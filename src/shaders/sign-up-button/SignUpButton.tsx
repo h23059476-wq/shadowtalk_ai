@@ -60,7 +60,7 @@ export function SignUpButton({ className = "", style, onClick }: SignUpButtonPro
         <iframe
           title="Sign Up Button"
           srcDoc={sourceDocument}
-          sandbox="allow-scripts"
+          sandbox="allow-scripts allow-same-origin"
           loading="eager"
           onLoad={() => setReady(true)}
           style={{
