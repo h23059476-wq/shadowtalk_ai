@@ -386,9 +386,9 @@ const ChatbotPage = () => {
           archived_at: (c as Conversation).archived_at ?? null,
         })),
       );
-      setConversations(rows);
+      setConversations(rows.filter(r => r && r.id));
       const active = rows.filter(
-        (c) => !isConversationArchived(c.id, c.archived_at, guestArchivedIds),
+        (c) => c && c.id && !isConversationArchived(c.id, c.archived_at, guestArchivedIds),
       );
       if (active.length > 0 && !currentConversationId) {
         loadConversation(active[0].id);
@@ -828,7 +828,7 @@ const ChatbotPage = () => {
         .insert({ conversation_id: conversationId, user_id: user.id, content: contentToSave, role, personality })
         .select().single();
       
-      if (role === 'user' && messages.length <= 1) {
+      if (data && role === 'user' && messages.length <= 1) {
         const titlePlain = content.trim().split(/\s+/).slice(0, 3).join(' ').slice(0, 25) || 'New Chat';
         const title = await chatPrivate.wrapForStorage(titlePlain);
         await backend.from('conversations').update({ title, updated_at: new Date().toISOString() }).eq('id', conversationId);
