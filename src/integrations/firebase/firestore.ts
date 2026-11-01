@@ -601,7 +601,12 @@ class FirestoreQuery<T = any> implements PromiseLike<Result<any>> {
           return await this.runSelect();
       }
     } catch (err: any) {
-      console.warn(`[firestore:${this.table}:${this.mode}]`, err?.code || err?.message || err, err?.message ?? '');
+      console.error(`[firestore:${this.table}:${this.mode}] FAILED:`, {
+        code: err?.code || 'unknown',
+        message: err?.message || String(err),
+        name: err?.name || 'Error',
+        stack: err?.stack?.split('\n').slice(0, 3).join(' '),
+      });
       return fail(err instanceof Error ? err : new Error(String(err)));
     }
   }

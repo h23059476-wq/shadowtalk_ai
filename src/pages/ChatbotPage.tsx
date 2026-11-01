@@ -770,7 +770,12 @@ const ChatbotPage = () => {
         return data.id;
       }
       if (error) {
-        console.error("[chat] remote conversation insert FAILED:", error?.message || error);
+        console.error("[chat] remote conversation insert FAILED:", {
+          message: error?.message || String(error),
+          code: (error as any)?.code || 'unknown',
+          name: error?.name || 'Error',
+          userId: user?.id || 'none',
+        });
       }
     } catch (err) {
       console.error("[chat] exception creating remote conversation:", err);
