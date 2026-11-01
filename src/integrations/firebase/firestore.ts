@@ -495,10 +495,11 @@ class FirestoreQuery<T = any> implements PromiseLike<Result<any>> {
       const body = { created_at: serverTimestamp(), ...v };
       if (v?.id) {
         await setDoc(doc(fbDb(), this.table, String(v.id)), body as any, { merge: false });
-        written.push({ ...v, id: String(v.id) });
+        // Include created_at as ISO string so callers have a usable timestamp
+        written.push({ ...v, id: String(v.id), created_at: new Date().toISOString() });
       } else {
         const ref = await addDoc(collection(fbDb(), this.table), body as any);
-        written.push({ ...v, id: ref.id });
+        written.push({ ...v, id: ref.id, created_at: new Date().toISOString() });
       }
     }
     const data = this.singleMode !== 'none' ? written[0] ?? null : written;

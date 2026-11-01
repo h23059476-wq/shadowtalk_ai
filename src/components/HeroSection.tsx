@@ -11,6 +11,7 @@ import { useStealthKillSwitch } from "@/hooks/useStealthKillSwitch";
 import { trackShadowTalkEvent } from "@/lib/analyticsEventTracker";
 import FreeTierLimitsStrip from "@/components/growth/FreeTierLimitsStrip";
 import ProofOverHypeBar from "@/components/growth/ProofOverHypeBar";
+import { SignUpButton } from "@/shaders/sign-up-button/SignUpButton";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -174,6 +175,17 @@ const HeroSection = () => {
                 <span className="text-xs text-muted-foreground font-mono">↓</span>
               </Button>
             </div>
+          </div>
+
+          {/* ThreeUI Sign Up Button — skeuomorphic animated CTA */}
+          <div className="mb-6 flex justify-center" style={{ height: "130px", width: "100%", maxWidth: "360px", margin: "0 auto 1.5rem" }}>
+            <SignUpButton
+              onClick={() => {
+                trackShadowTalkEvent("cta_clicked", { cta_name: "signup_button_threeui" });
+                navigate("/auth");
+              }}
+              style={{ borderRadius: "16px", height: "130px", width: "100%" }}
+            />
           </div>
 
           <div className="max-w-2xl mx-auto mb-8 px-2">
