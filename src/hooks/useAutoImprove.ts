@@ -45,7 +45,7 @@ export function useAutoImprove() {
   const analyzingRef = useRef(false);
 
   const runAnalysis = useCallback(async () => {
-    if (analyzingRef.current || !isLearningEnabled()) return;
+    if (analyzingRef.current || !isLearningEnabled() || !user) return;
     analyzingRef.current = true;
     try {
       const events = await getBehaviorEvents();

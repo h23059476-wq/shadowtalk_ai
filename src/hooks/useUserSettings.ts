@@ -81,7 +81,7 @@ export function useUserSettings<T = any>(settingKey: string, defaultValue: T) {
     setValue(newValue);
     
     if (!user) {
-      localStorage.setItem(`shadowtalk_${settingKey}_${user.id}`, JSON.stringify(newValue));
+      localStorage.setItem(`shadowtalk_${settingKey}_guest`, JSON.stringify(newValue));
       return;
     }
 
