@@ -75,7 +75,7 @@ const HeroSection = () => {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
               <Button
                 size="lg"
-                className="btn-glow text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 group rounded-xl w-full sm:w-auto bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-500/90 border-0"
+                className="btn-glow btn-3d-primary text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 group rounded-xl w-full sm:w-auto bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-500/90 border-0"
                 onClick={() => {
                   trackShadowTalkEvent("cta_clicked", { cta_name: "try_demo_no_signup" });
                   navigate("/chatbot?demo=true");
@@ -88,7 +88,7 @@ const HeroSection = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="text-base sm:text-lg px-6 sm:px-7 py-5 sm:py-6 border-primary/40 bg-card/40 hover:border-primary/60 hover:bg-card/60 rounded-xl w-full sm:w-auto gap-2 group"
+                className="btn-3d-secondary text-base sm:text-lg px-6 sm:px-7 py-5 sm:py-6 border-primary/40 bg-card/40 hover:border-primary/60 hover:bg-card/60 rounded-xl w-full sm:w-auto gap-2 group"
                 onClick={() => {
                   trackShadowTalkEvent("cta_clicked", { cta_name: "connect_api_key_byok" });
                   navigate("/chatbot?byok=true&view=settings");
@@ -143,7 +143,7 @@ const HeroSection = () => {
               <Button
                 variant="outline"
                 size="default"
-                className="text-sm sm:text-base px-5 sm:px-6 py-4 sm:py-5 border-border/60 bg-card/40 hover:border-primary/40 hover:bg-card/60 rounded-xl w-full sm:w-auto gap-2 group"
+                className="btn-3d-tertiary text-sm sm:text-base px-5 sm:px-6 py-4 sm:py-5 border-border/60 bg-card/40 hover:border-primary/40 hover:bg-card/60 rounded-xl w-full sm:w-auto gap-2 group"
                 onClick={() => {
                   trackShadowTalkEvent("cta_clicked", { cta_name: "run_first_agent" });
                   navigate("/chatbot?demo=true");
@@ -156,7 +156,7 @@ const HeroSection = () => {
               <Button
                 variant="outline"
                 size="default"
-                className="text-sm sm:text-base px-5 sm:px-6 py-4 sm:py-5 border-border/60 bg-card/40 hover:border-primary/40 hover:bg-card/60 rounded-xl w-full sm:w-auto"
+                className="btn-3d-tertiary text-sm sm:text-base px-5 sm:px-6 py-4 sm:py-5 border-border/60 bg-card/40 hover:border-primary/40 hover:bg-card/60 rounded-xl w-full sm:w-auto"
                 onClick={() => navigate("/pricing")}
               >
                 View pricing — from $5/mo
@@ -164,7 +164,7 @@ const HeroSection = () => {
               <Button
                 variant="outline"
                 size="default"
-                className="text-sm sm:text-base px-5 sm:px-6 py-4 sm:py-5 border-border/60 bg-card/40 hover:border-cyan-500/40 hover:bg-card/60 rounded-xl w-full sm:w-auto gap-2 group"
+                className="btn-3d-tertiary text-sm sm:text-base px-5 sm:px-6 py-4 sm:py-5 border-border/60 bg-card/40 hover:border-cyan-500/40 hover:bg-card/60 rounded-xl w-full sm:w-auto gap-2 group"
                 onClick={() => {
                   document.getElementById("sections-hub")?.scrollIntoView({ behavior: "smooth" });
                 }}
