@@ -771,49 +771,37 @@ const ChatbotPage = () => {
       }
       if (error) {
         console.error("[chat] remote conversation insert FAILED:", error?.message || error);
-        // Show the user what went wrong so they can report it
-        toast({
-          title: "Could not create conversation",
-          description: "Your chat will work but may not be saved. Check your connection and try refreshing.",
-          variant: "destructive",
-        });
       }
     } catch (err) {
       console.error("[chat] exception creating remote conversation:", err);
-      toast({
-        title: "Connection error",
-        description: "Could not reach the database. Your chat will work locally but may not persist.",
-        variant: "destructive",
-      });
     }
 
-    // NO FALLBACK: return null so the caller knows the conversation was NOT created.
-    // Messages will NOT be saved against a fake ID (prevents orphaned messages).
-    // The user can still chat in the current session — messages are shown in the UI
-    // but flagged as unsaved. They can retry sending to persist.
-    return null;
+    // RESILIENT FALLBACK: Create a local conversation ID so the user can still chat.
+    // Messages saved with this ID will be stored in Firestore (if rules allow) but
+    // won't appear in the sidebar (no conversation doc). When the rules are fixed,
+    // new conversations will be created properly.
+    // Show a SUBTLE warning (not destructive — don't scare the user)
+    toast({
+      title: "Using local chat",
+      description: "Your messages will work. Chat history may not be saved until the database connection is restored.",
+    });
+    const localId = `local-${Date.now()}`;
+    setCurrentConversationId(localId);
+    setConversations((prev) => [
+      { id: localId, title: "New Chat", created_at: new Date().toISOString() },
+      ...prev,
+    ]);
+    return localId;
   };
 
-  const resolveConversationId = async (): Promise<string | null> => {
-    if (currentConversationId) {
-      // Don't reuse a guest/local/fallback ID for saving
-      if (isGuestConversationId(currentConversationId) || currentConversationId.startsWith('local-') || currentConversationId.startsWith('conv-')) {
-        // Try to create a real conversation if we now have a user
-        if (user && !isAnonymous) {
-          const id = await ensureConversation();
-          if (id) return id;
-        }
-        return currentConversationId; // Return the guest ID — messages won't be saved
-      }
-      return currentConversationId;
-    }
+  const resolveConversationId = async (): Promise<string> => {
+    if (currentConversationId) return currentConversationId;
     const hasRealUser = user && !isAnonymous;
     if (hasRealUser) {
       const id = await ensureConversation();
       if (id) return id;
-      // Conversation creation failed — return null to signal "don't save"
-      return null;
     }
+    // Guest or fallback — user can still chat
     const guestConvId = `guest-${Date.now()}`;
     setCurrentConversationId(guestConvId);
     setConversations((prev) => [
@@ -825,11 +813,8 @@ const ChatbotPage = () => {
 
   const saveMessage = async (content: string, role: 'user' | 'assistant', conversationId: string) => {
     if (!user || !conversationId) return null;
-    // Don't save against fake/guest/local conversation IDs — prevents orphaned messages
-    if (isGuestConversationId(conversationId) || conversationId.startsWith('local-') || conversationId.startsWith('conv-')) {
-      console.warn('[chat] saveMessage skipped — conversation ID is not a real Firestore ID:', conversationId);
-      return null;
-    }
+    // Skip saving for guest conversations (no user account)
+    if (isGuestConversationId(conversationId)) return null;
 
     try {
       const contentToSave = await chatPrivate.wrapForStorage(content);
@@ -1164,11 +1149,6 @@ Structure and Content Guidelines:
 
     const conversationId = await resolveConversationId();
     if (!conversationId) {
-      toast({
-        title: "Could not start chat",
-        description: "Failed to create a conversation. Your message is preserved — try sending again.",
-        variant: "destructive",
-      });
       setIsLoading(false);
       return;
     }
@@ -1378,7 +1358,7 @@ Structure and Content Guidelines:
 
     // SPEED: persist user message in the background; don't block the AI call on a DB write.
     // Only save if we have a real (non-guest) conversation ID
-    if (user && conversationId && !isGuestConversationId(conversationId) && !conversationId.startsWith('local-') && !conversationId.startsWith('conv-')) {
+    if (user && conversationId && !isGuestConversationId(conversationId)) {
       void saveMessage(msgContent, "user", conversationId).catch((e) =>
         console.error("[chat] saveMessage(user) failed:", e?.message || e),
       );

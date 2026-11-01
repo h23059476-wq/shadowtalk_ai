@@ -114,7 +114,7 @@ const ChatHeaderInner = ({
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => navigate("/home")}
+            onClick={() => window.location.assign("/home")}
             className="gap-1.5 rounded-full border-border/60 bg-background/70 backdrop-blur-md shadow-sm h-8 px-3 text-xs"
             aria-label="Back to home"
           >
@@ -173,7 +173,7 @@ const ChatHeaderInner = ({
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => navigate("/home")}
+              onClick={() => window.location.assign("/home")}
               className="gap-2 rounded-full border-border/60 bg-background/70 backdrop-blur-md shadow-sm h-9 px-3"
               aria-label="Back to home"
             >
