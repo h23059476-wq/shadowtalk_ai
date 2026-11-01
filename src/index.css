@@ -329,6 +329,130 @@
   }
   .btn-glow:hover::after { opacity: 1; }
 
+/* === 3D Landing Page Button Animations === */
+
+/* Primary CTA — Try Demo: floating 3D effect with pulsing glow */
+@keyframes btn-3d-float {
+  0%, 100% { transform: translateY(0px) rotateX(0deg); box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.5); }
+  50% { transform: translateY(-4px) rotateX(2deg); box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.6); }
+}
+
+@keyframes btn-3d-glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px 0px rgba(99, 102, 241, 0.3), 0 10px 30px -10px rgba(34, 211, 238, 0.4); }
+  50% { box-shadow: 0 0 30px 5px rgba(99, 102, 241, 0.5), 0 15px 40px -10px rgba(34, 211, 238, 0.6); }
+}
+
+.btn-3d-primary {
+  animation: btn-3d-float 3s ease-in-out infinite, btn-3d-glow-pulse 2s ease-in-out infinite;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.btn-3d-primary:hover {
+  animation-play-state: paused;
+  transform: translateY(-6px) scale(1.03) rotateX(3deg);
+  box-shadow: 0 25px 50px -10px rgba(99, 102, 241, 0.7), 0 0 40px 10px rgba(34, 211, 238, 0.5);
+}
+
+.btn-3d-primary:active {
+  transform: translateY(-2px) scale(0.98) rotateX(0deg);
+  transition: transform 0.1s ease;
+}
+
+/* Secondary CTA — Connect API Key: 3D depth + border shimmer */
+@keyframes btn-3d-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes btn-3d-depth {
+  0%, 100% { transform: translateY(0px); box-shadow: 0 4px 15px -5px rgba(0, 0, 0, 0.3); }
+  50% { transform: translateY(-2px); box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.4); }
+}
+
+.btn-3d-secondary {
+  animation: btn-3d-depth 4s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease;
+}
+
+.btn-3d-secondary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.15), transparent);
+  background-size: 200% 100%;
+  animation: btn-3d-shimmer 3s linear infinite;
+  pointer-events: none;
+}
+
+.btn-3d-secondary:hover {
+  animation-play-state: paused;
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 15px 35px -5px rgba(99, 102, 241, 0.3);
+}
+
+.btn-3d-secondary:active {
+  transform: translateY(-1px) scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+/* Tertiary CTAs — Run Agent / Pricing / Explore: staggered entrance + hover lift */
+@keyframes btn-3d-enter {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.btn-3d-tertiary {
+  animation: btn-3d-enter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-3d-tertiary:nth-child(1) { animation-delay: 0.1s; }
+.btn-3d-tertiary:nth-child(2) { animation-delay: 0.2s; }
+.btn-3d-tertiary:nth-child(3) { animation-delay: 0.3s; }
+
+.btn-3d-tertiary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.btn-3d-tertiary:active {
+  transform: translateY(0) scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+/* Nav Open App button — gradient shimmer */
+@keyframes nav-cta-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.nav-cta-3d {
+  background-size: 200% 200% !important;
+  animation: nav-cta-shimmer 4s ease infinite;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.nav-cta-3d:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 30px -5px rgba(34, 211, 238, 0.5);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .btn-3d-primary, .btn-3d-secondary, .btn-3d-tertiary, .nav-cta-3d {
+    animation: none !important;
+  }
+  .btn-3d-primary:hover, .btn-3d-secondary:hover, .btn-3d-tertiary:hover, .nav-cta-3d:hover {
+    transform: none !important;
+  }
+}
+
   /* ===== Card System ===== */
   .card-hover {
     @apply transition-all duration-500;
