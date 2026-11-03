@@ -22,6 +22,7 @@ import {
   Download,
   FileQuestion,
   Sparkles,
+  Brain,
 } from "lucide-react";
 
 export interface AdminNavItem {
@@ -43,6 +44,7 @@ export const adminNavGroups: AdminNavGroup[] = [
     items: [
       { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, description: "Stats and quick actions" },
       { id: "alerts", label: "System alerts", icon: Bell, description: "Platform alerts log" },
+      { id: "intelligence", label: "Intelligence Center", icon: Brain, description: "Founder product analytics" },
     ],
   },
   {
@@ -52,6 +54,7 @@ export const adminNavGroups: AdminNavGroup[] = [
         id: "growth-command",
         label: "Growth Command",
         icon: Sparkles,
+  Brain,
         description: "ShadowScale autonomous growth engine",
         badgeKey: "pendingGrowthActions",
       },

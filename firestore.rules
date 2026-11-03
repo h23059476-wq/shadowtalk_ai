@@ -23,6 +23,13 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role == 'admin';
     }
 
+    // Founder-only access: stricter than admin. Used for the Intelligence Center.
+    function isFounder() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/user_roles/$(request.auth.uid))
+        && get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role == 'founder';
+    }
+
     // .get(key, default) avoids hard errors on docs that predate user_id.
     function ownsExisting() {
       return signedIn() && resource.data.get('user_id', '') == request.auth.uid;
@@ -146,7 +153,23 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
     match /analytics_daily/{doc} {
+
+    // Founder-only read access to usage_analytics for the Intelligence Center.
+    match /usage_analytics/{doc} {
+      allow read: if signedIn() && (ownsExisting() || isAdmin() || isFounder());
+      allow create: if ownsIncoming();
+      allow update: if (ownsExisting() && ownsIncoming()) || isAdmin();
+      allow delete: if ownsExisting() || isAdmin();
+    }
       allow read, write: if isAdmin();
+    }
+
+    // Founder-only read access to usage_analytics for the Intelligence Center.
+    match /usage_analytics/{doc} {
+      allow read: if signedIn() && (ownsExisting() || isAdmin() || isFounder());
+      allow create: if ownsIncoming();
+      allow update: if (ownsExisting() && ownsIncoming()) || isAdmin();
+      allow delete: if ownsExisting() || isAdmin();
     }
 
     // ------------------------------------------------------------------

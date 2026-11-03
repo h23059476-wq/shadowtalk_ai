@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
+import { CapabilityProfileCard } from "./CapabilityProfileCard";
 import {
   BYOK_PROVIDERS, type ByokProvider, clearByokConfig, getByokConfig, saveByokConfig, streamByokChat,
 } from "@/lib/byok";
@@ -186,6 +187,8 @@ export function SettingsByokCard() {
             )}
           </div>
         </div>
+        {/* Capability Profile — shows what the configured model can do */}
+        {saved && <CapabilityProfileCard />}
         <div className="flex flex-wrap gap-2">
           <Button onClick={save}>Save</Button>
           <Button variant="outline" onClick={test} disabled={testing}>{testing ? "Testing..." : "Test key"}</Button>
