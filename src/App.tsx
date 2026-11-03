@@ -83,6 +83,7 @@ const MissionControlPage = lazy(() => import("./pages/MissionControlPage"));
 const PersonalLlmPage = lazy(() => import("./pages/PersonalLlmPage"));
 const TemplatesPage = lazy(() => import("./pages/TemplatesPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
+const IntelligenceCenterPage = lazy(() => import("./pages/IntelligenceCenterPage"));
 const ResearchPage = lazy(() => import("./pages/ResearchPage"));
 const DevelopersPage = lazy(() => import("./pages/DevelopersPage"));
 const EnterprisePage = lazy(() => import("./pages/EnterprisePage"));
@@ -199,6 +200,7 @@ const AnimatedRoutes = () => {
           <Route path="/personal-llm" element={<Navigate to="/chatbot" replace />} />
           <Route path="/templates" element={<Navigate to="/chatbot" replace />} />
           <Route path="/admin" element={<PageTransition><AdminPage /></PageTransition>} />
+          <Route path="/admin/intelligence" element={<Suspense fallback={<PageLoader />}><IntelligenceCenterPage /></Suspense>} />
           <Route path="/research" element={<Navigate to="/chatbot" replace />} />
           <Route path="/developers" element={<Navigate to="/chatbot" replace />} />
           <Route path="/enterprise" element={<Navigate to="/chatbot" replace />} />

@@ -10,6 +10,7 @@
  */
 
 import { ComponentType } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/components/AuthProvider";
 import { useAdminCheck } from "@/hooks/useAdminCheck";
 import { motion } from "framer-motion";
@@ -99,12 +100,14 @@ const AccessDeniedFallback = () => (
 export default function AdminPage() {
   const { user, loading: authLoading } = useAuth();
   const { isAdmin, loading: roleLoading } = useAdminCheck();
+  const navigate = useNavigate();
   const accessGranted = Boolean(user && isAdmin);
   const accessLoading = authLoading || roleLoading;
 
   const handleNavigate = (section: string) => {
     // In production this would route to the admin subpage (e.g. /admin/users).
     // For now we keep the user on /admin and surface the action via state.
+    if (section === "intelligence") { navigate("/admin/intelligence"); return; }
     void section;
   };
 
