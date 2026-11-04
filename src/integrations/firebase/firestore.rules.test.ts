@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { assertFails, assertSucceeds, initializeTestEnvironment, type RulesTestEnvironment } from "@firebase/rules-unit-testing";
-import { deleteDoc, doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
@@ -74,6 +74,18 @@ rulesDescribe("Firestore auth and profile rules", () => {
     await assertFails(getDoc(doc(bobDb, "business_memories/alice-note")));
     await assertFails(deleteDoc(doc(bobDb, "business_memories/alice-note")));
     await assertSucceeds(deleteDoc(doc(aliceDb, "business_memories/alice-note")));
+  });
+
+  it("lets a signed-in user load and save their own chat settings and devices only", async () => {
+    const aliceDb = testEnv.authenticatedContext("alice").firestore();
+    const bobDb = testEnv.authenticatedContext("bob").firestore();
+    await assertSucceeds(setDoc(doc(aliceDb, "user_settings/a1"), { user_id: "alice", setting_key: "custom_instructions", setting_value: "x" }));
+    await assertSucceeds(setDoc(doc(aliceDb, "user_sessions/s1"), { user_id: "alice", session_token: "t", is_current: true }));
+    for (const col of ["user_settings", "user_sessions"]) {
+      await assertSucceeds(getDocs(query(collection(aliceDb, col), where("user_id", "==", "alice"))));
+      await assertFails(getDocs(query(collection(bobDb, col), where("user_id", "==", "alice"))));
+    }
+    await assertSucceeds(updateDoc(doc(aliceDb, "user_sessions/s1"), { last_seen_at: "now" }));
   });
   it("allows admin profile reads while keeping admin role writes privileged", async () => {
     await testEnv.withSecurityRulesDisabled(async (context) => {
