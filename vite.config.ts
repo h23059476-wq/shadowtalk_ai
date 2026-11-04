@@ -30,7 +30,6 @@ export default defineConfig(({ mode }) => {
             'vendor-firebase': ['firebase/app', 'firebase/auth', 'firebase/firestore', 'firebase/storage', 'firebase/analytics', 'firebase/remote-config'],
             'vendor-ui': ['lucide-react', 'framer-motion', '@radix-ui/react-dialog', '@radix-ui/react-toast', 'sonner'],
             'vendor-query': ['@tanstack/react-query'],
-            'vendor-3d': ['three', '@react-three/fiber', '@react-three/drei'],
             'vendor-editor': ['@monaco-editor/react'],
             'vendor-ai': ['@mlc-ai/web-llm']
           }
