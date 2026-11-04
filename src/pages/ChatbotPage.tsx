@@ -1981,7 +1981,7 @@ Structure and Content Guidelines:
                 if (isMobile) setShowMobileNav(!showMobileNav);
                 else toggleSidebar();
               }}
-              onSignOut={signOut}
+              onSignOut={async () => { await signOut(); navigate("/auth", { replace: true }); }}
               onOpenCanvas={(type) => navigate("/ide")}
 
               maxChats="∞"
