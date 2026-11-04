@@ -7,7 +7,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export type ChatMode = "general" | "image" | "document";
+/** Modes shown in the selector are general/image/document; the rest are still used internally by tools and agents. */
+export type ChatMode =
+  | "general" | "image" | "document"
+  | "code" | "research" | "creative" | "summarize" | "debug" | "email" | "shadowspectre";
 
 interface ModeSelectorProps {
   mode: ChatMode;
