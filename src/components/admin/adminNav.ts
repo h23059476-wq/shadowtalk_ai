@@ -54,7 +54,6 @@ export const adminNavGroups: AdminNavGroup[] = [
         id: "growth-command",
         label: "Growth Command",
         icon: Sparkles,
-  Brain,
         description: "ShadowScale autonomous growth engine",
         badgeKey: "pendingGrowthActions",
       },
