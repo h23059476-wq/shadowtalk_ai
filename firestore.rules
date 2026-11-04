@@ -181,7 +181,7 @@ service cloud.firestore {
     // - delete deliberately omits ownsIncoming() (request.resource is null on
     //   delete and reading it would deny every delete).
     // ------------------------------------------------------------------
-    function isUserDataCollection() {
+    function isUserDataCollection(collection) {
       return collection in [
         'conversations',
         'messages',
@@ -234,13 +234,13 @@ service cloud.firestore {
     }
 
     match /{collection}/{doc} {
-      allow read: if isUserDataCollection() && (ownsExisting() || isAdmin());
-      allow create: if isUserDataCollection() && ownsIncoming();
+      allow read: if isUserDataCollection(collection) && (ownsExisting() || isAdmin());
+      allow create: if isUserDataCollection(collection) && ownsIncoming();
       // Updates require stored and resulting ownership; an ownerless legacy
       // document cannot be claimed by guessing or discovering its document ID.
-      allow update: if isUserDataCollection() && ((ownsExisting() && ownsIncoming()) || isAdmin());
+      allow update: if isUserDataCollection(collection) && ((ownsExisting() && ownsIncoming()) || isAdmin());
       // Ownerless legacy records require a trusted migration or admin cleanup.
-      allow delete: if isUserDataCollection() && (ownsExisting() || isAdmin());
+      allow delete: if isUserDataCollection(collection) && (ownsExisting() || isAdmin());
     }
   }
 }
