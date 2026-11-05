@@ -14,6 +14,7 @@
  */
 
 import type { ByokProvider } from "@/lib/byok";
+import { inferModelCapabilities, normalizeModelId } from "./capabilityInference";
 
 // ─── Capability Status ──────────────────────────────────────
 
@@ -665,10 +666,12 @@ export function getModelCapabilities(
   provider: ByokProvider,
   modelId: string,
 ): ModelCapabilities {
-  const entry = findModelEntry(provider, modelId);
+  const entry = findModelEntry(provider, normalizeModelId(modelId));
   if (entry) return entry.capabilities;
 
-  // Unknown model — return all-unknown capabilities
+  // Unknown model — infer a profile from its model family instead of a fixed list.
+  if (modelId && modelId.trim()) return inferModelCapabilities(provider, modelId);
+
   return {
     textInput: supported("inferred_from_adapter", "All OpenAI-compatible providers support text input"),
     textOutput: supported("inferred_from_adapter"),

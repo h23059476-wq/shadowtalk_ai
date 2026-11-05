@@ -8,19 +8,22 @@
 
 import { useMemo } from "react";
 import { Check, X, HelpCircle, AlertCircle, ShieldCheck } from "lucide-react";
-import { getByokConfig } from "@/lib/byok";
+import { getByokConfig, type ByokProvider } from "@/lib/byok";
 import { getModelCapabilities, getRegistryVersion, getRegistryLastUpdated } from "@/lib/capabilityRegistry";
 import { getCapabilitySummary } from "@/lib/capabilityCompatibility";
 
-export function CapabilityProfileCard() {
-  const config = getByokConfig();
+export function CapabilityProfileCard({ provider, model }: { provider?: ByokProvider; model?: string } = {}) {
+  const saved = provider ? null : getByokConfig();
+  const config = provider ? { provider, model: model || "" } : saved ? { provider: saved.provider, model: saved.model } : null;
+  const cfgProvider = config?.provider;
+  const cfgModel = config?.model;
 
   const capabilityData = useMemo(() => {
-    if (!config) return null;
-    const caps = getModelCapabilities(config.provider, config.model);
-    const summary = getCapabilitySummary(config.provider, config.model);
+    if (!cfgProvider) return null;
+    const caps = getModelCapabilities(cfgProvider, cfgModel || "");
+    const summary = getCapabilitySummary(cfgProvider, cfgModel || "");
     return { caps, summary };
-  }, [config?.provider, config?.model]);
+  }, [cfgProvider, cfgModel]);
 
   if (!config || !capabilityData) {
     return (

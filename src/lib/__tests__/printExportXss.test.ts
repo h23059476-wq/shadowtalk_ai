@@ -39,7 +39,7 @@ describe("print export XSS escaping", () => {
   it("escapes malicious options (author / classification / date)", () => {
     printWorldClassDocument("# Safe Title\n\nBody.", {
       author: "<script>alert('author')</script>",
-      classification: "<script>alert('class')</script>",
+      classification: "<script>alert('class')</script>" as never,
       date: "<script>alert('date')</script>",
     });
 

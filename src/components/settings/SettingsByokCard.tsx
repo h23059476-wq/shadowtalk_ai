@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { KeyRound, ShieldCheck, ShieldAlert, Loader2, ExternalLink, Copy } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import {
   BYOK_PROVIDERS, type ByokProvider, clearByokConfig, getByokConfig, saveByokConfig, streamByokChat,
 } from "@/lib/byok";
 import { useApiKeyValidation } from "@/hooks/useApiKeyValidation";
+import { classifyModel, normalizeModelId } from "@/lib/capabilityInference";
 
 /** Direct deep-links to each provider's API key console. */
 const KEY_QUICK_LINKS: Record<ByokProvider, { label: string; url: string }> = {
@@ -36,10 +37,22 @@ export function SettingsByokCard() {
   const existing = getByokConfig();
   const [provider, setProvider] = useState<ByokProvider>(existing?.provider ?? "openai");
   const [apiKey, setApiKey] = useState(existing?.apiKey ?? "");
-  const [model, setModel] = useState(existing?.model ?? BYOK_PROVIDERS.openai.defaultModel);
+  const [model, setModel] = useState(normalizeModelId(existing?.model ?? BYOK_PROVIDERS.openai.defaultModel));
   const [testing, setTesting] = useState(false);
   const [saved, setSaved] = useState(Boolean(existing));
   const validation = useApiKeyValidation();
+
+  // Re-check a saved key when the window opens so its model list loads again.
+  useEffect(() => {
+    if (existing?.apiKey) validation.validate(existing.provider, existing.apiKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Only chat models belong in the chat model picker; strip "models/" prefixes.
+  const chatModels = useMemo(
+    () => Array.from(new Set(validation.models.map(normalizeModelId).filter((m) => classifyModel(m) === "chat"))).sort(),
+    [validation.models],
+  );
 
   // Trigger validation whenever the key or provider changes
   const handleKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +67,7 @@ export function SettingsByokCard() {
     if (apiKey) validation.validate(p, apiKey);
   };
 
-  const cfg = () => ({ provider, apiKey: apiKey.trim(), model: model.trim() || BYOK_PROVIDERS[provider].defaultModel, mode: "always" as const });
+  const cfg = () => ({ provider, apiKey: apiKey.trim(), model: normalizeModelId(model) || BYOK_PROVIDERS[provider].defaultModel, mode: "always" as const });
 
   const save = () => {
     if (!apiKey.trim()) return toast.error("Paste your API key first.");
@@ -105,21 +118,24 @@ export function SettingsByokCard() {
               {validation.status === "validating" && (
                 <span className="ml-2 text-[10px] text-muted-foreground font-normal">Loading available models…</span>
               )}
-              {validation.status === "valid" && validation.models.length > 0 && (
-                <span className="ml-2 text-[10px] text-success font-normal">{validation.models.length} models available</span>
+              {validation.status === "valid" && chatModels.length > 0 && (
+                <span className="ml-2 text-[10px] text-success font-normal">{chatModels.length} chat models available</span>
               )}
             </Label>
-            {validation.status === "valid" && validation.models.length > 0 ? (
+            {validation.status === "valid" && chatModels.length > 0 ? (
               <Select value={model} onValueChange={setModel}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent className="max-h-72">
                   {/* Default model first, then alphabetical */}
-                  {!validation.models.includes(BYOK_PROVIDERS[provider].defaultModel) && (
+                  {!chatModels.includes(BYOK_PROVIDERS[provider].defaultModel) && (
                     <SelectItem value={BYOK_PROVIDERS[provider].defaultModel}>
                       {BYOK_PROVIDERS[provider].defaultModel} (default)
                     </SelectItem>
                   )}
-                  {validation.models.map((m) => (
+                  {!chatModels.includes(model) && model !== BYOK_PROVIDERS[provider].defaultModel && model && (
+                    <SelectItem value={model}>{model}</SelectItem>
+                  )}
+                  {chatModels.map((m) => (
                     <SelectItem key={m} value={m}>{m}</SelectItem>
                   ))}
                 </SelectContent>
@@ -127,7 +143,7 @@ export function SettingsByokCard() {
             ) : (
               <Input value={model} onChange={(e) => setModel(e.target.value)} placeholder={BYOK_PROVIDERS[provider].defaultModel} />
             )}
-            {validation.status === "valid" && validation.models.length === 0 && (
+            {validation.status === "valid" && chatModels.length === 0 && (
               <p className="text-[10px] text-muted-foreground">Couldn&apos;t load the model list (CORS). Type the model ID manually.</p>
             )}
           </div>
@@ -188,7 +204,7 @@ export function SettingsByokCard() {
           </div>
         </div>
         {/* Capability Profile — shows what the configured model can do */}
-        {saved && <CapabilityProfileCard />}
+        {(saved || apiKey.trim()) && <CapabilityProfileCard provider={provider} model={normalizeModelId(model) || BYOK_PROVIDERS[provider].defaultModel} />}
         <div className="flex flex-wrap gap-2">
           <Button onClick={save}>Save</Button>
           <Button variant="outline" onClick={test} disabled={testing}>{testing ? "Testing..." : "Test key"}</Button>

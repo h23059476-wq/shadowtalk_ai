@@ -65,7 +65,7 @@ export function getByokConfig(): ByokConfig | null {
     if (!raw) return null;
     const cfg = JSON.parse(raw) as ByokConfig;
     if (!cfg?.apiKey || !BYOK_PROVIDERS[cfg.provider]) return null;
-    return { ...cfg, model: cfg.model || BYOK_PROVIDERS[cfg.provider].defaultModel, mode: cfg.mode === "always" ? "always" : "fallback" };
+    return { ...cfg, model: (cfg.model || "").trim().replace(/^models\//i, "") || BYOK_PROVIDERS[cfg.provider].defaultModel, mode: cfg.mode === "always" ? "always" : "fallback" };
   } catch {
     return null;
   }
