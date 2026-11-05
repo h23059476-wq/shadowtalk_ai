@@ -1,4 +1,5 @@
 import { getCachedAiAccessMode } from "@/lib/aiAccessMode";
+import { getByokConfig } from "@/lib/byok";
 
 /**
  * Turbo Provider Configuration — Key resolution & provider constants.
@@ -37,19 +38,15 @@ export const TURBO_MODEL_OPENAI = 'gpt-4o';
 /**
  * Resolve a user-supplied key only. Shared provider credentials must remain
  * server-side and are never bundled into the browser.
+ *
+ * Reads the v2 per-user BYOK namespace (`shadowtalk.byok.v2.<uid>`) — the
+ * legacy un-namespaced `shadowtalk.byok.v1` key is no longer consulted.
  */
 export function resolveTurboKey(): string | null {
   if (typeof window === "undefined" || getCachedAiAccessMode() !== "byok") return null;
-  try {
-    const stored = localStorage.getItem("shadowtalk.byok.v1");
-    if (!stored) return null;
-    const config = JSON.parse(stored) as { apiKey?: unknown };
-    return typeof config.apiKey === "string" && config.apiKey.trim()
-      ? config.apiKey.trim()
-      : null;
-  } catch {
-    return null;
-  }
+  const cfg = getByokConfig();
+  const key = cfg?.apiKey?.trim();
+  return key ? key : null;
 }
 
 /**

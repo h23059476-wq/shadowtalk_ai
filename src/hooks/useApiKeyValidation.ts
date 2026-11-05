@@ -38,6 +38,11 @@ interface ModelsResponse {
 function modelsUrlFor(provider: ByokProvider): string {
   const cfg = BYOK_PROVIDERS[provider];
   if (!cfg) return "";
+  if (provider === "anthropic") {
+    // Anthropic's models endpoint is /v1/models (the messages URL has no
+    // /chat/completions suffix to rewrite, so map it explicitly).
+    return "https://api.anthropic.com/v1/models";
+  }
   // Most OpenAI-compatible providers expose /models at the same base.
   return cfg.url.replace(/\/chat\/completions$/, "/models");
 }
@@ -50,11 +55,19 @@ async function pingModels(
   const url = modelsUrlFor(provider);
   if (!url) return { ok: false, error: "Unknown provider" };
 
-  // Use OpenAI-compatible Bearer auth for all providers in BYOK_PROVIDERS.
-  const headers: Record<string, string> = {
-    Authorization: `Bearer ${apiKey}`,
-    "Content-Type": "application/json",
-  };
+  // Anthropic authenticates with x-api-key + anthropic-version, not a Bearer
+  // header — using Bearer made every valid Anthropic key look rejected.
+  const headers: Record<string, string> =
+    provider === "anthropic"
+      ? {
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+          "Content-Type": "application/json",
+        }
+      : {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        };
 
   try {
     const res = await fetch(url, {

@@ -135,7 +135,9 @@ async function streamBuiltInChat(
       /* keep default */
     }
     if (resp?.status === 429) message = "Rate limit reached — please try again in a moment.";
-    if (resp?.status === 402) message = message || "AI credits exhausted.";
+    if (resp?.status === 402) message = "AI credits exhausted — check your plan or billing.";
+    if (resp?.status === 401) message = "AI gateway authentication failed — please sign in again.";
+    if (resp?.status && resp.status >= 500) message = "AI service is temporarily unavailable — please try again.";
     return { content: "", error: message };
   }
 
@@ -145,6 +147,31 @@ async function streamBuiltInChat(
   const decoder = new TextDecoder();
   let buffer = "";
   let content = "";
+  // Mid-stream `data: {"error": ...}` events must surface — previously they
+  // were swallowed, so a failed stream returned an empty answer with no error.
+  let streamError: string | null = null;
+
+  const handleDataLine = (payload: string): boolean => {
+    if (!payload || payload === "[DONE]") return true;
+    try {
+      const parsed = JSON.parse(payload);
+      if (parsed?.error) {
+        streamError =
+          typeof parsed.error === "string"
+            ? parsed.error
+            : parsed.error?.message || "The AI service reported an error mid-stream.";
+        return true;
+      }
+      const delta: string | undefined = parsed?.choices?.[0]?.delta?.content;
+      if (delta) {
+        content += delta;
+        opts.onDelta?.(content);
+      }
+      return true;
+    } catch {
+      return false; // partial JSON — caller decides whether it's a truncation
+    }
+  };
 
   while (true) {
     const { done, value } = await reader.read();
@@ -156,20 +183,26 @@ async function streamBuiltInChat(
       const line = buffer.slice(0, idx).trim();
       buffer = buffer.slice(idx + 1);
       if (!line.startsWith("data:")) continue;
-      const payload = line.slice(5).trim();
-      if (!payload || payload === "[DONE]") continue;
-      try {
-        const parsed = JSON.parse(payload);
-        const delta: string | undefined = parsed?.choices?.[0]?.delta?.content;
-        if (delta) {
-          content += delta;
-          opts.onDelta?.(content);
-        }
-      } catch {
-        /* partial JSON — ignore, next chunk completes it */
-      }
+      handleDataLine(line.slice(5).trim());
+    }
+  }
+  buffer += decoder.decode(); // flush the decoder
+
+  // Flush the final buffered line — streams may end without a trailing
+  // newline, and the last event (or a truncated JSON payload) lives there.
+  const tail = buffer.trim();
+  if (tail.startsWith("data:")) {
+    const parsedOk = handleDataLine(tail.slice(5).trim());
+    if (!parsedOk && !streamError) {
+      // Truncated final event — the response was cut off mid-generation.
+      streamError = "The AI response was cut off. Please regenerate.";
     }
   }
 
+  if (streamError) {
+    // Partial content is still returned so the UI can show it, but the
+    // error forces callers to treat this as an incomplete response.
+    return { content, error: streamError };
+  }
   return { content };
 }

@@ -47,18 +47,10 @@ deferNonCritical(() => {
   prewarmFastestLocalPath();
 });
 
-// Defer non-critical initialization
-deferNonCritical(() => {
-  // Unregister existing service workers to fully remove offline support
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.getRegistrations().then((registrations) => {
-      for (const registration of registrations) {
-        registration.unregister();
-      }
-    });
-  }
-});
- 
+// NOTE: Service workers are registered via `registerSW({ immediate: true })`
+// above and must stay registered — unregistering here killed PWA/offline
+// support for every returning user.
+
 const container = document.getElementById("root");
 
 if (!container) {

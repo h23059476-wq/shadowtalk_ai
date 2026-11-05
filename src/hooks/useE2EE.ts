@@ -83,6 +83,14 @@ export const useE2EE = () => {
   // Initialize vault salt if it doesn't exist; restore session key when possible
   useEffect(() => {
     if (!state.masterSalt) {
+      // Reuse the persisted vault salt so previously derived keys and the
+      // stored fingerprint stay valid across sessions. Generating a fresh
+      // salt on every mount would orphan all existing ciphertext.
+      const existingSalt = localStorage.getItem("shadowtalk_e2e_salt");
+      if (existingSalt) {
+        setState((prev) => ({ ...prev, masterSalt: existingSalt }));
+        return;
+      }
       const newSalt = arrayToBase64(generateSalt());
       localStorage.setItem("shadowtalk_e2e_salt", newSalt);
       setState((prev) => ({ ...prev, masterSalt: newSalt }));
@@ -124,8 +132,7 @@ export const useE2EE = () => {
       }));
 
       await persistSessionKey(key);
-      sessionStorage.setItem('shadowtalk_e2e_active', 'true');
-      
+
       toast.success("Security engine engaged. ShadowTalk is now E2EE protected.");
       return true;
     } catch (error) {
@@ -169,8 +176,8 @@ export const useE2EE = () => {
 
   const lock = useCallback(() => {
     setState(prev => ({ ...prev, isUnlocked: false, masterKey: null }));
+    // clearSessionKey already removes the key, the active flag, and the salt.
     clearSessionKey();
-    sessionStorage.removeItem('shadowtalk_e2e_active');
     toast.info("Security engine disengaged.");
   }, [clearSessionKey]);
 

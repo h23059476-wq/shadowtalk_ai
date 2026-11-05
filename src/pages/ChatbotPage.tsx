@@ -283,6 +283,16 @@ const ChatbotPage = () => {
   const abortControllerRef = useRef<AbortController | null>(null);
   const messagesRef = useRef<Message[]>([]);
   useEffect(() => { messagesRef.current = messages; }, [messages]);
+
+  // Abort any in-flight chat request when the chat page unmounts — otherwise
+  // the SSE reader keeps streaming (and may still write to the DB) after the
+  // user has navigated away.
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+      abortControllerRef.current = null;
+    };
+  }, []);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -751,7 +761,10 @@ const ChatbotPage = () => {
       ? await chatPrivate.wrapForStorage("New Chat")
       : "New Chat";
 
-    try {
+    // Private mode encryption failed — never create a remote conversation
+    // that would persist plaintext titles. Fall through to the local fallback.
+    if (titleToSave !== null) {
+      try {
       const { data, error } = await backend
         .from('conversations')
         .insert({ user_id: user.id, title: titleToSave })
@@ -777,8 +790,9 @@ const ChatbotPage = () => {
           userId: user?.id || 'none',
         });
       }
-    } catch (err) {
-      console.error("[chat] exception creating remote conversation:", err);
+      } catch (err) {
+        console.error("[chat] exception creating remote conversation:", err);
+      }
     }
 
     // RESILIENT FALLBACK: Create a local conversation ID so the user can still chat.
@@ -823,6 +837,12 @@ const ChatbotPage = () => {
 
     try {
       const contentToSave = await chatPrivate.wrapForStorage(content);
+      // Strict encrypt-or-null: while private mode is engaged, a failed
+      // encryption must skip the DB write — never persist plaintext.
+      if (contentToSave === null) {
+        console.warn("[chat] private-mode encryption failed — message not persisted");
+        return null;
+      }
       const { data } = await backend
         .from('messages')
         .insert({ conversation_id: conversationId, user_id: user.id, content: contentToSave, role, personality })
@@ -831,7 +851,9 @@ const ChatbotPage = () => {
       if (data && role === 'user' && messages.length <= 1) {
         const titlePlain = content.trim().split(/\s+/).slice(0, 3).join(' ').slice(0, 25) || 'New Chat';
         const title = await chatPrivate.wrapForStorage(titlePlain);
-        await backend.from('conversations').update({ title, updated_at: new Date().toISOString() }).eq('id', conversationId);
+        if (title !== null) {
+          await backend.from('conversations').update({ title, updated_at: new Date().toISOString() }).eq('id', conversationId);
+        }
         const displayTitle = chatPrivate.active
           ? "Private Chat"
           : titlePlain;
@@ -1063,6 +1085,14 @@ Structure and Content Guidelines:
 
       if (cloudError && !streamedContent) {
         throw new Error(cloudError);
+      }
+      if (cloudError && streamedContent) {
+        // Mid-stream failure with partial output: show what arrived, mark it
+        // incomplete, and NEVER silently persist a truncated response.
+        pushAssistant(`${streamedContent}\n\n_[Response interrupted — ${cloudError}]_`);
+        finalizeAssistant();
+        toast({ title: "Response incomplete", description: cloudError, variant: "destructive" });
+        return assistantContent || undefined;
       }
       if (streamedContent) {
         pushAssistant(streamedContent);

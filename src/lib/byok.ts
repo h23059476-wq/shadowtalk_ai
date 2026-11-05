@@ -86,26 +86,44 @@ function toPlainMessages(messages: CloudChatMessage[]) {
   return messages.map((m) => ({ role: m.role, content: m.content }));
 }
 
+type AnthropicContentBlock =
+  | { type: "text"; text: string }
+  | { type: "image"; source: { type: "base64"; media_type: string; data: string } | { type: "url"; url: string } };
+
+function toAnthropicBlocks(message: CloudChatMessage): AnthropicContentBlock[] {
+  if (typeof message.content === "string") {
+    return [{ type: "text", text: message.content }];
+  }
+  return message.content.map((part): AnthropicContentBlock => {
+    if (part.type === "text") return { type: "text", text: part.text };
+    const url = part.image_url.url;
+    const match = url.match(/^data:(image\/(?:jpeg|png|gif|webp));base64,([\s\S]+)$/i);
+    if (match) {
+      return {
+        type: "image",
+        source: { type: "base64", media_type: match[1].toLowerCase(), data: match[2] },
+      };
+    }
+    return { type: "image", source: { type: "url", url } };
+  });
+}
+
 function toAnthropicMessages(messages: CloudChatMessage[]) {
-  return messages
-    .filter((message) => message.role !== "system")
-    .map((message) => ({
-      role: message.role === "assistant" ? "assistant" as const : "user" as const,
-      content: typeof message.content === "string"
-        ? message.content
-        : message.content.map((part) => {
-            if (part.type === "text") return { type: "text" as const, text: part.text };
-            const url = part.image_url.url;
-            const match = url.match(/^data:(image\/(?:jpeg|png|gif|webp));base64,([\s\S]+)$/i);
-            if (match) {
-              return {
-                type: "image" as const,
-                source: { type: "base64" as const, media_type: match[1].toLowerCase(), data: match[2] },
-              };
-            }
-            return { type: "image" as const, source: { type: "url" as const, url } };
-          }),
-    }));
+  const merged: Array<{ role: "user" | "assistant"; content: AnthropicContentBlock[] }> = [];
+  for (const message of messages) {
+    if (message.role === "system") continue;
+    const role = message.role === "assistant" ? ("assistant" as const) : ("user" as const);
+    const blocks = toAnthropicBlocks(message);
+    const last = merged[merged.length - 1];
+    if (last && last.role === role) {
+      // The Anthropic Messages API requires strict user/assistant alternation —
+      // consecutive same-role messages must be merged or it rejects with 400.
+      last.content = [...last.content, ...blocks];
+    } else {
+      merged.push({ role, content: blocks });
+    }
+  }
+  return merged.filter((m) => m.content.length > 0);
 }
 
 async function streamAnthropicChat(
@@ -161,6 +179,27 @@ async function streamAnthropicChat(
   const decoder = new TextDecoder();
   let buffer = "";
   let content = "";
+  // Anthropic emits `event: error` SSE events mid-stream (overloaded,
+  // invalid_request, runtime errors). Swallowing them made truncated or
+  // failed streams look like successful empty answers.
+  let streamError: string | null = null;
+
+  const handleDataLine = (payload: string): boolean => {
+    if (!payload) return true;
+    try {
+      const event = JSON.parse(payload);
+      if (event?.type === "content_block_delta" && typeof event.delta?.text === "string") {
+        content += event.delta.text;
+        opts.onDelta?.(content);
+      } else if (event?.type === "error") {
+        streamError = event.error?.message || "Anthropic reported a mid-stream error.";
+      }
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
@@ -170,14 +209,22 @@ async function streamAnthropicChat(
       const line = buffer.slice(0, newline).trim();
       buffer = buffer.slice(newline + 1);
       if (!line.startsWith("data:")) continue;
-      try {
-        const event = JSON.parse(line.slice(5).trim());
-        if (event?.type === "content_block_delta" && typeof event.delta?.text === "string") {
-          content += event.delta.text;
-          opts.onDelta?.(content);
-        }
-      } catch { /* ignore non-JSON SSE lines */ }
+      handleDataLine(line.slice(5).trim());
     }
+  }
+  buffer += decoder.decode(); // flush the decoder
+
+  // Flush the final buffered line (streams may end without a trailing newline).
+  const tail = buffer.trim();
+  if (tail.startsWith("data:")) {
+    const parsedOk = handleDataLine(tail.slice(5).trim());
+    if (!parsedOk && !streamError) {
+      streamError = "The AI response was cut off. Please regenerate.";
+    }
+  }
+
+  if (streamError) {
+    return { content, error: streamError, source: "byok" };
   }
   return { content, source: "byok", modelUsed: opts.model || cfg.model };
 }
@@ -243,6 +290,32 @@ export async function streamByokChat(
   const decoder = new TextDecoder();
   let buffer = "";
   let content = "";
+  // OpenAI-compatible gateways emit `data: {"error": ...}` events mid-stream;
+  // ignoring them made failed streams look like successful empty answers.
+  let streamError: string | null = null;
+
+  const handleDataLine = (payload: string): boolean => {
+    if (!payload || payload === "[DONE]") return true;
+    try {
+      const parsed = JSON.parse(payload);
+      if (parsed?.error) {
+        streamError =
+          typeof parsed.error === "string"
+            ? parsed.error
+            : parsed.error?.message || `${provider.label} reported a mid-stream error.`;
+        return true;
+      }
+      const delta = parsed?.choices?.[0]?.delta?.content;
+      if (delta) {
+        content += delta;
+        opts.onDelta?.(content);
+      }
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
@@ -252,16 +325,22 @@ export async function streamByokChat(
       const line = buffer.slice(0, idx).trim();
       buffer = buffer.slice(idx + 1);
       if (!line.startsWith("data:")) continue;
-      const payload = line.slice(5).trim();
-      if (!payload || payload === "[DONE]") continue;
-      try {
-        const delta = JSON.parse(payload)?.choices?.[0]?.delta?.content;
-        if (delta) {
-          content += delta;
-          opts.onDelta?.(content);
-        }
-      } catch { /* partial */ }
+      handleDataLine(line.slice(5).trim());
     }
+  }
+  buffer += decoder.decode(); // flush the decoder
+
+  // Flush the final buffered line (streams may end without a trailing newline).
+  const tail = buffer.trim();
+  if (tail.startsWith("data:")) {
+    const parsedOk = handleDataLine(tail.slice(5).trim());
+    if (!parsedOk && !streamError) {
+      streamError = "The AI response was cut off. Please regenerate.";
+    }
+  }
+
+  if (streamError) {
+    return { content, error: streamError, source: "byok" };
   }
   return { content, source: "byok", modelUsed: opts.model || cfg.model };
 }

@@ -820,6 +820,10 @@ export function exportWorldClassPdf(
 export function printWorldClassDocument(markdown: string, options: WorldClassExportOptions = {}): void {
   const clean = polishProfessionalMarkdown(markdown);
   const meta = extractDocumentMetadata(clean);
+  // The print window is opened via window.open("", "_blank") and inherits the
+  // app origin — every interpolation below must be HTML-escaped or document
+  // content (e.g. a title like "<img src=x onerror=...>") becomes XSS.
+  const escape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
   const printWindow = window.open("", "_blank");
   if (!printWindow) return;
@@ -828,7 +832,7 @@ export function printWorldClassDocument(markdown: string, options: WorldClassExp
 <html>
 <head>
   <meta charset="utf-8">
-  <title>${meta.title} — ShadowTalk AI</title>
+  <title>${escape(meta.title)} — ShadowTalk AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -944,15 +948,15 @@ export function printWorldClassDocument(markdown: string, options: WorldClassExp
   ${options.includeCoverPage !== false ? `
   <div class="cover-page">
     <div>
-      <div class="cover-badge">${options.classification || "EXECUTIVE BRIEF"}</div>
-      <h1 class="cover-title">${meta.title}</h1>
-      <p class="cover-subtitle">${meta.subtitle}</p>
+      <div class="cover-badge">${escape(options.classification || "EXECUTIVE BRIEF")}</div>
+      <h1 class="cover-title">${escape(meta.title)}</h1>
+      <p class="cover-subtitle">${escape(meta.subtitle)}</p>
     </div>
     <div>
       <div class="cover-meta">
-        <div class="meta-item"><span class="meta-label">Author</span><span class="meta-val">${options.author || "ShadowTalk AI Document Specialist"}</span></div>
-        <div class="meta-item"><span class="meta-label">Date</span><span class="meta-val">${options.date || new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span></div>
-        <div class="meta-item"><span class="meta-label">Classification</span><span class="meta-val">${options.classification || "Executive / Confidential"}</span></div>
+        <div class="meta-item"><span class="meta-label">Author</span><span class="meta-val">${escape(options.author || "ShadowTalk AI Document Specialist")}</span></div>
+        <div class="meta-item"><span class="meta-label">Date</span><span class="meta-val">${escape(options.date || new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }))}</span></div>
+        <div class="meta-item"><span class="meta-label">Classification</span><span class="meta-val">${escape(options.classification || "Executive / Confidential")}</span></div>
         <div class="meta-item"><span class="meta-label">Scope</span><span class="meta-val">${meta.words.toLocaleString()} words · ${meta.readTime} min read</span></div>
       </div>
     </div>

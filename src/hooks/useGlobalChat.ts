@@ -35,6 +35,13 @@ export function useGlobalChat() {
   const send = useCallback(
     async (messages: GlobalChatMessage[], opts: GlobalChatOptions = {}): Promise<GlobalChatResponse> => {
       setIsLoading(true);
+      // Wire the abort controller so `abort()` (and unmount cleanup) can
+      // actually cancel the in-flight stream — previously abortRef was never
+      // assigned, so abort() was a silent no-op.
+      const controller = new AbortController();
+      abortRef.current = controller;
+      const onExternalAbort = () => controller.abort();
+      opts.signal?.addEventListener("abort", onExternalAbort);
       try {
         const lastUser = [...messages].reverse().find((m) => m.role === "user");
         
@@ -54,7 +61,7 @@ export function useGlobalChat() {
 
         const provider = await AIProviderRouter.getBestProvider();
         const { content, error } = await provider.streamChat(chatMessages, {
-          signal: opts.signal,
+          signal: controller.signal,
           temperature: 0.7,
           onDelta: opts.onDelta,
         });
@@ -62,6 +69,9 @@ export function useGlobalChat() {
 
         return { content, source: "cloud" };
       } catch (err: any) {
+        if (controller.signal.aborted || err?.name === "AbortError") {
+          return { content: "", source: "error", error: "Chat stopped." };
+        }
         if (err?.message === "offline_not_provisioned") {
           return {
             content: "",
@@ -75,6 +85,8 @@ export function useGlobalChat() {
           error: err instanceof Error ? err.message : "Chat request failed",
         };
       } finally {
+        opts.signal?.removeEventListener("abort", onExternalAbort);
+        if (abortRef.current === controller) abortRef.current = null;
         setIsLoading(false);
       }
     },
