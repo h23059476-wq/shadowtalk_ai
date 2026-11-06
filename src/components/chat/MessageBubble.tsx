@@ -29,6 +29,54 @@ const openInBrowser = (url: string) => {
   window.open(url, '_blank', 'noopener,noreferrer');
 };
 
+/**
+ * Batch 4 — format a friendly provider-source label for AI messages.
+ * Maps the canonical source + provider + modelUsed to a short human label.
+ *
+ *   "byok"      → "via <Provider> (your key)"     (e.g. "via OpenAI (your key)")
+ *   "shared"    → "via ShadowTalk shared"         (the Firebase Function path)
+ *   "local"     → "via Local (<model>)"           (on-device web-llm)
+ *   "omniroute" → "via OmniRoute"
+ *   anything else with modelUsed → "via <modelUsed>"
+ */
+function formatSourceLabel(source: string, provider?: string, modelUsed?: string): string {
+  switch (source) {
+    case "byok": {
+      if (provider) {
+        const known: Record<string, string> = {
+          openai: "OpenAI",
+          anthropic: "Anthropic",
+          gemini: "Google Gemini",
+          groq: "Groq",
+          openrouter: "OpenRouter",
+          mistral: "Mistral",
+          deepseek: "DeepSeek",
+          together: "Together",
+          fireworks: "Fireworks",
+          perplexity: "Perplexity",
+          cohere: "Cohere",
+          xai: "xAI",
+          cerebras: "Cerebras",
+          hyperbolic: "Hyperbolic",
+          novita: "Novita",
+          deepinfra: "DeepInfra",
+        };
+        const label = known[provider] || provider.charAt(0).toUpperCase() + provider.slice(1);
+        return `via ${label} (your key)`;
+      }
+      return "via your API key";
+    }
+    case "shared":
+      return "via ShadowTalk shared";
+    case "local":
+      return modelUsed ? `via Local (${modelUsed})` : "via Local (on-device)";
+    case "omniroute":
+      return "via OmniRoute";
+    default:
+      return modelUsed ? `via ${modelUsed}` : "";
+  }
+}
+
 interface Message {
   id: string;
   type: 'user' | 'ai';
@@ -39,6 +87,12 @@ interface Message {
   toolExecution?: { tool: string; status: 'pending' | 'running' | 'complete' | 'error' | 'confirm'; params?: Record<string, string>; result?: string };
   isShadowTwin?: boolean;
   shadowTwinName?: string;
+  /** Batch 4 — provider-source label. Values: "byok" | "shared" | "local" | "omniroute". */
+  source?: string;
+  /** Batch 4 — model actually used (e.g. "gpt-4o-mini", "Llama-3.2-1B-Instruct-q4f16_1-MLC"). */
+  modelUsed?: string;
+  /** Batch 4 — upstream provider name (e.g. "openai", "openrouter"). */
+  provider?: string;
 }
 
 interface MessageBubbleProps {
@@ -151,6 +205,12 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
         {!isUser && message.isShadowTwin && (
           <div className="text-xs font-semibold text-purple-400/80 flex items-center gap-1.5 ml-1">
             {message.shadowTwinName || "Shadow Twin"}
+          </div>
+        )}
+        {/* Batch 4 — provider-source label for AI messages. */}
+        {!isUser && !message.isShadowTwin && message.source && (
+          <div className="text-[11px] font-medium text-muted-foreground/70 flex items-center gap-1 ml-1">
+            {formatSourceLabel(message.source, message.provider, message.modelUsed)}
           </div>
         )}
         {/* Image attachment */}
@@ -518,6 +578,9 @@ export const MessageBubble = React.memo(MessageBubbleInner, (prev, next) => {
     prev.message.id === next.message.id &&
     prev.message.content === next.message.content &&
     prev.message.toolExecution?.status === next.message.toolExecution?.status &&
+    prev.message.source === next.message.source &&
+    prev.message.provider === next.message.provider &&
+    prev.message.modelUsed === next.message.modelUsed &&
     prev.isLoading === next.isLoading &&
     prev.speakingMessageId === next.speakingMessageId &&
     prev.isSpeaking === next.isSpeaking

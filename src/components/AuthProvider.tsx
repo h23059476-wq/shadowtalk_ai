@@ -9,6 +9,7 @@ import {
   isAnonymousUser,
   markExplicitSignOut,
 } from '@/lib/persistentAuth';
+import { clearUserLocalData } from '@/lib/signOutCleanup';
 
 interface AuthContextType {
   user: User | null;
@@ -138,6 +139,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
+  // Batch 3: track the uid whose profile/subscription we last synced so the
+  // duplicate onAuthStateChange('SIGNED_IN', sameUser) callback that fires right
+  // after getSession() does NOT re-run syncProfile + checkSubscription (~6
+  // extra Firestore ops per boot). The previous guard checked for an
+  // 'INITIAL_SESSION' event that the Firebase adapter never emits, so it was
+  // dead code. This uid-comparison guard is correct for any adapter.
+  const lastSyncedUid = useRef<string | null>(null);
+
   useEffect(() => {
     let mounted = true;
     let authSubscription: any = null;
@@ -146,16 +155,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!mounted) return;
       const local = toLocalSession(fbSession);
       applySession(local);
-      if (local?.user) {
+      const uid = local?.user?.id ?? null;
+      if (uid && uid !== lastSyncedUid.current) {
+        lastSyncedUid.current = uid;
         clearExplicitSignOut();
         if (typeof localStorage !== "undefined") localStorage.removeItem("shadowtalk-local-user");
-        void syncProfile(local.user.id, {
+        void syncProfile(uid, {
           email: local.user.email || undefined,
           display_name: (local.user.user_metadata as any)?.display_name || undefined,
         });
         void checkSubscription();
-
-      } else {
+      } else if (!uid) {
+        lastSyncedUid.current = null;
         setUserPlan('free');
         setSubscribed(false);
         setSubscriptionEnd(null);
@@ -164,31 +175,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const bootstrap = async () => {
       try {
-        // Cloud auth (Firebase) is the single source of truth.
-        // No preview bypass — Firebase Auth works on any domain that's
-        // added to Firebase Console → Authentication → Settings → Authorized domains.
         const { data: { session: cloudSession } } = await backend.auth.getSession();
         if (!mounted) return;
-        if (cloudSession?.user) {
-          hydrate(cloudSession);
-        } else {
-          hydrate(null);
-        }
-
-        // Track whether the initial session has already been hydrated so we
-        // can skip the duplicate INITIAL_SESSION callback from
-        // onAuthStateChange. Without this, every page load triggers
-        // double syncProfile + double checkSubscription calls (race conditions
-        // and unnecessary Firestore reads).
-        let initialHydrated = !!cloudSession?.user;
+        hydrate(cloudSession ?? null);
 
         const { data } = backend.auth.onAuthStateChange((event: string, next: any) => {
           if (!mounted) return;
-          // Skip the INITIAL_SESSION callback if we already hydrated from
-          // getSession() — it carries the same user and would cause a
-          // duplicate hydrate() call.
-          if (event === 'INITIAL_SESSION' && initialHydrated) return;
-          initialHydrated = initialHydrated || !!next?.user;
+          // The Firebase adapter emits 'SIGNED_IN' / 'SIGNED_OUT' (never
+          // 'INITIAL_SESSION'). hydrate()'s uid guard already dedupes the
+          // post-getSession() 'SIGNED_IN' callback for the same user.
+          void event;
           hydrate(next?.user ? next : null);
         });
         if (mounted) authSubscription = data?.subscription ?? null;
@@ -217,9 +213,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [applySession, checkSubscription]);
 
   const signOut = async () => {
+    // Capture the uid BEFORE Firebase signs out (currentUser becomes null
+    // after backend.auth.signOut()). Used to scope ephemeral cleanup.
+    const uid = user?.id ?? null;
     markExplicitSignOut();
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('shadowtalk-local-user');
+    }
+    // Batch 3: clear only EPHEMERAL user-scoped state (E2EE session keys).
+    // BYOK, persistent memory, and E2EE salt/fingerprint are PRESERVED.
+    try {
+      clearUserLocalData(uid);
+    } catch (err) {
+      console.warn('[Auth] clearUserLocalData error:', err);
     }
     try {
       await backend.auth.signOut();

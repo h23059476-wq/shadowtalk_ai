@@ -1,20 +1,37 @@
-import { useState, useCallback, useEffect } from 'react';
-import { 
-  deriveKey, 
-  encrypt, 
-  decrypt, 
-  generateSalt, 
-  generateIV, 
-  arrayToBase64, 
+import { useState, useCallback, useEffect, useRef } from 'react';
+import {
+  deriveKey,
+  encrypt,
+  decrypt,
+  generateSalt,
+  generateIV,
+  arrayToBase64,
   base64ToArray,
-  hashForVerification 
+  hashForVerification
 } from '@/lib/e2e-encryption';
+import {
+  readSalt,
+  writeSalt,
+  readFingerprint,
+  writeFingerprint,
+  readSessionKey,
+  readSessionActive,
+  writeSessionKey,
+  clearSessionKey,
+} from '@/lib/e2eeStorage';
+import { useAuth } from '@/components/AuthProvider';
 import { toast } from 'sonner';
 
 /**
  * World-Class End-to-End Encryption (E2EE) Hook
  * Manages the Master Security Key and provides encryption/decryption services.
  * Security Protocol: PBKDF2 (100k iterations) + AES-256-GCM
+ *
+ * Batch 3: all vault material is UID-namespaced via @/lib/e2eeStorage. The hook
+ * never reads or writes the legacy device-global keys, so a different account
+ * signing in on the same browser can never auto-claim another account's vault.
+ * Vault state resets whenever the authenticated UID changes (sign-out, account
+ * switch) so no master key or fingerprint leaks across accounts.
  */
 
 interface E2EEState {
@@ -25,6 +42,9 @@ interface E2EEState {
 }
 
 export const useE2EE = () => {
+  const { user } = useAuth();
+  const uid = user?.id ?? null;
+
   const [state, setState] = useState<E2EEState>({
     isUnlocked: false,
     masterKey: null,
@@ -32,29 +52,33 @@ export const useE2EE = () => {
     keyFingerprint: null,
   });
 
-
+  // Track the uid the current in-memory vault was built for so we can reset
+  // when the authenticated user changes (sign-out → null, or A → B switch).
+  const vaultUid = useRef<string | null>(null);
 
   const persistSessionKey = useCallback(async (key: CryptoKey) => {
+    // Note: deriveKey() produces a non-extractable CryptoKey, so exportKey
+    // throws here. This is the pre-existing behavior — session-key persistence
+    // is a best-effort no-op in production (the catch swallows the throw),
+    // which means tryRestoreSession() cannot silently unlock a vault without
+    // the user re-engaging encryption. We intentionally do NOT make the key
+    // extractable, as that would persist a raw AES key in sessionStorage and
+    // weaken the encryption posture.
     try {
       const raw = await crypto.subtle.exportKey("raw", key);
-      sessionStorage.setItem(
-        "shadowtalk_e2e_key",
-        arrayToBase64(new Uint8Array(raw))
-      );
-      sessionStorage.setItem("shadowtalk_e2e_active", "true");
-    } catch (e) {
-      console.warn("[E2EE] Could not persist session key:", e);
+      writeSessionKey(vaultUid.current, arrayToBase64(new Uint8Array(raw)));
+    } catch {
+      // Non-extractable key — session persistence intentionally unavailable.
     }
   }, []);
 
-  const clearSessionKey = useCallback(() => {
-    sessionStorage.removeItem("shadowtalk_e2e_key");
-    sessionStorage.removeItem("shadowtalk_e2e_active");
+  const clearVaultSession = useCallback(() => {
+    clearSessionKey(vaultUid.current);
   }, []);
 
   const tryRestoreSession = useCallback(async (salt: string) => {
-    const stored = sessionStorage.getItem("shadowtalk_e2e_key");
-    if (!stored || sessionStorage.getItem("shadowtalk_e2e_active") !== "true") return false;
+    const stored = readSessionKey(vaultUid.current);
+    if (!stored || !readSessionActive(vaultUid.current)) return false;
     try {
       const raw = base64ToArray(stored);
       const key = await crypto.subtle.importKey(
@@ -64,7 +88,7 @@ export const useE2EE = () => {
         false,
         ["encrypt", "decrypt"]
       );
-      const fingerprint = localStorage.getItem("shadowtalk_e2e_fingerprint");
+      const fingerprint = readFingerprint(vaultUid.current);
       setState((prev) => ({
         ...prev,
         isUnlocked: true,
@@ -73,55 +97,61 @@ export const useE2EE = () => {
         keyFingerprint: fingerprint,
       }));
       return true;
-    } catch (e) {
-      console.warn("[E2EE] Session restore failed:", e);
-      clearSessionKey();
+    } catch {
+      clearVaultSession();
       return false;
     }
-  }, [clearSessionKey]);
+  }, [clearVaultSession]);
 
-  // Initialize vault salt if it doesn't exist; restore session key when possible
+  // Initialize / reset the UID-scoped vault when the authenticated user
+  // changes. On a uid change we drop any in-memory master key + fingerprint so
+  // account A's key can never be used while account B is signed in.
   useEffect(() => {
+    if (vaultUid.current !== uid) {
+      // Reset in-memory vault state for the new user (or guest / signed-out).
+      setState({ isUnlocked: false, masterKey: null, masterSalt: null, keyFingerprint: null });
+      vaultUid.current = uid;
+    }
+
     if (!state.masterSalt) {
-      // Reuse the persisted vault salt so previously derived keys and the
-      // stored fingerprint stay valid across sessions. Generating a fresh
-      // salt on every mount would orphan all existing ciphertext.
-      const existingSalt = localStorage.getItem("shadowtalk_e2e_salt");
+      // Reuse the UID-scoped persisted salt so previously derived keys and the
+      // stored fingerprint stay valid across sessions. A fresh salt per mount
+      // would orphan all existing ciphertext for this account.
+      const existingSalt = readSalt(uid);
       if (existingSalt) {
         setState((prev) => ({ ...prev, masterSalt: existingSalt }));
         return;
       }
       const newSalt = arrayToBase64(generateSalt());
-      localStorage.setItem("shadowtalk_e2e_salt", newSalt);
+      writeSalt(uid, newSalt);
       setState((prev) => ({ ...prev, masterSalt: newSalt }));
       return;
     }
     if (!state.isUnlocked) {
       void tryRestoreSession(state.masterSalt);
     }
-  }, [state.masterSalt, state.isUnlocked, tryRestoreSession]);
+  }, [uid, state.masterSalt, state.isUnlocked, tryRestoreSession]);
 
   /**
-   * Unlock the E2EE engine with the user's master passphrase
+   * Unlock the E2EE engine with the user's master passphrase.
+   * Verifies the passphrase against the UID-scoped fingerprint.
    */
   const unlock = useCallback(async (passphrase: string) => {
     try {
       if (!state.masterSalt) throw new Error("Encryption engine not initialized");
-      
+
       const saltArr = base64ToArray(state.masterSalt);
       const key = await deriveKey(passphrase, saltArr);
       const fingerprint = await hashForVerification(passphrase, state.masterSalt);
 
-      // Verify if fingerprint exists and matches (if this is a returning user)
-      const existingFingerprint = localStorage.getItem('shadowtalk_e2e_fingerprint');
+      const existingFingerprint = readFingerprint(vaultUid.current);
       if (existingFingerprint && existingFingerprint !== fingerprint) {
         toast.error("Incorrect security passphrase. Access denied.");
         return false;
       }
 
-      // First time setup or correct unlock
       if (!existingFingerprint) {
-        localStorage.setItem('shadowtalk_e2e_fingerprint', fingerprint);
+        writeFingerprint(vaultUid.current, fingerprint);
       }
 
       setState(prev => ({
@@ -145,13 +175,14 @@ export const useE2EE = () => {
   /**
    * One-click session encryption (random key, no passphrase prompt).
    * Key lives in sessionStorage for the current browser tab session only.
+   * Salt + (when first set) fingerprint are written to the UID namespace.
    */
   const engageSessionEncryption = useCallback(async () => {
     try {
       let salt = state.masterSalt;
       if (!salt) {
         salt = arrayToBase64(generateSalt());
-        localStorage.setItem("shadowtalk_e2e_salt", salt);
+        writeSalt(vaultUid.current, salt);
         setState((prev) => ({ ...prev, masterSalt: salt }));
       }
 
@@ -166,7 +197,6 @@ export const useE2EE = () => {
         masterKey: key,
         masterSalt: salt,
       }));
-      sessionStorage.setItem("shadowtalk_e2e_active", "true");
       return true;
     } catch (error) {
       console.error("[E2EE] Session encryption engage failed:", error);
@@ -176,14 +206,10 @@ export const useE2EE = () => {
 
   const lock = useCallback(() => {
     setState(prev => ({ ...prev, isUnlocked: false, masterKey: null }));
-    // clearSessionKey already removes the key, the active flag, and the salt.
-    clearSessionKey();
+    clearVaultSession();
     toast.info("Security engine disengaged.");
-  }, [clearSessionKey]);
+  }, [clearVaultSession]);
 
-  /**
-   * Encrypt arbitrary string data
-   */
   const encryptData = useCallback(async (plaintext: string): Promise<{ data: string, iv: string } | null> => {
     if (!state.isUnlocked || !state.masterKey) {
       console.warn("[E2EE] Attempted encryption while locked");
@@ -203,12 +229,8 @@ export const useE2EE = () => {
     }
   }, [state.isUnlocked, state.masterKey]);
 
-  /**
-   * Decrypt data
-   */
   const decryptData = useCallback(async (ciphertext: string, ivBase64: string): Promise<string | null> => {
     if (!state.isUnlocked || !state.masterKey) {
-      // If locked, we return the ciphertext as a hint that it's encrypted
       return `[ENCRYPTED:${ciphertext.slice(0, 8)}...]`;
     }
 
@@ -221,19 +243,8 @@ export const useE2EE = () => {
     }
   }, [state.isUnlocked, state.masterKey]);
 
-  /**
-   * Helper to check if a string looks like an E2EE payload
-   */
   const isEncrypted = (text: string) => text.startsWith('e2e:');
-
-  /**
-   * Wrap data in a recognizable format for the UI and DB
-   */
   const wrapEncrypted = (data: string, iv: string) => `e2e:${iv}:${data}`;
-
-  /**
-   * Unwrap data into components
-   */
   const unwrapEncrypted = (wrapped: string) => {
     if (!wrapped.startsWith('e2e:')) return null;
     const parts = wrapped.split(':');

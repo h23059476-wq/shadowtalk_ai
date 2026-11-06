@@ -1,10 +1,30 @@
 /**
- * Regression: the E2EE vault salt must be REUSED from localStorage instead of
- * regenerated on every mount — a fresh salt per session orphaned all
- * previously derived keys and invalidated the stored fingerprint.
+ * Regression: the E2EE vault salt must be REUSED from the UID-scoped
+ * localStorage namespace instead of regenerated on every mount. A fresh salt
+ * per session would orphan all previously derived keys and invalidate the
+ * stored fingerprint for this account.
+ *
+ * Batch 3: salt/fingerprint/session-key are now UID-scoped via
+ * @/lib/e2eeStorage. The live hook never reads the legacy device-global keys.
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook, waitFor } from "@testing-library/react";
+
+const makeStorage = () => {
+  let store: Record<string, string> = {};
+  return {
+    getItem: vi.fn((k: string) => store[k] ?? null),
+    setItem: vi.fn((k: string, v: string) => { store[k] = String(v); }),
+    removeItem: vi.fn((k: string) => { delete store[k]; }),
+    clear: vi.fn(() => { store = {}; }),
+    _dump: () => store,
+  };
+};
+const lsMock = makeStorage();
+const ssMock = makeStorage();
+
+vi.stubGlobal("localStorage", lsMock);
+vi.stubGlobal("sessionStorage", ssMock);
 
 vi.mock("@/lib/e2e-encryption", () => {
   const arrayToBase64 = (arr: Uint8Array) => btoa(String.fromCharCode(...Array.from(arr)));
@@ -24,50 +44,67 @@ vi.mock("sonner", () => ({
   toast: { success: vi.fn(), error: vi.fn(), info: vi.fn() },
 }));
 
+const authMock = vi.hoisted(() => ({ uid: "alice" as string | null }));
+vi.mock("@/components/AuthProvider", () => ({
+  useAuth: () => ({ user: authMock.uid ? { id: authMock.uid } : null }),
+}));
+
 import { useE2EE } from "@/hooks/useE2EE";
 
-const SALT_KEY = "shadowtalk_e2e_salt";
+const saltKey = (uid: string) => `shadowtalk_e2e_salt_${uid}`;
 
-describe("useE2EE vault salt persistence", () => {
+describe("useE2EE UID-scoped vault salt persistence", () => {
   beforeEach(() => {
-    localStorage.clear();
-    sessionStorage.clear();
+    lsMock.clear(); ssMock.clear(); authMock.uid = "alice";
   });
+  afterEach(() => { lsMock.clear(); ssMock.clear(); });
 
-  afterEach(() => {
-    localStorage.clear();
-    sessionStorage.clear();
-  });
-
-  it("reuses the persisted salt instead of regenerating it", async () => {
-    localStorage.setItem(SALT_KEY, "existing-salt-value");
-
+  it("reuses the UID-scoped persisted salt instead of regenerating it", async () => {
+    lsMock.setItem(saltKey("alice"), "alice-salt");
     const { result } = renderHook(() => useE2EE());
-
-    await waitFor(() => expect(result.current.masterSalt).not.toBeNull());
-    expect(result.current.masterSalt).toBe("existing-salt-value");
-    expect(localStorage.getItem(SALT_KEY)).toBe("existing-salt-value");
+    await waitFor(() => expect(result.current.masterSalt).toBe("alice-salt"));
+    expect(lsMock.getItem("shadowtalk_e2e_salt")).toBeNull();
   });
 
-  it("persists a newly generated salt on first run", async () => {
+  it("persists a newly generated salt into the UID namespace on first run", async () => {
     const { result } = renderHook(() => useE2EE());
-
     await waitFor(() => expect(result.current.masterSalt).not.toBeNull());
-    const stored = localStorage.getItem(SALT_KEY);
+    const stored = lsMock.getItem(saltKey("alice"));
     expect(stored).toBeTruthy();
     expect(result.current.masterSalt).toBe(stored);
-    // 16 random bytes → 24 base64 chars (with padding)
     expect(atob(stored as string).length).toBe(16);
+    expect(lsMock.getItem("shadowtalk_e2e_salt")).toBeNull();
   });
 
-  it("keeps the same salt across remounts", async () => {
+  it("keeps the same salt across remounts for the same user", async () => {
     const first = renderHook(() => useE2EE());
     await waitFor(() => expect(first.result.current.masterSalt).not.toBeNull());
     const original = first.result.current.masterSalt;
     first.unmount();
 
     const second = renderHook(() => useE2EE());
-    await waitFor(() => expect(second.result.current.masterSalt).not.toBeNull());
-    expect(second.result.current.masterSalt).toBe(original);
+    await waitFor(() => expect(second.result.current.masterSalt).toBe(original));
+  });
+
+  it("isolates salts across different accounts (no cross-account claim)", async () => {
+    lsMock.setItem(saltKey("alice"), "alice-salt");
+    const alice = renderHook(() => useE2EE());
+    await waitFor(() => expect(alice.result.current.masterSalt).toBe("alice-salt"));
+    alice.unmount();
+
+    authMock.uid = "bob";
+    const bob = renderHook(() => useE2EE());
+    await waitFor(() => expect(bob.result.current.masterSalt).not.toBeNull());
+    expect(bob.result.current.masterSalt).not.toBe("alice-salt");
+    expect(lsMock.getItem(saltKey("bob"))).toBe(bob.result.current.masterSalt);
+    expect(lsMock.getItem(saltKey("alice"))).toBe("alice-salt");
+  });
+
+  it("does not auto-claim a legacy device-global salt for a new account", async () => {
+    lsMock.setItem("shadowtalk_e2e_salt", "legacy-device-salt");
+    const { result } = renderHook(() => useE2EE());
+    await waitFor(() => expect(result.current.masterSalt).not.toBeNull());
+    expect(result.current.masterSalt).not.toBe("legacy-device-salt");
+    expect(lsMock.getItem("shadowtalk_e2e_salt")).toBe("legacy-device-salt");
   });
 });

@@ -136,3 +136,39 @@ export async function saveAiAccessMode(uid: string, mode: AiAccessMode): Promise
     // Don't throw — localStorage cache is sufficient.
   }
 }
+
+// ---------------------------------------------------------------------------
+// Batch 4 — prefer-local wiring.
+//
+// A UID-scoped boolean flag that, when true, tells AIProviderRouter to try the
+// LocalAIProvider first (when it is available — i.e. the user has run
+// OfflineSetup to download + load the model). Falls back to cloud when the
+// local provider is unavailable or the model is not loaded.
+//
+// Default: false (BYOK-only architecture is preserved). The user must opt in
+// explicitly via Settings → Chat & AI.
+// ---------------------------------------------------------------------------
+
+const PREFER_LOCAL_CACHE_PREFIX = "shadowtalk_prefer_local_v1";
+
+function preferLocalCacheKey(uid: string): string {
+  return `${PREFER_LOCAL_CACHE_PREFIX}.${uid}`;
+}
+
+export function getPreferLocal(uid = fbAuth().currentUser?.uid): boolean {
+  if (!uid || typeof localStorage === "undefined") return false;
+  try {
+    return localStorage.getItem(preferLocalCacheKey(uid)) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function setPreferLocal(uid: string, value: boolean): void {
+  if (typeof localStorage === "undefined") return;
+  try {
+    localStorage.setItem(preferLocalCacheKey(uid), value ? "1" : "0");
+  } catch {
+    // ignore — non-fatal
+  }
+}

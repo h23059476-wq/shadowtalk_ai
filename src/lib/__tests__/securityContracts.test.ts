@@ -44,13 +44,28 @@ describe("security source contracts", () => {
     expect(fn).not.toContain("${options.classification");
   });
 
-  it("useE2EE reuses the persisted vault salt", () => {
+  it("useE2EE uses UID-scoped vault storage and never the legacy device-global salt", () => {
     const src = read("src/hooks/useE2EE.ts");
-    expect(src).toContain('localStorage.getItem("shadowtalk_e2e_salt")');
-    // The init effect must attempt to restore the stored salt before generating.
-    const getItemIdx = src.indexOf('localStorage.getItem("shadowtalk_e2e_salt")');
-    const effectIdx = src.indexOf("// Initialize vault salt");
-    expect(getItemIdx).toBeGreaterThan(effectIdx);
+    expect(src).toContain("readSalt");
+    expect(src).toContain("writeSalt");
+    expect(src).toContain("readFingerprint");
+    expect(src).toContain("useAuth");
+    expect(src).not.toContain('localStorage.getItem("shadowtalk_e2e_salt")');
+    expect(src).not.toContain('localStorage.setItem("shadowtalk_e2e_salt"');
+    expect(src).not.toContain('localStorage.getItem("shadowtalk_e2e_fingerprint")');
+    expect(src).not.toContain('localStorage.setItem("shadowtalk_e2e_fingerprint"');
+  });
+
+  it("e2eeStorage isolates vault material by UID and never deletes legacy keys", () => {
+    const src = read("src/lib/e2eeStorage.ts");
+    expect(src).toContain("shadowtalk_e2e_salt_${uid");
+    expect(src).toContain("shadowtalk_e2e_fingerprint_${uid");
+    expect(src).toContain("readLegacySalt");
+    expect(src).toContain("readLegacyFingerprint");
+    expect(src).not.toMatch(/removeItem\(\s*["']shadowtalk_e2e_salt["']\s*\)/);
+    expect(src).not.toMatch(/removeItem\(\s*["']shadowtalk_e2e_fingerprint["']\s*\)/);
+    expect(src).toContain("no_legacy_fingerprint");
+    expect(src).toContain("wrong_passphrase");
   });
 
   it("useApiKeyValidation authenticates Anthropic with x-api-key + version header", () => {

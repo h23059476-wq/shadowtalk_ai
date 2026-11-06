@@ -41,10 +41,14 @@ export interface CloudChatOptions {
 export interface CloudChatResult {
   content: string;
   error?: string;
-  /** Provider-reported source identifier (adapter-specific). */
+  /** Provider-reported source identifier (adapter-specific).
+   *  Batch 4 values: "byok" | "shared" | "local" | "omniroute". */
   source?: string;
   /** Model actually used (adapter-specific). */
   modelUsed?: string;
+  /** Upstream provider name when known (e.g. "openrouter" for the shared
+   *  Firebase Function path, or the BYOK provider id). */
+  provider?: string;
 }
 
 export function isCloudChatConfigured(): boolean {
@@ -138,10 +142,17 @@ async function streamBuiltInChat(
     if (resp?.status === 402) message = "AI credits exhausted — check your plan or billing.";
     if (resp?.status === 401) message = "AI gateway authentication failed — please sign in again.";
     if (resp?.status && resp.status >= 500) message = "AI service is temporarily unavailable — please try again.";
-    return { content: "", error: message };
+    return { content: "", error: message, source: "shared" };
   }
 
-  if (!resp.body) return { content: "", error: "Empty response from AI service." };
+  if (!resp.body) return { content: "", error: "Empty response from AI service.", source: "shared" };
+
+  // Batch 4: provider-source labeling. The Firebase `chat` function emits
+  // `X-Provider` and `X-Model` response headers (functions/src/index.ts).
+  // Capture them so the chat UI can label the response's source. The optional
+  // chaining guards against non-Response mocks in tests.
+  const headerProvider = resp.headers?.get?.("X-Provider") || undefined;
+  const headerModel = resp.headers?.get?.("X-Model") || undefined;
 
   const reader = resp.body.getReader();
   const decoder = new TextDecoder();
@@ -202,7 +213,7 @@ async function streamBuiltInChat(
   if (streamError) {
     // Partial content is still returned so the UI can show it, but the
     // error forces callers to treat this as an incomplete response.
-    return { content, error: streamError };
+    return { content, error: streamError, source: "shared", modelUsed: headerModel };
   }
-  return { content };
+  return { content, source: "shared", modelUsed: headerModel, provider: headerProvider };
 }

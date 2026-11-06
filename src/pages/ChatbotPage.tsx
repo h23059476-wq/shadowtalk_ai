@@ -124,6 +124,14 @@ interface Message {
   attachment?: { type: 'image' | 'file'; data: string; name: string; mimeType: string };
   imageUrl?: string;
   toolExecution?: { tool: string; status: string; result?: string; params?: Record<string, string> };
+  isShadowTwin?: boolean;
+  shadowTwinName?: string;
+  /** Batch 4 — provider-source label. Values: "byok" | "shared" | "local" | "omniroute". */
+  source?: string;
+  /** Batch 4 — model actually used. */
+  modelUsed?: string;
+  /** Batch 4 — upstream provider name (e.g. "openai", "openrouter"). */
+  provider?: string;
 }
 type Conversation = {
   id: string;
@@ -1018,6 +1026,13 @@ Structure and Content Guidelines:
       const isShadowTwin = !!shadowMatch || shadowTwinActive;
       const shadowTwinName = shadowMatch ? `${shadowMatch[1]}-shadow` : undefined;
 
+      // Batch 4: provider-source label captured from streamCloudChat's result.
+      // Set on the final assistant message so MessageBubble can render the
+      // source provenance (BYOK provider / shared / local / omniroute).
+      let assistantSource: string | undefined;
+      let assistantModelUsed: string | undefined;
+      let assistantProvider: string | undefined;
+
       const flushAssistant = () => {
         rafId = null;
         if (pendingContent === null) return;
@@ -1027,12 +1042,16 @@ Structure and Content Guidelines:
           const exists = prev.find((m) => m.id === aiMessageId);
           if (exists) {
             return prev.map((m) =>
-              m.id === aiMessageId ? { ...m, content } : m,
+              m.id === aiMessageId ? { ...m, content,
+                source: assistantSource ?? m.source,
+                modelUsed: assistantModelUsed ?? m.modelUsed,
+                provider: assistantProvider ?? m.provider } : m,
             );
           }
           return [
             ...prev,
-            { id: aiMessageId, type: "ai", content, timestamp: new Date(), isShadowTwin, shadowTwinName },
+            { id: aiMessageId, type: "ai", content, timestamp: new Date(), isShadowTwin, shadowTwinName,
+              source: assistantSource, modelUsed: assistantModelUsed, provider: assistantProvider },
           ];
         });
       };
@@ -1072,7 +1091,7 @@ Structure and Content Guidelines:
         })),
       ];
 
-      const { content: streamedContent, error: cloudError } = await streamCloudChat(cloudMessages, {
+      const { content: streamedContent, error: cloudError, source: resultSource, modelUsed: resultModel, provider: resultProvider } = await streamCloudChat(cloudMessages, {
         signal: controller.signal,
         temperature: 0.7,
         maxTokens: 8192,
@@ -1082,6 +1101,12 @@ Structure and Content Guidelines:
           costTracker.onToken("gpt-4o-mini");
         },
       });
+
+      // Batch 4: capture the response's source provenance so the rendered
+      // assistant message can display its provider-source label.
+      if (resultSource) assistantSource = resultSource;
+      if (resultModel) assistantModelUsed = resultModel;
+      if (resultProvider) assistantProvider = resultProvider;
 
       if (cloudError && !streamedContent) {
         throw new Error(cloudError);

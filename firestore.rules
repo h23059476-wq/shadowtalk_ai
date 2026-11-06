@@ -59,18 +59,69 @@ service cloud.firestore {
     // Profiles: readable by authenticated users only (was: public).
     // SECURITY FIX (audit ST-01): public reads exposed email + personal fields
     // to unauthenticated bulk collection. Now requires sign-in.
-    // TODO: split into profiles_public (limited fields, true public read) +
-    // profiles_private (email + sensitive, owner-only) for proper isolation.
-    // Owners may edit their own profile but can never change their own plan.
+    //
+    // SECURITY FIX (Batch 3): strict field whitelist + type/size validation.
+    // Owners may create a profile with plan:'free' and update only non-privileged
+    // fields. Privileged fields (plan, subscription_end, created_at, role,
+    // entitlements, is_admin, is_founder, subscription_status) are never writable
+    // by the owner — the isAdmin() override handles privileged mutations.
+    function isValidProfileCreate() {
+      let data = request.resource.data;
+      return data.keys().hasOnly([
+          'id', 'user_id', 'email', 'display_name', 'avatar_url', 'bio',
+          'notification_email', 'notification_push', 'notification_mentions',
+          'plan', 'created_at', 'updated_at'
+        ])
+        && (!('id' in data) || data.id == request.auth.uid)
+        && (!('user_id' in data) || data.user_id == request.auth.uid)
+        && data.get('plan', 'free') == 'free'
+        && (!('email' in data) || (data.email is string && data.email.size() < 256))
+        && (!('display_name' in data) || (data.display_name is string && data.display_name.size() <= 100))
+        && (!('avatar_url' in data) || (data.avatar_url is string && data.avatar_url.size() < 500000))
+        && (!('bio' in data) || (data.bio is string && data.bio.size() <= 1000))
+        && (!('notification_email' in data) || data.notification_email is bool)
+        && (!('notification_push' in data) || data.notification_push is bool)
+        && (!('notification_mentions' in data) || data.notification_mentions is bool)
+        && (!('created_at' in data) || data.created_at is timestamp)
+        && (!('updated_at' in data) || data.updated_at is timestamp);
+    }
+
+    function isValidProfileUpdate() {
+      let incoming = request.resource.data;
+      let existing = resource.data;
+      // request.resource.data on an update is the MERGED resulting document, so a
+      // hasOnly() against the full result would deny every update on a doc that
+      // already holds privileged fields (plan, subscription_end). Instead we use
+      // diff().affectedKeys() to restrict only the fields the update TOUCHES.
+      let allowed = [
+        'id', 'user_id', 'email', 'display_name', 'avatar_url', 'bio',
+        'notification_email', 'notification_push', 'notification_mentions', 'updated_at'
+      ];
+      let affected = incoming.diff(existing).affectedKeys();
+      return affected.hasOnly(allowed)
+        // Defense-in-depth: even if a future edit widens `allowed`, plan and
+        // subscription_end must remain byte-identical to the existing values.
+        && incoming.get('plan', existing.get('plan', 'free')) == existing.get('plan', 'free')
+        && incoming.get('subscription_end', existing.get('subscription_end', null)) == existing.get('subscription_end', null)
+        && (!('email' in incoming) || (incoming.email is string && incoming.email.size() < 256))
+        && (!('display_name' in incoming) || (incoming.display_name is string && incoming.display_name.size() <= 100))
+        && (!('avatar_url' in incoming) || (incoming.avatar_url is string && incoming.avatar_url.size() < 500000))
+        && (!('bio' in incoming) || (incoming.bio is string && incoming.bio.size() <= 1000))
+        && (!('notification_email' in incoming) || incoming.notification_email is bool)
+        && (!('notification_push' in incoming) || incoming.notification_push is bool)
+        && (!('notification_mentions' in incoming) || incoming.notification_mentions is bool)
+        && (!('updated_at' in incoming) || incoming.updated_at is timestamp);
+    }
+
     match /profiles/{uid} {
       allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
       allow create: if signedIn()
         && request.auth.uid == uid
-        && request.resource.data.get('plan', 'free') == 'free';
+        && isValidProfileCreate();
       allow update: if isAdmin()
         || (signedIn()
             && request.auth.uid == uid
-            && request.resource.data.get('plan', 'free') == resource.data.get('plan', 'free'));
+            && isValidProfileUpdate());
       allow delete: if isAdmin();
     }
 
@@ -143,24 +194,24 @@ service cloud.firestore {
 
     function isValidAnalyticsEvent() {
       let data = request.resource.data;
-      return data.keys().hasAll(['eventName', 'timestamp', 'sessionId']) &&
-             data.eventName is string && data.eventName.size() < 100 &&
-             data.sessionId is string && data.sessionId.size() < 100;
+      // Fields match analyticsEventTracker.ts (snake_case): event_name, session_id, timestamp.
+      // SECURITY FIX (Batch 3): previous rule required camelCase (eventName/sessionId),
+      // which mismatched the writer and silently denied every analytics write.
+      return data.keys().hasAll(['event_name', 'timestamp', 'session_id']) &&
+             data.event_name is string && data.event_name.size() < 100 &&
+             data.session_id is string && data.session_id.size() < 100;
     }
 
     match /analytics_events/{doc} {
       allow create: if isValidAnalyticsEvent();
       allow read, update, delete: if isAdmin();
     }
-    match /analytics_daily/{doc} {
 
-    // Founder-only read access to usage_analytics for the Intelligence Center.
-    match /usage_analytics/{doc} {
-      allow read: if signedIn() && (ownsExisting() || isAdmin() || isFounder());
-      allow create: if ownsIncoming();
-      allow update: if (ownsExisting() && ownsIncoming()) || isAdmin();
-      allow delete: if ownsExisting() || isAdmin();
-    }
+    // analytics_daily: admin-only aggregate. The nested usage_analytics match
+    // that previously lived inside this block was a syntax artifact that created
+    // a phantom subcollection path (analytics_daily/{doc}/usage_analytics/{doc}) —
+    // removed in Batch 3. The canonical usage_analytics rule is below.
+    match /analytics_daily/{doc} {
       allow read, write: if isAdmin();
     }
 
@@ -204,7 +255,6 @@ service cloud.firestore {
         'eco_actions',
         'cyber_scan_results',
         'cyber_research_projects',
-        'usage_analytics',
         'whatsapp_links',
         'bug_bounty_submissions',
         'shadowscale_action_queue',

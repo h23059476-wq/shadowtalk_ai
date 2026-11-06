@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Bot, Cpu, Gauge, Moon, Send, Clock } from "lucide-react";
+import { Bot, Cpu, Gauge, Moon, Send, Clock, HardDrive } from "lucide-react";
 import {
   getAccelerationPreference,
   setAccelerationPreference,
@@ -24,12 +24,16 @@ import {
   getChatShowTimestamps,
   setChatShowTimestamps,
 } from "@/lib/profilePreferences";
+import { getPreferLocal, setPreferLocal } from "@/lib/aiAccessMode";
+import { useAuth } from "@/components/AuthProvider";
 
 export function ChatAIPreferencesCard() {
+  const { user } = useAuth();
   const [acceleration, setAcceleration] = useState<AccelerationMode>(() => getAccelerationPreference());
   const [shadowMode, setShadowMode] = useState(() => getShadowModeEnabled());
   const [enterToSend, setEnterToSend] = useState(() => getChatEnterToSend());
   const [showTimestamps, setShowTimestamps] = useState(() => getChatShowTimestamps());
+  const [preferLocal, setPreferLocalState] = useState<boolean>(() => getPreferLocal(user?.id));
 
   useEffect(() => {
     const onAccel = (e: Event) => {
@@ -138,6 +142,28 @@ export function ChatAIPreferencesCard() {
             }}
           />
         </div>
+
+        <div className="flex items-center justify-between p-4 rounded-xl hover:bg-muted/30 transition-colors">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <HardDrive className="h-4 w-4 text-primary" />
+            </div>
+            <div>
+              <p className="font-medium text-sm">Prefer on-device AI</p>
+              <p className="text-xs text-muted-foreground">
+                Use the locally installed model first; falls back to cloud if the local model isn't loaded.
+              </p>
+            </div>
+          </div>
+          <Switch
+            checked={preferLocal}
+            onCheckedChange={(v) => {
+              setPreferLocalState(v);
+              if (user?.id) setPreferLocal(user.id, v);
+            }}
+          />
+        </div>
+
       </CardContent>
     </Card>
   );
