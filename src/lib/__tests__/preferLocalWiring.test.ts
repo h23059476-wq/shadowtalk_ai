@@ -116,3 +116,67 @@ describe("prefer-local — source contract", () => {
     expect(src).not.toMatch(/setPreferLocal\s*\(/);
   });
 });
+
+// ---------------------------------------------------------------------------
+// Final completion phase — main chat path (ChatbotPage) honors prefer-local
+// without silent provider switches, and the Offline AI settings section is
+// reachable (it was previously implemented but unreachable).
+// ---------------------------------------------------------------------------
+
+describe("ChatbotPage prefer-local integration (source contract)", () => {
+  const read = async (rel: string) => {
+    const fs = await import("node:fs");
+    const path = await import("node:path");
+    return fs.readFileSync(path.resolve(process.cwd(), rel), "utf8");
+  };
+
+  it("checks the preference and engine state before cloud streaming, and labels local replies", async () => {
+    const src = await read("src/pages/ChatbotPage.tsx");
+    // Preference is read from the UID-scoped helper with the current user id.
+    expect(src).toContain("getPreferLocal(user?.id ?? undefined)");
+    // The engine is loaded lazily so web-llm stays out of the chat bundle.
+    expect(src).toContain('await import("@/offline/LocalInferenceEngine")');
+    // Local generation only when the engine is actually ready.
+    expect(src).toContain('engineState === "ready"');
+    // Local replies are labeled as local (never claim cloud execution was local).
+    expect(src).toContain("localResult.content");
+  });
+
+  it("never silently switches providers", async () => {
+    const src = await read("src/pages/ChatbotPage.tsx");
+    // Local failure is surfaced, not retried on cloud in secret.
+    expect(src).toMatch(/Local generation failed — surface the error honestly/);
+    expect(src).toContain("throw new Error(localResult.error)");
+    // Online-but-not-loaded fall-through shows an explicit one-time notice.
+    expect(src).toContain("preferLocalNoticeShownRef");
+    expect(src).toMatch(/Local AI not loaded/);
+    // Offline without the engine fails with actionable guidance instead of a
+    // generic network error.
+    expect(src).toMatch(/isn't loaded yet/);
+  });
+
+  it("keeps the Offline AI settings section reachable", async () => {
+    const page = await read("src/pages/SettingsPage.tsx");
+    // The nav sections must include the offline entry (previously the panel
+    // existed but ?section=offline silently fell back to "home").
+    expect(page).toMatch(/\{\s*id:\s*"offline",\s*label:\s*"Offline AI"/);
+    const catalog = await read("src/lib/settingsCatalog.ts");
+    expect(catalog).toMatch(/id:\s*"offline",\s*section:\s*"offline"/);
+  });
+
+  it("does not claim offline AI is active when the engine is not ready", async () => {
+    const src = await read("src/components/chat/NetworkTransitionOverlay.tsx");
+    // The unconditional "Sovereign AI is active" claim is gone.
+    expect(src).not.toContain("Sovereign AI is active");
+    // The banner now gates the claim on the engine's real state.
+    expect(src).toContain("localReady");
+    expect(src).toContain("on-device AI is active");
+  });
+
+  it("removed the orphaned sw-downloader service worker", async () => {
+    const fs = await import("node:fs");
+    const path = await import("node:path");
+    const p = path.resolve(process.cwd(), "public/sw-downloader.js");
+    expect(fs.existsSync(p)).toBe(false);
+  });
+});

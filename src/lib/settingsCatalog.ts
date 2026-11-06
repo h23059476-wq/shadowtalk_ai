@@ -9,7 +9,7 @@ export interface SettingsCatalogEntry {
 }
 
 export const SETTINGS_CATALOG: SettingsCatalogEntry[] = [
-  { id: "offline", section: "models", label: "Offline AI", description: "On-device models", keywords: ["local", "webgpu", "privacy"] },
+  { id: "offline", section: "offline", label: "Offline AI", description: "On-device models", keywords: ["local", "webgpu", "privacy"] },
   { id: "sovereign", section: "models", label: "ShadowTalk model", description: "Sovereign on-device learning", keywords: ["training", "weights"] },
   { id: "desktop", section: "models", label: "Desktop app", description: "Install native client", keywords: ["electron", "capacitor"] },
   { id: "learning", section: "data", label: "Adaptive learning", description: "On-device behavior learning", keywords: ["auto improve", "consent"] },

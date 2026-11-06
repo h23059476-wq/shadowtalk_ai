@@ -30,7 +30,7 @@ import { inferDocumentTypeFromMessage } from "@/lib/kimiDocumentGeneration";
 
 import { streamCloudChat, isCloudChatConfigured, type CloudChatMessage } from "@/lib/cloudChat";
 import { buildChatSystemPrompt } from "@/lib/shadowTalkPersona";
-import { loadAiAccessMode, saveAiAccessMode } from "@/lib/aiAccessMode";
+import { loadAiAccessMode, saveAiAccessMode, getPreferLocal } from "@/lib/aiAccessMode";
 
 import { ChatAmbientBackground } from "@/components/chat/ChatAmbientBackground";
 import { ChatEmptyState } from "@/components/chat/ChatEmptyState";
@@ -110,8 +110,6 @@ import {
   DESKTOP_ENV_SETUP_HINT,
   formatChatFetchError,
 } from "@/lib/cloudEnv";
-import { isShadowTalkDesktop } from "@/lib/desktopBridge";
-import { desktopChatStream } from "@/lib/desktopChatFetch";
 import { reflectOnConversation, shouldReflect, type MemoryReflection } from "@/lib/memory/reflectionEngine";
 import { getActiveMemories, maybeReflectAndPersist } from "@/lib/memory/agentMemories";
 import { buildMemoryContext } from "@/lib/memory/promptInjector";
@@ -290,6 +288,10 @@ const ChatbotPage = () => {
 
   const abortControllerRef = useRef<AbortController | null>(null);
   const messagesRef = useRef<Message[]>([]);
+  // Final completion phase: shown at most once per mount when prefer-local is
+  // enabled but the local engine is not loaded, so a cloud reply is never a
+  // SILENT provider switch.
+  const preferLocalNoticeShownRef = useRef(false);
   useEffect(() => { messagesRef.current = messages; }, [messages]);
 
   // Abort any in-flight chat request when the chat page unmounts — otherwise
@@ -1090,6 +1092,73 @@ Structure and Content Guidelines:
           content: m.content as CloudChatMessage['content'],
         })),
       ];
+
+      // --- Prefer-local routing (final completion phase) --------------------
+      // Honors the explicit "Prefer on-device AI" opt-in (Settings → Chat
+      // behavior → ChatAIPreferencesCard). Contract:
+      //  - The engine module is dynamically imported so @mlc-ai/web-llm stays
+      //    out of the chat bundle unless the user actually opted in.
+      //  - Local replies carry source:"local" — MessageBubble renders
+      //    "via Local (<model>)" — cloud replies keep their provider label.
+      //  - NO silent provider switch: if the local engine fails mid-turn the
+      //    error is surfaced instead of quietly retrying on cloud; if
+      //    prefer-local is on but the engine is not loaded while ONLINE, the
+      //    cloud path runs with a one-time explicit notice (matches
+      //    AIProviderRouter's documented fall-through semantics); while
+      //    OFFLINE it fails with actionable guidance.
+      const preferLocal = getPreferLocal(user?.id ?? undefined);
+      if (preferLocal) {
+        const { localInferenceEngine } = await import("@/offline/LocalInferenceEngine");
+        const engineState = localInferenceEngine.getState();
+        const isOffline = typeof navigator !== "undefined" && navigator.onLine === false;
+
+        if (engineState === "ready") {
+          const localResult = await localInferenceEngine.generate(cloudMessages, {
+            signal: controller.signal,
+            temperature: 0.7,
+            onDelta: (accumulated) => pushAssistant(accumulated),
+          });
+
+          if (localResult.error && !localResult.content) {
+            // Local generation failed — surface the error honestly.
+            finalizeAssistant();
+            throw new Error(localResult.error);
+          }
+          if (localResult.content) pushAssistant(localResult.content);
+          finalizeAssistant();
+
+          // Product bookkeeping (no cloud cost tracking — local is free).
+          session.recordModelCall();
+          if (localResult.content && user) {
+            void saveMessage(localResult.content, "assistant", conversationId).catch((e) =>
+              console.warn("[chat] saveMessage(assistant/local) failed", e),
+            );
+          }
+          if (localResult.content.trim().length > 0) {
+            recordSuccessfulChatSession();
+            recordFunnelEvent("first_reply");
+            markHasChatted();
+          }
+          return localResult.content || undefined;
+        }
+
+        if (isOffline) {
+          throw new Error(
+            "You're offline and the local AI engine isn't loaded yet. Open Settings → Offline AI while connected to install it (one-time download).",
+          );
+        }
+
+        // Online but engine not loaded — fall through to cloud with an
+        // explicit one-time notice (never a silent provider switch).
+        if (!preferLocalNoticeShownRef.current) {
+          preferLocalNoticeShownRef.current = true;
+          toast({
+            title: "Local AI not loaded",
+            description:
+              "Using the cloud provider for this message. Load the on-device engine in Settings → Offline AI to chat locally.",
+          });
+        }
+      }
 
       const { content: streamedContent, error: cloudError, source: resultSource, modelUsed: resultModel, provider: resultProvider } = await streamCloudChat(cloudMessages, {
         signal: controller.signal,
