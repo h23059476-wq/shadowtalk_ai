@@ -35,6 +35,7 @@ import { loadAiAccessMode, saveAiAccessMode, getPreferLocal } from "@/lib/aiAcce
 import { ChatAmbientBackground } from "@/components/chat/ChatAmbientBackground";
 import { ChatEmptyState } from "@/components/chat/ChatEmptyState";
 import { ChatMainPanel } from "@/components/chat/ChatMainPanel";
+import { LegacyVaultRecoveryDialog } from "@/components/chat/LegacyVaultRecoveryDialog";
 import { SETTINGS_SPRING } from "@/lib/settingsMotion";
 import { useChatSidebarCollapse } from "@/hooks/useChatSidebarCollapse";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -239,6 +240,8 @@ const ChatbotPage = () => {
   const [toolsMenuOpen, setToolsMenuOpen] = useState(false);
   const [chatShareOffer, setChatShareOffer] = useState<{ title: string; subtitle?: string; prompt?: string; answer?: string } | null>(null);
   const [chatShareDialogOpen, setChatShareDialogOpen] = useState(false);
+  // Final completion phase — consent-gated legacy E2EE vault recovery.
+  const [legacyVaultRecoveryOpen, setLegacyVaultRecoveryOpen] = useState(false);
   const [chatShareCustomLink, setChatShareCustomLink] = useState<string | null>(null);
   const [showMultiModel, setShowMultiModel] = useState(false);
   const [showVisualReasoning, setShowVisualReasoning] = useState(false);
@@ -878,7 +881,8 @@ const ChatbotPage = () => {
     }
   };
 
-  const handleEnableChatEncryption = async () => {
+  /** Engage private mode for the current (or newly ensured) conversation. */
+  const startPrivateModeForCurrentConversation = async () => {
     let conversationId = currentConversationId;
     if (user && !conversationId) {
       conversationId = await ensureConversation();
@@ -909,6 +913,34 @@ const ChatbotPage = () => {
     if (user && !isGuestConversationId(conversationId)) {
       await loadConversation(conversationId);
     }
+  };
+
+  const handleEnableChatEncryption = async () => {
+    // Final completion phase: if this account has no vault yet but legacy
+    // device-global vault material exists, offer passphrase-verified recovery
+    // instead of silently minting a fresh vault (which would permanently
+    // orphan the legacy ciphertext). Recovery restores the legacy key, so
+    // startPrivateModeForCurrentConversation keeps it (enablePrivateMode skips
+    // re-engagement when the vault is already unlocked).
+    if (e2ee.legacyVaultAvailable && !e2ee.isUnlocked) {
+      setLegacyVaultRecoveryOpen(true);
+      return;
+    }
+    await startPrivateModeForCurrentConversation();
+  };
+
+  const handleLegacyVaultRestore = async (passphrase: string): Promise<boolean> => {
+    const recovered = await e2ee.recoverLegacyVault(passphrase);
+    if (recovered) {
+      setLegacyVaultRecoveryOpen(false);
+      await startPrivateModeForCurrentConversation();
+    }
+    return recovered;
+  };
+
+  const handleLegacyVaultStartFresh = async () => {
+    setLegacyVaultRecoveryOpen(false);
+    await startPrivateModeForCurrentConversation();
   };
 
   type ChatCompletionMessage = {
@@ -2308,6 +2340,14 @@ Structure and Content Guidelines:
         </Dialog>
 
         {user && <AiAccessOnboarding userId={user.id} />}
+
+        {/* Consent-gated recovery for pre-account-scoping E2EE vaults. */}
+        <LegacyVaultRecoveryDialog
+          open={legacyVaultRecoveryOpen}
+          onRestore={handleLegacyVaultRestore}
+          onStartFresh={handleLegacyVaultStartFresh}
+          onDismiss={() => setLegacyVaultRecoveryOpen(false)}
+        />
 
         {/* Floating Live Voice button — visible on ALL screen sizes */}
         <button

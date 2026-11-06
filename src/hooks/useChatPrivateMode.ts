@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect, useRef } from "react";
 import { backend } from "@/integrations/local/client";
 import { useToast } from "@/hooks/use-toast";
 import type { useE2EE } from "@/hooks/useE2EE";
@@ -26,6 +26,31 @@ export function useChatPrivateMode(e2ee: E2EEApi) {
   const [active, setActive] = useState(() => isChatPrivateModeActive());
   const [anonymousUi, setAnonymousUi] = useState(() => isChatAnonymousUiActive());
   const [busy, setBusy] = useState(false);
+
+  // Private-mode flag lifetime = encryption-key lifetime. The key is held only
+  // in memory (the dead sessionStorage persistence was removed from useE2EE),
+  // so a flag that survived a reload would claim encryption was active while
+  // the key was gone — every new message would then fail to save. Clear the
+  // stale flag on mount and tell the user honestly.
+  const clearedStaleFlag = useRef(false);
+  useEffect(() => {
+    if (clearedStaleFlag.current) return;
+    clearedStaleFlag.current = true;
+    if (isChatPrivateModeActive() && !e2ee.isUnlocked) {
+      setChatPrivateModeActive(false);
+      setChatAnonymousUiActive(false);
+      setActive(false);
+      setAnonymousUi(false);
+      toast({
+        title: "Private mode ended",
+        description:
+          "Encryption keys live only for the current session. Re-enable private mode to encrypt this chat.",
+      });
+    }
+    // Runs once per mount; e2ee.isUnlocked is always false at mount because
+    // the key is never persisted.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const resolveDisplayText = useCallback(
     async (raw: string): Promise<string> => {
@@ -100,7 +125,10 @@ export function useChatPrivateMode(e2ee: E2EEApi) {
     }) => {
       setBusy(true);
       try {
-        const engaged = await e2ee.engageSessionEncryption();
+        // If the vault is already unlocked (e.g. a legacy passphrase recovery
+        // just succeeded), keep THAT key — re-engaging would mint a fresh
+        // random key and permanently orphan the ciphertext we just recovered.
+        const engaged = e2ee.isUnlocked || (await e2ee.engageSessionEncryption());
         if (!engaged) {
           toast({
             title: "Encryption failed",
