@@ -7,6 +7,7 @@ import {
   BookOpen,
   User,
   Settings,
+  ShieldCheck,
 } from "lucide-react";
 
 export interface ChatSidebarNavItem {
@@ -22,6 +23,7 @@ export interface ChatSidebarNavItem {
 export const CHAT_SIDEBAR_NAV: ChatSidebarNavItem[] = [
   // Workspace section
   { label: "Chatbot", icon: MessageSquare, to: "/chatbot", end: true, section: "workspace" },
+  { label: "ProofLoop", shortLabel: "ProofLoop", icon: ShieldCheck, to: "/proofloop", section: "workspace", badge: "VERIFIED" },
   { label: "Home", icon: Home, to: "/home", end: true, section: "workspace" },
 
   // Explore section — only real pages

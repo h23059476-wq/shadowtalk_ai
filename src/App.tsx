@@ -59,6 +59,8 @@ const TrustPage = lazy(() => import("./pages/TrustPage"));
 const KnowledgeGraphPage = lazy(() => import("./pages/KnowledgeGraphPage"));
 const AgenticAIWorkspacePage = lazy(() => import("./pages/AgenticAIWorkspacePage"));
 const FounderAccessPage = lazy(() => import("./pages/FounderAccessPage"));
+const ProofLoopPage = lazy(() => import("./pages/ProofLoopPage"));
+const PublicProofCardPage = lazy(() => import("./pages/PublicProofCardPage"));
 
 // Production Company, Support & Legal Pages
 const ContactPage = lazy(() => import("./pages/ContactPage"));
@@ -194,9 +196,14 @@ const AnimatedRoutes = () => {
           <Route path="/privacy" element={<PageTransition><PrivacyPolicyPage /></PageTransition>} />
 
           {/* Feature Pages */}
+          <Route path="/proofloop" element={<PageTransition><ProofLoopPage /></PageTransition>} />
+          <Route path="/missions" element={<Navigate to="/proofloop" replace />} />
+          <Route path="/mission-control" element={<Navigate to="/proofloop" replace />} />
+          <Route path="/missioncontrol" element={<Navigate to="/proofloop" replace />} />
+          <Route path="/proof/:proofId" element={<PageTransition><PublicProofCardPage /></PageTransition>} />
+          <Route path="/mission/:id" element={<PageTransition><PublicProofCardPage /></PageTransition>} />
           <Route path="/analytics" element={<Navigate to="/chatbot" replace />} />
           <Route path="/computer" element={<Navigate to="/chatbot" replace />} />
-          <Route path="/mission-control" element={<Navigate to="/chatbot" replace />} />
           <Route path="/personal-llm" element={<Navigate to="/chatbot" replace />} />
           <Route path="/templates" element={<Navigate to="/chatbot" replace />} />
           <Route path="/admin" element={<PageTransition><AdminPage /></PageTransition>} />
