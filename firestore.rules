@@ -153,6 +153,12 @@ service cloud.firestore {
     match /announcements/{doc}         { allow read: if true; allow write: if isAdmin(); }
     match /faq_items/{doc}             { allow read: if true; allow write: if isAdmin(); }
     match /changelog_entries/{doc}     { allow read: if true; allow write: if isAdmin(); }
+    // Public CMS content (final completion phase): docs_pages is read by
+    // useDocsPages() (is_published filter), status_monitors by
+    // useStatusMonitors() (is_active filter). No client writer exists —
+    // both are admin-seeded content, mirroring blog_posts.
+    match /docs_pages/{doc}            { allow read: if true; allow write: if isAdmin(); }
+    match /status_monitors/{doc}       { allow read: if true; allow write: if isAdmin(); }
     match /marketplace_agents/{doc}    { allow read: if true; allow write: if isAdmin(); }
     match /threat_intel_cves/{doc}     { allow read: if true; allow write: if isAdmin(); }
     match /threat_actors/{doc}         { allow read: if true; allow write: if isAdmin(); }
@@ -215,6 +221,16 @@ service cloud.firestore {
       allow read, write: if isAdmin();
     }
 
+    // daily_usage: server-managed shared-AI rate limiter. Documents are
+    // `${uid}_${YYYY-MM-DD}` written ONLY by the `chat` Cloud Function via the
+    // Admin SDK (which bypasses these rules). The admin dashboard
+    // (FirebaseAnalytics.tsx) listens to today's rows, so admins read; clients
+    // must never write — incrementing their own limiter would bypass the cap.
+    match /daily_usage/{doc} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
     // Founder-only read access to usage_analytics for the Intelligence Center.
     match /usage_analytics/{doc} {
       allow read: if signedIn() && (ownsExisting() || isAdmin() || isFounder());
@@ -265,6 +281,18 @@ service cloud.firestore {
         'user_journeys',
         'realtime_channels',
         'room_presences',
+        // Final completion phase — client-verified ownership patterns:
+        // - strategy_reports: list by user_id, insert with user_id,
+        //   delete by document id (rules enforce ownership on the GET+DELETE).
+        // - search_history: list/delete by user_id, insert with user_id.
+        // - shadow_credits / credit_transactions: read/insert/update scoped to
+        //   user_id. NOTE: balances are client-reported soft credits (no
+        //   server ledger) — rules enforce OWNERSHIP, not honesty. See
+        //   the stabilization backlog.
+        'strategy_reports',
+        'search_history',
+        'shadow_credits',
+        'credit_transactions',
       ];
     }
 

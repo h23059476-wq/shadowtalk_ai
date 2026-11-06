@@ -235,4 +235,92 @@ rulesDescribe("Firestore auth and profile rules", () => {
     await assertFails(updateDoc(doc(bobDb, "conversations/conv-1"), { user_id: "bob" }));
     await assertSucceeds(updateDoc(doc(aliceDb, "conversations/conv-1"), { title: "renamed" }));
   });
+
+  // ---------------------------------------------------------------
+  // Final completion phase — seven previously-denied collections.
+  // Access patterns verified against the actual client writers:
+  //   strategyReports.ts, SearchHistory.tsx, useShadowCredits.ts,
+  //   useCMSContent.ts, FirebaseAnalytics.tsx, functions (chat).
+  // ---------------------------------------------------------------
+  it("gives the four user-data collections owner-scoped CRUD (previously fully denied)", async () => {
+    const seed: Record<string, Record<string, unknown>> = {
+      strategy_reports: { user_id: "alice", title: "Go-to-market", used_fallback: false },
+      search_history: { user_id: "alice", query: "e2ee pbkdf2", results_count: 3 },
+      shadow_credits: { user_id: "alice", balance: 5, total_purchased: 0, total_consumed: 0 },
+      credit_transactions: { user_id: "alice", amount: 5, transaction_type: "bonus" },
+    };
+    const aliceDb = testEnv.authenticatedContext("alice").firestore();
+    const bobDb = testEnv.authenticatedContext("bob").firestore();
+    const anonDb = testEnv.unauthenticatedContext().firestore();
+
+    for (const [col, data] of Object.entries(seed)) {
+      // Owner create + read + update + delete.
+      await assertSucceeds(setDoc(doc(aliceDb, `${col}/row-1`), data));
+      await assertSucceeds(getDoc(doc(aliceDb, `${col}/row-1`)));
+      await assertSucceeds(getDocs(query(collection(aliceDb, col), where("user_id", "==", "alice"))));
+      await assertSucceeds(updateDoc(doc(aliceDb, `${col}/row-1`), { updated: true }));
+
+      // Cross-account: Bob can never read, re-assign, or delete Alice's rows.
+      await assertFails(getDoc(doc(bobDb, `${col}/row-1`)));
+      await assertFails(updateDoc(doc(bobDb, `${col}/row-1`), { user_id: "bob" }));
+      await assertFails(deleteDoc(doc(bobDb, `${col}/row-1`)));
+
+      // Anonymous clients are denied outright.
+      await assertFails(getDoc(doc(anonDb, `${col}/row-1`)));
+      await assertFails(setDoc(doc(anonDb, `${col}/anon-row`), { ...data, user_id: "anon" }));
+
+      await assertSucceeds(deleteDoc(doc(aliceDb, `${col}/row-1`)));
+    }
+  });
+
+  it("allows public reads of docs_pages and status_monitors but restricts writes to admins", async () => {
+    const anonDb = testEnv.unauthenticatedContext().firestore();
+    const aliceDb = testEnv.authenticatedContext("alice").firestore();
+    const adminDb = testEnv.authenticatedContext("admin").firestore();
+    await testEnv.withSecurityRulesDisabled(async (context) => {
+      await setDoc(doc(context.firestore(), "user_roles/admin"), { role: "admin" });
+    });
+
+    await assertSucceeds(setDoc(doc(adminDb, "docs_pages/getting-started"), {
+      title: "Getting started", content: "# Hello", is_published: true, sort_order: 1,
+    }));
+    await assertSucceeds(setDoc(doc(adminDb, "status_monitors/api"), {
+      name: "API", is_active: true, sort_order: 1,
+    }));
+
+    // Public reads mirror the CMS hooks (is_published / is_active filters).
+    await assertSucceeds(getDocs(query(collection(anonDb, "docs_pages"), where("is_published", "==", true))));
+    await assertSucceeds(getDocs(query(collection(anonDb, "status_monitors"), where("is_active", "==", true))));
+
+    // Regular users and anonymous visitors can never write CMS content.
+    await assertFails(setDoc(doc(aliceDb, "docs_pages/tamper"), { title: "x", is_published: true }));
+    await assertFails(updateDoc(doc(aliceDb, "docs_pages/getting-started"), { content: "hacked" }));
+    await assertFails(deleteDoc(doc(anonDb, "docs_pages/getting-started")));
+    await assertFails(setDoc(doc(aliceDb, "status_monitors/tamper"), { name: "x", is_active: true }));
+    await assertFails(updateDoc(doc(anonDb, "status_monitors/api"), { is_active: false }));
+  });
+
+  it("locks daily_usage to admin reads and server-only writes", async () => {
+    await testEnv.withSecurityRulesDisabled(async (context) => {
+      await setDoc(doc(context.firestore(), "daily_usage/alice_2026-11-06"), {
+        user_id: "alice", usage_date: "2026-11-06", ai_requests: 3,
+      });
+      await setDoc(doc(context.firestore(), "user_roles/admin"), { role: "admin" });
+    });
+
+    const aliceDb = testEnv.authenticatedContext("alice").firestore();
+    const anonDb = testEnv.unauthenticatedContext().firestore();
+    const adminDb = testEnv.authenticatedContext("admin").firestore();
+
+    // The shared-AI limiter is incremented by the chat Cloud Function via the
+    // Admin SDK (rules do not apply). No client may write its own limit.
+    await assertFails(setDoc(doc(aliceDb, "daily_usage/alice_2026-11-06"), { ai_requests: 0 }, { merge: true }));
+    await assertFails(updateDoc(doc(aliceDb, "daily_usage/alice_2026-11-06"), { ai_requests: 9999 }));
+    await assertFails(deleteDoc(doc(aliceDb, "daily_usage/alice_2026-11-06")));
+
+    // Alice cannot read the aggregate; the admin dashboard listener can.
+    await assertFails(getDoc(doc(aliceDb, "daily_usage/alice_2026-11-06")));
+    await assertFails(getDocs(query(collection(anonDb, "daily_usage"), where("usage_date", "==", "2026-11-06"))));
+    await assertSucceeds(getDocs(query(collection(adminDb, "daily_usage"), where("usage_date", "==", "2026-11-06"))));
+  });
 });
