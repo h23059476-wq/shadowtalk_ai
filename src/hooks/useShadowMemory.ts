@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { openDB, IDBPDatabase, DBSchema } from 'idb';
+import { useAuth } from '@/components/AuthProvider';
 
 // ── Schema ──────────────────────────────────────────────────────────
 export type ActivityCategory =
@@ -22,6 +23,14 @@ export interface ShadowActivity {
   detail?: string;
   metadata?: Record<string, unknown>;
   timestamp: string; // ISO
+  /**
+   * Final completion phase — account scoping. New records are stamped with
+   * the authenticated uid. Records without a user_id are legacy (pre-scoping)
+   * or guest entries: they are visible ONLY in the signed-out view, so two
+   * accounts sharing a browser can never read each other's journal while
+   * every existing record stays preserved on the device.
+   */
+  user_id?: string | null;
 }
 
 interface ShadowMemoryDB extends DBSchema {
@@ -86,9 +95,13 @@ function saveLocalFallback(items: ShadowActivity[]) {
 
 // ── Hook ────────────────────────────────────────────────────────────
 export const useShadowMemory = () => {
+  const { user } = useAuth();
+  const uid = user?.id ?? null;
   const [db, setDb] = useState<IDBPDatabase<ShadowMemoryDB> | null>(null);
   const [isReady, setIsReady] = useState(false);
   const isFallbackRef = useRef(false);
+  const uidRef = useRef<string | null>(uid);
+  useEffect(() => { uidRef.current = uid; }, [uid]);
 
   useEffect(() => {
     let active = true;
@@ -113,15 +126,16 @@ export const useShadowMemory = () => {
         setDb(database);
         isFallbackRef.current = false;
 
-        // Check if fresh; seed baseline security logs
+        // Check if fresh; seed baseline security logs (stamped with the
+        // current account when signed in).
         const count = await database.count('activities');
         if (count === 0) {
           const tx = database.transaction('activities', 'readwrite');
           for (const item of DEFAULT_INITIAL_ACTIVITIES) {
-            await tx.store.put(item);
+            await tx.store.put({ ...item, user_id: uidRef.current ?? null });
           }
           await tx.done;
-          saveLocalFallback(DEFAULT_INITIAL_ACTIVITIES);
+          saveLocalFallback(DEFAULT_INITIAL_ACTIVITIES.map((i) => ({ ...i, user_id: uidRef.current ?? null })));
         }
 
         setIsReady(true);
@@ -143,6 +157,22 @@ export const useShadowMemory = () => {
     };
   }, []);
 
+  /**
+   * Scope filter: signed-in users see ONLY their own records; the signed-out
+   * (guest) view sees only records with no user_id (guest + legacy).
+   * Legacy records are preserved on the device — never deleted — but they are
+   * hidden from signed-in accounts, closing the cross-account journal leak
+   * where account B could previously read account A's activity history.
+   */
+  const inScope = useCallback(
+    (entry: ShadowActivity): boolean => {
+      const currentUid = uidRef.current;
+      if (currentUid) return entry.user_id === currentUid;
+      return !entry.user_id;
+    },
+    [],
+  );
+
   // ── Log an activity ───────────────────────────────────────────────
   const log = useCallback(
     async (category: ActivityCategory, action: string, detail?: string, metadata?: Record<string, unknown>) => {
@@ -153,6 +183,7 @@ export const useShadowMemory = () => {
         detail,
         metadata,
         timestamp: new Date().toISOString(),
+        user_id: uidRef.current ?? null,
       };
 
       if (db && !isFallbackRef.current) {
@@ -185,6 +216,7 @@ export const useShadowMemory = () => {
           } else {
             results = await db.getAllFromIndex('activities', 'by-timestamp');
           }
+          results = results.filter(inScope);
           // newest first
           results.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
           if (opts?.since) {
@@ -200,7 +232,7 @@ export const useShadowMemory = () => {
       }
 
       // Fallback
-      let items = getLocalFallback();
+      let items = getLocalFallback().filter(inScope);
       if (opts?.category) {
         items = items.filter((i) => i.category === opts.category);
       }
@@ -213,7 +245,7 @@ export const useShadowMemory = () => {
       }
       return items;
     },
-    [db],
+    [db, inScope],
   );
 
   // ── Stats ─────────────────────────────────────────────────────────
@@ -221,12 +253,12 @@ export const useShadowMemory = () => {
     let all: ShadowActivity[] = [];
     if (db && !isFallbackRef.current) {
       try {
-        all = await db.getAll('activities');
+        all = (await db.getAll('activities')).filter(inScope);
       } catch {
-        all = getLocalFallback();
+        all = getLocalFallback().filter(inScope);
       }
     } else {
-      all = getLocalFallback();
+      all = getLocalFallback().filter(inScope);
     }
 
     const categories: Record<string, number> = {};
@@ -234,7 +266,7 @@ export const useShadowMemory = () => {
       categories[a.category] = (categories[a.category] || 0) + 1;
     });
     return { total: all.length, categories };
-  }, [db]);
+  }, [db, inScope]);
 
   // ── Delete single ─────────────────────────────────────────────────
   const deleteActivity = useCallback(
@@ -254,17 +286,26 @@ export const useShadowMemory = () => {
 
   // ── Clear all ─────────────────────────────────────────────────────
   const clearAll = useCallback(async () => {
+    // Scope-aware clear: only the current account's (or, signed-out, the
+    // guest/legacy) records are removed. Previously this wiped the ENTIRE
+    // device store — one account could delete another account's journal.
     if (db && !isFallbackRef.current) {
       try {
         const tx = db.transaction('activities', 'readwrite');
-        await tx.store.clear();
+        let cursor = await tx.store.openCursor();
+        while (cursor) {
+          if (inScope(cursor.value as ShadowActivity)) {
+            await cursor.delete();
+          }
+          cursor = await cursor.continue();
+        }
         await tx.done;
       } catch (e) {
         console.error('[ShadowMemory] Clear failed:', e);
       }
     }
-    saveLocalFallback([]);
-  }, [db]);
+    saveLocalFallback(getLocalFallback().filter((a) => !inScope(a)));
+  }, [db, inScope]);
 
   // ── Seed demo activities helper ──────────────────────────────────
   const seedDemoActivities = useCallback(async () => {
