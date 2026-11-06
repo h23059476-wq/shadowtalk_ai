@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateImage = exports.drive = exports.audio = exports.chat = exports.deleteAccount = void 0;
+exports.sendContactEmail = exports.generateImage = exports.drive = exports.audio = exports.chat = exports.deleteAccount = void 0;
 const https_1 = require("firebase-functions/v2/https");
 const params_1 = require("firebase-functions/params");
 const admin = __importStar(require("firebase-admin"));
@@ -540,6 +540,76 @@ exports.generateImage = (0, https_1.onRequest)({ secrets: allSecrets }, (req, re
             if (usageRef && !upstreamStarted) {
                 await releaseSharedAiRequest(db, usageRef).catch((releaseError) => console.error("Failed to release AI request reservation:", releaseError));
             }
+            return sendError(res, error);
+        }
+    });
+});
+/**
+ * Contact / waitlist intake (final completion phase).
+ *
+ * Both contact surfaces (ContactPage, AboutForms) invoke this function; until
+ * now it did not exist, so About-page submissions hard-failed and the
+ * ContactPage fell back to browser-only storage. There is deliberately no
+ * third-party mail provider in the current architecture — messages are
+ * persisted to the `contact_messages` Firestore intake collection (the same
+ * destination the security rules' `isValidIntake()` path was designed for),
+ * where admins can read them.
+ *
+ * Anonymous submission is intentional (matches the client rules), so the
+ * caller's ID token is optional; when a valid one is presented, the uid and
+ * email are attached to the stored message.
+ *
+ * Validation mirrors the client-side firestore.rules intake constraints so a
+ * message rejected here would also be rejected by the rules path.
+ */
+exports.sendContactEmail = (0, https_1.onRequest)(async (req, res) => {
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS")
+            return;
+        if (req.method !== "POST")
+            return res.status(405).json({ error: "Method not allowed." });
+        try {
+            const body = (req.body || {});
+            const name = typeof body.name === "string" ? body.name.trim() : "";
+            const email = typeof body.email === "string" ? body.email.trim() : "";
+            const subject = typeof body.subject === "string" ? body.subject.trim() : "";
+            const message = typeof body.message === "string" ? body.message.trim() : "";
+            const source = typeof body.source === "string" ? body.source.slice(0, 120) : "website";
+            if (!name || name.length > 256)
+                throw new AiRequestError("Name is required (max 256 characters).", 400);
+            if (!email || email.length > 256 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                throw new AiRequestError("A valid email is required.", 400);
+            }
+            if (subject.length > 256)
+                throw new AiRequestError("Subject is too long (max 256 characters).", 400);
+            if (!message || message.length > 5000)
+                throw new AiRequestError("Message is required (max 5000 characters).", 400);
+            // Best-effort identity attachment — intake is anonymous-friendly.
+            let uid = null;
+            let userEmail = null;
+            try {
+                const user = await requireAuthenticatedUser(req.headers.authorization);
+                uid = user.uid;
+                userEmail = user.email ?? null;
+            }
+            catch {
+                /* anonymous submission */
+            }
+            const db = admin.firestore();
+            await db.collection("contact_messages").add({
+                name,
+                email,
+                subject: subject || "General Inquiry",
+                message,
+                source,
+                user_id: uid,
+                identity_email: userEmail,
+                status: "received",
+                created_at: admin.firestore.FieldValue.serverTimestamp(),
+            });
+            return res.status(200).json({ ok: true });
+        }
+        catch (error) {
             return sendError(res, error);
         }
     });
