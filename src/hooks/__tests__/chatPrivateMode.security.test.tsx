@@ -77,9 +77,28 @@ describe("chat private mode — strict encrypt-or-null", () => {
     expect(wrapped).toBe("e2e:iv123:enc(hello)");
   });
 
-  it("returns null (never plaintext) when active but locked", async () => {
-    privateModeState.active = true;
-    const { result } = renderHook(() => useChatPrivateMode(makeE2EE(false)));
+  it("returns null (never plaintext) when active but the vault locks mid-session", async () => {
+    // Mount with an unlocked engine, engage private mode, then the vault
+    // locks (e.g. lock() was called). The mount-time stale-flag cleanup no
+    // longer applies — this is the runtime state where the strict
+    // encrypt-or-null contract matters.
+    privateModeState.active = false;
+    const e2ee = makeE2EE(false);
+    // Engine engages successfully at enable-time, then locks.
+    (e2ee as unknown as { engageSessionEncryption: () => Promise<boolean> }).engageSessionEncryption =
+      async () => true;
+    const { result } = renderHook(() => useChatPrivateMode(e2ee));
+
+    await act(async () => {
+      const ok = await result.current.enablePrivateMode({
+        conversationId: "conv-1",
+        messages: [],
+        isGuest: true,
+      });
+      expect(ok).toBe(true);
+    });
+    expect(result.current.active).toBe(true);
+
     let wrapped: string | null | undefined;
     await act(async () => {
       wrapped = await result.current.wrapForStorage("secret");
@@ -140,8 +159,21 @@ describe("chat private mode — strict encrypt-or-null", () => {
   });
 
   it("encryptLocalMessages throws instead of leaking plaintext on failure", async () => {
-    privateModeState.active = true;
-    const { result } = renderHook(() => useChatPrivateMode(makeE2EE(false)));
+    // Engage with an engine that then cannot encrypt (mid-session lock).
+    privateModeState.active = false;
+    const e2ee = makeE2EE(false);
+    (e2ee as unknown as { engageSessionEncryption: () => Promise<boolean> }).engageSessionEncryption =
+      async () => true;
+    const { result } = renderHook(() => useChatPrivateMode(e2ee));
+
+    await act(async () => {
+      await result.current.enablePrivateMode({
+        conversationId: "conv-1",
+        messages: [],
+        isGuest: true,
+      });
+    });
+    expect(result.current.active).toBe(true);
 
     await act(async () => {
       await expect(
