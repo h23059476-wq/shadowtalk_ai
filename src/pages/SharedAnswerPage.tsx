@@ -30,19 +30,38 @@ const SharedAnswerPage = () => {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data, error } = await (backend as any).rpc("get_shared_answer", { _slug: slug });
+      // Final completion phase: the previous read went through a Postgres
+      // RPC ("get_shared_answer") that the Firebase adapter always refuses,
+      // so EVERY /s/:slug page rendered "no longer available".
+      // shared_answers is publicly readable per the security rules; query it
+      // directly by slug instead.
+      const { data, error } = await backend
+        .from("shared_answers")
+        .select("*")
+        .eq("slug", slug)
+        .limit(1)
+        .maybeSingle();
       if (cancelled) return;
-      const row = Array.isArray(data) ? data[0] : null;
-      if (error || !row) {
+      if (error || !data) {
         setState("missing");
         return;
       }
-      setData(row as SharedAnswer);
+      const row = data as unknown as SharedAnswer;
+      setData({
+        slug: row.slug ?? slug,
+        title: row.title ?? null,
+        prompt: row.prompt ?? "",
+        answer: row.answer ?? "",
+        model: row.model ?? null,
+        source: row.source ?? "chat",
+        views: typeof row.views === "number" ? row.views : 0,
+        created_at: row.created_at ?? new Date().toISOString(),
+      });
       setState("ready");
-      // fire-and-forget view increment
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      void (backend as any).rpc("increment_shared_answer_views", { _slug: slug });
+      // NOTE: view counting is intentionally not implemented client-side —
+      // the security rules correctly forbid anonymous visitors from updating
+      // documents. `views` stays server-managed; the old remote view-increment
+      // call never worked and has been removed rather than faked.
     })();
     return () => { cancelled = true; };
   }, [slug]);
