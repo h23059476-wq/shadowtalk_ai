@@ -1,6 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import {
   LayoutDashboard,
+  Brain,
   Bell,
   Radio,
   Server,
@@ -22,7 +23,6 @@ import {
   Download,
   FileQuestion,
   Sparkles,
-  Brain,
 } from "lucide-react";
 
 export interface AdminNavItem {

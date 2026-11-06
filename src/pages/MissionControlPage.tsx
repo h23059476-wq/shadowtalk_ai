@@ -81,10 +81,10 @@ export default function MissionControlPage() {
       toast.error("Describe your goal first.");
       return;
     }
-    toast.success("Mission queued — opening workspace…");
+    toast.success("Opening ProofLoop Verification Workspace…");
     setTimeout(() => {
-      window.location.href = "/chatbot?mission=" + encodeURIComponent(goal);
-    }, 700);
+      window.location.href = "/proofloop";
+    }, 500);
   };
 
   return (
