@@ -40,23 +40,35 @@ export default defineConfig(({ mode }) => {
       react(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+        // Batch 5: removed 'masked-icon.svg' — the file does not exist in
+        // public/, so including it made the precache manifest reference a 404.
+        includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
         manifest: {
           name: 'ShadowTalk AI',
           short_name: 'ShadowTalk',
           description: 'Agentic AI workspace with offline support',
-          theme_color: '#000000',
+          // Batch 5: stable install identity (recommended for PWA updates to
+          // target the same installed app across manifest revisions).
+          id: '/',
+          // Batch 5: align theme_color with index.html (#050508). The old
+          // value (#000000) disagreed with the <meta name="theme-color">,
+          // producing a mismatched title-bar/splash color on Android.
+          theme_color: '#050508',
           background_color: '#000000',
           icons: [
             {
               src: 'pwa-192x192.png',
               sizes: '192x192',
-              type: 'image/png'
+              type: 'image/png',
+              // Batch 5: mark icons as maskable so Android adaptive icons
+              // render without cropping the artwork.
+              purpose: 'any maskable'
             },
             {
               src: 'pwa-512x512.png',
               sizes: '512x512',
-              type: 'image/png'
+              type: 'image/png',
+              purpose: 'any maskable'
             }
           ]
         },

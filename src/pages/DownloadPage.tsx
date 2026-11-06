@@ -101,10 +101,22 @@ export default function DownloadPage() {
                     if (platform.action === 'Open Web App') {
                       window.location.href = '/chatbot';
                     } else if (platform.action === 'Install PWA') {
-                      // Trigger PWA install prompt if available
-                      const event = new Event('beforeinstallprompt');
-                      window.dispatchEvent(event);
-                      toast({ title: 'Install ShadowTalk', description: 'Use your browser menu → "Install app" or "Add to Home Screen".' });
+                      // Batch 5: the previous code dispatched a SYNTHETIC
+                      // beforeinstallprompt Event. Browsers only dispatch the
+                      // real event (carrying prompt()), and Navigation's
+                      // listener stored the fake event as deferredPrompt — a
+                      // dead object whose prompt() would throw. A PWA install
+                      // prompt cannot be triggered programmatically; show the
+                      // honest guidance instead, and confirm when already
+                      // installed.
+                      const isStandalone =
+                        window.matchMedia('(display-mode: standalone)').matches ||
+                        (navigator as any).standalone === true;
+                      if (isStandalone) {
+                        toast({ title: 'Already installed', description: 'ShadowTalk is running as an installed app.' });
+                      } else {
+                        toast({ title: 'Install ShadowTalk', description: 'Use your browser menu → "Install app" or "Add to Home Screen".' });
+                      }
                     } else {
                       // Desktop download — check if already running as desktop app
                       if (isDesktop) {

@@ -83,13 +83,12 @@
     <!-- Favicon and Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#38bdf8" />
 
-    <!-- iOS Splash Screens -->
-    <link rel="apple-touch-startup-image" href="/splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" />
-    <link rel="apple-touch-startup-image" href="/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" />
-    <link rel="apple-touch-startup-image" href="/splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)" />
-    <link rel="apple-touch-startup-image" href="/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" />
+    <!-- Batch 5: removed dead asset references. The iOS splash PNGs
+         (splash-*.png) and safari-pinned-tab.svg were referenced here but the
+         files do not exist in public/, so every page load produced 404s and
+         iOS fell back to a plain screenshot anyway. Restoring real splash
+         artwork is tracked in the stabilization backlog. -->
 
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

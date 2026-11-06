@@ -59,12 +59,15 @@ const Navigation = ({ landingAnimated = false }: NavigationProps) => {
       e.preventDefault();
       setDeferredPrompt(e);
     };
+    // Batch 5: name the appinstalled handler so the effect cleanup can remove
+    // it. Previously it was an anonymous listener that leaked on unmount.
+    const onInstalled = () => setIsInstalled(true);
     window.addEventListener('beforeinstallprompt', handler);
-    window.addEventListener('appinstalled', () => setIsInstalled(true));
+    window.addEventListener('appinstalled', onInstalled);
 
-    // Re-listen if prompt was consumed
     return () => {
       window.removeEventListener('beforeinstallprompt', handler);
+      window.removeEventListener('appinstalled', onInstalled);
     };
   }, []);
 
