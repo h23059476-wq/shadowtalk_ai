@@ -187,3 +187,54 @@ describe("AuthProvider signOut — ephemeral cleanup", () => {
     unmount();
   });
 });
+
+describe("AuthProvider remote revocation — consistent cleanup", () => {
+  beforeEach(() => {
+    lsMock.clear(); ssMock.clear();
+    syncProfileSpy.mockClear();
+    clearUserLocalDataSpy.mockClear();
+    signOutMock.mockClear();
+    getSessionMock.mockClear();
+    authCallback = null;
+    captured = null;
+  });
+
+  it("runs clearUserLocalData when the session disappears WITHOUT an explicit sign-out", async () => {
+    // Remote revocation: account deleted/disabled or refresh token revoked.
+    getSessionMock.mockResolvedValue({ data: { session: sessionA }, error: null });
+    const { unmount } = wrap();
+    await waitFor(() => expect(captured?.user?.id).toBe("uid-alice"));
+    expect(clearUserLocalDataSpy).not.toHaveBeenCalled();
+
+    await act(async () => { authCallback?.("SIGNED_OUT", null); });
+    await waitFor(() => expect(captured?.user).toBeNull());
+
+    expect(clearUserLocalDataSpy).toHaveBeenCalledTimes(1);
+    expect(clearUserLocalDataSpy).toHaveBeenCalledWith("uid-alice");
+    unmount();
+  });
+
+  it("never double-cleans after an explicit sign-out", async () => {
+    getSessionMock.mockResolvedValue({ data: { session: sessionA }, error: null });
+    signOutMock.mockResolvedValue({ error: null });
+    const { unmount } = wrap();
+    await waitFor(() => expect(captured?.user?.id).toBe("uid-alice"));
+
+    await act(async () => { await captured.signOut(); });
+    expect(clearUserLocalDataSpy).toHaveBeenCalledTimes(1); // from signOut()
+
+    // The observer still fires SIGNED_OUT afterwards — must not clean again.
+    await act(async () => { authCallback?.("SIGNED_OUT", null); });
+    expect(clearUserLocalDataSpy).toHaveBeenCalledTimes(1);
+    unmount();
+  });
+
+  it("does not clean up when booting signed-out (no prior identity)", async () => {
+    getSessionMock.mockResolvedValue({ data: { session: null }, error: null });
+    const { unmount } = wrap();
+    await waitFor(() => expect(captured?.loading).toBe(false));
+    await act(async () => { authCallback?.("SIGNED_OUT", null); });
+    expect(clearUserLocalDataSpy).not.toHaveBeenCalled();
+    unmount();
+  });
+});

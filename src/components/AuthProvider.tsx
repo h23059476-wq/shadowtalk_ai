@@ -6,6 +6,7 @@ import { resolvePlanFromCheckSubscription, type UserPlan } from '@/lib/resolveUs
 
 import {
   clearExplicitSignOut,
+  hasExplicitSignOut,
   isAnonymousUser,
   markExplicitSignOut,
 } from '@/lib/persistentAuth';
@@ -166,7 +167,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
         void checkSubscription();
       } else if (!uid) {
+        // Final completion phase — remote revocation cleanup. Firebase can
+        // report SIGNED_OUT without the user signing out themselves (deleted
+        // or disabled account, revoked refresh token, admin action). The
+        // interactive signOut() already ran clearUserLocalData and marked the
+        // explicit flag; this path covers the REMOTE case so ephemeral
+        // user-scoped state (E2EE session keys, private-mode flags) never
+        // outlives the identity. Explicit sign-outs set the flag first, so
+        // we never double-clean here.
+        const prevUid = lastSyncedUid.current;
         lastSyncedUid.current = null;
+        if (prevUid && !hasExplicitSignOut()) {
+          try {
+            clearUserLocalData(prevUid);
+          } catch (err) {
+            console.warn('[Auth] revocation cleanup failed:', err);
+          }
+        }
         setUserPlan('free');
         setSubscribed(false);
         setSubscriptionEnd(null);

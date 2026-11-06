@@ -3,6 +3,7 @@ import { backend } from "@/integrations/local/client";
 import { useAuth } from "@/components/AuthProvider";
 
 import { markExplicitSignOut } from "@/lib/persistentAuth";
+import { clearUserLocalData } from "@/lib/signOutCleanup";
 
 const SESSION_TOKEN_KEY = "shadowtalk_session_token";
 const HEARTBEAT_MS = 60_000;
@@ -121,6 +122,10 @@ export function useSessionTracking() {
           .maybeSingle();
 
         if (data?.revoked_at) {
+          // Final completion phase — keep cleanup consistent with interactive
+          // sign-out: ephemeral user-scoped state (E2EE session keys,
+          // private-mode flags) must not outlive the revoked identity.
+          try { clearUserLocalData(user.id); } catch { /* best effort */ }
           markExplicitSignOut();
           await backend.auth.signOut();
           localStorage.removeItem(SESSION_TOKEN_KEY);
