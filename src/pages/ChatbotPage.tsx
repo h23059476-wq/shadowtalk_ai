@@ -126,6 +126,8 @@ import {
   lastVisualizationSpec,
   type PipelineMessage,
 } from "@/lib/visualization/chatPipeline";
+// Batch 3: AI-assisted conceptual generation — model/research call contracts.
+import type { ConceptModelCall, ConceptResearchCall } from "@/lib/visualization/conceptual/modelBridge";
 import { buildMessageMetadata, encodeMessageMetadata, decodeMessageMetadata, type ChatMessageMetadata } from "@/lib/chatMessageMetadata";
 // Types
 interface Message { 
@@ -1452,6 +1454,44 @@ Structure and Content Guidelines:
         ...(m.visualization ? { visualization: m.visualization } : {}),
       }));
 
+  /**
+   * Batch 3 — BYOK model completion for AI-assisted conceptual diagrams.
+   * Uses streamCloudChat, which respects the user's access mode and their
+   * OWN key (BYOK-only preserved; no shared keys, no provider switching).
+   * structuredOutput requests JSON from the provider when supported.
+   */
+  const vizModelCall: ConceptModelCall = useCallback(async ({ system, user, maxTokens, structuredOutput }) => {
+    const res = await streamCloudChat(
+      [
+        { role: "system", content: system },
+        { role: "user", content: user },
+      ],
+      {
+        ...(structuredOutput ? { structuredOutput: true } : {}),
+        maxTokens: maxTokens ?? 2000,
+      },
+    );
+    if (res.error) throw new Error(res.error);
+    return { content: res.content, ...(res.citations?.length ? { citations: res.citations } : {}) };
+  }, []);
+
+  /**
+   * Batch 3 — gap-driven research call. Uses the existing web_search tool
+   * (provider-backed, citation-preserving — Batch R1). Throws propagate;
+   * the pipeline converts them into honest limitation notes.
+   */
+  const vizResearchCall: ConceptResearchCall = useCallback(
+    async ({ query }) => {
+      const res = await executeShadowTool("web_search", { query }, query, {
+        personality,
+        mode: chatMode,
+      });
+      if (res.kind !== "inline") throw new Error("Research tool did not return text results.");
+      return { content: res.content, ...(res.citations?.length ? { citations: res.citations } : {}) };
+    },
+    [personality, chatMode],
+  );
+
   const runVisualizationRequest = async (
     intent: { kind: "create" | "refine" | "explain"; requestedType?: import("@/lib/visualization/types").VizTypeHint; timeRange?: string; compareTarget?: string; interactive?: boolean; confidence: number },
     requestText: string,
@@ -1465,6 +1505,9 @@ Structure and Content Guidelines:
         intent,
         request: requestText,
         messages: toPipelineMessages(sessionMessages),
+        // Batch 3 — AI-assisted conceptual generation + gap-driven research.
+        model: vizModelCall,
+        research: vizResearchCall,
       });
       setMessages((prev) =>
         prev.map((m) =>

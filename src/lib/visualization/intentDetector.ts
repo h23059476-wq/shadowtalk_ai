@@ -18,10 +18,12 @@
  */
 
 import type { VizIntent, VizTypeHint } from "./types";
+import { detectConceptRefineOp } from "./conceptual/refineOps";
 
 /**
  * Type hints — ordered so specific multi-word types match before generic
- * ones (e.g. "stacked bar chart" must not resolve to "bar").
+ * ones (e.g. "stacked bar chart" must not resolve to "bar"). Batch 3 adds
+ * the conceptual diagram families.
  */
 const TYPE_PATTERNS: Array<[VizTypeHint, RegExp]> = [
   ["bar-grouped", /\b(?:grouped|clustered|side-by-side)\s+bar\s+(?:chart|graph|plot)\b/i],
@@ -36,14 +38,19 @@ const TYPE_PATTERNS: Array<[VizTypeHint, RegExp]> = [
   ["candlestick", /\bcandlestick(?:\s+(?:chart|plot))?\b/i],
   ["timeline", /\btimeline\b/i],
   ["flowchart", /\bflow\s?chart\b/i],
+  ["workflow", /\b(?:workflow|process\s+flow)(?:\s+(?:diagram|chart))?\b/i],
+  ["architecture", /\b(?:architecture\s+(?:diagram|chart|view)|system\s+architecture)\b/i],
   ["mindmap", /\bmind\s?map\b/i],
   ["roadmap", /\broadmap\b/i],
-  ["decision-tree", /\bdecision\s+(?:tree|diagram)\b/i],
+  ["project-plan", /\bproject\s+plan\b/i],
+  ["decision-tree", /\bdecision\s+(?:tree|diagram|map)\b/i],
+  ["framework", /\b(?:swot|strategic\s+framework|framework\s+diagram)\b/i],
+  ["hierarchy", /\b(?:org\s?chart|organizational\s+chart|organigram|hierarchy|hierarchical\s+diagram|tree\s+diagram)\b/i],
   ["dashboard", /\b(?:market\s+dashboard|comparison\s+dashboard|dashboard|kpi\s+cards?)\b/i],
 ];
 
 const CHART_NOUN =
-  /\b(?:chart|graph|plot|diagram|visualization|visualisation|dashboard|timeline|flowchart|mind\s?map|roadmap|histogram|scatter\s?plot|candlestick)\b/i;
+  /\b(?:chart|graph|plot|diagram|visualization|visualisation|dashboard|timeline|flowchart|workflow|process\s+flow|mind\s?map|roadmap|decision\s?tree|architecture|framework|swot|org\s?chart|hierarchy|project\s+plan|histogram|scatter\s?plot|candlestick)\b/i;
 
 const TIME_RANGE =
   /\b(last|past|previous|trailing)\s+(\d+|a\s+few|several|one|two|three|six|twelve)\s+(minutes?|hours?|days?|weeks?|months?|quarters?|years?)\b/i;
@@ -54,12 +61,16 @@ const COMPARE =
 const EXPLAIN =
   /\b(?:explain|describe|walk\s+me\s+through|break\s+down|what\s+does)\s+(?:this|that|the)\s+(?:chart|graph|visualization|visualisation|dashboard|diagram|plot|timeline)\b/i;
 
+/** Batch 3 — "Explain every stage." / "Describe each phase." */
+const EXPLAIN_STAGES =
+  /\b(?:explain|describe|walk\s+me\s+through|clarify)\s+(?:every|each|all)\s+(?:stage|step|phase|node|branch|section|part)\b/i;
+
 /** Explicit visualization verbs/nouns → create. */
 const CREATE_PATTERNS: Array<{ re: RegExp; confidence: number }> = [
   { re: /^\/visualize\b/i, confidence: 0.9 },
   { re: /\b(?:visuali[sz]e|visuali[sz]ation)\b/i, confidence: 0.9 },
   {
-    re: /\b(?:turn|convert|transform|represent|present|render|show|display)\b[^.?!]{0,60}?\b(?:this|that|it|them|the|those|your)\b[^.?!]{0,60}?\b(?:as|into|on)\b[^.?!]{0,40}?(?:chart|graph|plot|diagram|visual|dashboard|timeline|flowchart|mind\s?map|roadmap|histogram|scatter|candlestick|table)\b/i,
+    re: /\b(?:turn|convert|transform|represent|present|render|show|display)\b[^.?!]{0,60}?\b(?:this|that|it|them|the|those|your)\b[^.?!]{0,60}?\b(?:as|into|on)\b[^.?!]{0,40}?(?:chart|graph|plot|diagram|visual|dashboard|timeline|flowchart|workflow|process\s+flow|mind\s?map|roadmap|decision\s?tree|architecture|framework|swot|org\s?chart|hierarchy|project\s+plan|histogram|scatter|candlestick|table)\b/i,
     confidence: 0.9,
   },
   {
@@ -71,7 +82,7 @@ const CREATE_PATTERNS: Array<{ re: RegExp; confidence: number }> = [
     confidence: 0.9,
   },
   {
-    re: /\b(?:make|create|build|generate|draw|plot|give\s+me)\b[^.?!]{0,40}?\b(?:a|an)\b[^.?!]{0,40}?(?:chart|graph|diagram|dashboard|visualization|visualisation|timeline|flowchart|mind\s?map|histogram|scatter\s?plot|candlestick)\b/i,
+    re: /\b(?:make|create|build|generate|draw|plot|give\s+me)\b[^.?!]{0,40}?\b(?:a|an)\b[^.?!]{0,40}?(?:chart|graph|diagram|dashboard|visualization|visualisation|timeline|flowchart|workflow|process\s+flow|mind\s?map|roadmap|decision\s?tree|architecture|framework|swot|org\s?chart|hierarchy|project\s+plan|histogram|scatter\s?plot|candlestick)\b/i,
     confidence: 0.7,
   },
 ];
@@ -79,9 +90,13 @@ const CREATE_PATTERNS: Array<{ re: RegExp; confidence: number }> = [
 /**
  * Refinement patterns — change an existing visualization. All require a
  * pronoun/reference to the existing viz ("it", "this", "the chart", …).
+ * Batch 3: conceptual conversions ("turn this into a decision tree") are
+ * refinements of the existing visualization too.
  */
 const REFINE_TYPE =
   /\b(?:make|change|switch|convert|turn|use)\s+(?:it|this|that|to|into|a|an)\b[^.?!]{0,40}?\b(?:line|bar|pie|donut|area|scatter|stacked|grouped|clustered)\b/i;
+const REFINE_TYPE_CONCEPT =
+  /\b(?:make|change|switch|convert|turn|use|render|redraw|show)\s+(?:it|this|that|to|into|as|a|an)\b[^.?!]{0,40}?\b(?:mind\s?map|roadmap|decision\s+(?:tree|diagram)|architecture|framework|swot|org\s?chart|hierarchy|project\s+plan|workflow|process\s+flow)\b/i;
 const REFINE_INTERACTIVE =
   /\b(?:make|enable|add)\s+(?:it\s+)?(?:interactive|hoverable|zoomable|filterable)\b/i;
 const REFINE_RANGE =
@@ -115,7 +130,8 @@ export function detectVisualizationIntent(text: string): VizIntent | null {
   if (!input || input.length > 500) return null;
 
   // 1. Explain — most specific intent, wins over everything else.
-  if (EXPLAIN.test(input)) {
+  //    Batch 3: "Explain every stage." targets the conceptual explainer.
+  if (EXPLAIN.test(input) || EXPLAIN_STAGES.test(input)) {
     return {
       kind: "explain",
       confidence: 0.9,
@@ -124,10 +140,16 @@ export function detectVisualizationIntent(text: string): VizIntent | null {
   }
 
   // 2. Refinement — references an existing viz ("it/this/that").
+  //    Batch 3: conceptual ops ("add another branch", "simplify this",
+  //    "make it more detailed", "show dependencies", "presentation-style")
+  //    are refinements as well — classified by the shared op detector so
+  //    the pipeline and the intent layer can never disagree.
   const timeRange = detectTimeRange(input);
   const interactive = REFINE_INTERACTIVE.test(input);
   const refineType = REFINE_TYPE.test(input);
-  if (refineType || interactive || REFINE_RANGE.test(input)) {
+  const refineTypeConcept = REFINE_TYPE_CONCEPT.test(input);
+  const conceptOp = detectConceptRefineOp(input);
+  if (refineType || refineTypeConcept || interactive || REFINE_RANGE.test(input) || conceptOp) {
     const type = detectType(input);
     return {
       kind: "refine",

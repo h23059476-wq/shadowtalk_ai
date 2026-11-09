@@ -12,6 +12,8 @@
  * type/utility layer so it can be unit-tested in isolation.
  */
 
+import type { VizSpecKind } from "./spec";
+
 /**
  * Provenance class of a dataset value (D3 policy, approved):
  *  - "source-verified": tied to a citable source URL (research data block
@@ -109,7 +111,7 @@ export interface ResearchContext {
 /** What the user wants done: a new visualization, a refinement, or an explanation. */
 export type VizIntentKind = "create" | "refine" | "explain";
 
-/** Chart/diagram type hints recognized deterministically (Batch 1 set). */
+/** Chart/diagram type hints recognized deterministically (Batch 1 + Batch 3). */
 export type VizTypeHint =
   | "line"
   | "bar"
@@ -126,8 +128,44 @@ export type VizTypeHint =
   | "mindmap"
   | "roadmap"
   | "decision-tree"
+  | "architecture"
+  | "workflow"
+  | "framework"
+  | "hierarchy"
+  | "project-plan"
   | "dashboard"
   | "table";
+
+/** Hints that resolve to Batch 3 conceptual spec kinds (AI-assisted). */
+export const CONCEPTUAL_TYPE_HINTS: VizTypeHint[] = [
+  "mindmap",
+  "roadmap",
+  "decision-tree",
+  "architecture",
+  "framework",
+  "hierarchy",
+  "project-plan",
+];
+
+/** Map a type hint to its target conceptual spec kind (Batch 3). */
+export function conceptualHintToKind(hint: VizTypeHint): VizSpecKind | null {
+  switch (hint) {
+    case "mindmap":
+    case "hierarchy":
+      return "mindmap";
+    case "roadmap":
+    case "project-plan":
+      return "roadmap";
+    case "decision-tree":
+      return "decision-tree";
+    case "architecture":
+      return "architecture";
+    case "framework":
+      return "framework";
+    default:
+      return null;
+  }
+}
 
 /** Deterministic classification of a visualization request (Batch 1). */
 export interface VizIntent {

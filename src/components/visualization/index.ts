@@ -1,5 +1,5 @@
 /**
- * Visualization components (Batch 2) — public surface.
+ * Visualization components (Batch 2 + Batch 3) — public surface.
  *
  * MessageBubble should import ONLY `VisualizationCard` (the lazy entry);
  * everything else lives behind the async chunk.
@@ -14,3 +14,4 @@ export { KpiDashboardRenderer } from "./KpiDashboardRenderer";
 export { ComparisonMatrixRenderer } from "./ComparisonMatrixRenderer";
 export { TimelineDiagramRenderer } from "./TimelineDiagramRenderer";
 export { FlowchartDiagramRenderer } from "./FlowchartDiagramRenderer";
+export { default as ConceptualDiagramRenderer } from "./ConceptualDiagramRenderer";

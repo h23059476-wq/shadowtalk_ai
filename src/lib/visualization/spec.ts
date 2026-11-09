@@ -25,7 +25,16 @@
 import { z } from "zod";
 import type { ProvenanceClass, ShadowDataset } from "./types";
 
-/** Supported spec kinds (Batch 2). Candlestick is conditional — see below. */
+/**
+ * Supported spec kinds. Batch 2: data-chart kinds. Batch 3 adds five
+ * CONCEPTUAL kinds (mindmap, roadmap, decision-tree, architecture,
+ * framework) — label-only structures with NO numeric data surface, so an
+ * AI-authored conceptual spec can never present a fabricated number as
+ * fact. Workflow/process-flow diagrams remain on "flowchart"; project
+ * plans map onto "roadmap" (phases + item status); org/hierarchy charts
+ * map onto "mindmap" with a tree layout; strategic frameworks (SWOT,
+ * pillars) map onto "framework".
+ */
 export type VizSpecKind =
   | "line"
   | "bar"
@@ -39,12 +48,28 @@ export type VizSpecKind =
   | "comparison-matrix"
   | "timeline"
   | "flowchart"
-  | "candlestick";
+  | "candlestick"
+  // Batch 3 — conceptual (AI-assisted, spec-driven SVG renderers)
+  | "mindmap"
+  | "roadmap"
+  | "decision-tree"
+  | "architecture"
+  | "framework";
 
 export const VIZ_SPEC_KINDS: VizSpecKind[] = [
   "line", "bar", "bar-grouped", "area", "pie", "donut", "scatter", "radar",
   "kpi-dashboard", "comparison-matrix", "timeline", "flowchart", "candlestick",
+  "mindmap", "roadmap", "decision-tree", "architecture", "framework",
 ];
+
+/** Kinds whose spec is a conceptual structure (Batch 3) instead of data. */
+export const CONCEPTUAL_KINDS: VizSpecKind[] = [
+  "mindmap", "roadmap", "decision-tree", "architecture", "framework",
+];
+
+export function isConceptualKind(kind: VizSpecKind): boolean {
+  return CONCEPTUAL_KINDS.includes(kind);
+}
 
 export const VIZ_SPEC_VERSION = 1;
 
@@ -69,6 +94,16 @@ export const SPEC_LIMITS = {
   maxTimelineEvents: 60,
   maxFlowNodes: 24,
   maxFlowEdges: 40,
+  // Batch 3 — conceptual structure caps.
+  maxMindNodes: 60,
+  maxMindDepth: 6,
+  maxRoadmapPhases: 8,
+  maxRoadmapItemsPerPhase: 12,
+  maxArchitectureLayers: 6,
+  maxArchitectureComponentsPerLayer: 8,
+  maxArchitectureConnections: 24,
+  maxFrameworkSections: 6,
+  maxFrameworkItemsPerSection: 12,
   /** Hard cap on the serialized spec (mirrors the metadata column budget). */
   maxSerializedChars: 120_000,
   /** A time series needs at least this many points. */
@@ -227,6 +262,105 @@ const flowEncoding = z.object({
   edges: z.array(flowEdgeSchema).min(1).max(SPEC_LIMITS.maxFlowEdges),
 });
 
+/* ------------------------------------------------------------------ */
+/* Batch 3 — conceptual encodings (label-only structures; NO numeric   */
+/* data surface, so a fabricated number can never be rendered)         */
+/* ------------------------------------------------------------------ */
+
+const mindNodeSchema = z.object({
+  id: z.string().min(1).max(64),
+  label: z.string().min(1).max(SPEC_LIMITS.maxLabelChars),
+  /** Parent node id; the single node without a parent is the root. */
+  parent: z.string().min(1).max(64).optional(),
+  note: z.string().max(SPEC_LIMITS.maxGapChars).optional(),
+});
+
+const mindEncoding = z.object({
+  layout: z.enum(["radial", "tree"]).optional(),
+  nodes: z.array(mindNodeSchema).min(2).max(SPEC_LIMITS.maxMindNodes),
+});
+
+const roadmapStatus = z.enum(["planned", "in-progress", "done", "at-risk"]);
+
+const roadmapItemSchema = z.object({
+  id: z.string().min(1).max(64),
+  label: z.string().min(1).max(SPEC_LIMITS.maxLabelChars),
+  status: roadmapStatus.optional(),
+  note: z.string().max(SPEC_LIMITS.maxGapChars).optional(),
+});
+
+const roadmapPhaseSchema = z.object({
+  id: z.string().min(1).max(64),
+  label: z.string().min(1).max(SPEC_LIMITS.maxLabelChars),
+  /** Declared timeframe as plain text (e.g. "Q1 2026") — never inferred. */
+  timeframe: z.string().max(64).optional(),
+  items: z.array(roadmapItemSchema).min(1).max(SPEC_LIMITS.maxRoadmapItemsPerPhase),
+});
+
+const roadmapEncoding = z.object({
+  phases: z.array(roadmapPhaseSchema).min(1).max(SPEC_LIMITS.maxRoadmapPhases),
+});
+
+const decisionNodeSchema = z.object({
+  id: z.string().min(1).max(64),
+  label: z.string().min(1).max(SPEC_LIMITS.maxLabelChars),
+  kind: z.enum(["decision", "option", "outcome"]).optional(),
+});
+
+const decisionEdgeSchema = z.object({
+  from: z.string().min(1).max(64),
+  to: z.string().min(1).max(64),
+  /** Condition guarding the edge (e.g. "yes", "price rises"). */
+  label: z.string().max(SPEC_LIMITS.maxLabelChars).optional(),
+});
+
+const decisionEncoding = z.object({
+  nodes: z.array(decisionNodeSchema).min(2).max(SPEC_LIMITS.maxFlowNodes),
+  edges: z.array(decisionEdgeSchema).min(1).max(SPEC_LIMITS.maxFlowEdges),
+});
+
+const archComponentSchema = z.object({
+  id: z.string().min(1).max(64),
+  label: z.string().min(1).max(SPEC_LIMITS.maxLabelChars),
+  note: z.string().max(SPEC_LIMITS.maxGapChars).optional(),
+});
+
+const archLayerSchema = z.object({
+  id: z.string().min(1).max(64),
+  label: z.string().min(1).max(SPEC_LIMITS.maxLabelChars),
+  components: z
+    .array(archComponentSchema)
+    .min(1)
+    .max(SPEC_LIMITS.maxArchitectureComponentsPerLayer),
+});
+
+const archConnectionSchema = z.object({
+  from: z.string().min(1).max(64),
+  to: z.string().min(1).max(64),
+  label: z.string().max(SPEC_LIMITS.maxLabelChars).optional(),
+});
+
+const architectureEncoding = z.object({
+  layers: z.array(archLayerSchema).min(1).max(SPEC_LIMITS.maxArchitectureLayers),
+  connections: z.array(archConnectionSchema).max(SPEC_LIMITS.maxArchitectureConnections).optional(),
+});
+
+const frameworkSectionSchema = z.object({
+  id: z.string().min(1).max(64),
+  label: z.string().min(1).max(SPEC_LIMITS.maxLabelChars),
+  /** Quadrant tone for SWOT-style sections. */
+  tone: z.enum(["positive", "negative", "neutral"]).optional(),
+  items: z
+    .array(z.string().min(1).max(SPEC_LIMITS.maxLabelChars))
+    .min(1)
+    .max(SPEC_LIMITS.maxFrameworkItemsPerSection),
+});
+
+const frameworkEncoding = z.object({
+  layout: z.enum(["quadrant", "pillars"]).optional(),
+  sections: z.array(frameworkSectionSchema).min(2).max(SPEC_LIMITS.maxFrameworkSections),
+});
+
 const candleEncoding = z.object({
   datasetId: z.string().min(1).max(64),
   time: z.string().min(1).max(SPEC_LIMITS.maxKeyChars),
@@ -251,6 +385,12 @@ const encodingSchema = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("timeline"), ...timelineEncoding.shape }),
   z.object({ kind: z.literal("flowchart"), ...flowEncoding.shape }),
   z.object({ kind: z.literal("candlestick"), ...candleEncoding.shape }),
+  // Batch 3 — conceptual kinds
+  z.object({ kind: z.literal("mindmap"), ...mindEncoding.shape }),
+  z.object({ kind: z.literal("roadmap"), ...roadmapEncoding.shape }),
+  z.object({ kind: z.literal("decision-tree"), ...decisionEncoding.shape }),
+  z.object({ kind: z.literal("architecture"), ...architectureEncoding.shape }),
+  z.object({ kind: z.literal("framework"), ...frameworkEncoding.shape }),
 ]);
 
 export type VizEncoding =
@@ -262,7 +402,13 @@ export type VizEncoding =
   | ({ kind: "comparison-matrix" } & { datasetId: string; rowLabel: string; columns: string[]; note?: string })
   | ({ kind: "timeline" } & { datasetId: string; when: string; title: string; description?: string })
   | ({ kind: "flowchart" } & { datasetId?: string; nodes: Array<{ id: string; label: string; kind?: "start" | "process" | "decision" | "end" }>; edges: Array<{ from: string; to: string; label?: string }> })
-  | ({ kind: "candlestick" } & { datasetId: string; time: string; open: string; high: string; low: string; close: string; volume?: string });
+  | ({ kind: "candlestick" } & { datasetId: string; time: string; open: string; high: string; low: string; close: string; volume?: string })
+  // Batch 3 — conceptual
+  | ({ kind: "mindmap" } & { layout?: "radial" | "tree"; nodes: Array<{ id: string; label: string; parent?: string; note?: string }> })
+  | ({ kind: "roadmap" } & { phases: Array<{ id: string; label: string; timeframe?: string; items: Array<{ id: string; label: string; status?: "planned" | "in-progress" | "done" | "at-risk"; note?: string }> }> })
+  | ({ kind: "decision-tree" } & { nodes: Array<{ id: string; label: string; kind?: "decision" | "option" | "outcome" }>; edges: Array<{ from: string; to: string; label?: string }> })
+  | ({ kind: "architecture" } & { layers: Array<{ id: string; label: string; components: Array<{ id: string; label: string; note?: string }> }>; connections?: Array<{ from: string; to: string; label?: string }> })
+  | ({ kind: "framework" } & { layout?: "quadrant" | "pillars"; sections: Array<{ id: string; label: string; tone?: "positive" | "negative" | "neutral"; items: string[] }> });
 
 /* ------------------------------------------------------------------ */
 /* The spec                                                            */
@@ -274,7 +420,10 @@ export const visualizationSpecSchema = z.object({
   kind: z.enum(VIZ_SPEC_KINDS as [VizSpecKind, ...VizSpecKind[]]),
   title: z.string().min(1).max(SPEC_LIMITS.maxTitleChars),
   description: z.string().max(SPEC_LIMITS.maxDescriptionChars).optional(),
-  datasets: z.array(vizDatasetSchema).min(1).max(SPEC_LIMITS.maxDatasets),
+  // Conceptual kinds (Batch 3) are structure-first and carry no datasets;
+  // data-driven kinds are required to have ≥1 dataset in cross-field
+  // validation (requireDatasetsForDataKinds below).
+  datasets: z.array(vizDatasetSchema).min(0).max(SPEC_LIMITS.maxDatasets),
   encoding: encodingSchema,
   provenance: z.enum(["source-verified", "ai-extracted", "unverified"]),
   sources: z.array(specSourceSchema).max(SPEC_LIMITS.maxSources),
@@ -305,6 +454,112 @@ export type VisualizationSpec = {
 export interface SpecValidationResult {
   ok: boolean;
   errors: string[];
+}
+
+/** Data-driven kinds must reference at least one real dataset. */
+const DATA_KINDS: VizSpecKind[] = [
+  "line", "bar", "bar-grouped", "area", "pie", "donut", "scatter", "radar",
+  "kpi-dashboard", "comparison-matrix", "timeline", "candlestick",
+];
+
+function requireDatasetsForDataKinds(spec: VisualizationSpec, errors: string[]): void {
+  if (DATA_KINDS.includes(spec.kind) && spec.datasets.length < 1) {
+    errors.push(`a "${spec.kind}" chart requires at least one dataset`);
+  }
+}
+
+/**
+ * Walk the parent chain of a mind node to detect cycles and over-deep
+ * branches. A malformed tree (parent loop, depth > maxMindDepth) is
+ * rejected — never silently flattened.
+ */
+function mindDepthAndCycleCheck(
+  nodes: Array<{ id: string; parent?: string }>,
+  errors: string[],
+): void {
+  const byId = new Map(nodes.map((n) => [n.id, n]));
+  let rootCount = 0;
+  for (const node of nodes) {
+    if (!node.parent) rootCount += 1;
+    else if (!byId.has(node.parent)) {
+      errors.push(`mindmap node "${node.id}" references unknown parent "${node.parent}"`);
+    }
+  }
+  if (rootCount !== 1) {
+    errors.push(`mindmap must have exactly one root node (no parent), found ${rootCount}`);
+  }
+  for (const node of nodes) {
+    const seen = new Set<string>([node.id]);
+    let current = node;
+    let depth = 0;
+    while (current.parent) {
+      if (seen.has(current.parent)) {
+        errors.push(`mindmap contains a parent cycle at node "${current.id}"`);
+        break;
+      }
+      seen.add(current.parent);
+      const next = byId.get(current.parent);
+      if (!next) break;
+      current = next;
+      depth += 1;
+      if (depth > SPEC_LIMITS.maxMindDepth) {
+        errors.push(`mindmap branch depth exceeds the maximum of ${SPEC_LIMITS.maxMindDepth} at node "${node.id}"`);
+        break;
+      }
+    }
+  }
+}
+
+function validateMindKind(spec: VisualizationSpec, enc: { nodes: Array<{ id: string; parent?: string }> }, errors: string[]): void {
+  const ids = new Set(enc.nodes.map((n) => n.id));
+  if (ids.size !== enc.nodes.length) errors.push("mindmap node ids must be unique");
+  mindDepthAndCycleCheck(enc.nodes, errors);
+}
+
+function validateRoadmapKind(spec: VisualizationSpec, enc: { phases: Array<{ id: string; items: Array<{ id: string }> }> }, errors: string[]): void {
+  const phaseIds = new Set(enc.phases.map((p) => p.id));
+  if (phaseIds.size !== enc.phases.length) errors.push("roadmap phase ids must be unique");
+  for (const phase of enc.phases) {
+    const itemIds = new Set(phase.items.map((i) => i.id));
+    if (itemIds.size !== phase.items.length) {
+      errors.push(`roadmap phase "${phase.id}" has duplicate item ids`);
+    }
+  }
+}
+
+function validateDecisionKind(spec: VisualizationSpec, enc: { nodes: Array<{ id: string; kind?: string }>; edges: Array<{ from: string; to: string }> }, errors: string[]): void {
+  const nodeIds = new Set(enc.nodes.map((n) => n.id));
+  if (nodeIds.size !== enc.nodes.length) errors.push("decision-tree node ids must be unique");
+  for (const edge of enc.edges) {
+    if (!nodeIds.has(edge.from)) errors.push(`decision-tree edge references unknown node "${edge.from}"`);
+    if (!nodeIds.has(edge.to)) errors.push(`decision-tree edge references unknown node "${edge.to}"`);
+  }
+  if (!enc.nodes.some((n) => (n.kind ?? "decision") === "decision")) {
+    errors.push("decision-tree requires at least one node of kind \"decision\"");
+  }
+}
+
+function validateArchitectureKind(spec: VisualizationSpec, enc: { layers: Array<{ id: string; components: Array<{ id: string }> }>; connections?: Array<{ from: string; to: string }> }, errors: string[]): void {
+  const layerIds = new Set(enc.layers.map((l) => l.id));
+  if (layerIds.size !== enc.layers.length) errors.push("architecture layer ids must be unique");
+  const componentIds = new Set<string>();
+  for (const layer of enc.layers) {
+    for (const comp of layer.components) {
+      if (componentIds.has(comp.id)) {
+        errors.push(`architecture component ids must be unique across layers — "${comp.id}" is duplicated`);
+      }
+      componentIds.add(comp.id);
+    }
+  }
+  for (const conn of enc.connections ?? []) {
+    if (!componentIds.has(conn.from)) errors.push(`architecture connection references unknown component "${conn.from}"`);
+    if (!componentIds.has(conn.to)) errors.push(`architecture connection references unknown component "${conn.to}"`);
+  }
+}
+
+function validateFrameworkKind(spec: VisualizationSpec, enc: { sections: Array<{ id: string }> }, errors: string[]): void {
+  const sectionIds = new Set(enc.sections.map((s) => s.id));
+  if (sectionIds.size !== enc.sections.length) errors.push("framework section ids must be unique");
 }
 
 const isNumericField = (f: VizField) => f.type === "number" || f.type === "currency";
@@ -539,6 +794,11 @@ export function validateVisualizationSpec(input: unknown): SpecValidationResult 
     return { ok: false, errors: ["schema: " + errors.join("; ")] };
   }
   const spec = parsed.data as unknown as VisualizationSpec;
+  return validateParsedSpec(spec);
+}
+
+/** Cross-field validation of an ALREADY schema-parsed (and thus stripped) spec. */
+function validateParsedSpec(spec: VisualizationSpec): SpecValidationResult {
   const errors: string[] = [];
 
   // Serialization cap — protects the encrypted metadata column.
@@ -549,6 +809,8 @@ export function validateVisualizationSpec(input: unknown): SpecValidationResult 
   } catch {
     errors.push("spec is not serializable");
   }
+
+  requireDatasetsForDataKinds(spec, errors);
 
   switch (spec.encoding.kind) {
     case "line":
@@ -582,6 +844,22 @@ export function validateVisualizationSpec(input: unknown): SpecValidationResult 
     case "candlestick":
       validateCandlestickKind(spec, spec.encoding, errors);
       break;
+    // Batch 3 — conceptual kinds
+    case "mindmap":
+      validateMindKind(spec, spec.encoding, errors);
+      break;
+    case "roadmap":
+      validateRoadmapKind(spec, spec.encoding, errors);
+      break;
+    case "decision-tree":
+      validateDecisionKind(spec, spec.encoding, errors);
+      break;
+    case "architecture":
+      validateArchitectureKind(spec, spec.encoding, errors);
+      break;
+    case "framework":
+      validateFrameworkKind(spec, spec.encoding, errors);
+      break;
   }
 
   // Provenance policy (approved D3): an "unverified" spec must not present
@@ -594,17 +872,32 @@ export function validateVisualizationSpec(input: unknown): SpecValidationResult 
   return errors.length === 0 ? { ok: true, errors: [] } : { ok: false, errors };
 }
 
-/** Parse-and-validate helper for specs restored from persistence. */
+/**
+ * Parse-and-validate helper for specs restored from persistence.
+ * Returns the SCHEMA-STRIPPED object (Zod drops unknown keys recursively),
+ * so injected properties can never reach a renderer or re-enter the
+ * persisted metadata — the no-smuggling boundary is enforced here, not
+ * just inside the validator.
+ */
 export function parseVisualizationSpec(raw: unknown): VisualizationSpec | null {
-  const result = validateVisualizationSpec(raw);
-  return result.ok ? (raw as VisualizationSpec) : null;
+  const parsed = visualizationSpecSchema.safeParse(raw);
+  if (!parsed.success) return null;
+  const spec = parsed.data as unknown as VisualizationSpec;
+  const result = validateParsedSpec(spec);
+  return result.ok ? spec : null;
 }
 
 /* ------------------------------------------------------------------ */
 /* Helpers used by the planner and renderers                           */
 /* ------------------------------------------------------------------ */
 
-/** Which kinds a given kind can be switched to from the chart-type menu. */
+/**
+ * Which kinds a given kind can be switched to from the chart-type menu.
+ * Batch 3: conceptual kinds are restructured through CONVERSATIONAL
+ * refinement (model-assisted, re-validated) rather than the deterministic
+ * menu, so their menu list is empty — the deterministic transformKind
+ * cannot honestly restructure a label graph into a chart or vice versa.
+ */
 export const COMPATIBLE_KINDS: Record<VizSpecKind, VizSpecKind[]> = {
   line: ["bar", "area", "bar-grouped", "comparison-matrix", "kpi-dashboard"],
   area: ["line", "bar", "bar-grouped", "comparison-matrix", "kpi-dashboard"],
@@ -619,6 +912,11 @@ export const COMPATIBLE_KINDS: Record<VizSpecKind, VizSpecKind[]> = {
   timeline: ["flowchart"],
   flowchart: ["timeline"],
   candlestick: ["line", "area"],
+  mindmap: [],
+  roadmap: [],
+  "decision-tree": [],
+  architecture: [],
+  framework: [],
 };
 
 /** Humanize a column key: "market_cap_usd" → "Market cap USD". */

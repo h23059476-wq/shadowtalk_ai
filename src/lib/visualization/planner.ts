@@ -104,10 +104,15 @@ export function hintToKind(hint: VizTypeHint): VizSpecKind | null {
     case "candlestick": return "candlestick";
     case "timeline": return "timeline";
     case "flowchart": return "flowchart";
+    case "workflow": return "flowchart"; // workflow/process-flow share the flowchart encoding
     case "mindmap":
     case "roadmap":
     case "decision-tree":
-      return null; // conceptual kinds planned via structured outlines in Batch 3
+    case "architecture":
+    case "framework":
+    case "hierarchy":
+    case "project-plan":
+      return null; // conceptual kinds are planned via the Batch 3 AI-assisted pipeline
     case "dashboard": return "kpi-dashboard";
     case "table": return "comparison-matrix";
     default: return null;
@@ -501,6 +506,13 @@ const FALLBACK_CHAIN: Record<VizSpecKind, VizSpecKind[]> = {
   timeline: ["bar", "line", "comparison-matrix"],
   flowchart: ["timeline", "comparison-matrix"],
   candlestick: ["line", "area", "kpi-dashboard"],
+  // Batch 3 — conceptual kinds have no deterministic data-chart fallback:
+  // they are built by the AI-assisted pipeline or not at all.
+  mindmap: [],
+  roadmap: [],
+  "decision-tree": [],
+  architecture: [],
+  framework: [],
 };
 
 /* ------------------------------------------------------------------ */
@@ -573,7 +585,7 @@ export function planVisualization(input: PlanVisualizationInput): PlanResult {
 
   let requestedKind: VizSpecKind | null = intent.requestedType ? hintToKind(intent.requestedType) : null;
   if (intent.requestedType && !requestedKind) {
-    notes.push(`"${intent.requestedType}" diagrams are planned from structured outlines (Batch 3) — showing the data chart instead`);
+    notes.push(`"${intent.requestedType}" diagrams are planned by the AI-assisted conceptual pipeline (Batch 3) — showing the data chart instead`);
   }
 
   if (requestedKind === null) {

@@ -21,13 +21,17 @@ import {
   Expand,
   GitBranch,
   LayoutDashboard,
+  Layers3,
   LineChart,
   ListTree,
+  ListChecks,
+  Network,
   PieChart,
   Radar as RadarIcon,
   Scale,
   ShieldAlert,
   ShieldCheck,
+  Sparkles,
   Table2,
   Tag,
 } from "lucide-react";
@@ -54,6 +58,7 @@ import { KpiDashboardRenderer } from "./KpiDashboardRenderer";
 import { ComparisonMatrixRenderer } from "./ComparisonMatrixRenderer";
 import { TimelineDiagramRenderer } from "./TimelineDiagramRenderer";
 import { FlowchartDiagramRenderer } from "./FlowchartDiagramRenderer";
+import { ConceptualDiagramRenderer } from "./ConceptualDiagramRenderer";
 import { formatFullTimestamp, freshnessLabel, provenanceBadge } from "./vizTheme";
 
 const KIND_ICON: Record<VizSpecKind, React.ComponentType<{ className?: string }>> = {
@@ -70,6 +75,12 @@ const KIND_ICON: Record<VizSpecKind, React.ComponentType<{ className?: string }>
   timeline: ListTree,
   flowchart: GitBranch,
   candlestick: CandlestickChart,
+  // Batch 3 — conceptual
+  mindmap: Network,
+  roadmap: ListChecks,
+  "decision-tree": GitBranch,
+  architecture: Layers3,
+  framework: Sparkles,
 };
 
 const KIND_LABEL: Record<VizSpecKind, string> = {
@@ -86,6 +97,12 @@ const KIND_LABEL: Record<VizSpecKind, string> = {
   timeline: "Timeline",
   flowchart: "Flowchart",
   candlestick: "Candlestick",
+  // Batch 3 — conceptual
+  mindmap: "Mind map",
+  roadmap: "Roadmap",
+  "decision-tree": "Decision tree",
+  architecture: "Architecture diagram",
+  framework: "Strategic framework",
 };
 
 export interface VisualizationContainerProps {
@@ -107,6 +124,13 @@ function SpecBody({ spec, height }: { spec: VisualizationSpec; height?: number }
       return <TimelineDiagramRenderer spec={spec} />;
     case "flowchart":
       return <FlowchartDiagramRenderer spec={spec} />;
+    // Batch 3 — conceptual kinds share one trusted renderer.
+    case "mindmap":
+    case "roadmap":
+    case "decision-tree":
+    case "architecture":
+    case "framework":
+      return <ConceptualDiagramRenderer spec={spec} height={height} />;
     default:
       return <DataChartRenderer spec={spec} height={height} />;
   }

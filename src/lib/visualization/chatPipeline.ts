@@ -16,6 +16,7 @@
  */
 
 import type { Citation, ResolverMessage, VizIntent } from "./types";
+import { conceptualHintToKind } from "./types";
 import { resolveResearchContext } from "./contextResolver";
 import {
   applyTimeRange,
@@ -25,8 +26,13 @@ import {
   type ComparisonAsset,
 } from "./planner";
 import { explainVisualization, escapeDollarsForMarkdown } from "./explain";
+import { explainConceptual } from "./conceptual/conceptExplain";
+import { handleConceptualRequest } from "./conceptual/conceptualPipeline";
+import type { ConceptModelCall, ConceptResearchCall } from "./conceptual/modelBridge";
+import { detectConceptRefineOp } from "./conceptual/refineOps";
 import {
   COMPATIBLE_KINDS,
+  isConceptualKind,
   parseVisualizationSpec,
   vizSpecId,
   VIZ_SPEC_KINDS,
@@ -164,6 +170,10 @@ interface PipelineInput {
   request: string;
   messages: PipelineMessage[];
   now?: Date;
+  /** Batch 3 — BYOK model completion for AI-assisted conceptual generation. */
+  model?: ConceptModelCall;
+  /** Batch 3 — provider-backed research call for gap-driven evidence. */
+  research?: ConceptResearchCall;
 }
 
 async function compareFlow(baseSymbol: string, targetSymbol: string, input: PipelineInput, requestedType?: VizSpecKind): Promise<VisualizationOutcome> {
@@ -416,12 +426,17 @@ function hintToKind(hint: VizIntent["requestedType"]): VizSpecKind | null {
     case "candlestick": return "candlestick";
     case "timeline": return "timeline";
     case "flowchart": return "flowchart";
+    case "workflow": return "flowchart";
     case "dashboard": return "kpi-dashboard";
     case "table": return "comparison-matrix";
     case "mindmap":
     case "roadmap":
     case "decision-tree":
-      return null;
+    case "architecture":
+    case "framework":
+    case "hierarchy":
+    case "project-plan":
+      return null; // routed to the Batch 3 conceptual pipeline before this map is consulted
     default: {
       void allowed;
       return null;
@@ -482,6 +497,10 @@ async function explainFlow(input: PipelineInput): Promise<VisualizationOutcome> 
   if (!existing) {
     return textMessage("There's no visualization in this conversation yet — ask me to create one first and then I'll explain exactly what it shows.");
   }
+  // Batch 3 — conceptual diagrams are narrated from their own structure.
+  if (isConceptualKind(existing.kind)) {
+    return textMessage(explainConceptual(existing));
+  }
   // The explanation is generated from the displayed dataset itself.
   const explanation = explainVisualization(existing);
   return textMessage(explanation);
@@ -494,11 +513,29 @@ async function explainFlow(input: PipelineInput): Promise<VisualizationOutcome> 
 /**
  * Handle a visualization intent. Throws only on programmer error — every
  * data failure is converted into an honest text outcome.
+ *
+ * Batch 3 routing: conceptual type hints and conceptual refinement ops
+ * go to the AI-assisted conceptual pipeline; everything else keeps the
+ * deterministic Batch 2 behavior.
  */
 export async function handleVisualizationRequest(input: PipelineInput): Promise<VisualizationOutcome> {
+  const conceptKind = input.intent.requestedType ? conceptualHintToKind(input.intent.requestedType) : null;
+
+  if (input.intent.kind === "explain") {
+    return explainFlow(input);
+  }
+
+  // Conceptual conversions and conceptual ops refine via the Batch 3
+  // pipeline (it resolves the referenced spec itself — "this", "the
+  // mindmap", or the most recent visualization).
+  if (input.intent.kind === "refine" && (conceptKind || detectConceptRefineOp(input.request))) {
+    return handleConceptualRequest(input);
+  }
+  if ((input.intent.kind === "create" || input.intent.kind === "refine") && conceptKind) {
+    return handleConceptualRequest(input);
+  }
+
   switch (input.intent.kind) {
-    case "explain":
-      return explainFlow(input);
     case "refine":
       return refineFlow(input);
     case "create":
