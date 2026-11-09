@@ -8,6 +8,7 @@
 import { fbAuth, functionsBaseUrl } from "@/integrations/firebase/app";
 import { getByokConfig, streamByokChat } from "@/lib/byok";
 import { getCachedAiAccessMode } from "@/lib/aiAccessMode";
+import type { Citation } from "@/lib/visualization/types";
 
 export type CloudChatContent =
   | string
@@ -49,6 +50,11 @@ export interface CloudChatResult {
   /** Upstream provider name when known (e.g. "openrouter" for the shared
    *  Firebase Function path, or the BYOK provider id). */
   provider?: string;
+  /** Provider-reported citations (Batch 1): OpenRouter web_search
+   *  `url_citation` annotations, Perplexity `citations`, Anthropic citation
+   *  deltas. Previously these were silently dropped at the SSE layer, which
+   *  made source-preserving visualizations impossible. */
+  citations?: Citation[];
 }
 
 export function isCloudChatConfigured(): boolean {

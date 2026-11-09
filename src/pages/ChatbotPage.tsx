@@ -114,6 +114,15 @@ import {
 import { reflectOnConversation, shouldReflect, type MemoryReflection } from "@/lib/memory/reflectionEngine";
 import { getActiveMemories, maybeReflectAndPersist } from "@/lib/memory/agentMemories";
 import { buildMemoryContext } from "@/lib/memory/promptInjector";
+// Batch R1 (Research-to-Visualization): structured research capture.
+import type { Citation, ResearchDataBlock } from "@/lib/visualization/types";
+import { extractResearchDataBlocks } from "@/lib/visualization/dataDoc";
+import {
+  buildMessageMetadata,
+  encodeMessageMetadata,
+  decodeMessageMetadata,
+  type ChatMessageMetadata,
+} from "@/lib/chatMessageMetadata";
 // Types
 interface Message { 
   id: string; 
@@ -131,6 +140,10 @@ interface Message {
   modelUsed?: string;
   /** Batch 4 — upstream provider name (e.g. "openai", "openrouter"). */
   provider?: string;
+  /** Batch R1 — provider-reported citations (web research), preserved from the SSE layer. */
+  citations?: Citation[];
+  /** Batch R1 — structured research datasets captured from ```shadowdata blocks. */
+  researchData?: ResearchDataBlock[];
 }
 type Conversation = {
   id: string;
@@ -435,12 +448,26 @@ const ChatbotPage = () => {
     }
     if (data && !error) {
       const loadedMessages: Message[] = await Promise.all(
-        data.map(async (m) => ({
-          id: m.id,
-          type: m.role === "user" ? "user" : "ai",
-          content: await chatPrivate.resolveDisplayText(m.content),
-          timestamp: new Date(m.created_at),
-        })),
+        data.map(async (m) => {
+          // Batch R1 — restore structured research metadata (citations,
+          // shadowdata datasets, provider provenance) through the SAME
+          // decrypt-or-passthrough resolver used for message content.
+          const meta = await decodeMessageMetadata(
+            (m as Record<string, unknown>).metadata,
+            (raw) => chatPrivate.resolveDisplayText(raw),
+          );
+          return {
+            id: m.id,
+            type: m.role === "user" ? "user" : "ai",
+            content: await chatPrivate.resolveDisplayText(m.content),
+            timestamp: new Date(m.created_at),
+            ...(meta?.citations?.length ? { citations: meta.citations } : {}),
+            ...(meta?.researchData?.length ? { researchData: meta.researchData } : {}),
+            ...(meta?.source ? { source: meta.source } : {}),
+            ...(meta?.modelUsed ? { modelUsed: meta.modelUsed } : {}),
+            ...(meta?.provider ? { provider: meta.provider } : {}),
+          };
+        }),
       );
       setMessages(
         loadedMessages.length === 0
@@ -843,7 +870,12 @@ const ChatbotPage = () => {
     return guestConvId;
   };
 
-  const saveMessage = async (content: string, role: 'user' | 'assistant', conversationId: string) => {
+  const saveMessage = async (
+    content: string,
+    role: 'user' | 'assistant',
+    conversationId: string,
+    metadata?: ChatMessageMetadata | null,
+  ) => {
     if (!user || !conversationId) return null;
     // Skip saving for guest conversations (no user account)
     if (isGuestConversationId(conversationId)) return null;
@@ -856,9 +888,23 @@ const ChatbotPage = () => {
         console.warn("[chat] private-mode encryption failed — message not persisted");
         return null;
       }
+      // Batch R1 — optional structured metadata (citations, research datasets,
+      // provenance) goes through the SAME encrypt-or-null gate as content.
+      // If encryption fails in private mode, the metadata field is skipped —
+      // it is never written as plaintext fallback (D4 security condition).
+      const metadataToSave = await encodeMessageMetadata(metadata, (plain) =>
+        chatPrivate.wrapForStorage(plain),
+      );
       const { data } = await backend
         .from('messages')
-        .insert({ conversation_id: conversationId, user_id: user.id, content: contentToSave, role, personality })
+        .insert({
+          conversation_id: conversationId,
+          user_id: user.id,
+          content: contentToSave,
+          role,
+          personality,
+          ...(metadataToSave ? { metadata: metadataToSave } : {}),
+        })
         .select().single();
       
       if (data && role === 'user' && messages.length <= 1) {
@@ -1159,10 +1205,22 @@ Structure and Content Guidelines:
           if (localResult.content) pushAssistant(localResult.content);
           finalizeAssistant();
 
+          // Batch R1 — capture structured shadowdata blocks from local replies
+          // (no citations: local inference has no web access).
+          const localResearchBlocks = extractResearchDataBlocks(localResult.content).blocks;
+          if (localResearchBlocks.length) {
+            setMessages((prev) => prev.map((m) =>
+              m.id === aiMessageId ? { ...m, researchData: localResearchBlocks } : m,
+            ));
+          }
+
           // Product bookkeeping (no cloud cost tracking — local is free).
           session.recordModelCall();
           if (localResult.content && user) {
-            void saveMessage(localResult.content, "assistant", conversationId).catch((e) =>
+            void saveMessage(localResult.content, "assistant", conversationId, buildMessageMetadata({
+              researchData: localResearchBlocks.length ? localResearchBlocks : undefined,
+              source: "local",
+            })).catch((e) =>
               console.warn("[chat] saveMessage(assistant/local) failed", e),
             );
           }
@@ -1192,7 +1250,7 @@ Structure and Content Guidelines:
         }
       }
 
-      const { content: streamedContent, error: cloudError, source: resultSource, modelUsed: resultModel, provider: resultProvider } = await streamCloudChat(cloudMessages, {
+      const { content: streamedContent, error: cloudError, source: resultSource, modelUsed: resultModel, provider: resultProvider, citations: resultCitations } = await streamCloudChat(cloudMessages, {
         signal: controller.signal,
         temperature: 0.7,
         maxTokens: 8192,
@@ -1225,6 +1283,23 @@ Structure and Content Guidelines:
       }
 
       finalizeAssistant();
+
+      // Batch R1 — capture research citations + structured shadowdata blocks
+      // so the assistant message carries source provenance into state and
+      // persistence (previously both were lost on reload).
+      const researchBlocks = extractResearchDataBlocks(assistantContent).blocks;
+      if (resultCitations?.length || researchBlocks.length) {
+        setMessages((prev) => prev.map((m) =>
+          m.id === aiMessageId
+            ? {
+                ...m,
+                ...(resultCitations?.length ? { citations: resultCitations } : {}),
+                ...(researchBlocks.length ? { researchData: researchBlocks } : {}),
+              }
+            : m,
+        ));
+      }
+
       // === Session monetization: record this model call + project cost ===
       const _outputTokens = Math.ceil((streamedContent || assistantContent || "").length / 4);
       const _inputTokens = Math.ceil(cloudMessages.reduce((n, m) => n + (typeof m.content === 'string' ? m.content.length : 0), 0) / 4);
@@ -1232,7 +1307,13 @@ Structure and Content Guidelines:
       session.recordModelCall();
       // SPEED: don't block UI on DB write — fire and forget.
       if (assistantContent && user) {
-        void saveMessage(assistantContent, "assistant", conversationId).catch((e) =>
+        void saveMessage(assistantContent, "assistant", conversationId, buildMessageMetadata({
+          citations: resultCitations,
+          researchData: researchBlocks.length ? researchBlocks : undefined,
+          source: assistantSource,
+          modelUsed: assistantModelUsed,
+          provider: assistantProvider,
+        })).catch((e) =>
           console.warn("[chat] saveMessage(assistant) failed", e),
         );
       }
@@ -1432,6 +1513,9 @@ Structure and Content Guidelines:
 
       try {
         let finalToolContent = "";
+        // Batch R1 — citations returned by research tools, preserved on the
+        // message for provenance-aware visualization downstream.
+        let toolCitations: Citation[] | undefined;
         // Image generation — BYOK only. Uses the user's own OpenAI or OpenRouter
         // key. No fallback to free services. If the key is missing or fails,
         // the error is shown to the user so they can fix their setup.
@@ -1460,6 +1544,7 @@ Structure and Content Guidelines:
           );
           if (result.kind === "inline") {
             finalToolContent = result.content;
+            toolCitations = result.citations;
             setMessages((prev) => prev.map((m) => m.id === toolMessageId ? {
               ...m,
               content: result.content,
@@ -1486,8 +1571,23 @@ Structure and Content Guidelines:
           session.recordModelCall();
         }
 
+        // Batch R1 — capture structured shadowdata + citations from tool
+        // output onto the message state and persistence.
+        const toolResearchBlocks = extractResearchDataBlocks(finalToolContent).blocks;
+        if (toolCitations?.length || toolResearchBlocks.length) {
+          setMessages((prev) => prev.map((m) => m.id === toolMessageId ? {
+            ...m,
+            ...(toolCitations?.length ? { citations: toolCitations } : {}),
+            ...(toolResearchBlocks.length ? { researchData: toolResearchBlocks } : {}),
+          } : m));
+        }
+
         // Save the tool execution as an assistant message
-        if (user) void saveMessage(finalToolContent, "assistant", conversationId).catch(() => {});
+        if (user) void saveMessage(finalToolContent, "assistant", conversationId, buildMessageMetadata({
+          citations: toolCitations,
+          researchData: toolResearchBlocks.length ? toolResearchBlocks : undefined,
+          tool: toolResult.tool,
+        })).catch(() => {});
         recordSuccessfulChatSession();
         recordFunnelEvent("first_reply");
         markHasChatted();

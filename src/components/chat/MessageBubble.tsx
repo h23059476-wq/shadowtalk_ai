@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { LazyMarkdown } from './LazyMarkdown';
 import { CodeBlock } from './CodeBlock';
+import { ResearchDataCard } from './ResearchDataCard';
 import { useToast } from '@/hooks/use-toast';
 import { DocumentArtifact, detectDocumentArtifact } from './DocumentArtifact';
 import { ToolExecutionCard } from './ToolExecutionCard';
@@ -93,6 +94,10 @@ interface Message {
   modelUsed?: string;
   /** Batch 4 — upstream provider name (e.g. "openai", "openrouter"). */
   provider?: string;
+  /** Batch R1 — provider-reported citations (web research), preserved from the SSE layer. */
+  citations?: Array<{ url: string; title?: string }>;
+  /** Batch R1 — structured research datasets captured from ```shadowdata blocks. */
+  researchData?: unknown[];
 }
 
 interface MessageBubbleProps {
@@ -277,6 +282,12 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
                     
                     const isShortSnippet = !match && !codeString.includes('\n') && codeString.length < 80;
                     
+                    // Batch R1 — render structured research-data blocks as a
+                    // compact capture card instead of a raw JSON dump. The full
+                    // JSON stays in message content and persistence.
+                    if (!inline && match?.[1] === 'shadowdata') {
+                      return <ResearchDataCard raw={codeString} />;
+                    }
                     if (!inline && match) {
                       return <CodeBlock code={codeString} language={match[1]} onOpenCanvas={onOpenCodeCanvas} onOpenIDE={onOpenIDE} onLaunchWebsite={onLaunchWebsite} />;
                     }
@@ -430,18 +441,31 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
           />
         )}
 
-        {/* Extracted URLs */}
+        {/* Extracted URLs / provider citations */}
         {!isUser && !isWelcome && (() => {
-          const urls = extractUrls(message.content);
+          // Batch R1 — prefer provider-reported citations (with titles) over
+          // regex extraction when available; fall back to the legacy scan.
+          const linkChips: Array<{ url: string; label: string }> = message.citations?.length
+            ? message.citations.map((c) => {
+                let domain = '';
+                try { domain = new URL(c.url).hostname.replace('www.', ''); } catch { domain = c.url.slice(0, 30); }
+                const label = (c.title && c.title.length > 3 ? c.title : domain).trim();
+                return { url: c.url, label: label.length > 28 ? label.slice(0, 28) + '…' : label };
+              })
+            : extractUrls(message.content).map((url) => {
+                let domain = '';
+                try { domain = new URL(url).hostname.replace('www.', ''); } catch { domain = url.slice(0, 30); }
+                return { url, label: domain };
+              });
+          // Dedupe by URL (citations can repeat across annotations).
+          const seen = new Set<string>();
+          const urls = linkChips.filter((c) => !seen.has(c.url) && seen.add(c.url));
           if (urls.length === 0) return null;
           const displayUrls = urls.slice(0, 3);
           
           return (
             <div className="flex flex-wrap items-center gap-1.5 mt-2">
-              {displayUrls.map((url, idx) => {
-                let domain = '';
-                try { domain = new URL(url).hostname.replace('www.', ''); } catch { domain = url.slice(0, 30); }
-                
+              {displayUrls.map(({ url, label }, idx) => {
                 return (
                   <div key={idx} className="flex items-center gap-1">
                     <Button
@@ -451,7 +475,7 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
                       className="h-7 px-3 text-[11px] gap-1.5 text-muted-foreground/60 hover:text-blue-400 rounded-full bg-muted/20 hover:bg-muted/40 transition-all"
                     >
                       <ExternalLink className="h-3 w-3" />
-                      {domain.length > 20 ? domain.slice(0, 20) + '...' : domain}
+                      {label}
                     </Button>
                     {onOpenInBrowser && (
                       <Button
@@ -581,6 +605,10 @@ export const MessageBubble = React.memo(MessageBubbleInner, (prev, next) => {
     prev.message.source === next.message.source &&
     prev.message.provider === next.message.provider &&
     prev.message.modelUsed === next.message.modelUsed &&
+    // Batch R1 — research citations/datasets arrive AFTER the content settles,
+    // so the comparator must react to them or the chips/card never render.
+    prev.message.citations === next.message.citations &&
+    prev.message.researchData === next.message.researchData &&
     prev.isLoading === next.isLoading &&
     prev.speakingMessageId === next.speakingMessageId &&
     prev.isSpeaking === next.isSpeaking

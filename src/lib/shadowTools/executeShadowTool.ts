@@ -3,6 +3,7 @@ import type { ToolType } from "@/hooks/useToolOrchestrator";
 import { chatAuthHeaders } from "./chatAuthHeaders";
 import type { ExecuteShadowToolContext, ShadowToolResult } from "./types";
 import { streamCloudChat } from "@/lib/cloudChat";
+import { WEB_SEARCH_SYSTEM_PROMPT, DEEP_RESEARCH_SYSTEM_PROMPT } from "./researchPrompts";
 
 const UI_ROUTES: Partial<Record<ToolType, { path: string; label: string }>> = {
 
@@ -33,7 +34,7 @@ export async function executeShadowTool(
     case "web_search": {
       const query = (p.query as string) || message;
       const response = await streamCloudChat([
-        { role: "system", content: "Search the web for current, relevant information. Include source URLs and clearly distinguish sourced facts from inference." },
+        { role: "system", content: WEB_SEARCH_SYSTEM_PROMPT },
         { role: "user", content: query },
       ], { webSearch: true, maxTokens: 3000 });
       if (response.error) throw new Error(response.error);
@@ -41,18 +42,25 @@ export async function executeShadowTool(
         kind: "inline",
         tool,
         content: `### Web search: ${query}\n\n${response.content || "The provider returned no search results."}`,
+        // Batch 1: preserve provider citations so visualizations can carry provenance.
+        ...(response.citations?.length ? { citations: response.citations } : {}),
       };
     }
 
     case "deep_research": {
       const query = (p.query as string) || message;
       const reportResp = await streamCloudChat([
-        { role: "system", content: "Conduct a thorough web-based research review. Gather multiple perspectives, cite source URLs next to claims, identify uncertainty, and finish with a concise conclusion." },
+        { role: "system", content: DEEP_RESEARCH_SYSTEM_PROMPT },
         { role: "user", content: query },
       ], { webSearch: true, maxTokens: 6000 });
       if (reportResp.error) throw new Error(reportResp.error);
       const report = reportResp.content;
-      return { kind: "inline", tool, content: report || "Research returned no content." };
+      return {
+        kind: "inline",
+        tool,
+        content: report || "Research returned no content.",
+        ...(reportResp.citations?.length ? { citations: reportResp.citations } : {}),
+      };
     }
 
     case "image_generator": {

@@ -11,6 +11,9 @@ interface Message {
   content: string;
   timestamp: Date;
   attachment?: { type: 'image' | 'file'; data: string; name: string; mimeType: string };
+  /** Batch R1 — forwarded to MessageBubble (research citations + structured datasets). */
+  citations?: Array<{ url: string; title?: string }>;
+  researchData?: unknown[];
 }
 
 interface ChatMessagesProps {
