@@ -26,6 +26,22 @@ jobs:
       - run: npm run build
       - run: npm ci --prefix functions
       - run: npm --prefix functions run build
+      # ------------------------------------------------------------------
+      # Firestore rules + indexes deploy on every main merge.
+      #
+      # Why this exists (2026-11-09 incident): the rules file is CI-tested
+      # against the emulator, but hosting deploys never shipped it. The
+      # ruleset live in the project predated the per-user data whitelist, so
+      # every conversations/messages write was rejected with permission-denied
+      # and new users' chats silently vanished on refresh. Deploying the rules
+      # together with the app makes this drift impossible going forward.
+      # ------------------------------------------------------------------
+      - name: Write Firebase service account for rules deploy
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > "$RUNNER_TEMP/firebase-sa.json"
+      - name: Deploy Firestore rules and indexes
+        run: npx --yes firebase-tools@14 deploy --only firestore:rules,firestore:indexes --project shadowtalk-ai-7a513 --force
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}

@@ -237,6 +237,51 @@ rulesDescribe("Firestore auth and profile rules", () => {
   });
 
   // ---------------------------------------------------------------
+  // Regression (2026-11-09 production incident): newly signed-up users
+  // could chat, but EVERY conversations/messages write was rejected with
+  // permission-denied because the DEPLOYED ruleset had drifted from the
+  // repo and lacked the per-user data whitelist — the app silently fell
+  // back to in-memory chats, which vanished on refresh. This pins the
+  // exact signup flow: an authenticated user with an UNVERIFIED email
+  // (the state right after createUserWithEmailAndPassword) must be able
+  // to persist chats. Guards against reintroducing an email-verification
+  // gate or a whitelist omission for the chat collections.
+  // ---------------------------------------------------------------
+  it("signup persistence flow: unverified new user can save conversations and messages", async () => {
+    const fresh = testEnv
+      .authenticatedContext("new-signup-uid", { email_verified: false })
+      .firestore();
+
+    // ensureConversation(): insert with user_id == auth.uid and a plain title.
+    await assertSucceeds(setDoc(doc(fresh, "conversations/conv-new"), {
+      user_id: "new-signup-uid", title: "New Chat",
+    }));
+    // saveMessage(): user + assistant rows scoped to that conversation.
+    await assertSucceeds(setDoc(doc(fresh, "messages/msg-u1"), {
+      user_id: "new-signup-uid", conversation_id: "conv-new", content: "Hello", role: "user",
+    }));
+    await assertSucceeds(setDoc(doc(fresh, "messages/msg-a1"), {
+      user_id: "new-signup-uid", conversation_id: "conv-new", content: "Hi!", role: "assistant",
+    }));
+    // loadConversations() / loadConversation(): owner-scoped lists after refresh.
+    const convs = await getDocs(
+      query(collection(fresh, "conversations"), where("user_id", "==", "new-signup-uid")),
+    );
+    expect(convs.size).toBe(1);
+    await assertSucceeds(getDocs(
+      query(
+        collection(fresh, "messages"),
+        where("conversation_id", "==", "conv-new"),
+        where("user_id", "==", "new-signup-uid"),
+      ),
+    ));
+    // First-message title update from saveMessage().
+    await assertSucceeds(updateDoc(doc(fresh, "conversations/conv-new"), {
+      title: "Hello", updated_at: serverTimestamp(),
+    }));
+  });
+
+  // ---------------------------------------------------------------
   // Final completion phase — seven previously-denied collections.
   // Access patterns verified against the actual client writers:
   //   strategyReports.ts, SearchHistory.tsx, useShadowCredits.ts,
