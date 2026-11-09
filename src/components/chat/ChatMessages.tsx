@@ -11,6 +11,11 @@ interface Message {
   content: string;
   timestamp: Date;
   attachment?: { type: 'image' | 'file'; data: string; name: string; mimeType: string };
+  /** Batch R1 — forwarded to MessageBubble (research citations + structured datasets). */
+  citations?: Array<{ url: string; title?: string }>;
+  researchData?: unknown[];
+  /** Batch 2 — visualization artifact (validated spec) attached to the reply. */
+  visualization?: unknown;
 }
 
 interface ChatMessagesProps {
@@ -32,6 +37,10 @@ interface ChatMessagesProps {
   onConfirmTool?: (messageId: string) => void;
   onCancelTool?: (messageId: string) => void;
   onShareReply?: (content: string) => void;
+  /** Batch 2 — transform a visualization spec to a compatible kind. */
+  onVizTransform?: (messageId: string, spec: unknown, targetKind: string) => void;
+  /** Batch 2 — notes from infeasible transforms, keyed by message id. */
+  vizTransformNotes?: Record<string, string>;
   messagesEndRef: React.RefObject<HTMLDivElement>;
   thinkingStage?: 'understanding' | 'reasoning' | 'generating' | 'refining' | null;
   layout?: 'default' | 'gemini' | 'shadow-pulse';
@@ -56,6 +65,8 @@ export const ChatMessagesInner: React.FC<ChatMessagesProps> = ({
   onLaunchWebsite,
   onOpenInBrowser,
   onShareReply,
+  onVizTransform,
+  vizTransformNotes,
   messagesEndRef,
   thinkingStage,
   layout = 'default',
@@ -148,6 +159,8 @@ export const ChatMessagesInner: React.FC<ChatMessagesProps> = ({
             enterpriseShare={enterpriseShare}
             includeReferralInShare={includeReferralInShare}
             layout={isGemini ? 'gemini' : 'default'}
+            onVizTransform={onVizTransform}
+            vizTransformNote={vizTransformNotes?.[msg.id]}
           />
         ))}
 

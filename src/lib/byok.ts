@@ -3,7 +3,60 @@
  * their device and used directly from the browser for the signed-in account.
  */
 import type { CloudChatMessage, CloudChatOptions, CloudChatResult } from "@/lib/cloudChat";
+import type { Citation } from "@/lib/visualization/types";
 import { fbAuth } from "@/integrations/firebase/app";
+
+/**
+ * Batch 1 (Research-to-Visualization) — citation capture.
+ *
+ * Provider web-search citations used to be destroyed at the SSE layer (only
+ * `delta.content` was read), which made source-preserving visualization
+ * impossible. These collectors gather citations from every provider shape we
+ * support, dedupe by URL, and cap the list. Parsing is defensive: an
+ * unexpected annotation shape must never break a stream.
+ */
+
+const MAX_CITATIONS = 50;
+
+class CitationCollector {
+  private byUrl = new Map<string, Citation>();
+
+  add(url: unknown, title?: unknown): void {
+    if (typeof url !== "string") return;
+    const trimmed = url.trim();
+    if (!trimmed || this.byUrl.has(trimmed) || this.byUrl.size >= MAX_CITATIONS) return;
+    this.byUrl.set(trimmed, { url: trimmed, ...(typeof title === "string" && title ? { title } : {}) });
+  }
+
+  /** OpenRouter web-search annotations: [{ type: "url_citation", url_citation: { url, title, … } }]. */
+  addOpenRouterAnnotations(value: unknown): void {
+    if (!Array.isArray(value)) return;
+    for (const ann of value) {
+      const urlCitation = (ann as { url_citation?: { url?: unknown; title?: unknown } } | null)?.url_citation;
+      if (urlCitation?.url) this.add(urlCitation.url, urlCitation.title);
+    }
+  }
+
+  /** Perplexity: top-level `citations` (string[] or objects) + `search_results` ([{ title, url }]). */
+  addPerplexityCitations(value: unknown): void {
+    if (!Array.isArray(value)) return;
+    for (const entry of value) {
+      if (typeof entry === "string") this.add(entry);
+      else if (entry && typeof entry === "object") {
+        const record = entry as { url?: unknown; title?: unknown };
+        if (record.url) this.add(record.url, record.title);
+      }
+    }
+  }
+
+  addSearchResults(value: unknown): void {
+    this.addPerplexityCitations(value);
+  }
+
+  toList(): Citation[] | undefined {
+    return this.byUrl.size > 0 ? [...this.byUrl.values()] : undefined;
+  }
+}
 
 export type ByokProvider =
   | "openai"
@@ -183,6 +236,7 @@ async function streamAnthropicChat(
   // invalid_request, runtime errors). Swallowing them made truncated or
   // failed streams look like successful empty answers.
   let streamError: string | null = null;
+  const citations = new CitationCollector();
 
   const handleDataLine = (payload: string): boolean => {
     if (!payload) return true;
@@ -191,6 +245,10 @@ async function streamAnthropicChat(
       if (event?.type === "content_block_delta" && typeof event.delta?.text === "string") {
         content += event.delta.text;
         opts.onDelta?.(content);
+      } else if (event?.type === "content_block_delta" && event.delta?.type === "citations_delta") {
+        // Batch 1: Anthropic web-search citation deltas.
+        const citation = event.delta.citation as { url?: unknown; title?: unknown } | undefined;
+        if (citation?.url) citations.add(citation.url, citation.title);
       } else if (event?.type === "error") {
         streamError = event.error?.message || "Anthropic reported a mid-stream error.";
       }
@@ -224,9 +282,9 @@ async function streamAnthropicChat(
   }
 
   if (streamError) {
-    return { content, error: streamError, source: "byok" };
+    return { content, error: streamError, source: "byok", citations: citations.toList() };
   }
-  return { content, source: "byok", modelUsed: opts.model || cfg.model };
+  return { content, source: "byok", modelUsed: opts.model || cfg.model, citations: citations.toList() };
 }
 
 /** Stream a chat completion directly from the user's own provider. */
@@ -293,6 +351,7 @@ export async function streamByokChat(
   // OpenAI-compatible gateways emit `data: {"error": ...}` events mid-stream;
   // ignoring them made failed streams look like successful empty answers.
   let streamError: string | null = null;
+  const citations = new CitationCollector();
 
   const handleDataLine = (payload: string): boolean => {
     if (!payload || payload === "[DONE]") return true;
@@ -305,11 +364,16 @@ export async function streamByokChat(
             : parsed.error?.message || `${provider.label} reported a mid-stream error.`;
         return true;
       }
-      const delta = parsed?.choices?.[0]?.delta?.content;
+      const choice = parsed?.choices?.[0];
+      const delta = choice?.delta?.content;
       if (delta) {
         content += delta;
         opts.onDelta?.(content);
       }
+      // Batch 1: preserve provider web-search citations instead of dropping them.
+      if (choice?.delta?.annotations) citations.addOpenRouterAnnotations(choice.delta.annotations);
+      if (Array.isArray(parsed?.citations)) citations.addPerplexityCitations(parsed.citations);
+      if (Array.isArray(parsed?.search_results)) citations.addSearchResults(parsed.search_results);
       return true;
     } catch {
       return false;
@@ -340,7 +404,7 @@ export async function streamByokChat(
   }
 
   if (streamError) {
-    return { content, error: streamError, source: "byok" };
+    return { content, error: streamError, source: "byok", citations: citations.toList() };
   }
-  return { content, source: "byok", modelUsed: opts.model || cfg.model };
+  return { content, source: "byok", modelUsed: opts.model || cfg.model, citations: citations.toList() };
 }

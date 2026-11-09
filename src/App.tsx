@@ -47,6 +47,8 @@ const AuthDesignGalleryPage = lazy(() => import("./pages/AuthDesignGalleryPage")
 const AuthDesignPreviewPage = lazy(() => import("./pages/AuthDesignPreviewPage"));
 const SharedAnswerPage = lazy(() => import("./pages/SharedAnswerPage"));
 const DocsPage = lazy(() => import("./pages/DocsPage"));
+// Batch 2 — dev-only visualization demo (redirects to /chatbot in prod builds).
+const VizDemoPage = lazy(() => import("./pages/dev/VizDemoPage"));
 const ChangelogPage = lazy(() => import("./pages/ChangelogPage"));
 const PrivateAiHubPage = lazy(() => import("./pages/PrivateAiHubPage"));
 const FounderPage = lazy(() => import("./pages/FounderPage"));
@@ -157,6 +159,7 @@ const AnimatedRoutes = () => {
           <Route path="/auth/designs" element={<Navigate to="/auth" replace />} />
           <Route path="/auth/preview/:designId" element={<Navigate to="/auth" replace />} />
           <Route path="/docs" element={<PageTransition><DocsPage /></PageTransition>} />
+          <Route path="/dev/viz-demo" element={<Suspense fallback={<PageLoader />}><PageTransition><VizDemoPage /></PageTransition></Suspense>} />
           <Route path="/s/:slug" element={<Suspense fallback={<PageLoader />}><SharedAnswerPage /></Suspense>} />
           <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
           <Route path="/pricing" element={<PageTransition><PricingPage /></PageTransition>} />

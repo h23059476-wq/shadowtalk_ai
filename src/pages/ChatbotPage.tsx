@@ -114,6 +114,21 @@ import {
 import { reflectOnConversation, shouldReflect, type MemoryReflection } from "@/lib/memory/reflectionEngine";
 import { getActiveMemories, maybeReflectAndPersist } from "@/lib/memory/agentMemories";
 import { buildMemoryContext } from "@/lib/memory/promptInjector";
+// Batch R1 (Research-to-Visualization): structured research capture.
+import type { Citation, ResearchDataBlock } from "@/lib/visualization/types";
+import { extractResearchDataBlocks } from "@/lib/visualization/dataDoc";
+// Batch 2: visualization specs, planning and chat pipeline.
+import type { VizSpecKind, VisualizationSpec } from "@/lib/visualization/spec";
+import { transformKind } from "@/lib/visualization/planner";
+import { detectVisualizationIntent } from "@/lib/visualization/intentDetector";
+import {
+  handleVisualizationRequest,
+  lastVisualizationSpec,
+  type PipelineMessage,
+} from "@/lib/visualization/chatPipeline";
+// Batch 3: AI-assisted conceptual generation — model/research call contracts.
+import type { ConceptModelCall, ConceptResearchCall } from "@/lib/visualization/conceptual/modelBridge";
+import { buildMessageMetadata, encodeMessageMetadata, decodeMessageMetadata, type ChatMessageMetadata } from "@/lib/chatMessageMetadata";
 // Types
 interface Message { 
   id: string; 
@@ -131,6 +146,12 @@ interface Message {
   modelUsed?: string;
   /** Batch 4 — upstream provider name (e.g. "openai", "openrouter"). */
   provider?: string;
+  /** Batch R1 — provider-reported citations (web research), preserved from the SSE layer. */
+  citations?: Citation[];
+  /** Batch R1 — structured research datasets captured from ```shadowdata blocks. */
+  researchData?: ResearchDataBlock[];
+  /** Batch 2 — visualization artifact (validated spec) attached to this reply. */
+  visualization?: VisualizationSpec;
 }
 type Conversation = {
   id: string;
@@ -435,12 +456,29 @@ const ChatbotPage = () => {
     }
     if (data && !error) {
       const loadedMessages: Message[] = await Promise.all(
-        data.map(async (m) => ({
-          id: m.id,
-          type: m.role === "user" ? "user" : "ai",
-          content: await chatPrivate.resolveDisplayText(m.content),
-          timestamp: new Date(m.created_at),
-        })),
+        data.map(async (m) => {
+          // Batch R1 — restore structured research metadata (citations,
+          // shadowdata datasets, provider provenance) through the SAME
+          // decrypt-or-passthrough resolver used for message content.
+          const meta = await decodeMessageMetadata(
+            (m as Record<string, unknown>).metadata,
+            (raw) => chatPrivate.resolveDisplayText(raw),
+          );
+          return {
+            id: m.id,
+            type: m.role === "user" ? "user" : "ai",
+            content: await chatPrivate.resolveDisplayText(m.content),
+            timestamp: new Date(m.created_at),
+            ...(meta?.citations?.length ? { citations: meta.citations } : {}),
+            ...(meta?.researchData?.length ? { researchData: meta.researchData } : {}),
+            ...(meta?.source ? { source: meta.source } : {}),
+            ...(meta?.modelUsed ? { modelUsed: meta.modelUsed } : {}),
+            ...(meta?.provider ? { provider: meta.provider } : {}),
+            // Batch 2 — restored visualization artifacts survive reloads
+            // (decodeMessageMetadata re-validates the spec before restore).
+            ...(meta?.visualizations?.length ? { visualization: meta.visualizations[0] } : {}),
+          };
+        }),
       );
       setMessages(
         loadedMessages.length === 0
@@ -843,7 +881,12 @@ const ChatbotPage = () => {
     return guestConvId;
   };
 
-  const saveMessage = async (content: string, role: 'user' | 'assistant', conversationId: string) => {
+  const saveMessage = async (
+    content: string,
+    role: 'user' | 'assistant',
+    conversationId: string,
+    metadata?: ChatMessageMetadata | null,
+  ) => {
     if (!user || !conversationId) return null;
     // Skip saving for guest conversations (no user account)
     if (isGuestConversationId(conversationId)) return null;
@@ -856,9 +899,23 @@ const ChatbotPage = () => {
         console.warn("[chat] private-mode encryption failed — message not persisted");
         return null;
       }
+      // Batch R1 — optional structured metadata (citations, research datasets,
+      // provenance) goes through the SAME encrypt-or-null gate as content.
+      // If encryption fails in private mode, the metadata field is skipped —
+      // it is never written as plaintext fallback (D4 security condition).
+      const metadataToSave = await encodeMessageMetadata(metadata, (plain) =>
+        chatPrivate.wrapForStorage(plain),
+      );
       const { data } = await backend
         .from('messages')
-        .insert({ conversation_id: conversationId, user_id: user.id, content: contentToSave, role, personality })
+        .insert({
+          conversation_id: conversationId,
+          user_id: user.id,
+          content: contentToSave,
+          role,
+          personality,
+          ...(metadataToSave ? { metadata: metadataToSave } : {}),
+        })
         .select().single();
       
       if (data && role === 'user' && messages.length <= 1) {
@@ -1159,10 +1216,22 @@ Structure and Content Guidelines:
           if (localResult.content) pushAssistant(localResult.content);
           finalizeAssistant();
 
+          // Batch R1 — capture structured shadowdata blocks from local replies
+          // (no citations: local inference has no web access).
+          const localResearchBlocks = extractResearchDataBlocks(localResult.content).blocks;
+          if (localResearchBlocks.length) {
+            setMessages((prev) => prev.map((m) =>
+              m.id === aiMessageId ? { ...m, researchData: localResearchBlocks } : m,
+            ));
+          }
+
           // Product bookkeeping (no cloud cost tracking — local is free).
           session.recordModelCall();
           if (localResult.content && user) {
-            void saveMessage(localResult.content, "assistant", conversationId).catch((e) =>
+            void saveMessage(localResult.content, "assistant", conversationId, buildMessageMetadata({
+              researchData: localResearchBlocks.length ? localResearchBlocks : undefined,
+              source: "local",
+            })).catch((e) =>
               console.warn("[chat] saveMessage(assistant/local) failed", e),
             );
           }
@@ -1192,7 +1261,7 @@ Structure and Content Guidelines:
         }
       }
 
-      const { content: streamedContent, error: cloudError, source: resultSource, modelUsed: resultModel, provider: resultProvider } = await streamCloudChat(cloudMessages, {
+      const { content: streamedContent, error: cloudError, source: resultSource, modelUsed: resultModel, provider: resultProvider, citations: resultCitations } = await streamCloudChat(cloudMessages, {
         signal: controller.signal,
         temperature: 0.7,
         maxTokens: 8192,
@@ -1225,6 +1294,23 @@ Structure and Content Guidelines:
       }
 
       finalizeAssistant();
+
+      // Batch R1 — capture research citations + structured shadowdata blocks
+      // so the assistant message carries source provenance into state and
+      // persistence (previously both were lost on reload).
+      const researchBlocks = extractResearchDataBlocks(assistantContent).blocks;
+      if (resultCitations?.length || researchBlocks.length) {
+        setMessages((prev) => prev.map((m) =>
+          m.id === aiMessageId
+            ? {
+                ...m,
+                ...(resultCitations?.length ? { citations: resultCitations } : {}),
+                ...(researchBlocks.length ? { researchData: researchBlocks } : {}),
+              }
+            : m,
+        ));
+      }
+
       // === Session monetization: record this model call + project cost ===
       const _outputTokens = Math.ceil((streamedContent || assistantContent || "").length / 4);
       const _inputTokens = Math.ceil(cloudMessages.reduce((n, m) => n + (typeof m.content === 'string' ? m.content.length : 0), 0) / 4);
@@ -1232,7 +1318,13 @@ Structure and Content Guidelines:
       session.recordModelCall();
       // SPEED: don't block UI on DB write — fire and forget.
       if (assistantContent && user) {
-        void saveMessage(assistantContent, "assistant", conversationId).catch((e) =>
+        void saveMessage(assistantContent, "assistant", conversationId, buildMessageMetadata({
+          citations: resultCitations,
+          researchData: researchBlocks.length ? researchBlocks : undefined,
+          source: assistantSource,
+          modelUsed: assistantModelUsed,
+          provider: assistantProvider,
+        })).catch((e) =>
           console.warn("[chat] saveMessage(assistant) failed", e),
         );
       }
@@ -1339,6 +1431,163 @@ Structure and Content Guidelines:
     }
   };
 
+  // =================== Batch 2 — visualization pipeline ===================
+  // Handles /visualize + natural-language visualization intents. The pipeline
+  // (src/lib/visualization/chatPipeline.ts) is deterministic: it resolves the
+  // session's research context, plans/validates a spec, and returns honest
+  // text on any failure. This wrapper only wires React state + persistence.
+
+  /** Firestore row ids for assistant messages (metadata updates on transforms). */
+  const vizRowIdsRef = useRef<Map<string, string>>(new Map());
+  const [vizTransformNotes, setVizTransformNotes] = useState<Record<string, string>>({});
+
+  const toPipelineMessages = (list: Message[]): PipelineMessage[] =>
+    list
+      .filter((m) => m.id !== "welcome")
+      .map((m) => ({
+        id: m.id,
+        type: m.type,
+        content: m.content,
+        ...(m.citations?.length ? { citations: m.citations } : {}),
+        ...(m.researchData?.length ? { researchData: m.researchData } : {}),
+        ...(m.toolExecution ? { toolExecution: { tool: m.toolExecution.tool, status: m.toolExecution.status } } : {}),
+        ...(m.visualization ? { visualization: m.visualization } : {}),
+      }));
+
+  /**
+   * Batch 3 — BYOK model completion for AI-assisted conceptual diagrams.
+   * Uses streamCloudChat, which respects the user's access mode and their
+   * OWN key (BYOK-only preserved; no shared keys, no provider switching).
+   * structuredOutput requests JSON from the provider when supported.
+   */
+  const vizModelCall: ConceptModelCall = useCallback(async ({ system, user, maxTokens, structuredOutput }) => {
+    const res = await streamCloudChat(
+      [
+        { role: "system", content: system },
+        { role: "user", content: user },
+      ],
+      {
+        ...(structuredOutput ? { structuredOutput: true } : {}),
+        maxTokens: maxTokens ?? 2000,
+      },
+    );
+    if (res.error) throw new Error(res.error);
+    return { content: res.content, ...(res.citations?.length ? { citations: res.citations } : {}) };
+  }, []);
+
+  /**
+   * Batch 3 — gap-driven research call. Uses the existing web_search tool
+   * (provider-backed, citation-preserving — Batch R1). Throws propagate;
+   * the pipeline converts them into honest limitation notes.
+   */
+  const vizResearchCall: ConceptResearchCall = useCallback(
+    async ({ query }) => {
+      const res = await executeShadowTool("web_search", { query }, query, {
+        personality,
+        mode: chatMode,
+      });
+      if (res.kind !== "inline") throw new Error("Research tool did not return text results.");
+      return { content: res.content, ...(res.citations?.length ? { citations: res.citations } : {}) };
+    },
+    [personality, chatMode],
+  );
+
+  const runVisualizationRequest = async (
+    intent: { kind: "create" | "refine" | "explain"; requestedType?: import("@/lib/visualization/types").VizTypeHint; timeRange?: string; compareTarget?: string; interactive?: boolean; confidence: number },
+    requestText: string,
+    sessionMessages: Message[],
+  ) => {
+    const vizMessageId = (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `viz-${Date.now()}`);
+    setIsLoading(true);
+    setMessages((prev) => [...prev, { id: vizMessageId, type: "ai", content: "", timestamp: new Date() }]);
+    try {
+      const outcome = await handleVisualizationRequest({
+        intent,
+        request: requestText,
+        messages: toPipelineMessages(sessionMessages),
+        // Batch 3 — AI-assisted conceptual generation + gap-driven research.
+        model: vizModelCall,
+        research: vizResearchCall,
+      });
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === vizMessageId
+            ? {
+                ...m,
+                content: outcome.content,
+                ...(outcome.spec ? { visualization: outcome.spec } : {}),
+                ...(outcome.citations?.length ? { citations: outcome.citations } : {}),
+              }
+            : m,
+        ),
+      );
+      recordSuccessfulChatSession();
+      // Persist through the SAME encrypt-or-null metadata gate as chat
+      // content (approved D4 approach). Guest conversations skip storage.
+      const conversationId = await resolveConversationId();
+      if (user && conversationId && !isGuestConversationId(conversationId)) {
+        const row = await saveMessage(
+          outcome.content,
+          "assistant",
+          conversationId,
+          buildMessageMetadata({
+            citations: outcome.citations,
+            source: "shadowviz",
+            tool: "visualization",
+            visualizations: outcome.spec ? [outcome.spec] : undefined,
+          }),
+        ).catch((e) => {
+          console.warn("[viz] saveMessage(visualization) failed", e);
+          return null;
+        });
+        if (row?.id) vizRowIdsRef.current.set(vizMessageId, row.id);
+      }
+    } catch (err) {
+      const errMsg = err instanceof Error ? err.message : "Visualization failed.";
+      setMessages((prev) => prev.map((m) => (m.id === vizMessageId ? { ...m, content: `⚠️ ${errMsg}` } : m)));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  /** Type-switch handler wired into the visualization card toolbar. */
+  const handleVizTransform = async (messageId: string, spec: VisualizationSpec, targetKind: VizSpecKind) => {
+    const result = transformKind(spec, targetKind, new Date());
+    if (result.status === "unavailable") {
+      setVizTransformNotes((prev) => ({ ...prev, [messageId]: result.reason }));
+      return;
+    }
+    setVizTransformNotes((prev) => {
+      const next = { ...prev };
+      delete next[messageId];
+      return next;
+    });
+    setMessages((prev) => prev.map((m) => (m.id === messageId ? { ...m, visualization: result.spec } : m)));
+    // Persist the transform on the stored row so it survives reloads.
+    const rowId = vizRowIdsRef.current.get(messageId) ?? messageId;
+    const msg = messages.find((m) => m.id === messageId);
+    const conversationId = await resolveConversationId();
+    if (!user || !msg || !conversationId || isGuestConversationId(conversationId)) return;
+    try {
+      const metadata = buildMessageMetadata({
+        citations: msg.citations,
+        researchData: msg.researchData,
+        source: msg.source,
+        modelUsed: msg.modelUsed,
+        provider: msg.provider,
+        tool: "visualization",
+        visualizations: [result.spec],
+      });
+      const toSave = await encodeMessageMetadata(metadata, (plain) => chatPrivate.wrapForStorage(plain));
+      // Private-mode encryption failure → skip the update (never plaintext).
+      if (toSave) {
+        await backend.from("messages").update({ metadata: toSave }).eq("id", rowId);
+      }
+    } catch (e) {
+      console.warn("[viz] persist transform failed", e);
+    }
+  };
+
   const handleSendMessage = async (overrideText?: string) => {
     const msgContent = (overrideText ?? message).trim();
     if ((!msgContent && !selectedFile) || isLoading) return;
@@ -1403,6 +1652,29 @@ Structure and Content Guidelines:
     // Yield briefly to allow the browser to paint the optimistic updates
     await new Promise(resolve => requestAnimationFrame(resolve));
 
+    // === Batch 2 — visualization intents (/visualize + natural language) ===
+    // Runs BEFORE tool interception so "/visualize …" is never hijacked by
+    // another tool, and so viz requests resolve the session's research
+    // context instead of starting unrelated research. Attachments take the
+    // normal chat path (visualizations analyze structured data, not files).
+    if (!selectedFile) {
+      const vizIntent = detectVisualizationIntent(msgContent);
+      const hasLiveSpec = lastVisualizationSpec(toPipelineMessages(messages)) !== null;
+      const bareCompareMatch = vizIntent
+        ? null
+        : msgContent.match(/\bcompare\s+[\w.-]+\s+(?:with|vs\.?|versus|against|and)\s+([\w .-]{2,40}?)(?=\s+(?:in|on|as|using|over|under|during|for|per|to)\b|[.?!]|$)/i);
+      const vizBareCompare = !vizIntent && hasLiveSpec && bareCompareMatch !== null;
+      if (vizIntent || vizBareCompare) {
+        const intent = vizIntent ?? {
+          kind: "refine" as const,
+          compareTarget: bareCompareMatch?.[1]?.trim(),
+          confidence: 0.7,
+        };
+        await runVisualizationRequest(intent, msgContent, [...messages, userMessage]);
+        return;
+      }
+    }
+
     // === Tool interception ===
     // Check if the message triggers a tool (image generation, web search, etc.)
     // before sending it to the text completion API. Strip slash-command prefixes
@@ -1432,6 +1704,9 @@ Structure and Content Guidelines:
 
       try {
         let finalToolContent = "";
+        // Batch R1 — citations returned by research tools, preserved on the
+        // message for provenance-aware visualization downstream.
+        let toolCitations: Citation[] | undefined;
         // Image generation — BYOK only. Uses the user's own OpenAI or OpenRouter
         // key. No fallback to free services. If the key is missing or fails,
         // the error is shown to the user so they can fix their setup.
@@ -1460,6 +1735,7 @@ Structure and Content Guidelines:
           );
           if (result.kind === "inline") {
             finalToolContent = result.content;
+            toolCitations = result.citations;
             setMessages((prev) => prev.map((m) => m.id === toolMessageId ? {
               ...m,
               content: result.content,
@@ -1486,8 +1762,23 @@ Structure and Content Guidelines:
           session.recordModelCall();
         }
 
+        // Batch R1 — capture structured shadowdata + citations from tool
+        // output onto the message state and persistence.
+        const toolResearchBlocks = extractResearchDataBlocks(finalToolContent).blocks;
+        if (toolCitations?.length || toolResearchBlocks.length) {
+          setMessages((prev) => prev.map((m) => m.id === toolMessageId ? {
+            ...m,
+            ...(toolCitations?.length ? { citations: toolCitations } : {}),
+            ...(toolResearchBlocks.length ? { researchData: toolResearchBlocks } : {}),
+          } : m));
+        }
+
         // Save the tool execution as an assistant message
-        if (user) void saveMessage(finalToolContent, "assistant", conversationId).catch(() => {});
+        if (user) void saveMessage(finalToolContent, "assistant", conversationId, buildMessageMetadata({
+          citations: toolCitations,
+          researchData: toolResearchBlocks.length ? toolResearchBlocks : undefined,
+          tool: toolResult.tool,
+        })).catch(() => {});
         recordSuccessfulChatSession();
         recordFunnelEvent("first_reply");
         markHasChatted();
@@ -2258,6 +2549,8 @@ Structure and Content Guidelines:
                     enterpriseShare={enterprise.isEnterpriseUser}
                     includeReferralInShare={enterprise.includeReferralInShare}
                     onConfirmTool={handleConfirmTool}
+                    onVizTransform={handleVizTransform}
+                    vizTransformNotes={vizTransformNotes}
                     messagesEndRef={messagesEndRef}
                     layout="gemini"
                   />

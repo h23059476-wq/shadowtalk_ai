@@ -89,6 +89,10 @@ const TOOL_PATTERNS: Array<{
     patterns: [
       /\b(deep\s+research|research\s+deeply|in[- ]?depth\s+(research|analysis|dive))\b/i,
       /\b(research|investigate|analyze)\s+(competitors|market|industry|topic)\b/i,
+      // Batch 2 — allow words between the verb and the topic noun so natural
+      // requests like "Research the current USDT market" route to research
+      // (with web search + shadowdata capture) instead of plain chat.
+      /\b(?:research|investigate)\b[^.?!]{0,40}?\b(?:market|industry|topic|competitors?|landscape|trends?)\b/i,
     ],
     priority: 8,
     autoExecute: true,
@@ -222,31 +226,39 @@ export function executeCalculator(expression: string): string {
   }
 }
 
-export const useToolOrchestrator = () => {
-  const detectTool = useCallback((message: string): ToolDetectionResult => {
-    const normalizedMessage = message.trim().toLowerCase();
-    if (!normalizedMessage || normalizedMessage.length < 3) {
-      return { tool: null, confidence: 0 };
-    }
-    let bestMatch: ToolDetectionResult = { tool: null, confidence: 0 };
-    for (const toolDef of TOOL_PATTERNS) {
-      for (const pattern of toolDef.patterns) {
-        if (pattern.test(message)) {
-          const confidence = toolDef.priority * 10;
-          if (confidence > bestMatch.confidence) {
-            bestMatch = {
-              tool: toolDef.tool,
-              confidence,
-              params: toolDef.extractParams?.(message),
-              autoExecute: toolDef.autoExecute ?? false,
-              originalMessage: message,
-            };
-          }
-          break;
+/**
+ * Pure tool detection (Batch 2 — extracted from the hook for testability).
+ * Same behavior: highest-confidence pattern match wins.
+ */
+export function detectToolSync(message: string): ToolDetectionResult {
+  const normalizedMessage = message.trim().toLowerCase();
+  if (!normalizedMessage || normalizedMessage.length < 3) {
+    return { tool: null, confidence: 0 };
+  }
+  let bestMatch: ToolDetectionResult = { tool: null, confidence: 0 };
+  for (const toolDef of TOOL_PATTERNS) {
+    for (const pattern of toolDef.patterns) {
+      if (pattern.test(message)) {
+        const confidence = toolDef.priority * 10;
+        if (confidence > bestMatch.confidence) {
+          bestMatch = {
+            tool: toolDef.tool,
+            confidence,
+            params: toolDef.extractParams?.(message),
+            autoExecute: toolDef.autoExecute ?? false,
+            originalMessage: message,
+          };
         }
+        break;
       }
     }
-    return bestMatch;
+  }
+  return bestMatch;
+}
+
+export const useToolOrchestrator = () => {
+  const detectTool = useCallback((message: string): ToolDetectionResult => {
+    return detectToolSync(message);
   }, []);
 
   return {
