@@ -117,12 +117,16 @@ import { buildMemoryContext } from "@/lib/memory/promptInjector";
 // Batch R1 (Research-to-Visualization): structured research capture.
 import type { Citation, ResearchDataBlock } from "@/lib/visualization/types";
 import { extractResearchDataBlocks } from "@/lib/visualization/dataDoc";
+// Batch 2: visualization specs, planning and chat pipeline.
+import type { VizSpecKind, VisualizationSpec } from "@/lib/visualization/spec";
+import { transformKind } from "@/lib/visualization/planner";
+import { detectVisualizationIntent } from "@/lib/visualization/intentDetector";
 import {
-  buildMessageMetadata,
-  encodeMessageMetadata,
-  decodeMessageMetadata,
-  type ChatMessageMetadata,
-} from "@/lib/chatMessageMetadata";
+  handleVisualizationRequest,
+  lastVisualizationSpec,
+  type PipelineMessage,
+} from "@/lib/visualization/chatPipeline";
+import { buildMessageMetadata, encodeMessageMetadata, decodeMessageMetadata, type ChatMessageMetadata } from "@/lib/chatMessageMetadata";
 // Types
 interface Message { 
   id: string; 
@@ -144,6 +148,8 @@ interface Message {
   citations?: Citation[];
   /** Batch R1 — structured research datasets captured from ```shadowdata blocks. */
   researchData?: ResearchDataBlock[];
+  /** Batch 2 — visualization artifact (validated spec) attached to this reply. */
+  visualization?: VisualizationSpec;
 }
 type Conversation = {
   id: string;
@@ -466,6 +472,9 @@ const ChatbotPage = () => {
             ...(meta?.source ? { source: meta.source } : {}),
             ...(meta?.modelUsed ? { modelUsed: meta.modelUsed } : {}),
             ...(meta?.provider ? { provider: meta.provider } : {}),
+            // Batch 2 — restored visualization artifacts survive reloads
+            // (decodeMessageMetadata re-validates the spec before restore).
+            ...(meta?.visualizations?.length ? { visualization: meta.visualizations[0] } : {}),
           };
         }),
       );
@@ -1420,6 +1429,122 @@ Structure and Content Guidelines:
     }
   };
 
+  // =================== Batch 2 — visualization pipeline ===================
+  // Handles /visualize + natural-language visualization intents. The pipeline
+  // (src/lib/visualization/chatPipeline.ts) is deterministic: it resolves the
+  // session's research context, plans/validates a spec, and returns honest
+  // text on any failure. This wrapper only wires React state + persistence.
+
+  /** Firestore row ids for assistant messages (metadata updates on transforms). */
+  const vizRowIdsRef = useRef<Map<string, string>>(new Map());
+  const [vizTransformNotes, setVizTransformNotes] = useState<Record<string, string>>({});
+
+  const toPipelineMessages = (list: Message[]): PipelineMessage[] =>
+    list
+      .filter((m) => m.id !== "welcome")
+      .map((m) => ({
+        id: m.id,
+        type: m.type,
+        content: m.content,
+        ...(m.citations?.length ? { citations: m.citations } : {}),
+        ...(m.researchData?.length ? { researchData: m.researchData } : {}),
+        ...(m.toolExecution ? { toolExecution: { tool: m.toolExecution.tool, status: m.toolExecution.status } } : {}),
+        ...(m.visualization ? { visualization: m.visualization } : {}),
+      }));
+
+  const runVisualizationRequest = async (
+    intent: { kind: "create" | "refine" | "explain"; requestedType?: import("@/lib/visualization/types").VizTypeHint; timeRange?: string; compareTarget?: string; interactive?: boolean; confidence: number },
+    requestText: string,
+    sessionMessages: Message[],
+  ) => {
+    const vizMessageId = (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `viz-${Date.now()}`);
+    setIsLoading(true);
+    setMessages((prev) => [...prev, { id: vizMessageId, type: "ai", content: "", timestamp: new Date() }]);
+    try {
+      const outcome = await handleVisualizationRequest({
+        intent,
+        request: requestText,
+        messages: toPipelineMessages(sessionMessages),
+      });
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === vizMessageId
+            ? {
+                ...m,
+                content: outcome.content,
+                ...(outcome.spec ? { visualization: outcome.spec } : {}),
+                ...(outcome.citations?.length ? { citations: outcome.citations } : {}),
+              }
+            : m,
+        ),
+      );
+      recordSuccessfulChatSession();
+      // Persist through the SAME encrypt-or-null metadata gate as chat
+      // content (approved D4 approach). Guest conversations skip storage.
+      const conversationId = await resolveConversationId();
+      if (user && conversationId && !isGuestConversationId(conversationId)) {
+        const row = await saveMessage(
+          outcome.content,
+          "assistant",
+          conversationId,
+          buildMessageMetadata({
+            citations: outcome.citations,
+            source: "shadowviz",
+            tool: "visualization",
+            visualizations: outcome.spec ? [outcome.spec] : undefined,
+          }),
+        ).catch((e) => {
+          console.warn("[viz] saveMessage(visualization) failed", e);
+          return null;
+        });
+        if (row?.id) vizRowIdsRef.current.set(vizMessageId, row.id);
+      }
+    } catch (err) {
+      const errMsg = err instanceof Error ? err.message : "Visualization failed.";
+      setMessages((prev) => prev.map((m) => (m.id === vizMessageId ? { ...m, content: `⚠️ ${errMsg}` } : m)));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  /** Type-switch handler wired into the visualization card toolbar. */
+  const handleVizTransform = async (messageId: string, spec: VisualizationSpec, targetKind: VizSpecKind) => {
+    const result = transformKind(spec, targetKind, new Date());
+    if (result.status === "unavailable") {
+      setVizTransformNotes((prev) => ({ ...prev, [messageId]: result.reason }));
+      return;
+    }
+    setVizTransformNotes((prev) => {
+      const next = { ...prev };
+      delete next[messageId];
+      return next;
+    });
+    setMessages((prev) => prev.map((m) => (m.id === messageId ? { ...m, visualization: result.spec } : m)));
+    // Persist the transform on the stored row so it survives reloads.
+    const rowId = vizRowIdsRef.current.get(messageId) ?? messageId;
+    const msg = messages.find((m) => m.id === messageId);
+    const conversationId = await resolveConversationId();
+    if (!user || !msg || !conversationId || isGuestConversationId(conversationId)) return;
+    try {
+      const metadata = buildMessageMetadata({
+        citations: msg.citations,
+        researchData: msg.researchData,
+        source: msg.source,
+        modelUsed: msg.modelUsed,
+        provider: msg.provider,
+        tool: "visualization",
+        visualizations: [result.spec],
+      });
+      const toSave = await encodeMessageMetadata(metadata, (plain) => chatPrivate.wrapForStorage(plain));
+      // Private-mode encryption failure → skip the update (never plaintext).
+      if (toSave) {
+        await backend.from("messages").update({ metadata: toSave }).eq("id", rowId);
+      }
+    } catch (e) {
+      console.warn("[viz] persist transform failed", e);
+    }
+  };
+
   const handleSendMessage = async (overrideText?: string) => {
     const msgContent = (overrideText ?? message).trim();
     if ((!msgContent && !selectedFile) || isLoading) return;
@@ -1483,6 +1608,29 @@ Structure and Content Guidelines:
 
     // Yield briefly to allow the browser to paint the optimistic updates
     await new Promise(resolve => requestAnimationFrame(resolve));
+
+    // === Batch 2 — visualization intents (/visualize + natural language) ===
+    // Runs BEFORE tool interception so "/visualize …" is never hijacked by
+    // another tool, and so viz requests resolve the session's research
+    // context instead of starting unrelated research. Attachments take the
+    // normal chat path (visualizations analyze structured data, not files).
+    if (!selectedFile) {
+      const vizIntent = detectVisualizationIntent(msgContent);
+      const hasLiveSpec = lastVisualizationSpec(toPipelineMessages(messages)) !== null;
+      const bareCompareMatch = vizIntent
+        ? null
+        : msgContent.match(/\bcompare\s+[\w.-]+\s+(?:with|vs\.?|versus|against|and)\s+([\w .-]{2,40}?)(?=\s+(?:in|on|as|using|over|under|during|for|per|to)\b|[.?!]|$)/i);
+      const vizBareCompare = !vizIntent && hasLiveSpec && bareCompareMatch !== null;
+      if (vizIntent || vizBareCompare) {
+        const intent = vizIntent ?? {
+          kind: "refine" as const,
+          compareTarget: bareCompareMatch?.[1]?.trim(),
+          confidence: 0.7,
+        };
+        await runVisualizationRequest(intent, msgContent, [...messages, userMessage]);
+        return;
+      }
+    }
 
     // === Tool interception ===
     // Check if the message triggers a tool (image generation, web search, etc.)
@@ -2358,6 +2506,8 @@ Structure and Content Guidelines:
                     enterpriseShare={enterprise.isEnterpriseUser}
                     includeReferralInShare={enterprise.includeReferralInShare}
                     onConfirmTool={handleConfirmTool}
+                    onVizTransform={handleVizTransform}
+                    vizTransformNotes={vizTransformNotes}
                     messagesEndRef={messagesEndRef}
                     layout="gemini"
                   />

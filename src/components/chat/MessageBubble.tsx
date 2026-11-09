@@ -13,6 +13,8 @@ import { motion } from 'framer-motion';
 import { LazyMarkdown } from './LazyMarkdown';
 import { CodeBlock } from './CodeBlock';
 import { ResearchDataCard } from './ResearchDataCard';
+import { VisualizationCard } from '@/components/visualization';
+import type { VisualizationSpec, VizSpecKind } from '@/lib/visualization/spec';
 import { useToast } from '@/hooks/use-toast';
 import { DocumentArtifact, detectDocumentArtifact } from './DocumentArtifact';
 import { ToolExecutionCard } from './ToolExecutionCard';
@@ -98,6 +100,8 @@ interface Message {
   citations?: Array<{ url: string; title?: string }>;
   /** Batch R1 — structured research datasets captured from ```shadowdata blocks. */
   researchData?: unknown[];
+  /** Batch 2 — visualization artifact (validated inside VisualizationCard). */
+  visualization?: unknown;
 }
 
 interface MessageBubbleProps {
@@ -120,6 +124,10 @@ interface MessageBubbleProps {
   onConfirmTool?: (messageId: string) => void;
   onCancelTool?: (messageId: string) => void;
   onShareReply?: (content: string) => void;
+  /** Batch 2 — transform the visualization to a compatible kind. */
+  onVizTransform?: (messageId: string, spec: unknown, targetKind: string) => void;
+  /** Batch 2 — note from an infeasible transform. */
+  vizTransformNote?: string;
   enterpriseShare?: boolean;
   includeReferralInShare?: boolean;
 }
@@ -143,6 +151,8 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
   onConfirmTool,
   onCancelTool,
   onShareReply,
+  onVizTransform,
+  vizTransformNote,
   enterpriseShare = false,
   includeReferralInShare = true,
 }) => {
@@ -441,6 +451,17 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
           />
         )}
 
+        {/* Batch 2 — visualization artifact (lazy-loaded; validated spec only) */}
+        {!isUser && message.visualization && (
+          <div className="mt-2 w-full">
+            <VisualizationCard
+              spec={message.visualization}
+              transformNote={vizTransformNote}
+              onTransformKind={onVizTransform ? (spec, target) => onVizTransform(message.id, spec, target) : undefined}
+            />
+          </div>
+        )}
+
         {/* Extracted URLs / provider citations */}
         {!isUser && !isWelcome && (() => {
           // Batch R1 — prefer provider-reported citations (with titles) over
@@ -609,6 +630,9 @@ export const MessageBubble = React.memo(MessageBubbleInner, (prev, next) => {
     // so the comparator must react to them or the chips/card never render.
     prev.message.citations === next.message.citations &&
     prev.message.researchData === next.message.researchData &&
+    // Batch 2 — visualization artifact + transform note.
+    prev.message.visualization === next.message.visualization &&
+    prev.vizTransformNote === next.vizTransformNote &&
     prev.isLoading === next.isLoading &&
     prev.speakingMessageId === next.speakingMessageId &&
     prev.isSpeaking === next.isSpeaking

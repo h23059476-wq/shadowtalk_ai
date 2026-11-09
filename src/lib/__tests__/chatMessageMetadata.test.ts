@@ -19,6 +19,7 @@ import {
   decodeMessageMetadata,
 } from "../chatMessageMetadata";
 import type { ResearchDataBlock } from "@/lib/visualization/types";
+import type { VisualizationSpec } from "@/lib/visualization/spec";
 
 const block: ResearchDataBlock = {
   datasets: [
@@ -114,5 +115,80 @@ describe("chat message metadata — decode", () => {
     expect(
       await decodeMessageMetadata(JSON.stringify({ citations: [{ nope: true }] }), identityResolve),
     ).toBeNull();
+  });
+});
+
+describe("chat message metadata — visualization artifacts (Batch 2)", () => {
+  const lineSpec: VisualizationSpec = {
+    version: 1,
+    id: "viz-test",
+    kind: "line",
+    title: "USDT daily prices",
+    datasets: [
+      {
+        id: "d0",
+        title: "USDT daily prices",
+        fields: [
+          { key: "date", type: "date" },
+          { key: "price_usd", type: "currency", unit: "USD" },
+        ],
+        rows: Array.from({ length: 5 }, (_, i) => ({
+          date: new Date(Date.UTC(2026, 10, 1 + i)).toISOString(),
+          price_usd: 1.0001 + i * 0.0001,
+        })),
+      },
+    ],
+    encoding: { kind: "line", datasetId: "d0", x: "date", xType: "date", y: ["price_usd"] },
+    provenance: "source-verified",
+    sources: [{ url: "https://example.com/usdt", name: "Example" }],
+    generatedAt: "2026-11-09T00:00:00.000Z",
+    gaps: [],
+  };
+
+  it("persists a validated visualization spec and restores it after reload", async () => {
+    const meta = buildMessageMetadata({ visualizations: [lineSpec] });
+    expect(meta?.visualizations).toHaveLength(1);
+    const encoded = await encodeMessageMetadata(meta, passthroughWrap);
+    const decoded = await decodeMessageMetadata(encoded, identityResolve);
+    expect(decoded?.visualizations?.[0].kind).toBe("line");
+    expect(decoded?.visualizations?.[0].datasets[0].rows).toHaveLength(5);
+  });
+
+  it("drops an INVALID visualization spec at build time (never persisted)", () => {
+    // Source URL protocol violation + unknown columns.
+    // Deliberately invalid (source protocol + unknown column) — the cast is
+    // the point: a malformed object must be rejected at the metadata gate.
+    const bad = {
+      ...lineSpec,
+      sources: [{ url: "javascript:alert(1)" }],
+      encoding: { ...lineSpec.encoding, y: ["ghost_column"] },
+    } as unknown as VisualizationSpec;
+    const meta = buildMessageMetadata({ visualizations: [bad] });
+    expect(meta).toBeNull();
+  });
+
+  it("round-trips a transform: kind switch survives encode/decode", async () => {
+    const dashboard: VisualizationSpec = {
+      ...lineSpec,
+      kind: "kpi-dashboard",
+      encoding: {
+        kind: "kpi-dashboard",
+        datasetId: "d0",
+        items: [{ label: "Price", field: "price_usd", agg: "latest" }],
+      },
+    };
+    const encoded = await encodeMessageMetadata(buildMessageMetadata({ visualizations: [dashboard] }), passthroughWrap);
+    const decoded = await decodeMessageMetadata(encoded, identityResolve);
+    expect(decoded?.visualizations?.[0].encoding.kind).toBe("kpi-dashboard");
+  });
+
+  it("e2e-wraps visualization specs exactly like other metadata", async () => {
+    const wrappingWrap = async (plain: string) => "e2e:iv:" + Buffer.from(plain, "utf8").toString("base64");
+    const decryptingResolve = async (raw: string) =>
+      raw.startsWith("e2e:") ? Buffer.from(raw.split(":")[2], "base64").toString("utf8") : raw;
+    const encoded = await encodeMessageMetadata(buildMessageMetadata({ visualizations: [lineSpec] }), wrappingWrap);
+    expect(encoded?.startsWith("e2e:")).toBe(true);
+    const decoded = await decodeMessageMetadata(encoded, decryptingResolve);
+    expect(decoded?.visualizations?.[0].title).toBe("USDT daily prices");
   });
 });

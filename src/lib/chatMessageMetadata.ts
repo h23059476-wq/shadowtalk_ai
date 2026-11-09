@@ -19,6 +19,8 @@
  */
 
 import type { Citation, ResearchDataBlock } from "@/lib/visualization/types";
+import { parseVisualizationSpec } from "@/lib/visualization/spec";
+import type { VisualizationSpec } from "@/lib/visualization/spec";
 
 export interface ChatMessageMetadata {
   /** Provider-reported citations (web research). */
@@ -31,6 +33,8 @@ export interface ChatMessageMetadata {
   provider?: string;
   /** Tool that produced this message, when applicable. */
   tool?: string;
+  /** Batch 2 — validated visualization artifacts attached to this reply. */
+  visualizations?: VisualizationSpec[];
 }
 
 /** Hard cap — oversized metadata is dropped rather than persisted. */
@@ -60,6 +64,15 @@ export function buildMessageMetadata(
   if (parts.modelUsed) cleaned.modelUsed = parts.modelUsed;
   if (parts.provider) cleaned.provider = parts.provider;
   if (parts.tool) cleaned.tool = parts.tool;
+  // Batch 2 — at most ONE visualization artifact per message; only specs
+  // that pass full validation are persisted.
+  if (parts.visualizations && parts.visualizations.length > 0) {
+    const valid = parts.visualizations
+      .slice(0, 1)
+      .map((v) => parseVisualizationSpec(v))
+      .filter((v): v is VisualizationSpec => v !== null);
+    if (valid.length > 0) cleaned.visualizations = valid;
+  }
   return Object.keys(cleaned).length > 0 ? cleaned : null;
 }
 
@@ -121,6 +134,7 @@ export async function decodeMessageMetadata(
     modelUsed: typeof meta.modelUsed === "string" ? meta.modelUsed : undefined,
     provider: typeof meta.provider === "string" ? meta.provider : undefined,
     tool: typeof meta.tool === "string" ? meta.tool : undefined,
+    visualizations: Array.isArray(meta.visualizations) ? meta.visualizations : undefined,
   });
   return cleaned;
 }
