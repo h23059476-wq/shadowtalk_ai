@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, lazy, Suspense, useCallback, useMemo } from "react";
-import { Loader2, Phone } from "lucide-react";
+import { Loader2, Phone, TriangleAlert } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useSearchParams } from "react-router-dom";
 // Removed broken imports
@@ -44,6 +44,16 @@ import { ChatMobileNavDrawer } from "@/components/chat/ChatMobileNavDrawer";
 import { useShadowMemoryContext } from "@/contexts/ShadowMemoryContext";
 import { useIntelligenceHub } from "@/hooks/useIntelligenceHub";
 import { useAutoImproveContext } from "@/contexts/AutoImproveContext";
+
+/**
+ * Firestore (or the backend adapter) rejected a persistence write/read.
+ * Matches both the FirestoreError code and the PostgREST-style error shape.
+ */
+const isPermissionDeniedError = (err: unknown): boolean => {
+  const e = err as { code?: string; message?: string } | null | undefined;
+  if (!e) return false;
+  return e.code === "permission-denied" || /insufficient permissions|permission denied/i.test(e.message || "");
+};
 
 
 
@@ -251,6 +261,13 @@ const ChatbotPage = () => {
   const [musicAutoGenerate, setMusicAutoGenerate] = useState(false);
   const [showDocumentGenerator, setShowDocumentGenerator] = useState(false);
   const [documentTopic, setDocumentTopic] = useState("");
+  /**
+   * 2026-11-09 incident: the deployed Firestore rules denied every
+   * conversations/messages write, chats kept working in memory only, and a
+   * refresh silently wiped them. When persistence is rejected we now show an
+   * honest, persistent hint instead of letting the user lose history unseen.
+   */
+  const [persistenceBlocked, setPersistenceBlocked] = useState(false);
   const [showWordle, setShowWordle] = useState(false);
   const [showGoogleIntegration, setShowGoogleIntegration] = useState(false);
 
@@ -421,8 +438,10 @@ const ChatbotPage = () => {
     
     if (error) {
       console.error("[chat] loadConversations FAILED:", error?.message || error);
+      if (isPermissionDeniedError(error)) setPersistenceBlocked(true);
     }
     if (data && !error) {
+      setPersistenceBlocked(false);
       const rows = await Promise.all(
         data.map(async (c) => ({
           ...c,
@@ -814,6 +833,7 @@ const ChatbotPage = () => {
 
     // Private mode encryption failed — never create a remote conversation
     // that would persist plaintext titles. Fall through to the local fallback.
+    let insertDenied = false;
     if (titleToSave !== null) {
       try {
       const { data, error } = await backend
@@ -834,6 +854,7 @@ const ChatbotPage = () => {
         return data.id;
       }
       if (error) {
+        insertDenied = isPermissionDeniedError(error);
         console.error("[chat] remote conversation insert FAILED:", {
           message: error?.message || String(error),
           code: (error as any)?.code || 'unknown',
@@ -841,19 +862,25 @@ const ChatbotPage = () => {
           userId: user?.id || 'none',
         });
       }
-      } catch (err) {
+      } catch (err: any) {
+        insertDenied = isPermissionDeniedError(err);
         console.error("[chat] exception creating remote conversation:", err);
       }
     }
+    if (insertDenied) setPersistenceBlocked(true);
 
     // RESILIENT FALLBACK: Create a local conversation ID so the user can still chat.
     // Messages saved with this ID will be stored in Firestore (if rules allow) but
     // won't appear in the sidebar (no conversation doc). When the rules are fixed,
     // new conversations will be created properly.
-    // Show a SUBTLE warning (not destructive — don't scare the user)
+    // Show a SUBTLE warning (not destructive — don't scare the user), and be
+    // HONEST about the cause: a permission denial is a rules problem, not a
+    // connection problem (2026-11-09 incident).
     toast({
-      title: "Using local chat",
-      description: "Your messages will work. Chat history may not be saved until the database connection is restored.",
+      title: insertDenied ? "Chat history can't be saved" : "Using local chat",
+      description: insertDenied
+        ? "The server's security rules rejected saving your chats. Messaging still works, but this conversation will not survive a refresh until the database rules are updated."
+        : "Your messages will work. Chat history may not be saved until the database connection is restored.",
     });
     const localId = `local-${Date.now()}`;
     setCurrentConversationId(localId);
@@ -906,7 +933,7 @@ const ChatbotPage = () => {
       const metadataToSave = await encodeMessageMetadata(metadata, (plain) =>
         chatPrivate.wrapForStorage(plain),
       );
-      const { data } = await backend
+      const { data, error: insertError } = await backend
         .from('messages')
         .insert({
           conversation_id: conversationId,
@@ -917,6 +944,13 @@ const ChatbotPage = () => {
           ...(metadataToSave ? { metadata: metadataToSave } : {}),
         })
         .select().single();
+
+      // A denied message write used to disappear without a trace — surface it
+      // at least once so the user understands why refresh loses history.
+      if (insertError) {
+        console.error("[chat] message insert FAILED:", insertError?.message || insertError);
+        if (isPermissionDeniedError(insertError)) setPersistenceBlocked(true);
+      }
       
       if (data && role === 'user' && messages.length <= 1) {
         const titlePlain = content.trim().split(/\s+/).slice(0, 3).join(' ').slice(0, 25) || 'New Chat';
@@ -2479,6 +2513,16 @@ Structure and Content Guidelines:
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
               End-to-end encrypted · Anonymous session
+            </motion.div>
+          )}
+          {persistenceBlocked && (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mx-4 md:mx-6 mb-2 flex items-center justify-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 text-[11px] font-medium text-amber-600 dark:text-amber-400"
+            >
+              <TriangleAlert className="h-3 w-3 shrink-0" />
+              Chat history unavailable — the server denied access, so new messages won't survive a refresh.
             </motion.div>
           )}
           <div className={`flex-1 min-h-0 relative flex flex-col ${isEmptyChat ? "overflow-y-auto" : "overflow-hidden"}`}>
