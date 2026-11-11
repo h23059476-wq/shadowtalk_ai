@@ -52,12 +52,6 @@ describe("site link audit", () => {
     );
   });
 
-  it("AdNetwork referral CTA routes to /referral", () => {
-    const ads = readSrc("components/monetization/AdNetwork.tsx");
-    expect(ads).toContain('link: "/referral"');
-    expect(ads).not.toContain("/profile#referral");
-  });
-
   it("Voice home alias routes to marketing /home", () => {
     const voice = readSrc("components/VoiceCommandSystem.tsx");
     expect(voice).toMatch(/path:\s*"\/home"[^]*names:.*"home"/s);

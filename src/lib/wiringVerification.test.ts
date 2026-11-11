@@ -222,7 +222,12 @@ describe("feature wiring verification", () => {
     expect(readSrc("lib/seo/generateSitemap.ts")).toContain("/research");
     expect(readSrc("components/hubs/UnifiedHubShell.tsx")).toContain("PageMeta");
     expect(readSrc("pages/ChatbotPage.tsx")).toContain("useDailyLimits");
-    expect(readSrc("pages/ChatbotPage.tsx")).toContain("UsageLimitBanner");
+    // FREE ACCESS TRANSITION: monetization UI must stay unwired.
+    expect(readSrc("pages/ChatbotPage.tsx")).not.toContain("UsageLimitBanner");
+    expect(readSrc("pages/ChatbotPage.tsx")).not.toContain("ChatUpgradeNudge");
+    expect(readSrc("pages/ChatbotPage.tsx")).not.toContain("UpgradePrompt");
+    expect(readSrc("pages/ChatbotPage.tsx")).not.toContain("AdBanner");
+    expect(readSrc("hooks/useFeatureGating.ts")).toContain("FREE_ACCESS_FOR_EVERYONE");
     expect(readSrc("hooks/useFeatureGating.ts")).toContain("FREE_TIER_DAILY");
     expect(readSrc("contexts/PlatformMetricsContext.tsx")).toContain("get_public_platform_metrics");
     expect(readFileSync(resolve(root, "package.json"), "utf-8")).toContain('"sync:seo"');
@@ -250,7 +255,6 @@ describe("feature wiring verification", () => {
     expect(chat).toContain("ShadowCowork");
     expect(chat).toContain("SignInPrompt");
     expect(chat).toContain("InterimCloudConsentDialog");
-    expect(chat).toContain("AdBanner");
     expect(chat).toContain('case "agentic"');
     expect(chat).toContain('case "uncensored-arena"');
     expect(readSrc("components/OnboardingFlow.tsx")).toContain("WelcomeDialog");
