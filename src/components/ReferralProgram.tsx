@@ -374,8 +374,8 @@ const ReferralProgram = () => {
             {[
               { step: "1", title: "Share Your Link", desc: "Share on social media, email, or direct message" },
               { step: "2", title: "They Sign Up", desc: "Your friend creates a free ShadowTalk account" },
-              { step: "3", title: "They Subscribe", desc: "When they upgrade to any paid plan" },
-              { step: "4", title: "You Get Paid", desc: "Commission deposited to your earnings balance" },
+              { step: "3", title: "They Start Building", desc: "They explore the full free workspace" },
+              { step: "4", title: "You Both Win", desc: "Your friend ships faster with you in their corner" },
             ].map((s) => (
               <div key={s.step} className="text-center">
                 <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-3">

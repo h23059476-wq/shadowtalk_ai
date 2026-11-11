@@ -45,13 +45,13 @@ export function getUpgradeNudgeSubline(
 }
 
 export const FREE_TIER_MARKETING = {
-  title: "Start free — limits stated upfront",
-  hook: `No credit card. ${FREE_TIER_DAILY.messages} messages/day to prove the workspace — then upgrade on your terms.`,
-  cta: "See what Premium unlocks →",
+  title: "Free to use — everything included",
+  hook: "No subscription, no credit card. Bring your own AI provider API key and choose your preferred models.",
+  cta: "How free access works →",
 } as const;
 
 export const PRICING_PAGE_HOOK =
-  "Cancel anytime. 14-day money-back on paid plans. Your data stays under your control with on-device options.";
+  "Free to use — no subscriptions, no checkout. Bring your own AI provider API key; your provider bills you directly for API usage.";
 
 export const COMMUNITY_MARKETING = {
   title: "Building in public",

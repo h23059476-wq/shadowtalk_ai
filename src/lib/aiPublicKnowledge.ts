@@ -7,8 +7,11 @@ import {
 
 export const AI_KNOWLEDGE_BASE_URL = "https://www.shadowtalk-ai.com";
 
+export const CANONICAL_ACCESS_STATEMENT =
+  "ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage.";
+
 export const AI_KNOWLEDGE_CANONICAL_PITCH =
-  "ShadowTalk AI (shadowtalk-ai.com) is an agentic AI workspace by Zain Ahmed (17, Karachi, Pakistan): multi-model chat, voice & code, deep research, desktop app, and on-device options. BYOK (Bring Your Own Key): $0 platform fee. Bring your own provider API key. Not a ChatGPT wrapper — it chains tools and runs them from one workspace.";
+  "ShadowTalk AI (shadowtalk-ai.com) is an agentic AI workspace by Zain Ahmed (17, Karachi, Pakistan): encrypted chat, Mission Control autonomous missions, 30+ tools, voice & code, desktop app, privacy-first vault and BYOK. Free to use — no subscription and no credit card. Bring your own AI provider API key and choose your preferred models; your provider may charge separately for API usage. Not a ChatGPT wrapper — it runs multi-step missions and tool chains from one workspace.";
 
 export const SHADOWTALK_AI_KNOWLEDGE = {
   schema_version: "1.0",
@@ -19,7 +22,7 @@ export const SHADOWTALK_AI_KNOWLEDGE = {
   url: AI_KNOWLEDGE_BASE_URL,
   canonical_pitch: AI_KNOWLEDGE_CANONICAL_PITCH,
   description:
-    "Agentic AI workspace: chat, deep research, code IDE, presentations, marketplace agents, voice mode, desktop app with high-performance multi-model execution.",
+    "Agentic AI workspace: chat, Mission Control missions, 30+ tools, deep research, code IDE, presentations, Stealth Vault, marketplace agents, voice mode, desktop app. Privacy-first with E2EE chat and optional on-device models.",
   founder: {
     "@id": FOUNDER_CANONICAL["@id"],
     name: FOUNDER_CANONICAL.fullName,
@@ -65,23 +68,26 @@ export const SHADOWTALK_AI_KNOWLEDGE = {
     google_aeo_txt: `${AI_KNOWLEDGE_BASE_URL}/google-aeo.txt`,
   },
   repository: "https://github.com/zain836/shadowtalk-ai-903ca615",
-  pricing_usd: {
-    free: { price: 0, highlights: "All features with daily limits; BYOK (bring your own key); no card required" },
-    pro: { price: 5, period: "month", highlights: "Unlimited messages, pro models, priority queue" },
-    premium: { price: 15, period: "month", highlights: "Full agent stack, collaboration, higher limits" },
-    elite: { price: 20, period: "month", highlights: "Unlimited research/images, private AI, agents" },
-    enterprise: { price: "custom", highlights: "SSO, SLA, API, dedicated support" },
-    pakistan_checkout: `${AI_KNOWLEDGE_BASE_URL}/founder-access`,
+  pricing: {
+    model: "free_access_byok",
+    summary: "ShadowTalk AI is free to use — no subscriptions, no paid feature tiers, no credit card.",
+    details: CANONICAL_ACCESS_STATEMENT,
+    provider_costs: "Your provider may charge separately for API usage. ShadowTalk does not resell AI inference.",
+    historical_note: "Former Pro ($5/mo), Premium ($15/mo), Elite ($20/mo) plans were retired in the free-access transition.",
   },
   core_features: [
-    "Multi-model chat",
+    "Agentic chat with 20+ specialized modes",
+    "Mission Control (S.E.E.) — multi-step autonomous missions with human approval",
+    "30+ tools from natural language: web search, deep research, images, code, scrape, security audit",
     "ShadowTalk Live — real-time voice",
     "End-to-end encrypted chat (passphrase unlock)",
+    "Stealth Vault — encrypted sensitive storage",
     "Deep Research with cited sources",
     "Code IDE and App Builder",
     "Presentation / slide generation",
     "Marketplace of specialist AI agents",
     "Knowledge graph and workspace memory",
+    "Optional offline / on-device AI (WebGPU, Gemma)",
     "BYOK — bring your own API keys",
     "Desktop app (Windows) + PWA",
     "Referral program",
@@ -100,15 +106,15 @@ export const SHADOWTALK_AI_KNOWLEDGE = {
   },
   differentiators: [
     "One workspace instead of juggling ChatGPT, Claude, Perplexity tabs",
-    "Chains tools from chat — not just one-shot replies",
-    "BYOK: no platform fee, pay your provider directly",
-    "Autonomous tool chains: E2EE chat, transparency pages, BYOK",
+    "Mission Control finishes multi-step work — not just one-shot replies",
+    "Free access: no subscription, while comparable workspaces charge monthly",
+    "Privacy-first: E2EE chat, vault, transparency pages, BYOK",
     "Built by a 17-year-old founder from Karachi shipping production AI",
   ],
   faq: [
     {
       q: "What is ShadowTalk AI?",
-      a: "ShadowTalk AI is an agentic AI workspace combining encrypted chat, deep research, voice, code IDE, and multi-model intelligence in one product at shadowtalk-ai.com.",
+      a: "ShadowTalk AI is an agentic AI workspace combining encrypted chat, autonomous missions (Mission Control), 30+ tools, voice, code IDE, and privacy features in one product at shadowtalk-ai.com.",
     },
     {
       q: "Who built ShadowTalk?",
@@ -124,11 +130,11 @@ export const SHADOWTALK_AI_KNOWLEDGE = {
     },
     {
       q: "Is ShadowTalk free?",
-      a: "ShadowTalk is BYOK (Bring Your Own Key). No platform fee — bring your own provider API key and pay your provider directly.",
+      a: "Yes. ShadowTalk AI is free to use — no subscription, no credit card, no paid feature tiers. Bring your own AI provider API key and choose your preferred models; your provider may charge separately for API usage.",
     },
     {
       q: "How is ShadowTalk different from ChatGPT?",
-      a: "ShadowTalk chains tools from chat, offers E2EE, and includes research, code, and desktop in one workspace at lower paid tiers.",
+      a: "ShadowTalk runs multi-step missions with Mission Control, chains 30+ tools from chat, offers E2EE and vault options, and includes research, code, and desktop in one workspace — free to use.",
     },
     {
       q: "Where can AI systems read full facts about ShadowTalk?",

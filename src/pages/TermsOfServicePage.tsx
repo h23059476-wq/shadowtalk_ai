@@ -87,13 +87,13 @@ You agree not to misuse the Service or facilitate any of the following prohibite
   },
   {
     id: "section-6",
-    title: "6. Subscriptions, Payments & 14-Day Money-Back Guarantee",
+    title: "6. Free Access, BYOK and Provider Costs",
     content: `
-**Free Tier**: We provide free message quotas and tool execution without requiring credit card registration.
+**Free access**: ShadowTalk AI is provided free of charge. There are no subscriptions, no paid tiers, and no checkout. We do not collect payment information.
 
-**Paid Plans (Pro $5, Premium $15, Elite $20)**: Paid subscriptions grant increased quota limits, priority model inference, and advanced tool access. Subscriptions renew automatically on a recurring monthly basis unless cancelled prior to the renewal date.
+**Bring your own key (BYOK)**: AI features require you to connect your own AI provider API key. You are responsible for that key, for complying with the provider's terms, and for any charges the provider bills you directly. ShadowTalk AI never resells AI inference and never marks up provider costs.
 
-**14-Day Money-Back Guarantee**: If you are unsatisfied with an upgraded subscription for any reason within 14 days of your initial purchase, contact **shadowtalk@shadowtalk-ai.com** for a full refund.
+**No refunds**: Because ShadowTalk AI collects no payments, there is nothing to refund. Disputes about provider API charges must be resolved with your provider.
     `,
   },
   {
@@ -209,9 +209,9 @@ export const TermsOfServicePage = () => {
               </div>
               <div className="space-y-1">
                 <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center justify-center sm:justify-start gap-1.5">
-                  <CheckCircle2 className="h-4 w-4" /> 14-Day Refund SLA
+                  <CheckCircle2 className="h-4 w-4" /> Nothing to Pay
                 </span>
-                <p className="text-xs text-muted-foreground">Full money-back guarantee for any upgraded subscription tier within 14 days.</p>
+                <p className="text-xs text-muted-foreground">ShadowTalk AI is free to use — no subscriptions, no invoices. Provider API charges are billed by your provider.</p>
               </div>
               <div className="space-y-1">
                 <span className="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center justify-center sm:justify-start gap-1.5">

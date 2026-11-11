@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated": "2026-07-28",
+  "updated": "2026-11-11",
   "name": "ShadowTalk AI",
   "alternate_names": [
     "ShadowTalk",
@@ -8,7 +8,7 @@
   ],
   "tagline": "Think AI. Think ShadowTalk.",
   "url": "https://www.shadowtalk-ai.com",
-  "canonical_pitch": "ShadowTalk AI (shadowtalk-ai.com) is an agentic AI workspace by Zain Ahmed (17, Karachi, Pakistan): multi-model chat, voice & code, desktop app, secure vault and BYOK. BYOK (Bring Your Own Key): $0 platform fee. Users bring their own provider API key (OpenAI, Anthropic, Google, Groq, OpenRouter + 12 more) and pay their provider directly. Not a ChatGPT wrapper — it runs tool chains from one workspace.",
+  "canonical_pitch": "ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage. BYOK (Bring Your Own Key): $0 platform fee. Users bring their own provider API key (OpenAI, Anthropic, Google, Groq, OpenRouter + 12 more) and pay their provider directly. Not a ChatGPT wrapper — it runs tool chains from one workspace.",
   "description": "Agentic AI workspace: chat, deep research, code IDE, presentations, marketplace agents, voice mode, desktop app with high-performance multi-model execution.",
   "founder": {
     "@id": "https://www.shadowtalk-ai.com/#zain-ahmed-shadowtalk",
@@ -60,28 +60,9 @@
   "pricing_usd": {
     "free": {
       "price": 0,
-      "highlights": "BYOK: $0 platform fee. Bring your own provider API key."
+      "highlights": "Free to use — every feature included; no subscription, no card. BYOK: bring your own AI provider API key; your provider may charge separately for API usage."
     },
-    "pro": {
-      "price": 5,
-      "period": "month",
-      "highlights": "Unlimited messages, pro models, priority queue"
-    },
-    "premium": {
-      "price": 15,
-      "period": "month",
-      "highlights": "Full agent stack, collaboration, higher limits"
-    },
-    "elite": {
-      "price": 20,
-      "period": "month",
-      "highlights": "Unlimited research/images, private AI, agents"
-    },
-    "enterprise": {
-      "price": "custom",
-      "highlights": "SSO, SLA, API, dedicated support"
-    },
-    "pakistan_checkout": "https://www.shadowtalk-ai.com/founder-access"
+    "note": "No paid plans. Former Pro ($5/mo), Premium ($15/mo) and Elite ($20/mo) tiers were retired in the free-access transition."
   },
   "core_features": [
     "ShadowTalk Live — real-time voice",

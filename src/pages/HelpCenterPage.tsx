@@ -124,22 +124,21 @@ Choosing the right model for the task ensures optimal response times and token e
   // Category: Billing & Subscriptions
   {
     id: "billing-plans-explained",
-    title: "Plan Comparison: Free vs Pro ($5) vs Premium ($15) vs Elite ($20)",
+    title: "Free Access: What You Get and How BYOK Works",
     category: "billing",
-    summary: "Clear breakdown of quota limits, model queues, tool access, and the 14-day refund policy.",
-    readTime: "3 min read",
-    tags: ["Pricing", "Subscriptions", "Limits"],
+    summary: "ShadowTalk AI is free to use — every feature, no subscriptions. How the BYOK model and provider costs work.",
+    readTime: "2 min read",
+    tags: ["Free Access", "BYOK", "Providers"],
     content: `
-### Transparent Tier Architecture
-ShadowTalk provides flexible tiers designed for individual developers up to scaling organizations:
+### One Plan: Free Access
+ShadowTalk AI is free to use. ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage.
 
-- **Free Tier ($0/mo)**: ~50 messages/day, access to Groq Llama Turbo, standard tools, and no credit card required.
-- **Pro ($5/mo)**: Unlimited messages, DeepSeek R1 reasoning, priority model queue, and custom memory slots.
-- **Premium ($15/mo)**: Full autonomous agent workflows, extended tool execution, and team collaboration.
-- **Elite ($20/mo)**: Unlimited deep research briefs, WebGPU model runtime, and priority technical support.
+- **Every feature included**: agentic chat, Mission Control missions, research and visualization, document analysis, themes, desktop app — nothing is gated behind a tier.
+- **Bring your own AI provider API key (BYOK)**: you choose the provider and the models; switch any time from Settings.
+- **Provider costs and limits**: your provider bills you directly for API usage and may apply its own rate limits. ShadowTalk never resells inference and never sits between you and your provider's bill.
 
-#### 14-Day Money-Back Guarantee
-If you are not completely satisfied with your upgraded tier, contact **shadowtalk@shadowtalk-ai.com** within 14 days for a no-questions-asked full refund.
+#### Nothing to Refund
+ShadowTalk does not collect payments, so there are no subscriptions or invoices here. Provider-side API charges are between you and your provider.
     `,
   },
 

@@ -20,7 +20,7 @@ export const BRAND = {
   heroHeadline: ["Don't just get an answer.", "Get it done."],
   heroSubtitle:
     "ShadowTalk turns ideas into actions through agentic workflows.",
-  heroBadge: "Free start · No card · Your old stack will feel slow",
+  heroBadge: "Free to use · No card · Your old stack will feel slow",
 } as const;
 
 /** Section headlines & subcopy for the home page */
@@ -44,10 +44,10 @@ export const LANDING_COPY = {
       "Marketplace agents, IDE, research, presentations, and optional on-device models — listed in /docs, shipped in product.",
   },
   pricing: {
-    badge: "Transparent tiers",
-    title: ["Unlimited execution.", "Without surprise fees."],
+    badge: "Free access",
+    title: ["Free to use.", "You bring the key."],
     subtitle:
-      "Free to prove the workspace. Pro, Premium, and Elite when you're ready — cancel anytime, money-back guarantee, data practices stated before you pay.",
+      "ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models — your provider may charge separately for API usage.",
   },
   testimonials: {
     badge: "How early users work",

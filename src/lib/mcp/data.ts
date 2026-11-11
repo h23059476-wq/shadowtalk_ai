@@ -31,17 +31,17 @@ export const PLANS: PlanInfo[] = [
   },
   {
     name: "Pro",
-    price: "BYOKnth",
+    price: "$0",
     highlights: ["Higher limits", "Priority routing", "Full tool suite"],
   },
   {
     name: "Premium",
-    price: "BYOKnth",
+    price: "$0",
     highlights: ["Advanced automation", "Advanced research", "Creative Studio"],
   },
   {
     name: "Elite",
-    price: "BYOKnth",
+    price: "$0",
     highlights: ["Maximum limits", "Enterprise features", "Priority support"],
   },
 ];
@@ -131,7 +131,7 @@ export const FAQS: { question: string; answer: string }[] = [
   {
     question: "What does ShadowTalk cost?",
     answer:
-      "There is a free tier with no credit card. Paid plans are Pro BYOKnth, Premium BYOKnth and Elite BYOKnth.",
+      "ShadowTalk AI is free to use — no credit card, no paid plans. Bring your own AI provider API key; your provider may charge separately for API usage.",
   },
   {
     question: "Can I run it offline?",

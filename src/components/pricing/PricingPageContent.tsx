@@ -1,45 +1,64 @@
 import { Link } from "react-router-dom";
-import { CreditCard, Smartphone } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { KeyRound, ShieldCheck, Wallet, Gauge, Sparkles, Lock } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 import PricingHero from "@/components/pricing/PricingHero";
-import PricingCompareStrip from "@/components/pricing/PricingCompareStrip";
-import PricingPlansGrid from "@/components/pricing/PricingPlansGrid";
-import PricingAddonsSection from "@/components/pricing/PricingAddonsSection";
-import PricingTrustSection from "@/components/pricing/PricingTrustSection";
-import PricingTransparencyBlock from "@/components/growth/PricingTransparencyBlock";
+import FreeTierLimitsStrip from "@/components/growth/FreeTierLimitsStrip";
+
+const FREE_ACCESS_FACTS = [
+  {
+    icon: Wallet,
+    title: "No subscription, no credit card",
+    body: "There are no plans, tiers, or checkout flows. Create an account and use the full workspace — chat, missions, research, documents, IDE, and more.",
+  },
+  {
+    icon: KeyRound,
+    title: "Bring your own AI provider key",
+    body: "Connect the AI provider you prefer by adding your own API key. You choose the provider and the models — switch any time.",
+  },
+  {
+    icon: Gauge,
+    title: "Provider limits still apply",
+    body: "Your provider bills and rate-limits API usage directly. ShadowTalk never resells AI inference and never sits between you and your provider's bill.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Security and privacy unchanged",
+    body: "Account security, encrypted storage (Stealth Vault), BYOK key encryption, and abuse protections all stay exactly as they were.",
+  },
+  {
+    icon: Sparkles,
+    title: "Every feature unlocked",
+    body: "Formerly gated capabilities — Video Studio, fine-tuning controls, missions, deep research — are available to everyone at no charge.",
+  },
+  {
+    icon: Lock,
+    title: "Your keys stay yours",
+    body: "API keys are encrypted before storage and are never shared, pooled, or used to serve other users.",
+  },
+];
 
 const PricingPageContent = () => {
   return (
     <>
       <PricingHero />
-      <div className="container mx-auto px-4 max-w-3xl -mt-4 mb-6">
-        <div className="rounded-2xl border border-primary/25 bg-primary/5 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4">
-          <div className="flex-1 space-y-1">
-            <p className="font-semibold flex items-center gap-2">
-              <Smartphone className="h-4 w-4 text-primary" />
-              Pay with JazzCash, Easypaisa, bank, or USDT
-            </p>
-            <p className="text-sm text-muted-foreground">
-              <span className="font-semibold text-foreground">Local:</span> JazzCash, Easypaisa, bank transfer, or USDT — exact amounts shown in PKR. 
-            <span className="font-semibold text-foreground">International:</span> card or crypto. 
-            Founder-verified checkout — activated within 24h or money back.
-            </p>
-          </div>
-          <Button asChild className="shrink-0 gap-2">
-            <Link to="/founder-access?plan=premium">
-              <CreditCard className="h-4 w-4" />
-              Go to checkout
-            </Link>
-          </Button>
+      <div className="container mx-auto px-4 max-w-3xl mb-10">
+        <FreeTierLimitsStrip className="mb-10" showUpgradeLink={false} />
+        <div className="grid gap-4 sm:grid-cols-2">
+          {FREE_ACCESS_FACTS.map((fact) => (
+            <Card key={fact.title} className="border-border/60">
+              <CardContent className="p-5">
+                <fact.icon className="h-5 w-5 text-primary mb-3" aria-hidden />
+                <h2 className="text-sm font-semibold mb-1.5">{fact.title}</h2>
+                <p className="text-sm text-muted-foreground leading-relaxed">{fact.body}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
+        <p className="text-center text-sm text-muted-foreground mt-10">
+          Questions? See the <Link to="/faq" className="text-primary hover:underline">FAQ</Link> or{" "}
+          <Link to="/docs" className="text-primary hover:underline">documentation</Link>.
+        </p>
       </div>
-      <PricingCompareStrip />
-      <PricingPlansGrid />
-      <PricingAddonsSection />
-      <div className="container mx-auto px-4 max-w-3xl">
-        <PricingTransparencyBlock />
-      </div>
-      <PricingTrustSection />
     </>
   );
 };

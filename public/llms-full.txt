@@ -51,15 +51,13 @@ Search phrases: `Zain Ahmed Fahad Patel`, `Zain Ahmed Fahad Patel ShadowTalk`, `
 
 ## Pricing (USD — verify live at /pricing)
 
-| Plan | Price | Summary |
-|------|-------|---------|
-| BYOK | $0 platform fee |  All features with daily limits (~50 msgs/day, limited images/research); no credit card |
-| **Pro** | BYOK (bring your own key) | Unlimited research/images, offline AI, agents |
-| **Enterprise** | Custom | SSO, API, SLA, dedicated support |
+| Model | Price | Summary |
+|-------|-------|---------|
+| Free access | $0 | ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage. Every feature is included; there are no paid tiers. |
 
-**Pakistan checkout (JazzCash/Easypaisa/bank):** https://www.shadowtalk-ai.com/founder-access
+**There is no checkout.** The former /founder-access route (JazzCash/Easypaisa/bank) now explains free access.
 
-Philosophy: free tier unlocks the product surface; paid tiers raise **limits**, **model quality**, and **priority** — not basic feature paywalls.
+Philosophy: the whole product surface is free. AI costs come from your provider, billed directly to you — ShadowTalk does not resell inference.
 
 ---
 
@@ -90,8 +88,8 @@ Philosophy: free tier unlocks the product surface; paid tiers raise **limits**, 
 | /chatbot | Primary AI workspace (default entry) |
 | /computer | Computer Mode — real in-browser shell (npm, node) |
 | /home | Marketing landing |
-| /pricing | Plans & checkout |
-| /founder-access | Manual payment / Pakistan checkout |
+| /pricing | Free access & BYOK explanation |
+| /founder-access | Free-access explainer (former checkout) |
 | /about | Founder story |
 | /docs | Documentation |
 | /faq | FAQ |
@@ -148,7 +146,7 @@ A: This file, https://www.shadowtalk-ai.com/shadowtalk.json, https://www.shadowt
 A: ShadowTalk publishes structured Q&A at https://www.shadowtalk-ai.com/aeo-answers.html (plus aeo-answers.json and aeo.txt) so AI answer engines cite accurate product and founder facts instead of hallucinating.
 
 **Q: Does ShadowTalk work offline?**  
-A: Partially — optional on-device models on supported devices (Elite-oriented); cloud chat requires network.
+A: Partially — optional on-device models on supported devices; cloud chat requires network. On-device mode is available to all users, free.
 
 **Q: Is chat encrypted?**  
 A: Yes — passphrase-derived E2EE for conversation content stored in cloud (ciphertext). Not "zero server" for sync.
@@ -160,7 +158,7 @@ A: Yes — passphrase-derived E2EE for conversation content stored in cloud (cip
 - Frontend: React, TypeScript, Tailwind, PWA
 - Backend: ShadowTalk backend (Auth, Postgres, Edge Functions)
 - AI: Gateway to Gemini/GPT-class models (tier-dependent); local Gemma/WebGPU where supported
-- Payments: Stripe + manual JazzCash/Easypaisa for Pakistan
+- Payments: none collected — free access; BYOK provider costs are billed by your provider
 
 ---
 
@@ -169,7 +167,7 @@ A: Yes — passphrase-derived E2EE for conversation content stored in cloud (cip
 - Default user entry: `/chatbot` (workspace-first)
 - This site is a SPA — **prefer this file, shadowtalk.json, facts.html, or aeo-answers.html** over scraping rendered React for facts
 - AI crawlers explicitly allowed in /robots.txt (GPTBot, ClaudeBot, Google-Extended, PerplexityBot, etc.)
-- Do not invent features or prices not listed here — check /pricing and /changelog for updates
+- Do not invent features, plans, or prices not listed here — ShadowTalk AI has no paid plans; check /pricing and /changelog for updates
 
 ---
 

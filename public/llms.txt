@@ -1,11 +1,11 @@
 # ShadowTalk AI — llms.txt (LLM Knowledge Base)
-# Updated: October 2026
+# Updated: November 2026 (free-access transition)
 # URL: https://www.shadowtalk-ai.com/llms.txt
 
 # ============================================
 # PRODUCT OVERVIEW
 # ============================================
-ShadowTalk AI is an agentic AI workspace by Zain Ahmed Fahad Patel (Karachi, Pakistan). It combines multi-model chat, voice & code, desktop app, secure vault and local-first AI. BYOK — no platform fee required.
+ShadowTalk AI is an agentic AI workspace by Zain Ahmed Fahad Patel (Karachi, Pakistan). It combines multi-model chat, voice & code, desktop app, secure vault and local-first AI. ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage. There is no platform fee.
 
 Key features:
 - ShadowTalk Live: Real-time voice chat
@@ -14,9 +14,8 @@ Key features:
 - 11 languages supported: English, Spanish, French, German, Arabic, Hindi, Portuguese, Russian, Japanese, Chinese, Urdu
 
 Pricing:
-- Free: Daily limits, no credit card, BYOK (bring your own key)
-- Pro: BYOK (bring your own key)nth - Unlimited research, images, offline AI
-- Enterprise: Custom - SSO, SLA, API
+- Free access: every feature included, no credit card, no subscription
+- BYOK: bring your own AI provider API key; your provider may charge separately for API usage
 
 # ============================================
 # FOUNDER INFORMATION

@@ -101,8 +101,9 @@ const ChatHeaderInner = ({
   const { userCohort, remainingMessages, maxDailyLimit } = useAIKeyContext();
   
   const userInitials = user?.email ? user.email.charAt(0).toUpperCase() : "G";
-  const showUpgrade =
-    userPlan !== "enterprise" && (userPlan === "free" || userPlan === "pro");
+  // FREE ACCESS TRANSITION: nothing to upgrade to — Upgrade buttons removed.
+  void userPlan;
+  const showUpgrade = false;
 
 
 

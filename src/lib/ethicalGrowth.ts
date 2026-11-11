@@ -13,8 +13,8 @@ export const PROOF_LINKS = [
 ] as const;
 
 export const PRICING_TRANSPARENCY = {
-  cancel: "Cancel anytime from billing or your payment provider — no lock-in contracts.",
-  refund: "14-day money-back guarantee on paid plans (see Terms for details).",
+  cancel: "There is nothing to cancel — ShadowTalk AI is free to use with no subscriptions.",
+  refund: "No payments are collected, so there is nothing to refund. Provider API charges are billed by your provider.",
   data:
     "Cloud chat uses our servers; the encrypted vault, and optional on-device models keep sensitive work under your control.",
   privacyLinks: [
@@ -26,12 +26,13 @@ export const PRICING_TRANSPARENCY = {
 } as const;
 
 export function getFreeTierSummary(): string {
-  return `Free: ${FREE_TIER_DAILY.messages} messages/day, ${FREE_TIER_DAILY.fileUploads} uploads, ${FREE_TIER_DAILY.webSearches} web searches — no card required.`;
+  return `Free: every feature included — no subscription, no credit card. Bring your own AI provider API key.`;
 }
 
 export function getPaidTierOneLiner(plan: "pro" | "premium" | "elite" = "premium"): string {
-  const p = PLAN_DETAILS[plan];
-  return `${p.name} ($${p.price}/mo): unlimited messages and expanded tools — cancel anytime.`;
+  // Free access transition: there are no paid tiers anymore.
+  void plan;
+  return "There are no paid tiers — ShadowTalk AI is free to use. Your AI provider may charge separately for API usage.";
 }
 
 /** Honest usage copy — no fake scarcity */

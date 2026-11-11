@@ -31,7 +31,7 @@ import {
   Palette, Users, Download, Search, ChevronRight, ExternalLink, Sparkles,
   Settings, Lock, Bell, Globe, Keyboard, FileText, HelpCircle, Lightbulb,
   Terminal, Database, Cloud, Smartphone, Monitor, Wifi, WifiOff, Volume2,
-  Upload, Share2, History, Star, Crown, Check, X, Compass, Eye, TrendingUp,
+  Upload, Share2, History, Star, Crown, Check, Compass, Eye, TrendingUp,
   Link2, Bookmark, Rocket, LayoutDashboard, KeyRound
 } from "lucide-react";
 
@@ -126,57 +126,22 @@ const CodeExample = ({ title, code, language = "bash" }: { title: string; code: 
   </div>
 );
 
-type PlanCell = boolean | string;
-
-const PlanCellValue = ({ value, accent }: { value: PlanCell; accent?: "primary" | "secondary" }) => {
-  if (typeof value === "boolean") {
-    return value ? (
-      <Check className={`h-5 w-5 mx-auto ${accent === "secondary" ? "text-secondary" : "text-primary"}`} />
-    ) : (
-      <X className="h-5 w-5 text-muted-foreground/30 mx-auto" />
-    );
-  }
-  const textClass =
-    accent === "secondary" ? "text-secondary font-medium" : accent === "primary" ? "text-primary font-medium" : "text-muted-foreground";
-  return <span className={textClass}>{value}</span>;
-};
-
 const FeatureComparison = () => (
-  <div className="overflow-x-auto">
-    <table className="w-full border-collapse text-sm">
-      <thead>
-        <tr className="border-b border-border/30">
-          <th className="text-left p-3 text-foreground/80">Feature</th>
-          <th className="text-center p-3 text-foreground/80">Free</th>
-          <th className="text-center p-3 text-primary font-bold">Pro</th>
-          <th className="text-center p-3 text-foreground/80 font-bold">Premium</th>
-          <th className="text-center p-3 text-secondary font-bold">Elite</th>
-        </tr>
-      </thead>
-      <tbody>
-        {[
-          { feature: "Daily messages", free: "50", pro: "Unlimited", premium: "Unlimited", elite: "Unlimited" },
-          { feature: "Image generation", free: "4/day", pro: "20/day", premium: "50/day", elite: "Unlimited" },
-          { feature: "Deep research", free: "5/day", pro: "20/day", premium: "50/day", elite: "Unlimited" },
-          { feature: "Voice sessions", free: "3/day", pro: "Unlimited", premium: "Unlimited", elite: "Unlimited" },
-          { feature: "File uploads", free: "3/day", pro: "50/day", premium: "Unlimited", elite: "Unlimited" },
-          { feature: "ShadowBrowser & IDE", free: true, pro: true, premium: true, elite: true },
-          { feature: "Collaborative rooms", free: false, pro: true, premium: true, elite: true },
-          { feature: "Chat export", free: false, pro: true, premium: true, elite: true },
-          { feature: "/ on-device AI", free: false, pro: false, premium: false, elite: true },
-          { feature: "API access", free: false, pro: false, premium: false, elite: true },
-          { feature: "Priority support", free: false, pro: "<4h", premium: "<2h", elite: "24/7" },
-        ].map((row, i) => (
-          <tr key={i} className="border-b border-border/20 hover:bg-primary/5 transition-colors">
-            <td className="p-3 font-medium text-foreground/90">{row.feature}</td>
-            <td className="text-center p-3"><PlanCellValue value={row.free} /></td>
-            <td className="text-center p-3"><PlanCellValue value={row.pro} accent="primary" /></td>
-            <td className="text-center p-3"><PlanCellValue value={row.premium} /></td>
-            <td className="text-center p-3"><PlanCellValue value={row.elite} accent="secondary" /></td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+  <div className="space-y-3 text-sm">
+    <p className="text-muted-foreground">
+      ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage.
+    </p>
+    {[
+      "Every feature included for every account — no plans, no tiers, no checkout",
+      "BYOK: connect your preferred AI provider and switch any time",
+      "Provider rate limits and API billing apply directly from your provider",
+      "Account security, encrypted storage, and abuse protections unchanged",
+    ].map((line) => (
+      <div key={line} className="flex items-start gap-2">
+        <Check className="h-4 w-4 mt-0.5 text-primary" />
+        <span className="text-foreground/90">{line}</span>
+      </div>
+    ))}
   </div>
 );
 
@@ -940,7 +905,7 @@ const DocsPage = () => {
                 <Accordion type="single" collapsible className="space-y-3">
                   {[
                     { value: "code", title: "Code Mode Tips", tips: ["Specify the programming language for better results", "Include context about your project structure", "Use the Code Canvas for interactive editing", "Ask for explanations along with code solutions", "Request unit tests for generated code"] },
-                    { value: "image", title: "Image Generation Tips", tips: ["Be specific about style (photorealistic, cartoon, watercolor, etc.)", "Include details about lighting and mood", "Mention aspect ratio if important", "Use negative prompts to exclude unwanted elements", "Check your plan's daily image limit on /pricing"] },
+                    { value: "image", title: "Image Generation Tips", tips: ["Be specific about style (photorealistic, cartoon, watercolor, etc.)", "Include details about lighting and mood", "Mention aspect ratio if important", "Use negative prompts to exclude unwanted elements"] },
                     { value: "translate", title: "Translation Tips", tips: ["Specify source and target languages", "Provide context for better accuracy", "Ask for formal or informal translations", "Request pronunciation guides when needed", "Supports 100+ languages"] },
                     { value: "summarize", title: "Summarization Tips", tips: ["Specify desired length (bullet points, paragraph, one-liner)", "Ask for key takeaways or action items", "Upload documents for longer content", "Request summaries for specific audiences", "Great for meeting notes and articles"] },
                   ].map((section) => (
@@ -1006,8 +971,8 @@ const DocsPage = () => {
             <TabsContent value="pricing" className="space-y-8">
               <DocSection title="Plans & limits">
                 <p className="text-muted-foreground mb-6">
-                  Free unlocks all feature types with daily limits. Paid plans remove caps and add vault, and API access.
-                  Pakistan local payments: <button type="button" className="text-primary underline" onClick={() => navigate("/founder-access")}>/founder-access</button>.
+                  ShadowTalk AI is free to use — every feature included, no subscription, no credit card. Bring your own AI provider API key; your provider may charge separately for API usage.
+                  The former <button type="button" className="text-primary underline" onClick={() => navigate("/founder-access")}>/founder-access</button> checkout page now explains free access.
                 </p>
                 <div className="grid gap-5 md:grid-cols-2">
                   {pricingTiers.map((tier, i) => (
@@ -1045,7 +1010,7 @@ const DocsPage = () => {
                 </Card>
                 <div className="mt-4">
                   <Button className="btn-glow rounded-xl" onClick={() => navigate("/pricing")}>
-                    <Crown className="h-4 w-4 mr-2" /> View live pricing
+                    <Crown className="h-4 w-4 mr-2" /> View free access details
                   </Button>
                 </div>
               </DocSection>
@@ -1055,7 +1020,7 @@ const DocsPage = () => {
             <TabsContent value="api" className="space-y-8">
               <DocSection title="API Reference">
                 <div className="flex items-center gap-2 mb-6">
-                  <Badge className="bg-secondary/10 text-secondary border-secondary/20">Elite Plan Required</Badge>
+                  <Badge className="bg-secondary/10 text-secondary border-secondary/20">Free — BYOK required</Badge>
                 </div>
                 <p className="text-muted-foreground mb-6">
                   Access ShadowTalk AI programmatically through our REST API.

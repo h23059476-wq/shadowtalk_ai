@@ -405,12 +405,12 @@ const LandingNavigation = ({ children }: LandingNavigationProps) => {
                             onClick={closeDrawer}
                             className="block text-neutral-300 hover:text-white transition-colors"
                           >
-                            <p className="font-medium text-white">Membership Plans & Pricing</p>
+                            <p className="font-medium text-white">Free Access & Pricing</p>
                             <p className="text-xs text-neutral-500 mt-0.5">
-                              Free ($0) &bull; Pro ($5/mo)
+                              Free to use &bull; no plans, no tiers
                             </p>
                             <p className="text-[11px] text-emerald-400 font-mono mt-1">
-                              No credit card required for Free
+                              Bring your own AI provider API key
                             </p>
                           </Link>
                         </motion.div>

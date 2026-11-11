@@ -159,11 +159,11 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       {
         question: "Does ShadowTalk AI cost less than TypingMind?",
         answer:
-          "ShadowTalk has a free tier with no credit card and Pro from BYOKnth. TypingMind is a one-time license purchase for the interface (then BYOK provider costs on top). For builders who want execution + tools, not just chat UI, ShadowTalk includes more per dollar.",
+          "ShadowTalk is free to use with no credit card and no subscription. TypingMind is a one-time license purchase for the interface (then BYOK provider costs on top). For builders who want execution + tools, not just chat UI, ShadowTalk includes more per dollar.",
       },
     ],
     rows: [
-      { category: "Pricing model", shadowtalk: "Free tier + Pro BYOK", competitor: "One-time license fee" },
+      { category: "Pricing model", shadowtalk: "Free — no platform fee (BYOK)", competitor: "One-time license fee" },
       { category: "BYOK support", shadowtalk: "100% BYOK — all major providers", competitor: "BYOK — all major providers" },
       { category: "Multi-model canvas", shadowtalk: "Side-by-side with live diffing", competitor: "Single conversation at a time" },
       { category: "Agentic workflows", shadowtalk: "Multi-step missions with approval gates", competitor: "Single-turn chat only" },

@@ -11,7 +11,7 @@ Allow: /aeo-answers.html
 Allow: /facts.html
 Allow: /zain-ahmed-fahad-patel.html
 Allow: /zain-ahmed.html
-Allow: /llms-txt/
+Allow: /llms.txt
 Allow: /shadowtalk.json
 Allow: /aeo-answers.json
 Allow: /aeo.txt

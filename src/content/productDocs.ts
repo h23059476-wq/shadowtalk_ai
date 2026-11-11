@@ -367,40 +367,16 @@ export const DOC_PRIVACY_SECTIONS: DocWorkspaceTopic[] = [
 
 export const DOC_PRICING_TIERS: DocPricingTier[] = [
   {
-    name: "Free Tier",
+    name: "Free",
     price: "$0",
-    tagline: "Full access to Core AI & Memory features",
+    tagline: "Everything included — no subscription, no credit card.",
     highlights: [
-      "50 high-speed messages per day",
-      "Full access to /workspace (Business Memory)",
-      "Full access to /analytics & /shadow-memory",
-      "Groq Llama-3.3 70B Turbo Engine",
-      "1 Shadow Twin Profile",
-    ],
-  },
-  {
-    name: "Pro Plan",
-    price: "$20/mo",
-    tagline: "For professional builders & power users",
-    highlights: [
-      "Unlimited daily chat messages",
-      "DeepSeek R1 reasoning & GPT-4o priority routing",
-      "Unlimited Business Memory context cards",
-      "Deep web search & document file uploads",
-      "Up to 5 Shadow Twin personas",
-      "Advanced analytics report downloads",
-    ],
-  },
-  {
-    name: "Enterprise SaaS",
-    price: "Custom",
-    tagline: "Team governance & developer APIs",
-    highlights: [
-      "Dedicated REST API keys & Webhook access (/developers)",
-      "Organization Admin & Seat Management (/admin)",
-      "Pre-built integrations (Slack, GitHub, Notion) (/integrations)",
-      "Tamper-evident compliance audit trail (/audit-logs)",
-      "Custom SLA & 24/7 dedicated support",
+      "All features unlocked for every account",
+      "Bring your own AI provider API key (BYOK)",
+      "Choose your preferred provider and models",
+      "Your provider may charge separately for API usage",
+      "Encrypted vault, missions, research, IDE included",
+      "No plans, no tiers, no checkout",
     ],
   },
 ];

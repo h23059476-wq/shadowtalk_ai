@@ -337,7 +337,7 @@ export const CHATBOT_FAQ = [
   {
     question: "How do I get started with ShadowTalk AI?",
     answer:
-      "Visit shadowtalk-ai.com/chatbot and start chatting immediately — no signup required. For higher limits, autonomous missions, and premium tools, create a free account and optionally upgrade.",
+      "Visit shadowtalk-ai.com/chatbot and start using it immediately — no credit card required. Create a free account to sync history and memory across devices. ShadowTalk AI is free to use; bring your own AI provider API key.",
   },
 ] as const;
 
@@ -499,9 +499,9 @@ export const PAGE_SEO: Record<string, PageMeta> = {
     canonical: 'https://www.shadowtalk-ai.com/home',
   },
   pricing: {
-    title: 'Pricing — Free to Start, Cancel Anytime',
-    description: 'ShadowTalk pricing: Free tier with stated daily limits. BYOK (Bring Your Own Key) — $0 platform fee Cancel anytime, 14-day money-back, data handling disclosed upfront.',
-    keywords: ['AI pricing', 'chatbot subscription', 'AI plans', 'Pro AI $5'],
+    title: 'Free Access — ShadowTalk AI',
+    description: 'ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage.',
+    keywords: ['free AI workspace', 'BYOK AI', 'free ChatGPT alternative', 'no subscription AI'],
     canonical: 'https://www.shadowtalk-ai.com/pricing',
   },
   chatbot: {
@@ -761,9 +761,9 @@ export const PAGE_SEO: Record<string, PageMeta> = {
     canonical: 'https://www.shadowtalk-ai.com/careers',
   },
   billing: {
-    title: 'Billing & Subscription',
-    description: 'Manage your ShadowTalk AI subscription, billing, and payment methods.',
-    keywords: ['billing', 'subscription', 'payment', 'plans'],
+    title: 'Billing — Everything Is Free',
+    description: 'ShadowTalk AI is free to use. No subscriptions, no invoices, no payment methods. Provider API usage is billed by your provider, not by ShadowTalk.',
+    keywords: ['billing', 'free', 'BYOK', 'no subscription'],
     canonical: 'https://www.shadowtalk-ai.com/billing',
   },
   enterprise: {
@@ -779,20 +779,20 @@ export const PAGE_SEO: Record<string, PageMeta> = {
     canonical: 'https://www.shadowtalk-ai.com/privacy-score',
   },
   founderAccess: {
-    title: 'Founder Access — Direct Activation for Pakistan & International',
-    description: 'Activate subscriptions and paid features directly: JazzCash, Easypaisa, bank, USDT, or international card. Document generation and BYOKs available.',
-    keywords: ['founder access', 'JazzCash', 'Easypaisa', 'bank transfer Pakistan', 'USDT', 'document generation', 'direct activation', 'Pakistan AI payments'],
+    title: 'Free Access — Former Checkout Page',
+    description: 'ShadowTalk AI is free to use. There is nothing to buy: no plans, no payment methods, no regional checkout. Bring your own AI provider API key.',
+    keywords: ['free access', 'BYOK', 'no checkout'],
     canonical: 'https://www.shadowtalk-ai.com/founder-access',
   },
   referral: {
-    title: 'Referral Program — Earn 20–40% Commission',
-    description: 'Share ShadowTalk AI and earn 20–40% recurring commission. Launch a tracked affiliate link from your dashboard.',
+    title: 'Referral Program — Share ShadowTalk Free',
+    description: 'Share ShadowTalk AI with friends — it is free to use, no subscription required. Launch a tracked share link from your dashboard.',
     keywords: ['ShadowTalk referral', 'affiliate program', '20% commission', '40% commission', 'earn recurring commission'],
     canonical: 'https://www.shadowtalk-ai.com/referral',
   },
   partnerships: {
     title: 'Partnerships & Integrations — ShadowTalk AI',
-    description: 'Integrate ShadowTalk with Notion, Slack, Discord, and complementary tools. Team pricing, co-marketing, and referral credits.',
+    description: 'Integrate ShadowTalk with Notion, Slack, Discord, and complementary tools. Co-marketing and integration partnerships.',
     keywords: ['ShadowTalk integrations', 'AI partnerships', 'enterprise AI', 'Slack AI'],
     canonical: 'https://www.shadowtalk-ai.com/partnerships',
   },

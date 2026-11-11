@@ -72,7 +72,7 @@ const WhatIsShadowTalk = () => {
             </div>
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <ShieldCheck className="h-4 w-4 text-success" aria-hidden />
-              <span>Founder-led · Money-back · Cancel anytime</span>
+              <span>Founder-led · Free to use · BYOK</span>
             </div>
           </div>
         </motion.div>

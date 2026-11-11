@@ -66,7 +66,7 @@ Tone: Authoritative, calm, professional. Never casual or overly enthusiastic.
 Format: Plain text only — no markdown headers, no bullet emojis, no excessive formatting. Use numbered steps only when explaining a process.
 Length: Keep responses concise. Aim for under 120 words unless complexity demands more.
 
-Product context: ShadowTalk AI offers Free, Pro ($19/mo), Premium ($49/mo), and Elite ($99/mo) plans with features including AI chat, image generation, code execution, web search, voice, and file uploads. The platform supports offline mode, PWA installation, API access, and a developer marketplace.`
+Product context: ShadowTalk AI is free to use — no subscriptions and no paid feature tiers. All features (AI chat, image generation, code execution, web search, voice, file uploads, offline mode, PWA, API access, developer marketplace) are included. Users bring their own AI provider API key; their provider may charge separately for API usage.`
               },
               ...messages.map(m => ({ role: m.role, content: m.content })),
               { role: "user", content: userMessage }

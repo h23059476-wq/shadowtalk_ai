@@ -1135,7 +1135,9 @@ Structure and Content Guidelines:
           detail = rawBody || detail;
         }
         if (status === 402) {
-          throw new Error("Platform credits exhausted. Please upgrade your plan.");
+          throw new Error(
+            "The free platform quota is temporarily exhausted. Add your own AI provider API key in Settings (BYOK) to keep chatting — it is free and unlimited.",
+          );
         }
         throw new Error(detail);
       };

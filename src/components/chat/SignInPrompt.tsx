@@ -1,8 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { LogIn, Sparkles, Zap, Shield, Crown } from "lucide-react";
-import { FREE_TIER_DAILY } from "@/lib/productClaims";
+import { LogIn, Sparkles, Zap, Shield, Cloud } from "lucide-react";
 
 interface SignInPromptProps {
   open: boolean;
@@ -12,52 +11,55 @@ interface SignInPromptProps {
   limitCount?: number;
 }
 
-export function SignInPrompt({ open, onOpenChange, reason, usedCount, limitCount }: SignInPromptProps) {
+/** Free-access sign-in prompt: ShadowTalk is free; sign-in adds continuity,
+ *  sync, and encrypted vault access. No paid tiers, no upgrade messaging. */
+export function SignInPrompt({ open, onOpenChange, reason }: SignInPromptProps) {
+  void reason;
   const navigate = useNavigate();
 
   const reasonMessages = {
     chats: {
-      title: "You've used your free chats!",
-      description: `You've enjoyed ${usedCount || 10} free AI conversations. Sign in to continue chatting!`,
+      title: "Sign in to keep your chats",
+      description: "ShadowTalk AI is free to use. Signing in saves your history across devices.",
       icon: Zap,
       benefits: [
-        `${FREE_TIER_DAILY.messages.toLocaleString()} messages per day (Free tier)`,
-        "Unlimited with Pro subscription",
-        "Save conversation history",
-        "Access advanced features",
+        "Conversation history saved to your account",
+        "Encrypted Stealth Vault for sensitive work",
+        "Projects and memory that follow you",
+        "Everything stays free — no subscription",
       ]
     },
     images: {
-      title: "Image generation limit reached!",
-      description: `You've created ${usedCount || 5} free images. Sign in to generate more!`,
+      title: "Sign in to keep your creations",
+      description: "ShadowTalk AI is free to use. Signing in keeps your gallery with you.",
       icon: Sparkles,
       benefits: [
-        "4 images per day (Free tier)",
-        "20+ images with Pro subscription",
-        "HD quality outputs",
-        "Save to your gallery",
+        "Images saved to your gallery",
+        "History across devices",
+        "Encrypted vault storage",
+        "Everything stays free — no subscription",
       ]
     },
     deepResearch: {
-      title: "Deep Research limit reached!",
-      description: `You've used ${usedCount || 5} free research queries. Sign in for more!`,
+      title: "Sign in to keep your research",
+      description: "ShadowTalk AI is free to use. Signing in keeps your research reports.",
       icon: Shield,
       benefits: [
-        "5 research queries per day (Free)",
-        "More with Pro subscription",
-        "Multi-source analysis",
+        "Multi-source analysis with citations",
         "Export research reports",
+        "Knowledge graph and memory",
+        "Everything stays free — no subscription",
       ]
     },
     general: {
       title: "Sign in to continue",
-      description: "Create a free account to unlock more features!",
-      icon: Crown,
+      description: "Create a free account — ShadowTalk AI is free to use.",
+      icon: Cloud,
       benefits: [
         "Save your conversations",
         "Access all AI features",
         "Sync across devices",
-        "Priority support",
+        "Bring your own AI provider API key",
       ]
     }
   };
@@ -88,10 +90,9 @@ export function SignInPrompt({ open, onOpenChange, reason, usedCount, limitCount
         </DialogHeader>
 
         <div className="space-y-4 py-4">
-          {/* Benefits list */}
           <div className="bg-muted/50 rounded-lg p-4 space-y-2">
             <p className="text-sm font-medium text-foreground mb-3">
-              ✨ Sign in to unlock:
+              Sign in to unlock:
             </p>
             {config.benefits.map((benefit, i) => (
               <div key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -101,15 +102,14 @@ export function SignInPrompt({ open, onOpenChange, reason, usedCount, limitCount
             ))}
           </div>
 
-          {/* Comparison with ChatGPT */}
           <div className="bg-gradient-to-r from-success/10 to-primary/10 border border-success/20 rounded-lg p-3">
             <p className="text-xs font-medium text-success flex items-center gap-1">
               <Zap className="w-3 h-3" />
-              Better than ChatGPT Free!
+              Free to use — no credit card
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              ChatGPT limits free users to ~3 images & ~3 research queries. 
-              <span className="text-foreground font-medium"> ShadowTalk gives you 4 images & 5 research queries!</span>
+              Bring your own AI provider API key and choose your models. Your
+              provider may charge separately for API usage.
             </p>
           </div>
         </div>

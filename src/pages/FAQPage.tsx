@@ -75,14 +75,14 @@ const STATIC_FAQS: FAQItem[] = [
   {
     id: "faq-pricing-tiers",
     category: "pricing",
-    question: "What are the paid tiers and pricing?",
-    answer: "We offer Pro ($5/month) for unlimited messages and DeepSeek R1 reasoning, Premium ($15/month) for full autonomous agents and team features, and Elite ($20/month) for priority GPU queues, WebGPU edge runtimes, and unlimited deep research. All plans include a 14-day money-back guarantee.",
+    question: "What does ShadowTalk AI cost?",
+    answer: "Nothing. ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage. There are no paid tiers, no subscriptions, and no feature locks.",
   },
   {
     id: "faq-refund-policy",
     category: "pricing",
     question: "Can I get a refund if I am not satisfied?",
-    answer: "Yes. We offer a 100% money-back guarantee for 14 days from your initial subscription date. Simply email shadowtalk@shadowtalk-ai.com with your account email and our billing team will process your full refund immediately.",
+    answer: "There is nothing to refund: ShadowTalk AI does not charge for access and does not collect payments. If you use your own AI provider API key (BYOK), that provider bills you directly — refund questions go to your provider.",
   },
   {
     id: "faq-who-built",
