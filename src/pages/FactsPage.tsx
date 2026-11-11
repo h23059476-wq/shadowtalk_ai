@@ -93,15 +93,24 @@ const FactsPage = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold mb-3">Pricing (USD)</h2>
+              <h2 className="text-xl font-bold mb-3">Access &amp; pricing</h2>
               <ul className="text-sm space-y-2 text-muted-foreground">
-                {Object.entries(k.pricing_usd).map(([plan, info]) => (
-                  <li key={plan}>
-                    <strong className="text-foreground capitalize">{plan}</strong>
-                    {typeof info === "object" && "price" in info ? ` — $${info.price}` : ""}
-                    {typeof info === "object" && "highlights" in info ? `: ${info.highlights}` : ""}
-                  </li>
-                ))}
+                <li>
+                  <strong className="text-foreground capitalize">Model</strong>
+                  {": free_access_byok — free to use, no subscriptions, no paid feature tiers"}
+                </li>
+                <li>
+                  <strong className="text-foreground">Summary</strong>
+                  {": " + k.pricing.summary}
+                </li>
+                <li>
+                  <strong className="text-foreground">Details</strong>
+                  {": " + k.pricing.details}
+                </li>
+                <li>
+                  <strong className="text-foreground">Provider costs</strong>
+                  {": " + k.pricing.provider_costs}
+                </li>
               </ul>
             </section>
 

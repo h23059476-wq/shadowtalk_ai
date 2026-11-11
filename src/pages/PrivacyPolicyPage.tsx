@@ -15,7 +15,7 @@ const PrivacyPolicyPage = () => {
 • **Account Information**: When you create an account, we collect your email address, name, and password.
 • **Usage Data**: We collect information about how you use our services, including conversation history, feature usage, and preferences.
 • **Device Information**: We may collect device identifiers, browser type, and operating system information.
-• **Payment Information**: If you subscribe to a paid plan, our payment processor collects billing information.
+• **Payment Information**: ShadowTalk AI is free to use and does not collect payments. If you use a paid AI provider under BYOK, your payment details stay with that provider — we never see them.
 
 We do NOT collect or store the content of your conversations in offline mode, as all processing happens locally on your device.`
     },

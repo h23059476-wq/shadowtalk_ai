@@ -83,7 +83,7 @@ export const HOW_TO_GUIDES: HowToGuide[] = [
       "ChatGPT: strong for single-turn brainstorming and polish",
       "ShadowTalk: missions, /strategy, exports, and tool chains in one workspace",
       "Try both on the same prompt — compare finish rate, not reply length",
-      "Use ShadowTalk free tier for strategy; upgrade Pro at $5/mo for limits",
+      "Use ShadowTalk for strategy — it is free to use; your provider may charge for API usage",
     ],
     ctaLabel: "Try ShadowTalk for strategy — free",
     utmCampaign: "comparison_howto",

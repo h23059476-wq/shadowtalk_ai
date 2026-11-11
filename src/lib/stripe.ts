@@ -1,4 +1,7 @@
 // Stripe Configuration for ShadowTalk AI
+// DORMANT since the free-access transition: ShadowTalk AI no longer sells
+// subscriptions, so nothing in the app initiates Stripe checkout. Config is
+// preserved so optional monetization can be re-enabled later.
 import { FREE_TIER_MARKETING } from "@/lib/productClaims";
 
 

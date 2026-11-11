@@ -1,10 +1,9 @@
 import { PLAN_DETAILS } from "@/lib/stripe";
 
 /**
- * Best default for ShadowTalk: Premium $15/mo.
- * - Pro ($5) = entry hook for price-sensitive users only
- * - Premium ($15) = main revenue + matches ChatGPT Plus anchor with more tools
- * - Elite ($20) = decoy that makes Premium feel like the smart middle
+ * DORMANT since the free-access transition: ShadowTalk AI has no paid plans,
+ * so these conversion helpers no longer drive any UI. Kept for optional
+ * monetization in the future.
  */
 export const RECOMMENDED_MONTHLY_PLAN = "premium" as const;
 export const BEST_MONTHLY_PLAN = RECOMMENDED_MONTHLY_PLAN;

@@ -23,7 +23,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     solution:
       "Used ShadowTalk /strategy and Mission Control: market sizing → channel plan → one-pager draft with cited research in one workspace.",
     outcome:
-      "Shipped a shareable plan same day; upgraded to Pro ($5/mo) when daily limits became the bottleneck — still under ChatGPT Plus pricing.",
+      "Shipped a shareable plan same day — no upgrade needed because ShadowTalk is free to use and includes the full workflow.",
     framework: "PSOF: Problem = tab sprawl · Solution = agentic strategy missions · Outcome = finished artifact · Framework = Strategy Agent + exports",
     ctaHref: "/ai-business-planner",
   },

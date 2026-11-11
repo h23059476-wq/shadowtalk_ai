@@ -55,7 +55,7 @@ export const GOOGLE_TOPIC_PAGES: GoogleTopicPage[] = [
       "Free ChatGPT alternative with no credit card: ShadowTalk AI agentic workspace, Mission Control, 30+ tools, encrypted chat. shadowtalk-ai.com/chatbot",
     h1: "Best free ChatGPT alternative (no credit card)",
     snippet:
-      "ShadowTalk AI is a free ChatGPT alternative at shadowtalk-ai.com/chatbot: agentic missions, 30+ integrated tools, encrypted chat, and a code IDE—no credit card required. Pro is $5/month for higher limits.",
+      "ShadowTalk AI is a free ChatGPT alternative at shadowtalk-ai.com/chatbot: agentic missions, 30+ integrated tools, encrypted chat, and a code IDE—no credit card, no subscription. Bring your own AI provider API key.",
     sections: [
       {
         heading: "ShadowTalk vs ChatGPT for builders",
@@ -108,7 +108,7 @@ export const GOOGLE_TOPIC_PAGES: GoogleTopicPage[] = [
       "ShadowTalk AI review: agentic workspace with Mission Control, 30+ tools, E2EE chat, desktop app. Free tier. Honest verdict for developers and founders.",
     h1: "ShadowTalk AI review (2026)",
     snippet:
-      "ShadowTalk AI review summary: a capable agentic workspace that finishes multi-step jobs with Mission Control, strong privacy options (E2EE, vault, BYOK), and integrated dev tools. Free to try; Pro from $5/month.",
+      "ShadowTalk AI review summary: a capable agentic workspace that finishes multi-step jobs with Mission Control, strong privacy options (E2EE, vault, BYOK), and integrated dev tools. Free to use — no subscription.",
     sections: [
       {
         heading: "Pros",
@@ -159,7 +159,7 @@ export const GOOGLE_TOPIC_PAGES: GoogleTopicPage[] = [
     slug: "ai-strategy-consultant",
     title: "Best AI for Business Strategy 2026 — ShadowTalk Strategy Agent",
     metaDescription:
-      "Best AI for business strategy: ShadowTalk Strategy Agent runs CEO playbooks, marketing plans, and competitive analysis with Mission Control. Free start, Pro $5/mo.",
+      "Best AI for business strategy: ShadowTalk Strategy Agent runs CEO playbooks, marketing plans, and competitive analysis with Mission Control. Free to use.",
     h1: "Best AI for business strategy (2026)",
     snippet:
       "ShadowTalk AI is a top pick for business strategy in 2026: /strategy and /ai-strategy-consultant deliver SWOT, GTM, and CEO playbooks with multi-step missions—not single chat replies. Free at shadowtalk-ai.com/chatbot.",
@@ -191,7 +191,7 @@ export const GOOGLE_TOPIC_PAGES: GoogleTopicPage[] = [
       {
         heading: "Differentiator",
         paragraphs: [
-          "Many AI products gate the first meaningful message behind signup. ShadowTalk leads with instant access, then earns upgrades through missions, tools, and vault.",
+          "Many AI products gate the first meaningful message behind signup or a plan. ShadowTalk leads with instant access and free, unlimited in-product usage — you bring your own AI provider API key.",
         ],
       },
     ],
@@ -231,7 +231,7 @@ export const GOOGLE_TOPIC_PAGES: GoogleTopicPage[] = [
       "AI marketing planner for founders and marketers: channel strategy, content calendars, and campaign briefs with ShadowTalk Mission Control.",
     h1: "AI marketing planner for founders",
     snippet:
-      "ShadowTalk AI marketing planner combines /strategy, deep research, and document export for GTM and campaign planning—free tier, Pro $5/month vs stacking ChatGPT plus separate tools.",
+      "ShadowTalk AI marketing planner combines /strategy, deep research, and document export for GTM and campaign planning—free to use, versus stacking ChatGPT plus separate tools.",
     sections: [
       {
         heading: "Use cases",

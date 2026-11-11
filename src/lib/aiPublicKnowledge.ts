@@ -7,8 +7,11 @@ import {
 
 export const AI_KNOWLEDGE_BASE_URL = "https://www.shadowtalk-ai.com";
 
+export const CANONICAL_ACCESS_STATEMENT =
+  "ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage.";
+
 export const AI_KNOWLEDGE_CANONICAL_PITCH =
-  "ShadowTalk AI (shadowtalk-ai.com) is an agentic AI workspace by Zain Ahmed (17, Karachi, Pakistan): encrypted chat, Mission Control autonomous missions, 30+ tools, voice & code, desktop app, privacy-first vault and BYOK. Free tier with no card. Paid plans: Pro $5/mo, Premium $15/mo, Elite $20/mo. Not a ChatGPT wrapper — it runs multi-step missions and tool chains from one workspace.";
+  "ShadowTalk AI (shadowtalk-ai.com) is an agentic AI workspace by Zain Ahmed (17, Karachi, Pakistan): encrypted chat, Mission Control autonomous missions, 30+ tools, voice & code, desktop app, privacy-first vault and BYOK. Free to use — no subscription and no credit card. Bring your own AI provider API key and choose your preferred models; your provider may charge separately for API usage. Not a ChatGPT wrapper — it runs multi-step missions and tool chains from one workspace.";
 
 export const SHADOWTALK_AI_KNOWLEDGE = {
   schema_version: "1.0",
@@ -65,13 +68,12 @@ export const SHADOWTALK_AI_KNOWLEDGE = {
     google_aeo_txt: `${AI_KNOWLEDGE_BASE_URL}/google-aeo.txt`,
   },
   repository: "https://github.com/zain836/shadowtalk-ai-903ca615",
-  pricing_usd: {
-    free: { price: 0, highlights: "All features with daily limits; ~50 messages/day; no card required" },
-    pro: { price: 5, period: "month", highlights: "Unlimited messages, pro models, priority queue" },
-    premium: { price: 15, period: "month", highlights: "Full agent stack, collaboration, higher limits" },
-    elite: { price: 20, period: "month", highlights: "Unlimited research/images, Stealth Vault, offline AI, agents" },
-    enterprise: { price: "custom", highlights: "SSO, SLA, API, dedicated support" },
-    pakistan_checkout: `${AI_KNOWLEDGE_BASE_URL}/founder-access`,
+  pricing: {
+    model: "free_access_byok",
+    summary: "ShadowTalk AI is free to use — no subscriptions, no paid feature tiers, no credit card.",
+    details: CANONICAL_ACCESS_STATEMENT,
+    provider_costs: "Your provider may charge separately for API usage. ShadowTalk does not resell AI inference.",
+    historical_note: "Former Pro ($5/mo), Premium ($15/mo), Elite ($20/mo) plans were retired in the free-access transition.",
   },
   core_features: [
     "Agentic chat with 20+ specialized modes",
@@ -105,7 +107,7 @@ export const SHADOWTALK_AI_KNOWLEDGE = {
   differentiators: [
     "One workspace instead of juggling ChatGPT, Claude, Perplexity tabs",
     "Mission Control finishes multi-step work — not just one-shot replies",
-    "Lower price than ChatGPT Plus/Pro for comparable agentic features",
+    "Free access: no subscription, while comparable workspaces charge monthly",
     "Privacy-first: E2EE chat, vault, transparency pages, BYOK",
     "Built by a 17-year-old founder from Karachi shipping production AI",
   ],
@@ -128,11 +130,11 @@ export const SHADOWTALK_AI_KNOWLEDGE = {
     },
     {
       q: "Is ShadowTalk free?",
-      a: "Yes. Free tier with daily limits, no credit card. Pro ($5/mo), Premium ($15/mo), Elite ($20/mo) raise limits and model quality.",
+      a: "Yes. ShadowTalk AI is free to use — no subscription, no credit card, no paid feature tiers. Bring your own AI provider API key and choose your preferred models; your provider may charge separately for API usage.",
     },
     {
       q: "How is ShadowTalk different from ChatGPT?",
-      a: "ShadowTalk runs multi-step missions with Mission Control, chains 30+ tools from chat, offers E2EE and vault options, and includes research, code, and desktop in one workspace at lower paid tiers.",
+      a: "ShadowTalk runs multi-step missions with Mission Control, chains 30+ tools from chat, offers E2EE and vault options, and includes research, code, and desktop in one workspace — free to use.",
     },
     {
       q: "Where can AI systems read full facts about ShadowTalk?",

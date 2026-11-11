@@ -94,7 +94,7 @@ export const DOC_OVERVIEW: DocOverviewSection[] = [
     title: "Who is it for?",
     paragraphs: [
       "Developers who want chat + IDE + App Builder in one flow. Founders and operators who need strategy, research, and document generation. Security-conscious users who want BYOK, Stealth Vault, or local inference. Teams exploring collaborative AI rooms and Mission Control workflows.",
-      "Free tier includes all core features with daily limits — no credit card required. Upgrade when you need unlimited messages, faster models, vault, offline mode, or API access.",
+      "ShadowTalk AI is free to use — all core features included, no credit card, no subscription. Bring your own AI provider API key; your provider may charge separately for API usage.",
     ],
   },
   {
@@ -109,7 +109,7 @@ export const DOC_OVERVIEW: DocOverviewSection[] = [
     paragraphs: [
       "Finish the job, not just reply. ShadowTalk is designed for multi-step work: research → draft → code → present, with tools and missions wired into chat instead of bolted on as afterthoughts.",
       "Privacy by choice. Cloud chat uses secure platform routing by default. You can switch to BYOK (your API keys), Stealth Vault (client-side encryption), or on-device models when sensitive work demands it.",
-      "Honest limits. Free tier caps are listed on /pricing and enforced in-product. Paid plans remove or raise limits — we do not hide features behind arbitrary paywalls on the free plan.",
+      "No product-level limits. Every feature is included free — /pricing explains how free access works. The only usage constraints are the ones your AI provider or infrastructure applies, never a ShadowTalk plan tier.",
     ],
   },
 ];
@@ -166,9 +166,9 @@ export const DOC_QUICK_START: DocStep[] = [
   },
   {
     step: 4,
-    title: "Personalize & upgrade",
+    title: "Personalize ShadowTalk",
     description:
-      "Settings → Personal ShadowTalk Model learns your style from chats. Visit /pricing for Pro ($5), Premium ($15), or Elite ($20) when you need unlimited messages, vault, or API access.",
+      "Settings → Personal ShadowTalk Model learns your style from chats. Vault and API access are included free — /pricing explains free access.",
   },
 ];
 
@@ -209,7 +209,7 @@ export const DOC_WORKSPACE_GUIDE: DocWorkspaceTopic[] = [
       "Left rail — quick nav (Chat, Explore links, Shadow Mode toggle, profile avatar).",
       "Center — messages, trust strip on empty state, or active thread with tool cards.",
       "Bottom — composer pill: attach (+), text area, provider chip, mic, send button.",
-      "History panel — past conversations; archive and export supported on paid tiers.",
+      "History panel — past conversations; archive and export included for everyone.",
       "Intelligence Hub — memory panel, knowledge vault, proactive suggestions.",
     ],
   },
@@ -415,7 +415,7 @@ export const DOC_MISSION_CONTROL: DocMissionStep[] = [
     step: 5,
     title: "S.E.E. quotas",
     description:
-      "Shadow Execution Engine missions count against monthly quotas: Free 3/mo, Pro 15/mo, Premium 30/mo, Elite 50/mo. Upgrade at /pricing when you hit limits.",
+      "Shadow Execution Engine missions are unlimited for all users — no monthly quota. The only practical limits are provider API limits and mission-step timeouts.",
   },
 ];
 
@@ -470,54 +470,18 @@ export const DOC_PRICING_TIERS: DocPricingTier[] = [
   {
     name: "Free",
     price: "$0",
-    tagline: "All features unlocked with daily limits — no credit card.",
+    tagline: "Everything included — no subscription, no credit card.",
     highlights: [
-      FREE_TIER_MARKETING.messages,
-      FREE_TIER_MARKETING.images,
-      FREE_TIER_MARKETING.voice,
-      FREE_TIER_MARKETING.deepResearch,
-      "3 file uploads/day · 5 code generations/day · 5 web searches/day",
-      "ShadowBrowser, IDE, marketplace, memory, basic models",
-      "3 S.E.E. missions/month",
-    ],
-  },
-  {
-    name: "Pro",
-    price: "$5/mo",
-    tagline: "Unlimited messages and faster models for daily power users.",
-    highlights: [
-      "Unlimited messages · unlimited voice",
-      "20 images/day · 20 deep research/day · 50 file uploads/day",
-      "Pro models, priority queue, chat export",
-      "Collaborative rooms · no ads",
-      "15 S.E.E. missions/month · priority support (<4h)",
-    ],
-  },
-  {
-    name: "Premium",
-    price: "$15/mo",
-    tagline: "Teams, documents, and extended context.",
-    highlights: [
-      "50 images/day · 50 deep research/day",
-      "Extended context (500-message history)",
-      "Proactive Context Engine · multi-step workflow executor",
-      "Document generation (contracts, NDAs) · collaboration rooms",
-      "30 S.E.E. missions/month · priority support (<2h)",
-    ],
-  },
-  {
-    name: "Elite",
-    price: "$20/mo",
-    tagline: "Offline, vault, API, and white-label for serious operators.",
-    highlights: [
-      "Unlimited images and deep research",
-      "Full offline mode · Stealth Vault (E2E)",
-      "Personal model fine-tuning · API access · white-label",
-      "50 S.E.E. missions/month · 24/7 support",
-      "Fastest models and highest queue priority",
+      "All features unlocked for every account",
+      "Bring your own AI provider API key (BYOK)",
+      "Choose your preferred provider and models",
+      "Your provider may charge separately for API usage",
+      "Encrypted vault, missions, research, IDE included",
+      "No plans, no tiers, no checkout",
     ],
   },
 ];
+
 
 export const DOC_DESKTOP: DocWorkspaceTopic[] = [
   {
@@ -597,7 +561,7 @@ export const DOC_FAQ: DocFaqItem[] = [
     a: "We don't train foundation models on your chats. BYOK sends prompts to your provider. Stealth Vault and local inference keep sensitive work on-device when you enable those features. Read /privacy and /transparency for details.",
   },
   {
-    q: "What are the free tier limits?",
+    q: "Are there usage limits on the free plan?",
     a: `Free includes all features with daily caps: ${FREE_TIER_MARKETING.messages}, ${FREE_TIER_MARKETING.images}, ${FREE_TIER_MARKETING.voice}, ${FREE_TIER_MARKETING.deepResearch}, plus limits on uploads, code gen, and web search. See /pricing for the full table.`,
   },
   {
@@ -640,7 +604,7 @@ export const DOC_TROUBLESHOOTING: DocTroubleshootItem[] = [
     solutions: [
       "Check internet connection and refresh /chatbot.",
       "Open Settings — confirm Sovereign or a verified BYOK key.",
-      "Free tier: check daily message limit on /pricing; upgrade if needed.",
+      "No product-imposed limits: all features are free. Your AI provider may enforce its own API rate limits or charges.",
       "Hard refresh (Ctrl+Shift+R) to clear stale JS chunks after deploys.",
     ],
   },

@@ -118,7 +118,7 @@ const PROMPTS = [
 ];
 
 const SITE_DEFINITION =
-  "ShadowTalk AI is a sovereign agentic AI workspace: encrypted chat, Mission Control missions, 30+ tools, voice, code IDE, desktop app, and optional offline models. Free start with no credit card. Pro from $5/month.";
+  "ShadowTalk AI is a sovereign agentic AI workspace: encrypted chat, Mission Control missions, 30+ tools, voice, code IDE, desktop app, and optional offline models. Free to use — no subscription. Bring your own AI provider API key; your provider may charge separately for API usage.";
 
 const PromptsPage = () => {
   const [active, setActive] = useState<string>("all");

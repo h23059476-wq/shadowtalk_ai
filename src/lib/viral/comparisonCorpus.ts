@@ -51,7 +51,7 @@ export const COMPARISON_PAGES: ComparisonPage[] = [
       "30+ integrated tools (research, code, images, security) from one chat",
       "End-to-end encrypted chat + Stealth Vault",
       "In-browser IDE, presentations, and desktop app",
-      "Pro from $5/mo vs ChatGPT Plus pricing for more integrated tooling",
+      "Free to use — vs ChatGPT Plus monthly pricing — for more integrated tooling",
       "BYOK + optional on-device offline models",
     ],
     competitorWins: [
@@ -186,7 +186,7 @@ export const COMPARISON_PAGES: ComparisonPage[] = [
       "Mission Control for multi-step go-to-market tasks",
       "In-browser code workspace and document generation",
       "Affiliate and referral tools built in",
-      "Pro from $5/mo with transparent usage caps",
+      "Free to use with transparent BYOK costs",
     ],
     competitorWins: [
       "Huge immediate helper text quality out of the box",
@@ -347,7 +347,7 @@ export const COMPARISON_PAGES: ComparisonPage[] = [
       "End-to-end encrypted chat option",
       "30+ tools beyond basic chat",
       "Local offline models for sensitive use",
-      "Clear upgrade path: Pro, Premium, Elite",
+      "No upgrade path needed: everything is free",
     ],
     competitorWins: [
       "Some free tiers have larger public model access",
@@ -370,7 +370,7 @@ export const COMPARISON_PAGES: ComparisonPage[] = [
       "Multi-step missions with human approval",
       "Deep research with citations in same workspace",
       "Document and presentation export",
-      "Pro $5/mo vs ChatGPT Plus for integrated tooling",
+      "Free vs ChatGPT Plus for integrated tooling",
     ],
     competitorWins: [
       "Strong brand for quick strategy Q&A",
