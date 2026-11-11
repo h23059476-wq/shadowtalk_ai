@@ -1,99 +1,81 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CreditSystem } from "@/components/monetization/CreditSystem";
-import { AffiliateProgram } from "@/components/monetization/AffiliateProgram";
-import { UsageBasedBilling } from "@/components/monetization/UsageBasedBilling";
-import { RevenueStreams } from "@/components/monetization/RevenueStreams";
+import ChatWidget from "@/components/ChatWidget";
+import { SEOHead } from "@/components/SEOHead";
+import { PAGE_SEO } from "@/lib/seo";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { 
-  Coins, 
-  Users, 
-  Activity, 
-  Crown,
-  Sparkles,
-  LayoutGrid
-} from "lucide-react";
-import { useAuth } from "@/components/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Wallet, KeyRound, ShieldCheck, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const MonetizationPage = () => {
-  const { user, userPlan } = useAuth();
-  const navigate = useNavigate();
+const BillingPage = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      <div className="pt-20 pb-12">
-        <div className="container mx-auto px-4">
-          {/* Header */}
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center space-x-2 bg-card/50 border border-border rounded-full px-4 py-2 mb-6">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-sm text-muted-foreground">Billing & Credits</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Manage Your{" "}
-              <span className="gradient-text">Account</span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
-              Credits, usage, affiliate earnings, and billing - all in one place
-            </p>
-            
-            {/* Quick Actions */}
-            <div className="flex flex-wrap justify-center gap-3">
-              {userPlan === 'free' && (
-                <Button className="gap-2" onClick={() => navigate('/founder-access')}>
-                  <Crown className="h-4 w-4" />
-                  Upgrade to Pro
-                </Button>
-              )}
-            </div>
+    <>
+      <SEOHead meta={PAGE_SEO.billing} />
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <main className="container mx-auto px-4 pt-24 pb-16 max-w-3xl">
+          <Badge variant="outline" className="mb-4 gap-1.5">
+            <Wallet className="h-3 w-3" /> Billing
+          </Badge>
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+            There is nothing to pay here
+          </h1>
+          <p className="text-lg text-muted-foreground mb-8">
+            ShadowTalk AI is free to use. Bring your own AI provider API key and
+            choose your preferred models. Your provider may charge separately for
+            API usage.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-3 mb-10">
+            <Card>
+              <CardContent className="p-5">
+                <Sparkles className="h-5 w-5 text-primary mb-3" />
+                <h2 className="text-sm font-semibold mb-1.5">No subscriptions</h2>
+                <p className="text-sm text-muted-foreground">
+                  No plans, no tiers, no renewals. Your account includes every feature.
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-5">
+                <Wallet className="h-5 w-5 text-primary mb-3" />
+                <h2 className="text-sm font-semibold mb-1.5">No invoices</h2>
+                <p className="text-muted-foreground text-sm">
+                  ShadowTalk AI does not collect payments, so there are no bills or receipts.
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-5">
+                <KeyRound className="h-5 w-5 text-primary mb-3" />
+                <h2 className="text-sm font-semibold mb-1.5">Your provider bills you</h2>
+                <p className="text-muted-foreground text-sm">
+                  AI usage costs come from your provider, billed directly to you — never through us.
+                </p>
+              </CardContent>
+            </Card>
           </div>
-
-          {/* Main Content */}
-          <Tabs defaultValue="overview" className="max-w-5xl mx-auto">
-            <TabsList className="grid w-full grid-cols-4 mb-8">
-              <TabsTrigger value="overview" className="gap-2">
-                <LayoutGrid className="h-4 w-4" />
-                <span className="hidden sm:inline">Overview</span>
-              </TabsTrigger>
-              <TabsTrigger value="credits" className="gap-2">
-                <Coins className="h-4 w-4" />
-                <span className="hidden sm:inline">Credits</span>
-              </TabsTrigger>
-              <TabsTrigger value="usage" className="gap-2">
-                <Activity className="h-4 w-4" />
-                <span className="hidden sm:inline">Usage</span>
-              </TabsTrigger>
-              <TabsTrigger value="affiliate" className="gap-2">
-                <Users className="h-4 w-4" />
-                <span className="hidden sm:inline">Affiliate</span>
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="overview">
-              <RevenueStreams />
-            </TabsContent>
-
-            <TabsContent value="credits">
-              <CreditSystem />
-            </TabsContent>
-
-            <TabsContent value="usage">
-              <UsageBasedBilling />
-            </TabsContent>
-
-            <TabsContent value="affiliate">
-              <AffiliateProgram />
-            </TabsContent>
-          </Tabs>
-        </div>
+          <Card className="border-primary/25 bg-primary/5">
+            <CardContent className="p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+              <ShieldCheck className="h-6 w-6 text-primary shrink-0" />
+              <div className="flex-1">
+                <p className="font-semibold">Manage your AI provider keys</p>
+                <p className="text-sm text-muted-foreground">
+                  Add or rotate API keys in Settings. Keys are encrypted before storage.
+                </p>
+              </div>
+              <Button asChild className="shrink-0">
+                <Link to="/settings">Open Settings</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </main>
+        <Footer />
+        <ChatWidget />
       </div>
-      
-      <Footer />
-      
-    </div>
+    </>
   );
 };
 
-export default MonetizationPage;
+export default BillingPage;
