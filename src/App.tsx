@@ -126,7 +126,6 @@ const StrategyLabPage = lazy(() => import("./pages/StrategyLabPage"));
 const SovereignDataPage = lazy(() => import("./pages/SovereignDataPage"));
 const SovereignWalletPage = lazy(() => import("./pages/SovereignWalletPage"));
 const GhostAdsPage = lazy(() => import("./pages/GhostAdsPage"));
-const EnterpriseLicensePage = lazy(() => import("./pages/EnterpriseLicensePage"));
 const TransparencyPage = lazy(() => import("./pages/TransparencyPage"));
 const CommandCenterPage = lazy(() => import("./pages/CommandCenterPage"));
 const CompetitivePage = lazy(() => import("./pages/CompetitivePage"));
