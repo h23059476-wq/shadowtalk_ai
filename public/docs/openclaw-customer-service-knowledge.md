@@ -93,9 +93,8 @@ ShadowTalk AI is an **agentic AI workspace** — a web app, PWA, and desktop app
 | Plan | Price | Best for |
 |------|-------|----------|
 | **Free** | $0 | Trying everything — no credit card |
-| **Pro** | $5/month | Daily drivers — unlimited messages |
-| **Premium** | $15/month | Teams & power users — workflows, collaboration |
-| **Elite** | $20/month | Offline, vault, agents, white-label, phone support |
+| **Free access** | $0/month | Everything included — no subscription, no credit card |
+| **AI usage** | Your provider's rates | BYOK — your provider may charge separately for API usage |
 | **Enterprise** | Custom | SSO, API, SLA, dedicated support |
 
 ### Free tier daily limits (signed-in)
@@ -119,7 +118,7 @@ ShadowTalk AI is an **agentic AI workspace** — a web app, PWA, and desktop app
 
 **Note:** Users can chat **without signing up** on the free tier (anonymous session). Signing in unlocks higher limits and sync.
 
-### Pro ($5/month) highlights
+### Free access highlights
 - Unlimited messages
 - 20 images/day
 - 20 deep research/day
@@ -130,7 +129,7 @@ ShadowTalk AI is an **agentic AI workspace** — a web app, PWA, and desktop app
 - 15 S.E.E. missions/month
 - Priority support (< 4 hours)
 
-### Premium ($15/month) highlights
+### BYOK highlights
 - Everything in Pro
 - 50 images/day, 50 deep research/day
 - Extended context (500 message history)
@@ -140,8 +139,8 @@ ShadowTalk AI is an **agentic AI workspace** — a web app, PWA, and desktop app
 - Real-time collaboration rooms
 - 30 S.E.E. missions/month
 
-### Elite ($20/month) highlights
-- Everything in Premium
+### Cost transparency highlights
+- ShadowTalk AI never charges for the workspace
 - Unlimited images & deep research
 - Full offline mode
 - Stealth Vault (E2E encrypted storage)
@@ -155,7 +154,7 @@ ShadowTalk AI is an **agentic AI workspace** — a web app, PWA, and desktop app
 ### How to upgrade
 1. **International card (Stripe):** https://www.shadowtalk-ai.com/pricing or Profile → Billing
 2. **Pakistan local payments:** https://www.shadowtalk-ai.com/founder-access — JazzCash, Easypaisa, bank transfer, USDT
-3. **Profile:** Settings → subscription
+3. **Profile:** Settings → your BYOK API keys
 
 ### Referral program
 - URL: https://www.shadowtalk-ai.com/referral
@@ -272,7 +271,7 @@ ShadowTalk supports **optional offline AI** when models are installed.
 - Smaller models are **less capable** than cloud Pro models
 - First download requires internet
 - Not all tools work offline (web search, cloud images need connectivity)
-- Elite tier marketed for "full offline mode" but Tier A is available to free users with limits
+- Everything is free — no tiers; offline mode availability depends on device support
 
 ### Personal model (learns from you)
 - Every user gets **"My ShadowTalk"** personal model
@@ -286,7 +285,7 @@ ShadowTalk supports **optional offline AI** when models are installed.
 
 ### What we offer
 - **E2EE chat** — passphrase-derived encryption; cloud stores ciphertext
-- **Stealth Vault** — client-side encrypted storage (Elite-oriented)
+- **Stealth Vault** — client-side encrypted storage (included free)
 - **BYOK** — bring your own OpenAI/Anthropic/Google API keys
 - **Transparency pages** — /transparency, /privacy, /gdpr
 - **Device-only pledge** — block cloud when local model ready
@@ -328,7 +327,7 @@ More: https://www.shadowtalk-ai.com/multilingual-ai
 
 ### vs ChatGPT
 - **ChatGPT wins:** Brand recognition, polished single-turn chat, massive ecosystem
-- **ShadowTalk wins:** Mission Control missions, 30+ tools in one UI, IDE, vault, lower Pro price ($5 vs ~$20 Plus), free tier with all features (limited), BYOK, offline options
+- **ShadowTalk wins:** Mission Control missions, 30+ tools in one UI, IDE, vault, free access (no subscription, no tiers), BYOK, offline options
 
 ### vs Claude
 - **Claude wins:** Long-form reasoning, writing quality
@@ -350,7 +349,7 @@ More: https://www.shadowtalk-ai.com/multilingual-ai
 ShadowTalk AI is an agentic AI workspace at shadowtalk-ai.com — encrypted chat, Mission Control missions, 30+ tools, voice, code IDE, and optional offline AI. Free to start, no credit card. Tagline: *Think AI. Think ShadowTalk.*
 
 ### "Is it free?"
-Yes. Free tier with daily limits (~50 messages/day). No credit card required. Pro is $5/month for unlimited messages and more.
+Yes — completely. No subscription, no credit card, no paid tiers. Bring your own AI provider API key; your provider may charge separately for API usage.
 
 ### "Do I need an account?"
 No — you can start chatting at /chatbot without signing up. Creating an account unlocks higher limits and sync across devices.
@@ -359,7 +358,7 @@ No — you can start chatting at /chatbot without signing up. Creating an accoun
 Visit /pricing for card payments or /founder-access for JazzCash/Easypaisa (Pakistan). You can also upgrade from Profile → Settings → Billing.
 
 ### "Why did I hit a limit?"
-Free and guest tiers have daily caps. Check your usage in /insights or upgrade to Pro ($5/mo) for unlimited messages.
+There are no product-imposed caps. Check your usage in /insights; provider API limits may still apply.
 
 ### "Can it work offline?"
 Yes, after installing the on-device model (~130MB) or larger Gemma/Ollama on desktop. Go to Profile → Offline AI. Quality is best with larger models.
@@ -379,8 +378,8 @@ Yes — /downloads for Windows. PWA also available from browser.
 ### "What's Mission Control?"
 Autonomous AI that plans and executes multi-step tasks with your approval. Open /missioncontrol or say "start a mission" in chat.
 
-### "What's the difference between Pro and Premium?"
-Pro ($5): unlimited messages, pro models, priority. Premium ($15): adds workflows, collaboration rooms, document generation, higher image/research limits.
+### "Are there different plans?"
+No. There is one access level — free. Every feature is included; you bring your own AI provider API key.
 
 ### "I'm in Pakistan — how do I pay?"
 Use /founder-access for JazzCash, Easypaisa, bank transfer, or USDT. Founder-led activation.
@@ -446,7 +445,7 @@ Yes — BYOK (Bring Your Own Key) in Settings. Supports OpenAI, Anthropic, Googl
 - **Enterprise:** Custom pricing, SSO, teams, audit logs — /enterprise or contact sales via /contact
 - **API / developers:** /developers and /api
 - **Partnerships:** /partnerships (Slack, Notion integrations on roadmap)
-- **White-label:** Elite tier — contact founder
+- **White-label:** contact the founder — no self-serve tier
 
 ---
 
@@ -467,10 +466,10 @@ Yes — BYOK (Bring Your Own Key) in Settings. Supports OpenAI, Anthropic, Googl
 > Hi! I'm here to help with ShadowTalk AI — your agentic workspace for chat, missions, research, code, and more. What can I help you with today?
 
 ### Limit hit
-> You've reached today's free tier limit. You can wait for the daily reset, sign in for higher limits, or upgrade to **Pro ($5/month)** for unlimited messages: https://www.shadowtalk-ai.com/pricing
+> You've hit a provider-side limit. Check your provider dashboard for quota details: https://www.shadowtalk-ai.com/pricing explains free access.
 
 ### Upgrade nudge (soft)
-> If you're using ShadowTalk daily, **Pro at $5/month** removes message caps and unlocks pro models — less than ChatGPT Plus. No pressure — the free tier stays available!
+> If you need more capacity, add your own provider API key (BYOK) or a higher-quota plan with your provider — ShadowTalk itself stays free!
 
 ### Escalation
 > I want to make sure you get the right help. Please email **shadowtalk68@gmail.com** or use https://www.shadowtalk-ai.com/contact with your account email and a short description. Our team typically responds within 24 hours (faster for Pro+).

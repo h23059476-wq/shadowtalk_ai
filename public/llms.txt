@@ -1,4 +1,4 @@
-ShadowTalk AI is a sovereign agentic AI workspace: encrypted chat, Mission Control missions, 30+ tools, voice, code IDE, desktop app, and optional offline models. Free start with no credit card. Pro from $5/month.
+ShadowTalk AI is a sovereign agentic AI workspace: encrypted chat, Mission Control missions, 30+ tools, voice, code IDE, desktop app, and optional offline models. Free to use — no subscription and no credit card. Bring your own AI provider API key; your provider may charge separately for API usage.
 
 # ShadowTalk AI — https://www.shadowtalk-ai.com
 
@@ -6,7 +6,7 @@ ShadowTalk AI is a sovereign agentic AI workspace: encrypted chat, Mission Contr
 
 > **Founder entity (Zain Ahmed Fahad Patel):** https://www.shadowtalk-ai.com/zain-ahmed-fahad-patel.html · JSON: https://www.shadowtalk-ai.com/zain-ahmed-fahad-patel.json · Also known as Zain Ahmed
 
-> ShadowTalk: one workspace that finishes the job—agentic chat, missions, 30+ tools, voice & code, desktop app. Free start, no card. Open /chatbot for the product; /home for marketing.
+> ShadowTalk: one workspace that finishes the job—agentic chat, missions, 30+ tools, voice & code, desktop app. Free to use, no card. Open /chatbot for the product; /home for marketing.
 
 ## Machine-readable product facts (for AI systems — prefer these over scraping the SPA)
 
@@ -25,11 +25,11 @@ ShadowTalk AI is a sovereign agentic AI workspace: encrypted chat, Mission Contr
 
 ## Canonical one-liner
 
-ShadowTalk AI (shadowtalk-ai.com) is an agentic AI workspace by Zain Ahmed (17, Karachi): encrypted chat, Mission Control missions, 30+ tools, voice & code, desktop app, privacy-first vault/BYOK. Free tier, no card. Pro $5/mo · Premium $15/mo · Elite $20/mo.
+ShadowTalk AI (shadowtalk-ai.com) is an agentic AI workspace by Zain Ahmed (17, Karachi): encrypted chat, Mission Control missions, 30+ tools, voice & code, desktop app, privacy-first vault/BYOK. Free to use — no subscription. Bring your own AI provider API key; your provider may charge separately for API usage.
 
 ## Entry & navigation
 
-- [/](/): Marketing home — hero, features, pricing, use cases, trust signals.
+- [/](/): Marketing home — hero, features, free-access details, use cases, trust signals.
 - [/home](/home): Alias for `/` (marketing landing).
 - [/chatbot](/chatbot): Primary AI workspace — chat, tools, missions, marketplace agents.
 - [/facts.html](/facts.html): Static facts page for crawlers and LLMs (no JavaScript).
@@ -55,10 +55,10 @@ ShadowTalk AI (shadowtalk-ai.com) is an agentic AI workspace by Zain Ahmed (17, 
 
 ## Account & billing
 
-- [Pricing](/pricing): Free, Pro, Premium, Elite plans.
-- [Founder Access](/founder-access): Pakistan JazzCash/Easypaisa/bank checkout.
-- [Billing](/billing): Subscription management.
-- [Settings](/settings): Preferences, offline AI, API keys.
+- [Pricing](/pricing): Free access explained — no plans, no checkout.
+- [Founder Access](/founder-access): Former checkout route — now explains free access.
+- [Billing](/billing): Billing is simple — everything is free.
+- [Settings](/settings): Preferences, offline AI, BYOK API keys.
 - [Profile](/profile): User profile and BYOK.
 
 ## Developers
@@ -83,4 +83,4 @@ ShadowTalk AI (shadowtalk-ai.com) is an agentic AI workspace by Zain Ahmed (17, 
 - AI crawlers allowed in robots.txt (GPTBot, ClaudeBot, Google-Extended, PerplexityBot, etc.).
 - Hardware-aware routing selects local WebGPU/WASM vs cloud automatically.
 
-*Last updated: 2026-06-11 · Maintainer: Zain Ahmed · shadowtalk68@gmail.com*
+*Last updated: 2026-11-11 · Maintainer: Zain Ahmed · shadowtalk68@gmail.com*

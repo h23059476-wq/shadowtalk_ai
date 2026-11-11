@@ -1,5 +1,11 @@
 # ShadowTalk AI — Founder Strategy Brief
 
+> **SUPERSEDED — Free Access Transition (November 2026).** ShadowTalk AI is now
+> completely free to use: no subscriptions, no paid tiers, no checkout. This
+> document is preserved as a historical record of the pre-transition monetization
+> strategy. Current access model: free access with BYOK — bring your own AI
+> provider API key; your provider may charge separately for API usage.
+
 **Confidential — Founder Strategy Brief**
 
 **From zero revenue to first paying customers — a practical playbook for Zain Ahmed**

@@ -62,7 +62,7 @@ Built-in Monaco IDE, Marketplace agents, BYOK, API access.
 Optional offline mode, encrypted vault, transparency reports, no forced telemetry.
 
 7/ Pricing:
-Free tier, Pro $5/mo, Premium $15/mo, Elite $20/mo.
+Free to use — no subscription. Bring your own AI provider API key.
 No hidden costs. No data selling.
 
 8/ The vision:
