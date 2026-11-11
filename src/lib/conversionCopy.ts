@@ -45,13 +45,13 @@ export function getUpgradeNudgeSubline(
 }
 
 export const FREE_TIER_MARKETING = {
-  title: "Start free — limits stated upfront",
-  hook: `No credit card. ${FREE_TIER_DAILY.messages} messages/day to prove the workspace — then upgrade on your terms.`,
-  cta: "See what Premium unlocks →",
+  title: "Free to use — everything included",
+  hook: "No subscription, no credit card. Bring your own AI provider API key and choose your preferred models.",
+  cta: "How free access works →",
 } as const;
 
 export const PRICING_PAGE_HOOK =
-  "Cancel anytime. 30-day money-back on paid plans. Your data stays under your control with Vault, BYOK, and on-device options.";
+  "ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage.";
 
 export const COMMUNITY_MARKETING = {
   title: "Building in public",
@@ -67,8 +67,9 @@ export const PROACTIVE_MARKETING = {
 } as const;
 
 export const CHAT_LIMIT_TOAST = {
-  title: "Daily free limit reached",
-  description: `Premium ($${premium.price}/mo) — unlimited messages, Mission Control, and the full tool stack. Limits reset at midnight UTC on Free.`,
+  title: "All features are free",
+  description:
+    "ShadowTalk AI is free to use — no daily caps from us. Your AI provider may enforce its own API usage limits.",
 } as const;
 
 export const PROOF_BAR_LABEL = "Verify before you buy:";

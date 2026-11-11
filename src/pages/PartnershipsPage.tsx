@@ -97,7 +97,7 @@ const PartnershipsPage = () => {
           <div className="rounded-xl border border-border/50 p-5 mb-12 space-y-3 text-sm text-muted-foreground">
             <p>
               <strong className="text-foreground">Free:</strong> Daily message caps create natural
-              scarcity — try everything, upgrade when limits bite.
+              transparency — try everything; it is all included, free.
             </p>
             <p>
               <strong className="text-foreground">Pro (${PLAN_DETAILS.pro.price}/mo):</strong> Undercuts

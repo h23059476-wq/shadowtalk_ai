@@ -151,9 +151,6 @@ import { ImageDecoder } from "@/components/chat/ImageDecoder";
 import { DailyPlanner } from "@/components/chat/DailyPlanner";
 import { IntelligenceHub } from "@/components/chat/IntelligenceHub";
 import { KnowledgeVault } from "@/components/chat/KnowledgeVault";
-import { ChatUpgradeNudge } from "@/components/monetization/ChatUpgradeNudge";
-import { UpgradePrompt } from "@/components/monetization/UpgradePrompt";
-import { useSubscriptionNudge } from "@/hooks/useSubscriptionNudge";
 import { CHAT_LIMIT_TOAST } from "@/lib/conversionCopy";
 import { getDailyMessageCount, incrementDailyMessageCount } from "@/lib/dailyMessageCounter";
 import { openProjectInIde, saveIdePayload } from "@/lib/idePayloadStorage";
@@ -162,7 +159,6 @@ import { useShadowTalkModel } from "@/hooks/useShadowTalkModel";
 import { SEOHead } from "@/components/SEOHead";
 import { PAGE_SEO, getFounderHomeStructuredData, getChatbotFAQSchema, getSpeakableSchema, getWebSiteWithSearchSchema } from "@/lib/seo";
 import { FounderCrawlStrip } from "@/components/founder/FounderCrawlStrip";
-import { UsageLimitBanner } from "@/components/monetization/UsageLimitBanner";
 import { PlanetaryActionModal } from "@/components/chat/PlanetaryActionModal";
 import { ScreenAgent } from "@/components/chat/ScreenAgent";
 import { VisionAgentModal } from "@/components/chat/VisionAgentModal";
@@ -175,7 +171,6 @@ import { UncensoredArena } from "@/components/chat/UncensoredArena";
 import { ShadowCowork } from "@/components/chat/ShadowCowork";
 import { SignInPrompt } from "@/components/chat/SignInPrompt";
 import { InterimCloudConsentDialog } from "@/components/chat/InterimCloudConsentDialog";
-import { AdBanner } from "@/components/chat/AdBanner";
 import { BRAND } from "@/lib/brand";
 import { ReferralNudgeBanner } from "@/components/growth/ReferralNudgeBanner";
 import { ShareResultDialog } from "@/components/growth/ShareResultDialog";
@@ -292,15 +287,9 @@ const ChatbotPage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [dailyChats, setDailyChats] = useState(() => getDailyMessageCount());
-  const [nudgeDismissed, setNudgeDismissed] = useState(false);
-  const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const messageCount =
     user && dailyLimits.isLoaded ? dailyLimits.usage.messages : dailyChats;
-  const nudge = useSubscriptionNudge(
-    messageCount,
-    conversations.filter((c) => !c.archived_at).length,
-  );
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
   const [personality, setPersonality] = useState<Personality>("friendly");
   const [chatMode, setChatMode] = useState<ChatMode>("general");
@@ -1590,10 +1579,6 @@ const ChatbotPage = () => {
       // Soft downgrade: keep chat flowing for anonymous users.
     }
 
-    if (!isProOrHigher && nudge.shouldBlockSend && !isAnonymousAutonomousEnabled()) {
-      // Soft downgrade: do not interrupt sends for anonymous users.
-    }
-
     recordFunnelEvent("first_send_attempt");
     markHasChatted();
 
@@ -2487,12 +2472,6 @@ const ChatbotPage = () => {
             {BRAND.tagline}
           </motion.p>
           <EnterpriseWelcomeBanner email={user?.email} displayName={userDisplayName} />
-          {!isProOrHigher && dailyLimits.isLoaded && (
-            <div className="px-3 pt-2 max-w-3xl mx-auto w-full">
-              <UsageLimitBanner currentUsage={dailyLimits.usage.messages} action="messages" />
-            </div>
-          )}
-          <AdBanner />
           {enterprise.showInviteColleagues && enterprise.tenant && (
             <EnterpriseInviteColleagues tenant={enterprise.tenant} />
           )}
@@ -2531,27 +2510,7 @@ const ChatbotPage = () => {
               End-to-end encrypted · Anonymous session
             </motion.div>
           )}
-          {!enterprise.hideMonetization && (
-            <ChatUpgradeNudge
-              open={nudge.shouldShowBanner && !nudgeDismissed}
-              intensity={nudge.intensity}
-              headline={nudge.headline}
-              subline={nudge.subline}
-              used={nudge.used}
-              limit={nudge.limit}
-              recommendedPlan={nudge.recommendedPlan}
-              onDismiss={() => setNudgeDismissed(true)}
-            />
-          )}
           {!enterprise.hideReferralNudges && <ReferralNudgeBanner />}
-          {!enterprise.hideMonetization && (
-            <UpgradePrompt
-              open={upgradeOpen}
-              onOpenChange={setUpgradeOpen}
-              limitReached={nudge.shouldBlockSend}
-              requiredPlan="premium"
-            />
-          )}
           <div className={`flex-1 min-h-0 relative flex flex-col ${isEmptyChat ? "overflow-y-auto" : "overflow-hidden"}`}>
             <AnimatePresence mode="wait">
               {isEmptyChat ? (

@@ -52,7 +52,7 @@ const ACCOUNT_LINKS = [
   { label: "Notifications", href: "/profile?tab=notifications", desc: "Email & alerts" },
   { label: "Security & 2FA", href: "/profile?tab=security", desc: "Password, API vault" },
   { label: "Active sessions", href: "/sessions", desc: "Signed-in devices & revoke" },
-  { label: "Billing & plan", href: "/profile?tab=billing", desc: "Subscription & credits" },
+  { label: "Billing", href: "/profile?tab=billing", desc: "Everything is free" },
   { label: "Activity history", href: "/profile?tab=activity", desc: "Past conversations" },
   { label: "Self-healing diagnostics", href: "/self-healing", desc: "Captured errors & auto-fix proposals" },
 ] as const;
@@ -281,7 +281,7 @@ export function SettingsSectionPanels({
       <SettingsSectionHeader
         icon={User}
         title="Account"
-        description="Profile, subscription, security, and notifications"
+        description="Profile, billing (free), security, and notifications"
       />
       <SettingsStaggerItem>
         <Card className="glass border-border/50 card-glass divide-y divide-border/40 overflow-hidden">

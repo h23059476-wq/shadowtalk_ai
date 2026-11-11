@@ -361,12 +361,12 @@ export const CommandPalette = ({ open, onOpenChange, onAction }: CommandPaletteP
     },
     {
       id: "pricing",
-      label: "Upgrade Plan",
-      description: "See pricing options",
+      label: "Free Access",
+      description: "ShadowTalk is free — how it works",
       icon: <Star className="h-4 w-4" />,
       category: "Navigation",
       action: () => navigate("/pricing"),
-      keywords: ["pricing", "upgrade", "pro", "premium", "plan"],
+      keywords: ["pricing", "free", "byok", "plan"],
     },
     {
       id: "sign-out",

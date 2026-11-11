@@ -254,8 +254,9 @@ export const ChatHeader = ({
   const isMobile = useIsMobile();
   
   const userInitials = user?.email ? user.email.charAt(0).toUpperCase() : "G";
-  const showUpgrade =
-    userPlan !== "enterprise" && (userPlan === "free" || userPlan === "pro");
+  // FREE ACCESS TRANSITION: nothing to upgrade to — Upgrade buttons removed.
+  void userPlan;
+  const showUpgrade = false;
 
   const toolsHandlers = {
     onOpenDeepResearch,
@@ -435,7 +436,7 @@ export const ChatHeader = ({
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onManageSubscription} className="gap-3 rounded-xl py-3 px-4">
                 <Crown className="h-4 w-4 text-amber-400" />
-                <span className="text-[14px] font-medium">Subscription</span>
+                <span className="text-[14px] font-medium">Billing — everything is free</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onOpenGeminiAnalytics} className="gap-3 rounded-xl py-3 px-4">
                 <Settings className="h-4 w-4 text-muted-foreground/60" />

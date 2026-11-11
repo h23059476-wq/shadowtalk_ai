@@ -159,10 +159,8 @@ export function VideoTutorials({ open, onOpenChange }: VideoTutorialsProps) {
   };
 
   const startTutorial = (tutorial: Tutorial) => {
-    if (tutorial.isPro && userPlan === 'free') {
-      // Show upgrade prompt instead
-      return;
-    }
+    // FREE ACCESS TRANSITION: all tutorials are unlocked for everyone.
+    void userPlan;
     setCurrentTutorial(tutorial);
     setCurrentStep(0);
     setPlaying(true);
@@ -183,7 +181,7 @@ export function VideoTutorials({ open, onOpenChange }: VideoTutorialsProps) {
   };
 
   const progress = (completedTutorials.size / TUTORIALS.length) * 100;
-  const isProUser = userPlan !== 'free';
+  const isProUser = true; // Free access: tutorials are never locked.
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

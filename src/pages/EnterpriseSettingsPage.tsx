@@ -45,7 +45,8 @@ const EnterpriseSettingsPage = () => {
   const [ipWhitelist, setIpWhitelist] = useState("");
   const [sessionTimeout, setSessionTimeout] = useState("60");
   
-  const hasEnterpriseAccess = userPlan === 'elite' || userPlan === 'enterprise';
+  // FREE ACCESS TRANSITION: enterprise workspace features are included free.
+  const hasEnterpriseAccess = true;
 
   useEffect(() => {
     if (!user) return;
@@ -124,11 +125,6 @@ const EnterpriseSettingsPage = () => {
 
   const handleInviteMember = async () => {
     if (!user || !workspaceId || !inviteEmail.trim()) return;
-    if (!hasEnterpriseAccess) {
-      toast({ title: "Upgrade required", description: "Team invites need Elite or Enterprise.", variant: "destructive" });
-      return;
-    }
-
     try {
       const token = crypto.randomUUID();
       const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();

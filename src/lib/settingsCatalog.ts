@@ -26,7 +26,7 @@ export const SETTINGS_CATALOG: SettingsCatalogEntry[] = [
   { id: "api-keys", section: "connections", label: "API keys", description: "Bring your own provider keys", keywords: ["byok", "openai", "anthropic"] },
   { id: "linked", section: "connections", label: "Linked accounts", description: "Google, GitHub, Slack, WhatsApp QR", keywords: ["oauth", "integration", "whatsapp", "qr"] },
   { id: "profile", section: "account", label: "Profile & avatar", description: "Name, bio, photo", keywords: ["user", "photo"] },
-  { id: "billing", section: "account", label: "Billing & plan", description: "Subscription and credits", keywords: ["pro", "elite", "stripe"] },
+  { id: "billing", section: "account", label: "Billing", description: "Everything is free — no subscription", keywords: ["free", "byok", "api key"] },
   { id: "security", section: "account", label: "Security & 2FA", description: "Password and vault", keywords: ["2fa", "password"] },
 ];
 

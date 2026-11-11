@@ -78,7 +78,7 @@ const HeroSection = () => {
 
           <div className="mb-3 w-full max-w-2xl mx-auto px-2">
             <div className="glass-subtle rounded-xl border border-primary/20 bg-primary/5 px-4 py-2 text-xs sm:text-center text-muted-foreground">
-              Free plan is actually free: no credit card, no blocked tools, no hidden limits. Upgrade only when you’re ready.
+              Free is actually free: no credit card, no blocked tools, no subscription. Bring your own AI provider key and go.
             </div>
           </div>
 

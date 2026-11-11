@@ -103,7 +103,6 @@ const ProfilePage = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [isManagingSubscription, setIsManagingSubscription] = useState(false);
   const [displayName, setDisplayName] = useState("");
   const [bio, setBio] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
@@ -257,18 +256,6 @@ const ProfilePage = () => {
     });
   };
 
-  const handleManageSubscription = async () => {
-    setIsManagingSubscription(true);
-    try {
-      const { data, error } = await backend.functions.invoke("stripe-portal");
-      if (error) throw new Error(error.message);
-      if (data?.url) window.open(data.url, "_blank");
-    } catch (error) {
-      toast({ title: "Error", description: error instanceof Error ? error.message : "Failed to open subscription portal", variant: "destructive" });
-    } finally {
-      setIsManagingSubscription(false);
-    }
-  };
 
   const handleChangePassword = async () => {
     if (newPassword.length < 8) {
@@ -539,54 +526,36 @@ const ProfilePage = () => {
 
                   {currentTab === "billing" && (
             <motion.div className="space-y-6">
-              <Card className={`glass border-border/50 ${subscribed ? "ring-2 ring-primary/30" : ""}`}>
+              <Card className="glass border-border/50">
                 <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2">
-                      <CreditCard className="h-5 w-5 text-primary" /> Subscription
-                    </CardTitle>
-                    <Badge variant={subscribed ? "default" : "secondary"} className="capitalize">
-                      {subscribed && <Crown className="h-3 w-3 mr-1" />}
-                      {currentPlanDetails.name}
-                    </Badge>
-                  </div>
+                  <CardTitle className="flex items-center gap-2">
+                    <CreditCard className="h-5 w-5 text-primary" /> Billing
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="p-5 rounded-xl bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent border border-primary/15">
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-3">
                       <div>
-                        <p className="font-semibold text-lg">{currentPlanDetails.name} Plan</p>
-                        <p className="text-3xl font-bold gradient-text">
-                          ${currentPlanDetails.price}
-                          {currentPlanDetails.price > 0 && <span className="text-sm font-normal text-muted-foreground">/mo</span>}
-                        </p>
+                        <p className="font-semibold text-lg">Free access</p>
+                        <p className="text-2xl font-bold gradient-text">$0</p>
                       </div>
-                      {subscribed && subscriptionEnd && (
-                        <div className="text-right">
-                          <p className="text-xs text-muted-foreground">Renews on</p>
-                          <p className="text-sm font-medium">{new Date(subscriptionEnd).toLocaleDateString()}</p>
-                        </div>
-                      )}
+                      <Badge variant="default" className="gap-1">
+                        <CheckCircle2 className="h-3 w-3" /> All features included
+                      </Badge>
                     </div>
-
-                    <div className="grid grid-cols-2 gap-2 mb-5">
-                      {currentPlanDetails.features.slice(0, 4).map((feature, i) => (
-                        <p key={i} className="text-xs text-muted-foreground flex items-center gap-1.5">
-                          <CheckCircle2 className="h-3 w-3 text-primary shrink-0" /> {feature}
-                        </p>
-                      ))}
+                    <p className="text-sm text-muted-foreground mb-4">
+                      ShadowTalk AI is free to use. Bring your own AI provider API
+                      key and choose your preferred models. Your provider may
+                      charge separately for API usage.
+                    </p>
+                    <div className="grid grid-cols-1 gap-2">
+                      <Button onClick={() => navigate("/settings")} variant="outline" className="w-full">
+                        Manage your AI provider keys
+                      </Button>
+                      <Button onClick={() => navigate("/pricing")} variant="ghost" className="w-full">
+                        How free access works
+                      </Button>
                     </div>
-
-                    {subscribed ? (
-                      <Button onClick={handleManageSubscription} disabled={isManagingSubscription} className="w-full">
-                        {isManagingSubscription ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <ExternalLink className="h-4 w-4 mr-2" />}
-                        Manage Subscription
-                      </Button>
-                    ) : (
-                      <Button onClick={() => navigate("/pricing")} className="w-full btn-glow">
-                        <Crown className="h-4 w-4 mr-2" /> Upgrade Plan
-                      </Button>
-                    )}
                   </div>
                 </CardContent>
               </Card>

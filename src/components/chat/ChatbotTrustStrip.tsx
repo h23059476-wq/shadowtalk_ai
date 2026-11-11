@@ -129,7 +129,7 @@ export function ChatbotTrustStrip() {
             <Link to="/anonymous-ai">No-login AI</Link>
           </Button>
           <Button asChild variant="ghost" size="sm" className="h-7 text-xs">
-            <Link to="/pricing">Pro from $5/mo</Link>
+            <Link to="/pricing">Free to use</Link>
           </Button>
         </div>
       </div>

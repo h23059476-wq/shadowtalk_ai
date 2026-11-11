@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
 import { Info } from "lucide-react";
-import { getFreeTierSummary, getPaidTierOneLiner } from "@/lib/ethicalGrowth";
-import { FREE_TIER_MARKETING } from "@/lib/conversionCopy";
 
 type FreeTierLimitsStripProps = {
   className?: string;
   showUpgradeLink?: boolean;
 };
 
-/** Honest free vs paid limits — no fake counters */
+/** Free access strip — ShadowTalk AI is free, BYOK for AI usage. */
 export function FreeTierLimitsStrip({ className = "", showUpgradeLink = true }: FreeTierLimitsStripProps) {
   return (
     <div
@@ -18,15 +16,17 @@ export function FreeTierLimitsStrip({ className = "", showUpgradeLink = true }: 
       <div className="flex items-start gap-2 min-w-0">
         <Info className="h-4 w-4 shrink-0 text-primary mt-0.5" aria-hidden />
         <div className="min-w-0">
-          <p className="text-foreground/90 font-medium">{FREE_TIER_MARKETING.title}</p>
-          <p>{FREE_TIER_MARKETING.hook}</p>
-          <p className="mt-1 text-muted-foreground/90">{getFreeTierSummary()}</p>
-          <p className="mt-1 text-muted-foreground/90">{getPaidTierOneLiner("premium")}</p>
+          <p className="text-foreground/90 font-medium">Free to use — no subscription, no credit card</p>
+          <p>
+            ShadowTalk AI is free to use. Bring your own AI provider API key and
+            choose your preferred models. Your provider may charge separately for
+            API usage.
+          </p>
         </div>
       </div>
       {showUpgradeLink && (
         <Link to="/pricing" className="shrink-0 text-primary font-medium hover:underline sm:ml-auto">
-          {FREE_TIER_MARKETING.cta}
+          How free access works →
         </Link>
       )}
     </div>

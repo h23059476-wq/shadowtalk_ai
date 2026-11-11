@@ -47,8 +47,8 @@ const CATEGORY_META: Record<
   },
   billing: {
     icon: CreditCard,
-    title: "Billing & Subscriptions",
-    description: "Plans, payments, and invoices",
+    title: "Billing",
+    description: "Everything is free — BYOK explained",
     href: "/pricing",
   },
   account: {

@@ -122,9 +122,8 @@ export function ChatEmptyState({
         className="mt-6 flex flex-wrap justify-center gap-2"
       >
         {[
-          { label: "Pro — Rs 1,499/mo", href: "/founder-access?plan=pro" },
-          { label: "Premium — Rs 3,999/mo", href: "/founder-access?plan=premium" },
-          { label: "Elite — Rs 5,999/mo", href: "/founder-access?plan=elite" },
+          { label: "Free to use — no subscription", href: "/pricing" },
+          { label: "Bring your own AI provider key", href: "/settings" },
         ].map((cta) => (
           <motion.a
             key={cta.label}
