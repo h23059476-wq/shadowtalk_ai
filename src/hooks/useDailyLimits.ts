@@ -126,18 +126,15 @@ export function useDailyLimits() {
     load();
   }, [user]);
 
-  const getLimit = useCallback((action: ActionType): number => {
-    const plan = userPlan as keyof typeof DAILY_LIMITS;
-    const limits = DAILY_LIMITS[plan] ?? DAILY_LIMITS.free;
-    return (limits as Record<string, number>)[action] ?? 0;
-  }, [userPlan]);
+  const getLimit = useCallback((_action: ActionType): number => {
+    // FREE ACCESS TRANSITION: product-level daily caps are removed. Third-party
+    // provider limits and backend abuse protection still apply naturally.
+    return Infinity;
+  }, []);
 
-  const canPerform = useCallback((action: ActionType): boolean => {
-    const limit = getLimit(action);
-    if (limit === Infinity) return true;
-    const current = usage[action as keyof DailyUsage] as number ?? 0;
-    return current < limit;
-  }, [usage, getLimit]);
+  const canPerform = useCallback((_action: ActionType): boolean => {
+    return true;
+  }, [getLimit]);
 
   const getRemaining = useCallback((action: ActionType): number => {
     const limit = getLimit(action);
@@ -195,6 +192,6 @@ export function useDailyLimits() {
     getPercentage,
     trackUsage,
     resetUsage,
-    isUnlimited: userPlan !== 'free',
+    isUnlimited: true,
   };
 }

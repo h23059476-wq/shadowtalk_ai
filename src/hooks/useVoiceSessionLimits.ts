@@ -23,7 +23,7 @@ function loadUsage(): VoiceUsage {
   }
 }
 
-/** Tracks daily voice session starts (localStorage; aligns with productClaims limits). */
+/** Tracks daily voice session starts (analytics only — sessions are unlimited). */
 export function useVoiceSessionLimits() {
   const { userPlan } = useAuth();
   const [usage, setUsage] = useState<VoiceUsage>(loadUsage);
@@ -32,8 +32,10 @@ export function useVoiceSessionLimits() {
     setUsage(loadUsage());
   }, []);
 
-  const plan = (userPlan in DAILY_LIMITS ? userPlan : 'free') as keyof typeof DAILY_LIMITS;
-  const limit = DAILY_LIMITS[plan].voiceSessions;
+  // FREE ACCESS TRANSITION: voice sessions are unlimited.
+  void userPlan;
+  void DAILY_LIMITS;
+  const limit = Infinity;
 
   const canStart = limit === Infinity || usage.count < limit;
   const remaining = limit === Infinity ? Infinity : Math.max(0, limit - usage.count);

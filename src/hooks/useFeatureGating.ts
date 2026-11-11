@@ -1,7 +1,14 @@
 import { useAuth } from "@/components/AuthProvider";
-import { useToast } from "@/hooks/use-toast";
 import { hasSpecialAccessEmail } from "@/lib/resolveUserPlan";
 import { FREE_TIER_DAILY } from "@/lib/productClaims";
+
+/**
+ * FREE ACCESS TRANSITION: ShadowTalk AI is free to use — no subscriptions, no
+ * paid feature tiers. Every feature is unlocked for every user. The FEATURES
+ * map and plan hierarchy are kept so optional monetization can be reintroduced
+ * later without re-plumbing the app, but they no longer gate anything.
+ */
+export const FREE_ACCESS_FOR_EVERYONE = true;
 
 export type PlanTier = 'free' | 'pro' | 'premium' | 'lifetime' | 'elite' | 'enterprise';
 
@@ -63,7 +70,7 @@ export const FEATURES: Record<string, FeatureConfig> = {
   complianceModules: { name: "Custom Compliance Modules", requiredPlan: "enterprise" },
 };
 
-const planHierarchy: Record<PlanTier, number> = {
+const planHierarchy: Record<PlanTier, number> = { /* kept for future optional monetization */
   free: 0,
   pro: 1,
   premium: 2,
@@ -74,10 +81,12 @@ const planHierarchy: Record<PlanTier, number> = {
 
 export const useFeatureGating = () => {
   const { userPlan, user } = useAuth();
-  const { toast } = useToast();
 
+  // Everything is free — all capability flags are always true.
   const hasSpecialAccess =
-    hasSpecialAccessEmail(user?.email) || userPlan === "enterprise";
+    FREE_ACCESS_FOR_EVERYONE ||
+    hasSpecialAccessEmail(user?.email) ||
+    userPlan === "enterprise";
 
   const getEffectivePlanLevel = (): number => {
     if (hasSpecialAccess) return planHierarchy.enterprise;
@@ -92,52 +101,35 @@ export const useFeatureGating = () => {
   };
 
   const checkAccess = (featureKey: string): boolean => {
-    if (hasSpecialAccess) return true;
-    const feature = FEATURES[featureKey];
-    if (!feature) return true;
-    const hasAccess = canAccess(featureKey);
-    if (!hasAccess) {
-      const planLabel = feature.requiredPlan.charAt(0).toUpperCase() + feature.requiredPlan.slice(1);
-      const monthly =
-        feature.requiredPlan === "elite" || feature.requiredPlan === "enterprise"
-          ? 20
-          : feature.requiredPlan === "premium" || feature.requiredPlan === "lifetime"
-            ? 15
-            : 5;
-      toast({
-        title: `Unlock ${feature.name}`,
-        description: `${planLabel} from $${monthly}/mo — unlimited use, cancel anytime. Open Pricing to compare plans.`,
-        variant: "destructive",
-      });
-    }
-    return hasAccess;
+    // No paywalls: access always granted, no upgrade toasts.
+    return canAccess(featureKey);
   };
 
-  const getUpgradeMessage = (featureKey: string): string => {
-    if (hasSpecialAccess) return "";
-    const feature = FEATURES[featureKey];
-    if (!feature) return "";
-    return `Upgrade to ${feature.requiredPlan.charAt(0).toUpperCase() + feature.requiredPlan.slice(1)} to unlock unlimited ${feature.name}`;
+  const getUpgradeMessage = (_featureKey: string): string => {
+    // Free access: there is nothing to upgrade to.
+    return "";
   };
 
   const getDailyMessageLimit = (): number => {
-    if (hasSpecialAccess) return Infinity;
-    if (getEffectivePlanLevel() >= planHierarchy.pro) return Infinity;
-    return FEATURES.dailyMessages.freeLimit || 50;
+    // Free access: no daily message cap from the product itself. Providers may
+    // still enforce their own API limits.
+    return Infinity;
   };
 
   const effectiveLevel = getEffectivePlanLevel();
 
   return {
-    userPlan: (hasSpecialAccess ? 'enterprise' : userPlan) as PlanTier,
+    // Display stays honest: users are on the free plan. Capabilities are
+    // surfaced through the flags below, which are always true.
+    userPlan: userPlan as PlanTier,
     canAccess,
     checkAccess,
     getUpgradeMessage,
     getDailyMessageLimit,
-    isProOrHigher: effectiveLevel >= planHierarchy.pro,
-    isPremiumOrHigher: effectiveLevel >= planHierarchy.premium,
-    isElite: effectiveLevel >= planHierarchy.elite,
-    isEnterprise: effectiveLevel >= planHierarchy.enterprise,
+    isProOrHigher: true,
+    isPremiumOrHigher: true,
+    isElite: true,
+    isEnterprise: hasSpecialAccess,
     hasSpecialAccess,
   };
 };

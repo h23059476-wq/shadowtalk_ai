@@ -13,12 +13,14 @@ import { useFeatureGating, PlanTier } from './useFeatureGating';
 // Hybrid billing: 3 free retries per mission before counting
 // =============================================================================
 
+// FREE ACCESS TRANSITION: mission quota is unlimited for every plan. The map
+// is kept so optional monetization can reintroduce limits later.
 export const MISSION_LIMITS: Record<PlanTier, number> = {
-  free: 3,
-  pro: 15,
-  premium: 15,
-  lifetime: 30,
-  elite: 50,
+  free: Infinity,
+  pro: Infinity,
+  premium: Infinity,
+  lifetime: Infinity,
+  elite: Infinity,
   enterprise: Infinity,
 };
 
@@ -110,7 +112,9 @@ export const useMissionQuota = () => {
     fetchQuota();
   }, [fetchQuota]);
 
-  const canCreateMission = quotaInfo ? quotaInfo.remaining > 0 : shouldUseAnonymousMissionStore();
+  // Free access: missions never blocked by quota (abuse protections elsewhere
+  // are untouched).
+  const canCreateMission = true;
 
   const consumeMission = useCallback(async () => {
     if (shouldUseAnonymousMissionStore()) {

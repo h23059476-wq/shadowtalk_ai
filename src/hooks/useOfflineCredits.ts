@@ -19,16 +19,17 @@ interface CreditTransaction {
   synced: boolean;
 }
 
-// Feature costs in credits
+// FREE ACCESS TRANSITION: every feature costs zero credits. The credit ledger
+// is kept for analytics and for optional monetization in the future.
 export const FEATURE_COSTS: Record<string, number> = {
-  chat: 0,             // Free while offline
-  deep_research: 0,    // Uses local data = free
-  strategy: 0,         // Local processing = free
-  code_execution: 0,   // Local sandbox = free
-  online_sync: 1,      // Pay when syncing to cloud
-  cloud_ai: 2,         // Using cloud AI models
-  voice_tts: 1,        // Text-to-speech via cloud
-  image_generation: 3, // Cloud image generation
+  chat: 0,
+  deep_research: 0,
+  strategy: 0,
+  code_execution: 0,
+  online_sync: 0,
+  cloud_ai: 0,
+  voice_tts: 0,
+  image_generation: 0,
 };
 
 const DB_NAME = 'shadowtalk-credits';
@@ -112,7 +113,7 @@ export const useOfflineCredits = () => {
     feature: string,
     customAmount?: number
   ): Promise<boolean> => {
-    const cost = customAmount ?? FEATURE_COSTS[feature] ?? 1;
+    const cost = 0; // Free access: consuming credits is a no-op.
 
     // Free features don't need credits
     if (cost === 0) return true;
@@ -231,11 +232,10 @@ export const useOfflineCredits = () => {
     return unsynced.length;
   }, [user, state.balance, state.totalConsumed, getDB]);
 
-  // Check if user can afford a feature
-  const canAfford = useCallback((feature: string): boolean => {
-    const cost = FEATURE_COSTS[feature] ?? 1;
-    return cost === 0 || state.balance >= cost;
-  }, [state.balance]);
+  // Check if user can afford a feature — everything is free, always true.
+  const canAfford = useCallback((_feature: string): boolean => {
+    return true;
+  }, []);
 
   // Get transaction history
   const getTransactionHistory = useCallback(async (limit = 20): Promise<CreditTransaction[]> => {

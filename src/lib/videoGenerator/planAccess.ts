@@ -1,6 +1,7 @@
 import type { PlanTier } from "@/hooks/useFeatureGating";
 
-/** Pro & Elite (+ premium/lifetime/enterprise) — not free */
+// FREE ACCESS TRANSITION: Video Studio is free for everyone. The plan list is
+// kept so optional monetization can reintroduce tiers later.
 const VIDEO_STUDIO_PLANS: PlanTier[] = [
   "pro",
   "premium",
@@ -11,7 +12,8 @@ const VIDEO_STUDIO_PLANS: PlanTier[] = [
 
 export function canAccessVideoStudio(plan: PlanTier, hasSpecialAccess = false): boolean {
   if (hasSpecialAccess) return true;
-  return VIDEO_STUDIO_PLANS.includes(plan);
+  void plan;
+  return true;
 }
 
 export const VIDEO_STUDIO_FEATURE_KEY = "videoStudio";
