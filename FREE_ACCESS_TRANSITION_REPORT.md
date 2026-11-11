@@ -174,3 +174,58 @@ Functional regression coverage (per test suite): auth/session (`persistentAuth`,
 - API-key encryption & secure storage; Stealth Vault; E2EE chat.
 - Rate limiting and abuse protection (backend + guest caps).
 - All non-monetization features (chat, missions, research, IDE, video studio, docs, themes, notifications, desktop).
+
+---
+
+## 9. Integration update (2026-11-11): merged with the project's live main
+
+After the original 8 commits were completed on a snapshot of the codebase, the
+project's actual working repository was identified as
+`shadowtalk424/ShadowTalk-AI` (private; the earlier `origin` pointed at a stale
+public mirror). Its `main` was **568 commits ahead** of the transition base and
+still carried the full pre-transition monetization surface. The branch was
+therefore integrated with that main as merge commit `bec20751`:
+
+- **Base merged:** `shadowtalk424/main` @ `28f77d4` (research-visualization
+  batches, ProofLoop, Firestore persistence-incident fixes, E2EE cleanup,
+  offline AI, repository restructuring).
+- **Resolution strategy:** upstream's current product code was kept; the
+  free-access semantics were re-applied on top (28 upstream deletions accepted,
+  including the old quota-hook system and MonetizationPage; 41 conflict files
+  resolved semantically).
+- **Result:** one branch that carries both the upstream evolution and the
+  complete free-access transition, mergeable into `main` without reverting
+  upstream work.
+
+### 9.1 Upstream systems reviewed during integration
+
+| System | Decision |
+|---|---|
+| `useFeatureGating` plan logic | Our `FREE_ACCESS_FOR_EVERYONE` master unlock survived the merge and still governs every `canAccess`/quota call |
+| `AIKeyContext` / `useDailyUsage` (new) | Instant Start ("NON_TECH") users share a platform key with a 100-message/day cap; BYOK ("TECH") users are unmetered. **Kept** — this is infrastructure abuse protection for the shared-key fallback, not a paid tier; no payment or upsell exists anywhere in the system (verified). The 402 error path in ChatbotPage now directs users to the free BYOK setup instead of an "upgrade" |
+| Dormant payment libs (`src/lib/payments/*`, `stripe.ts`) | Preserved by design (future optional monetization), as in the original transition |
+| Upstream-deleted monetization files (28) | Accepted: old quota hooks, `planAccess`, `MonetizationPage`, marketing corpora, historical strategy downloads |
+| Legacy bugs absorbed by upstream history | Repaired: `BYOKnth`/`unlockso`/truncation remnants from an earlier buggy patch pass across 16 files (answerCorpus, comparisonPages, mcp/data, public AEO assets, learn/vs pages, llms.txt, stripe comment) |
+
+### 9.2 Re-verification after the merge
+
+| Gate | Result |
+|---|---|
+| `tsc --noEmit` | **PASS** (0 errors) |
+| `eslint src --quiet` | **PASS** (0 errors) |
+| `vitest --run` (79 test files) | **644 passed**, 2 failed, ~29 skipped — the 2 failures are `VisualizationCard` renderer tests whose code is **byte-identical to upstream main** (pre-existing, not caused by this branch). The two failures noted in §6 (`persistentAuth`, `shadowHealEngine`) no longer exist on the integrated tree |
+| `vite build` (PWA) | **PASS** (263 precached entries) |
+| Stale-claims audit | Clean: no paid-plan/checkout/upsell claims outside dormant payment libs, admin tooling, competitor comparisons, and marked historical narrative |
+
+### 9.3 Known limitations (superseding §7 where different)
+
+1. The `wiringVerification` / `planAccess` tests from §6 were removed upstream
+   along with the systems they pinned; the free-access wiring is now pinned by
+   the master unlock, the no-op nudge hook, and the audit in §9.2.
+2. Guest caps (`GUEST_LIMITS`) no longer exist as such; the equivalent
+   protection for signed-out/keyless visitors is the Instant Start daily cap
+   plus backend rate limiting (kept intentionally).
+3. `subscribers`-era Firestore data remains untouched (no schema migration
+   needed — nothing reads plan state for gating).
+4. Admin subscriber stat cards remain as admin tooling (they read zero).
+5. `/lifetime-deal` still redirects to `/pricing` (now the free-access page).
