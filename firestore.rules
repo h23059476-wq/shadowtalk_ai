@@ -1,0 +1,324 @@
+rules_version = '2';
+
+// ShadowTalk AI — Firestore Security Rules
+// Deploy with: firebase deploy --only firestore:rules
+//
+// Design notes:
+// - Every collection must be matched by an EXPLICIT rule below or by the
+//   whitelisted per-user catch-all. Unknown collections are fully denied.
+// - The per-user catch-all is gated by isUserDataCollection() so it can never
+//   grant access to privileged collections (user_roles, profiles, subscribers…).
+// - Deletes are intentionally split from updates: request.resource is null on
+//   delete, so a rule that reads request.resource.data would deny ALL deletes.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/user_roles/$(request.auth.uid))
+        && get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Founder-only access: stricter than admin. Used for the Intelligence Center.
+    function isFounder() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/user_roles/$(request.auth.uid))
+        && get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role == 'founder';
+    }
+
+    // .get(key, default) avoids hard errors on docs that predate user_id.
+    function ownsExisting() {
+      return signedIn() && resource.data.get('user_id', '') == request.auth.uid;
+    }
+
+    function ownsIncoming() {
+      return signedIn() && request.resource.data.get('user_id', '') == request.auth.uid;
+    }
+
+    function isValidIntake() {
+      return (!('message' in request.resource.data) || request.resource.data.message.size() < 5000)
+          && (!('email' in request.resource.data) || request.resource.data.email.size() < 256)
+          && (!('name' in request.resource.data) || request.resource.data.name.size() < 256)
+          && (!('subject' in request.resource.data) || request.resource.data.subject.size() < 256);
+    }
+
+    // ------------------------------------------------------------------
+    // Privileged collections — NEVER matched by the per-user catch-all.
+    // ------------------------------------------------------------------
+
+    // Roles are admin-managed only — never writable by the user they describe.
+    match /user_roles/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow write: if isAdmin();
+    }
+
+    // Profiles: readable by authenticated users only (was: public).
+    // SECURITY FIX (audit ST-01): public reads exposed email + personal fields
+    // to unauthenticated bulk collection. Now requires sign-in.
+    //
+    // SECURITY FIX (Batch 3): strict field whitelist + type/size validation.
+    // Owners may create a profile with plan:'free' and update only non-privileged
+    // fields. Privileged fields (plan, subscription_end, created_at, role,
+    // entitlements, is_admin, is_founder, subscription_status) are never writable
+    // by the owner — the isAdmin() override handles privileged mutations.
+    function isValidProfileCreate() {
+      let data = request.resource.data;
+      return data.keys().hasOnly([
+          'id', 'user_id', 'email', 'display_name', 'avatar_url', 'bio',
+          'notification_email', 'notification_push', 'notification_mentions',
+          'plan', 'created_at', 'updated_at'
+        ])
+        && (!('id' in data) || data.id == request.auth.uid)
+        && (!('user_id' in data) || data.user_id == request.auth.uid)
+        && data.get('plan', 'free') == 'free'
+        && (!('email' in data) || (data.email is string && data.email.size() < 256))
+        && (!('display_name' in data) || (data.display_name is string && data.display_name.size() <= 100))
+        && (!('avatar_url' in data) || (data.avatar_url is string && data.avatar_url.size() < 500000))
+        && (!('bio' in data) || (data.bio is string && data.bio.size() <= 1000))
+        && (!('notification_email' in data) || data.notification_email is bool)
+        && (!('notification_push' in data) || data.notification_push is bool)
+        && (!('notification_mentions' in data) || data.notification_mentions is bool)
+        && (!('created_at' in data) || data.created_at is timestamp)
+        && (!('updated_at' in data) || data.updated_at is timestamp);
+    }
+
+    function isValidProfileUpdate() {
+      let incoming = request.resource.data;
+      let existing = resource.data;
+      // request.resource.data on an update is the MERGED resulting document, so a
+      // hasOnly() against the full result would deny every update on a doc that
+      // already holds privileged fields (plan, subscription_end). Instead we use
+      // diff().affectedKeys() to restrict only the fields the update TOUCHES.
+      let allowed = [
+        'id', 'user_id', 'email', 'display_name', 'avatar_url', 'bio',
+        'notification_email', 'notification_push', 'notification_mentions', 'updated_at'
+      ];
+      let affected = incoming.diff(existing).affectedKeys();
+      return affected.hasOnly(allowed)
+        // Defense-in-depth: even if a future edit widens `allowed`, plan and
+        // subscription_end must remain byte-identical to the existing values.
+        && incoming.get('plan', existing.get('plan', 'free')) == existing.get('plan', 'free')
+        && incoming.get('subscription_end', existing.get('subscription_end', null)) == existing.get('subscription_end', null)
+        && (!('email' in incoming) || (incoming.email is string && incoming.email.size() < 256))
+        && (!('display_name' in incoming) || (incoming.display_name is string && incoming.display_name.size() <= 100))
+        && (!('avatar_url' in incoming) || (incoming.avatar_url is string && incoming.avatar_url.size() < 500000))
+        && (!('bio' in incoming) || (incoming.bio is string && incoming.bio.size() <= 1000))
+        && (!('notification_email' in incoming) || incoming.notification_email is bool)
+        && (!('notification_push' in incoming) || incoming.notification_push is bool)
+        && (!('notification_mentions' in incoming) || incoming.notification_mentions is bool)
+        && (!('updated_at' in incoming) || incoming.updated_at is timestamp);
+    }
+
+    match /profiles/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow create: if signedIn()
+        && request.auth.uid == uid
+        && isValidProfileCreate();
+      allow update: if isAdmin()
+        || (signedIn()
+            && request.auth.uid == uid
+            && isValidProfileUpdate());
+      allow delete: if isAdmin();
+    }
+
+    // Deliberately limited public identity fields. Private profile fields
+    // (including email and entitlement data) remain in /profiles.
+    match /public_profiles/{uid} {
+      function validPublicProfile() {
+        let data = request.resource.data;
+        return data.keys().hasOnly(['user_id', 'display_name', 'avatar_url', 'updated_at'])
+          && data.get('user_id', '') == uid
+          && (!('display_name' in data) || (data.display_name is string && data.display_name.size() <= 100))
+          && (!('avatar_url' in data) || (data.avatar_url is string && data.avatar_url.size() < 300000))
+          && (!('updated_at' in data) || data.updated_at is timestamp);
+      }
+      allow read: if true;
+      allow create, update: if signedIn() && request.auth.uid == uid && validPublicProfile();
+      allow delete: if (signedIn() && request.auth.uid == uid) || isAdmin();
+    }
+
+    // Billing / entitlement state — readable by owner, writable only by admins/server.
+    match /subscribers/{doc}       { allow read: if ownsExisting() || isAdmin(); allow write: if isAdmin(); }
+    match /manual_payments/{doc}   { allow read: if ownsExisting() || isAdmin(); allow create: if ownsIncoming(); allow update, delete: if isAdmin(); }
+    match /referrals/{doc}         { allow read: if ownsExisting() || isAdmin(); allow write: if isAdmin(); }
+
+    // ------------------------------------------------------------------
+    // Publicly readable content collections.
+    // ------------------------------------------------------------------
+    match /blog_posts/{doc}            { allow read: if true; allow write: if isAdmin(); }
+    match /announcements/{doc}         { allow read: if true; allow write: if isAdmin(); }
+    match /faq_items/{doc}             { allow read: if true; allow write: if isAdmin(); }
+    match /changelog_entries/{doc}     { allow read: if true; allow write: if isAdmin(); }
+    // Public CMS content (final completion phase): docs_pages is read by
+    // useDocsPages() (is_published filter), status_monitors by
+    // useStatusMonitors() (is_active filter). No client writer exists —
+    // both are admin-seeded content, mirroring blog_posts.
+    match /docs_pages/{doc}            { allow read: if true; allow write: if isAdmin(); }
+    match /status_monitors/{doc}       { allow read: if true; allow write: if isAdmin(); }
+    match /marketplace_agents/{doc}    { allow read: if true; allow write: if isAdmin(); }
+    match /threat_intel_cves/{doc}     { allow read: if true; allow write: if isAdmin(); }
+    match /threat_actors/{doc}         { allow read: if true; allow write: if isAdmin(); }
+    match /shadowscale_config/{doc}    { allow read: if true; allow write: if isAdmin(); }
+    match /shadowscale_experiments/{doc} { allow read: if true; allow write: if isAdmin(); }
+    match /shadowscale_metrics_daily/{doc} { allow read: if true; allow write: if isAdmin(); }
+
+    // Community threat-intel: anyone can read, contributors own their rows.
+    match /cyber_incidents/{doc} {
+      allow read: if true;
+      allow create: if ownsIncoming();
+      allow update, delete: if ownsExisting() || isAdmin();
+    }
+    match /cyber_incident_events/{doc} {
+      allow read: if true;
+      allow create: if ownsIncoming();
+      allow update, delete: if ownsExisting() || isAdmin();
+    }
+
+    // Public referral leaderboard (read), owner-managed codes (write).
+    match /user_referral_codes/{doc} {
+      allow read: if true;
+      allow create: if ownsIncoming();
+      allow update, delete: if ownsExisting() || isAdmin();
+    }
+
+    // Public answers / missions (shared via /s/:slug).
+    match /shared_answers/{doc}  { allow read: if true; allow create: if ownsIncoming(); allow update, delete: if ownsExisting() || isAdmin(); }
+    match /shared_missions/{doc} { allow read: if true; allow create: if ownsIncoming(); allow update, delete: if ownsExisting() || isAdmin(); }
+
+    // ------------------------------------------------------------------
+    // Write-only intake collections (no public reads — they contain emails).
+    // Anonymous submission is intentional (guest feedback/newsletter/contact);
+    // spam is mitigated by field-size validation + App Check (roadmap).
+    // ------------------------------------------------------------------
+    match /feedback/{doc}                { allow create: if isValidIntake(); allow read, update, delete: if isAdmin(); }
+    match /newsletter_subscriptions/{doc} { allow create: if isValidIntake(); allow read, update, delete: if isAdmin(); }
+    match /contact_messages/{doc}         { allow create: if isValidIntake(); allow read, update, delete: if isAdmin(); }
+
+    function isValidAnalyticsEvent() {
+      let data = request.resource.data;
+      // Fields match analyticsEventTracker.ts (snake_case): event_name, session_id, timestamp.
+      // SECURITY FIX (Batch 3): previous rule required camelCase (eventName/sessionId),
+      // which mismatched the writer and silently denied every analytics write.
+      return data.keys().hasAll(['event_name', 'timestamp', 'session_id']) &&
+             data.event_name is string && data.event_name.size() < 100 &&
+             data.session_id is string && data.session_id.size() < 100;
+    }
+
+    match /analytics_events/{doc} {
+      allow create: if isValidAnalyticsEvent();
+      allow read, update, delete: if isAdmin();
+    }
+
+    // analytics_daily: admin-only aggregate. The nested usage_analytics match
+    // that previously lived inside this block was a syntax artifact that created
+    // a phantom subcollection path (analytics_daily/{doc}/usage_analytics/{doc}) —
+    // removed in Batch 3. The canonical usage_analytics rule is below.
+    match /analytics_daily/{doc} {
+      allow read, write: if isAdmin();
+    }
+
+    // daily_usage: server-managed shared-AI rate limiter. Documents are
+    // `${uid}_${YYYY-MM-DD}` written ONLY by the `chat` Cloud Function via the
+    // Admin SDK (which bypasses these rules). The admin dashboard
+    // (FirebaseAnalytics.tsx) listens to today's rows, so admins read; clients
+    // must never write — incrementing their own limiter would bypass the cap.
+    match /daily_usage/{doc} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // Founder-only read access to usage_analytics for the Intelligence Center.
+    match /usage_analytics/{doc} {
+      allow read: if signedIn() && (ownsExisting() || isAdmin() || isFounder());
+      allow create: if ownsIncoming();
+      allow update: if (ownsExisting() && ownsIncoming()) || isAdmin();
+      allow delete: if ownsExisting() || isAdmin();
+    }
+
+    // ------------------------------------------------------------------
+    // Per-user private data — whitelisted catch-all.
+    // Notes:
+    // - update keeps the ownsIncoming() guard (merged post-write doc) so a row
+    //   can never be re-assigned to another user. request.resource IS present
+    //   on update, so this is safe.
+    // - delete deliberately omits ownsIncoming() (request.resource is null on
+    //   delete and reading it would deny every delete).
+    // ------------------------------------------------------------------
+    function isUserDataCollection(collection) {
+      return collection in [
+        'conversations',
+        'messages',
+        'user_sessions',
+        'user_settings',
+        'user_memories',
+        'business_memories',
+        'user_notifications',
+        'user_installed_agents',
+        'user_locations',
+        'user_streaks',
+        'workspaces',
+        'agent_tasks',
+        'ai_memories',
+        'daily_insights',
+        'knowledge_entries',
+        'knowledge_nodes',
+        'knowledge_edges',
+        'knowledge_snapshots',
+        'eco_actions',
+        'cyber_scan_results',
+        'cyber_research_projects',
+        'whatsapp_links',
+        'bug_bounty_submissions',
+        'shadowscale_action_queue',
+        'shadowscale_heartbeats',
+        'shadowscale_client_signals',
+        'chat_sessions',
+        'chat_messages',
+        'user_journeys',
+        'realtime_channels',
+        'room_presences',
+        // Final completion phase — client-verified ownership patterns:
+        // - strategy_reports: list by user_id, insert with user_id,
+        //   delete by document id (rules enforce ownership on the GET+DELETE).
+        // - search_history: list/delete by user_id, insert with user_id.
+        // - shadow_credits / credit_transactions: read/insert/update scoped to
+        //   user_id. NOTE: balances are client-reported soft credits (no
+        //   server ledger) — rules enforce OWNERSHIP, not honesty. See
+        //   the stabilization backlog.
+        'strategy_reports',
+        'search_history',
+        'shadow_credits',
+        'credit_transactions',
+      ];
+    }
+
+    // Realtime collections — signed-in users can read all (broadcast model).
+    // SECURITY FIX (audit ST-04): create/update/delete now require ownership.
+    match /realtime_channels/{doc} {
+      allow read: if signedIn();
+      allow create: if signedIn() && ownsIncoming();
+      allow update: if signedIn() && ownsExisting() && ownsIncoming();
+      allow delete: if ownsExisting() || isAdmin();
+    }
+    match /room_presences/{doc} {
+      allow read: if signedIn();
+      allow create: if signedIn() && ownsIncoming();
+      allow update: if signedIn() && ownsExisting() && ownsIncoming();
+      allow delete: if ownsExisting() || isAdmin();
+    }
+
+    match /{collection}/{doc} {
+      allow read: if isUserDataCollection(collection) && (ownsExisting() || isAdmin());
+      allow create: if isUserDataCollection(collection) && ownsIncoming();
+      // Updates require stored and resulting ownership; an ownerless legacy
+      // document cannot be claimed by guessing or discovering its document ID.
+      allow update: if isUserDataCollection(collection) && ((ownsExisting() && ownsIncoming()) || isAdmin());
+      // Ownerless legacy records require a trusted migration or admin cleanup.
+      allow delete: if isUserDataCollection(collection) && (ownsExisting() || isAdmin());
+    }
+  }
+}

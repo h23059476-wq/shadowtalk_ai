@@ -12,7 +12,7 @@ export function isDuplicateReactError(message: string): boolean {
   return DUPLICATE_REACT_PATTERNS.some((p) => message.includes(p));
 }
 
-/** One-time hard reload when stale Vite dep chunks mix two React copies (Lovable preview). */
+/** One-time hard reload when stale Vite dep chunks mix two React copies (ShadowTalk preview). */
 export function installViteChunkRecovery(): void {
   if (typeof window === "undefined") return;
 

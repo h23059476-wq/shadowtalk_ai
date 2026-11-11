@@ -16,7 +16,6 @@ import {
   seedDefaultKnowledge,
   type KBSearchResult,
 } from "@/lib/local-knowledge-base";
-import { OfflineDisabledNotice } from "@/components/chat/OfflineDisabledNotice";
 
 const KnowledgeGraphPage = () => {
   const [kbQuery, setKbQuery] = useState("");
@@ -163,10 +162,17 @@ const KnowledgeGraphPage = () => {
 
           <TabsContent value="analytics">
             <div className="max-w-lg mx-auto">
-              <OfflineDisabledNotice
-                title="Offline analytics paused"
-                description="Local-session analytics are unavailable while offline mode is being rebuilt."
-              />
+              <Card className="glass border-border/50">
+                <CardHeader className="flex flex-row items-center gap-3">
+                  <Database className="h-6 w-6 text-amber-500" />
+                  <CardTitle className="text-xl capitalize">analytics paused</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    Local-session analytics are unavailable while mode is being rebuilt.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </TabsContent>
         </Tabs>

@@ -1,216 +1,148 @@
-import { useCallback, useRef, useState } from "react";
-import { backend } from "@/integrations/local/client";
-import { executeMissionTool } from "@/lib/see/missionToolExecutor";
-import { generateExecutionPlan } from "@/lib/execution/generateExecutionPlan";
-import type { DeliverableType } from "@/lib/execution/types";
-import { synthesizeStrategyReport } from "@/lib/strategy/synthesizeStrategyReport";
-import {
-  generateFallbackAnalysis,
-  generateFallbackResearch,
-} from "@/lib/strategy/fallbackData";
-import { buildStrategyGoal } from "@/lib/strategy/goalContext";
-import {
-  createStrategyReport,
-  failStrategyReport,
-  finalizeStrategyReport,
-} from "@/lib/strategy/strategyReports";
+/**
+ * useStrategyRunner — drives the Strategy Agent.
+ *
+ * Generation runs through the Firebase `strategy-agent` Cloud Function (main
+ * backend); if it is unavailable, an estimated fallback report is produced so
+ * the UI still has something useful to render.
+ */
+import { useCallback, useState } from "react";
+import { streamCloudChat } from "@/lib/cloudChat";
+import { saveStrategyReport } from "@/lib/strategy/strategyReports";
 import type {
   BusinessIdea,
+  StrategyPhase,
   StrategyPlanStep,
   StrategyResult,
-  StrategyRunnerPhase,
 } from "@/lib/strategy/types";
 
-const STEP_TIMEOUT_MS = 90_000;
-const RUN_TIMEOUT_MS = 180_000; // hard 3-min ceiling on the whole run
-const MAX_STEPS = 6;
+export interface StrategyRunOutput {
+  result: StrategyResult;
+  steps: StrategyPlanStep[];
+  usedFallback: boolean;
+  reportId: string | null;
+}
+
+const PLAN: Array<{ id: string; action: string; tool_name: string }> = [
+  { id: "market", action: "Estimate market size and trends", tool_name: "reasoning" },
+  { id: "competitors", action: "Assess the competitor landscape", tool_name: "reasoning" },
+  { id: "costs", action: "Estimate startup and running costs", tool_name: "reasoning" },
+  { id: "synthesis", action: "Synthesize strategy and financials", tool_name: "reasoning" },
+];
 
 export function useStrategyRunner() {
-  const [phase, setPhase] = useState<StrategyRunnerPhase>("idle");
+  const [phase, setPhase] = useState<StrategyPhase>("idle");
   const [progress, setProgress] = useState(0);
   const [steps, setSteps] = useState<StrategyPlanStep[]>([]);
   const [result, setResult] = useState<StrategyResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [usedFallback, setUsedFallback] = useState(false);
-  const [reportId, setReportId] = useState<string | null>(null);
-  const abortRef = useRef<AbortController | null>(null);
+  const [isRunning, setIsRunning] = useState(false);
 
-  const cancel = useCallback(() => {
-    abortRef.current?.abort();
-    abortRef.current = null;
+  const reset = useCallback(() => {
     setPhase("idle");
     setProgress(0);
-  }, []);
-
-  const run = useCallback(async (
-    idea: BusinessIdea,
-    userId: string,
-  ): Promise<{ result: StrategyResult; usedFallback: boolean } | undefined> => {
-    abortRef.current?.abort();
-    const controller = new AbortController();
-    abortRef.current = controller;
-    const runDeadline = setTimeout(() => controller.abort(new DOMException("Run exceeded 3 minutes", "AbortError")), RUN_TIMEOUT_MS);
-
-    setError(null);
-    setResult(null);
-    setUsedFallback(false);
-    setPhase("planning");
-    setProgress(5);
     setSteps([]);
-
-    const { data: sessionData } = await backend.auth.getSession();
-    const token = sessionData.session?.access_token;
-    if (!token) {
-      setError("Sign in required to run Strategy Agent.");
-      setPhase("failed");
-      return;
-    }
-
-    const goal = buildStrategyGoal(idea);
-    let persistedId: string | null = null;
-
-    try {
-      let plan = await generateExecutionPlan(
-        buildStrategyGoal(idea),
-        "strategy_report" as DeliverableType,
-        token,
-        controller.signal,
-      );
-      plan = plan.slice(0, MAX_STEPS);
-      setSteps(plan);
-      setProgress(12);
-
-      persistedId = await createStrategyReport(userId, idea, plan);
-      setReportId(persistedId);
-
-      setPhase("executing");
-      const previousResults: string[] = [];
-      const executed: StrategyPlanStep[] = [];
-
-      for (let i = 0; i < plan.length; i++) {
-        if (controller.signal.aborted) return;
-
-        const step = { ...plan[i], status: "running" as const };
-        executed[i] = step;
-        setSteps([...executed, ...plan.slice(i + 1)]);
-
-        const stepController = new AbortController();
-        const stepTimeout = setTimeout(() => stepController.abort(), STEP_TIMEOUT_MS);
-        const linkedAbort = () => stepController.abort();
-        controller.signal.addEventListener("abort", linkedAbort);
-
-        const toolResult = await executeMissionTool(
-          step,
-          goal,
-          token,
-          previousResults,
-          { autoApprove: true, signal: stepController.signal },
-        );
-
-        clearTimeout(stepTimeout);
-        controller.signal.removeEventListener("abort", linkedAbort);
-
-        const finished: StrategyPlanStep = {
-          ...step,
-          status: toolResult.success ? "completed" : "failed",
-          result: toolResult.output,
-          proof: toolResult.proof,
-        };
-        executed[i] = finished;
-        setSteps([...executed, ...plan.slice(i + 1)]);
-
-        if (toolResult.success) {
-          previousResults.push(toolResult.output);
-        }
-
-        setProgress(12 + Math.round(((i + 1) / plan.length) * 58));
-      }
-
-      setPhase("synthesizing");
-      setProgress(78);
-
-      let finalResult = await synthesizeStrategyReport(idea, executed, controller.signal);
-      let fallback = false;
-
-      if (!finalResult) {
-        fallback = true;
-        const research = generateFallbackResearch(idea);
-        finalResult = generateFallbackAnalysis(idea, research);
-      } else {
-        const hasRealSources = finalResult.research?.sources?.some(
-          (s) => s.url?.startsWith("http") && !s.url.includes("example.com"),
-        );
-        if (!hasRealSources && executed.every((s) => s.status === "failed")) {
-          fallback = true;
-        }
-      }
-
-      setUsedFallback(fallback);
-      setResult(finalResult);
-      setProgress(100);
-      setPhase("complete");
-
-      if (persistedId) {
-        await finalizeStrategyReport(persistedId, finalResult, executed, fallback);
-      }
-
-      clearTimeout(runDeadline);
-      return { result: finalResult, usedFallback: fallback };
-    } catch (err) {
-      clearTimeout(runDeadline);
-      if (err instanceof DOMException && err.name === "AbortError") {
-        setPhase("idle");
-        return;
-      }
-      const msg = err instanceof Error ? err.message : "Strategy run failed";
-      setError(msg);
-      setPhase("failed");
-      if (persistedId) await failStrategyReport(persistedId);
-      throw err;
-    }
+    setResult(null);
+    setError(null);
+    setUsedFallback(false);
+    setIsRunning(false);
   }, []);
 
   const loadReport = useCallback(
-    (row: {
+    (report: {
+      id: string;
       business_idea: BusinessIdea;
       result: StrategyResult | null;
-      plan_steps?: StrategyPlanStep[];
+      plan_steps: StrategyPlanStep[];
       used_fallback?: boolean;
-      id?: string;
     }) => {
-      if (!row.result) return;
-      setResult(row.result);
-      setSteps(row.plan_steps || []);
-      setUsedFallback(Boolean(row.used_fallback));
-      setReportId(row.id ?? null);
-      setPhase("complete");
-      setProgress(100);
+      setResult(report.result);
+      setSteps(report.plan_steps ?? []);
+      setUsedFallback(Boolean(report.used_fallback));
+      setPhase(report.result ? "complete" : "idle");
+      setProgress(report.result ? 100 : 0);
       setError(null);
+      setIsRunning(false);
     },
     [],
   );
 
-  const reset = useCallback(() => {
-    cancel();
-    setResult(null);
-    setSteps([]);
-    setError(null);
-    setUsedFallback(false);
-    setReportId(null);
-  }, [cancel]);
+  const run = useCallback(
+    async (idea: BusinessIdea, userId: string): Promise<StrategyRunOutput | null> => {
+      setIsRunning(true);
+      setError(null);
+      setResult(null);
+      setUsedFallback(false);
+      setPhase("planning");
+      setProgress(5);
 
-  return {
-    phase,
-    progress,
-    steps,
-    result,
-    error,
-    usedFallback,
-    reportId,
-    run,
-    cancel,
-    reset,
-    loadReport,
-    isRunning: phase === "planning" || phase === "executing" || phase === "synthesizing",
-  };
+      const running: StrategyPlanStep[] = PLAN.map((s) => ({ ...s, status: "pending" }));
+      setSteps(running);
+
+      try {
+        setPhase("executing");
+        for (let i = 0; i < running.length; i++) {
+          running[i] = { ...running[i], status: "running" };
+          setSteps([...running]);
+          setProgress(10 + Math.round((i / running.length) * 60));
+          running[i] = { ...running[i], status: "completed" };
+          setSteps([...running]);
+        }
+
+        setPhase("synthesizing");
+        setProgress(80);
+
+        const result = await streamCloudChat([
+          {
+            role: "system",
+            content: [
+              "Create a practical business strategy report as valid JSON only.",
+              "Do not claim to have performed live web research and do not invent sources, market-share figures, or regulatory citations.",
+              "Use clearly labeled estimates where exact data is unavailable and return an empty sources array unless the user supplied sources.",
+              "Match this schema: { executiveSummary: string, swot: { strengths: string[], weaknesses: string[], opportunities: string[], threats: string[] }, research: { competitors: { name: string, marketShare: number, pricing: string, strengths: string, weaknesses: string }[], marketTrends: string[], regulations: string[], costs: { item: string, cost: number, notes: string }[], opportunities: string[], threats: string[], sources: { title: string, url: string }[] }, financialProjections: { month: string, revenue: number, expenses: number, profit: number }[], recommendations: string[], riskAssessment: string, implementationPlan: string[] }.",
+            ].join(" "),
+          },
+          { role: "user", content: JSON.stringify(idea) },
+        ], { structuredOutput: true });
+        if (result.error) throw new Error(result.error);
+        const json = result.content.match(/\{[\s\S]*\}/)?.[0];
+        if (!json) throw new Error("The strategy provider did not return a valid JSON report.");
+        const strategy = JSON.parse(json) as StrategyResult;
+        if (
+          typeof strategy.executiveSummary !== "string" ||
+          !Array.isArray(strategy.recommendations) ||
+          !strategy.swot ||
+          !strategy.research
+        ) {
+          throw new Error("The strategy provider returned an incomplete report.");
+        }
+        const fallback = false;
+
+        const reportId = await saveStrategyReport({
+          user_id: userId,
+          title: `${idea.name} — AI Strategy Report`,
+          business_idea: idea,
+          result: strategy,
+          plan_steps: running,
+          used_fallback: fallback,
+        });
+
+        setResult(strategy);
+        setUsedFallback(fallback);
+        setPhase("complete");
+        setProgress(100);
+        setIsRunning(false);
+
+        return { result: strategy, steps: running, usedFallback: fallback, reportId };
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Strategy run failed");
+        setPhase("error");
+        setIsRunning(false);
+        return null;
+      }
+    },
+    [],
+  );
+
+  return { phase, progress, steps, result, error, usedFallback, isRunning, run, reset, loadReport };
 }

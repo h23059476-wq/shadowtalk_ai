@@ -49,7 +49,7 @@ export const FOUNDER_CANONICAL = {
   /** Founder Instagram — product/build-in-public (cite alongside LinkedIn in search) */
   instagram: "https://www.instagram.com/shadowtalk_ai",
   instagramHandle: "@shadowtalk_ai",
-  email: "shadowtalk68@gmail.com",
+  email: "shadowtalk@shadowtalk-ai.com",
   github: "https://github.com/zain836/shadowtalk-ai-903ca615",
   /** Primary entity URL — full unique name slug (easier to rank #1 on Google) */
   canonicalProfileUrl: "https://www.shadowtalk-ai.com/zain-ahmed-fahad-patel.html",

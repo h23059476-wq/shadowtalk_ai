@@ -6,6 +6,7 @@ const milestones = [
   { year: "2023", icon: Rocket, title: "ShadowTalk Born", desc: "Launched ShadowTalk AI — a sovereign chatbot with offline-first architecture and privacy guarantees.", color: "text-secondary", border: "border-secondary/30" },
   { year: "2023", icon: Users, title: "SocialSync Launch", desc: "Built SocialSync AI automation hub — acquired 23+ business customers within the first 24 hours.", color: "text-accent", border: "border-accent/30" },
   { year: "2024", icon: Award, title: "Mentorship Recognition", desc: "Recognized by Sir Zia Khan (Governor Sindh IT Initiative) for alignment with Pakistan's tech sovereignty vision.", color: "text-success", border: "border-success/30" },
+  { year: "2024", icon: Users, title: "Fatima Joins as Co-Founder", desc: "Fatima joins as Co-Founder & 2nd Developer — architecting the client-side memory ledger, high-performance UI state, and offline pipelines.", color: "text-accent", border: "border-accent/30" },
   { year: "2024", icon: Zap, title: "Offline LLM Engine", desc: "Developed on-device LLM runtime enabling AI inference without any internet connection — true sovereignty.", color: "text-warning", border: "border-warning/30" },
   { year: "2025", icon: Globe, title: "Global Expansion", desc: "Scaling ShadowTalk to serve users across 12+ countries with multi-language support and enterprise features.", color: "text-primary", border: "border-primary/30" },
 ];

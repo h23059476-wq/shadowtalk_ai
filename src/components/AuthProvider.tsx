@@ -1,13 +1,16 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import type { User, Session } from '@/lib/backend-types';
+import { backend, isConfigured } from '@/integrations/local/client';
+import { syncProfile } from '@/lib/authProfile';
+import { resolvePlanFromCheckSubscription, type UserPlan } from '@/lib/resolveUserPlan';
+
 import {
   clearExplicitSignOut,
+  hasExplicitSignOut,
   isAnonymousUser,
   markExplicitSignOut,
-  restoreOrCreateSession,
 } from '@/lib/persistentAuth';
-
-type UserPlan = 'free' | 'pro' | 'premium' | 'lifetime' | 'elite' | 'enterprise';
+import { clearUserLocalData } from '@/lib/signOutCleanup';
 
 interface AuthContextType {
   user: User | null;
@@ -31,6 +34,27 @@ export const useAuth = () => {
   }
   return context;
 };
+
+/** Convert a cloud auth session into our local Session type. */
+function toLocalSession(cloudSession: any): Session | null {
+  if (!cloudSession) return null;
+  return {
+    access_token: cloudSession.access_token,
+    refresh_token: cloudSession.refresh_token,
+    token_type: cloudSession.token_type,
+    expires_in: cloudSession.expires_in,
+    expires_at: cloudSession.expires_at,
+    user: {
+      id: cloudSession.user?.id || '',
+      email: cloudSession.user?.email || null,
+      is_anonymous: cloudSession.user?.is_anonymous ?? false,
+      app_metadata: cloudSession.user?.app_metadata || {},
+      user_metadata: cloudSession.user?.user_metadata || {},
+      aud: cloudSession.user?.aud || 'authenticated',
+      created_at: cloudSession.user?.created_at || new Date().toISOString(),
+    },
+  };
+}
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -61,30 +85,128 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const checkSubscription = useCallback(async () => {
-    // All users are free tier — no backend to check
-    setSubscribed(false);
-    setUserPlan('free');
-    setSubscriptionEnd(null);
+    try {
+      const { data: { user } } = await backend.auth.getUser();
+      if (!user?.email) {
+        // Anonymous/guest users are always on the free plan.
+        setSubscribed(false);
+        setUserPlan('free');
+        setSubscriptionEnd(null);
+        return;
+      }
+
+      // 1) Billing source of truth: subscribers row (written by admin/server).
+      let subData: { subscribed?: boolean; plan?: string; product_id?: string; subscription_end?: string | null } | null = null;
+      try {
+        const { data } = await backend
+          .from('subscribers')
+          .select('plan, subscribed, product_id, subscription_end')
+          .eq('user_id', user.id)
+          .maybeSingle();
+        subData = (data as any) ?? null;
+      } catch {
+        // subscribers table may not have a row yet — fall through to profile.
+      }
+
+      // 2) Fallback: server-managed plan on the profile document.
+      if (!subData) {
+        try {
+          const { data } = await backend
+            .from('profiles')
+            .select('plan, subscription_end')
+            .eq('id', user.id)
+            .maybeSingle();
+          if (data?.plan && data.plan !== 'free') {
+            subData = {
+              subscribed: true,
+              plan: data.plan,
+              subscription_end: (data as any).subscription_end ?? null,
+            };
+          }
+        } catch {
+          // Profile missing — treat as free.
+        }
+      }
+
+      const resolved = resolvePlanFromCheckSubscription(user.email, subData);
+      setUserPlan(resolved.plan);
+      setSubscribed(resolved.subscribed);
+      setSubscriptionEnd(resolved.subscriptionEnd);
+    } catch (err) {
+      console.warn('[Auth] checkSubscription failed:', err);
+      setSubscribed(false);
+      setUserPlan('free');
+      setSubscriptionEnd(null);
+    }
   }, []);
+
+  // Batch 3: track the uid whose profile/subscription we last synced so the
+  // duplicate onAuthStateChange('SIGNED_IN', sameUser) callback that fires right
+  // after getSession() does NOT re-run syncProfile + checkSubscription (~6
+  // extra Firestore ops per boot). The previous guard checked for an
+  // 'INITIAL_SESSION' event that the Firebase adapter never emits, so it was
+  // dead code. This uid-comparison guard is correct for any adapter.
+  const lastSyncedUid = useRef<string | null>(null);
 
   useEffect(() => {
     let mounted = true;
+    let authSubscription: any = null;
+
+    const hydrate = (fbSession: any) => {
+      if (!mounted) return;
+      const local = toLocalSession(fbSession);
+      applySession(local);
+      const uid = local?.user?.id ?? null;
+      if (uid && uid !== lastSyncedUid.current) {
+        lastSyncedUid.current = uid;
+        clearExplicitSignOut();
+        if (typeof localStorage !== "undefined") localStorage.removeItem("shadowtalk-local-user");
+        void syncProfile(uid, {
+          email: local.user.email || undefined,
+          display_name: (local.user.user_metadata as any)?.display_name || undefined,
+        });
+        void checkSubscription();
+      } else if (!uid) {
+        // Final completion phase — remote revocation cleanup. Firebase can
+        // report SIGNED_OUT without the user signing out themselves (deleted
+        // or disabled account, revoked refresh token, admin action). The
+        // interactive signOut() already ran clearUserLocalData and marked the
+        // explicit flag; this path covers the REMOTE case so ephemeral
+        // user-scoped state (E2EE session keys, private-mode flags) never
+        // outlives the identity. Explicit sign-outs set the flag first, so
+        // we never double-clean here.
+        const prevUid = lastSyncedUid.current;
+        lastSyncedUid.current = null;
+        if (prevUid && !hasExplicitSignOut()) {
+          try {
+            clearUserLocalData(prevUid);
+          } catch (err) {
+            console.warn('[Auth] revocation cleanup failed:', err);
+          }
+        }
+        setUserPlan('free');
+        setSubscribed(false);
+        setSubscriptionEnd(null);
+      }
+    };
 
     const bootstrap = async () => {
-      let restored: Session | null = null;
       try {
-        restored = await restoreOrCreateSession();
+        const { data: { session: cloudSession } } = await backend.auth.getSession();
         if (!mounted) return;
-        applySession(restored);
-        if (restored?.user) {
-          void checkSubscription();
-        } else {
-          setUserPlan('free');
-          setSubscribed(false);
-          setSubscriptionEnd(null);
-        }
+        hydrate(cloudSession ?? null);
+
+        const { data } = backend.auth.onAuthStateChange((event: string, next: any) => {
+          if (!mounted) return;
+          // The Firebase adapter emits 'SIGNED_IN' / 'SIGNED_OUT' (never
+          // 'INITIAL_SESSION'). hydrate()'s uid guard already dedupes the
+          // post-getSession() 'SIGNED_IN' callback for the same user.
+          void event;
+          hydrate(next?.user ? next : null);
+        });
+        if (mounted) authSubscription = data?.subscription ?? null;
       } catch (error) {
-        console.warn('[Auth] Session bootstrap failed:', error);
+        console.warn('[Auth] session bootstrap failed:', error);
         if (mounted) {
           applySession(null);
           setUserPlan('free');
@@ -103,19 +225,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return () => {
       mounted = false;
+      authSubscription?.unsubscribe();
     };
   }, [applySession, checkSubscription]);
 
   const signOut = async () => {
+    // Capture the uid BEFORE Firebase signs out (currentUser becomes null
+    // after backend.auth.signOut()). Used to scope ephemeral cleanup.
+    const uid = user?.id ?? null;
     markExplicitSignOut();
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('shadowtalk-local-user');
     }
+    // Batch 3: clear only EPHEMERAL user-scoped state (E2EE session keys).
+    // BYOK, persistent memory, and E2EE salt/fingerprint are PRESERVED.
+    try {
+      clearUserLocalData(uid);
+    } catch (err) {
+      console.warn('[Auth] clearUserLocalData error:', err);
+    }
+    try {
+      await backend.auth.signOut();
+    } catch (err) {
+      console.warn('[Auth] signOut error:', err);
+    }
+
     applySession(null);
     setUserPlan('free');
     setSubscribed(false);
     setSubscriptionEnd(null);
   };
+
 
   const value = {
     user,

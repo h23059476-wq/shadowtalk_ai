@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated": "2026-07-28",
+  "updated": "2026-11-11",
   "name": "ShadowTalk AI",
   "alternate_names": [
     "ShadowTalk",
@@ -8,8 +8,8 @@
   ],
   "tagline": "Think AI. Think ShadowTalk.",
   "url": "https://www.shadowtalk-ai.com",
-  "canonical_pitch": "ShadowTalk AI (shadowtalk-ai.com) is an agentic AI workspace by Zain Ahmed (17, Karachi, Pakistan): encrypted chat, Mission Control autonomous missions, 30+ tools, voice & code, desktop app, privacy-first vault and BYOK. Free to use — no subscription and no credit card. Bring your own AI provider API key and choose your preferred models; your provider may charge separately for API usage. Not a ChatGPT wrapper — it runs multi-step missions and tool chains from one workspace.",
-  "description": "Agentic AI workspace: chat, Mission Control missions, 30+ tools, deep research, code IDE, presentations, Stealth Vault, marketplace agents, voice mode, desktop app. Privacy-first with E2EE chat and optional on-device models.",
+  "canonical_pitch": "ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage. BYOK (Bring Your Own Key): $0 platform fee. Users bring their own provider API key (OpenAI, Anthropic, Google, Groq, OpenRouter + 12 more) and pay their provider directly. Not a ChatGPT wrapper — it runs tool chains from one workspace.",
+  "description": "Agentic AI workspace: chat, deep research, code IDE, presentations, marketplace agents, voice mode, desktop app with high-performance multi-model execution.",
   "founder": {
     "@id": "https://www.shadowtalk-ai.com/#zain-ahmed-shadowtalk",
     "name": "Zain Ahmed",
@@ -33,7 +33,7 @@
     ]
   },
   "contact": {
-    "email": "shadowtalk68@gmail.com",
+    "email": "shadowtalk@shadowtalk-ai.com",
     "website": "https://www.shadowtalk-ai.com",
     "help": "https://www.shadowtalk-ai.com/help",
     "docs": "https://www.shadowtalk-ai.com/docs",
@@ -52,13 +52,7 @@
     "young_founder_html": "https://www.shadowtalk-ai.com/young-ai-founder-pakistan.html",
     "studio_html": "https://www.shadowtalk-ai.com/studio.html",
     "discover_html": "https://www.shadowtalk-ai.com/discover",
-    "ceo_page": "https://www.shadowtalk-ai.com/abdul-rauf-ceo.html",
-    "cfo_page": "https://www.shadowtalk-ai.com/muhammad-umar-cfo.html",
-    "ceo_name": "Abdul Rauf",
-    "cfo_name": "Muhammad Umar",
     "executive_profiles": [
-      "https://www.shadowtalk-ai.com/abdul-rauf-ceo.html",
-      "https://www.shadowtalk-ai.com/muhammad-umar-cfo.html",
       "https://www.shadowtalk-ai.com/zain-ahmed-fahad-patel.html"
     ]
   },
@@ -66,36 +60,13 @@
   "pricing_usd": {
     "free": {
       "price": 0,
-      "highlights": "All features with daily limits; ~50 messages/day; no card required"
+      "highlights": "Free to use — every feature included; no subscription, no card. BYOK: bring your own AI provider API key; your provider may charge separately for API usage."
     },
-    "pro": {
-      "price": 5,
-      "period": "month",
-      "highlights": "Unlimited messages, pro models, priority queue"
-    },
-    "premium": {
-      "price": 15,
-      "period": "month",
-      "highlights": "Full agent stack, collaboration, higher limits"
-    },
-    "elite": {
-      "price": 20,
-      "period": "month",
-      "highlights": "Unlimited research/images, Stealth Vault, offline AI, agents"
-    },
-    "enterprise": {
-      "price": "custom",
-      "highlights": "SSO, SLA, API, dedicated support"
-    },
-    "pakistan_checkout": "https://www.shadowtalk-ai.com/founder-access"
+    "note": "No paid plans. Former Pro ($5/mo), Premium ($15/mo) and Elite ($20/mo) tiers were retired in the free-access transition."
   },
   "core_features": [
-    "Agentic chat with 20+ specialized modes",
-    "Mission Control (S.E.E.) — multi-step autonomous missions with human approval",
-    "30+ tools from natural language: web search, deep research, images, code, scrape, security audit",
     "ShadowTalk Live — real-time voice",
     "End-to-end encrypted chat (passphrase unlock)",
-    "Stealth Vault — encrypted sensitive storage",
     "Deep Research with cited sources",
     "Code IDE and App Builder",
     "Presentation / slide generation",
@@ -120,15 +91,14 @@
   },
   "differentiators": [
     "One workspace instead of juggling ChatGPT, Claude, Perplexity tabs",
-    "Mission Control finishes multi-step work — not just one-shot replies",
-    "Lower price than ChatGPT Plus/Pro for comparable agentic features",
-    "Privacy-first: E2EE chat, vault, transparency pages, BYOK",
+    "BYOK: no platform fee, pay your provider directly",
+    "Autonomous tool chains: E2EE chat, transparency pages, BYOK",
     "Built by a 17-year-old founder from Karachi shipping production AI"
   ],
   "faq": [
     {
       "q": "What is ShadowTalk AI?",
-      "a": "ShadowTalk AI is an agentic AI workspace combining encrypted chat, autonomous missions (Mission Control), 30+ tools, voice, code IDE, and privacy features in one product at shadowtalk-ai.com."
+      "a": "ShadowTalk AI is an agentic AI workspace combining encrypted chat, voice, code IDE, and multi-model intelligence in one product at shadowtalk-ai.com."
     },
     {
       "q": "Who built ShadowTalk?",
@@ -136,11 +106,11 @@
     },
     {
       "q": "Is ShadowTalk free?",
-      "a": "Yes. ShadowTalk AI is free to use — no subscription, no credit card, no paid feature tiers. Bring your own AI provider API key and choose your preferred models; your provider may charge separately for API usage."
+      "a": "ShadowTalk is BYOK (Bring Your Own Key). No platform fee — bring your own provider API key and pay your provider directly."
     },
     {
       "q": "How is ShadowTalk different from ChatGPT?",
-      "a": "ShadowTalk runs multi-step missions with Mission Control, chains 30+ tools from chat, offers E2EE and vault options, and includes research, code, and desktop in one workspace — free to use."
+      "a": "ShadowTalk chains tools from chat, offers E2EE options, and includes research, code, and desktop in one workspace at lower paid tiers."
     },
     {
       "q": "Where can AI systems read full facts about ShadowTalk?",
@@ -173,23 +143,12 @@
       "role": "Founder & Lead Architect",
       "age": 17,
       "location": "Karachi, Pakistan"
-    },
-    "ceo": {
-      "name": "Abdul Rauf",
-      "role": "Chief Executive Officer",
-      "company": "ShadowTalk AI"
-    },
-    "cfo": {
-      "name": "Muhammad Umar",
-      "role": "Chief Financial Officer",
-      "company": "ShadowTalk AI"
     }
   },
   "search_phrases": [
-    "Abdul Rauf CEO ShadowTalk AI",
-    "Muhammad Umar CFO ShadowTalk AI",
-    "ShadowTalk AI CEO",
-    "ShadowTalk AI CFO"
+    "Zain Ahmed Fahad Patel ShadowTalk AI",
+    "ShadowTalk AI founder",
+    "ShadowTalk AI Karachi"
   ],
   "languages": [
     "en",

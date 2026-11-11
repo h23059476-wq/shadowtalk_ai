@@ -35,15 +35,18 @@ const WhatIsShadowTalk = () => {
       <div className="absolute inset-0 bg-grid-dense opacity-20" aria-hidden />
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <LandingSectionHeader
-          badge="What is ShadowTalk AI?"
+          badge="The Difference"
           badgeIcon={Sparkles}
           title={
             <>
-              An AI workspace that <span className="gradient-text">finishes the job</span>,
-              not just replies.
+              An AI workspace that <span className="gradient-text">executes missions</span>, not just replies.
             </>
           }
-          subtitle={`${BRAND.name} chains 30+ tools, runs multi-step missions, and keeps your work in one place — chat, research, code, voice, presentations, vault, and an optional on-device model. Free to start. No card.`}
+          subtitle={
+            <>
+              Because standard chatbots stop at answering questions. ShadowTalk <strong>finishes the job</strong>. When you need to research a topic, write a script, run the code, and format the output — ShadowTalk's autonomous agent does it all in a unified workspace terminal.
+            </>
+          }
           className="mb-10 sm:mb-14"
         />
 
@@ -69,7 +72,7 @@ const WhatIsShadowTalk = () => {
             </div>
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <ShieldCheck className="h-4 w-4 text-success" aria-hidden />
-              <span>Founder-led · Money-back · Cancel anytime</span>
+              <span>Founder-led · Free to use · BYOK</span>
             </div>
           </div>
         </motion.div>

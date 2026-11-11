@@ -142,7 +142,7 @@ export function ComputerModePanel({ embedded = false }: { embedded?: boolean }) 
                 Computer Mode
               </CardTitle>
               <CardDescription>
-                Real npm/node shell in your browser — like Manus/Kimi code execution, privacy-first on your device.
+                Real npm/node shell in your browser — like Manus/Kimi code execution, sandboxed directly on your device.
               </CardDescription>
             </div>
             <div className="flex flex-wrap items-center gap-2">

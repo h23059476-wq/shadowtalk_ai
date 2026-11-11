@@ -80,8 +80,7 @@ if (typeof process !== 'undefined') {
   (globalThis as any).import = {
     meta: {
       env: {
-        VITE_API_BASE_URL: 'https://api.shadowtalk-ai.com',
-        VITE_API_KEY: 'test-key',
+        
       },
     },
   };

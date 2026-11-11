@@ -30,7 +30,7 @@ const PROVIDERS = [
     requiresKey: true,
   },
   {
-    id: 'lovable' as const,
+    id: 'shadowtalk' as const,
     label: 'ShadowTalk Pro',
     sub: 'Platform cloud AI (Gemini)',
     icon: Sparkles,
@@ -50,7 +50,7 @@ export const ProviderSelector = ({
 
   const ActiveIcon = active.icon;
   const isActiveTurbo = provider === 'turbo';
-  const isActiveLovable = provider === 'lovable' || provider === 'shadowtalk';
+  const isActiveShadowTalk = provider === 'shadowtalk';
 
   return (
     <DropdownMenu>

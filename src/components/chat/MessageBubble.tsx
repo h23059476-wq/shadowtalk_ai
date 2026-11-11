@@ -1,15 +1,20 @@
 import React, { useMemo } from 'react';
-import { User, Copy, RefreshCw, Volume2, VolumeX, Lock, Edit2, ExternalLink, Compass, Sparkles, Share2 } from 'lucide-react';
+import { User, Copy, RefreshCw, Volume2, VolumeX, Lock, Edit2, ExternalLink, Compass, Sparkles, Share2, MoreHorizontal, FileText, Paperclip } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { formatCopyWithAttribution } from '@/lib/growth/selfMarketing';
 import { useUserReferralCode } from '@/hooks/useUserReferralCode';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
-import 'katex/dist/katex.min.css';
+import { LazyMarkdown } from './LazyMarkdown';
 import { CodeBlock } from './CodeBlock';
+import { ResearchDataCard } from './ResearchDataCard';
+import { VisualizationCard } from '@/components/visualization';
+import type { VisualizationSpec, VizSpecKind } from '@/lib/visualization/spec';
 import { useToast } from '@/hooks/use-toast';
 import { DocumentArtifact, detectDocumentArtifact } from './DocumentArtifact';
 import { ToolExecutionCard } from './ToolExecutionCard';
@@ -27,6 +32,54 @@ const openInBrowser = (url: string) => {
   window.open(url, '_blank', 'noopener,noreferrer');
 };
 
+/**
+ * Batch 4 — format a friendly provider-source label for AI messages.
+ * Maps the canonical source + provider + modelUsed to a short human label.
+ *
+ *   "byok"      → "via <Provider> (your key)"     (e.g. "via OpenAI (your key)")
+ *   "shared"    → "via ShadowTalk shared"         (the Firebase Function path)
+ *   "local"     → "via Local (<model>)"           (on-device web-llm)
+ *   "omniroute" → "via OmniRoute"
+ *   anything else with modelUsed → "via <modelUsed>"
+ */
+function formatSourceLabel(source: string, provider?: string, modelUsed?: string): string {
+  switch (source) {
+    case "byok": {
+      if (provider) {
+        const known: Record<string, string> = {
+          openai: "OpenAI",
+          anthropic: "Anthropic",
+          gemini: "Google Gemini",
+          groq: "Groq",
+          openrouter: "OpenRouter",
+          mistral: "Mistral",
+          deepseek: "DeepSeek",
+          together: "Together",
+          fireworks: "Fireworks",
+          perplexity: "Perplexity",
+          cohere: "Cohere",
+          xai: "xAI",
+          cerebras: "Cerebras",
+          hyperbolic: "Hyperbolic",
+          novita: "Novita",
+          deepinfra: "DeepInfra",
+        };
+        const label = known[provider] || provider.charAt(0).toUpperCase() + provider.slice(1);
+        return `via ${label} (your key)`;
+      }
+      return "via your API key";
+    }
+    case "shared":
+      return "via ShadowTalk shared";
+    case "local":
+      return modelUsed ? `via Local (${modelUsed})` : "via Local (on-device)";
+    case "omniroute":
+      return "via OmniRoute";
+    default:
+      return modelUsed ? `via ${modelUsed}` : "";
+  }
+}
+
 interface Message {
   id: string;
   type: 'user' | 'ai';
@@ -35,6 +88,20 @@ interface Message {
   attachment?: { type: 'image' | 'file'; data: string; name: string; mimeType: string };
   imageUrl?: string;
   toolExecution?: { tool: string; status: 'pending' | 'running' | 'complete' | 'error' | 'confirm'; params?: Record<string, string>; result?: string };
+  isShadowTwin?: boolean;
+  shadowTwinName?: string;
+  /** Batch 4 — provider-source label. Values: "byok" | "shared" | "local" | "omniroute". */
+  source?: string;
+  /** Batch 4 — model actually used (e.g. "gpt-4o-mini", "Llama-3.2-1B-Instruct-q4f16_1-MLC"). */
+  modelUsed?: string;
+  /** Batch 4 — upstream provider name (e.g. "openai", "openrouter"). */
+  provider?: string;
+  /** Batch R1 — provider-reported citations (web research), preserved from the SSE layer. */
+  citations?: Array<{ url: string; title?: string }>;
+  /** Batch R1 — structured research datasets captured from ```shadowdata blocks. */
+  researchData?: unknown[];
+  /** Batch 2 — visualization artifact (validated inside VisualizationCard). */
+  visualization?: unknown;
 }
 
 interface MessageBubbleProps {
@@ -57,11 +124,15 @@ interface MessageBubbleProps {
   onConfirmTool?: (messageId: string) => void;
   onCancelTool?: (messageId: string) => void;
   onShareReply?: (content: string) => void;
+  /** Batch 2 — transform the visualization to a compatible kind. */
+  onVizTransform?: (messageId: string, spec: unknown, targetKind: string) => void;
+  /** Batch 2 — note from an infeasible transform. */
+  vizTransformNote?: string;
   enterpriseShare?: boolean;
   includeReferralInShare?: boolean;
 }
 
-export const MessageBubble: React.FC<MessageBubbleProps> = ({
+const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
   message,
   index,
   isLoading,
@@ -80,6 +151,8 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   onConfirmTool,
   onCancelTool,
   onShareReply,
+  onVizTransform,
+  vizTransformNote,
   enterpriseShare = false,
   includeReferralInShare = true,
 }) => {
@@ -118,11 +191,12 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
 
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ 
-        duration: 0.3, 
-        ease: [0.25, 0.46, 0.45, 0.94],
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
         delay: Math.min(index * 0.02, 0.1)
       }}
       className={`group flex items-start gap-3 md:gap-4 py-3 ${isUser ? 'flex-row-reverse' : ''} ${isClean ? 'neural-message-row' : ''}`}
@@ -130,26 +204,51 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
       {/* Avatar */}
       <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 select-none ${
         isUser 
-          ? isClean ? 'bg-[#2f2f2f]' : 'bg-[#1e1f20]/60 border border-border/15'
+          ? 'bg-primary text-primary-foreground'
           : 'bg-transparent'
       }`}>
         {isUser 
           ? <User className="h-4 w-4 text-muted-foreground/80" /> 
-          : (
-            <Sparkles className={`h-5 w-5 ${isClean ? 'text-muted-foreground/60' : 'text-blue-400'}`} />
-          )
+          : message.isShadowTwin
+            ? <User className={`h-5 w-5 ${isClean ? 'text-purple-400/80' : 'text-purple-400'}`} />
+            : <Sparkles className={`h-5 w-5 ${isClean ? 'text-muted-foreground/60' : 'text-blue-400'}`} />
         }
       </div>
 
       {/* Content */}
-      <div className={`flex flex-col gap-2 ${isUser ? 'items-end' : 'items-start'} max-w-[85%] sm:max-w-[80%]`} style={{ width: '100%' }}>
+      <div className={`flex flex-col gap-2 ${isUser ? 'items-end max-w-[85%] sm:max-w-[75%]' : 'items-start w-full'} `} style={{ width: isUser ? undefined : '100%' }}>
+        {!isUser && message.isShadowTwin && (
+          <div className="text-xs font-semibold text-purple-400/80 flex items-center gap-1.5 ml-1">
+            {message.shadowTwinName || "Shadow Twin"}
+          </div>
+        )}
+        {/* Batch 4 — provider-source label for AI messages. */}
+        {!isUser && !message.isShadowTwin && message.source && (
+          <div className="text-[11px] font-medium text-muted-foreground/70 flex items-center gap-1 ml-1">
+            {formatSourceLabel(message.source, message.provider, message.modelUsed)}
+          </div>
+        )}
         {/* Image attachment */}
         {message.attachment?.type === 'image' && (
-          <img 
-            src={message.attachment.data} 
-            alt={message.attachment.name} 
-            className="max-w-[200px] sm:max-w-md rounded-2xl border border-border/10 shadow-lg mb-2" 
+          <img
+            src={message.attachment.data}
+            alt={message.attachment.name}
+            className="max-w-[200px] sm:max-w-md rounded-2xl border border-border/10 shadow-lg mb-2"
           />
+        )}
+
+        {/* File attachment (non-image) */}
+        {message.attachment?.type === 'file' && (
+          <div className="flex items-center gap-3 p-3 rounded-xl border border-border/20 bg-muted/20 mb-2 max-w-md">
+            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20 shrink-0">
+              <FileText className="h-5 w-5 text-primary" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-foreground truncate">{message.attachment.name}</p>
+              <p className="text-[11px] text-muted-foreground">{message.attachment.mimeType || 'File'}</p>
+            </div>
+            <Paperclip className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+          </div>
         )}
 
         {/* AI Generated Image */}
@@ -175,19 +274,17 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
         <div className={`w-full transition-all duration-300 ${
           isUser 
             ? isClean
-              ? 'bg-[#2f2f2f] text-foreground rounded-[22px] rounded-br-md px-4 py-2.5 max-w-max'
-              : 'bg-[#1e1f20]/45 border border-border/10 text-foreground rounded-[28px] rounded-tr-sm px-6 py-3.5 shadow-sm max-w-max'
+              ? 'bg-primary text-primary-foreground rounded-[22px] rounded-br-md px-4 py-2.5 max-w-max'
+              : 'ios-glass-bubble-user bg-primary/80 text-primary-foreground rounded-[28px] rounded-tr-sm px-6 py-3.5 shadow-sm max-w-max'
             : isClean
               ? 'bg-transparent border-none shadow-none px-0 py-0.5 article-response'
-              : 'bg-transparent border-none shadow-none px-0 py-1 article-response'
+              : 'ios-glass-bubble-ai bg-transparent border border-white/[0.06] shadow-none px-5 py-3 article-response'
         }`}>
           {isUser ? (
             <p className="text-[15.5px] leading-relaxed whitespace-pre-wrap break-words font-normal tracking-wide">{typeof message.content === 'string' ? message.content : String(message.content || '')}</p>
           ) : (
             <div className="prose prose-sm md:prose-base dark:prose-invert max-w-none prose-p:my-5 prose-headings:mt-10 prose-headings:mb-5 prose-headings:first:mt-0 prose-ul:my-6 prose-ol:my-6 prose-li:my-2 prose-hr:my-10 prose-hr:border-border/10 [&_.katex]:text-foreground [&_.katex-display]:my-10 [&_.katex-display]:overflow-x-auto overflow-hidden">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm, remarkMath]}
-                rehypePlugins={[rehypeKatex]}
+              <LazyMarkdown
                 components={{
                   code({ node, inline, className, children, ...props }: any) {
                     const match = /language-(\w+)/.exec(className || '');
@@ -195,6 +292,12 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
                     
                     const isShortSnippet = !match && !codeString.includes('\n') && codeString.length < 80;
                     
+                    // Batch R1 — render structured research-data blocks as a
+                    // compact capture card instead of a raw JSON dump. The full
+                    // JSON stays in message content and persistence.
+                    if (!inline && match?.[1] === 'shadowdata') {
+                      return <ResearchDataCard raw={codeString} />;
+                    }
                     if (!inline && match) {
                       return <CodeBlock code={codeString} language={match[1]} onOpenCanvas={onOpenCodeCanvas} onOpenIDE={onOpenIDE} onLaunchWebsite={onLaunchWebsite} />;
                     }
@@ -321,7 +424,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
                 }}
               >
                 {typeof message.content === 'string' ? message.content : String(message.content || '')}
-              </ReactMarkdown>
+              </LazyMarkdown>
             </div>
           )}
         </div>
@@ -348,18 +451,42 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
           />
         )}
 
-        {/* Extracted URLs */}
+        {/* Batch 2 — visualization artifact (lazy-loaded; validated spec only) */}
+        {!isUser && message.visualization && (
+          <div className="mt-2 w-full">
+            <VisualizationCard
+              spec={message.visualization}
+              transformNote={vizTransformNote}
+              onTransformKind={onVizTransform ? (spec, target) => onVizTransform(message.id, spec, target) : undefined}
+            />
+          </div>
+        )}
+
+        {/* Extracted URLs / provider citations */}
         {!isUser && !isWelcome && (() => {
-          const urls = extractUrls(message.content);
+          // Batch R1 — prefer provider-reported citations (with titles) over
+          // regex extraction when available; fall back to the legacy scan.
+          const linkChips: Array<{ url: string; label: string }> = message.citations?.length
+            ? message.citations.map((c) => {
+                let domain = '';
+                try { domain = new URL(c.url).hostname.replace('www.', ''); } catch { domain = c.url.slice(0, 30); }
+                const label = (c.title && c.title.length > 3 ? c.title : domain).trim();
+                return { url: c.url, label: label.length > 28 ? label.slice(0, 28) + '…' : label };
+              })
+            : extractUrls(message.content).map((url) => {
+                let domain = '';
+                try { domain = new URL(url).hostname.replace('www.', ''); } catch { domain = url.slice(0, 30); }
+                return { url, label: domain };
+              });
+          // Dedupe by URL (citations can repeat across annotations).
+          const seen = new Set<string>();
+          const urls = linkChips.filter((c) => !seen.has(c.url) && seen.add(c.url));
           if (urls.length === 0) return null;
           const displayUrls = urls.slice(0, 3);
           
           return (
             <div className="flex flex-wrap items-center gap-1.5 mt-2">
-              {displayUrls.map((url, idx) => {
-                let domain = '';
-                try { domain = new URL(url).hostname.replace('www.', ''); } catch { domain = url.slice(0, 30); }
-                
+              {displayUrls.map(({ url, label }, idx) => {
                 return (
                   <div key={idx} className="flex items-center gap-1">
                     <Button
@@ -369,7 +496,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
                       className="h-7 px-3 text-[11px] gap-1.5 text-muted-foreground/60 hover:text-blue-400 rounded-full bg-muted/20 hover:bg-muted/40 transition-all"
                     >
                       <ExternalLink className="h-3 w-3" />
-                      {domain.length > 20 ? domain.slice(0, 20) + '...' : domain}
+                      {label}
                     </Button>
                     {onOpenInBrowser && (
                       <Button
@@ -400,7 +527,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
 
         {/* Actions */}
         {!isWelcome && (
-          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0 mt-2">
+          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0 focus-within:translate-y-0 mt-2">
             {isUser ? (
               <Button 
                 variant="ghost" 
@@ -417,41 +544,14 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  onClick={() => onTextToSpeech(message.content, message.id)} 
-                  disabled={isLoading} 
-                  className={`h-8 px-3 text-[11px] text-muted-foreground/60 hover:text-foreground rounded-full hover:bg-muted/40 ${
-                    userPlan !== 'pro' && userPlan !== 'elite' ? 'opacity-40' : ''
-                  }`}
-                >
-                  {speakingMessageId === message.id && isSpeaking 
-                    ? <VolumeX className="h-3 w-3 mr-1.5" /> 
-                    : <Volume2 className="h-3 w-3 mr-1.5" />
-                  }
-                  {userPlan !== 'pro' && userPlan !== 'elite' && <Lock className="h-2.5 w-2.5 mr-1" />}
-                  {speakingMessageId === message.id && isSpeaking ? 'Stop' : 'Listen'}
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
                   onClick={() => onRegenerate(index)} 
                   disabled={isLoading} 
                   className="h-8 px-3 text-[11px] text-muted-foreground/60 hover:text-foreground rounded-full hover:bg-muted/40"
+                  aria-label="Regenerate response"
                 >
                   <RefreshCw className={`h-3 w-3 mr-1.5 ${isLoading ? 'animate-spin' : ''}`} />
-                  Retry
+                  Regenerate
                 </Button>
-                {onShareReply && message.content.trim().length > 120 && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onShareReply(message.content)}
-                    disabled={isLoading}
-                    className="h-8 px-3 text-[11px] text-primary/80 hover:text-primary rounded-full hover:bg-primary/10"
-                  >
-                    <Share2 className="h-3 w-3 mr-1.5" />
-                    Share
-                  </Button>
-                )}
               </>
             )}
             <Button 
@@ -459,13 +559,82 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
               size="sm" 
               onClick={handleCopy} 
               className="h-8 px-3 text-[11px] text-muted-foreground/60 hover:text-foreground rounded-full hover:bg-muted/40"
+              aria-label="Copy message"
             >
               <Copy className="h-3 w-3 mr-1.5" />
               Copy
             </Button>
+            {!isUser && (
+              /* Spec §10 / §15 — secondary actions live behind a "More" menu. */
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0 text-muted-foreground/60 hover:text-foreground rounded-full hover:bg-muted/40"
+                    aria-label="More actions"
+                  >
+                    <MoreHorizontal className="h-3.5 w-3.5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-48">
+                  <DropdownMenuItem
+                    onClick={() => onTextToSpeech(message.content, message.id)}
+                    disabled={isLoading}
+                    className="gap-2 text-[13px]"
+                  >
+                    {speakingMessageId === message.id && isSpeaking ? (
+                      <VolumeX className="h-3.5 w-3.5" />
+                    ) : (
+                      <Volume2 className="h-3.5 w-3.5" />
+                    )}
+                    {speakingMessageId === message.id && isSpeaking ? 'Stop reading' : 'Read aloud'}
+                    {userPlan !== 'pro' && userPlan !== 'elite' && (
+                      <Lock className="h-3 w-3 ml-auto opacity-60" aria-label="Upgrade required" />
+                    )}
+                  </DropdownMenuItem>
+                  {onShareReply && (
+                    <DropdownMenuItem
+                      onClick={() => onShareReply(message.content)}
+                      disabled={isLoading}
+                      className="gap-2 text-[13px]"
+                    >
+                      <Share2 className="h-3.5 w-3.5" />
+                      Share reply
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
         )}
       </div>
     </motion.div>
   );
 };
+
+/**
+ * Memoised wrapper — prevents all existing message bubbles from re-rendering
+ * on every streaming token. Only re-renders when this specific message changes.
+ */
+export const MessageBubble = React.memo(MessageBubbleInner, (prev, next) => {
+  // Only skip re-render if the message content, speaking state and loading state are identical
+  return (
+    prev.message.id === next.message.id &&
+    prev.message.content === next.message.content &&
+    prev.message.toolExecution?.status === next.message.toolExecution?.status &&
+    prev.message.source === next.message.source &&
+    prev.message.provider === next.message.provider &&
+    prev.message.modelUsed === next.message.modelUsed &&
+    // Batch R1 — research citations/datasets arrive AFTER the content settles,
+    // so the comparator must react to them or the chips/card never render.
+    prev.message.citations === next.message.citations &&
+    prev.message.researchData === next.message.researchData &&
+    // Batch 2 — visualization artifact + transform note.
+    prev.message.visualization === next.message.visualization &&
+    prev.vizTransformNote === next.vizTransformNote &&
+    prev.isLoading === next.isLoading &&
+    prev.speakingMessageId === next.speakingMessageId &&
+    prev.isSpeaking === next.isSpeaking
+  );
+});

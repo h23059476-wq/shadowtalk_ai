@@ -22,10 +22,10 @@ export const FileUpload = ({ onFileSelect, selectedFile, onClear, disabled, vari
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 10 * 1024 * 1024) {
+    if (file.size > 100 * 1024 * 1024) {
       toast({
         title: "File too large",
-        description: "Please select a file under 10MB",
+        description: "Please select a file under 100MB",
         variant: "destructive",
       });
       return;
@@ -99,7 +99,7 @@ export const FileUpload = ({ onFileSelect, selectedFile, onClear, disabled, vari
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*,.pdf,.txt,.md,.json,.csv"
+        accept="image/*,.pdf,.docx,.pptx,.xlsx,.odt,.txt,.md,.json,.csv,.js,.ts,.tsx,.jsx,.py,.rb,.go,.rs,.java,.c,.cpp,.h,.css,.html,.xml,.yml,.yaml,.sh,.sql,video/mp4,video/webm,video/ogg,video/quicktime,.mkv"
         onChange={handleFileChange}
         className="hidden"
         disabled={disabled || isProcessing}

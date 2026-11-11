@@ -32,7 +32,7 @@ export const TrustBadge = ({ className }: { className?: string }) => {
         )}
       >
         {cryptoAvailable ? <Shield className="h-3 w-3" /> : <Shield className="h-3 w-3" />}
-        <span className="hidden sm:inline">{cryptoAvailable ? "PRIVACY ARCHITECTURE" : "CHECKING..."}</span>
+        <span className="hidden sm:inline">{cryptoAvailable ? "SECURITY ARCHITECTURE" : "CHECKING..."}</span>
         <span className="sm:hidden">{cryptoAvailable ? "🔒" : "..."}</span>
       </button>
 
@@ -46,7 +46,7 @@ export const TrustBadge = ({ className }: { className?: string }) => {
           >
             <div className="flex items-center gap-2 mb-2">
               <Shield className="h-4 w-4 text-primary" />
-              <span className="text-xs font-semibold text-foreground">Privacy Features</span>
+              <span className="text-xs font-semibold text-foreground">Security Architecture</span>
             </div>
             <div className="space-y-1.5 text-[10px] font-mono text-muted-foreground">
               <div className="flex justify-between">

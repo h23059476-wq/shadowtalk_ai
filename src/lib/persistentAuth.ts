@@ -36,7 +36,10 @@ export function consumeReturnPath(): string {
   if (typeof localStorage === "undefined") return DEFAULT_WORKSPACE;
   const path = localStorage.getItem(RETURN_TO_KEY) || DEFAULT_WORKSPACE;
   localStorage.removeItem(RETURN_TO_KEY);
-  return path.startsWith("/") ? path : DEFAULT_WORKSPACE;
+  if (!path.startsWith("/") || path.includes(":") || path.includes("index.html") || path === "/" || path === "/home" || path === "/auth" || path.startsWith("/auth/")) {
+    return DEFAULT_WORKSPACE;
+  }
+  return path;
 }
 
 export function rememberWorkspacePath(path: string) {
@@ -48,7 +51,10 @@ export function rememberWorkspacePath(path: string) {
 export function getRememberedWorkspacePath(): string {
   if (typeof localStorage === "undefined") return DEFAULT_WORKSPACE;
   const path = localStorage.getItem(LAST_WORKSPACE_KEY);
-  return path?.startsWith("/") ? path : DEFAULT_WORKSPACE;
+  if (!path || !path.startsWith("/") || path.includes(":") || path.includes("index.html")) {
+    return DEFAULT_WORKSPACE;
+  }
+  return path;
 }
 
 export function isAnonymousUser(session: Session | null): boolean {
@@ -57,7 +63,7 @@ export function isAnonymousUser(session: Session | null): boolean {
 }
 
 /** Build a local Session object from stored user data. */
-function buildLocalSession(email: string, id?: string): Session {
+export function buildLocalSession(email: string, id?: string): Session {
   const userId = id || `local-${email.split('@')[0]}-${Date.now().toString(36)}`;
   return {
     access_token: 'local-token',
@@ -118,4 +124,6 @@ export const PRESERVE_ON_LOCAL_CLEAR = [
   RETURN_TO_KEY,
   LAST_WORKSPACE_KEY,
   LOCAL_AUTH_KEY,
+  "shadowtalk_session_token",
+  "shadowtalk_offline_auth",
 ] as const;

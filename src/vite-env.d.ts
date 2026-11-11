@@ -1,8 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_API_BASE_URL: string;
-  readonly VITE_API_KEY: string;
+  
   readonly VITE_API_PROJECT_ID: string;
 }
 
@@ -57,7 +56,13 @@ interface Window {
 declare const SpeechRecognition: SpeechRecognitionCtor | undefined;
 
 // ---- WebGPU type shim ----
-type GPU = unknown;
+  interface GPU {
+    requestAdapter(): Promise<unknown>;
+  }
 interface Navigator {
   gpu?: GPU;
+}
+
+declare module "virtual:pwa-register" {
+  export function registerSW(options?: Record<string, unknown>): (reload?: boolean) => Promise<void>;
 }

@@ -1,78 +1,86 @@
 /**
  * Non-streaming chat edge calls for image edit / analyze.
- * Uses existing /functions/v1/chat handlers (imageEdit, decodeImage).
+ * Integrates directly with imageEditorEngine for seamless image editing & visual analysis.
  */
 
-import { backend } from "@/integrations/local/client";
-import { stringifyChatBody } from "@/lib/chatRequest";
-import { getChatFetchHeaders, getChatFunctionUrl } from "@/lib/cloudEnv";
-import { selfHealedFetch } from "@/lib/selfHealing/selfHealedFetch";
+import {
+  editImageSeamlessly,
+  analyzeImageInDetail,
+  type ImageEditResult,
+  type ImageAnalysisResult,
+} from "@/lib/imageEditorEngine";
 
 export interface ChatImageResult {
   content: string;
   imageUrl?: string;
   type: "image" | "analysis" | "text";
+  editDetails?: ImageEditResult;
+  analysisDetails?: ImageAnalysisResult;
 }
 
+/**
+ * Edit an uploaded image according to the user's natural language instructions.
+ * Analyzes the image, applies direct or generative transformations, and returns the new image.
+ */
 export async function callChatImageEdit(
   originalImage: string,
   editPrompt: string,
   signal?: AbortSignal,
 ): Promise<ChatImageResult> {
-  return callChatImageMode({
-    imageEdit: true,
-    originalImage,
-    editPrompt,
-    signal,
-  });
+  try {
+    const editResult = await editImageSeamlessly(originalImage, editPrompt, signal);
+
+    return {
+      content: editResult.analysis,
+      imageUrl: editResult.editedImageUrl,
+      type: "image",
+      editDetails: editResult,
+    };
+  } catch (error) {
+    console.error("[callChatImageEdit] Error editing image:", error);
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to edit the image. Please try again.",
+    );
+  }
 }
 
+/**
+ * Analyze an uploaded image in detail and return a structured visual breakdown with suggested edits.
+ */
 export async function callChatImageAnalyze(
   imageToAnalyze: string,
   signal?: AbortSignal,
 ): Promise<ChatImageResult> {
-  return callChatImageMode({
-    decodeImage: true,
-    imageToAnalyze,
-    signal,
-  });
-}
+  try {
+    const analysis = await analyzeImageInDetail(imageToAnalyze, signal);
 
-async function callChatImageMode(body: Record<string, unknown> & { signal?: AbortSignal }): Promise<ChatImageResult> {
-  const { signal, ...payload } = body;
-  const chatUrl = getChatFunctionUrl();
-  if (!chatUrl) throw new Error("Chat is not configured for this build.");
+    const formattedContent = [
+      `### 🔍 Visual Analysis Report`,
+      ``,
+      `**Overview**: ${analysis.summary}`,
+      ``,
+      `- **Subject & Focal Points**: ${analysis.subject}`,
+      `- **Composition & Perspective**: ${analysis.composition}`,
+      `- **Color Palette & Lighting**: ${analysis.palette}`,
+      ``,
+      `---`,
+      `#### 💡 Creative Editing Ideas`,
+      `Ask ShadowTalk to edit this image by typing any of the following:`,
+      analysis.suggestedEdits.map((e, idx) => `${idx + 1}. *"Edit this: ${e}"*`).join("\n"),
+    ].join("\n");
 
-  const { data: { session } } = await backend.auth.getSession();
-  const resp = await selfHealedFetch(chatUrl, {
-    method: "POST",
-    headers: getChatFetchHeaders(session?.access_token),
-    body: stringifyChatBody({
-      messages: [],
-      personality: "creative",
-      mode: "general",
-      ...payload,
-    }),
-    signal,
-  });
-
-  if (!resp.ok) {
-    let detail = "Image request failed";
-    try {
-      const err = await resp.json();
-      detail = typeof err.error === "string" ? err.error : detail;
-    } catch {
-      detail = (await resp.text().catch(() => "")) || detail;
-    }
-    throw new Error(detail);
+    return {
+      content: formattedContent,
+      imageUrl: imageToAnalyze,
+      type: "analysis",
+      analysisDetails: analysis,
+    };
+  } catch (error) {
+    console.error("[callChatImageAnalyze] Error analyzing image:", error);
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to analyze image.",
+    );
   }
-
-  const data = await resp.json();
-  return {
-    type: data.type === "image" ? "image" : data.type === "analysis" ? "analysis" : "text",
-    content: data.content || data.analysis || "",
-    imageUrl: data.imageUrl,
-  };
 }
 
 /** Build multimodal user content for vision Q&A in streaming chat */

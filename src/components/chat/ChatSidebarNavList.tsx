@@ -27,43 +27,57 @@ function NavRow({
   active: boolean;
   onItemClick?: () => void;
 }) {
-  const { navSpring, spring } = useSettingsMotion();
+  const { spring } = useSettingsMotion();
   const Icon = item.icon;
   const label = collapsed ? item.shortLabel ?? item.label : item.label;
 
   const inner = (
     <motion.span
       className={cn(
-        "relative flex items-center rounded-xl text-[13px] font-medium transition-colors",
-        collapsed ? "justify-center h-11 w-11 mx-auto" : "gap-3 px-3 py-2.5 w-full",
-        active ? "text-sidebar-foreground" : "text-muted-foreground hover:text-sidebar-foreground",
+        "group relative flex items-center rounded-xl text-[13px] font-normal transition-colors duration-150 h-10 overflow-hidden",
+        !active && "hover:bg-white/[0.05]",
+        collapsed ? "justify-center w-10 mx-auto px-0" : "gap-3 px-3.5 w-full",
+        active ? "text-cyan-200 font-medium" : "text-slate-400 hover:text-slate-100",
       )}
-      whileHover={active ? undefined : { x: collapsed ? 0 : 5, scale: collapsed ? 1.05 : 1 }}
-      whileTap={{ scale: 0.96 }}
+      whileHover={{ x: collapsed ? 0 : 3 }}
+      whileTap={{ scale: 0.97 }}
       transition={spring}
     >
       {active && (
         <motion.span
           layoutId="chat-sidebar-nav-active"
-          className={cn(
-            "absolute inset-0 rounded-xl border border-primary/25 bg-primary/12",
-            "shadow-[inset_0_1px_0_hsl(var(--primary)/0.2),0_0_20px_hsl(var(--primary)/0.08)]",
-          )}
-          transition={navSpring}
+          className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/15 via-indigo-500/10 to-transparent border border-cyan-500/25 shadow-[0_0_14px_rgba(6,182,212,0.12)]"
+          transition={{ type: "spring", stiffness: 380, damping: 30 }}
         />
       )}
-      <Icon className={cn("relative z-10 h-4 w-4 shrink-0", active && "text-primary")} />
-      {!collapsed && (
-        <>
-          <span className="relative z-10 flex-1 truncate">{label}</span>
-          {active && (
-            <motion.span
-              layoutId="chat-sidebar-nav-dot"
-              className="relative z-10 h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_hsl(var(--primary))]"
-              transition={navSpring}
-            />
-          )}
-        </>
+      <Icon
+        className={cn(
+          "relative z-10 h-4 w-4 shrink-0 transition-transform duration-200 group-hover:scale-110",
+          active ? "text-cyan-400" : "text-slate-400 group-hover:text-cyan-300"
+        )}
+      />
+      <motion.span
+        animate={{
+          opacity: collapsed ? 0 : 1,
+          width: collapsed ? 0 : "auto",
+        }}
+        transition={{ duration: 0.18, ease: [0.2, 0.8, 0.2, 1] }}
+        className="relative z-10 flex-1 truncate overflow-hidden whitespace-nowrap text-left"
+      >
+        {label}
+      </motion.span>
+      {item.badge && (
+        <motion.span
+          animate={{
+            opacity: collapsed ? 0 : 1,
+            scale: collapsed ? 0.6 : 1,
+            width: collapsed ? 0 : "auto",
+          }}
+          transition={{ duration: 0.18, ease: [0.2, 0.8, 0.2, 1] }}
+          className="relative z-10 text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 overflow-hidden whitespace-nowrap"
+        >
+          {item.badge}
+        </motion.span>
       )}
     </motion.span>
   );
@@ -76,7 +90,7 @@ function NavRow({
         settingsHapticTick();
         onItemClick?.();
       }}
-      className="block"
+      className="block select-none"
     >
       {inner}
     </NavLink>
@@ -121,7 +135,7 @@ export function ChatSidebarNavList({ collapsed, onItemClick }: ChatSidebarNavLis
   const renderSection = (title: string, items: ChatSidebarNavItem[]) => (
     <div className={cn("space-y-0.5", collapsed && "space-y-1")}>
       {!collapsed && (
-        <p className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/50">
+        <p className="px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-400/50 select-none">
           {title}
         </p>
       )}
@@ -145,10 +159,10 @@ export function ChatSidebarNavList({ collapsed, onItemClick }: ChatSidebarNavLis
           variants={staggerList}
           initial="hidden"
           animate="visible"
-          className="flex-1 px-2 py-2 space-y-4 overflow-y-auto min-h-0 scrollbar-none"
+          className="flex-1 px-1 py-1 space-y-3.5 overflow-y-auto min-h-0 scrollbar-none"
         >
           {renderSection("Workspace", workspace)}
-          {renderSection("Explore", explore)}
+          {renderSection("Explore & Studios", explore)}
         </motion.nav>
       </LayoutGroup>
     </TooltipProvider>

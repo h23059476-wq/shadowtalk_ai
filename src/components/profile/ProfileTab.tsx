@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { User, Camera, Calendar, Loader2 } from "lucide-react";
+import { User, Camera, Calendar, Loader2, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { uploadProfileAvatar } from "@/lib/avatarUpload";
+import { backend } from "@/integrations/local/client";
 import { SettingsStagger, SettingsStaggerItem } from "@/components/settings/SettingsStagger";
 import { useSettingsMotion } from "@/hooks/useSettingsMotion";
 
@@ -39,6 +40,8 @@ export const ProfileTab = ({
   const { toast } = useToast();
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [savingUrl, setSavingUrl] = useState(false);
+  const [urlSaved, setUrlSaved] = useState(false);
 
   const onPickAvatar = async (file: File | undefined) => {
     if (!file) return;
@@ -50,7 +53,45 @@ export const ProfileTab = ({
       return;
     }
     setAvatarUrl(result.publicUrl);
+    // Auto-save the avatar URL to Firestore immediately
+    await saveAvatarUrl(result.publicUrl);
     toast({ title: "Photo updated", description: "Your profile picture was saved." });
+  };
+
+  // Auto-save avatar URL when user pastes a URL and clicks away (onBlur)
+  const saveAvatarUrl = useCallback(async (url: string) => {
+    if (!userId || !url) return;
+    setSavingUrl(true);
+    setUrlSaved(false);
+    try {
+      const { error } = await backend
+        .from("profiles")
+        .update({ avatar_url: url, updated_at: new Date().toISOString() })
+        .eq("id", userId);
+      if (error) throw error;
+      setUrlSaved(true);
+      setTimeout(() => setUrlSaved(false), 2000);
+    } catch (err: any) {
+      toast({
+        title: "Save failed",
+        description: "Could not save avatar URL. Try the Save button.",
+        variant: "destructive",
+      });
+    } finally {
+      setSavingUrl(false);
+    }
+  }, [userId, toast]);
+
+  const handleUrlBlur = () => {
+    if (avatarUrl && avatarUrl.trim()) {
+      void saveAvatarUrl(avatarUrl.trim());
+    }
+  };
+
+  const handleUrlKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.currentTarget.blur(); // trigger onBlur which saves
+    }
   };
 
   const shortId = `${userId.slice(0, 8)}…${userId.slice(-4)}`;
@@ -61,12 +102,12 @@ export const ProfileTab = ({
     <SettingsStagger className="space-y-6">
       <SettingsStaggerItem>
       <motion.div whileHover={reduced ? undefined : { y: -2 }} transition={spring}>
-      <Card className="glass border-border/50 card-glass">
+      <Card className="card-glass border-border/50 card-glass">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <User className="h-5 w-5 text-primary" /> Profile Information
           </CardTitle>
-          <CardDescription>Your identity across ShadowTalk — saved when you click Save in the header</CardDescription>
+          <CardDescription>Your identity across ShadowTalk — avatar saves automatically</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex items-center gap-6">
@@ -98,16 +139,28 @@ export const ProfileTab = ({
               onChange={(e) => void onPickAvatar(e.target.files?.[0])}
             />
             <div className="flex-1 space-y-2">
-              <Label className="text-xs text-muted-foreground">Profile photo</Label>
+              <Label className="text-xs text-muted-foreground">Profile photo URL</Label>
               <p className="text-xs text-muted-foreground">
-                Click the avatar to upload (max 5 MB). Or paste an image URL below.
+                Click the avatar to upload, or paste an image URL — it saves automatically.
               </p>
-              <Input
-                value={avatarUrl}
-                onChange={(e) => setAvatarUrl(e.target.value)}
-                placeholder="https://… or upload via camera button"
-                className="bg-muted/30 border-border/50"
-              />
+              <div className="relative">
+                <Input
+                  value={avatarUrl}
+                  onChange={(e) => setAvatarUrl(e.target.value)}
+                  onBlur={handleUrlBlur}
+                  onKeyDown={handleUrlKeyDown}
+                  placeholder="https://… or upload via camera button"
+                  maxLength={500000}
+                  className="bg-muted/30 border-border/50 pr-8"
+                />
+                <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                  {savingUrl ? (
+                    <Loader2 className="h-3.5 w-3.5 text-muted-foreground animate-spin" />
+                  ) : urlSaved ? (
+                    <Check className="h-3.5 w-3.5 text-emerald-400" />
+                  ) : null}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -147,7 +200,7 @@ export const ProfileTab = ({
         </CardContent>
       </Card>
 
-      <Card className="glass border-border/50">
+      <Card className="card-glass border-border/50">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
             <Calendar className="h-4 w-4 text-primary" /> Account Details

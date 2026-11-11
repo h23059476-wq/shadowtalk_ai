@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const stackCards = [
-  { icon: Rocket, title: "Infrastructure", desc: "Built and scaled using Lovable Pro for rapid deployment and clean, private code architecture.", color: "from-primary/20 to-primary/5" },
+  { icon: Rocket, title: "Infrastructure", desc: "Built and scaled using ShadowTalk Pro for rapid deployment and clean, private code architecture.", color: "from-primary/20 to-primary/5" },
   { icon: WifiOff, title: "Offline Core", desc: "Sovereign engine utilizing local inference to run LLMs in Airplane Mode.", color: "from-secondary/20 to-secondary/5" },
   { icon: TrendingUp, title: "Growth Engine", desc: "SocialSync AI automation hub — 23 customers in its first 24 hours.", color: "from-accent/20 to-accent/5" },
   { icon: Cpu, title: "Edge Computing", desc: "On-device model execution for zero-latency AI responses without cloud dependency.", color: "from-success/20 to-success/5" },

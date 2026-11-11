@@ -8,25 +8,32 @@ import {
   Link2,
   User,
   ChevronRight,
+  TrendingUp,
+  WifiOff,
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { SettingsGeneralSection } from "@/components/settings/SettingsGeneralSection";
 import { SettingsDefaultModelsCard } from "@/components/settings/SettingsDefaultModelsCard";
+import { SettingsByokCard } from "@/components/settings/SettingsByokCard";
+import { WorkspaceExportImport } from "@/components/settings/WorkspaceExportImport";
 import { SettingsSectionHeader } from "@/components/settings/SettingsSectionHeader";
 import { SettingsStagger, SettingsStaggerItem } from "@/components/settings/SettingsStagger";
 import { CustomInstructionsProfileCard } from "@/components/profile/CustomInstructionsProfileCard";
 import { ChatAIPreferencesCard } from "@/components/profile/ChatAIPreferencesCard";
-import { OfflineAISettings } from "@/components/profile/OfflineAISettings";
+
 import { ShadowTalkModelPanel } from "@/components/profile/ShadowTalkModelPanel";
 import { AutoImproveInsights } from "@/components/autoImprove/AutoImproveInsights";
-import { PrivacyDataCard } from "@/components/profile/PrivacyDataCard";
-import { CustomApiKeysPanel } from "@/components/profile/CustomApiKeysPanel";
+import { OfflineSetup } from "@/components/offline/OfflineSetup";
+import { LocalModelStatus } from "@/components/offline/LocalModelStatus";
+
+
 import { DesktopAppSettings } from "@/components/desktop/DesktopAppSettings";
 import { useSettingsMotion } from "@/hooks/useSettingsMotion";
 import { SettingsHomeGrid } from "@/components/settings/SettingsHomeGrid";
 import { SettingsShellCard } from "@/components/settings/SettingsShellCard";
+
 import type { SettingsNavSection } from "@/components/settings/SettingsNav";
 import type { SettingsSectionId } from "@/lib/settingsTypes";
 import { Brain } from "lucide-react";
@@ -38,13 +45,7 @@ interface SettingsSectionPanelsProps {
   sections: readonly SettingsNavSection[];
   onSelectSection: (id: string) => void;
   learningEnabled: boolean;
-  onLearningChange: (enabled: boolean) => void;
-  autonomyEnabled: boolean;
-  onAutonomyChange: (enabled: boolean) => void;
-  anonymousAutonomous: boolean;
-  onAnonymousAutonomousChange: (enabled: boolean) => void;
-  autoApproveMissions: boolean;
-  onAutoApproveMissionsChange: (enabled: boolean) => void;
+  onLearningChange?: (value: boolean) => void;
 }
 
 const ACCOUNT_LINKS = [
@@ -54,7 +55,6 @@ const ACCOUNT_LINKS = [
   { label: "Active sessions", href: "/sessions", desc: "Signed-in devices & revoke" },
   { label: "Billing", href: "/profile?tab=billing", desc: "Everything is free" },
   { label: "Activity history", href: "/profile?tab=activity", desc: "Past conversations" },
-  { label: "Self-healing diagnostics", href: "/self-healing", desc: "Captured errors & auto-fix proposals" },
 ] as const;
 
 function AnimatedCard({
@@ -83,12 +83,6 @@ export function SettingsSectionPanels({
   onSelectSection,
   learningEnabled,
   onLearningChange,
-  autonomyEnabled,
-  onAutonomyChange,
-  anonymousAutonomous,
-  onAnonymousAutonomousChange,
-  autoApproveMissions,
-  onAutoApproveMissionsChange,
 }: SettingsSectionPanelsProps) {
   if (section === "home") {
     return <SettingsHomeGrid sections={sections} onSelect={onSelectSection} />;
@@ -109,6 +103,11 @@ export function SettingsSectionPanels({
         <SettingsStaggerItem>
           <AnimatedCard>
             <SettingsDefaultModelsCard />
+          </AnimatedCard>
+        </SettingsStaggerItem>
+        <SettingsStaggerItem>
+          <AnimatedCard>
+            <SettingsByokCard />
           </AnimatedCard>
         </SettingsStaggerItem>
         <SettingsStaggerItem>
@@ -148,11 +147,6 @@ export function SettingsSectionPanels({
         <SettingsStaggerItem>
           <AnimatedCard>
             <SettingsDefaultModelsCard />
-          </AnimatedCard>
-        </SettingsStaggerItem>
-        <SettingsStaggerItem>
-          <AnimatedCard>
-            <OfflineAISettings />
           </AnimatedCard>
         </SettingsStaggerItem>
         <SettingsStaggerItem>
@@ -202,79 +196,40 @@ export function SettingsSectionPanels({
         <SettingsStaggerItem>
           <AnimatedCard>
             <SettingsShellCard
-              title="Autonomous agent"
-              description="In-chat missions, scheduled runs, goal pursuit, and proactive signals"
-              icon={Sparkles}
+              title="Workspace export / import"
+              description="Sync your chats, templates, and RAG vectors across machines. API keys never leave your browser."
+              icon={Database}
             >
-              <motion.div
-                className="flex items-center justify-between p-4 rounded-xl bg-muted/20 border border-border/40"
-                whileTap={{ scale: 0.995 }}
-              >
-                <p className="text-sm font-medium">Enable autonomous mode</p>
-                <Switch checked={autonomyEnabled} onCheckedChange={onAutonomyChange} />
-              </motion.div>
-              <motion.div
-                className="flex items-center justify-between p-4 rounded-xl bg-muted/20 border border-border/40"
-                whileTap={{ scale: 0.995 }}
-              >
-                <div>
-                  <p className="text-sm font-medium">Anonymous & autonomous</p>
-                  <p className="text-xs text-muted-foreground">No sign-in required; missions stay on-device</p>
-                </div>
-                <Switch checked={anonymousAutonomous} onCheckedChange={onAnonymousAutonomousChange} />
-              </motion.div>
-              <motion.div
-                className="flex items-center justify-between p-4 rounded-xl bg-muted/20 border border-border/40"
-                whileTap={{ scale: 0.995 }}
-              >
-                <div>
-                  <p className="text-sm font-medium">Auto-run missions</p>
-                  <p className="text-xs text-muted-foreground">Skip approval prompts for agent steps</p>
-                </div>
-                <Switch checked={autoApproveMissions} onCheckedChange={onAutoApproveMissionsChange} />
-              </motion.div>
+              <WorkspaceExportImport />
             </SettingsShellCard>
           </AnimatedCard>
         </SettingsStaggerItem>
+
+      </SettingsStagger>
+    );
+  }
+
+  if (section === "offline") {
+    return (
+      <SettingsStagger className="space-y-6">
+        <SettingsSectionHeader
+          icon={WifiOff}
+          title="Local AI (Offline)"
+          description="Provision and manage local models to run ShadowTalk fully offline."
+        />
         <SettingsStaggerItem>
           <AnimatedCard>
-            <PrivacyDataCard />
+            <div className="space-y-6">
+              <LocalModelStatus />
+              <OfflineSetup />
+            </div>
           </AnimatedCard>
         </SettingsStaggerItem>
       </SettingsStagger>
     );
   }
 
-  if (section === "connections") {
-    return (
-      <SettingsStagger className="space-y-6">
-        <SettingsSectionHeader
-          icon={Link2}
-          title="Connections"
-          description="API keys and linked services (Google, GitHub, Slack, WhatsApp)"
-        />
-        <SettingsStaggerItem>
-          <AnimatedCard>
-            <CustomApiKeysPanel />
-          </AnimatedCard>
-        </SettingsStaggerItem>
-        <SettingsStaggerItem>
-          <AnimatedCard>
-            <Card className="glass border-border/50 card-glass">
-              <CardContent className="pt-6 flex flex-wrap gap-3">
-                <Button asChild variant="secondary" className="btn-glow">
-                  <Link to="/profile?tab=linked">Manage linked accounts</Link>
-                </Button>
-                <Button asChild variant="outline">
-                  <Link to="/developers">Developer integrations</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          </AnimatedCard>
-        </SettingsStaggerItem>
-      </SettingsStagger>
-    );
-  }
+
 
   return (
     <SettingsStagger className="space-y-6">

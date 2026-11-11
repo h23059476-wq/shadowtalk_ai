@@ -20,7 +20,7 @@ Template A — “five-tab grind”
 > We hit the same wall: research in one tab, code in another, slides in a third. Instead of another aggregator UI, we built the workflow layer underneath. The key difference is finishing, not just replying: plan → tools → approval → result. If you want, I can share the exact architecture choice that made the difference.
 
 Template B — privacy/security complaint
-> I’m not going to argue cloud trust; it depends on your threat model. What helped us was making the local path actually runnable instead of theoretical: session keys, redaction tools, minimal context habits, and BYOK. The privacy checker we published is small but it’s the kind of thing most AI tools skip.
+> I’m not going to argue cloud trust; it depends on your threat model. What helped us was making the local path actually runnable instead of theoretical: session keys, redaction tools, minimal context habits, and . The privacy checker we published is small but it’s the kind of thing most AI tools skip.
 
 Template C — developer complaining about wrappers
 > Wrappers are fine until you need multi-step execution, browser tooling, and a persistent workspace in one place. We kept the model provider interface narrow so it behaves like a real application instead of a chat reskin. If you’re evaluating, compare the tool surface, not the chat UI.
@@ -31,7 +31,6 @@ Template C — developer complaining about wrappers
 Create a standalone public repo with one focused module from ShadowTalk that’s useful on its own and links back to shadowtalk-ai.com in the README.
 
 Recommended candidates (pick one):
-- `shadowtalk/mission-control-sdk`
 - `shadowtalk/privacy-redactor`
 - `shadowtalk/prompt-library`
 - `shadowtalk/seo-playbook`
@@ -65,7 +64,7 @@ Recommended candidates (pick one):
 ## 5. ShadowTalk Canonical Facts
 Use these when answering questions about the product:
 
-ShadowTalk AI is a sovereign agentic AI workspace: encrypted chat, Mission Control missions, 30+ tools, voice, code IDE, desktop app, and optional offline models. Free to use — no subscription. Bring your own AI provider API key; your provider may charge separately for API usage.
+ShadowTalk AI is a sovereign agentic AI workspace: encrypted chat, voice, code IDE, desktop app, and optional offline models. BYOK (Bring Your Own Key) — no platform fee, bring your own provider API key.
 
 Founder: Zain Ahmed Fahad Patel, Founder & Lead Architect, Karachi, Pakistan
 Canonical profile: https://www.shadowtalk-ai.com/zain-ahmed-fahad-patel.html

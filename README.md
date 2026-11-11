@@ -1,140 +1,52 @@
 # ShadowTalk AI
 
-**Think AI. Think ShadowTalk.**
+ShadowTalk is a React and TypeScript web application for AI chat and related personal, developer, and product workflows. Firebase is the active application backend. This guide describes the implementation in this repository as inspected on 2026-10-29; source code and deployment configuration remain authoritative when behavior changes.
 
-**The AI workspace that doesn't own you.**
+## Start here
 
-ShadowTalk is the **agentic AI workspace** for people who are tired of chatbots that only talk. Plan missions, run 30+ tools from one sentence, approve agent steps when it matters, and ship real work — on **web, PWA, or desktop** — while **you** stay in control of your keys, data, and pace.
+- [Architecture and runtime map](docs/architecture/README.md)
+- [AI request paths](docs/architecture/ai-and-request-flows.md)
+- [Data and security boundaries](docs/architecture/data-and-security.md)
+- [Feature and integration inventory](docs/architecture/feature-inventory.md)
+- [Build, configuration, and deployment](docs/operations.md)
 
-> *ChatGPT answers. ShadowTalk executes.*
+## Stack
 
-**[Launch workspace →](https://www.shadowtalk-ai.com/chatbot)** · **[Marketing site](https://www.shadowtalk-ai.com/home)** · [Repository](https://github.com/zain836/shadowtalk-ai-903ca615)
+- React 18, TypeScript, Vite, React Router, TanStack Query
+- Firebase Authentication, Cloud Firestore, Cloud Storage, and Firebase Functions v2
+- AI request paths for shared OpenRouter access, user-supplied provider keys, and WebLLM local inference
+- Tailwind CSS, Radix UI, Framer Motion, and feature-specific tools such as Monaco and WebContainer
 
-**Full documentation index:** [DOCUMENTATION.md](./DOCUMENTATION.md)
+## Local development
 
----
+Use Node.js 20 or newer. Install dependencies and run the Vite server:
 
-## Why people switch
-
-| Others | ShadowTalk |
-|--------|------------|
-| Single-thread chat | **Mission Control** — multi-step autonomous runs |
-| Manual tool hopping | **30+ tools** from natural language |
-| Cloud-only | **Vault, BYOK, optional on-device Gemma** |
-| Browser tab | **Desktop app** with native files & notifications |
-| Platform credits only | **Your API keys** — Gemini, , Kimi |
-
-| You get | What that means |
-|--------|------------------|
-| **Workspace-first** | Opening the site goes straight to **`/chatbot`** — no boot splash |
-| **Persistent session** | Return visits stay signed in (anonymous or linked account) |
-| **One workspace** | Chat, research, code, images, presentations, missions |
-| **Privacy by design** | BYOK, optional local inference, stealth tooling |
-
----
-
-## URLs (current)
-
-| URL | Purpose |
-|-----|---------|
-| `/` | Redirects to `/chatbot` |
-| `/chatbot` | **Main AI workspace** |
-| `/home` | Marketing landing |
-| `/pricing` | Plans & billing |
-| `/docs` | User documentation |
-| `/ide` | Personal IDE + App Builder output |
-
-See [Detailed Documentation/11-complete-route-reference.md](./Detailed%20Documentation/11-complete-route-reference.md) for every route.
-
----
-
-## What ShadowTalk is
-
-- **Neural chat** — personalities, modes, tool orchestration, marketplace agents.
-- **Mission Control** — autonomous workflows with human approval gates.
-- **IDE & App Builder** — multi-file projects from chat (`/ide`).
-- **BYOK** — route chat through your providers when configured.
-- **Offline paths** — SmolLM / Gemma + hardware-aware local vs cloud routing.
-
-**Stack:** React · Vite · TypeScript · ShadowTalk backend · Tailwind · shadcn/ui · PWA · Electron (desktop).
-
----
-
-## Start in 60 seconds
-
-```bash
-git clone https://github.com/zain836/shadowtalk-ai-903ca615.git
-cd shadowtalk-ai-903ca615
-npm install
+```sh
+npm ci
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) — you land on **`/chatbot`**. Marketing page: [http://localhost:5173/home](http://localhost:5173/home).
+Vite uses port 8080 by default. Firebase web configuration has source defaults; local overrides can be placed in `.env` using the keys documented in [`env.example`](env.example). Web configuration is public client configuration and must not contain provider secrets.
 
-### Environment
+Build and lint commands are `npm run build` and `npm run lint`. The separate Functions package is built with `npm ci --prefix functions` followed by `npm --prefix functions run build`. See [operations](docs/operations.md) for boundaries and deployment details.
 
-`.env` / `.env.local`:
+## Repository map
 
-```env
-VITE_API_BASE_URL=
-VITE_API_KEY=
+```text
+src/App.tsx                       providers and client-side routes
+src/pages/                        route-level screens
+src/components/                   shared and feature UI
+src/hooks/                        reusable feature and data hooks
+src/contexts/                     cross-app React state
+src/integrations/firebase/        Firebase SDK adapters
+src/integrations/local/client.ts  app-facing Firebase compatibility client
+src/lib/                          feature services and orchestration
+src/ai/ and src/offline/          provider selection and browser inference
+functions/src/index.ts            deployed Firebase HTTPS Functions
+firestore.rules                   Firestore authorization
+storage.rules                     Cloud Storage authorization
+firebase.json                     Hosting, rules/indexes, Functions predeploy
+public/                           static assets and directly served content
 ```
 
-Enable **Anonymous sign-ins** in ShadowTalk backend Auth for Gemini-style auto session on first visit.
-
-### Desktop
-
-```bash
-npm run build
-npm run desktop:make
-```
-
-See [DESKTOP.md](./DESKTOP.md). Offline models: [OFFLINE.md](./OFFLINE.md).
-
-Desktop does **not** require ShadowTalk local runtime. Run with `VITE_LOCAL_FIRST=1` to build/run in standalone/offline-first mode.
-
----
-
-## For developers
-
-```bash
-npm run build
-npm test
-```
-
-| Area | Path |
-|------|------|
-| Routes | `src/App.tsx` |
-| Chat | `src/pages/ChatbotPage.tsx` |
-| Auth | `src/lib/persistentAuth.ts`, `src/components/AuthProvider.tsx` |
-| Edge functions | `backend/functions/` |
-| Engineering docs | `Detailed Documentation/` |
-| Doc hub | [DOCUMENTATION.md](./DOCUMENTATION.md) |
-
-**Deploy:** run migrations, deploy `chat` and related functions; set secrets in ShadowTalk backend — never commit keys.
-
----
-
-## Documentation
-
-| Doc | Description |
-|-----|-------------|
-| [DOCUMENTATION.md](./DOCUMENTATION.md) | Master index |
-| [Detailed Documentation/](./Detailed%20Documentation/README.md) | Engineering series (performance, WebGPU, marketplace, IDE, UX) |
-| [RELEASE.md](./RELEASE.md) | Release checklist |
-| [OFFLINE.md](./OFFLINE.md) | Offline tiers A/B/C |
-| [DESKTOP.md](./DESKTOP.md) | Native desktop |
-
----
-
-## Links
-
-- **Workspace:** https://www.shadowtalk-ai.com/chatbot
-- **Home:** https://www.shadowtalk-ai.com/home
-- **Docs:** https://www.shadowtalk-ai.com/docs
-
----
-
-*ShadowTalk AI · Private repo. Contact the maintainer for licensing.*
-
-**Think AI. Think ShadowTalk.**
+There are Supabase-named compatibility and legacy files in the repository. Their presence does not make Supabase the active backend; follow actual imports and deployment configuration.

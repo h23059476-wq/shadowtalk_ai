@@ -32,7 +32,7 @@ export const getNextTier = (referrals: number): PowerTier | null => {
 export const getShareLinks = (code: string, baseUrl: string) => {
   const link = `${baseUrl}?ref=${code}`;
   const text = encodeURIComponent(
-    "I've been using ShadowTalk AI — an AI chatbot with privacy-focused features and optional offline mode. Try it free:"
+    "I've been using ShadowTalk AI — an intelligent multi-model agentic workspace with built-in tools. Try it free:"
   );
   return {
     link,

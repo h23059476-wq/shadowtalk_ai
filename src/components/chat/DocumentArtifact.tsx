@@ -1,13 +1,23 @@
 import React, { useState, useRef, useMemo } from 'react';
-import { FileText, Download, Edit3, Check, X, Copy, Maximize2, Minimize2, FileDown, BookOpen, List, Printer, ChevronRight } from 'lucide-react';
+import {
+  FileText, Download, Edit3, Check, X, Copy, Maximize2, Minimize2,
+  FileDown, BookOpen, List, Printer, ChevronRight, Palette, Layout, Globe
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useToast } from '@/hooks/use-toast';
-import { downloadAsWordDoc } from '@/lib/kimiDocumentGeneration';
 import { DOCUMENT_PROSE_CLASS, polishProfessionalMarkdown } from '@/lib/professionalDocument';
-import { downloadProfessionalPdf } from '@/lib/professionalPdfExport';
+import {
+  exportWorldClassPdf,
+  printWorldClassDocument,
+  exportWorldClassMarkdown,
+  exportWorldClassPlainText,
+  exportWorldClassWordDoc,
+  exportWorldClassHtml,
+  type DocumentTheme,
+} from '@/lib/worldClassDocumentExport';
 
 interface DocumentArtifactProps {
   title: string;
@@ -60,7 +70,11 @@ export const DocumentArtifact: React.FC<DocumentArtifactProps> = ({ title, conte
   const [editedContent, setEditedContent] = useState(() => polishProfessionalMarkdown(content, { tone: 'professional' }));
   const [isExpanded, setIsExpanded] = useState(false);
   const [showTOC, setShowTOC] = useState(false);
+  const [showThemePicker, setShowThemePicker] = useState(false);
   const [activeView, setActiveView] = useState<'rendered' | 'raw'>('rendered');
+  const [selectedTheme, setSelectedTheme] = useState<DocumentTheme>('executive');
+  const [viewMode, setViewMode] = useState<'scroll' | 'sheet'>('scroll');
+  const [includeCover, setIncludeCover] = useState(true);
   const docRef = useRef<HTMLDivElement>(null);
 
   const config = typeConfig[type] || typeConfig.document;
@@ -68,74 +82,77 @@ export const DocumentArtifact: React.FC<DocumentArtifactProps> = ({ title, conte
   const words = useMemo(() => wordCount(editedContent), [editedContent]);
   const readTime = useMemo(() => readingTime(editedContent), [editedContent]);
 
+  const cleanFilename = (ext: string) => `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.${ext}`;
+
   const handleCopy = async () => {
     await navigator.clipboard.writeText(editedContent);
     toast({ title: 'Document copied to clipboard' });
   };
 
-  const handleDownloadMd = () => {
-    const blob = new Blob([editedContent], { type: 'text/markdown' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${title.replace(/\s+/g, '_').toLowerCase()}.md`;
-    a.click();
-    URL.revokeObjectURL(url);
-    toast({ title: 'Downloaded as Markdown' });
-  };
-
-  const handleDownloadTxt = () => {
-    const plainText = editedContent
-      .replace(/#{1,6}\s/g, '')
-      .replace(/\*\*(.*?)\*\*/g, '$1')
-      .replace(/\*(.*?)\*/g, '$1')
-      .replace(/`(.*?)`/g, '$1')
-      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-      .replace(/^[-*+]\s/gm, '• ')
-      .replace(/^>\s/gm, '');
-    
-    const blob = new Blob([plainText], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${title.replace(/\s+/g, '_').toLowerCase()}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
-    toast({ title: 'Downloaded as Text' });
-  };
-
   const handleDownloadPdf = () => {
     try {
-      downloadProfessionalPdf(
-        editedContent,
-        `${title.replace(/\s+/g, '_').toLowerCase()}.pdf`,
-      );
-      toast({ title: 'Downloaded as PDF' });
+      exportWorldClassPdf(editedContent, cleanFilename('pdf'), {
+        theme: selectedTheme,
+        includeCoverPage: includeCover,
+        classification: type === 'report' ? 'Executive Brief' : type === 'proposal' ? 'Strategic Proposal' : 'Confidential',
+      });
+      toast({ title: 'Ultra-HD PDF Downloaded' });
     } catch {
       toast({ title: 'PDF export failed', variant: 'destructive' });
     }
   };
 
   const handlePrint = () => {
-    const printWindow = window.open('', '_blank');
-    if (!printWindow) return;
-    printWindow.document.write(`
-      <html><head><title>${title}</title>
-      <style>
-        body { font-family: Georgia, 'Times New Roman', serif; max-width: 700px; margin: 40px auto; padding: 20px; color: #1a1a1a; line-height: 1.8; }
-        h1 { font-size: 28px; margin-bottom: 8px; } h2 { font-size: 22px; margin-top: 32px; } h3 { font-size: 18px; }
-        p { margin: 12px 0; } ul, ol { padding-left: 24px; } blockquote { border-left: 3px solid #ddd; padding-left: 16px; color: #555; }
-        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 14px; }
-        pre { background: #f4f4f4; padding: 16px; border-radius: 8px; overflow-x: auto; }
-        table { border-collapse: collapse; width: 100%; } th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
-        th { background: #f8f8f8; font-weight: 600; }
-        @media print { body { margin: 0; } }
-      </style></head><body>
-      ${docRef.current?.innerHTML || ''}
-      </body></html>
-    `);
-    printWindow.document.close();
-    printWindow.print();
+    try {
+      printWorldClassDocument(editedContent, {
+        theme: selectedTheme,
+        includeCoverPage: includeCover,
+      });
+    } catch {
+      toast({ title: 'Print preview failed', variant: 'destructive' });
+    }
+  };
+
+  const handleDownloadWord = () => {
+    try {
+      exportWorldClassWordDoc(editedContent, cleanFilename('doc'), {
+        classification: type === 'report' ? 'Executive Brief' : 'Confidential',
+      });
+      toast({ title: 'Word Document Downloaded' });
+    } catch {
+      toast({ title: 'Word export failed', variant: 'destructive' });
+    }
+  };
+
+  const handleDownloadMd = () => {
+    try {
+      exportWorldClassMarkdown(editedContent, cleanFilename('md'), {
+        theme: selectedTheme,
+      });
+      toast({ title: 'GFM Markdown Downloaded' });
+    } catch {
+      toast({ title: 'Markdown export failed', variant: 'destructive' });
+    }
+  };
+
+  const handleDownloadTxt = () => {
+    try {
+      exportWorldClassPlainText(editedContent, cleanFilename('txt'));
+      toast({ title: 'Executive Text File Downloaded' });
+    } catch {
+      toast({ title: 'Text export failed', variant: 'destructive' });
+    }
+  };
+
+  const handleDownloadHtml = () => {
+    try {
+      exportWorldClassHtml(editedContent, cleanFilename('html'), {
+        theme: selectedTheme,
+      });
+      toast({ title: 'Standalone Web Document Downloaded' });
+    } catch {
+      toast({ title: 'HTML export failed', variant: 'destructive' });
+    }
   };
 
   const handleSaveEdit = () => {
@@ -153,46 +170,51 @@ export const DocumentArtifact: React.FC<DocumentArtifactProps> = ({ title, conte
       initial={{ opacity: 0, y: 8, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
-      className={`mt-3 rounded-xl border border-border/30 bg-gradient-to-br ${config.bg} overflow-hidden shadow-lg shadow-black/5 backdrop-blur-sm ${
-        isExpanded ? 'fixed inset-4 z-50 m-0' : ''
+      className={`mt-3 rounded-xl border border-border/40 bg-gradient-to-br ${config.bg} overflow-hidden shadow-xl shadow-black/5 backdrop-blur-md ${
+        isExpanded ? 'fixed inset-3 z-50 m-0' : ''
       }`}
     >
       {/* Premium header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border/20 bg-card/40 backdrop-blur-md">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border/30 bg-card/60 backdrop-blur-md">
         <div className="flex items-center gap-2.5">
-          <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${config.bg} border border-border/20 flex items-center justify-center text-base`}>
+          <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${config.bg} border border-border/30 flex items-center justify-center text-base shadow-sm`}>
             {config.icon}
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-semibold text-foreground leading-tight">{title}</span>
+            <span className="text-sm font-semibold text-foreground leading-tight tracking-tight">{title}</span>
             <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-muted/40 text-muted-foreground font-semibold uppercase tracking-wider">
+              <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-muted/60 text-muted-foreground font-semibold uppercase tracking-wider">
                 {config.label}
               </span>
-              <span className="text-[10px] text-muted-foreground/40 font-mono">
+              <span className="text-[10px] text-muted-foreground/60 font-mono">
                 {words.toLocaleString()} words · {readTime} min read
+              </span>
+              <span className="text-[9px] px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium capitalize">
+                {selectedTheme}
               </span>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-0.5">
+        <div className="flex items-center gap-1">
           {/* View toggle */}
           {!isEditing && (
-            <div className="flex items-center bg-muted/30 rounded-lg p-0.5 mr-1">
+            <div className="flex items-center bg-muted/40 rounded-lg p-0.5 mr-1 border border-border/20">
               <button
                 onClick={() => setActiveView('rendered')}
                 className={`px-2 py-0.5 rounded-md text-[10px] font-medium transition-all ${
-                  activeView === 'rendered' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-foreground'
+                  activeView === 'rendered' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground/60 hover:text-foreground'
                 }`}
+                title="Reading View"
               >
                 <BookOpen className="h-3 w-3" />
               </button>
               <button
                 onClick={() => setActiveView('raw')}
                 className={`px-2 py-0.5 rounded-md text-[10px] font-medium transition-all ${
-                  activeView === 'raw' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground/50 hover:text-foreground'
+                  activeView === 'raw' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground/60 hover:text-foreground'
                 }`}
+                title="Raw Markdown"
               >
                 <FileText className="h-3 w-3" />
               </button>
@@ -210,43 +232,130 @@ export const DocumentArtifact: React.FC<DocumentArtifactProps> = ({ title, conte
             </>
           ) : (
             <>
+              {/* Theme Picker */}
+              <div className="relative">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowThemePicker(!showThemePicker)}
+                  className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+                  title="Document Theme"
+                >
+                  <Palette className="h-3.5 w-3.5" />
+                </Button>
+                {showThemePicker && (
+                  <div className="absolute right-0 top-full mt-1 w-44 bg-card border border-border/40 rounded-lg shadow-2xl p-2 z-50 text-xs space-y-1">
+                    <p className="text-[10px] font-semibold text-muted-foreground uppercase px-2 py-1">Style Preset</p>
+                    {(['executive', 'obsidian', 'minimal', 'academic'] as DocumentTheme[]).map((thm) => (
+                      <button
+                        key={thm}
+                        onClick={() => {
+                          setSelectedTheme(thm);
+                          setShowThemePicker(false);
+                        }}
+                        className={`w-full text-left px-2.5 py-1.5 rounded-md flex items-center justify-between capitalize transition-colors ${
+                          selectedTheme === thm ? 'bg-primary/10 text-primary font-semibold' : 'hover:bg-muted/60 text-foreground'
+                        }`}
+                      >
+                        {thm}
+                        {selectedTheme === thm && <Check className="h-3 w-3" />}
+                      </button>
+                    ))}
+                    <div className="pt-1 border-t border-border/30">
+                      <button
+                        onClick={() => {
+                          setViewMode(viewMode === 'scroll' ? 'sheet' : 'scroll');
+                          setShowThemePicker(false);
+                        }}
+                        className="w-full text-left px-2.5 py-1.5 rounded-md hover:bg-muted/60 text-muted-foreground flex items-center gap-2"
+                      >
+                        <Layout className="h-3 w-3" />
+                        {viewMode === 'sheet' ? 'Continuous Scroll' : 'Paginated Sheet'}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIncludeCover(!includeCover);
+                          setShowThemePicker(false);
+                        }}
+                        className="w-full text-left px-2.5 py-1.5 rounded-md hover:bg-muted/60 text-muted-foreground flex items-center justify-between"
+                      >
+                        <span>Include Cover Page</span>
+                        <span className="text-[10px] font-semibold">{includeCover ? 'ON' : 'OFF'}</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               {toc.length > 2 && (
-                <Button variant="ghost" size="sm" onClick={() => setShowTOC(!showTOC)} className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground" title="Table of Contents">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowTOC(!showTOC)}
+                  className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+                  title="Table of Contents"
+                >
                   <List className="h-3.5 w-3.5" />
                 </Button>
               )}
-              <Button variant="ghost" size="sm" onClick={() => setIsEditing(true)} className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground" title="Edit">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsEditing(true)}
+                className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+                title="Edit Content"
+              >
                 <Edit3 className="h-3.5 w-3.5" />
               </Button>
-              <Button variant="ghost" size="sm" onClick={handleCopy} className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground" title="Copy">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleCopy}
+                className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+                title="Copy Text"
+              >
                 <Copy className="h-3.5 w-3.5" />
               </Button>
-              <Button variant="ghost" size="sm" onClick={handlePrint} className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground" title="Print">
-                <Printer className="h-3.5 w-3.5" />
-              </Button>
 
-              {/* Download dropdown */}
+              {/* Comprehensive 6-Format Download Dropdown */}
               <div className="relative group/dl">
-                <Button variant="ghost" size="sm" className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground" title="Download">
+                <Button variant="ghost" size="sm" className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground" title="Export Document">
                   <Download className="h-3.5 w-3.5" />
                 </Button>
-                <div className="absolute right-0 top-full mt-1 w-36 bg-card border border-border/30 rounded-lg shadow-xl opacity-0 invisible group-hover/dl:opacity-100 group-hover/dl:visible transition-all duration-200 z-50">
-                  <button onClick={handleDownloadMd} className="w-full text-left px-3 py-2 text-xs hover:bg-muted/50 transition-colors flex items-center gap-2 rounded-t-lg">
-                    <FileText className="h-3 w-3" /> Markdown (.md)
-                  </button>
-                  <button onClick={handleDownloadTxt} className="w-full text-left px-3 py-2 text-xs hover:bg-muted/50 transition-colors flex items-center gap-2">
-                    <FileText className="h-3 w-3" /> Plain Text (.txt)
-                  </button>
-                  <button onClick={() => { downloadAsWordDoc(editedContent, title.replace(/\s+/g, '_').toLowerCase()); toast({ title: 'Downloaded as Word' }); }} className="w-full text-left px-3 py-2 text-xs hover:bg-muted/50 transition-colors flex items-center gap-2">
-                    <FileDown className="h-3 w-3" /> Word (.doc)
-                  </button>
-                  <button onClick={handleDownloadPdf} className="w-full text-left px-3 py-2 text-xs hover:bg-muted/50 transition-colors flex items-center gap-2 rounded-b-lg">
-                    <FileDown className="h-3 w-3" /> PDF Document
-                  </button>
+                <div className="absolute right-0 top-full mt-1 w-52 bg-card border border-border/40 rounded-xl shadow-2xl opacity-0 invisible group-hover/dl:opacity-100 group-hover/dl:visible transition-all duration-200 z-50 p-1 divide-y divide-border/20">
+                  <div className="pb-1">
+                    <p className="text-[10px] font-semibold text-muted-foreground uppercase px-2 py-1">Document Formats</p>
+                    <button onClick={handleDownloadPdf} className="w-full text-left px-2.5 py-1.5 text-xs hover:bg-muted/60 transition-colors flex items-center gap-2 rounded-md font-medium text-foreground">
+                      <FileDown className="h-3.5 w-3.5 text-primary" /> Ultra-HD PDF (.pdf)
+                    </button>
+                    <button onClick={handlePrint} className="w-full text-left px-2.5 py-1.5 text-xs hover:bg-muted/60 transition-colors flex items-center gap-2 rounded-md text-foreground">
+                      <Printer className="h-3.5 w-3.5 text-blue-500" /> Vector Print / Save PDF
+                    </button>
+                    <button onClick={handleDownloadWord} className="w-full text-left px-2.5 py-1.5 text-xs hover:bg-muted/60 transition-colors flex items-center gap-2 rounded-md text-foreground">
+                      <FileDown className="h-3.5 w-3.5 text-indigo-500" /> Word Document (.doc)
+                    </button>
+                  </div>
+                  <div className="pt-1">
+                    <button onClick={handleDownloadMd} className="w-full text-left px-2.5 py-1.5 text-xs hover:bg-muted/60 transition-colors flex items-center gap-2 rounded-md text-foreground">
+                      <FileText className="h-3.5 w-3.5 text-emerald-500" /> GFM Markdown (.md)
+                    </button>
+                    <button onClick={handleDownloadTxt} className="w-full text-left px-2.5 py-1.5 text-xs hover:bg-muted/60 transition-colors flex items-center gap-2 rounded-md text-foreground">
+                      <FileText className="h-3.5 w-3.5 text-amber-500" /> Plain Text (.txt)
+                    </button>
+                    <button onClick={handleDownloadHtml} className="w-full text-left px-2.5 py-1.5 text-xs hover:bg-muted/60 transition-colors flex items-center gap-2 rounded-md text-foreground">
+                      <Globe className="h-3.5 w-3.5 text-cyan-500" /> Web Page (.html)
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <Button variant="ghost" size="sm" onClick={() => setIsExpanded(!isExpanded)} className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground" title={isExpanded ? 'Minimize' : 'Expand'}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+                title={isExpanded ? 'Minimize' : 'Expand'}
+              >
                 {isExpanded ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
               </Button>
             </>
@@ -265,22 +374,21 @@ export const DocumentArtifact: React.FC<DocumentArtifactProps> = ({ title, conte
             className="border-b border-border/20 bg-muted/10 overflow-hidden"
           >
             <div className="px-4 py-3">
-              <h4 className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider mb-2">Contents</h4>
+              <h4 className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider mb-2">Executive Table of Contents</h4>
               <nav className="flex flex-col gap-0.5">
                 {toc.map((item, i) => (
                   <button
                     key={i}
-                    className="text-left text-xs text-muted-foreground/70 hover:text-foreground transition-colors flex items-center gap-1"
+                    className="text-left text-xs text-muted-foreground/80 hover:text-foreground transition-colors flex items-center gap-1.5 py-0.5"
                     style={{ paddingLeft: `${(item.level - 1) * 16}px` }}
                     onClick={() => {
                       setShowTOC(false);
-                      // Scroll to heading
                       const el = document.getElementById(item.id);
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }}
                   >
-                    <ChevronRight className="h-2.5 w-2.5 text-primary/40" />
-                    {item.text}
+                    <ChevronRight className="h-2.5 w-2.5 text-primary/60" />
+                    <span>{item.text}</span>
                   </button>
                 ))}
               </nav>
@@ -289,64 +397,106 @@ export const DocumentArtifact: React.FC<DocumentArtifactProps> = ({ title, conte
         )}
       </AnimatePresence>
 
-      {/* Content */}
-      <div className={`${isExpanded ? 'overflow-y-auto max-h-[calc(100dvh-120px)]' : 'max-h-[min(500px,70dvh)] overflow-y-auto'} custom-scrollbar`}>
+      {/* Content Canvas */}
+      <div className={`${isExpanded ? 'overflow-y-auto max-h-[calc(100dvh-120px)]' : 'max-h-[min(540px,70dvh)] overflow-y-auto'} custom-scrollbar p-2 sm:p-4`}>
         {isEditing ? (
           <textarea
             value={editedContent}
             onChange={(e) => setEditedContent(e.target.value)}
-            className="w-full min-h-[300px] p-6 bg-transparent text-sm text-foreground font-mono leading-relaxed resize-y focus:outline-none focus:ring-1 focus:ring-primary/30 rounded-b-xl"
+            className="w-full min-h-[340px] p-6 bg-card text-sm text-foreground font-mono leading-relaxed resize-y focus:outline-none focus:ring-1 focus:ring-primary/40 rounded-xl border border-border/30"
             autoFocus
           />
         ) : activeView === 'raw' ? (
-          <pre className="p-6 text-xs font-mono text-muted-foreground/80 whitespace-pre-wrap leading-relaxed">
+          <pre className="p-6 text-xs font-mono text-muted-foreground/90 whitespace-pre-wrap leading-relaxed bg-card/60 rounded-xl border border-border/30">
             {editedContent}
           </pre>
         ) : (
-          <div ref={docRef} className="px-4 py-4 sm:px-6"><div className="bg-white dark:bg-neutral-900 border border-border/40 rounded-sm shadow-md px-6 py-8 sm:px-10 max-w-[8.5in] mx-auto">
-            {/* Document page styling */}
-            <div className={DOCUMENT_PROSE_CLASS}>
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  h1: ({ children }) => <h1 id={String(children).toLowerCase().replace(/[^\w]+/g, '-')}>{children}</h1>,
-                  h2: ({ children }) => <h2 id={String(children).toLowerCase().replace(/[^\w]+/g, '-')}>{children}</h2>,
-                  h3: ({ children }) => <h3 id={String(children).toLowerCase().replace(/[^\w]+/g, '-')}>{children}</h3>,
-                  // Task list support
-                  li: ({ children, ...props }: any) => {
-                    const text = String(children);
-                    if (text.startsWith('☐ ') || text.startsWith('☑ ')) {
-                      const checked = text.startsWith('☑');
-                      return (
-                        <li className="flex items-start gap-2 list-none -ml-5" {...props}>
-                          <span className={`mt-1 w-4 h-4 rounded border flex items-center justify-center text-[10px] ${
-                            checked ? 'bg-primary/20 border-primary/40 text-primary' : 'border-border/40'
-                          }`}>
-                            {checked && '✓'}
-                          </span>
-                          <span className={checked ? 'line-through opacity-60' : ''}>{text.slice(2)}</span>
-                        </li>
-                      );
-                    }
-                    return <li {...props}>{children}</li>;
-                  },
-                }}
-              >
-                {editedContent}
-              </ReactMarkdown>
-            </div>
-            </div>
+          <div ref={docRef} className="max-w-[8.5in] mx-auto">
+            {/* Sheet view container or standard container */}
+            <div className={`bg-white dark:bg-neutral-900 border border-neutral-200/90 dark:border-neutral-800 rounded-sm shadow-xl px-6 py-8 sm:px-12 sm:py-12 ${
+              viewMode === 'sheet' ? 'min-h-[11in] shadow-2xl relative' : ''
+            }`}>
+              {/* Optional Cover Page Mock */}
+              {includeCover && (
+                <div className="mb-10 pb-8 border-b-2 border-primary/20">
+                  <div className="inline-block px-2.5 py-0.5 mb-3 bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider rounded-md">
+                    {type === 'report' ? 'Executive Report' : type === 'proposal' ? 'Strategic Proposal' : 'Official Document'}
+                  </div>
+                  <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-50 mb-2">
+                    {title}
+                  </h1>
+                  <p className="text-sm text-neutral-500 dark:text-neutral-400 italic mb-6">
+                    Autonomous Intelligence Synthesis &bull; Client-Ready Formulation
+                  </p>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 bg-neutral-50 dark:bg-neutral-800/60 rounded-lg border border-neutral-200 dark:border-neutral-700 text-xs">
+                    <div><span className="block text-[9px] uppercase font-bold text-neutral-400">Author</span><span className="font-semibold text-neutral-800 dark:text-neutral-200">ShadowTalk AI</span></div>
+                    <div><span className="block text-[9px] uppercase font-bold text-neutral-400">Date</span><span className="font-semibold text-neutral-800 dark:text-neutral-200">{new Date().toLocaleDateString()}</span></div>
+                    <div><span className="block text-[9px] uppercase font-bold text-neutral-400">Classification</span><span className="font-semibold text-neutral-800 dark:text-neutral-200">Confidential</span></div>
+                    <div><span className="block text-[9px] uppercase font-bold text-neutral-400">Scope</span><span className="font-semibold text-neutral-800 dark:text-neutral-200">{words.toLocaleString()} words</span></div>
+                  </div>
+                </div>
+              )}
 
-            {/* Document footer */}
-            <div className="mt-8 pt-4 border-t border-border/20 flex items-center justify-between text-[10px] text-muted-foreground/30 font-mono">
-              <span>Generated by ShadowTalk AI</span>
-              <span>{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+              {/* Document Markdown Body */}
+              <div className={DOCUMENT_PROSE_CLASS}>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    h1: ({ children }) => <h1 id={String(children).toLowerCase().replace(/[^\w]+/g, '-')}>{children}</h1>,
+                    h2: ({ children }) => <h2 id={String(children).toLowerCase().replace(/[^\w]+/g, '-')}>{children}</h2>,
+                    h3: ({ children }) => <h3 id={String(children).toLowerCase().replace(/[^\w]+/g, '-')}>{children}</h3>,
+                    blockquote: ({ children }) => (
+                      <blockquote className="border-l-4 border-primary bg-primary/5 px-4 py-2.5 rounded-r-lg not-italic text-sm text-foreground/90 my-4 shadow-sm">
+                        {children}
+                      </blockquote>
+                    ),
+                    table: ({ children }) => (
+                      <div className="overflow-x-auto my-6 border border-border/40 rounded-lg shadow-sm">
+                        <table className="w-full text-left border-collapse text-xs sm:text-sm">{children}</table>
+                      </div>
+                    ),
+                    th: ({ children }) => (
+                      <th className="bg-neutral-900 text-white dark:bg-neutral-800 px-3.5 py-2.5 font-semibold text-xs">{children}</th>
+                    ),
+                    td: ({ children }) => (
+                      <td className="border-t border-border/30 px-3.5 py-2 text-foreground/80">{children}</td>
+                    ),
+                    li: ({ children, ...props }: any) => {
+                      const text = String(children);
+                      if (text.startsWith('☐ ') || text.startsWith('☑ ') || text.startsWith('[ ] ') || text.startsWith('[x] ')) {
+                        const checked = text.startsWith('☑') || text.startsWith('[x]');
+                        const cleanText = text.replace(/^(?:☐|☑|\[[ xX]\])\s*/, '');
+                        return (
+                          <li className="flex items-start gap-2 list-none -ml-4 my-1.5" {...props}>
+                            <span className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center text-[10px] font-bold ${
+                              checked ? 'bg-primary text-primary-foreground border-primary' : 'border-neutral-400 bg-background'
+                            }`}>
+                              {checked && '✓'}
+                            </span>
+                            <span className={checked ? 'line-through opacity-60' : ''}>{cleanText}</span>
+                          </li>
+                        );
+                      }
+                      return <li {...props}>{children}</li>;
+                    },
+                  }}
+                >
+                  {editedContent}
+                </ReactMarkdown>
+              </div>
+
+              {/* Running Footer Simulation */}
+              <div className="mt-12 pt-4 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between text-[10px] text-neutral-400 font-mono">
+                <span>Generated by ShadowTalk AI Intelligence</span>
+                <span>Page 1 of 1</span>
+                <span>Strictly Confidential</span>
+              </div>
             </div>
           </div>
         )}
       </div>
 
-      {/* Fullscreen overlay backdrop */}
+      {/* Fullscreen backdrop */}
       {isExpanded && (
         <div 
           className="fixed inset-0 bg-background/80 backdrop-blur-sm -z-10" 
@@ -357,9 +507,31 @@ export const DocumentArtifact: React.FC<DocumentArtifactProps> = ({ title, conte
   );
 };
 
-// Detect if AI response contains a document artifact
+// Detect if AI response contains a document artifact.
+// STRICT mode (audit fix): content must be 800+ chars AND contain explicit
+// document structure markers. This stops casual AI responses from being
+// auto-detected as documents and triggering the document-artifact UI
+// (which can be exported as PDF).
+//
+// To force a document, use the /doc or /draft slash command — that sets
+// toolExecution.tool = 'document_generator' which bypasses this check.
 export function detectDocumentArtifact(content: string): { isDocument: boolean; title: string; type: DocumentArtifactProps['type']; documentContent: string } | null {
-  if (!content || content.length < 200) return null;
+  if (!content || content.length < 800) return null;
+
+  // Completion verification: if the content ends mid-sentence (no terminal
+  // punctuation or markdown heading), treat it as incomplete and don't
+  // auto-detect as a document. This stops half-finished AI responses from
+  // being exported as incomplete PDFs.
+  const trimmedEnd = content.trimEnd();
+  const lastChar = trimmedEnd.slice(-1);
+  const last5 = trimmedEnd.slice(-5).toLowerCase();
+  const looksComplete =
+    /[.!?]/.test(lastChar) ||           // ends with punctuation
+    /```$/.test(trimmedEnd) ||          // ends with code block close
+    /^#{1,6}\s/.test(trimmedEnd.split("\n").pop() || "") ||  // ends with heading
+    last5.includes("---") ||            // ends with horizontal rule
+    last5.includes("***");
+  if (!looksComplete) return null;
 
   const documentPatterns: Array<{ regex: RegExp; type: DocumentArtifactProps['type']; titleExtractor: (match: RegExpMatchArray, content: string) => string }> = [
     {
@@ -435,7 +607,7 @@ export function detectDocumentArtifact(content: string): { isDocument: boolean; 
   }
 
   const headerCount = (content.match(/^#{1,3}\s+/gm) || []).length;
-  if (headerCount >= 3 && content.length > 500) {
+  if (headerCount >= 3 && content.length > 400) {
     const titleMatch = content.match(/^#\s+(.+?)(?:\n|$)/m);
     return {
       isDocument: true,

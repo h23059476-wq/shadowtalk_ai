@@ -33,7 +33,7 @@ export const PreferencesTab = () => {
     <SettingsStagger className="space-y-6">
       <AutoImproveInsights />
 
-      <Card className="glass border-border/50">
+      <Card className="card-glass border-border/50">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Settings className="h-5 w-5 text-primary" /> Adaptive learning
@@ -58,7 +58,7 @@ export const PreferencesTab = () => {
       </Card>
 
       {/* Appearance */}
-      <Card className="glass border-border/50">
+      <Card className="card-glass border-border/50">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Palette className="h-5 w-5 text-primary" /> Appearance
@@ -130,7 +130,7 @@ export const PreferencesTab = () => {
       </Card>
 
       {/* Language & Region */}
-      <Card className="glass border-border/50">
+      <Card className="card-glass border-border/50">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Globe className="h-5 w-5 text-primary" /> Language & Region

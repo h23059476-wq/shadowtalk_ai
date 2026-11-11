@@ -100,7 +100,7 @@ const useIntegrityHash = () => {
 
   useEffect(() => {
     const computeHash = async () => {
-      const policyText = `ShadowTalk Privacy Architecture v2.0 — Client-side AES-256-GCM encryption, PBKDF2 key derivation, optional WebAuthn biometric binding, optional offline AI inference`;
+      const policyText = `ShadowTalk Privacy Architecture v2.0 — Client-side AES-256-GCM encryption, PBKDF2 key derivation, optional WebAuthn biometric binding, optional AI inference`;
       const encoder = new TextEncoder();
       const data = encoder.encode(policyText + new Date().toISOString().slice(0, 10));
       const hashBuffer = await crypto.subtle.digest("SHA-256", data);
@@ -221,8 +221,8 @@ const architectureGuarantees = [
   {
     icon: Database,
     title: "Optional Local-First Mode",
-    description: "AI models and knowledge graphs can run on your device when you opt in to offline mode",
-    proof: "IndexedDB for persistence. Web Workers for computation. Offline AI requires explicit user opt-in to download models.",
+    description: "AI models and knowledge graphs can run on your device when you opt in to mode",
+    proof: "IndexedDB for persistence. Web Workers for computation. AI requires explicit user opt-in to download models.",
   },
   {
     icon: Shield,
@@ -238,7 +238,7 @@ const architectureGuarantees = [
   },
   {
     icon: Lock,
-    title: "Stealth Vault Encryption",
+    title: "Encrypted Storage",
     description: "Your secrets are encrypted before they touch any server — only your master password can decrypt them",
     proof: "PBKDF2 (SHA-256, 600k iterations) → AES-256-GCM. IV and salt stored alongside ciphertext. Key never transmitted.",
   },
@@ -269,11 +269,10 @@ const TrustPage = ({ embedded = false }: { embedded?: boolean }) => {
           </div>
           
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight">
-            Privacy Proof Center
+            Your Data Stays Yours
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            Every claim is verifiable. Open your browser's DevTools and confirm each proof yourself. 
-            We don't ask for trust — we provide <span className="text-primary font-semibold">cryptographic evidence</span>.
+            Encrypted vault and optional on-device mode keep sensitive work truly local. Cloud chat sends prompts to AI providers via encrypted TLS.
           </p>
 
           {/* Live integrity hash */}
@@ -368,10 +367,10 @@ const TrustPage = ({ embedded = false }: { embedded?: boolean }) => {
               />
               <ProofCard
                 icon={Cpu}
-                title="Service Worker (Offline AI)"
-                description="Browser supports offline operation via service workers"
+                title="Service Worker (AI)"
+                description="Browser supports operation via service workers"
                 status={proofs.serviceWorker}
-                technical="'serviceWorker' in navigator → ✓ Can intercept network, serve cached AI models offline."
+                technical="Enterprise-grade architecture for maximum uptime and security."
                 delay={0.2}
               />
               <ProofCard
@@ -491,7 +490,7 @@ const TrustPage = ({ embedded = false }: { embedded?: boolean }) => {
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-primary/10 text-primary">WE CAN'T READ IT</span>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  <DataFlowNode icon={Lock} label="Stealth Vault" type="encrypted" delay={0.3} />
+                  <DataFlowNode icon={Lock} label="Encrypted Storage" type="encrypted" delay={0.3} />
                   <DataFlowNode icon={Database} label="Business Memory" type="encrypted" delay={0.35} />
                   <DataFlowNode icon={Shield} label="Vault Connections" type="encrypted" delay={0.4} />
                   <DataFlowNode icon={Server} label="Sync Queue" type="encrypted" delay={0.45} />
@@ -508,7 +507,7 @@ const TrustPage = ({ embedded = false }: { embedded?: boolean }) => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   <DataFlowNode icon={Eye} label="Browsing History" type="none" delay={0.5} />
                   <DataFlowNode icon={Globe} label="IP-based Tracking" type="none" delay={0.55} />
-                  <DataFlowNode icon={Server} label="Conversation Logs" type="none" delay={0.6} />
+                  <DataFlowNode icon={Server} label="Conversation Logs — Not persisted by ShadowTalk (prompts transit via encrypted TLS to AI providers)" type="none" delay={0.6} />
                   <DataFlowNode icon={Cpu} label="Telemetry Data" type="none" delay={0.65} />
                 </div>
               </div>

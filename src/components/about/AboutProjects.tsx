@@ -4,7 +4,7 @@ import { ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 
 const projects = [
-  { title: "ShadowTalk AI", desc: "AI chatbot with optional offline mode, multi-model support, and privacy-focused architecture.", badge: "Founder & Lead Developer", status: "Live" },
+  { title: "ShadowTalk AI", desc: "Agentic AI workspace with multi-model support, E2EE chat, and deep research pipelines.", badge: "Founder & Lead Developer", status: "Live" },
   { title: "SocialSync", desc: "AI-powered social media automation hub serving 23+ businesses with autonomous content distribution.", badge: "Architect & Creator", status: "Live" },
   { title: "ShadowVault", desc: "Client-side encrypted storage with local-first data management and cross-device sync.", badge: "Lead Engineer", status: "Beta" },
   { title: "Offline LLM Engine", desc: "On-device large language model runtime enabling AI inference without internet (user opt-in).", badge: "Core Developer", status: "Alpha" },

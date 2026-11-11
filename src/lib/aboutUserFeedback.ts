@@ -78,7 +78,6 @@ export const ABOUT_MARQUEE_QUOTES = [
   "It's very nice.. You made it..?",
   "Everything was heavy and smooth — 5/5",
   "Built by Zain Ahmed — a first-year student, no industry experience.",
-  "Google #1 for ShadowTalk AI · Built in Karachi 🇵🇰",
   "An AI engineer said: carry on, reach out if you need help.",
   "Privacy-first AI for people who take their data seriously.",
 ];

@@ -1,29 +1,14 @@
-import type { MissionPlanStep } from "@/lib/see/types";
+/**
+ * Strategy Agent shared types.
+ */
 
 export interface BusinessIdea {
   name: string;
-  description: string;
-  location: string;
+  description?: string;
   industry: string;
-  targetMarket: string;
-  initialInvestment: string;
-}
-
-export interface ResearchData {
-  competitors: Array<{ name: string; marketShare: number; pricing: string }>;
-  regulations: string[];
-  marketTrends: string[];
-  costs: Array<{ item: string; cost: number }>;
-  opportunities: string[];
-  threats: string[];
-  sources: Array<{ title: string; url: string; verified?: boolean }>;
-}
-
-export interface FinancialProjection {
-  month: string;
-  revenue: number;
-  expenses: number;
-  profit: number;
+  location: string;
+  targetMarket?: string;
+  initialInvestment?: string;
 }
 
 export interface SWOTData {
@@ -33,33 +18,68 @@ export interface SWOTData {
   threats: string[];
 }
 
+export interface Competitor {
+  name: string;
+  marketShare: number;
+  pricing: string;
+  strengths?: string;
+  weaknesses?: string;
+}
+
+export interface CostItem {
+  item: string;
+  cost: number;
+  notes?: string;
+}
+
+export interface FinancialProjection {
+  month: string;
+  revenue: number;
+  expenses: number;
+  profit: number;
+}
+
+export interface StrategySource {
+  title: string;
+  url: string;
+}
+
+export interface StrategyResearch {
+  competitors: Competitor[];
+  marketTrends: string[];
+  regulations: string[];
+  costs: CostItem[];
+  opportunities: string[];
+  threats: string[];
+  sources: StrategySource[];
+}
+
 export interface StrategyResult {
   executiveSummary: string;
-  research: ResearchData;
   swot: SWOTData;
+  research: StrategyResearch;
   financialProjections: FinancialProjection[];
   recommendations: string[];
   riskAssessment: string;
   implementationPlan: string[];
 }
 
-export type StrategyRunnerPhase =
+export type StrategyStepStatus = "pending" | "running" | "completed" | "failed";
+
+export interface StrategyPlanStep {
+  id: string;
+  action: string;
+  tool_name: string;
+  status: StrategyStepStatus;
+  result?: string | null;
+  proof?: { sources?: StrategySource[] } | null;
+}
+
+export type StrategyPhase =
   | "idle"
   | "planning"
   | "executing"
   | "synthesizing"
   | "complete"
-  | "failed";
-
-export type StrategyPlanStep = MissionPlanStep;
-
-export interface StrategyReportRow {
-  id: string;
-  title: string;
-  business_idea: BusinessIdea;
-  result: StrategyResult | null;
-  plan_steps: StrategyPlanStep[];
-  status: string;
-  used_fallback: boolean;
-  created_at: string;
-}
+  | "failed"
+  | "error";

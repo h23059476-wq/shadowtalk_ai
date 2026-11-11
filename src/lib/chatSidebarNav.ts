@@ -3,14 +3,11 @@ import {
   Home,
   MessageSquare,
   Brain,
-  Network,
-  FileText,
-  Radio,
-  Workflow,
-  Code,
-  Plug,
+  Sparkles,
+  BookOpen,
+  User,
   Settings,
-  Clapperboard,
+  ShieldCheck,
 } from "lucide-react";
 
 export interface ChatSidebarNavItem {
@@ -20,20 +17,21 @@ export interface ChatSidebarNavItem {
   to: string;
   end?: boolean;
   section: "workspace" | "explore";
+  badge?: string;
 }
 
 export const CHAT_SIDEBAR_NAV: ChatSidebarNavItem[] = [
+  // Workspace section
+  { label: "Chatbot", icon: MessageSquare, to: "/chatbot", end: true, section: "workspace" },
+  { label: "ProofLoop", shortLabel: "ProofLoop", icon: ShieldCheck, to: "/proofloop", section: "workspace", badge: "VERIFIED" },
   { label: "Home", icon: Home, to: "/home", end: true, section: "workspace" },
-  { label: "Chat", icon: MessageSquare, to: "/chatbot", end: true, section: "workspace" },
-  { label: "Execute", shortLabel: "Exec", icon: Brain, to: "/execute", section: "explore" },
-  { label: "Research", icon: Network, to: "/research", section: "explore" },
-  { label: "Workspace", icon: FileText, to: "/workspace", section: "explore" },
-  { label: "Code IDE", icon: Code, to: "/ide", section: "explore" },
-  { label: "Video Studio", shortLabel: "Video", icon: Clapperboard, to: "/video-studio", section: "explore" },
-  { label: "Insights", icon: Radio, to: "/insights", section: "explore" },
-  { label: "Automations", icon: Workflow, to: "/workspace?tab=automate", section: "explore" },
-  { label: "Integrations", icon: Plug, to: "/developers", section: "explore" },
+
+  // Explore section — only real pages
+  { label: "Shadow Twin", icon: Brain, to: "/shadow-twin", section: "explore" },
   { label: "Settings", icon: Settings, to: "/settings", section: "explore" },
+  { label: "Pricing", icon: Sparkles, to: "/pricing", section: "explore" },
+  { label: "Docs", icon: BookOpen, to: "/docs", section: "explore" },
+  { label: "Founder", icon: User, to: "/founder", section: "explore" },
 ];
 
 export const CHAT_SIDEBAR_WIDTH_EXPANDED = 268;

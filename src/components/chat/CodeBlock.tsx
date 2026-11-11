@@ -128,10 +128,10 @@ export const CodeBlock = ({ code, language, filename, onOpenCanvas, onOpenIDE, o
       initial={{ opacity: 0, y: 4 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
-      className="relative rounded-xl overflow-hidden my-4 max-w-full border border-border/30 bg-card/80 backdrop-blur-sm shadow-lg shadow-black/5 group/code"
+      className="relative rounded-xl overflow-hidden my-4 max-w-full border border-white/10 bg-black/40 backdrop-blur-3xl shadow-2xl shadow-black/50 group/code"
     >
       {/* Premium header */}
-      <div className="flex items-center justify-between px-3 py-2 border-b border-border/20 bg-muted/30">
+      <div className="flex items-center justify-between px-3 py-2 border-b border-white/10 bg-black/40">
         <div className="flex items-center gap-2">
           {/* macOS-style dots */}
           <div className="flex items-center gap-1.5 mr-1">

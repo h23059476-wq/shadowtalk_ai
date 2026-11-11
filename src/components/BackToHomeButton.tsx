@@ -31,7 +31,7 @@ export function BackToHomeButton({ className }: { className?: string }) {
         type="button"
         variant="outline"
         size="sm"
-        onClick={() => navigate("/")}
+        onClick={() => window.location.assign("/")}
         aria-label="Back to home"
         className={cn(
           "gap-2 rounded-full border-border/60 bg-background/70 backdrop-blur-md shadow-sm",

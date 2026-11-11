@@ -54,6 +54,24 @@ export const useIntelligenceHub = () => {
   const [knowledgeEntries, setKnowledgeEntries] = useState<KnowledgeEntry[]>([]);
   const [streak, setStreak] = useState<UserStreak | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSynthesizing, setIsSynthesizing] = useState(
+    () => localStorage.getItem("shadowtalk_insights_synthesizing") === "true"
+  );
+
+  useEffect(() => {
+    const handleStart = () => setIsSynthesizing(true);
+    const handleFinish = () => {
+      setIsSynthesizing(false);
+      loadAll(); // Reload insights when synthesis is done
+    };
+    
+    window.addEventListener("insights_synthesis_started", handleStart);
+    window.addEventListener("insights_synthesis_finished", handleFinish);
+    return () => {
+      window.removeEventListener("insights_synthesis_started", handleStart);
+      window.removeEventListener("insights_synthesis_finished", handleFinish);
+    };
+  }, []);
 
   // ─── Load all data ───
   const loadAll = useCallback(async () => {
@@ -246,7 +264,7 @@ export const useIntelligenceHub = () => {
 
   return {
     memories, insights, knowledgeEntries, streak,
-    isLoading, unreadInsights,
+    isLoading, isSynthesizing, unreadInsights,
     extractMemories, extractKnowledge, getMemoryContext,
     markInsightRead, togglePinInsight, searchKnowledge,
     deleteMemory, deleteKnowledgeEntry, loadAll,

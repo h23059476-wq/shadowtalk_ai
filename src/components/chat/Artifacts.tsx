@@ -239,7 +239,7 @@ export const extractArtifacts = (content: string): { cleanContent: string; artif
     // Only extract substantial code blocks as artifacts
     if (code.split('\n').length > 5) {
       artifacts.push({
-        id: crypto.randomUUID(),
+        id: (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); })),
         type: 'code',
         title,
         content: code,
@@ -252,7 +252,7 @@ export const extractArtifacts = (content: string): { cleanContent: string; artif
   const htmlRegex = /<html[\s\S]*?<\/html>/gi;
   while ((match = htmlRegex.exec(content)) !== null) {
     artifacts.push({
-      id: crypto.randomUUID(),
+      id: (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); })),
       type: 'html',
       title: 'HTML Preview',
       content: match[0],
@@ -263,7 +263,7 @@ export const extractArtifacts = (content: string): { cleanContent: string; artif
   const svgRegex = /<svg[\s\S]*?<\/svg>/gi;
   while ((match = svgRegex.exec(content)) !== null) {
     artifacts.push({
-      id: crypto.randomUUID(),
+      id: (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); })),
       type: 'svg',
       title: 'SVG Graphic',
       content: match[0],

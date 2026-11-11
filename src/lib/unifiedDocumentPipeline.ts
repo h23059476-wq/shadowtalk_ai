@@ -6,7 +6,6 @@
  */
 
 import {
-  CHAT_FUNCTION_URL,
   streamKimiDocument,
   type KimiDocumentType,
   type KimiLengthType,
@@ -152,25 +151,15 @@ export async function fetchDocumentResearch(
   accessToken: string | null | undefined,
   options?: { signal?: AbortSignal; onChunk?: (text: string) => void },
 ): Promise<string> {
-  const response = await fetch(CHAT_FUNCTION_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken || import.meta.env.VITE_API_KEY}`,
-    },
-    body: stringifyChatBody({
-      deepResearch: true,
-      researchQuery: query.slice(0, 500),
-    }),
-    signal: options?.signal,
-  });
-
-  if (!response.ok) {
-    const errText = await response.text().catch(() => "");
-    throw new Error(errText || `Research failed (${response.status})`);
-  }
-
-  return collectSseContent(response, options?.onChunk);
+  const result = await turboComplete(
+    "You are a deep research agent. Provide a cited research brief with references.",
+    query.slice(0, 500),
+    {
+      signal: options?.signal,
+      onDelta: options?.onChunk ? (accumulated) => options.onChunk!(accumulated) : undefined,
+    }
+  );
+  return result.content || "";
 }
 
 function buildDraftContext(
@@ -232,7 +221,7 @@ export async function runUnifiedDocumentPipeline(
         temperature: plan.tone === 'creative' ? 0.7 : 0.5,
       },
     );
-    if (turboResult.source !== 'fallback' && turboResult.content) {
+    if (turboResult.content) {
       content = turboResult.content;
       console.log('[forge] draft via Turbo', turboResult.source, `${turboResult.totalMs?.toFixed(0)}ms`);
     }

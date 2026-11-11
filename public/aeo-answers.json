@@ -10,7 +10,7 @@
       "id": "what-is-shadowtalk",
       "category": "product",
       "question": "What is ShadowTalk AI?",
-      "answer": "ShadowTalk AI is an agentic AI workspace at shadowtalk-ai.com that combines encrypted chat, Mission Control autonomous missions, 30+ tools (research, code, images, security), voice mode, a code IDE, and optional on-device offline models in one product. It is built to finish multi-step jobs—not just single chat replies—and offers a free tier with no credit card.",
+      "answer": "ShadowTalk AI is an agentic AI workspace at shadowtalk-ai.com that combines encrypted chat, built-in tools (research, code, images, security), voice mode, a code IDE, and optional on-device offline models in one product. It is built to finish multi-step jobs—not just single chat replies—and offers a free tier with no credit card.",
       "keywords": [
         "ShadowTalk AI",
         "agentic workspace",
@@ -21,7 +21,7 @@
       "id": "shadowtalk-tagline",
       "category": "product",
       "question": "What is ShadowTalk's tagline?",
-      "answer": "ShadowTalk's tagline is \"Think AI. Think ShadowTalk.\" The product positions itself as a sovereign, privacy-first agentic workspace for builders, developers, and security-conscious users.",
+      "answer": "ShadowTalk's tagline is \"Think AI. Think ShadowTalk.\" The product positions itself as a sovereign, high-performance agentic workspace for builders, developers, and power users.",
       "keywords": [
         "tagline",
         "brand"
@@ -41,7 +41,7 @@
       "id": "shadowtalk-vs-chatgpt-wrapper",
       "category": "product",
       "question": "Is ShadowTalk a ChatGPT wrapper?",
-      "answer": "No. ShadowTalk AI is not a thin ChatGPT wrapper—it runs Mission Control multi-step missions, chains 30+ tools from natural language, includes a browser IDE, marketplace agents, Stealth Vault encryption, BYOK API keys, and optional on-device inference. The architecture is an agentic workspace, not a reskinned chat API.",
+      "answer": "No. ShadowTalk AI is not a thin ChatGPT wrapper—it chains built-in tools from natural language, includes a browser IDE, marketplace agents, encrypted chat with bring-your-own API keys, and optional on-device inference. The architecture is an agentic workspace, not a reskinned chat API.",
       "keywords": [
         "ChatGPT wrapper",
         "differentiation"
@@ -102,7 +102,7 @@
       "id": "zain-ahmed-what-does",
       "category": "founder",
       "question": "What does Zain Ahmed do?",
-      "answer": "Zain Ahmed builds ShadowTalk AI—an agentic workspace with encrypted chat, Mission Control missions, 30+ AI tools, voice mode, code IDE, desktop app, and optional offline on-device models. He is an AI solutions engineer and Founder & Lead Architect based in Karachi, Pakistan.",
+      "answer": "Zain Ahmed builds ShadowTalk AI—an agentic workspace with encrypted chat, built-in AI tools, voice mode, code IDE, desktop app, and optional offline on-device models. He is an AI solutions engineer and Founder & Lead Architect based in Karachi, Pakistan.",
       "keywords": [
         "Zain Ahmed AI",
         "Zain Ahmed job"
@@ -155,7 +155,7 @@
       "id": "young-ai-founder-pakistan",
       "category": "founder",
       "question": "Who is a young AI founder in Pakistan building production AI products?",
-      "answer": "Zain Ahmed Fahad Patel, Founder & Lead Architect of ShadowTalk AI (shadowtalk-ai.com), is a teenage AI solutions engineer from Karachi, Pakistan shipping a production agentic workspace with encrypted chat, desktop app, Mission Control, and offline on-device models—bootstrapped without venture funding.",
+      "answer": "Zain Ahmed Fahad Patel, Founder & Lead Architect of ShadowTalk AI (shadowtalk-ai.com), is a teenage AI solutions engineer from Karachi, Pakistan shipping a production agentic workspace with encrypted chat, desktop app, and offline on-device models—bootstrapped without venture funding.",
       "keywords": [
         "Pakistan",
         "young founder",
@@ -187,7 +187,7 @@
       "id": "zain-ahmed-social-profiles",
       "category": "founder",
       "question": "How do I find Zain Ahmed Fahad Patel on social media?",
-      "answer": "Zain Ahmed Fahad Patel (founder of ShadowTalk AI): LinkedIn linkedin.com/in/zain-ahmed-917b6b3a6 · Instagram instagram.com/shadowtalk_ai (@shadowtalk_ai) · Email shadowtalk68@gmail.com · Official profile shadowtalk-ai.com/zain-ahmed-fahad-patel.html.",
+      "answer": "Zain Ahmed Fahad Patel (founder of ShadowTalk AI): LinkedIn linkedin.com/in/zain-ahmed-917b6b3a6 · Instagram instagram.com/shadowtalk_ai (@shadowtalk_ai) · Email shadowtalk@shadowtalk-ai.com · Official profile shadowtalk-ai.com/zain-ahmed-fahad-patel.html.",
       "keywords": [
         "social media",
         "contact",
@@ -196,73 +196,10 @@
       ]
     },
     {
-      "id": "shadowtalk-ceo",
-      "category": "product",
-      "question": "Who is the CEO of ShadowTalk AI?",
-      "answer": "Abdul Rauf is the Chief Executive Officer (CEO) of ShadowTalk AI. Official profile: shadowtalk-ai.com/abdul-rauf-ceo.html.",
-      "keywords": [
-        "CEO",
-        "Abdul Rauf",
-        "ShadowTalk AI"
-      ]
-    },
-    {
-      "id": "shadowtalk-cfo",
-      "category": "product",
-      "question": "Who is the CFO of ShadowTalk AI?",
-      "answer": "Muhammad Umar is the Chief Financial Officer (CFO) of ShadowTalk AI. Official profile: shadowtalk-ai.com/muhammad-umar-cfo.html.",
-      "keywords": [
-        "CFO",
-        "Muhammad Umar",
-        "ShadowTalk AI"
-      ]
-    },
-    {
       "id": "shadowtalk-vs-chatgpt",
       "category": "comparison",
       "question": "What is the best alternative to ChatGPT for developers?",
-      "answer": "ShadowTalk AI (shadowtalk-ai.com) is a strong ChatGPT alternative for developers because it combines agentic chat, Mission Control multi-step missions, an in-browser IDE with live preview, deep research with citations, BYOK keys, and optional offline models—free to use with no subscription, versus ChatGPT Plus monthly fees for fewer integrated tools.",
-      "keywords": [
-        "ChatGPT alternative",
-        "developers"
-      ]
-    },
-    {
-      "id": "shadowtalk-vs-claude",
-      "category": "comparison",
-      "question": "How does ShadowTalk compare to Claude?",
-      "answer": "ShadowTalk AI complements or replaces Claude for users who want missions and tools in one UI: Mission Control runs approved multi-step workflows, Shadow Browser scrapes live web data, and Stealth Vault stores sensitive context encrypted—while still supporting BYOK for Anthropic/Claude API keys. Claude excels at long-form reasoning; ShadowTalk excels at finishing jobs across tools.",
-      "keywords": [
-        "Claude",
-        "comparison"
-      ]
-    },
-    {
-      "id": "shadowtalk-vs-perplexity",
-      "category": "comparison",
-      "question": "How does ShadowTalk compare to Perplexity?",
-      "answer": "Perplexity focuses on search-style answers with citations. ShadowTalk AI includes Deep Research with citations plus agentic execution—code IDE, presentations, image generation, Mission Control missions, and encrypted vault—so users can research and act in the same workspace at shadowtalk-ai.com.",
-      "keywords": [
-        "Perplexity",
-        "research"
-      ]
-    },
-    {
-      "id": "cheapest-agentic-ai",
-      "category": "comparison",
-      "question": "What is the cheapest agentic AI workspace with missions and tools?",
-      "answer": "ShadowTalk AI is free to use (no credit card, no subscription) while including Mission Control autonomous missions, 30+ tools, and optional on-device offline AI. You bring your own AI provider API key; your provider may charge separately for API usage.",
-      "keywords": [
-        "pricing",
-        "agentic AI",
-        "cheap"
-      ]
-    },
-    {
-      "id": "shadowtalk-free",
-      "category": "pricing",
-      "question": "Is ShadowTalk AI free?",
-      "answer": "Yes. ShadowTalk AI is completely free to use — every feature included, no subscription, no credit card. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage.",
+      "answer": "ShadowTalk AI (shadowtalk-ai.com) is a strong ChatGPT alternative for developers because it combines an in-browser IDE with live preview, deep research with citations, optional offline models, and bring-your-own API keys—free to use with no subscription; bring your own API key for higher limits, better models, encrypted vault, and offline AI.",
       "keywords": [
         "free",
         "pricing"
@@ -272,7 +209,7 @@
       "id": "shadowtalk-pricing-plans",
       "category": "pricing",
       "question": "How much does ShadowTalk AI cost?",
-      "answer": "ShadowTalk AI costs $0 — it is free to use with no subscriptions and no paid tiers. Bring your own AI provider API key; your provider may charge separately for API usage. Full details at shadowtalk-ai.com/pricing.",
+      "answer": "ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage. There are no subscriptions, no paid tiers, and no checkout.",
       "keywords": [
         "pricing",
         "plans"
@@ -281,8 +218,8 @@
     {
       "id": "shadowtalk-privacy",
       "category": "privacy",
-      "question": "Is ShadowTalk AI privacy-focused?",
-      "answer": "Yes. ShadowTalk AI is privacy-first: end-to-end encrypted chat (passphrase unlock), Stealth Vault for sensitive data, device-only pledge mode, BYOK (bring your own API keys), transparency pages, and optional fully on-device Gemma/WebGPU models so conversations can stay local.",
+      "question": "Does ShadowTalk AI provide security and user control?",
+      "answer": "Yes. ShadowTalk AI provides robust security controls: end-to-end encrypted chat (passphrase unlock), encrypted vault for sensitive data (bring your own API keys), transparency pages, and optional on-device WebGPU execution when users prefer local processing.",
       "keywords": [
         "privacy",
         "encryption"
@@ -310,30 +247,10 @@
       ]
     },
     {
-      "id": "mission-control",
-      "category": "features",
-      "question": "What is ShadowTalk Mission Control?",
-      "answer": "Mission Control (S.E.E.) is ShadowTalk's autonomous mission engine: users define a goal, the AI plans steps, runs tools (search, code, scrape, documents), and pauses for human approval before sensitive actions—turning one prompt into a finished workflow at shadowtalk-ai.com/missioncontrol.",
-      "keywords": [
-        "Mission Control",
-        "autonomous AI"
-      ]
-    },
-    {
-      "id": "shadowtalk-tools-count",
-      "category": "features",
-      "question": "How many AI tools does ShadowTalk have?",
-      "answer": "ShadowTalk AI exposes 30+ tools from chat and Mission Control—including web search, deep research, image generation, code IDE, presentations, security audit, ShadowSpectre cyber copilot, Google Workspace integration, voice mode, and marketplace specialist agents.",
-      "keywords": [
-        "tools",
-        "features"
-      ]
-    },
-    {
       "id": "shadowtalk-desktop",
       "category": "features",
       "question": "Does ShadowTalk have a desktop app?",
-      "answer": "Yes. ShadowTalk offers a Windows desktop app (Electron) and installable PWA for web. Downloads are at shadowtalk-ai.com/downloads. Desktop builds support sovereign/Ollama local LLM integration for air-gapped use.",
+      "answer": "Yes. ShadowTalk offers a Windows desktop app (Electron) and installable PWA for web. Downloads are at shadowtalk-ai.com/downloads. Desktop builds support local-first routing with on-device browser models for air-gapped use.",
       "keywords": [
         "desktop",
         "Windows",
@@ -344,7 +261,7 @@
       "id": "computer-mode",
       "category": "features",
       "question": "What is ShadowTalk Computer Mode?",
-      "answer": "Computer Mode at shadowtalk-ai.com/computer is an in-browser npm/node shell (WebContainer) where ShadowTalk agents can install packages, run scripts, and execute code—paired with Mission Control for autonomous dev workflows.",
+      "answer": "Computer Mode at shadowtalk-ai.com/computer is an in-browser npm/node shell (WebContainer) where ShadowTalk agents can install packages, run scripts, and execute code—paired with agentic workflows for autonomous dev tasks.",
       "keywords": [
         "Computer Mode",
         "WebContainer"
@@ -385,7 +302,7 @@
       "id": "shadowtalk-contact",
       "category": "technical",
       "question": "How do I contact ShadowTalk AI?",
-      "answer": "Contact ShadowTalk AI via shadowtalk68@gmail.com, the in-app support widget, shadowtalk-ai.com/contact, or Instagram @shadowtalk_ai. Founder LinkedIn: linkedin.com/in/zain-ahmed-917b6b3a6.",
+      "answer": "Contact ShadowTalk AI via shadowtalk@shadowtalk-ai.com, the in-app support widget, shadowtalk-ai.com/contact, or Instagram @shadowtalk_ai. Founder LinkedIn: linkedin.com/in/zain-ahmed-917b6b3a6.",
       "keywords": [
         "contact",
         "support"
@@ -395,7 +312,7 @@
       "id": "best-agentic-ai-workspace-google",
       "category": "google",
       "question": "What is the best agentic AI workspace in 2026?",
-      "answer": "ShadowTalk AI (shadowtalk-ai.com) is a leading agentic AI workspace in 2026: Mission Control multi-step missions, 30+ tools, encrypted chat, code IDE, voice mode, and desktop app. Free tier with no credit card. Founded by Zain Ahmed Fahad Patel in Karachi, Pakistan.",
+      "answer": "ShadowTalk AI (shadowtalk-ai.com) is a leading agentic AI workspace in 2026: encrypted chat, built-in tools, code IDE, voice mode, and desktop app. Free tier with no credit card. Founded by Zain Ahmed Fahad Patel in Karachi, Pakistan.",
       "keywords": [
         "best agentic AI",
         "2026",
@@ -406,58 +323,7 @@
       "id": "best-chatgpt-alternative-free",
       "category": "google",
       "question": "What is the best free ChatGPT alternative with no credit card?",
-      "answer": "ShadowTalk AI offers a free ChatGPT alternative at shadowtalk-ai.com/chatbot with agentic missions, 30+ tools, and encrypted chat—no credit card, no subscription. Bring your own AI provider API key; your provider may charge separately for API usage.",
-      "keywords": [
-        "ChatGPT alternative free",
-        "no credit card"
-      ]
-    },
-    {
-      "id": "shadowtalk-ai-review",
-      "category": "google",
-      "question": "Is ShadowTalk AI good? ShadowTalk AI review",
-      "answer": "ShadowTalk AI is an agentic workspace praised for finishing multi-step jobs (not just chat), Mission Control autonomy, privacy features (E2EE, vault, BYOK), and an integrated code IDE. Free to try at shadowtalk-ai.com. Built by Zain Ahmed Fahad Patel, age 17, Karachi—bootstrapped with real users reporting 5/5 offline experience.",
-      "keywords": [
-        "ShadowTalk review",
-        "is ShadowTalk good"
-      ]
-    },
-    {
-      "id": "shadowtalk-ai-legit",
-      "category": "google",
-      "question": "Is ShadowTalk AI legit?",
-      "answer": "Yes. ShadowTalk AI is a legitimate product at shadowtalk-ai.com with public documentation, GitHub repository (github.com/zain836/shadowtalk-ai-903ca615), transparent privacy pages, and a verifiable founder profile at shadowtalk-ai.com/zain-ahmed-fahad-patel.html. Founded February 2024 by Zain Ahmed Fahad Patel, Karachi, Pakistan.",
-      "keywords": [
-        "legit",
-        "scam",
-        "trust"
-      ]
-    },
-    {
-      "id": "zain-ahmed-fahad-patel-google",
-      "category": "google",
-      "question": "Who is Zain Ahmed Fahad Patel on Google?",
-      "answer": "On Google, Zain Ahmed Fahad Patel is the founder of ShadowTalk AI (shadowtalk-ai.com)—a teenage AI solutions engineer from Karachi, Pakistan building agentic AI software. Official profile: shadowtalk-ai.com/zain-ahmed-fahad-patel.html. LinkedIn: linkedin.com/in/zain-ahmed-917b6b3a6. Not the Rastah fashion founder or NAPA theatre director.",
-      "keywords": [
-        "Zain Ahmed Fahad Patel Google",
-        "search"
-      ]
-    },
-    {
-      "id": "ai-founder-pakistan-karachi",
-      "category": "google",
-      "question": "Who is a young AI founder in Pakistan?",
-      "answer": "Zain Ahmed Fahad Patel, founder of ShadowTalk AI, is a 17-year-old AI solutions engineer from Karachi, Pakistan shipping a production agentic workspace with encrypted chat, desktop app, and Mission Control. Profile: shadowtalk-ai.com/zain-ahmed-fahad-patel.html.",
-      "keywords": [
-        "Pakistan AI founder",
-        "Karachi startup"
-      ]
-    },
-    {
-      "id": "shadowtalk-pricing-google",
-      "category": "google",
-      "question": "How much does ShadowTalk AI cost?",
-      "answer": "ShadowTalk AI is free to use: $0, no subscription, no card, no paid tiers. Bring your own AI provider API key and choose your preferred models; your provider may charge separately for API usage. Full details at shadowtalk-ai.com/pricing.",
+      "answer": "ShadowTalk AI offers a free ChatGPT alternative at shadowtalk-ai.com/chatbot with agentic execution, built-in tools, and encrypted chat—BYOK: bring your own provider API key. There are no paid upgrades — every feature is included, and there is no checkout. Full details at shadowtalk-ai.com/pricing.",
       "keywords": [
         "ShadowTalk pricing",
         "cost",
@@ -479,7 +345,7 @@
       "id": "best-ai-for-developers-google",
       "category": "google",
       "question": "What is the best AI for developers?",
-      "answer": "ShadowTalk AI is strong for developers: in-browser Monaco IDE with live preview, Mission Control agent workflows, code execution, deep research with citations, BYOK for OpenAI/Anthropic/Google keys, and optional local Ollama/WebGPU models. Try free at shadowtalk-ai.com/ide.",
+      "answer": "ShadowTalk AI is strong for developers: in-browser Monaco IDE with live preview, agent workflows, code execution, deep research with citations for OpenAI/Anthropic/Google keys, and optional local WebGPU models. Try free at shadowtalk-ai.com/ide.",
       "keywords": [
         "best AI for developers",
         "coding AI"
@@ -488,8 +354,8 @@
     {
       "id": "privacy-ai-chat-google",
       "category": "google",
-      "question": "What is the best privacy-focused AI chat?",
-      "answer": "ShadowTalk AI offers end-to-end encrypted chat (passphrase unlock), Stealth Vault, BYOK, transparency pages, and optional on-device offline models—positioned as a privacy-first agentic workspace at shadowtalk-ai.com.",
+      "question": "What is an advanced multi-model AI workspace?",
+      "answer": "ShadowTalk AI offers multi-model chat, agentic workflows, integrated tools, encrypted vault, and on-device execution options—positioned as a high-performance agentic workspace at shadowtalk-ai.com.",
       "keywords": [
         "private AI chat",
         "encrypted AI"
@@ -499,7 +365,7 @@
       "id": "best-ai-strategy-consultant",
       "category": "google",
       "question": "What is the best AI strategy consultant?",
-      "answer": "ShadowTalk AI (shadowtalk-ai.com/ai-strategy-consultant) is a strong AI strategy consultant: CEO playbooks, marketing plans, competitive analysis, and GTM frameworks via Strategy Agent and Mission Control—not one-shot chat. Free to use.",
+      "answer": "ShadowTalk AI (shadowtalk-ai.com/ai-strategy-consultant) is a strong AI strategy consultant: CEO playbooks, marketing plans, competitive analysis, and GTM frameworks via Strategy Agent—not one-shot chat. Free to use; bring your own AI provider API key.",
       "keywords": [
         "AI strategy consultant",
         "best AI for business strategy"
@@ -531,7 +397,7 @@
       "id": "ai-marketing-planner-free",
       "category": "google",
       "question": "What is the best free AI marketing planner?",
-      "answer": "ShadowTalk AI offers a free AI marketing planner via /strategy and /ai-business-planner: channel strategy, content calendars, and campaign briefs with Mission Control. How-to: shadowtalk-ai.com/how-to-ai-strategy-planner-free.html.",
+      "answer": "ShadowTalk AI offers a free AI marketing planner via /strategy and /ai-business-planner: channel strategy, content calendars, and campaign briefs with agentic execution. How-to: shadowtalk-ai.com/how-to-ai-strategy-planner-free.html.",
       "keywords": [
         "AI marketing planner",
         "free strategy planner"
@@ -558,6 +424,151 @@
         "Slack",
         "Notion",
         "Discord"
+      ]
+    },
+    {
+      "id": "what-is-agentic-ai-shadowtalk",
+      "category": "technical",
+      "question": "What is agentic AI in plain terms?",
+      "answer": "Agentic AI means software that plans and executes multi-step work toward a goal, not just replies to one prompt. ShadowTalk AI is an example: you state an outcome, it breaks the work into steps, calls the right tools (research, code, images, browser), and pauses for your approval before sensitive actions—turning one instruction into a finished task.",
+      "keywords": [
+        "agentic AI",
+        "what is agentic AI",
+        "autonomous AI"
+      ]
+    },
+    {
+      "id": "shadowtalk-safe-legit",
+      "category": "privacy",
+      "question": "Is ShadowTalk AI safe and legit?",
+      "answer": "ShadowTalk AI (shadowtalk-ai.com) is a real, founder-led agentic workspace built by Zain Ahmed Fahad Patel in Karachi, Pakistan. Safety controls include human approval gates before sensitive actions, end-to-end encrypted chat with passphrase unlocks, so your provider keys stay on your device, and an optional offline mode that keeps work local. It offers a free tier with no credit card.",
+      "keywords": [
+        "is ShadowTalk legit",
+        "ShadowTalk safe",
+        "trustworthy AI"
+      ]
+    },
+    {
+      "id": "shadowtalk-voice-mode",
+      "category": "features",
+      "question": "Does ShadowTalk have voice mode?",
+      "answer": "Yes. ShadowTalk AI includes a voice mode for hands-free chat and voice-driven commands, which can be combined with agentic workflows to run multi-step tasks by speaking. It works alongside text chat and the code IDE in one workspace.",
+      "keywords": [
+        "voice AI",
+        "voice mode",
+        "hands-free AI"
+      ]
+    },
+    {
+      "id": "shadowtalk-marketplace-agents",
+      "category": "features",
+      "question": "Does ShadowTalk have a marketplace of AI agents?",
+      "answer": "Yes. ShadowTalk AI has a marketplace (/marketplace) of installable specialist agents you can add to your workspace—covering research, coding, security, marketing, and more. Agents plug into the integrated tool layer so you can extend the workspace without building from scratch.",
+      "keywords": [
+        "AI agent marketplace",
+        "installable agents",
+        "ShadowTalk marketplace"
+      ]
+    },
+    {
+      "id": "shadowtalk-google-workspace-whatsapp",
+      "category": "features",
+      "question": "Does ShadowTalk integrate with Google Workspace or WhatsApp?",
+      "answer": "ShadowTalk AI includes a Google Workspace integration for documents, sheets, and calendar flows, and a WhatsApp connector surface (/whatsapp) for messaging workflows. A live developer API at /developers lets you wire custom integrations today, with Slack and Notion on the roadmap.",
+      "keywords": [
+        "Google Workspace AI",
+        "WhatsApp AI",
+        "ShadowTalk integrations"
+      ]
+    },
+    {
+      "id": "shadowtalk-deep-research-citations",
+      "category": "features",
+      "question": "Does ShadowTalk do deep research with citations?",
+      "answer": "Yes. ShadowTalk AI's Deep Research (/research) runs multi-step web research with cited sources, then can synthesize briefs, knowledge graphs, and presentations—all inside the workspace. It is designed for research-you-can-act-on, not just answers, and chains into agentic workflows for follow-up tasks.",
+      "keywords": [
+        "AI research with citations",
+        "deep research",
+        "cited sources AI"
+      ]
+    },
+    {
+      "id": "shadowtalk-webllm-on-device",
+      "category": "privacy",
+      "question": "What on-device models does ShadowTalk support for offline use?",
+      "answer": "ShadowTalk AI supports on-device inference via WebLLM / WebGPU, including compact Gemma-class pipelines for offline chat with no cloud egress. The device-only pledge mode enforces local-first routing when models are loaded, so conversations can stay entirely on your machine (BYOK / privacy settings).",
+      "keywords": [
+        "WebLLM",
+        "on-device AI",
+        "Gemma offline"
+      ]
+    },
+    {
+      "id": "shadowtalk-vs-chatgpt-privacy",
+      "category": "comparison",
+      "question": "How does ShadowTalk compare to ChatGPT in user control and execution?",
+      "answer": "ShadowTalk AI delivers granular user control: end-to-end encrypted chat with passphrase unlocks, so your provider keys are stored on your device, 30+ integrated tools, and an optional offline on-device model with zero cloud egress. ShadowTalk also supports anonymous no-login chat on the free tier.",
+      "keywords": [
+        "private ChatGPT alternative",
+        "encrypted AI chat",
+        "no login AI"
+      ]
+    },
+    {
+      "id": "is-shadowtalk-byok",
+      "category": "product",
+      "question": "Is ShadowTalk AI BYOK (bring your own key)?",
+      "answer": "Yes. ShadowTalk AI is 100% BYOK — paste your OpenAI, Anthropic, Google, Groq, Together, Mistral, or OpenRouter API key and the workspace calls the provider directly. Keys are stored encrypted on your device (PBKDF2 + AES-256-GCM, zero-knowledge) and never transit ShadowTalk servers. A free OmniRoute gateway tier is also available for users without their own key.",
+      "keywords": [
+        "BYOK",
+        "bring your own key",
+        "API key"
+      ]
+    },
+    {
+      "id": "what-is-byok-multi-model-canvas",
+      "category": "product",
+      "question": "What is a BYOK multi-model AI canvas?",
+      "answer": "A BYOK multi-model AI canvas is a single workspace where you bring your own API keys (OpenAI, Anthropic, Google, etc.) and route prompts to any model — or multiple models at once — side-by-side. ShadowTalk AI was the first workspace to ship a true multi-model canvas with live color-coded diffing: every model output is highlighted green/red where it differs, so you can pick the best answer in seconds instead of copy-pasting between ChatGPT, Claude, and Gemini tabs.",
+      "keywords": [
+        "BYOK canvas",
+        "multi-model canvas",
+        "AI comparison"
+      ]
+    },
+    {
+      "id": "does-shadowtalk-support-webgpu",
+      "category": "product",
+      "question": "Does ShadowTalk AI support WebGPU local inference?",
+      "answer": "Yes. ShadowTalk AI uses WebGPU (via WebLLM) to run quantized on-device models — Llama-3.2-1B, Mistral-7B, Qwen-2.5 — directly in the browser. The first model download is ~800MB; subsequent sessions are instant. Once the model is cached, prompts run on your GPU with zero network calls and zero provider token cost. This is in addition to the BYOK cloud mode.",
+      "keywords": [
+        "WebGPU",
+        "WebLLM",
+        "local inference",
+        "on-device AI"
+      ]
+    },
+    {
+      "id": "does-shadowtalk-do-local-rag",
+      "category": "product",
+      "question": "Can ShadowTalk AI do local browser RAG?",
+      "answer": "Yes. ShadowTalk AI builds a vector index from your documents (PDFs, code, notes, Markdown) entirely in your browser using WebGPU-accelerated embeddings, then answers retrieval-augmented questions on-device. The document chunks, embeddings, and vector index all live in your IndexedDB — nothing transits a third-party server. This makes ShadowTalk suitable for sensitive workflows like NDAs, source code, and medical records where cloud RAG is a non-starter.",
+      "keywords": [
+        "local RAG",
+        "browser RAG",
+        "WebGPU RAG",
+        "private RAG"
+      ]
+    },
+    {
+      "id": "shadowtalk-vs-typingmind",
+      "category": "comparison",
+      "question": "How is ShadowTalk AI different from TypingMind?",
+      "answer": "TypingMind is a polished BYOK chat UI — you bring API keys, pay a one-time license for the interface, and chat with one model at a time. ShadowTalk AI is a fuller workspace: 100% BYOK like TypingMind, but adds a multi-model canvas (compare Claude vs GPT-4o vs Gemini side-by-side with live diffing), agentic workflows (multi-step missions with approval gates), WebGPU local inference, local vector RAG, an encrypted vault, and built-in tools (Deep Research, Code IDE, Video Studio). BYOK — no platform fee; free to use.",
+      "keywords": [
+        "ShadowTalk vs TypingMind",
+        "TypingMind alternative",
+        "BYOK comparison"
       ]
     }
   ],

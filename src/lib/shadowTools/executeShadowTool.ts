@@ -1,73 +1,12 @@
 import { backend } from "@/integrations/local/client";
 import type { ToolType } from "@/hooks/useToolOrchestrator";
-import { buildExecutePath, inferDeliverableType } from "@/lib/execution/inferFromChat";
-import type { DeliverableType } from "@/lib/execution/types";
 import { chatAuthHeaders } from "./chatAuthHeaders";
 import type { ExecuteShadowToolContext, ShadowToolResult } from "./types";
-
-const CHAT_URL = `${import.meta.env.VITE_API_BASE_URL}/functions/v1/chat`;
-
-async function parseChatJsonResponse(resp: Response): Promise<Record<string, unknown>> {
-  const text = await resp.text();
-  try {
-    return JSON.parse(text) as Record<string, unknown>;
-  } catch {
-    return { content: text };
-  }
-}
-
-async function streamChatToText(body: Record<string, unknown>, accessToken?: string): Promise<string> {
-  const resp = await fetch(CHAT_URL, {
-    method: "POST",
-    headers: chatAuthHeaders({ accessToken }),
-    body: JSON.stringify(body),
-  });
-  if (!resp.ok) {
-    const err = await resp.text().catch(() => "");
-    throw new Error(err || `Request failed (${resp.status})`);
-  }
-
-  const contentType = resp.headers.get("content-type") || "";
-  if (contentType.includes("application/json")) {
-    const data = await parseChatJsonResponse(resp);
-    if (typeof data.content === "string") return data.content;
-    if (typeof data.imageUrl === "string") return String(data.content || "Image generated.");
-    return JSON.stringify(data, null, 2).slice(0, 12000);
-  }
-
-  const reader = resp.body?.getReader();
-  if (!reader) return "";
-  const decoder = new TextDecoder();
-  let full = "";
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    for (const line of decoder.decode(value, { stream: true }).split("\n")) {
-      if (line.startsWith("data: ") && line !== "data: [DONE]") {
-        try {
-          const data = JSON.parse(line.slice(6));
-          const c = data.choices?.[0]?.delta?.content || data.choices?.[0]?.message?.content;
-          if (c) full += c;
-        } catch {
-          /* ignore */
-        }
-      }
-    }
-  }
-  return full;
-}
-
-function formatSearchResults(results: Array<{ title?: string; link?: string; snippet?: string }>): string {
-  if (!results.length) return "No search results returned.";
-  return results
-    .map((r, i) => `${i + 1}. **${r.title || "Result"}**\n   ${r.link || ""}\n   ${r.snippet || ""}`)
-    .join("\n\n");
-}
+import { streamCloudChat } from "@/lib/cloudChat";
+import { WEB_SEARCH_SYSTEM_PROMPT, DEEP_RESEARCH_SYSTEM_PROMPT } from "./researchPrompts";
 
 const UI_ROUTES: Partial<Record<ToolType, { path: string; label: string }>> = {
-  shadow_execution: { path: "/execute", label: "Shadow Execution" },
-  mission_control: { path: "/execute", label: "Shadow Execution" },
-  strategy_agent: { path: "/execute?mode=strategy_report", label: "Shadow Execution" },
+
   workspace: { path: "/workspace", label: "AI Workspace" },
   ide: { path: "/ide", label: "Code IDE" },
   computer_mode: { path: "/computer", label: "Computer Mode" },
@@ -93,37 +32,41 @@ export async function executeShadowTool(
 
   switch (tool) {
     case "web_search": {
-      const query = p.query || message;
-      const { data, error } = await backend.functions.invoke("web-search", {
-        body: { query, numResults: 6 },
-      });
-      if (error) throw new Error(error.message);
-      const results = (data?.results || data?.items || []) as Array<{
-        title?: string;
-        link?: string;
-        snippet?: string;
-      }>;
+      const query = (p.query as string) || message;
+      const response = await streamCloudChat([
+        { role: "system", content: WEB_SEARCH_SYSTEM_PROMPT },
+        { role: "user", content: query },
+      ], { webSearch: true, maxTokens: 3000 });
+      if (response.error) throw new Error(response.error);
       return {
         kind: "inline",
         tool,
-        content: `### Web search: ${query}\n\n${formatSearchResults(results)}`,
+        content: `### Web search: ${query}\n\n${response.content || "The provider returned no search results."}`,
+        // Batch 1: preserve provider citations so visualizations can carry provenance.
+        ...(response.citations?.length ? { citations: response.citations } : {}),
       };
     }
 
     case "deep_research": {
-      const query = p.query || message;
-      const report = await streamChatToText(
-        { deepResearch: true, researchQuery: query, searchMode: "web" },
-        ctx.accessToken
-      );
-      return { kind: "inline", tool, content: report || "Research returned no content." };
+      const query = (p.query as string) || message;
+      const reportResp = await streamCloudChat([
+        { role: "system", content: DEEP_RESEARCH_SYSTEM_PROMPT },
+        { role: "user", content: query },
+      ], { webSearch: true, maxTokens: 6000 });
+      if (reportResp.error) throw new Error(reportResp.error);
+      const report = reportResp.content;
+      return {
+        kind: "inline",
+        tool,
+        content: report || "Research returned no content.",
+        ...(reportResp.citations?.length ? { citations: reportResp.citations } : {}),
+      };
     }
 
     case "image_generator": {
-      const imgPrompt = p.prompt || message;
-      const encoded = encodeURIComponent(`${imgPrompt}, high quality, detailed, 4k`);
-      const seed = Math.floor(Math.random() * 999999);
-      const imageUrl = `https://image.pollinations.ai/prompt/${encoded}?width=1024&height=1024&seed=${seed}&nologo=true&model=flux`;
+      const imgPrompt = (p.prompt as string) || message;
+      const { generateCloudImage } = await import("@/lib/cloudImage");
+      const imageUrl = await generateCloudImage(imgPrompt, { watermark: true });
       return {
         kind: "inline",
         tool,
@@ -132,19 +75,47 @@ export async function executeShadowTool(
       };
     }
 
+    case "image_editor" as any:
+    case "image_edit" as any: {
+      const imgData =
+        (p.image as string) ||
+        (ctx.attachment?.type === "image" && ctx.attachment.data
+          ? `data:${ctx.attachment.mimeType};base64,${ctx.attachment.data}`
+          : null);
+      if (imgData) {
+        const { callChatImageEdit } = await import("@/lib/chatImageApi");
+        const editResp = await callChatImageEdit(
+          imgData,
+          message || (p.prompt as string) || "Enhance and stylize this image",
+        );
+        return {
+          kind: "inline",
+          tool,
+          content: editResp.content,
+          imageUrl: editResp.imageUrl,
+        };
+      }
+      return {
+        kind: "ui",
+        tool,
+        message: "Please attach an image to edit.",
+        path: "/chatbot",
+      };
+    }
+
     case "image_decoder":
     case "visual_reasoning": {
       if (ctx.attachment?.type === "image" && ctx.attachment.data) {
-        const analysis = await streamChatToText(
-          {
-            decodeImage: true,
-            imageToAnalyze: ctx.attachment.data,
-            messages: [{ role: "user", content: message || "Analyze this image in detail." }],
-            personality: ctx.personality,
-          },
-          ctx.accessToken
+        const { callChatImageAnalyze } = await import("@/lib/chatImageApi");
+        const decodeResp = await callChatImageAnalyze(
+          `data:${ctx.attachment.mimeType};base64,${ctx.attachment.data}`,
         );
-        return { kind: "inline", tool, content: analysis };
+        return {
+          kind: "inline",
+          tool,
+          content: decodeResp.content,
+          imageUrl: `data:${ctx.attachment.mimeType};base64,${ctx.attachment.data}`,
+        };
       }
       return {
         kind: "ui",
@@ -157,37 +128,26 @@ export async function executeShadowTool(
     case "security_audit": {
       const urlMatch = message.match(/https?:\/\/[^\s]+/i);
       const url = p.url || urlMatch?.[0];
-      if (url) {
-        const { data, error } = await backend.functions.invoke("website-security-scan", {
-          body: { url },
-        });
-        if (error) throw new Error(error.message);
-        const summary =
-          typeof data === "string"
-            ? data
-            : data?.report || data?.summary || JSON.stringify(data, null, 2).slice(0, 8000);
-        return { kind: "inline", tool, content: `### Security audit: ${url}\n\n${summary}` };
-      }
-      return {
-        kind: "chat_flags",
-        tool,
-        flags: { securityAudit: message, messages: [{ role: "user", content: message }] },
-        preamble: "Running security audit on provided code/context…",
-      };
+      const response = await streamCloudChat([
+        { role: "system", content: "Perform a defensive security review of the supplied source or page content. Report evidence, severity, impact, and actionable mitigations. Do not claim that you executed tests, exploited the target, or verified runtime behavior." },
+        { role: "user", content: url ? `Review the security posture visible on this URL: ${url}` : message },
+      ], { webFetch: Boolean(url), maxTokens: 5000 });
+      if (response.error) throw new Error(response.error);
+      return { kind: "inline", tool, content: `### Security review${url ? `: ${url}` : ""}\n\n${response.content}` };
     }
 
     case "shadow_browser": {
       const url = p.url || message.match(/https?:\/\/[^\s]+/i)?.[0];
       if (url) {
-        const { data, error } = await backend.functions.invoke("firecrawl-scrape", {
-          body: { url, options: { formats: ["markdown"], onlyMainContent: true } },
-        });
-        if (error) throw new Error(error.message);
-        const markdown = data?.markdown || data?.content || JSON.stringify(data, null, 2).slice(0, 8000);
+        const response = await streamCloudChat([
+          { role: "system", content: "Read the requested web page using the available URL-fetch tool. Summarize its key points and cite the URL. If you cannot access it, say so plainly." },
+          { role: "user", content: url },
+        ], { webFetch: true, maxTokens: 4000 });
+        if (response.error) throw new Error(response.error);
         return {
           kind: "inline",
           tool,
-          content: `### Scraped: ${url}\n\n${markdown}`,
+          content: `### Page summary: ${url}\n\n${response.content || "The provider returned no page content."}`,
         };
       }
       return {
@@ -219,21 +179,14 @@ export async function executeShadowTool(
 
     case "presentation_builder": {
       const topic = p.topic || message;
-      try {
-        const outline = buildExecutePath(message, "content_pack");
-        return {
-          kind: "inline",
-          tool,
-          content: `### Presentation outline: ${topic}\n\n\`\`\`json\n${JSON.stringify(outline, null, 2).slice(0, 8000)}\`\`\`\n\nOpen **Presentations** to export as PPTX.`,
-        };
-      } catch {
-        return {
-          kind: "inline",
-          tool,
-          content: `### Presentation outline: ${topic}\n\n\`\`\`json\n${JSON.stringify({ slides: [{ title: topic, bullets: ["Intro", "Body", "Conclusion"] }], export: "Use Presentations page to generate PPTX." }, null, 2)}\`\`\``,
-        };
-      }
+      const response = await streamCloudChat([
+        { role: "system", content: "Create a useful presentation outline as Markdown. Include a title, audience and objective, followed by 6 to 10 numbered slides with a headline, key points, and suggested visual for each. Do not claim to have generated a PowerPoint file." },
+        { role: "user", content: topic },
+      ], { maxTokens: 5000 });
+      if (response.error) throw new Error(response.error);
+      return { kind: "inline", tool, content: response.content };
     }
+
 
     case "database_query":
     case "analytics_agent": {
@@ -266,23 +219,7 @@ export async function executeShadowTool(
       };
     }
 
-    case "shadow_execution":
-    case "mission_control":
-    case "strategy_agent": {
-      const mode = tool === "strategy_agent"
-        ? "strategy_report"
-        : (p.mode as DeliverableType) || inferDeliverableType(message);
-      return {
-        kind: "ui",
-        tool: "shadow_execution",
-        path: UI_ROUTES[tool]?.path ?? "/execute",
-        state: {
-          mode,
-          message,
-          params: p,
-        },
-      };
-    }
+
 
     default:
       return {

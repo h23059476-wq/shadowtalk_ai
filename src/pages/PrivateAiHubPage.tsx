@@ -27,8 +27,8 @@ const pillars = [
   },
   {
     icon: WifiOff,
-    title: "Runs offline on your device",
-    body: "A compact on-device model auto-installs in the background. Once cached, standard chat routes locally and never leaves your machine.",
+    title: "Runs on your device",
+    body: "Opt in to install a compact on-device model (~800MB). Once installed, you can switch to local inference in Settings. Standard chat uses cloud AI providers.",
   },
   {
     icon: Shield,
@@ -38,7 +38,7 @@ const pillars = [
   {
     icon: Zap,
     title: "Agentic tools included",
-    body: "Deep Research, autonomous Missions, Video Studio, Code IDE, Vault — 30+ tools in one workspace, not just chat.",
+    body: "Deep Research, autonomous agents, Video Studio, Code IDE, Vault — integrated tools in one workspace, not just chat.",
   },
   {
     icon: Globe,
@@ -47,14 +47,14 @@ const pillars = [
   },
   {
     icon: KeyRound,
-    title: "Bring your own key",
-    body: "Prefer to route through your own OpenAI, Anthropic, Google, or Ollama endpoint? BYOK is a first-class option.",
+    title: "",
+    body: "Prefer to route through your own OpenRouter, OpenAI, or Google Gemini endpoint? is a first-class option.",
   },
 ];
 
 const compareRows: Array<{ feature: string; shadow: string; chatgpt: string; claude: string }> = [
   { feature: "Login required", shadow: "No", chatgpt: "Yes", claude: "Yes" },
-  { feature: "Works offline", shadow: "Yes (on-device)", chatgpt: "No", claude: "No" },
+  { feature: "Runs on device", shadow: "Yes", chatgpt: "No", claude: "No" },
   { feature: "Stores chats on server", shadow: "No — local only", chatgpt: "Yes", claude: "Yes" },
   { feature: "Uses chats for training", shadow: "Never", chatgpt: "Configurable", claude: "Configurable" },
   { feature: "Autonomous agent missions", shadow: "Built-in", chatgpt: "Limited", claude: "No" },
@@ -89,7 +89,7 @@ export default function PrivateAiHubPage() {
           data-speakable
         >
           ShadowTalk AI is a free, anonymous alternative to ChatGPT. Chat runs on your
-          device once the offline model finishes downloading — nothing is stored on our
+          device once the model finishes downloading — nothing is stored on our
           servers, and your conversations are never used for training.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">

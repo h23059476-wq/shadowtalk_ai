@@ -23,16 +23,21 @@ async function sendHeartbeat(route: string, userId: string | null): Promise<void
   }
 
   try {
-    await backend.functions.invoke("shadow-scale-orchestrator", {
+    const { data, error } = await backend.functions.invoke("shadow-scale-orchestrator", {
       body: {
         client_id: getShadowScaleClientId(),
         user_id: userId,
         route,
         events,
-      },
+      }
     });
-  } catch {
-    /* edge optional */
+    if (error) {
+      console.warn("[ShadowScale] Orchestrator Genkit Error:", error);
+    } else {
+      console.log("[ShadowScale] Orchestrator Action Plan:", data);
+    }
+  } catch (err) {
+    console.warn("[ShadowScale] Orchestrator execution skipped or failed:", err);
   }
 }
 

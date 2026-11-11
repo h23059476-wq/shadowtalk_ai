@@ -87,7 +87,7 @@ export const ActivityTab = ({ userId }: ActivityTabProps) => {
             color: "text-emerald-400",
           },
         ].map((stat) => (
-          <Card key={stat.label} className="glass border-border/50">
+          <Card key={stat.label} className="card-glass border-border/50">
             <CardContent className="p-4 text-center">
               <stat.icon className={`h-5 w-5 mx-auto mb-2 ${stat.color}`} />
               <p className="text-lg font-bold truncate">{stat.value}</p>
@@ -97,7 +97,7 @@ export const ActivityTab = ({ userId }: ActivityTabProps) => {
         ))}
       </div>
 
-      <Card className="glass border-border/50">
+      <Card className="card-glass border-border/50">
         <CardHeader className="flex flex-row items-center justify-between gap-2">
           <div>
             <CardTitle className="flex items-center gap-2">

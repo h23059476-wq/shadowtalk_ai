@@ -1,210 +1,87 @@
 import { defineConfig } from 'vite';
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { VitePWA } from "vite-plugin-pwa";
 
-// https://vitejs.dev/config/
+import { VitePWA } from 'vite-plugin-pwa';
+
+// ShadowScan MVP — Lean build config (original backed up as vite.config.ts.full-backup)
 export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
 
   return {
+    base: '/',
     server: {
       host: "::",
       port: 8080,
       headers: {
-        "Cache-Control": "no-store",
-        "Cross-Origin-Opener-Policy": "same-origin",
         "Cross-Origin-Embedder-Policy": "credentialless",
+        "Cross-Origin-Opener-Policy": "same-origin",
       },
     },
-    preview: {
-      headers: {
-        "Cross-Origin-Opener-Policy": "same-origin",
-        "Cross-Origin-Embedder-Policy": "credentialless",
-      },
+    build: {
+      target: 'es2020',
+      minify: isProduction ? 'esbuild' : false,
+      sourcemap: isProduction ? false : true,
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+            'vendor-firebase': ['firebase/app', 'firebase/auth', 'firebase/firestore', 'firebase/storage', 'firebase/analytics', 'firebase/remote-config'],
+            'vendor-ui': ['lucide-react', 'framer-motion', '@radix-ui/react-dialog', '@radix-ui/react-toast', 'sonner'],
+            'vendor-query': ['@tanstack/react-query'],
+            'vendor-editor': ['@monaco-editor/react'],
+            'vendor-ai': ['@mlc-ai/web-llm']
+          }
+        }
+      }
     },
-    define: {
-      'import.meta.env.VITE_API_BASE_URL': JSON.stringify(''),
-      'import.meta.env.VITE_API_KEY': JSON.stringify(''),
-      'import.meta.env.VITE_LOCAL_FIRST': JSON.stringify(false),
-    },
-     build: {
-       // Production optimizations
-       target: 'es2020',
-       minify: isProduction ? 'esbuild' : false,
-       sourcemap: isProduction ? 'hidden' : true,
-       rollupOptions: {
-         input: {
-           main: path.resolve(__dirname, "index.html"),
-           "computer-frame": path.resolve(__dirname, "computer-frame.html"),
-         },
-         output: {
-           // Chunk splitting for better caching
-           manualChunks: {
-             // NOTE: Do NOT split react/react-dom — causes duplicate React instances
-             'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-tabs'],
-             'query-vendor': ['@tanstack/react-query'],
-             'chart-vendor': ['recharts'],
-             'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'],
-             // Feature chunks
-             'monaco': ['@monaco-editor/react'],
-           },
-           // Asset naming for long-term caching
-           assetFileNames: (assetInfo) => {
-             const info = assetInfo.name?.split('.') || [];
-             const ext = info[info.length - 1];
-             if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
-               return `assets/images/[name]-[hash][extname]`;
-             }
-             if (/woff2?|eot|ttf|otf/i.test(ext)) {
-               return `assets/fonts/[name]-[hash][extname]`;
-             }
-             return `assets/[name]-[hash][extname]`;
-           },
-           chunkFileNames: 'assets/js/[name]-[hash].js',
-           entryFileNames: 'assets/js/[name]-[hash].js',
-         },
-       },
-       // Performance hints
-       chunkSizeWarningLimit: 1000,
-     },
     plugins: [
       react(),
       VitePWA({
-        registerType: "autoUpdate",
-        includeAssets: [
-          "favicon.ico",
-          "robots.txt",
-          "apple-touch-icon.png",
-          "llms.txt",
-          "llms-full.txt",
-          "shadowtalk.json",
-          "facts.html",
-          "aeo-answers.html",
-          "aeo-answers.json",
-          "aeo.txt",
-          "zain-ahmed-fahad-patel.html",
-          "zain-ahmed-fahad-patel.json",
-          "zain-ahmed-fahad-patel.txt",
-          "zain-ahmed.html",
-          "zain-ahmed.json",
-          "zain-ahmed.txt",
-          "founder-zain-ahmed.html",
-          "og-image.svg",
-          "google-aeo.txt",
-          "google-seo-hub.html",
-          "feed.xml",
-          "embed/shadowtalk-badge.js",
-        ],
+        registerType: 'autoUpdate',
+        // Batch 5: removed 'masked-icon.svg' — the file does not exist in
+        // public/, so including it made the precache manifest reference a 404.
+        includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
         manifest: {
-          name: "ShadowTalk AI",
-          short_name: "ShadowTalk",
-          description: "Advanced AI chatbot with multimodal capabilities",
-          theme_color: "#050508",
-          background_color: "#050508",
-          display: "standalone",
-          orientation: "portrait",
-          scope: "/",
-          start_url: "/",
+          name: 'ShadowTalk AI',
+          short_name: 'ShadowTalk',
+          description: 'Agentic AI workspace with offline support',
+          // Batch 5: stable install identity (recommended for PWA updates to
+          // target the same installed app across manifest revisions).
+          id: '/',
+          // Batch 5: align theme_color with index.html (#050508). The old
+          // value (#000000) disagreed with the <meta name="theme-color">,
+          // producing a mismatched title-bar/splash color on Android.
+          theme_color: '#050508',
+          background_color: '#000000',
           icons: [
             {
-              src: "/pwa-192x192.png",
-              sizes: "192x192",
-              type: "image/png",
-              purpose: "any maskable"
+              src: 'pwa-192x192.png',
+              sizes: '192x192',
+              type: 'image/png',
+              // Batch 5: mark icons as maskable so Android adaptive icons
+              // render without cropping the artwork.
+              purpose: 'any maskable'
             },
             {
-              src: "/pwa-512x512.png",
-              sizes: "512x512",
-              type: "image/png",
-              purpose: "any maskable"
-            }
-          ],
-          categories: ["productivity", "utilities", "business"],
-          shortcuts: [
-            {
-              name: "New Chat",
-              short_name: "Chat",
-              description: "Start a new conversation",
-              url: "/chatbot",
-              icons: [{ src: "/pwa-192x192.png", sizes: "192x192" }]
+              src: 'pwa-512x512.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'any maskable'
             }
           ]
         },
         workbox: {
-          globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
-          maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
-          navigateFallbackDenylist: [/^\/~oauth/],
-            runtimeCaching: [
-              {
-                urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-                handler: "CacheFirst",
-                options: {
-                  cacheName: "google-fonts-cache",
-                  expiration: {
-                    maxEntries: 10,
-                    maxAgeSeconds: 60 * 60 * 24 * 365
-                  },
-                  cacheableResponse: {
-                    statuses: [0, 200]
-                  }
-                }
-              },
-              {
-                urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-                handler: "CacheFirst",
-                options: {
-                  cacheName: "gstatic-fonts-cache",
-                  expiration: {
-                    maxEntries: 10,
-                    maxAgeSeconds: 60 * 60 * 24 * 365
-                  },
-                  cacheableResponse: {
-                    statuses: [0, 200]
-                  }
-                }
-              },
-              // ShadowTalk backend caching removed
-            ]
-        },
-        devOptions: {
-          enabled: false,
-        },
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,json,wasm}'],
+          maximumFileSizeToCacheInBytes: 10000000 // Increase limit for wasm/model artifacts
+        }
       })
-    ].filter(Boolean),
+    ],
     resolve: {
-      // Single React instance — prevents "Cannot read properties of null (reading 'useState')"
-      dedupe: [
-        "react",
-        "react-dom",
-        "react/jsx-runtime",
-        "react/jsx-dev-runtime",
-        "react-router-dom",
-        "framer-motion",
-      ],
       alias: {
         "@": path.resolve(__dirname, "./src"),
-        react: path.resolve(__dirname, "node_modules/react"),
-        "react-dom": path.resolve(__dirname, "node_modules/react-dom"),
-        "react/jsx-runtime": path.resolve(__dirname, "node_modules/react/jsx-runtime.js"),
-        "react/jsx-dev-runtime": path.resolve(__dirname, "node_modules/react/jsx-dev-runtime.js"),
       },
-    },
-    optimizeDeps: {
-      // Fresh dep graph on each dev server start — avoids mixed ?v= chunk hashes
-      force: mode === "development",
-      exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"],
-      include: [
-        "react",
-        "react-dom",
-        "react/jsx-runtime",
-        "react/jsx-dev-runtime",
-        "react-dom/client",
-        "react-router-dom",
-        "framer-motion",
-        "@tanstack/react-query",
-        "react-helmet-async",
-      ],
     },
   };
 });

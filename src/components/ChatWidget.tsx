@@ -5,9 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { backend } from "@/integrations/local/client";
-import { stringifyChatBody } from "@/lib/chatRequest";
-
-const CHAT_URL = `${import.meta.env.VITE_API_BASE_URL}/functions/v1/chat`;
+import { turboComplete } from "@/lib/turbo/turboEngine";
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +18,7 @@ const ChatWidget = () => {
       try {
         // Real total registered users — no fabricated count.
         const { count } = await backend
-          .from("profiles")
+          .from("public_profiles")
           .select("id", { count: "exact", head: true });
         if (!cancelled) setOnlineUsers(count ?? 0);
       } catch {
@@ -63,62 +61,20 @@ const ChatWidget = () => {
     setIsLoading(true);
 
     try {
-      const { data: { session } } = await backend.auth.getSession();
-
-      const chatHistory = messages.slice(-8).map(m => ({
-        role: m.type === 'user' ? 'user' : 'assistant',
-        content: m.content
-      }));
-      chatHistory.push({ role: 'user', content: userMsg });
-
-      const resp = await fetch(CHAT_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
-        },
-        body: stringifyChatBody({
-          messages: chatHistory,
-          personality: 'friendly',
-          mode: 'general'
-        }),
-      });
-
-      if (!resp.ok) throw new Error("Failed");
-
-      const reader = resp.body?.getReader();
-      const decoder = new TextDecoder();
-      let assistantContent = "";
-      let textBuffer = "";
-
-      // Add placeholder message
       const botId = messages.length + 2;
       setMessages(prev => [...prev, { id: botId, type: "bot", content: "...", timestamp: new Date() }]);
 
-      while (reader) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        textBuffer += decoder.decode(value, { stream: true });
+      const result = await turboComplete(
+        "You are ShadowTalk AI, a friendly and helpful assistant. Use markdown formatting.",
+        userMsg,
+        {
+          onDelta: (accumulated) => {
+            setMessages(prev => prev.map(m => m.id === botId ? { ...m, content: accumulated } : m));
+          },
+        },
+      );
 
-        let newlineIndex: number;
-        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
-          let line = textBuffer.slice(0, newlineIndex);
-          textBuffer = textBuffer.slice(newlineIndex + 1);
-          if (line.endsWith("\r")) line = line.slice(0, -1);
-          if (line.startsWith(":") || line.trim() === "" || !line.startsWith("data: ")) continue;
-          const jsonStr = line.slice(6).trim();
-          if (jsonStr === "[DONE]") break;
-          try {
-            const content = JSON.parse(jsonStr).choices?.[0]?.delta?.content;
-            if (content) {
-              assistantContent += content;
-              setMessages(prev => prev.map(m => m.id === botId ? { ...m, content: assistantContent } : m));
-            }
-          } catch { /* skip parse errors */ }
-        }
-      }
-
-      if (!assistantContent) {
+      if (!result.content.trim()) {
         setMessages(prev => prev.filter(m => m.id !== botId));
       }
     } catch (error) {

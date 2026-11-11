@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Bot, Zap, ArrowRight, Search, Workflow, Target } from "lucide-react";
+import { MessageCircle, Bot, Zap, ArrowRight, Search, Workflow, Target, Key, Cpu, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CommandPaletteContext } from "@/App";
 import { BRAND, BRAND_HOOKS, LANDING_COPY } from "@/lib/brand";
@@ -8,6 +8,7 @@ import { usePlatformMetrics } from "@/hooks/usePlatformMetrics";
 import { formatTractionDaily, formatTractionUsers } from "@/lib/formatMetrics";
 import { StealthKillSwitch } from "@/components/StealthKillSwitch";
 import { useStealthKillSwitch } from "@/hooks/useStealthKillSwitch";
+import { trackShadowTalkEvent } from "@/lib/analyticsEventTracker";
 import FreeTierLimitsStrip from "@/components/growth/FreeTierLimitsStrip";
 import ProofOverHypeBar from "@/components/growth/ProofOverHypeBar";
 
@@ -44,26 +45,80 @@ const HeroSection = () => {
 
       <div className="container mx-auto px-4 sm:px-6 text-center relative z-10 pt-20 sm:pt-24 pb-12 sm:pb-16">
         <div className="max-w-4xl mx-auto space-y-6">
-          <div className="inline-flex items-center flex-wrap justify-center gap-2 glass-subtle rounded-full px-4 py-2 sm:px-5 sm:py-2.5 mb-8 sm:mb-10 max-w-[95vw]">
-            <Bot className="h-4 w-4 text-primary shrink-0" />
-            <span className="text-xs sm:text-sm text-foreground/90 font-medium tracking-wide text-center">
-              {BRAND.heroBadge}
+          {/* Explicit value-prop eyebrow — screams core value within 3 seconds */}
+          <div className="inline-flex items-center flex-wrap justify-center gap-2 glass-subtle rounded-full px-4 py-2 sm:px-5 sm:py-2.5 mb-6 sm:mb-8 max-w-[95vw] border-primary/30">
+            <Sparkles className="h-4 w-4 text-primary shrink-0" />
+            <span className="text-xs sm:text-sm font-semibold tracking-wide text-center text-foreground">
+              The World&apos;s First Zero-Knowledge, Multi-Model AI Canvas
             </span>
-            <span className="w-2 h-2 bg-success rounded-full shrink-0" />
+            <span className="w-2 h-2 bg-success rounded-full shrink-0 animate-pulse" />
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-6 sm:mb-8 leading-[1.08] tracking-tight px-1">
+          {/* Two-line value-prop headline — instantly tells builders what we are */}
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-[1.1] tracking-tight px-1">
             <span className="gradient-text inline-block">{BRAND.heroHeadline[0]}</span>{" "}
             <br className="hidden sm:block" />
             <span className="gradient-text inline-block">{BRAND.heroHeadline[1]}</span>
           </h1>
 
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 max-w-3xl mx-auto leading-relaxed px-2">
+          <p className="text-sm sm:text-base md:text-lg text-foreground/90 mb-5 max-w-3xl mx-auto leading-relaxed px-2 font-medium">
+            100% BYOK &amp; WebGPU Local Vector RAG. One workspace, every frontier model, zero data leaves your device.
+          </p>
+
+          <p className="text-xs sm:text-sm md:text-base text-muted-foreground mb-7 max-w-2xl mx-auto leading-relaxed px-2">
             {BRAND.heroSubtitle}
           </p>
 
-          <div className="mb-8 sm:mb-10 min-h-[2rem] flex justify-center px-2">
-            <p className="text-sm sm:text-base font-medium text-foreground/90">{BRAND_HOOKS[0] ?? 'ShadowTalk AI'}</p>
+          {/* Value Highlights */}
+          {/* 1-click demo / connect key — above the fold, zero friction */}
+          <div className="mb-5 w-full max-w-2xl mx-auto px-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
+              <Button
+                size="lg"
+                className="btn-glow btn-3d-primary text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 group rounded-xl w-full sm:w-auto bg-gradient-to-r from-primary to-cyan-500 hover:from-primary/90 hover:to-cyan-500/90 border-0"
+                onClick={() => {
+                  trackShadowTalkEvent("cta_clicked", { cta_name: "try_demo_no_signup" });
+                  navigate("/chatbot?demo=true");
+                }}
+              >
+                <Zap className="mr-2 sm:mr-3 h-5 w-5 fill-current" />
+                Try Demo — No Signup
+                <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="btn-3d-secondary text-base sm:text-lg px-6 sm:px-7 py-5 sm:py-6 border-primary/40 bg-card/40 hover:border-primary/60 hover:bg-card/60 rounded-xl w-full sm:w-auto gap-2 group"
+                onClick={() => {
+                  trackShadowTalkEvent("cta_clicked", { cta_name: "connect_api_key_byok" });
+                  navigate("/chatbot?byok=true&view=settings");
+                }}
+              >
+                <Key className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
+                Connect Your API Key
+              </Button>
+            </div>
+            <p className="text-[11px] sm:text-xs text-muted-foreground/70 text-center mt-2.5">
+              No card · No email · Pick Claude, GPT-4o, Gemini, Llama — all on your own keys
+            </p>
+          </div>
+
+          {/* BYOK / WebGPU / RAG feature pills — explicit, scannable */}
+          <div className="mb-6 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 px-2">
+            {[
+              { icon: Key, label: "100% BYOK" },
+              { icon: Cpu, label: "WebGPU Local Inference" },
+              { icon: Sparkles, label: "Local Vector RAG" },
+              { icon: Workflow, label: "Multi-Model Canvas" },
+            ].map((pill) => (
+              <div
+                key={pill.label}
+                className="inline-flex items-center gap-1.5 glass-subtle rounded-full px-3 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-xs font-medium text-foreground/85 border-primary/15"
+              >
+                <pill.icon className="h-3.5 w-3.5 text-primary" />
+                {pill.label}
+              </div>
+            ))}
           </div>
 
           <div className="mb-3 w-full max-w-2xl mx-auto px-2">
@@ -72,7 +127,7 @@ const HeroSection = () => {
               <span className="text-muted-foreground"> Unlimited plans from </span>
               <span className="font-semibold text-foreground">$5</span>
               <span className="text-muted-foreground">/mo</span>
-              <span className="text-muted-foreground"> · activate within 2h · 30-day guarantee · cancel anytime.</span>
+              <span className="text-muted-foreground"> · activate within 2h · 14-day guarantee · cancel anytime.</span>
             </div>
           </div>
 
@@ -82,25 +137,41 @@ const HeroSection = () => {
             </div>
           </div>
 
+          {/* Secondary CTAs — explore sections, pricing */}
           <div className="mb-10 sm:mb-14 w-full max-w-md sm:max-w-none mx-auto px-2">
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-3">
               <Button
-                size="lg"
-                className="btn-glow text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 group rounded-xl w-full sm:w-auto"
-                onClick={() => navigate("/chatbot")}
+                variant="outline"
+                size="default"
+                className="btn-3d-tertiary text-sm sm:text-base px-5 sm:px-6 py-4 sm:py-5 border-border/60 bg-card/40 hover:border-primary/40 hover:bg-card/60 rounded-xl w-full sm:w-auto gap-2 group"
+                onClick={() => {
+                  trackShadowTalkEvent("cta_clicked", { cta_name: "run_first_agent" });
+                  navigate("/chatbot?demo=true");
+                }}
               >
-                <MessageCircle className="mr-2 sm:mr-3 h-5 w-5" />
-                Try chat — free
-                <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <Zap className="h-4 w-4" />
+                Run Your First Agent
+                <ArrowRight className="ml-1.5 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button
                 variant="outline"
-                size="lg"
-                className="text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 border-border/60 bg-card/40 hover:border-primary/40 hover:bg-card/60 rounded-xl w-full sm:w-auto"
+                size="default"
+                className="btn-3d-tertiary text-sm sm:text-base px-5 sm:px-6 py-4 sm:py-5 border-border/60 bg-card/40 hover:border-primary/40 hover:bg-card/60 rounded-xl w-full sm:w-auto"
                 onClick={() => navigate("/pricing")}
               >
-                <Zap className="mr-2 sm:mr-3 h-5 w-5" />
-                View pricing — from Rs 1,499/mo
+                View pricing — from $5/mo
+              </Button>
+              <Button
+                variant="outline"
+                size="default"
+                className="btn-3d-tertiary text-sm sm:text-base px-5 sm:px-6 py-4 sm:py-5 border-border/60 bg-card/40 hover:border-cyan-500/40 hover:bg-card/60 rounded-xl w-full sm:w-auto gap-2 group"
+                onClick={() => {
+                  document.getElementById("sections-hub")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                <Target className="h-4 w-4 text-cyan-400 group-hover:scale-110 transition-transform" />
+                <span>Explore Sections</span>
+                <span className="text-xs text-muted-foreground font-mono">↓</span>
               </Button>
             </div>
           </div>
@@ -121,12 +192,12 @@ const HeroSection = () => {
             <div className="hidden sm:block w-px h-4 bg-border" />
             <div className="flex items-center space-x-2">
               <Zap className="h-4 w-4 text-warning" />
-              <span className="text-sm font-medium">30+ Tools</span>
+              <span className="text-sm font-medium">E2EE Chat</span>
             </div>
             <div className="hidden sm:block w-px h-4 bg-border" />
             <div className="flex items-center space-x-2">
               <Target className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium">Mission Control</span>
+              <span className="text-sm font-medium">Deep Research</span>
             </div>
           </div>
 
@@ -155,7 +226,7 @@ const HeroSection = () => {
           </div>
 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 px-2">
-            {["🤖 Agentic missions", "⚡ Tool orchestration", "🎯 Mission Control", "🛡️ Privacy when you need it"].map(
+            {["🤖 Agentic missions", "⚡ Tool orchestration", "🎙️ Voice Mode", "⚡ Ultra-Low Latency Turbo"].map(
               (badge) => (
                 <div
                   key={badge}

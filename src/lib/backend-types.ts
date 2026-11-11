@@ -38,7 +38,7 @@ export interface RealtimeChannel {
   untrack?: () => Promise<any>;
   [key: string]: any;
   on?: (...args: any[]) => RealtimeChannel;
-  subscribe?: (cb?: Function) => { unsubscribe: () => void };
+  subscribe?: (cb?: (...args: any[]) => any) => { unsubscribe: () => void };
   unsubscribe?: () => void;
   send?: (type: string, payload?: any) => { ok: boolean };
   state?: string;

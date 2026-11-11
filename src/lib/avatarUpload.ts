@@ -1,7 +1,19 @@
-import { backend } from "@/integrations/local/client";
+/**
+ * Avatar upload — converts the image to a data URL stored in the profile.
+ *
+ * Previously this tried to upload to Firebase Storage bucket "avatars",
+ * which required bucket configuration + storage rules. Many deployments
+ * don't have this set up. Instead, we now convert the image to a
+ * compressed data URL (max 200px, JPEG quality 0.8) and store it
+ * directly in the profiles table as `avatar_url`.
+ *
+ * This works everywhere — no Storage bucket needed.
+ */
 
 const MAX_BYTES = 5 * 1024 * 1024;
 const ALLOWED = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const OUTPUT_SIZE = 200; // px — square crop
+const OUTPUT_QUALITY = 0.8;
 
 export async function uploadProfileAvatar(
   userId: string,
@@ -14,29 +26,57 @@ export async function uploadProfileAvatar(
     return { error: "Image must be under 5 MB" };
   }
 
-  const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
-  const path = `${userId}/avatar.${ext}`;
+  try {
+    // Read the file as a data URL
+    const dataUrl = await readFileAsDataUrl(file);
 
-  const { error: uploadError } = await backend.storage.from("avatars").upload(path, file, {
-    upsert: true,
-    contentType: file.type,
+    // Resize/compress the image to a 200x200 JPEG data URL
+    const compressed = await resizeImage(dataUrl, OUTPUT_SIZE, OUTPUT_QUALITY);
+
+    return { publicUrl: compressed };
+  } catch (err: any) {
+    return { error: err?.message || "Failed to process image" };
+  }
+}
+
+/** Read a File as a data URL. */
+function readFileAsDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(new Error("Failed to read file"));
+    reader.readAsDataURL(file);
   });
+}
 
-  if (uploadError) {
-    return { error: uploadError.message };
-  }
+/**
+ * Resize an image data URL to a square crop of `size` px and return
+ * a compressed JPEG data URL.
+ */
+function resizeImage(dataUrl: string, size: number, quality: number): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = size;
+      canvas.height = size;
 
-  const { data } = backend.storage.from("avatars").getPublicUrl(path);
-  const publicUrl = `${data.publicUrl}?t=${Date.now()}`;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        reject(new Error("Canvas not supported"));
+        return;
+      }
 
-  const { error: profileError } = await backend
-    .from("profiles")
-    .update({ avatar_url: publicUrl, updated_at: new Date().toISOString() })
-    .eq("id", userId);
+      // Center-crop to square
+      const minDim = Math.min(img.width, img.height);
+      const sx = (img.width - minDim) / 2;
+      const sy = (img.height - minDim) / 2;
 
-  if (profileError) {
-    return { error: profileError.message };
-  }
+      ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, size, size);
 
-  return { publicUrl };
+      resolve(canvas.toDataURL("image/jpeg", quality));
+    };
+    img.onerror = () => reject(new Error("Failed to load image"));
+    img.src = dataUrl;
+  });
 }

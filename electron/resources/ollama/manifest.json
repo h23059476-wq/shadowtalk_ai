@@ -1,7 +1,0 @@
-{
-  "version": "0.30.6",
-  "defaultModel": "qwen2.5:7b",
-  "fallbackModel": "phi3:mini",
-  "bundledModels": [],
-  "notes": "Run npm run desktop:stage-ollama before desktop:make to bundle the Ollama binary and optional models."
-}

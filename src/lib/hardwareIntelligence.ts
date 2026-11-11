@@ -199,24 +199,7 @@ export function shouldPrewarmLocalModels(profile?: HardwareProfile | null): bool
 
 /** Idle prewarm of Tier-A model on fast hardware. */
 export function prewarmFastestLocalPath(): void {
-  if (typeof window === "undefined") return;
-
-  const run = async () => {
-    const profile = await detectHardwareProfile();
-    if (!shouldPrewarmLocalModels(profile)) return;
-
-    const { isAnyLocalModelReady } = await import("@/lib/offline/localChat");
-    if (isAnyLocalModelReady()) return;
-
-    const { startSilentTierAInstall } = await import("@/lib/offline/tierAInstall");
-    startSilentTierAInstall();
-  };
-
-  if (typeof window.requestIdleCallback === "function") {
-    window.requestIdleCallback(() => void run(), { timeout: 5000 });
-  } else {
-    window.setTimeout(() => void run(), 1200);
-  }
+  // Offline/local model prewarming removed
 }
 
 export function warmHardwareProfile(): void {

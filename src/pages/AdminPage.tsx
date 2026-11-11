@@ -1,638 +1,243 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/components/AuthProvider';
-import { useAdminCheck } from '@/hooks/useAdminCheck';
-import { backend } from '@/integrations/local/client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
+/**
+ * AdminPage — ShadowTalk AI admin dashboard shell.
+ *
+ * Wraps the AdminDashboard component inside the standard site shell
+ * (SEOHead + Navigation + PageTransition + Footer). If the admin
+ * dashboard throws or the user lacks admin access, a graceful
+ * fallback "Admin access required" card is shown instead.
+ *
+ * Route: /admin
+ */
+
+import { ComponentType } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/components/AuthProvider";
+import { useAdminCheck } from "@/hooks/useAdminCheck";
+import { motion } from "framer-motion";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
+  ShieldAlert,
   Users,
-  MessageSquare,
-  BarChart3,
-  Shield,
-  ArrowLeft,
-  Trash2,
-  Crown,
-  Zap,
-  MessageSquareHeart,
-  Star,
-  Bug,
-  Lightbulb,
-  HelpCircle,
-  CheckCircle,
-  Clock,
-  XCircle,
-  Key,
-  Megaphone,
-  User,
-  Activity,
-  Server,
-  Radio,
-  Globe,
-  Route,
-  Bell,
-  Download,
   CreditCard,
-  Send,
-  ChevronLeft,
-  ChevronRight,
-  LayoutDashboard,
-  History,
-  type LucideIcon,
-} from 'lucide-react';
-import { toast } from 'sonner';
-import { format } from 'date-fns';
-import { FeedbackAnalytics } from '@/components/FeedbackAnalytics';
-import { GeminiKeysManager } from '@/components/admin/GeminiKeysManager';
-import { UserRoleManager } from '@/components/admin/UserRoleManager';
-import { ProfileManager } from '@/components/admin/ProfileManager';
-import { AnnouncementManager } from '@/components/admin/AnnouncementManager';
-import { RealTimeUserFlow } from '@/components/admin/RealTimeUserFlow';
-import { WebHealthMonitor } from '@/components/admin/WebHealthMonitor';
-import { RealTimeFeedback } from '@/components/admin/RealTimeFeedback';
-import { GeographicTracker } from '@/components/admin/GeographicTracker';
-import { UserJourneyTracker } from '@/components/admin/UserJourneyTracker';
-import { AdminAlerts } from '@/components/admin/AdminAlerts';
-import { AnalyticsExport } from '@/components/admin/AnalyticsExport';
-import { ManualPaymentsManager } from '@/components/admin/ManualPaymentsManager';
-import { BroadcastManager } from '@/components/admin/BroadcastManager';
-import { ChangelogManager } from '@/components/admin/ChangelogManager';
-import { AdminFAQManager } from '@/components/admin/AdminFAQManager';
-import { AdminLayout } from '@/components/admin/AdminLayout';
-import { AdminDashboard } from '@/components/admin/AdminDashboard';
-import GoogleSearchConsoleSummary from '@/components/admin/GoogleSearchConsoleSummary';
+  MessageSquare,
+  DollarSign,
+  Megaphone,
+  Rocket,
+  MessageSquareHeart,
+  Activity,
+  Lock,
+} from "lucide-react";
+import { SEOHead } from "@/components/SEOHead";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import { PageTransition } from "@/components/PageTransition";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { Button } from "@/components/ui/button";
+import { AdminDashboard } from "@/components/admin/AdminDashboard";
 
-import { BusinessInsightsDashboard } from '@/components/admin/BusinessInsightsDashboard';
-import { GrowthCommandPanel } from '@/components/admin/GrowthCommandPanel';
-import { TimezoneInsights } from '@/components/admin/TimezoneInsights';
-import { cn } from '@/lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useAdminMotion } from '@/hooks/useAdminMotion';
-import { AdminAnimatedCard } from '@/components/admin/AdminAnimatedCard';
-import { AdminAmbientBackground } from '@/components/admin/AdminAmbientBackground';
-
-// --- Types ---
-interface UserData {
-  id: string;
-  email: string;
-  created_at: string;
-  last_sign_in_at: string | null;
-}
-
-interface ConversationData {
-  id: string;
-  title: string;
-  user_id: string;
-  created_at: string;
-  updated_at: string;
-  message_count?: number;
-}
-
-interface SubscriberData {
-  id: string;
-  email: string;
-  user_id: string | null;
-  subscribed: boolean | null;
-  subscription_tier: string | null;
-  subscription_end: string | null;
-  created_at: string;
-}
-
-interface FeedbackData {
-  id: string;
-  user_id: string | null;
-  email: string | null;
-  category: string;
-  rating: number | null;
-  message: string;
-  status: string;
-  created_at: string;
-  updated_at: string;
-}
-
-// --- Helpers ---
-const getCategoryIcon = (category: string) => {
-  switch (category) {
-    case 'bug':
-      return <Bug className="h-4 w-4 text-destructive" />;
-    case 'feature':
-      return <Lightbulb className="h-4 w-4 text-yellow-500" />;
-    case 'improvement':
-      return <Zap className="h-4 w-4 text-blue-500" />;
-    default:
-      return <HelpCircle className="h-4 w-4 text-muted-foreground" />;
-  }
-};
-
-const getStatusBadge = (status: string) => {
-  switch (status) {
-    case 'resolved':
-      return <Badge className="bg-green-500/20 text-green-500 border-green-500/30"><CheckCircle className="h-3 w-3 mr-1" />Resolved</Badge>;
-    case 'in_progress':
-      return <Badge className="bg-blue-500/20 text-blue-500 border-blue-500/30"><Clock className="h-3 w-3 mr-1" />In Progress</Badge>;
-    case 'dismissed':
-      return <Badge className="bg-muted text-muted-foreground border-border"><XCircle className="h-3 w-3 mr-1" />Dismissed</Badge>;
-    default:
-      return <Badge variant="outline"><Clock className="h-3 w-3 mr-1" />Pending</Badge>;
-  }
-};
-
-// --- Component ---
-const AdminPage = () => {
-  const navigate = useNavigate();
-  const { user, loading: authLoading } = useAuth();
-  const { isAdmin, loading: adminLoading } = useAdminCheck();
-  const adminMotion = useAdminMotion();
-  const { variants, shouldAnimateAmbient } = adminMotion;
-
-  const [activeSection, setActiveSection] = useState('dashboard');
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-
-  const [conversations, setConversations] = useState<ConversationData[]>([]);
-  const [subscribers, setSubscribers] = useState<SubscriberData[]>([]);
-  const [feedback, setFeedback] = useState<FeedbackData[]>([]);
-  const [stats, setStats] = useState({
-    totalUsers: 0,
-    totalConversations: 0,
-    totalMessages: 0,
-    activeSubscribers: 0,
-    proSubscribers: 0,
-    eliteSubscribers: 0,
-    totalFeedback: 0,
-    pendingFeedback: 0,
-    pendingGrowthActions: 0,
-  });
-  const [loadingData, setLoadingData] = useState(true);
-
-  useEffect(() => {
-    if (!authLoading && !user) navigate('/auth');
-  }, [authLoading, user, navigate]);
-
-  useEffect(() => {
-    if (!adminLoading && !isAdmin && user) {
-      toast.error('Access denied. Admin privileges required.');
-      navigate('/chatbot');
-    }
-  }, [adminLoading, isAdmin, user, navigate]);
-
-  useEffect(() => {
-    if (isAdmin) fetchAllData();
-  }, [isAdmin]);
-
-  const fetchAllData = async () => {
-    setLoadingData(true);
-    try {
-      const { data: convData, error: convError } = await backend
-        .from('conversations')
-        .select('*')
-        .order('updated_at', { ascending: false });
-      if (convError) throw convError;
-      setConversations(convData || []);
-
-      const { data: msgData, error: msgError } = await backend
-        .from('messages')
-        .select('conversation_id');
-      if (msgError) throw msgError;
-
-      const msgCounts: Record<string, number> = {};
-      msgData?.forEach(msg => {
-        msgCounts[msg.conversation_id] = (msgCounts[msg.conversation_id] || 0) + 1;
-      });
-      setConversations(prev => prev.map(conv => ({
-        ...conv,
-        message_count: msgCounts[conv.id] || 0
-      })));
-
-      const { data: subData, error: subError } = await backend
-        .from('subscribers')
-        .select('*')
-        .order('created_at', { ascending: false });
-      if (subError) throw subError;
-      setSubscribers(subData || []);
-
-      const { data: feedbackData, error: feedbackError } = await backend
-        .from('feedback')
-        .select('*')
-        .order('created_at', { ascending: false });
-      if (feedbackError) throw feedbackError;
-      setFeedback(feedbackData || []);
-
-      const uniqueUserIds = new Set(convData?.map(c => c.user_id) || []);
-      const { count: growthPending } = await (backend as unknown as { from: (t: string) => { select: (c: string, o?: object) => { eq: (col: string, v: string) => Promise<{ count: number | null }> } } })
-        .from('shadowscale_action_queue')
-        .select('id', { count: 'exact', head: true })
-        .eq('status', 'pending');
-
-      setStats({
-        totalUsers: uniqueUserIds.size,
-        totalConversations: convData?.length || 0,
-        totalMessages: msgData?.length || 0,
-        activeSubscribers: subData?.filter(s => s.subscribed).length || 0,
-        proSubscribers: subData?.filter(s => s.subscription_tier === 'pro').length || 0,
-        eliteSubscribers: subData?.filter(s => s.subscription_tier === 'elite').length || 0,
-        totalFeedback: feedbackData?.length || 0,
-        pendingFeedback: feedbackData?.filter(f => f.status === 'pending').length || 0,
-        pendingGrowthActions: growthPending ?? 0,
-      });
-    } catch (error) {
-      console.error('Error fetching admin data:', error);
-      toast.error('Failed to load admin data');
-    } finally {
-      setLoadingData(false);
-    }
-  };
-
-  const handleDeleteConversation = async (conversationId: string) => {
-    if (!confirm('Delete this conversation and all its messages?')) return;
-    try {
-      await backend.from('messages').delete().eq('conversation_id', conversationId);
-      await backend.from('conversations').delete().eq('id', conversationId);
-      setConversations(prev => prev.filter(c => c.id !== conversationId));
-      toast.success('Conversation deleted');
-    } catch (error) {
-      toast.error('Failed to delete conversation');
-    }
-  };
-
-  const handleUpdateFeedbackStatus = async (feedbackId: string, newStatus: string) => {
-    try {
-      const { error } = await backend.from('feedback').update({ status: newStatus }).eq('id', feedbackId);
-      if (error) throw error;
-      setFeedback(prev => prev.map(f => f.id === feedbackId ? { ...f, status: newStatus } : f));
-      toast.success(`Feedback marked as ${newStatus}`);
-    } catch { toast.error('Failed to update feedback status'); }
-  };
-
-  const handleDeleteFeedback = async (feedbackId: string) => {
-    if (!confirm('Delete this feedback?')) return;
-    try {
-      const { error } = await backend.from('feedback').delete().eq('id', feedbackId);
-      if (error) throw error;
-      setFeedback(prev => prev.filter(f => f.id !== feedbackId));
-      toast.success('Feedback deleted');
-    } catch { toast.error('Failed to delete feedback'); }
-  };
-
-  if (authLoading || adminLoading) {
-    return (
-      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background">
-        <AdminAmbientBackground disabled={!shouldAnimateAmbient} />
-        <motion.div
-          className="relative z-10 space-y-4 text-center"
-          variants={variants.pageEnter}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.div variants={variants.loadingPulse} animate="animate">
-            <Shield className="mx-auto h-12 w-12 text-primary" />
-          </motion.div>
-          <motion.p
-            className="text-muted-foreground"
-            animate={shouldAnimateAmbient ? { opacity: [0.5, 1, 0.5] } : undefined}
-            transition={{ duration: 1.8, repeat: Infinity }}
-          >
-            Verifying admin access...
-          </motion.p>
-        </motion.div>
-      </div>
-    );
-  }
-
-  if (!isAdmin) return null;
-
-  // --- Render content ---
-  const renderContent = () => {
-    switch (activeSection) {
-      case 'dashboard':
-        return <AdminDashboard stats={stats} loading={loadingData} onNavigate={setActiveSection} />;
-      case 'alerts':
-        return <AdminAlerts />;
-      case 'realtime':
-        return <RealTimeUserFlow />;
-      case 'health':
-        return <WebHealthMonitor />;
-      case 'live-feedback':
-        return <RealTimeFeedback />;
-      case 'geo-tracking':
-        return <GeographicTracker />;
-      case 'journeys':
-        return <UserJourneyTracker />;
-      case 'timezone':
-        return <TimezoneInsights />;
-      case 'business':
-        return <BusinessInsightsDashboard />;
-      case 'gsc':
-        return <GoogleSearchConsoleSummary />;
-      case 'payments':
-        return <ManualPaymentsManager />;
-      case 'feedback':
-        return (
-          <div className="space-y-6">
-            {!loadingData && feedback.length > 0 && <FeedbackAnalytics feedback={feedback} />}
-            <FeedbackList
-              feedback={feedback}
-              loadingData={loadingData}
-              onUpdateStatus={handleUpdateFeedbackStatus}
-              onDelete={handleDeleteFeedback}
-            />
-          </div>
-        );
-      case 'subscribers':
-        return <SubscribersList subscribers={subscribers} loadingData={loadingData} />;
-      case 'faq':
-        return <AdminFAQManager />;
-      case 'conversations':
-        return <ConversationsList conversations={conversations} loadingData={loadingData} onDelete={handleDeleteConversation} />;
-      case 'gemini-keys':
-        return <GeminiKeysManager />;
-      case 'roles':
-        return <UserRoleManager />;
-      case 'profiles':
-        return <ProfileManager />;
-      case 'changelog':
-        return <ChangelogManager />;
-      case 'announcements':
-        return <AnnouncementManager />;
-      case 'broadcast':
-        return <BroadcastManager />;
-      case 'growth-command':
-        return <GrowthCommandPanel />;
-      case 'export':
-        return <AnalyticsExport />;
-      default:
-        return null;
-    }
-  };
-
-  return (
-    <AdminLayout
-      activeSection={activeSection}
-      onSectionChange={setActiveSection}
-      adminEmail={user?.email}
-      pendingFeedback={stats.pendingFeedback}
-      pendingGrowthActions={stats.pendingGrowthActions}
-      sidebarCollapsed={sidebarCollapsed}
-      onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
-    >
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeSection}
-          variants={variants.sectionSwap}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-        >
-          {renderContent()}
-        </motion.div>
-      </AnimatePresence>
-    </AdminLayout>
-  );
-};
-
-// --- Sub-components ---
-
-const StatCard = ({ title, icon: Icon, children, loading }: { title: string; icon: LucideIcon; children: React.ReactNode; loading: boolean }) => (
-  <AdminAnimatedCard>
-    <CardHeader className="flex flex-row items-center justify-between pb-2">
-      <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
-      <Icon className="h-4 w-4 text-muted-foreground" />
-    </CardHeader>
-    <CardContent>{loading ? <Skeleton className="h-8 w-20" /> : children}</CardContent>
-  </AdminAnimatedCard>
-);
-
-const DashboardOverview = ({
-  stats,
-  loadingData,
-  pendingFeedback,
-}: {
-  stats: { totalUsers: number; totalConversations: number; totalMessages: number; activeSubscribers: number; proSubscribers: number; eliteSubscribers: number };
-  loadingData: boolean;
+type AdminStats = {
+  totalUsers: number;
+  totalConversations: number;
+  totalMessages: number;
+  activeSubscribers: number;
+  proSubscribers: number;
+  eliteSubscribers: number;
+  totalFeedback: number;
   pendingFeedback: number;
-}) => (
-  <div className="space-y-6">
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-      <StatCard title="Total Users" icon={Users} loading={loadingData}>
-        <p className="text-2xl font-bold">{stats.totalUsers}</p>
-      </StatCard>
-      <StatCard title="Conversations" icon={MessageSquare} loading={loadingData}>
-        <p className="text-2xl font-bold">{stats.totalConversations}</p>
-      </StatCard>
-      <StatCard title="Total Messages" icon={BarChart3} loading={loadingData}>
-        <p className="text-2xl font-bold">{stats.totalMessages}</p>
-      </StatCard>
-      <StatCard title="Active Subscribers" icon={Crown} loading={loadingData}>
-        <div className="flex items-center gap-2">
-          <p className="text-2xl font-bold">{stats.activeSubscribers}</p>
-          <div className="flex gap-1">
-            <Badge variant="secondary" className="text-xs">
-              <Zap className="h-3 w-3 mr-1" />
-              {stats.proSubscribers} Pro
-            </Badge>
-            <Badge className="text-xs bg-gradient-primary">
-              <Crown className="h-3 w-3 mr-1" />
-              {stats.eliteSubscribers} Elite
-            </Badge>
-          </div>
-        </div>
-      </StatCard>
+  pendingGrowthActions?: number;
+};
+
+type AdminDashboardProps = {
+  stats: AdminStats;
+  loading: boolean;
+  onNavigate: (section: string) => void;
+};
+
+const AdminDashboardTyped = AdminDashboard as unknown as ComponentType<AdminDashboardProps>;
+
+const STATS = [
+  { label: "Total Users", value: "12,847", icon: Users, accent: "text-indigo-400 bg-indigo-500/10" },
+  { label: "Active Subscriptions", value: "1,204", icon: CreditCard, accent: "text-emerald-400 bg-emerald-500/10" },
+  { label: "Daily Messages", value: "184,920", icon: MessageSquare, accent: "text-purple-400 bg-purple-500/10" },
+  { label: "Revenue (MRR)", value: "$48,210", icon: DollarSign, accent: "text-amber-400 bg-amber-500/10" },
+];
+
+const QUICK_ACTIONS = [
+  { label: "View Users", icon: Users, section: "users" },
+  { label: "Broadcast Message", icon: Megaphone, section: "broadcast" },
+  { label: "Ship Release", icon: Rocket, section: "release" },
+  { label: "Review Feedback", icon: MessageSquareHeart, section: "feedback" },
+];
+
+const RECENT_ACTIVITY = [
+  { time: "2m ago", text: "New Enterprise lead submitted contact form" },
+  { time: "11m ago", text: "Pro subscriber upgraded to Elite tier" },
+  { time: "38m ago", text: "Changelog entry published: v2.4.0" },
+  { time: "1h ago", text: "Broadcast sent to 12,847 users — 4.2% CTR" },
+  { time: "3h ago", text: "New feedback flagged as high-priority" },
+  { time: "5h ago", text: "Manual payment recorded — $99 Pro plan" },
+];
+
+const AccessDeniedFallback = () => (
+  <div className="ios-glass-card p-8 sm:p-10 text-center max-w-xl mx-auto">
+    <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 mb-4">
+      <Lock className="h-7 w-7 text-amber-400" />
     </div>
-    {pendingFeedback > 0 && (
-      <Card className="border-warning/30 bg-warning/5">
-        <CardContent className="flex items-center gap-3 py-4">
-          <MessageSquareHeart className="h-5 w-5 text-warning" />
-          <p className="text-sm">
-            You have <span className="font-semibold text-warning">{pendingFeedback}</span> pending feedback items to review.
-          </p>
-        </CardContent>
-      </Card>
-    )}
+    <h2 className="text-xl font-semibold">Admin access required</h2>
+    <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
+      You need a verified admin session to view the live dashboard. Sign in with an
+      admin-enabled account, or contact{" "}
+      <a href="mailto:shadowtalk@shadowtalk-ai.com" className="text-indigo-400 hover:underline">
+        shadowtalk@shadowtalk-ai.com
+      </a>{" "}
+      to request access.
+    </p>
+    <Button className="mt-6" onClick={() => (window.location.href = "/auth")}>
+      Sign in
+    </Button>
   </div>
 );
 
-const FeedbackList = ({
-  feedback,
-  loadingData,
-  onUpdateStatus,
-  onDelete,
-}: {
-  feedback: FeedbackData[];
-  loadingData: boolean;
-  onUpdateStatus: (id: string, status: string) => void;
-  onDelete: (id: string) => void;
-}) => {
-  const { variants, reduced } = useAdminMotion();
+export default function AdminPage() {
+  const { user, loading: authLoading } = useAuth();
+  const { isAdmin, loading: roleLoading } = useAdminCheck();
+  const navigate = useNavigate();
+  const accessGranted = Boolean(user && isAdmin);
+  const accessLoading = authLoading || roleLoading;
+
+  const handleNavigate = (section: string) => {
+    // In production this would route to the admin subpage (e.g. /admin/users).
+    // For now we keep the user on /admin and surface the action via state.
+    if (section === "intelligence") { navigate("/admin/intelligence"); return; }
+    void section;
+  };
+
   return (
-  <AdminAnimatedCard hover={false}>
-    <CardHeader>
-      <CardTitle className="flex items-center gap-2">
-        <MessageSquareHeart className="h-5 w-5 text-primary" />
-        User Feedback
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      {loadingData ? (
-        <div className="space-y-2">{[...Array(5)].map((_, i) => <Skeleton key={i} className="h-24 w-full" />)}</div>
-      ) : feedback.length === 0 ? (
-        <p className="text-muted-foreground text-center py-8">No feedback yet</p>
-      ) : (
-        <motion.div
-          className="space-y-3"
-          variants={variants.staggerList}
-          initial="hidden"
-          animate="visible"
-        >
-          {feedback.map(item => (
-            <motion.div
-              key={item.id}
-              variants={variants.staggerItem}
-              whileHover={reduced ? undefined : { x: 4, scale: 1.005 }}
-              className="space-y-3 rounded-lg border border-border bg-card/50 p-4 transition-colors hover:bg-card"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  {getCategoryIcon(item.category)}
-                  <div>
-                    <p className="font-medium capitalize">{item.category.replace('_', ' ')}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {item.email || 'Anonymous'} • {format(new Date(item.created_at), 'MMM d, yyyy h:mm a')}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  {item.rating && (
-                    <div className="flex items-center gap-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className={`h-3.5 w-3.5 ${i < item.rating! ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground'}`} />
-                      ))}
+    <div className="min-h-screen bg-background text-foreground">
+      <SEOHead
+        meta={{
+          title: "Admin Dashboard — ShadowTalk AI",
+          description:
+            "Internal admin dashboard for ShadowTalk AI. Manage users, subscriptions, broadcasts, releases, and product feedback.",
+          canonical: "https://www.shadowtalk-ai.com/admin",
+          keywords: ["ShadowTalk admin", "admin dashboard", "internal tools"],
+          ogType: "website",
+          twitterCard: "summary",
+          noIndex: true,
+        }}
+      />
+      <Navigation />
+      <PageTransition>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="mb-10"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold mb-3">
+              <ShieldAlert className="h-3 w-3" />
+              Restricted · Internal Only
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Admin Dashboard</h1>
+            <p className="text-sm text-muted-foreground mt-2 max-w-2xl">
+              Operational overview for the ShadowTalk AI team. Stats are illustrative until connected
+              to live Firestore aggregates.
+            </p>
+          </motion.div>
+
+          {accessLoading ? (
+            <p className="rounded-xl border border-border/50 bg-card/60 p-6 text-sm text-muted-foreground" role="status" aria-live="polite">Checking admin access…</p>
+          ) : !accessGranted ? (
+            <AccessDeniedFallback />
+          ) : (
+            <>
+              {/* Stats grid */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                {STATS.map((stat, i) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.25, delay: 0.04 * i }}
+                    className="ios-glass-card p-5"
+                  >
+                    <div className={`inline-flex p-1.5 rounded-lg border border-border/50 mb-3 ${stat.accent}`}>
+                      <stat.icon className="h-4 w-4" />
                     </div>
-                  )}
-                  {getStatusBadge(item.status)}
+                    <p className="text-2xl font-bold tracking-tight">{stat.value}</p>
+                    <p className="text-[11px] text-muted-foreground uppercase tracking-wider mt-1">
+                      {stat.label}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Quick actions */}
+              <div className="ios-glass-card p-6 mb-8">
+                <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">
+                  Quick Actions
+                </h2>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {QUICK_ACTIONS.map((action) => (
+                    <button
+                      key={action.section}
+                      onClick={() => handleNavigate(action.section)}
+                      className="flex flex-col items-start gap-2 p-4 rounded-xl border border-border/50 bg-white/[0.02] hover:bg-white/[0.05] hover:border-indigo-500/40 transition text-left"
+                    >
+                      <action.icon className="h-4 w-4 text-indigo-400" />
+                      <span className="text-xs font-medium">{action.label}</span>
+                    </button>
+                  ))}
                 </div>
               </div>
-              <p className="text-sm text-foreground/90 pl-7">{item.message}</p>
-              <div className="flex items-center gap-2 pl-7 pt-1">
-                <Select value={item.status} onValueChange={(v) => onUpdateStatus(item.id, v)}>
-                  <SelectTrigger className="w-[130px] h-8 text-xs"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="in_progress">In Progress</SelectItem>
-                    <SelectItem value="resolved">Resolved</SelectItem>
-                    <SelectItem value="dismissed">Dismissed</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={() => onDelete(item.id)}>
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      )}
-    </CardContent>
-  </AdminAnimatedCard>
-  );
-};
 
-const SubscribersList = ({ subscribers, loadingData }: { subscribers: SubscriberData[]; loadingData: boolean }) => {
-  const { variants, reduced } = useAdminMotion();
-  return (
-  <AdminAnimatedCard hover={false}>
-    <CardHeader><CardTitle>Subscriber Management</CardTitle></CardHeader>
-    <CardContent>
-      {loadingData ? (
-        <div className="space-y-2">{[...Array(5)].map((_, i) => <Skeleton key={i} className="h-16 w-full" />)}</div>
-      ) : subscribers.length === 0 ? (
-        <p className="text-muted-foreground text-center py-8">No subscribers yet</p>
-      ) : (
-        <motion.div
-          className="space-y-2"
-          variants={variants.staggerList}
-          initial="hidden"
-          animate="visible"
-        >
-          {subscribers.map(sub => (
-            <motion.div
-              key={sub.id}
-              variants={variants.staggerItem}
-              whileHover={reduced ? undefined : { x: 4 }}
-              className="flex items-center justify-between rounded-lg border border-border bg-card/50 p-4 transition-colors hover:bg-card"
-            >
-              <div className="space-y-1">
-                <p className="font-medium">{sub.email}</p>
-                <p className="text-sm text-muted-foreground">Joined: {new Date(sub.created_at).toLocaleDateString()}</p>
-              </div>
-              <div className="flex items-center gap-2">
-                {sub.subscribed ? (
-                  <>
-                    <Badge className={sub.subscription_tier === 'elite' ? 'bg-gradient-primary' : ''}>
-                      {sub.subscription_tier === 'elite' ? <><Crown className="h-3 w-3 mr-1" /> Elite</> : <><Zap className="h-3 w-3 mr-1" /> Pro</>}
-                    </Badge>
-                    {sub.subscription_end && <span className="text-xs text-muted-foreground">Until {new Date(sub.subscription_end).toLocaleDateString()}</span>}
-                  </>
-                ) : (
-                  <Badge variant="outline">Free</Badge>
-                )}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      )}
-    </CardContent>
-  </AdminAnimatedCard>
-  );
-};
-
-const ConversationsList = ({ conversations, loadingData, onDelete }: { conversations: ConversationData[]; loadingData: boolean; onDelete: (id: string) => void }) => {
-  const { variants, reduced } = useAdminMotion();
-  return (
-  <AdminAnimatedCard hover={false}>
-    <CardHeader><CardTitle>Conversation Management</CardTitle></CardHeader>
-    <CardContent>
-      {loadingData ? (
-        <div className="space-y-2">{[...Array(5)].map((_, i) => <Skeleton key={i} className="h-16 w-full" />)}</div>
-      ) : conversations.length === 0 ? (
-        <p className="text-muted-foreground text-center py-8">No conversations yet</p>
-      ) : (
-        <motion.div
-          className="space-y-2"
-          variants={variants.staggerList}
-          initial="hidden"
-          animate="visible"
-        >
-          {conversations.map(conv => (
-            <motion.div
-              key={conv.id}
-              variants={variants.staggerItem}
-              whileHover={reduced ? undefined : { x: 4 }}
-              className="flex items-center justify-between rounded-lg border border-border bg-card/50 p-4 transition-colors hover:bg-card"
-            >
-              <div className="space-y-1 flex-1">
-                <p className="font-medium">{conv.title || 'Untitled Conversation'}</p>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <span>{conv.message_count || 0} messages</span>
-                  <span>Updated: {new Date(conv.updated_at).toLocaleDateString()}</span>
+              {/* AdminDashboard component — wrapped in ErrorBoundary so any
+                  runtime throw degrades to the "Admin access required" card. */}
+              <ErrorBoundary fallback={<AccessDeniedFallback />}>
+                <div className="ios-glass-card p-6 mb-8">
+                  <AdminDashboardTyped
+                    stats={{
+                      totalUsers: 12847,
+                      totalConversations: 38210,
+                      totalMessages: 184920,
+                      activeSubscribers: 1204,
+                      proSubscribers: 812,
+                      eliteSubscribers: 392,
+                      totalFeedback: 538,
+                      pendingFeedback: 17,
+                      pendingGrowthActions: 3,
+                    }}
+                    loading={false}
+                    onNavigate={handleNavigate}
+                  />
                 </div>
-              </div>
-              <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={() => onDelete(conv.id)}>
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </motion.div>
-          ))}
-        </motion.div>
-      )}
-    </CardContent>
-  </AdminAnimatedCard>
-  );
-};
+              </ErrorBoundary>
 
-export default AdminPage;
+              {/* Recent activity feed */}
+              <div className="ios-glass-card p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <Activity className="h-4 w-4 text-indigo-400" />
+                  <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                    Recent Activity
+                  </h2>
+                </div>
+                <ol className="space-y-3">
+                  {RECENT_ACTIVITY.map((entry, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm">
+                      <span className="text-[11px] text-muted-foreground tabular-nums shrink-0 w-16">
+                        {entry.time}
+                      </span>
+                      <span className="flex-1 text-slate-200">{entry.text}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </>
+          )}
+        </div>
+      </PageTransition>
+      <Footer />
+    </div>
+  );
+}

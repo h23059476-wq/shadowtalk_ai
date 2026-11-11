@@ -51,7 +51,7 @@ const AboutStats = () => {
   useEffect(() => {
     const fetchStats = async () => {
       const [usersRes, convsRes, scansRes, bugsRes, feedbackRes, ratingsRes] = await Promise.all([
-        backend.from("profiles").select("id", { count: "exact", head: true }),
+        backend.from("public_profiles").select("id", { count: "exact", head: true }),
         backend.from("conversations").select("id", { count: "exact", head: true }),
         backend.from("cyber_scan_results").select("id", { count: "exact", head: true }),
         backend.from("bug_bounty_submissions").select("id", { count: "exact", head: true }),

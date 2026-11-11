@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useLocalCodeAgent } from "@/hooks/useLocalCodeAgent";
-import { isDeviceOnlyPledgeActive } from "@/lib/privacy/deviceOnlyPledge";
+
 import type { JulesWorkspaceFile, ParsedFileChange } from "@/lib/jules/types";
 
 const QUICK_TASKS = [
@@ -28,7 +28,6 @@ interface JulesPanelProps {
 export function JulesPanel({ files, activeFileName, onApplyChanges }: JulesPanelProps) {
   const [task, setTask] = useState("");
   const agent = useLocalCodeAgent(files, activeFileName);
-  const pledged = isDeviceOnlyPledgeActive();
 
   const handleApply = () => {
     if (!agent.lastResult) return;
@@ -58,9 +57,7 @@ export function JulesPanel({ files, activeFileName, onApplyChanges }: JulesPanel
       <ScrollArea className="flex-1">
         <div className="p-3 space-y-3">
           <p className="text-[11px] text-muted-foreground leading-relaxed">
-            {pledged
-              ? "Your code never leaves this device. Inference runs in your browser or local Ollama — we cannot see your workspace."
-              : "Running on-device. Cloud agents are disabled unless you opt in under Privacy settings."}
+            Running in cloud via Groq.
           </p>
 
           <Textarea

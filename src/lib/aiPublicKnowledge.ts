@@ -45,7 +45,7 @@ export const SHADOWTALK_AI_KNOWLEDGE = {
     search_phrases: [...FOUNDER_SEARCH_PHRASES],
   },
   contact: {
-    email: "shadowtalk68@gmail.com",
+    email: "shadowtalk@shadowtalk-ai.com",
     website: AI_KNOWLEDGE_BASE_URL,
     help: `${AI_KNOWLEDGE_BASE_URL}/help`,
     docs: `${AI_KNOWLEDGE_BASE_URL}/docs`,

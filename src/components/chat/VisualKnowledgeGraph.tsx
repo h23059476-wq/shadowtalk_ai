@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useLocalKnowledgeGraph } from "@/hooks/useLocalKnowledgeGraph";
+import { useKnowledgeGraph } from "@/hooks/useKnowledgeGraph";
 import { useMemoryGraph } from "@/hooks/useMemoryGraph";
 import { useKnowledgeSnapshot } from "@/hooks/useKnowledgeSnapshot";
 import { useToast } from "@/hooks/use-toast";
@@ -41,7 +41,7 @@ const VisualKnowledgeGraph = () => {
     clearGraph,
     getRelatedNodes,
     importGraph,
-  } = useLocalKnowledgeGraph();
+  } = useKnowledgeGraph();
 
   const { isReady: memoryReady, stats: memoryStats } = useMemoryGraph();
   const { saveSnapshot, loadLatestSnapshot } = useKnowledgeSnapshot();
@@ -363,17 +363,20 @@ const VisualKnowledgeGraph = () => {
       .filter((e) => e.id && e.label && e.type)
       .map((e) => ({
         id: e.id!,
+        user_id: "",
         label: e.label!,
         type: e.type as "entity" | "concept" | "topic" | "memory",
         content: e.content || e.label!,
         frequency: e.frequency ?? 1,
-        lastMentioned: e.lastMentioned ? new Date(e.lastMentioned) : new Date(),
+        lastMentioned: (e.lastMentioned ? new Date(e.lastMentioned) : new Date()).toISOString(),
         metadata: e.metadata,
       }));
 
     const importEdges = relationships
       .filter((r) => r.source && r.target)
       .map((r) => ({
+        id: `${r.source!}-${r.target!}`,
+        user_id: "",
         source: r.source!,
         target: r.target!,
         relationship: r.relationship || "related",

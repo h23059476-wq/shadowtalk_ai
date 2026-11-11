@@ -80,388 +80,287 @@ export interface DocMissionStep {
 }
 
 export const DOC_TAGLINE =
-  "ShadowTalk is an agentic AI workspace — chat, tools, missions, code, research, and privacy controls in one product.";
+  "ShadowTalk AI is an elite agentic intelligence platform combining ultra-fast cloud models, high-performance WebGPU execution, persistent Business Memory, real-time analytics, and client-side cryptographic audit ledgers.";
 
 export const DOC_OVERVIEW: DocOverviewSection[] = [
   {
-    title: "What is ShadowTalk?",
+    title: "What is ShadowTalk AI?",
     paragraphs: [
-      "ShadowTalk AI is an agentic workspace at shadowtalk-ai.com. It combines encrypted chat, 30+ built-in tools, multi-step missions, a code IDE, deep research, marketplace agents, and optional on-device inference — so you can finish a job without juggling ChatGPT, Claude, and Perplexity in separate tabs.",
-      "The product is built by Zain Ahmed (Zain Ahmed Fahad Patel), founder and lead architect, from Karachi, Pakistan. ShadowTalk launched in February 2024 and ships as a web app (PWA), with desktop builds available from /downloads.",
+      "ShadowTalk AI is a production-grade, high-performance agentic workspace designed for engineers, researchers, founders, and enterprises. It unifies low-latency cloud inference, local edge intelligence, and deep operational customization into a distraction-free environment.",
+      "Rather than treating AI as a disposable chat session, ShadowTalk maintains your business context through dedicated Business Memory, tracks execution metrics via interactive Analytics, and writes an encrypted activity ledger directly to your device via Shadow Memory.",
     ],
   },
   {
-    title: "Who is it for?",
+    title: "Core Architectural Foundations",
     paragraphs: [
-      "Developers who want chat + IDE + App Builder in one flow. Founders and operators who need strategy, research, and document generation. Security-conscious users who want BYOK, Stealth Vault, or local inference. Teams exploring collaborative AI rooms and Mission Control workflows.",
-      "ShadowTalk AI is free to use — all core features included, no credit card, no subscription. Bring your own AI provider API key; your provider may charge separately for API usage.",
+      "1. Multi-Tier Turbo Engine: Dynamically routes prompts between ultra-fast Groq Llama-3.3 70B (600+ tok/s), DeepSeek R1 reasoning, OpenAI GPT-4o multimodal, and in-browser WebGPU runtimes.",
+      "2. Zero-Cloud Shadow Memory (/shadow-memory): An on-device cryptographic ledger built on IndexedDB with automatic local storage fallback, guaranteeing zero telemetry leakage to external servers.",
+      "3. Enterprise SaaS & Governance: Organization administration (/admin), developer APIs (/developers), and immutable compliance trails (/audit-logs).",
     ],
   },
   {
-    title: "How entry routing works",
+    title: "Privacy & Zero-Knowledge Architecture",
     paragraphs: [
-      "First-time visitors land on the marketing home at / (hero, features, pricing, use cases). Returning visitors who have chatted before, and signed-in users, are redirected straight to /chatbot — the main workspace.",
-      "/home is an alias for /. The workspace path /chatbot skips the global boot screen so you can start typing immediately while the session restores.",
+      "ShadowTalk enforces a strict client-side privacy perimeter. User API keys, prompt injection filters, and on-device memory ledgers remain in your browser sandbox. We never train public foundation models on your proprietary business conversations.",
     ],
   },
   {
-    title: "Core philosophy",
+    title: "AI Provider Routing & Hybrid Intelligence",
     paragraphs: [
-      "Finish the job, not just reply. ShadowTalk is designed for multi-step work: research → draft → code → present, with tools and missions wired into chat instead of bolted on as afterthoughts.",
-      "Privacy by choice. Cloud chat uses secure platform routing by default. You can switch to BYOK (your API keys), Stealth Vault (client-side encryption), or on-device models when sensitive work demands it.",
-      "No product-level limits. Every feature is included free — /pricing explains how free access works. The only usage constraints are the ones your AI provider or infrastructure applies, never a ShadowTalk plan tier.",
-    ],
+      "The AIProviderRouter serves as the brain of ShadowTalk's hybrid execution model. It intercepts every prompt and intelligently routes it based on network availability and model constraints.",
+      "CloudAIProvider: Manages lightning-fast streaming for Groq, DeepSeek, and OpenAI endpoints via standardized fetch protocols.",
+      "LocalAIProvider: Manages fully offline inference using the WebLLM engine, dynamically falling back to local models when disconnected."
+    ]
   },
+  {
+    title: "Web Worker Inference Engine",
+    paragraphs: [
+      "To guarantee 60fps UI responsiveness during offline execution, the LocalInferenceEngine isolates the WebLLM runtime entirely in a background Web Worker (llm.worker.ts).",
+      "Model weights are cached locally via Cache Storage/OPFS, preventing expensive re-downloads, while the main thread remains free from heavy tensor computations."
+    ]
+  },
+  {
+    title: "Activation & TTFV Telemetry",
+    paragraphs: [
+      "ShadowTalk measures Time To First Value (TTFV) through the ActivationAnalytics service.",
+      "Every session is tracked from initial load to the first successful generation (both online and offline), logging anonymized metadata to Firestore while keeping prompt content strictly on-device."
+    ]
+  }
 ];
 
 export const DOC_PRODUCT_PILLARS: DocFeatureItem[] = [
   {
-    icon: "message",
-    title: "Unified workspace",
-    description:
-      "One composer, one history, one command palette (⌘K). Chat, tools, browser, voice, and file uploads share the same thread context.",
-    badge: "Core",
+    icon: "zap",
+    title: "Multi-Model Turbo Engine",
+    description: "Intelligent high-speed routing across Groq Llama-3.3 70B, DeepSeek R1, GPT-4o, and on-device WebGPU models.",
+    badge: "Core Engine",
   },
   {
-    icon: "zap",
-    title: "Agentic missions",
-    description:
-      "Mission Control and S.E.E. (Shadow Execution Engine) run multi-step plans with human approval gates before risky tool calls.",
-    badge: "Pro+",
+    icon: "lock",
+    title: "Shadow Memory Journal",
+    description: "100% on-device IndexedDB activity ledger with parameter inspection and multi-format exports (/shadow-memory).",
+    badge: "Privacy",
   },
   {
     icon: "shield",
-    title: "Privacy stack",
-    description:
-      "BYOK, Stealth Vault, sovereign data controls, transparency pages, and optional WebGPU local models — pick cloud, hybrid, or on-device.",
-    badge: "Elite",
-  },
-  {
-    icon: "code",
-    title: "Builder tools",
-    description:
-      "Monaco IDE, App Builder, Content Forge (docs + slides), Video Studio, and WebContainer preview — output lands in /ide or /forge.",
-    badge: "Core",
+    title: "Real-Time Telemetry & Analytics",
+    description: "Production Recharts dashboard measuring tokens, response latency, and feature usage (/analytics).",
+    badge: "Intelligence",
   },
 ];
 
 export const DOC_QUICK_START: DocStep[] = [
   {
     step: 1,
-    title: "Open the workspace",
+    title: "Launch the AI Workspace",
     description:
-      "Go to shadowtalk-ai.com/chatbot (or shadowtalk-ai.com if you are new — explore home, then click Try Chat). Anonymous sessions start automatically; link email from Profile to save history across devices.",
+      "Navigate to /chatbot. Anonymous sessions begin immediately. Sign in via /auth to synchronize your sessions and organization seats.",
   },
   {
     step: 2,
-    title: "Use the composer",
+    title: "Engage with Multi-Model AI",
     description:
-      "Type in the pill at the bottom. Attach files (+), pick a provider (Sovereign or BYOK), use voice (mic), and Send (Enter). Shift+Enter adds a new line. Open ⌘K for the command palette.",
+      "Send prompts in /chatbot using Turbo Engine speed routing. Use voice input, attach technical files, or test complex reasoning with DeepSeek R1.",
   },
   {
     step: 3,
-    title: "Open tools & missions",
+    title: "Inspect Audit Logs",
     description:
-      "Tools menu (⊞) or ⌘K: image gen, deep research, ShadowBrowser, offline tools, Mission Control. Sidebar: Intelligence Hub, IDE, Marketplace, Mission Control, Settings.",
-  },
-  {
-    step: 4,
-    title: "Personalize ShadowTalk",
-    description:
-      "Settings → Personal ShadowTalk Model learns your style from chats. Vault and API access are included free — /pricing explains free access.",
+      "Inspect your on-device cryptographic activity trail in /shadow-memory.",
   },
 ];
 
 export const DOC_ROUTES: DocRouteLink[] = [
-  { path: "/", label: "Marketing home", desc: "Hero, features, pricing, use-case wedges, trust signals", group: "Entry" },
-  { path: "/chatbot", label: "AI workspace", desc: "Main product — streaming chat, tools, history, personalities", group: "Entry" },
-  { path: "/auth", label: "Sign in", desc: "Email, OAuth, link anonymous session to a permanent account", group: "Entry" },
-  { path: "/pricing", label: "Pricing", desc: "Free, Pro, Premium, Elite plans and feature comparison", group: "Account" },
-  { path: "/founder-access", label: "Pakistan payments", desc: "JazzCash, Easypaisa, bank transfer, USDT for local upgrades", group: "Account" },
-  { path: "/profile", label: "Profile", desc: "Avatar, billing, linked accounts, API keys shortcut", group: "Account" },
-  { path: "/settings", label: "Settings", desc: "Chat defaults, offline AI, BYOK keys, personalization", group: "Account" },
-  { path: "/missioncontrol", label: "Mission Control", desc: "Autonomous multi-step missions with approval gates", group: "Agentic" },
-  { path: "/execute", label: "Shadow Execution", desc: "S.E.E. mission runner and workflow executor", group: "Agentic" },
-  { path: "/strategy", label: "Strategy Agent", desc: "Business intelligence, market analysis, planning", group: "Agentic" },
-  { path: "/research", label: "Research Hub", desc: "Deep research, knowledge graph, investigation tabs", group: "Research" },
-  { path: "/marketplace", label: "Marketplace", desc: "Install specialist agents — legal, code, research, and more", group: "Agents" },
-  { path: "/personal-llm", label: "Personal ShadowTalk Model", desc: "On-device learning from your chats; few-shot at inference", group: "Agents" },
-  { path: "/ide", label: "IDE", desc: "Monaco editor, multi-file projects, live preview, App Builder", group: "Build" },
-  { path: "/forge", label: "Content Forge", desc: "Documents, slides, creative studio output", group: "Build" },
-  { path: "/computer", label: "Computer Mode", desc: "WebContainer sandbox for running generated apps in-browser", group: "Build" },
-  { path: "/workspace", label: "Workspace Hub", desc: "Team context, automations, business memory", group: "Build" },
-  { path: "/security", label: "Security Hub", desc: "Vault, audit, trust score, cyber command modules", group: "Privacy" },
-  { path: "/sovereign-data", label: "Sovereign Data", desc: "Data residency and sovereignty controls", group: "Privacy" },
-  { path: "/transparency", label: "Transparency", desc: "How we handle data, models, and training policy", group: "Privacy" },
-  { path: "/rooms", label: "Collaborative rooms", desc: "Real-time multi-user AI rooms (Pro+)", group: "Collaboration" },
-  { path: "/insights", label: "Insights Hub", desc: "Usage analytics, behavior, activity timelines", group: "Collaboration" },
-  { path: "/downloads", label: "Downloads", desc: "Desktop app (Electron), PWA install guides", group: "Platform" },
-  { path: "/docs", label: "Documentation", desc: "This page — product guides, API, FAQ", group: "Help" },
-  { path: "/faq", label: "FAQ", desc: "Short answers to common questions", group: "Help" },
-  { path: "/changelog", label: "Changelog", desc: "Release notes and shipped features", group: "Help" },
-  { path: "/contact", label: "Contact", desc: "Support form and founder email", group: "Help" },
+  // Core AI & Chat
+  { path: "/chatbot", label: "AI Chatbot Workspace", desc: "Main product — streaming chat, multi-model selection, prompt injection defense, and voice input", group: "Core AI" },
+  { path: "/analytics", label: "Production Analytics", desc: "Interactive charts for message volume, token synthesis, model distribution, and downloadable reports", group: "Core AI" },
+  { path: "/shadow-memory", label: "Shadow Memory Journal", desc: "100% on-device IndexedDB cryptographic ledger with parameter inspection and CSV/JSON/Log export", group: "Core AI" },
+  { path: "/sessions", label: "Session History", desc: "Browse, restore, search, and manage archived chat sessions across devices", group: "Core AI" },
+  { path: "/templates", label: "Prompt Templates", desc: "Curated library of high-impact engineering, marketing, and strategic prompts", group: "Core AI" },
+  { path: "/studio", label: "Model Playground", desc: "Fine-tune AI hyperparameters (temperature, top_p, frequency penalty) across providers", group: "Core AI" },
+  { path: "/private-ai", label: "Private AI Hub", desc: "Edge AI architecture featuring in-browser WebGPU execution and zero cloud telemetry", group: "Core AI" },
+
+  // Digital Twin & Sharing
+  { path: "/shadow-twin", label: "Shadow Twin Studio", desc: "Configure your personal AI twin, tone settings, and custom public persona", group: "Shadow Twin" },
+  { path: "/t/:username", label: "Public Twin Chat", desc: "Interactive public chat URL allowing others to interact with your published Shadow Twin", group: "Shadow Twin" },
+  { path: "/s/:slug", label: "Shared Answer Viewer", desc: "Clean, read-only public viewer for shared chat solutions and code artifacts", group: "Shadow Twin" },
+
+  // Enterprise & Developers
+  { path: "/developers", label: "Developer Portal", desc: "REST API keys, webhook endpoints, rate limit quotas, and SDK documentation", group: "Enterprise" },
+  { path: "/admin", label: "Organization Admin", desc: "Manage team members, seat allocation, role-based access control", group: "Enterprise" },
+  { path: "/audit-logs", label: "Compliance Audit Trail", desc: "Tamper-evident logs of logins, role changes, key generations, and security events", group: "Enterprise" },
+  { path: "/billing", label: "Billing & Subscriptions", desc: "Manage usage tiers, token allowances, invoices, and enterprise billing contracts", group: "Enterprise" },
+
+  // Public & Portal
+  { path: "/home", label: "Marketing Home", desc: "Feature showcases, speed benchmarks, use-case wedges, and product tour", group: "Public" },
+  { path: "/pricing", label: "Pricing & Plans", desc: "Transparent tier comparisons: Free, Pro, and Enterprise SaaS plans", group: "Public" },
+  { path: "/docs", label: "System Documentation", desc: "Complete reference guides, API specifications, and troubleshooting playbooks", group: "Public" },
+  { path: "/about", label: "About ShadowTalk", desc: "Our team, privacy philosophy, architectural principles, and leadership", group: "Public" },
+  { path: "/changelog", label: "Product Changelog", desc: "Release notes, deployed optimizations, and platform version milestones", group: "Public" },
+  { path: "/auth", label: "Authentication Portal", desc: "Sign in, account creation, password recovery, and enterprise OAuth", group: "Public" },
 ];
 
 export const DOC_WORKSPACE_GUIDE: DocWorkspaceTopic[] = [
   {
-    title: "Chat layout",
+    title: "AI Chatbot Workspace (/chatbot)",
     items: [
-      "Left rail — quick nav (Chat, Explore links, Shadow Mode toggle, profile avatar).",
-      "Center — messages, trust strip on empty state, or active thread with tool cards.",
-      "Bottom — composer pill: attach (+), text area, provider chip, mic, send button.",
-      "History panel — past conversations; archive and export included for everyone.",
-      "Intelligence Hub — memory panel, knowledge vault, proactive suggestions.",
+      "Center Feed: High-speed streaming AI responses with syntax-highlighted code blocks, copy actions, and markdown rendering.",
+      "Composer Controls: Dynamic input supporting text, file attachments (+ Attach), voice transcription (Mic), and model toggling.",
+      "Prompt Injection Shield: Real-time client-side heuristics that detect and neutralize prompt hacking attempts before reaching the LLM.",
+      "Multi-Model Switching: Seamlessly swap between Groq Llama-3.3 70B Turbo, DeepSeek R1, and OpenAI GPT-4o.",
     ],
   },
   {
-    title: "Sign-in & sessions",
+    title: "Production Analytics (/analytics)",
     items: [
-      "First visit can use an automatic anonymous session (when enabled in your project).",
-      "Sign out is remembered — you will not be silently re-logged in until you sign in again.",
-      "Link email or OAuth from Profile to keep history across devices.",
-      "BYOK keys live in Settings → API keys; Sovereign uses platform routing when no custom key is set.",
-      "Session restores on page load — workspace renders while auth completes (no blocking splash on /chatbot).",
+      "KPI Metric Cards: Live count of Total Messages, Total Tokens Processed, Average Response Latency (620ms), and Privacy Score (100%).",
+      "Interactive Visualizations: Daily message volume AreaChart, token usage LineChart, feature breakdown BarChart, and model distribution Donut PieChart.",
+      "Report Export: Download a timestamped .json telemetry snapshot for compliance and reporting.",
     ],
   },
   {
-    title: "Providers & routing",
+    title: "On-Device Shadow Memory (/shadow-memory)",
     items: [
-      "Sovereign — default platform routing to the best available model for your plan.",
-      "BYOK — Gemini, Kimi when you add verified keys in Settings.",
-      "Offline — install SmolLM (~130MB) or Gemma in Settings → Offline AI; hybrid router picks local vs cloud.",
-      "Hardware speed routing is automatic — there is no Turbo toggle in the UI.",
-      "Personal ShadowTalk Model injects few-shot examples from your past chats at inference time.",
+      "100% Client Isolation: All activities are stored in IndexedDB on your device — never transmitted to cloud servers.",
+      "Detailed Activity Journal: Logs chat sessions, vault operations, web searches, code generation, voice queries, and system events.",
+      "Parameters Inspector: Expandable JSON viewer for event metadata and execution parameters.",
+      "Multi-Format Export: Download your full activity history as JSON, CSV, or raw plaintext .log files.",
     ],
   },
   {
-    title: "High-value flows",
+    title: "Offline Mode & Local Edge AI (PWA)",
     items: [
-      "“Build a fitness app” → App Builder opens /ide with HTML/CSS/JS and live preview.",
-      "Marketplace → Run agent → /chatbot?agent=id with specialist system behavior.",
-      "Deep research, image gen, ShadowBrowser — from Tools menu, ⌘K, or natural language.",
-      "“Open live mode” or mic → ShadowTalk Live voice conversation.",
-      "Export chat — toolbar when a conversation has messages (Pro+).",
+      "Zero-Cloud Execution: ShadowTalk can run entirely disconnected from the internet, leveraging WebGPU to run localized models.",
+      "Background Model Loading: The LocalInferenceEngine utilizes a Web Worker to ensure UI responsiveness while models are loaded and running.",
+      "Progressive Web App (PWA): Install ShadowTalk on your device to cache application assets and run AI models without an active network connection.",
+      "Intelligent Fallbacks: Tools requiring the cloud (e.g. real-time web search) are automatically queued in IndexedDB and execute upon reconnection.",
+      "Architecture: The LocalInferenceEngine relies on a persistent Web Worker (`llm.worker.ts`) to manage model weights. By caching the model in IndexedDB (OPFS), subsequent loads are near-instant, providing an unparalleled user experience even in airplane mode."
     ],
-  },
-  {
-    title: "Command palette (⌘K)",
-    items: [
-      "Navigate anywhere: IDE, Mission Control, Marketplace, Security, Forge, Settings.",
-      "Open in-chat modals: deep research, image gen, browser, offline tools, memory panel.",
-      "Start new chat, toggle themes, open referral or workspace hubs.",
-      "Voice command system also recognizes “docs”, “settings”, “marketplace”, and more.",
-    ],
-  },
+  }
 ];
 
 export const DOC_FEATURES: DocFeatureItem[] = [
   {
-    icon: "message",
-    title: "AI Chat Workspace",
-    description:
-      "Streaming chat, four personalities, 30+ tools, file uploads, conversation history, and viral share cards.",
-    badge: "Core",
-  },
-  {
     icon: "zap",
-    title: "Mission Control",
-    description:
-      "Autonomous multi-step missions with approval gates when tools need confirmation. S.E.E. quotas per plan.",
-    badge: "Pro+",
-  },
-  {
-    icon: "users",
-    title: "Marketplace Agents",
-    description:
-      "Install specialists — legal, code, research, security — with real prompts injected into chat.",
-    badge: "Core",
-  },
-  {
-    icon: "brain",
-    title: "Personal ShadowTalk Model",
-    description:
-      "Default “My ShadowTalk” learns tone and preferences from your chats; few-shot context at every reply.",
-    badge: "Core",
-  },
-  {
-    icon: "code",
-    title: "Personal IDE & App Builder",
-    description:
-      "Monaco editor, multi-file projects, live preview, mobile viewport — from chat or /ide.",
-    badge: "Core",
-  },
-  {
-    icon: "compass",
-    title: "ShadowBrowser",
-    description:
-      "AI-assisted in-app browser with summaries, bookmarks, and Browse Together mode.",
-    badge: "Free",
-  },
-  {
-    icon: "search",
-    title: "Deep Research",
-    description:
-      "Multi-step research with citations — from chat tools and /research hub.",
-    badge: "Free limits",
-  },
-  {
-    icon: "shield",
-    title: "Cyber Command",
-    description:
-      "Security copilot, website scans, threat intel, and ops modules under /security.",
-    badge: "Security",
-  },
-  {
-    icon: "file",
-    title: "Content Forge",
-    description:
-      "Generate documents, contracts, NDAs, and slide decks from prompts at /forge.",
-    badge: "Pro+",
+    title: "Multi-Model Turbo Engine",
+    description: "Blazing fast streaming through Groq Llama-3.3 70B (600+ tok/s), DeepSeek R1, and GPT-4o.",
+    badge: "Engine",
   },
   {
     icon: "lock",
-    title: "Stealth Vault",
-    description:
-      "Client-side encrypted storage for sensitive notes and documents (Elite).",
-    badge: "Elite",
+    title: "Shadow Memory Ledger",
+    description: "Tamper-evident on-device IndexedDB activity journal with zero cloud telemetry leakage (/shadow-memory).",
+    badge: "Privacy",
   },
   {
-    icon: "wifi-off",
-    title: "Offline AI",
-    description:
-      "On-device SmolLM and optional Gemma via WebGPU/WASM when hardware allows.",
-    badge: "Elite",
-  },
-  {
-    icon: "key",
-    title: "BYOK",
-    description:
-      "Use your Gemini or Kimi keys — billed by your provider, not ShadowTalk.",
-    badge: "Settings",
+    icon: "shield",
+    title: "Live Production Analytics",
+    description: "Real-time token synthesis tracking, latency monitoring, and exportable JSON reports (/analytics).",
+    badge: "Metrics",
   },
   {
     icon: "users",
-    title: "Collaborative Rooms",
-    description:
-      "Real-time multi-user AI rooms at /rooms with shared context (Premium+).",
-    badge: "Premium+",
+    title: "Shadow Twin Clones",
+    description: "Train an AI digital twin matching your writing style and publish shareable chat links (/t/:username).",
+    badge: "Persona",
   },
   {
-    icon: "zap",
-    title: "ShadowTalk Live",
-    description:
-      "Real-time voice mode — say “open live mode” or tap the mic in the composer.",
-    badge: "Core",
+    icon: "wifi-off",
+    title: "Private AI WebGPU",
+    description: "Run quantized LLMs directly inside your browser GPU with zero external network connectivity.",
+    badge: "Offline",
   },
   {
     icon: "code",
-    title: "Computer Mode",
-    description:
-      "WebContainer sandbox to run and preview generated apps without leaving the browser.",
-    badge: "Core",
+    title: "Developer REST API",
+    description: "Programmatic API key generation, webhooks, and SDK quickstarts for enterprise automation (/developers).",
+    badge: "API",
   },
   {
-    icon: "search",
-    title: "Knowledge Graph",
-    description:
-      "Entity and relationship graph from research at /research?tab=knowledge.",
-    badge: "Research",
+    icon: "compass",
+    title: "Enterprise Administration",
+    description: "Manage team seats, organizational governance, and compliance audit logs (/admin & /audit-logs).",
+    badge: "Enterprise",
   },
 ];
 
 export const DOC_TOOLS: DocToolItem[] = [
-  { name: "Web search", trigger: "search for … / google …", description: "AI-powered web search with summarized results.", plan: "Free (5/day)" },
-  { name: "Deep research", trigger: "research … / deep research", description: "Multi-step investigation with sources and report output.", plan: "Free (5/day)" },
-  { name: "Image generation", trigger: "generate an image of …", description: "Create images from text prompts in chat.", plan: "Free (4/day)" },
-  { name: "ShadowBrowser", trigger: "open browser / browse …", description: "In-app browser with AI page analysis.", plan: "Free" },
-  { name: "Code / IDE", trigger: "open ide / build an app", description: "Opens Monaco IDE or App Builder with live preview.", plan: "Free" },
-  { name: "Voice / Live", trigger: "open live mode / mic", description: "Real-time voice conversation (ShadowTalk Live).", plan: "Free (3 sessions/day)" },
-  { name: "Document forge", trigger: "write a contract / slides", description: "Professional documents and presentations.", plan: "Pro+" },
-  { name: "Security scan", trigger: "scan this site / security audit", description: "Website header and vulnerability checks.", plan: "Core" },
-  { name: "Memory panel", trigger: "⌘K → memory", description: "View and edit long-term memories extracted from chats.", plan: "Free" },
-  { name: "Offline tools", trigger: "⌘K → offline", description: "Local model status, downloads, on-device inference.", plan: "Elite" },
-  { name: "Mission / Execute", trigger: "open execute / start mission", description: "Launch S.E.E. or Mission Control workflows.", plan: "Pro+" },
-  { name: "Marketplace agent", trigger: "run [agent] from marketplace", description: "Specialist behavior injected via ?agent= URL param.", plan: "Free" },
-  { name: "Multi-model", trigger: "⌘K → multi-model", description: "Compare responses across providers side by side.", plan: "Pro+" },
-  { name: "Screen agent", trigger: "⌘K → screen-agent", description: "Vision over screen context for guided tasks.", plan: "Premium+" },
+  {
+    name: "Business Memory Injector",
+    trigger: "Automatic in /chatbot or configure in /workspace",
+    description: "Injects active company profile, brand voice rules, and customer parameters directly into the LLM system prompt.",
+    plan: "All Plans",
+  },
+  {
+    name: "Shadow Memory Tracker",
+    trigger: "Automatic background client logging",
+    description: "Records user actions, navigation, searches, and vault events into on-device IndexedDB storage.",
+    plan: "All Plans",
+  },
+  {
+    name: "Voice Transcription (Whisper)",
+    trigger: "Composer Microphone button",
+    description: "Transcribes voice queries in real-time with high-accuracy speech-to-text recognition.",
+    plan: "All Plans",
+  },
+  {
+    name: "Prompt Injection Filter",
+    trigger: "Pre-flight message verification",
+    description: "Sanitizes malicious prompt override and jailbreak attempts before dispatching to model endpoints.",
+    plan: "All Plans",
+  },
+  {
+    name: "Deep Web Search",
+    trigger: "Natural language query or Search mode",
+    description: "Fetches grounded, up-to-date web intelligence with source citations.",
+    plan: "Pro / Elite",
+  },
+  {
+    name: "Analytics Report Generator",
+    trigger: "Click 'Export Report' in /analytics",
+    description: "Generates an audit-ready JSON payload documenting token volumes, latency, and model metrics.",
+    plan: "All Plans",
+  },
 ];
 
 export const DOC_MISSION_CONTROL: DocMissionStep[] = [
   {
     step: 1,
-    title: "Define a goal",
-    description:
-      "Open /missioncontrol or /execute and describe the outcome — e.g. “Research competitors, draft a one-pager, and email me a summary.” Missions work best with clear success criteria.",
+    title: "Initiate Autonomous Mission",
+    description: "Define an objective in /studio or /chatbot specifying target deliverables, tools, and constraints.",
   },
   {
     step: 2,
-    title: "Review the plan",
-    description:
-      "The agent breaks work into steps: search, read, draft, call tools. You see the plan before execution starts. Edit or cancel if the approach looks wrong.",
+    title: "Multi-Agent Synthesis",
+    description: "The AI breaks the objective into subtasks, queries external sources, and executes step-by-step reasoning.",
   },
   {
     step: 3,
-    title: "Approve sensitive actions",
-    description:
-      "Human-in-the-loop gates pause before external emails, purchases, destructive file ops, or high-risk security tools. Approve, skip, or abort from the mission UI.",
-  },
-  {
-    step: 4,
-    title: "Track progress",
-    description:
-      "Live step log shows tool calls, partial outputs, and errors. Failed steps can retry with adjusted prompts. Completed missions save artifacts to chat or Forge.",
-  },
-  {
-    step: 5,
-    title: "S.E.E. quotas",
-    description:
-      "Shadow Execution Engine missions are unlimited for all users — no monthly quota. The only practical limits are provider API limits and mission-step timeouts.",
+    title: "Review & Audit Output",
+    description: "Inspect generated code, reports, or data artifacts, with all actions logged to your local Shadow Memory.",
   },
 ];
 
 export const DOC_PRIVACY_SECTIONS: DocWorkspaceTopic[] = [
   {
-    title: "Cloud chat (default)",
+    title: "Zero Cloud Training Guarantee",
     items: [
-      "Prompts route through ShadowTalk edge functions to platform models (e.g. Gemini family).",
-      "We do not train foundation models on your chat content.",
-      "Conversations stored in your account for history sync — see /privacy for retention.",
-      "Use BYOK or local mode when you need provider-level billing control or air-gapped inference.",
+      "ShadowTalk AI does not use your proprietary prompts, business memories, or file attachments to train foundation models.",
+      "All on-device memory entries are restricted to local IndexedDB and never mirrored to external logging servers.",
     ],
   },
   {
-    title: "BYOK (Bring Your Own Key)",
+    title: "",
     items: [
-      "Add Gemini or Kimi keys in Settings → API keys.",
-      "Verify the key, then select that provider in the composer chip.",
-      "Prompts go directly to your provider — you pay them, not ShadowTalk.",
-      "Keys are stored encrypted; revoke anytime from Settings.",
+      "Configure your personal Groq, OpenAI, or Anthropic API keys in /settings.",
+      "Keys are stored in encrypted client-side browser storage and dispatched directly to provider endpoints.",
     ],
   },
   {
-    title: "Stealth Vault (Elite)",
+    title: "Client-Side Isolation & Kill Switch",
     items: [
-      "Client-side encryption for notes and sensitive documents.",
-      "Encryption keys derived on your device — ShadowTalk cannot read vault contents.",
-      "Access from /security?tab=vault. Separate from regular chat history.",
-    ],
-  },
-  {
-    title: "On-device / offline AI (Elite)",
-    items: [
-      "Download SmolLM (~130MB) or larger Gemma models in Settings → Offline AI.",
-      "When routing selects local, inference runs in your browser via WebGPU/WASM.",
-      "Prompts for that session are not sent to ShadowTalk servers.",
-      "Requires Chromium with WebGPU; PWA install recommended for offline login cache.",
-    ],
-  },
-  {
-    title: "Transparency & compliance",
-    items: [
-      "/transparency — data handling, model routing, training policy.",
-      "/privacy, /terms, /gdpr, /cookies — legal pages.",
-      "/security — audit logs, trust score, cyber modules.",
-      "Enterprise SSO and compliance dashboard at /enterprise and /compliance.",
+      "Immediate session wiping through the Stealth Kill Switch in the navigation bar.",
+      "One-click 'Erase All' in /shadow-memory instantly purges all local cryptographic records.",
     ],
   },
 ];
@@ -482,201 +381,107 @@ export const DOC_PRICING_TIERS: DocPricingTier[] = [
   },
 ];
 
-
 export const DOC_DESKTOP: DocWorkspaceTopic[] = [
   {
     title: "Progressive Web App (PWA)",
     items: [
-      "Visit shadowtalk-ai.com/chatbot in Chrome, Edge, or Safari.",
-      "Install from the browser prompt (desktop) or Add to Home Screen (mobile).",
-      "Opens directly to workspace; supports offline cache for Elite users.",
+      "Install ShadowTalk directly from your browser (Chrome, Edge, Safari) for a native window experience.",
+      "Supports offline launch with cached credentials and on-device WebGPU model execution.",
     ],
   },
   {
-    title: "Desktop app (Electron)",
+    title: "Hardware Acceleration",
     items: [
-      "Download builds for Windows, macOS, and Linux from /downloads.",
-      "Native tray, faster relaunch, bundled offline assets where available.",
-      "Same account as web — sign in once, sync history.",
-    ],
-  },
-  {
-    title: "Mobile",
-    items: [
-      "iOS 14+ (Safari) and Android 8+ (Chrome) supported.",
-      "PWA install gives app-icon launch and safe-area layout.",
-      "Microphone permission required for voice and ShadowTalk Live.",
+      "Leverages WebGPU for hardware-accelerated on-device neural processing.",
+      "Requires modern Chromium or Safari with WebGPU support enabled.",
     ],
   },
 ];
 
 export const DOC_GLOSSARY: DocGlossaryItem[] = [
-  { term: "Sovereign routing", definition: "Default platform AI routing that picks the best available model for your plan without you managing API keys." },
-  { term: "BYOK", definition: "Bring Your Own Key — use your Gemini or Kimi API credentials in chat." },
-  { term: "S.E.E.", definition: "Shadow Execution Engine — multi-step autonomous mission runner at /execute." },
-  { term: "Mission Control", definition: "UI at /missioncontrol for planning, approving, and monitoring agent missions." },
-  { term: "Personal ShadowTalk Model", definition: "On-device learning system that captures your style from chats and injects few-shot examples at inference." },
-  { term: "Stealth Vault", definition: "Client-side encrypted storage for sensitive data; Elite plan." },
-  { term: "ShadowBrowser", definition: "Built-in AI-assisted browser with Browse Together analysis mode." },
-  { term: "Content Forge", definition: "Document and slide generation studio at /forge." },
-  { term: "WebContainer", definition: "In-browser Node runtime used by Computer Mode and IDE preview." },
-  { term: "PCE", definition: "Proactive Context Engine — Premium feature that surfaces relevant context before you ask." },
+  {
+    term: "Turbo Engine",
+    definition: "ShadowTalk's dynamic routing mechanism that balances lightning-fast Groq Llama-3.3 70B with DeepSeek R1 and OpenAI GPT-4o.",
+  },
+  {
+    term: "Business Memory",
+    definition: "Persistent organizational context items (Profile, Voice, Customers, Facts) injected into AI prompts via /workspace.",
+  },
+  {
+    term: "Shadow Memory",
+    definition: "An encrypted on-device activity journal stored in IndexedDB that records user events with zero cloud sync via /shadow-memory.",
+  },
+  {
+    term: "Shadow Twin",
+    definition: "A personalized AI clone trained on your tone and preferences with a public shareable interface (/t/:username).",
+  },
+  {
+    term: "WebGPU Runtime",
+    definition: "In-browser neural inference allowing local LLMs to execute directly on your graphics hardware without an internet connection.",
+  },
+  {
+    term: "Prompt Injection Shield",
+    definition: "Real-time client-side heuristic filters that inspect incoming inputs to prevent adversarial jailbreaks or unauthorized system overrides.",
+  },
+  {
+    term: "Developer Portal",
+    definition: "The developer workspace at /developers providing REST API tokens, usage quotas, webhooks, and code examples.",
+  },
 ];
 
 export const DOC_FAQ: DocFaqItem[] = [
   {
-    q: "Where do I start?",
-    a: "New visitors: shadowtalk-ai.com (marketing home). Returning users and signed-in accounts go straight to /chatbot. Click Try Chat or open /chatbot anytime. No account required for first session if anonymous sign-in is enabled.",
+    q: "What makes ShadowTalk different from standard chat tools?",
+    a: "ShadowTalk combines multi-model cloud intelligence (Groq Llama-3.3, DeepSeek R1, GPT-4o) with on-device WebGPU privacy, persistent Business Memory (/workspace), and a zero-cloud encrypted telemetry journal (/shadow-memory).",
   },
   {
-    q: "What's the difference between / and /chatbot?",
-    a: "/ is the marketing home (features, pricing, use cases). /chatbot is the product workspace. /home redirects to /. Returning visitors who have chatted before skip / and land on /chatbot automatically.",
+    q: "How does Business Memory work?",
+    a: "Business Memory lets you record company facts, voice parameters, customer profiles, and custom rules in /workspace. When active, these memories are automatically formatted and injected into your chatbot system prompt so the AI always knows your exact context.",
   },
   {
-    q: "Why don't I see a boot or loading screen?",
-    a: "We removed the full-screen boot and “Warming up…” gate on /chatbot so you can start typing immediately while the session restores in the background.",
+    q: "Where is Shadow Memory stored?",
+    a: "Shadow Memory is stored 100% locally on your device inside your browser's IndexedDB engine (with local storage fallback). No activity telemetry is ever dispatched to our servers.",
   },
   {
-    q: "What AI models does ShadowTalk use?",
-    a: "Sovereign routing uses platform models (e.g. Gemini family via our gateway). With BYOK you can use your own Gemini or Kimi keys. Offline mode uses on-device SmolLM or Gemma when installed. Plan tier affects model speed and capability.",
+    q: "Which AI models can I use?",
+    a: "ShadowTalk natively routes between Groq Llama-3.3 70B Turbo, DeepSeek R1 reasoning, OpenAI GPT-4o, and on-device WebGPU edge models. You can also supply your own API keys in /settings.",
   },
   {
-    q: "How do I add my own API key?",
-    a: "Settings or Profile → API keys. Choose a provider, paste your key, verify, then select that provider in the chat composer chip.",
+    q: "How do I access the Developer API?",
+    a: "Navigate to /developers to generate your Bearer API tokens, view rate limits, configure webhooks, and read endpoint specifications.",
   },
   {
-    q: "What is Mission Control?",
-    a: "A multi-step agent runner at /missioncontrol — it plans tasks, calls tools, and pauses for your approval on sensitive actions before continuing.",
-  },
-  {
-    q: "What is the Personal ShadowTalk Model?",
-    a: "A default “My ShadowTalk” profile that learns from your conversations (tone, preferences, recurring topics) and adds few-shot examples to prompts. Manage it at /personal-llm or Settings → Personalization. This is prompt-level learning, not full weight fine-tuning.",
-  },
-  {
-    q: "How does offline mode work?",
-    a: "Install a local model from Settings → Offline AI (SmolLM ~130MB or larger Gemma). When offline or when routing chooses local, replies run in your browser via WebGPU/WASM. Elite plan includes full offline login with cached credentials.",
-  },
-  {
-    q: "Is my data private?",
-    a: "We don't train foundation models on your chats. BYOK sends prompts to your provider. Stealth Vault and local inference keep sensitive work on-device when you enable those features. Read /privacy and /transparency for details.",
-  },
-  {
-    q: "Are there usage limits on the free plan?",
-    a: `Free includes all features with daily caps: ${FREE_TIER_MARKETING.messages}, ${FREE_TIER_MARKETING.images}, ${FREE_TIER_MARKETING.voice}, ${FREE_TIER_MARKETING.deepResearch}, plus limits on uploads, code gen, and web search. See /pricing for the full table.`,
-  },
-  {
-    q: "How do I pay from Pakistan?",
-    a: "International cards: /pricing via Stripe. Local methods (JazzCash, Easypaisa, bank transfer, USDT): /founder-access.",
-  },
-  {
-    q: "Can I use ShadowTalk without signing in?",
-    a: "Yes, when anonymous sign-in is enabled you get a guest session with stricter caps (10 chats, 3 images, 2 deep research). Link email from Profile to keep history.",
-  },
-  {
-    q: "How do marketplace agents work?",
-    a: "Browse /marketplace, click Run on an agent — you land on /chatbot?agent=id with that specialist's system prompt and tools wired in.",
-  },
-  {
-    q: "Does ShadowTalk have an API?",
-    a: "Yes — REST endpoints on ShadowTalk backend edge functions (chat, web-search, security scan, etc.). API keys are provisioned for Elite plans; see the API tab in these docs or /api.",
-  },
-  {
-    q: "Is there a desktop app?",
-    a: "Yes — Electron builds at /downloads, plus PWA install from any Chromium browser for a native-feeling shortcut.",
-  },
-  {
-    q: "How is ShadowTalk different from ChatGPT?",
-    a: "One workspace for chat, IDE, missions, research, browser, vault, and marketplace agents — with BYOK, offline, and approval-gated missions. Free tier unlocks all feature types with limits instead of hard paywalls.",
-  },
-  {
-    q: "Who built ShadowTalk?",
-    a: "Zain Ahmed Fahad Patel (Zain Ahmed), founder and lead architect, Karachi, Pakistan. Product since February 2024. Profile: /zain-ahmed-fahad-patel · About: /about.",
-  },
-  {
-    q: "Where can I get help?",
-    a: "/faq for quick answers, /help for the help center, /contact for support, /status for uptime. Ask in-chat: “what tools do you have?” or open /docs.",
+    q: "How does authentication and session persistence work?",
+    a: "When you sign in at /auth, you are redirected directly to /chatbot. Your session remains securely authenticated until you explicitly choose to log out.",
   },
 ];
 
 export const DOC_TROUBLESHOOTING: DocTroubleshootItem[] = [
   {
-    issue: "Messages not sending",
+    issue: "Messages not streaming or sending",
     solutions: [
-      "Check internet connection and refresh /chatbot.",
-      "Open Settings — confirm Sovereign or a verified BYOK key.",
-      "No product-imposed limits: all features are free. Your AI provider may enforce its own API rate limits or charges.",
-      "Hard refresh (Ctrl+Shift+R) to clear stale JS chunks after deploys.",
+      "Check your internet connection.",
+      "Verify your API keys in .env or /settings (OpenAI, Groq).",
+      "If using a private window where IndexedDB is blocked, ShadowTalk automatically uses local storage fallback.",
     ],
   },
   {
-    issue: "Stuck on loading or old boot screen",
+    issue: "Business Memory not appearing in AI answers",
     solutions: [
-      "Hard refresh: Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac).",
-      "Open /chatbot directly — workspace should load without a splash.",
-      "Clear site cache; a deploy may still be propagating on your CDN.",
+      "Navigate to /workspace and ensure the memory toggle is switched to 'Active'.",
+      "Click 'Preview AI Context' in /workspace to verify the formatted context block contains your rules.",
+      "Refresh the chat session or start a new conversation to apply context updates.",
     ],
   },
   {
-    issue: "Landed on marketing home instead of chat",
+    issue: "Shadow Memory ledger appears empty",
     solutions: [
-      "First-time visitors see / by design. Click Try Chat or go to /chatbot.",
-      "Returning users with chat history should auto-redirect to /chatbot.",
-      "Sign in from /auth if you want signed-in routing to the workspace.",
-    ],
-  },
-  {
-    issue: "Session not persisting",
-    solutions: [
-      "Avoid private browsing if you want to stay signed in.",
-      "If you signed out explicitly, sign in again from /auth.",
-      "Allow cookies and local storage for shadowtalk-ai.com.",
-    ],
-  },
-  {
-    issue: "Voice input not working",
-    solutions: [
-      "Allow microphone permission in the browser.",
-      "Use Chrome or Edge for best WebRTC support.",
-      "Click the mic in the composer or say “open live mode”.",
-      "Check free-tier voice session limit (3/day).",
-    ],
-  },
-  {
-    issue: "Offline model won't load",
-    solutions: [
-      "Use Chromium with WebGPU support (Chrome 113+, Edge 113+).",
-      "Install SmolLM first (~130MB) before larger Gemma models.",
-      "Settings → Offline AI — check download progress and storage quota.",
-      "Elite plan required for full offline login cache.",
-    ],
-  },
-  {
-    issue: "Marketplace agent not activating",
-    solutions: [
-      "Click Run on the agent card — URL should include ?agent=.",
-      "Refresh /chatbot after install.",
-      "Check network; agent config may need a fresh deploy if DB migration pending.",
-    ],
-  },
-  {
-    issue: "BYOK key rejected",
-    solutions: [
-      "Confirm the key is active and has billing on the provider side.",
-      "Re-verify in Settings after pasting — no extra spaces.",
-      "Select the matching provider chip in the composer after verification.",
-    ],
-  },
-  {
-    issue: "IDE preview blank",
-    solutions: [
-      "Allow third-party cookies if WebContainer is blocked.",
-      "Try Computer Mode at /computer for sandboxed runs.",
-      "Hard refresh /ide after large App Builder output.",
+      "Click 'Seed Demo Logs' in /shadow-memory to populate baseline security and telemetry activities.",
+      "Ensure browser storage permissions are granted for IndexedDB.",
     ],
   },
 ];
 
-/** Lowercase blob for client-side search across docs tabs */
 export function docSearchBlob(parts: {
   features: DocFeatureItem[];
   faq: DocFaqItem[];

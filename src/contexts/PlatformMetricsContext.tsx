@@ -79,7 +79,7 @@ async function fetchMetrics(): Promise<PlatformMetrics> {
   const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
   const [usersRes, convsRes, activityRes] = await Promise.all([
-    backend.from("profiles").select("id", { count: "exact", head: true }),
+    backend.from("public_profiles").select("id", { count: "exact", head: true }),
     backend.from("conversations").select("id", { count: "exact", head: true }),
     backend.from("usage_analytics").select("user_id").gte("created_at", dayAgo).limit(400),
   ]);

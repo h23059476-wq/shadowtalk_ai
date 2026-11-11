@@ -6,7 +6,5 @@
 - Privacy uncertainty with hosted AI
 
 ## Differentiators
-- Mission Control for autonomous multi-step tasks
-- E2EE chat + Stealth Vault
 - Desktop app + PWA
 - Transparent pricing and usage limits

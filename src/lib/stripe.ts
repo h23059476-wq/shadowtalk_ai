@@ -7,9 +7,7 @@ import { FREE_TIER_MARKETING } from "@/lib/productClaims";
 
 export const STRIPE_CONFIG = {
   prices: {
-    pro: "price_1ScezZInnwEWcho15wMKeOMU", // $5/month
-    premium: "price_1SeVSbInnwEWcho1EILyNsK4", // $15/month
-    elite: "price_1SeTpoInnwEWcho1ETYh5Udy", // $20/month
+    pro: "price_1ScezZInnwEWcho15wMKeOMU", // dormant plan price ID — no active monetization (free access)
   },
   products: {
     pro: "prod_TZocSSpPddFCH1",
@@ -39,44 +37,59 @@ export const getPlanFromProductId = (productId: string): PlanName | 'free' => {
 // Plan display information
 // Strategy: FREE plan includes ALL features with daily limits
 // Paid plans = remove limits + better models + priority
+// BYOK = $0 platform fee, user pays their own AI provider directly
+// Enterprise = custom contract for teams and organizations
 // ChatGPT: Free=crippled, Go=$10, Plus=$20, Pro=$200
-// ShadowTalk: Free=EVERYTHING with limits, Pro=$5, Premium=$15, Elite=$20
+// ShadowTalk: Free=EVERYTHING with limits, BYOK=$0 platform fee, Pro=$5, Premium=$15, Elite=$20, Enterprise=Custom
 export const PLAN_DETAILS = {
   free: {
     name: "Free",
     price: 0,
     features: [
-      "✅ ALL features unlocked (no paywalls!)",
+      "ALL features unlocked (no paywalls!)",
       FREE_TIER_MARKETING.messages,
-      `🖼️ ${FREE_TIER_MARKETING.images}`,
-      `🎙️ ${FREE_TIER_MARKETING.voice}`,
-      `🔬 ${FREE_TIER_MARKETING.deepResearch}`,
-      "📄 Canvas & document editing",
-      "🔍 Web search & browsing",
-      "📁 File uploads & analysis",
-      "🧠 AI Memory across sessions",
-      "💻 Code generation & execution",
-      "🌐 10+ language translation",
-      "3 S.E.E. missions/month",
-      "Basic models (Gemini Flash)",
+      FREE_TIER_MARKETING.images,
+      FREE_TIER_MARKETING.voice,
+      FREE_TIER_MARKETING.deepResearch,
+      "Agentic IDE (Shadow Cowork)",
+      "Shadow Browser & Web Scraping",
+      "Visual Reasoning & Image Decoder",
+      "Canvas & document editing",
+      "AI Memory across sessions",
+      "Code generation & execution",
+      "Basic cloud models (Gemini Flash)",
     ],
     comparison: "ChatGPT Free blocks features. We unlock ALL!",
+  },
+  byok: {
+    name: "BYOK",
+    price: 0,
+    features: [
+      "Bring your own OpenRouter/OpenAI/Gemini key",
+      "Unlimited messages",
+      "Unlimited image generation",
+      "Unlimited deep research",
+      "Direct provider connection (no middleman)",
+      "Custom model selection",
+      "Keys stored locally in browser only",
+      "No platform fees — pay your provider directly",
+    ],
+    comparison: "Zero platform fees — you pay your AI provider directly",
   },
   pro: {
     name: "Pro",
     price: 5,
     features: [
       "Everything in Free, PLUS:",
-      "♾️ Unlimited messages",
-      "🖼️ 20 image generations/day",
-      "🎙️ Unlimited voice sessions",
-      "🔬 20 Deep Research queries/day",
-      "⚡ Pro models (GPT-5, Gemini Pro)",
-      "🚀 Priority queue (2x faster)",
-      "📤 Chat export & full history",
-      "100+ language translation",
+      "Unlimited messages",
+      "20 cloud image generations/day",
+      "Unlimited voice sessions",
+      "20 Deep Research queries/day",
+      "Pro models (GPT-5, Gemini Pro)",
+      "Priority queue (2x faster)",
+      "Chat export & full history",
+      "Security & Code Quality Auditor",
       "No advertisements",
-      "15 S.E.E. missions/month",
       "Priority support (< 4h)",
     ],
     comparison: "Half the price of ChatGPT Plus ($20)!",
@@ -86,14 +99,13 @@ export const PLAN_DETAILS = {
     price: 15,
     features: [
       "Everything in Pro, PLUS:",
-      "🖼️ 50 image generations/day",
-      "🔬 50 Deep Research queries/day",
-      "🧠 Extended context (500 msg history)",
-      "📄 Proactive Context Engine (PCE)",
-      "⚙️ Multi-Step Workflow Executor",
-      "📝 Document generation (contracts, NDAs)",
-      "👥 Real-time collaboration rooms",
-      "30 S.E.E. missions/month",
+      "50 cloud image generations/day",
+      "50 Deep Research queries/day",
+      "Extended context (500 msg history)",
+      "Proactive Context Engine (PCE)",
+      "Real-time collaboration rooms",
+      "Shadow Twin (Digital Clone & Public Link)",
+      "Multi-Agent Orchestration SDK",
       "Priority support (< 2h)",
     ],
     comparison: "Premium features at ChatGPT Plus price!",
@@ -103,17 +115,32 @@ export const PLAN_DETAILS = {
     price: 20,
     features: [
       "Everything in Premium, PLUS:",
-      "♾️ Unlimited image generations",
-      "♾️ Unlimited Deep Research",
-      "✈️ Full offline mode (works anywhere!)",
-      "🔒 Stealth Vault (E2E encrypted)",
-      "🤖 AI agents & workflow automation",
-      "🎨 Custom model fine-tuning",
-      "🏷️ White-label solutions",
-      "50 S.E.E. missions/month",
+      "Unlimited cloud image generations",
+      "Unlimited Deep Research",
+      "Zero-download Offline Models (Llama-3 pre-installed)",
+      "Unlimited Agentic Workflows",
+      "Custom model fine-tuning",
+      "White-label solutions",
       "24/7 phone support",
-      "⚡ Fastest models + highest priority",
+      "Fastest models + highest priority",
     ],
-    comparison: "75% cheaper than ChatGPT Pro ($200)!",
+    comparison: "90% cheaper than ChatGPT Pro ($200)!",
+  },
+  enterprise: {
+    name: "Enterprise",
+    price: 0,
+    features: [
+      "Everything in Elite, PLUS:",
+      "SSO & SAML authentication",
+      "Dedicated infrastructure",
+      "SLA guarantee (99.9%)",
+      "Custom model fine-tuning",
+      "Team workspaces & collaboration",
+      "Priority technical support",
+      "API access & webhooks",
+      "Compliance (GDPR, SOC 2)",
+      "Custom integrations",
+    ],
+    comparison: "Custom pricing — contact sales",
   },
 } as const;

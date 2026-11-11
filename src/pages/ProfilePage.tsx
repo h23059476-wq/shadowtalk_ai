@@ -35,9 +35,8 @@ import { ActivityTab } from "@/components/profile/ActivityTab";
 import { PreferencesTab } from "@/components/profile/PreferencesTab";
 import { AiSettingsTab } from "@/components/profile/AiSettingsTab";
 import { NotificationsExtras } from "@/components/profile/NotificationsExtras";
-import { PrivacyDataCard } from "@/components/profile/PrivacyDataCard";
-import { LinkedAccountsTab } from "@/components/profile/LinkedAccountsTab";
-import { CustomApiKeysPanel } from "@/components/profile/CustomApiKeysPanel";
+
+
 import { AdminPanelLink } from "@/components/admin/AdminPanelLink";
 import {
   Dialog, DialogContent, DialogDescription, DialogFooter,
@@ -75,7 +74,6 @@ const PROFILE_TABS = new Set([
   "activity",
   "notifications",
   "security",
-  "linked",
   "ai",
   "preferences",
   "billing",
@@ -86,7 +84,6 @@ const PROFILE_TAB_SECTIONS: readonly ProfileNavTab[] = [
   { id: "activity", label: "Activity", icon: Activity, desc: "Conversation history" },
   { id: "notifications", label: "Notifications", shortLabel: "Alerts", icon: Bell, desc: "Email & push" },
   { id: "security", label: "Security", icon: Shield, desc: "2FA, password, vault" },
-  { id: "linked", label: "Linked accounts", shortLabel: "Linked", icon: Link2, desc: "Google, GitHub, Slack" },
   { id: "ai", label: "AI", icon: Bot, desc: "Models & instructions" },
   { id: "preferences", label: "Preferences", shortLabel: "Prefs", icon: Settings, desc: "Appearance & UI" },
   { id: "billing", label: "Billing", icon: CreditCard, desc: "Plan & credits" },
@@ -129,20 +126,7 @@ const ProfilePage = () => {
   const currentPlanDetails = PLAN_DETAILS[planKey] || PLAN_DETAILS.free;
   const { balance, transactions, isLoading: creditsLoading } = useShadowCredits();
 
-  useEffect(() => {
-    if (!user) { navigate("/auth"); return; }
-    void loadProfile();
-  }, [user]);
-
-  useEffect(() => {
-    const oauth = searchParams.get("oauth");
-    if (oauth === "success") {
-      toast({ title: "Account linked", description: "Your integration was connected successfully." });
-      setSearchParams({ tab: "linked" }, { replace: true });
-    }
-  }, [searchParams, setSearchParams, toast]);
-
-  const loadProfile = async () => {
+  const loadProfile = useCallback(async () => {
     if (!user) return;
     const [profileRes, settingsRes] = await Promise.all([
       backend.from("profiles").select("*").eq("id", user.id).maybeSingle(),
@@ -170,7 +154,7 @@ const ProfilePage = () => {
     } else {
       const defaultName = user.email?.split("@")[0] || "User";
       setDisplayName(defaultName);
-      await backend.from("profiles").insert({ id: user.id, display_name: defaultName });
+      await backend.from("profiles").insert({ id: user.id, user_id: user.id, display_name: defaultName });
     }
 
     const ext = parseExtendedNotif(settingsRes.data?.setting_value);
@@ -180,13 +164,29 @@ const ProfilePage = () => {
     setNotifWeeklyDigest(ext.weeklyDigest);
 
     setIsLoading(false);
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) { navigate("/auth"); return; }
+    void loadProfile();
+  }, [user, navigate, loadProfile]);
+
+  useEffect(() => {
+    const oauth = searchParams.get("oauth");
+    if (oauth === "success") {
+      toast({ title: "Account linked", description: "Your integration was connected successfully." });
+      setSearchParams({ tab: "linked" }, { replace: true });
+    }
+  }, [searchParams, setSearchParams, toast]);
+
+
 
   const persistProfile = useCallback(
     async (opts?: { silent?: boolean }) => {
       if (!user) return false;
       const { error } = await backend.from("profiles").upsert({
         id: user.id,
+        user_id: user.id,
         display_name: displayName,
         bio,
         avatar_url: avatarUrl,
@@ -237,6 +237,19 @@ const ProfilePage = () => {
 
   const saveProfile = async () => {
     if (!user) return;
+
+    // Allow data URLs (base64 images) up to 500KB in the avatar_url field.
+    // The avatar upload compresses to 200x200 JPEG (~10-50KB), which
+    // produces a data URL of ~15,000-70,000 characters.
+    if (avatarUrl && avatarUrl.length > 500_000) {
+      toast({
+        title: "Avatar too large",
+        description: "Please use a smaller image (under 5MB).",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsSaving(true);
     const ok = await persistProfile();
     if (ok) {
@@ -289,18 +302,26 @@ const ProfilePage = () => {
   const handleDeleteAccount = async () => {
     setIsDeletingAccount(true);
     try {
-      const { data, error } = await backend.functions.invoke("delete-account", {
-        body: { confirm: "DELETE" },
-      });
-      if (error) throw new Error(error.message);
-      if (data?.error) throw new Error(data.error);
-      toast({ title: "Account deleted", description: "Your account and data have been removed." });
+      const uid = user?.id;
+      if (!uid) throw new Error("Sign in again before deleting your account.");
+      const { data, error } = await backend.functions.invoke("deleteAccount");
+      if (error) throw error;
+      if (!data?.deleted) throw new Error("Account deletion did not complete. Please try again.");
+
+      // Remove this account's browser-side settings and credentials on this device.
+      for (let index = localStorage.length - 1; index >= 0; index--) {
+        const key = localStorage.key(index);
+        if (key && (key.includes(uid) || key === `shadowtalk.byok.v2.${uid}`)) {
+          localStorage.removeItem(key);
+        }
+      }
+      toast({ title: "Account deleted", description: "Linked Firebase records and private receipt files were removed." });
       await signOut();
-      navigate("/chatbot");
+      navigate("/auth");
     } catch (err) {
       toast({
         title: "Deletion failed",
-        description: err instanceof Error ? err.message : "Could not delete account",
+        description: err instanceof Error ? err.message : "Could not delete account. Please sign out and sign back in, then try again.",
         variant: "destructive",
       });
     } finally {
@@ -466,9 +487,9 @@ const ProfilePage = () => {
                 </CardContent>
               </Card>
 
-              <CustomApiKeysPanel />
 
-              <PrivacyDataCard />
+
+
 
               <Card className="glass border-border/50">
                 <CardHeader>
@@ -516,9 +537,7 @@ const ProfilePage = () => {
             </motion.div>
                   )}
 
-                  {currentTab === "linked" && user && (
-                    <LinkedAccountsTab userId={user.id} email={user.email || ""} />
-                  )}
+
 
                   {currentTab === "ai" && <AiSettingsTab />}
 
@@ -635,8 +654,8 @@ const ProfilePage = () => {
             <DialogTitle className="flex items-center gap-2 text-destructive">
               <Trash2 className="h-5 w-5" /> Delete Account
             </DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. Type <span className="font-mono font-bold text-foreground">DELETE</span> to confirm.
+              <DialogDescription>
+               This permanently deletes your Firebase account records and private receipt files. Type <span className="font-mono font-bold text-foreground">DELETE</span> to confirm.
             </DialogDescription>
           </DialogHeader>
           <Input value={deleteConfirm} onChange={(e) => setDeleteConfirm(e.target.value)} placeholder='Type "DELETE"' className="bg-muted/30 font-mono" />

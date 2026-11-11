@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
@@ -11,264 +14,380 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { motion } from "framer-motion";
-import { BookOpen, Calendar, Clock, Sparkles, Code, Shield, Zap, Loader2 } from "lucide-react";
-import { useBlogPosts } from "@/hooks/useCMSContent";
-import { format } from "date-fns";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import {
+  BookOpen,
+  Calendar,
+  Clock,
+  Sparkles,
+  Code,
+  Shield,
+  Zap,
+  ArrowRight,
+  ArrowLeft,
+  Search,
+  Share2,
+  Check,
+  User,
+  Tag,
+  Layers,
+  Cpu,
+  Target,
+} from "lucide-react";
 import SEOHead from "@/components/SEOHead";
-import { FollowUsSection } from "@/components/FollowUsSection";
 import { PAGE_SEO } from "@/lib/seo";
-import NewsletterSignup from "@/components/blog/NewsletterSignup";
-import PostCTA from "@/components/blog/PostCTA";
+import { motion } from "framer-motion";
+import { toast } from "sonner";
 
+import { PRODUCTION_POSTS, type BlogPost } from "@/content/blogPosts";
 
+const CATEGORIES = ["All", "Architecture", "Agentic AI", "Tutorials", "Product Updates"];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30, filter: "blur(6px)" },
-  visible: (i: number) => ({
-    opacity: 1, y: 0, filter: "blur(0px)",
-    transition: { delay: i * 0.08, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  }),
-};
-
-const ICON_MAP: Record<string, any> = {
-  "Product Updates": Zap,
-  "Tutorials": Code,
-  "Security": Shield,
-  "AI & Technology": Sparkles,
-  "Vision": Sparkles,
-};
-
-type BlogPost = {
-  id: string;
-  title: string;
-  excerpt: string | null;
-  content: string;
-  author: string;
-  category: string;
-  published_at: string | null;
-  read_time_minutes: number | null;
-  cover_image_url: string | null;
-};
-
-const BlogPage = () => {
-  const { posts, isLoading } = useBlogPosts();
+export const BlogPage = () => {
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
 
-  const featuredPost = posts[0];
-  const gridPosts = posts.slice(1);
+  const filteredPosts = useMemo(() => {
+    return PRODUCTION_POSTS.filter((post) => {
+      const matchesCat = activeCategory === "All" || post.category === activeCategory;
+      const q = searchQuery.toLowerCase().trim();
+      const matchesQuery =
+        !q ||
+        post.title.toLowerCase().includes(q) ||
+        post.excerpt.toLowerCase().includes(q) ||
+        post.tags.some((t) => t.toLowerCase().includes(q));
+      return matchesCat && matchesQuery;
+    });
+  }, [activeCategory, searchQuery]);
 
-  const categories = ["All", ...Array.from(new Set(posts.map(p => p.category)))];
-  const filteredPosts = activeCategory === "All" ? gridPosts : gridPosts.filter(p => p.category === activeCategory);
+  const featuredPost = filteredPosts[0] || PRODUCTION_POSTS[0];
+  const gridPosts = filteredPosts.length > 1 ? filteredPosts.slice(1) : filteredPosts;
 
-  // CollectionPage schema built from the live blog posts.
-  const blogSchema = posts.length > 0 ? {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "ShadowTalk AI Blog",
-    url: "https://www.shadowtalk-ai.com/blog",
-    hasPart: posts.slice(0, 20).map((p) => ({
-      "@type": "BlogPosting",
-      headline: p.title,
-      datePublished: p.published_at || undefined,
-      author: { "@type": "Person", name: p.author },
-      url: `https://www.shadowtalk-ai.com/blog#${p.id}`,
-    })),
-  } : undefined;
+  const handleShare = (post: BlogPost, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const url = `${window.location.origin}/blog#${post.slug}`;
+    navigator.clipboard.writeText(url);
+    setCopiedSlug(post.slug);
+    toast.success("Article link copied to clipboard!");
+    setTimeout(() => setCopiedSlug(null), 2500);
+  };
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead meta={PAGE_SEO.blog} structuredData={blogSchema} />
+    <div className="min-h-screen bg-background text-foreground relative selection:bg-primary/20">
+      <SEOHead meta={PAGE_SEO.blog} />
       <Navigation />
 
-
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-1/4 right-1/3 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[180px]" />
+      {/* Floating Back to Chatbot */}
+      <div className="fixed bottom-6 left-6 z-40">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => navigate("/chatbot")}
+          className="gap-2 glass-strong border-border/50 hover:border-primary/40 shadow-lg backdrop-blur-xl"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Chatbot
+        </Button>
       </div>
 
-      {/* Hero */}
-      <section className="pt-24 pb-16 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid opacity-15" />
-        <div className="container mx-auto max-w-6xl relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
-            <Badge variant="outline" className="mb-4 glass-subtle border-primary/20">
-              <BookOpen className="h-3 w-3 mr-1" /> Blog
-            </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
-              Insights & <span className="gradient-text">Updates</span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Stay updated with the latest in AI technology, product updates, and tutorials
-            </p>
-          </motion.div>
+      {/* Hero Section */}
+      <section className="pt-28 pb-14 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-dense opacity-20 pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-primary/10 rounded-full blur-[160px] pointer-events-none" />
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="flex flex-wrap justify-center gap-2 mb-12">
-            {categories.map((category, i) => (
-              <Badge 
-                key={i} 
-                variant={category === activeCategory ? "default" : "outline"} 
-                className={`cursor-pointer transition-all ${category === activeCategory ? 'btn-glow' : 'hover:bg-primary/10 hover:border-primary/30'}`}
-                onClick={() => setActiveCategory(category)}
-              >
-                {category}
-              </Badge>
-            ))}
+        <div className="container mx-auto max-w-5xl text-center relative z-10">
+          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <Badge variant="outline" className="mb-4 glass-subtle border-primary/30 text-primary py-1 px-3">
+              <BookOpen className="h-3.5 w-3.5 mr-1.5" />
+              Engineering, Architecture & Systems Blog
+            </Badge>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
+              ShadowTalk <span className="gradient-text">Engineering Blog</span>
+            </h1>
+            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
+              Technical deep dives on multi-model routing, agentic state machines, edge runtime benchmarks, 
+              and the philosophy of autonomous software design.
+            </p>
+
+            {/* Search Input */}
+            <div className="relative max-w-xl mx-auto">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search articles, architectures, benchmarks, tags..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-11 pr-4 py-5 text-sm bg-background/80 border-border/60 rounded-xl shadow-md"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-muted-foreground hover:text-foreground font-mono"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {isLoading ? (
-        <div className="flex justify-center py-20">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      {/* Category Tabs */}
+      <section className="py-4 px-4 border-y border-border/40 bg-muted/5">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none justify-start sm:justify-center flex-wrap">
+            {CATEGORIES.map((cat) => {
+              const isActive = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all border ${
+                    isActive
+                      ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                      : "glass-subtle text-muted-foreground hover:text-foreground border-border/50"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
         </div>
-      ) : posts.length === 0 ? (
-        <div className="text-center py-20 px-4">
-          <BookOpen className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
-          <h2 className="text-xl font-bold mb-2">No blog posts yet</h2>
-          <p className="text-muted-foreground">New AI-generated articles are published daily. Check back soon!</p>
-        </div>
-      ) : (
-        <>
-          {/* Featured */}
-          {featuredPost && (
-            <section className="py-8 px-4">
-              <div className="container mx-auto max-w-6xl">
-                <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                  <Card
-                    className="card-glass overflow-hidden group cursor-pointer"
-                    onClick={() => setSelectedPost(featuredPost as BlogPost)}
-                  >
-                    <div className="grid md:grid-cols-2">
-                      <div className="aspect-video md:aspect-auto bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 flex items-center justify-center relative overflow-hidden">
-                        <div className="absolute inset-0 bg-grid-dense opacity-20" />
-                        {featuredPost.cover_image_url ? (
-                          <img src={featuredPost.cover_image_url} alt={featuredPost.title} className="w-full h-full object-cover" />
-                        ) : (
-                          <Sparkles className="h-24 w-24 text-primary/30 relative z-10" />
-                        )}
+      </section>
+
+      {/* Featured Hero Article */}
+      {featuredPost && activeCategory === "All" && !searchQuery && (
+        <section className="py-8 px-4">
+          <div className="container mx-auto max-w-6xl">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Card
+                onClick={() => setSelectedPost(featuredPost)}
+                className="glass-subtle border-primary/30 hover:border-primary/60 cursor-pointer transition-all duration-300 overflow-hidden group shadow-elevated bg-gradient-to-br from-primary/10 via-background to-secondary/5"
+              >
+                <div className="grid lg:grid-cols-12 gap-6 p-6 sm:p-8 items-center">
+                  <div className="lg:col-span-8 space-y-4">
+                    <div className="flex items-center gap-2">
+                      <Badge className="bg-primary text-primary-foreground text-xs font-mono">
+                        Featured Article
+                      </Badge>
+                      <Badge variant="outline" className="text-xs font-mono text-muted-foreground border-border/50">
+                        {featuredPost.category}
+                      </Badge>
+                    </div>
+
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground group-hover:text-primary transition-colors tracking-tight leading-tight">
+                      {featuredPost.title}
+                    </h2>
+
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      {featuredPost.excerpt}
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground pt-2">
+                      <div className="flex items-center gap-1.5">
+                        <User className="h-3.5 w-3.5 text-primary" />
+                        <span className="font-medium text-foreground">{featuredPost.author.name}</span>
                       </div>
-                      <CardContent className="p-8 flex flex-col justify-center relative z-10">
-                        <Badge className="w-fit mb-4 bg-primary/10 text-primary border-primary/20">{featuredPost.category}</Badge>
-                        <h2 className="text-2xl md:text-3xl font-bold mb-4 group-hover:text-primary transition-colors tracking-tight">
-                          {featuredPost.title}
-                        </h2>
-                        <p className="text-muted-foreground mb-6">{featuredPost.excerpt}</p>
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                          <span>{featuredPost.author}</span>
-                          <span>•</span>
-                          <span className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4" />
-                            {featuredPost.published_at ? format(new Date(featuredPost.published_at), 'MMMM d, yyyy') : ''}
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="h-3.5 w-3.5" />
+                        <span>{featuredPost.publishedAt}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Clock className="h-3.5 w-3.5" />
+                        <span>{featuredPost.readTime}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-4 flex flex-col items-start lg:items-end justify-between h-full gap-4">
+                    <div className="flex flex-wrap gap-1.5">
+                      {featuredPost.tags.map((t) => (
+                        <span key={t} className="text-[10px] px-2.5 py-1 rounded-md bg-muted/60 text-muted-foreground font-mono">
+                          #{t}
+                        </span>
+                      ))}
+                    </div>
+                    <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-1.5 shadow-md">
+                      Read Complete Paper
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* Grid of Articles */}
+      <section className="py-8 pb-16 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg sm:text-xl font-bold tracking-tight">
+              {activeCategory === "All" && !searchQuery ? "Recent Publications" : `Articles (${filteredPosts.length})`}
+            </h3>
+          </div>
+
+          {filteredPosts.length === 0 ? (
+            <div className="text-center py-16 glass-subtle rounded-2xl border border-border/50 p-8 max-w-md mx-auto">
+              <BookOpen className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
+              <h4 className="font-bold text-lg mb-1">No articles match your query</h4>
+              <p className="text-xs text-muted-foreground mb-4">
+                Try searching for another topic or reset the category filters.
+              </p>
+              <Button variant="outline" size="sm" onClick={() => { setSearchQuery(""); setActiveCategory("All"); }}>
+                Reset Filters
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {(activeCategory === "All" && !searchQuery ? gridPosts : filteredPosts).map((post, idx) => (
+                <motion.div
+                  key={post.id}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05, duration: 0.4 }}
+                >
+                  <Card
+                    onClick={() => setSelectedPost(post)}
+                    className="glass-subtle border-border/50 hover:border-primary/40 cursor-pointer transition-all duration-300 h-full flex flex-col justify-between p-5 group hover:shadow-elevated"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <Badge variant="outline" className="text-[10px] uppercase font-mono tracking-wider text-primary border-primary/20">
+                          {post.category}
+                        </Badge>
+                        <span className="text-[11px] text-muted-foreground font-mono">{post.readTime}</span>
+                      </div>
+
+                      <h4 className="font-bold text-base text-foreground group-hover:text-primary transition-colors leading-snug mb-2">
+                        {post.title}
+                      </h4>
+
+                      <p className="text-xs text-muted-foreground line-clamp-3 leading-relaxed mb-4">
+                        {post.excerpt}
+                      </p>
+                    </div>
+
+                    <div>
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {post.tags.map((tag) => (
+                          <span key={tag} className="text-[10px] px-2 py-0.5 rounded bg-muted/40 text-muted-foreground font-mono">
+                            #{tag}
                           </span>
-                          <span>•</span>
-                          <span className="flex items-center gap-1">
-                            <Clock className="h-4 w-4" />{featuredPost.read_time_minutes} min read
-                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center justify-between text-xs text-muted-foreground pt-3 border-t border-border/30">
+                        <div className="flex items-center gap-1.5">
+                          <User className="h-3 w-3 text-primary" />
+                          <span className="truncate max-w-[130px]">{post.author.name}</span>
                         </div>
-                      </CardContent>
+                        <button
+                          onClick={(e) => handleShare(post, e)}
+                          className="hover:text-primary transition-colors p-1"
+                          title="Copy Link"
+                        >
+                          {copiedSlug === post.slug ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Share2 className="h-3.5 w-3.5" />}
+                        </button>
+                      </div>
                     </div>
                   </Card>
                 </motion.div>
-              </div>
-            </section>
-          )}
-
-          {/* Grid */}
-          <section className="py-16 px-4">
-            <div className="container mx-auto max-w-6xl">
-              <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-2xl font-bold mb-8 tracking-tight">
-                Latest Articles
-              </motion.h2>
-              {filteredPosts.length === 0 ? (
-                <p className="text-center text-muted-foreground py-12">No articles in this category yet.</p>
-              ) : (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {filteredPosts.map((post, i) => {
-                  const Icon = ICON_MAP[post.category] || Sparkles;
-                  return (
-                    <motion.div key={post.id || i} custom={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-                      whileHover={{ y: -6, transition: { type: "spring", stiffness: 400 } }}
-                    >
-                      <Card
-                        className="card-glass h-full group cursor-pointer overflow-hidden"
-                        onClick={() => setSelectedPost(post as BlogPost)}
-                      >
-                        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                        <CardContent className="p-6 relative z-10">
-                          <div className="flex items-center gap-2 mb-4">
-                            <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                              <Icon className="h-4 w-4 text-primary" />
-                            </div>
-                            <Badge variant="outline" className="border-border/50 text-xs">{post.category}</Badge>
-                          </div>
-                          <h3 className="font-bold text-lg mb-3 group-hover:text-primary transition-colors line-clamp-2">{post.title}</h3>
-                          <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{post.excerpt}</p>
-                          <div className="flex items-center justify-between text-xs text-muted-foreground">
-                            <span>{post.author}</span>
-                            <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{post.read_time_minutes} min read</span>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  );
-                })}
-              </div>
-              )}
+              ))}
             </div>
-          </section>
-        </>
-      )}
+          )}
+        </div>
+      </section>
 
-      {/* Newsletter */}
-      <NewsletterSignup />
-
-
+      {/* Article Reader Modal */}
       <Dialog open={!!selectedPost} onOpenChange={(open) => !open && setSelectedPost(null)}>
-        <DialogContent className="max-w-3xl max-h-[85vh] flex flex-col">
+        <DialogContent className="max-w-3xl max-h-[85vh] p-0 overflow-hidden bg-popover border-border/60">
           {selectedPost && (
-            <>
-              <DialogHeader>
-                <Badge variant="outline" className="w-fit mb-2">{selectedPost.category}</Badge>
-                <DialogTitle className="text-2xl pr-8">{selectedPost.title}</DialogTitle>
-                <DialogDescription className="flex flex-wrap items-center gap-2 text-sm">
-                  <span>{selectedPost.author}</span>
-                  {selectedPost.published_at && (
-                    <>
-                      <span>•</span>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="h-3.5 w-3.5" />
-                        {format(new Date(selectedPost.published_at), "MMMM d, yyyy")}
-                      </span>
-                    </>
-                  )}
-                  <span>•</span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-3.5 w-3.5" />
-                    {selectedPost.read_time_minutes ?? 5} min read
-                  </span>
-                </DialogDescription>
+            <div className="flex flex-col h-full max-h-[85vh]">
+              <DialogHeader className="p-6 pb-4 border-b border-border/40">
+                <div className="flex items-center gap-2 mb-2">
+                  <Badge variant="outline" className="text-[10px] uppercase font-mono text-primary border-primary/30">
+                    {selectedPost.category}
+                  </Badge>
+                  <span className="text-xs text-muted-foreground font-mono">{selectedPost.readTime}</span>
+                  <span className="text-xs text-muted-foreground font-mono">· {selectedPost.publishedAt}</span>
+                </div>
+                <DialogTitle className="text-xl sm:text-2xl font-bold leading-snug">
+                  {selectedPost.title}
+                </DialogTitle>
+                <div className="flex items-center gap-2 pt-2 text-xs text-muted-foreground">
+                  <span className="font-semibold text-foreground">{selectedPost.author.name}</span>
+                  <span>({selectedPost.author.role})</span>
+                </div>
               </DialogHeader>
-              <ScrollArea className="flex-1 pr-4 -mr-4">
-                <div className="prose prose-sm dark:prose-invert max-w-none pb-4">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {selectedPost.content}
-                  </ReactMarkdown>
-                  <PostCTA title={selectedPost.title} postId={selectedPost.id} />
+
+              <ScrollArea className="p-6 pt-4 flex-1">
+                <div className="prose prose-invert prose-sm max-w-none space-y-4 text-foreground/90 leading-relaxed font-sans">
+                  {selectedPost.content.split("\n\n").map((block, i) => {
+                    const trimmed = block.trim();
+                    if (trimmed.startsWith("### ")) {
+                      return <h3 key={i} className="text-lg font-bold text-foreground mt-5 mb-2">{trimmed.replace("### ", "")}</h3>;
+                    }
+                    if (trimmed.startsWith("#### ")) {
+                      return <h4 key={i} className="text-base font-semibold text-foreground mt-3 mb-1">{trimmed.replace("#### ", "")}</h4>;
+                    }
+                    if (trimmed.startsWith("- ")) {
+                      return (
+                        <ul key={i} className="list-disc pl-5 space-y-1 text-xs sm:text-sm text-muted-foreground">
+                          {trimmed.split("\n- ").map((item, j) => (
+                            <li key={j}>{item.replace(/^- /, "")}</li>
+                          ))}
+                        </ul>
+                      );
+                    }
+                    if (/^\d+\.\s/.test(trimmed)) {
+                      return (
+                        <ol key={i} className="list-decimal pl-5 space-y-1 text-xs sm:text-sm text-muted-foreground">
+                          {trimmed.split(/\n\d+\.\s/).map((item, j) => (
+                            <li key={j}>{item.replace(/^\d+\.\s/, "")}</li>
+                          ))}
+                        </ol>
+                      );
+                    }
+                    return <p key={i} className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{trimmed}</p>;
+                  })}
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-border/40 flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedPost.tags.map((t) => (
+                      <Badge key={t} variant="secondary" className="text-[10px] font-mono">
+                        #{t}
+                      </Badge>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={(e) => handleShare(selectedPost, e)}
+                      className="text-xs gap-1.5"
+                    >
+                      <Share2 className="h-3.5 w-3.5" />
+                      Share Article
+                    </Button>
+                    <Button asChild size="sm" className="bg-primary text-primary-foreground text-xs">
+                      <Link to="/chatbot">Execute in Chatbot &rarr;</Link>
+                    </Button>
+                  </div>
                 </div>
               </ScrollArea>
-            </>
+            </div>
           )}
         </DialogContent>
       </Dialog>
-
-      <section className="py-16 px-4 border-t border-border/40">
-        <div className="container mx-auto max-w-2xl">
-          <FollowUsSection description="New posts, launches, and builder notes — Instagram and LinkedIn." />
-        </div>
-      </section>
 
       <Footer />
     </div>

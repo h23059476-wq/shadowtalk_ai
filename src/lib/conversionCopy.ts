@@ -36,12 +36,12 @@ export function getUpgradeNudgeSubline(
   const endowment = getEndowmentMessage(conversationCount);
 
   if (level === "blocking") {
-    return `${honest} ${premium.name} ($${premium.price}/mo) — unlimited messages, Mission Control, ${anchor}.`;
+    return `${honest} ${premium.name} ($${premium.price}/mo) — unlimited messages, ${anchor}.`;
   }
   if (level === "strong") {
     return `${endowment} ${premium.name} keeps momentum without daily caps — ${anchor}.`;
   }
-  return `${honest} When ShadowTalk is your daily driver, ${premium.name} removes caps and unlocks Mission Control.`;
+  return `${honest} When ShadowTalk is your daily driver, ${premium.name} removes caps and unlocks the full tool stack.`;
 }
 
 export const FREE_TIER_MARKETING = {
@@ -51,13 +51,13 @@ export const FREE_TIER_MARKETING = {
 } as const;
 
 export const PRICING_PAGE_HOOK =
-  "ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage.";
+  "Free to use — no subscriptions, no checkout. Bring your own AI provider API key; your provider bills you directly for API usage.";
 
 export const COMMUNITY_MARKETING = {
   title: "Building in public",
   headline: "Ship with us — not around us",
   subtitle:
-    "Follow the real changelog, uptime, and security docs. Early builders shape Mission Control, agents, and pricing — no inflated user counts or stock testimonials.",
+    "Follow the real changelog, uptime, and security docs. Early builders shape agents, tools, and pricing — no inflated user counts or stock testimonials.",
 } as const;
 
 export const PROACTIVE_MARKETING = {
@@ -67,9 +67,8 @@ export const PROACTIVE_MARKETING = {
 } as const;
 
 export const CHAT_LIMIT_TOAST = {
-  title: "All features are free",
-  description:
-    "ShadowTalk AI is free to use — no daily caps from us. Your AI provider may enforce its own API usage limits.",
+  title: "Daily free limit reached",
+  description: `Premium ($${premium.price}/mo) — unlimited messages, 50 images/day, 50 research/day. Or use BYOK mode with your own API key for unlimited everything. Limits reset at midnight UTC on Free.`,
 } as const;
 
 export const PROOF_BAR_LABEL = "Verify before you buy:";

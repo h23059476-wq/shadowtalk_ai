@@ -38,19 +38,15 @@ describe("site link audit", () => {
   it("App.tsx defines all critical nav routes", () => {
     for (const path of CRITICAL_NAV_LINKS) {
       expect(
-        appRoutes.includes(path) || path === "/missioncontrol",
+        appRoutes.includes(path),
         `missing route: ${path}`,
       ).toBe(true);
     }
   });
 
-  it("missioncontrol preserves goal query via MissionControlPage", () => {
-    expect(appSource).toContain('path="/missioncontrol"');
-    expect(appSource).toContain("MissionControlPage");
-    expect(appSource).not.toMatch(
-      /path="\/missioncontrol"\s+element=\{<Navigate to="\/execute"\s+replace\s*\/>\}/,
-    );
-  });
+  // Note: The missioncontrol and AdNetwork tests were removed because those
+  // pages/components were removed in the v3.0.0 architecture pivot.
+  // /missioncontrol is now a prerendered marketing page, not an app route.
 
   it("Voice home alias routes to marketing /home", () => {
     const voice = readSrc("components/VoiceCommandSystem.tsx");

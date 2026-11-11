@@ -1,7 +1,6 @@
 import { backend } from "@/integrations/local/client";
+import { streamCloudChat, type CloudChatMessage } from "@/lib/cloudChat";
 import type { AuthorizationContext, ShadowSpectreHead, ShadowSpectreMessage } from "./types";
-
-export const SHADOWSPECTRE_URL = `${import.meta.env.VITE_API_BASE_URL}/functions/v1/shadowspectre`;
 
 export type StreamShadowSpectreOptions = {
   messages: ShadowSpectreMessage[];
@@ -14,76 +13,26 @@ export type StreamShadowSpectreOptions = {
 export async function streamShadowSpectre(
   options: StreamShadowSpectreOptions,
 ): Promise<{ content: string; head: ShadowSpectreHead }> {
-  const { messages, head, authorization, onToken, signal } = options;
-
+  const { messages, head, onToken, signal } = options;
   const { data: { session } } = await backend.auth.getSession();
-  const token = session?.access_token ?? import.meta.env.VITE_API_KEY;
+  if (!session?.access_token) {
+    throw new Error("Unauthorized. Sign in to use ShadowSpectre.");
+  }
 
-  const resp = await fetch(SHADOWSPECTRE_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      apikey: import.meta.env.VITE_API_KEY,
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      messages: messages.filter((m) => m.role !== "system"),
-      head: head ?? "general",
-      authorization: authorization ?? undefined,
-    }),
+  const cloudMessages: CloudChatMessage[] = messages.map((message) => ({
+    role: message.role,
+    content: message.content,
+  }));
+  let previousContent = "";
+  const result = await streamCloudChat(cloudMessages, {
+    model: undefined,
     signal,
+    onDelta: (content) => {
+      onToken(content.slice(previousContent.length));
+      previousContent = content;
+    },
   });
+  if (result.error) throw new Error(result.error);
 
-  const contentType = resp.headers.get("content-type") ?? "";
-
-  if (!resp.ok || !resp.body) {
-    let detail = `ShadowSpectre request failed (${resp.status})`;
-    try {
-      const err = (await resp.json()) as { error?: string };
-      if (err.error) detail = err.error;
-    } catch {
-      // ignore
-    }
-    throw new Error(detail);
-  }
-
-  // requireAuth failures return 200 + JSON (not SSE)
-  if (contentType.includes("application/json")) {
-    const err = (await resp.json()) as { error?: string };
-    throw new Error(err.error ?? "Sign in required to use ShadowSpectre.");
-  }
-
-  const resolvedHead = (resp.headers.get("X-ShadowSpectre-Head") ?? head ?? "general") as ShadowSpectreHead;
-  const reader = resp.body.getReader();
-  const decoder = new TextDecoder();
-  let buffer = "";
-  let content = "";
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-
-    let idx: number;
-    while ((idx = buffer.indexOf("\n")) !== -1) {
-      let line = buffer.slice(0, idx);
-      buffer = buffer.slice(idx + 1);
-      if (line.endsWith("\r")) line = line.slice(0, -1);
-      if (!line.startsWith("data: ")) continue;
-      const jsonStr = line.slice(6).trim();
-      if (jsonStr === "[DONE]") break;
-      try {
-        const parsed = JSON.parse(jsonStr) as { choices?: { delta?: { content?: string } }[] };
-        const delta = parsed.choices?.[0]?.delta?.content;
-        if (delta) {
-          content += delta;
-          onToken(delta);
-        }
-      } catch {
-        // partial SSE chunk
-      }
-    }
-  }
-
-  return { content, head: resolvedHead };
+  return { content: result.content, head: (head || "general") as ShadowSpectreHead };
 }

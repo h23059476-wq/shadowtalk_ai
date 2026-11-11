@@ -1,10 +1,6 @@
-import { runLocalChat } from "@/lib/offline/localChat";
-import { runOllamaChat } from "@/lib/desktop/ollamaInference";
-import { isOllamaInferenceReady } from "@/lib/desktop/sovereignMode";
 import { buildWorkspacePrompt } from "@/lib/jules/buildWorkspacePrompt";
 import type { JulesWorkspaceFile } from "@/lib/jules/types";
-import { DEVICE_ONLY_BLOCKED_MESSAGE } from "@/lib/privacy/deviceOnlyPledge";
-import { isAnyLocalModelReady } from "@/lib/offline/localChat";
+import { turboComplete } from "@/lib/turbo/turboEngine";
 
 export async function runLocalIdeAssist(
   instruction: string,
@@ -12,12 +8,8 @@ export async function runLocalIdeAssist(
   activeFileName?: string,
   isCodeAction = true,
 ): Promise<string> {
-  if (!isOllamaInferenceReady() && !isAnyLocalModelReady()) {
-    throw new Error(`${DEVICE_ONLY_BLOCKED_MESSAGE} Open Settings → Offline AI to download a model.`);
-  }
-
   const systemPrompt = isCodeAction
-    ? "You are a code assistant inside an offline IDE. Respond ONLY with updated code. No markdown fences, no explanations."
+    ? "You are a code assistant inside an IDE. Respond ONLY with updated code. No markdown fences, no explanations."
     : "You are a code assistant. Provide a clear, helpful explanation.";
 
   const userContent =
@@ -25,16 +17,10 @@ export async function runLocalIdeAssist(
       ? buildWorkspacePrompt(instruction, files, activeFileName)
       : `${instruction}\n\n${files[0]?.content ?? ""}`;
 
-  const messages = [
-    { role: "system" as const, content: systemPrompt },
-    { role: "user" as const, content: userContent },
-  ];
-
-  if (isOllamaInferenceReady()) {
-    const ollama = await runOllamaChat(messages);
-    if (ollama.ok && ollama.content.trim()) return ollama.content.trim();
-  }
-
-  const { content } = await runLocalChat(messages);
-  return content.trim();
+  const result = await turboComplete(systemPrompt, userContent, {
+    temperature: 0.2,
+    maxTokens: 2048,
+    taskComplexity: "medium",
+  });
+  return result.content;
 }

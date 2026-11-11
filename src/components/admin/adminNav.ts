@@ -1,6 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import {
   LayoutDashboard,
+  Brain,
   Bell,
   Radio,
   Server,
@@ -43,6 +44,7 @@ export const adminNavGroups: AdminNavGroup[] = [
     items: [
       { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, description: "Stats and quick actions" },
       { id: "alerts", label: "System alerts", icon: Bell, description: "Platform alerts log" },
+      { id: "intelligence", label: "Intelligence Center", icon: Brain, description: "Founder product analytics" },
     ],
   },
   {
@@ -74,6 +76,7 @@ export const adminNavGroups: AdminNavGroup[] = [
       { id: "geo-tracking", label: "User map", icon: Globe },
       { id: "journeys", label: "Journeys", icon: Route },
       { id: "timezone", label: "Timezones", icon: Clock },
+      { id: "firebase-analytics", label: "Firebase Analytics", icon: Activity, description: "Real-time usage limits & logs" },
       { id: "business", label: "Business insights", icon: BarChart3 },
       { id: "gsc", label: "Search Console", icon: Globe, description: "Read-only GSC summary" },
     ],

@@ -20,7 +20,7 @@ export function turboPlannerPrompt(goal: string, type: DeliverableType): string 
       ? `Deliverable: STRATEGY REPORT. Use web_search for competitors/pricing, deep_research for market/TAM, end with synthesis. 4-6 steps.`
       : type === 'research_brief'
         ? `Deliverable: RESEARCH BRIEF with citations. Prefer deep_research and web_search. End with synthesis.`
-        : `Deliverable: ${type}. Use real tools. End with synthesis or document_generator.`;
+        : `Deliverable: ${type}. Use real tools. End with synthesis.`;
 
   return `You are the S.E.E. planner. Break this goal into 4-8 concrete steps.
 
@@ -28,7 +28,7 @@ Goal: ${goal}
 
 ${typeRules}
 
-Tools: web_search, deep_research, web_scrape, synthesis, general, security_audit, document_generator.
+Tools: web_search, deep_research, web_scrape, synthesis, general, security_audit.
 
 Return ONLY a JSON array. Each object:
 - "action": specific imperative step

@@ -18,16 +18,26 @@ const PLAN_ALIASES: Record<string, UserPlan> = {
   enterprise: "enterprise",
 };
 
+/** Founder account — always Shadow Elite with every feature unlocked. */
+export const FOUNDER_EMAIL = "zain@shadowtalk-ai.com";
+
 const SPECIAL_ACCESS_EMAILS = [
+  FOUNDER_EMAIL,
   "j3451500@gmail.com",
   "almadadali00@gmail.com",
   "zaim98269@gmail.com",
   "laibaanis345@gmail.com",
+  "talhaateeq112@gmail.com",  // Lifetime Elite — founder grant
 ];
+
+export function isFounderEmail(email: string | null | undefined): boolean {
+  return !!email && email.trim().toLowerCase() === FOUNDER_EMAIL;
+}
 
 export function hasSpecialAccessEmail(email: string | null | undefined): boolean {
   if (!email) return false;
-  return SPECIAL_ACCESS_EMAILS.some((e) => e.toLowerCase() === email.toLowerCase());
+  const e = email.trim().toLowerCase();
+  return SPECIAL_ACCESS_EMAILS.some((s) => s.toLowerCase() === e);
 }
 
 export function resolvePlanFromCheckSubscription(

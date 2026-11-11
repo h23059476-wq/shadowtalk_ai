@@ -53,7 +53,7 @@ const skillCategories = [
 const certifications = [
   "AI Architecture Specialist",
   "Open Source Contributor",
-  "Privacy-First Engineering",
+  "Agentic Systems Engineering",
   "Sovereign Systems Design",
 ];
 

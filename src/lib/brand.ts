@@ -13,14 +13,14 @@ export const BRAND = {
   /** Primary brand line — landing hero, manifesto, chat empty state, SEO */
   tagline: "Think AI. Think ShadowTalk.",
   shortPitch:
-    "Stop juggling AI tabs. ShadowTalk finishes the job—agentic chat, missions, 30+ tools, voice & code, desktop app.",
+    "Stop juggling AI tabs. ShadowTalk finishes the job—voice & code, deep research, and a desktop app in one workspace.",
   manifesto:
-    "AI should execute — not just chat. ShadowTalk turns goals into missions, chains tools, and keeps you in control at every step.",
+    "AI should execute — not just chat. ShadowTalk turns goals into actions, chains tools, and keeps you in control at every step.",
   /** Landing hero — tagline as headline for maximum recall */
-  heroHeadline: ["Think AI.", "Think ShadowTalk."],
+  heroHeadline: ["Don't just get an answer.", "Get it done."],
   heroSubtitle:
-    "Stop juggling AI tabs. One workspace for agentic chat, missions, 30+ tools, voice & code, and a desktop app—free start, no card.",
-  heroBadge: "Free start · No card · Your old stack will feel slow",
+    "ShadowTalk turns ideas into actions through agentic workflows.",
+  heroBadge: "Free to use · No card · Your old stack will feel slow",
 } as const;
 
 /** Section headlines & subcopy for the home page */
@@ -28,20 +28,20 @@ export const LANDING_COPY = {
   manifesto: {
     kicker: "One line. One workspace.",
     title: ["You will forget", "most AI names."],
-    body: "Not this one. Think AI. Think ShadowTalk. — finish research, code, vault, voice, and autonomous missions in one flow. No five-tab copy-paste grind.",
+    body: "Not this one. Think AI. Think ShadowTalk. — finish research, code, voice, and deep work in one flow. No five-tab copy-paste grind.",
     traction: "Join builders who made the name stick and the work leave the chat window.",
   },
   comparison: {
     badge: "Feature-for-feature, honest",
     title: ["They reply.", "We run the playbook."],
     subtitle:
-      "Side-by-side on agents, tools, privacy, and price — sourced from our docs, not hype. Confirm competitor pricing on their sites before you switch.",
+      "Side-by-side on agents, tools, performance, and price — sourced from our docs, not hype. Confirm competitor pricing on their sites before you switch.",
   },
   features: {
     badge: "What you actually get",
-    title: ["One workspace.", "Thirty-plus tools."],
+    title: ["One workspace.", "Every tool you need."],
     subtitle:
-      "Mission Control, marketplace agents, IDE, research, presentations, Stealth Vault, BYOK, and optional on-device models — listed in /docs, shipped in product.",
+      "Marketplace agents, IDE, research, presentations, and optional on-device models — listed in /docs, shipped in product.",
   },
   pricing: {
     badge: "Free access",
@@ -74,35 +74,25 @@ export const LANDING_COPY = {
 
 /** Real traction — sync with productClaims COMMUNITY_METRICS */
 export const BRAND_TRACTION = {
-  usersLabel: "1.5K+ creators",
-  dailyLabel: "104+ daily active",
+  usersLabel: "Loading…",
+  dailyLabel: "Loading…",
 } as const;
 
 export const BRAND_PILLARS = [
   {
-    title: "Agents that finish",
-    description: "Multi-step missions with Mission Control — not one-shot replies.",
-    emoji: "🎯",
+    title: "Think, Plan, Execute",
+    description: "Give it a goal. The agent breaks it down into steps, writes the code, and runs it.",
+    emoji: "🧠",
   },
   {
-    title: "30+ tools, one sentence",
-    description: "Research, code, vault, voice, docs — triggered from natural language.",
-    emoji: "⚡",
+    title: "A Real Terminal",
+    description: "It doesn't just output bash snippets. It executes them securely in your workspace.",
+    emoji: "⌨️",
   },
   {
-    title: "You approve the edge",
-    description: "Human-in-the-loop when stakes are high. Auto-run when you trust the flow.",
-    emoji: "🛡️",
-  },
-  {
-    title: "Privacy on your terms",
-    description: "Cloud power by default. Vault, BYOK, and on-device Gemma when it matters.",
-    emoji: "🔒",
-  },
-  {
-    title: "Every surface",
-    description: "Web, PWA, and desktop software — same brain, deeper device access on install.",
-    emoji: "🖥️",
+    title: "Tool Chaining",
+    description: "It scrapes the web, reads files, writes code, and analyzes data — all in one continuous flow.",
+    emoji: "🔗",
   },
 ] as const;
 
@@ -111,8 +101,8 @@ export const BRAND_HOOKS = [
   "Think AI. Think ShadowTalk.",
   "Stop juggling tabs — finish the job here.",
   "Chat suggests. ShadowTalk ships.",
-  "One workspace. Thirty tools. Zero tab marathon.",
-  "Mission Control finishes the work you started in chat.",
+  "One workspace. Every tool. Zero tab marathon.",
+  "From idea to output — without leaving the workspace.",
   "Try it free — remember the name when generic AI fades.",
   "Premium power without the $200 ChatGPT Pro tax.",
   "Proof in /changelog — not marketing wallpaper.",
@@ -121,8 +111,8 @@ export const BRAND_HOOKS = [
 export const CHAT_WELCOME_LINES = [
   "Think AI. Think ShadowTalk. What are we building today?",
   "Your agentic workspace is live. Give me a goal — I'll plan the steps.",
-  "Mission-ready. Drop a task, research question, or 'run this for me'.",
-  "Encrypted vault unlocked. Let's turn intent into output.",
+  "Workspace-ready. Drop a task, research question, or 'run this for me'.",
+  "Intelligent tools unlocked. Let's turn intent into output.",
 ] as const;
 
 export const CHAT_EMPTY_HEADLINE = "What should ShadowTalk execute for you?";

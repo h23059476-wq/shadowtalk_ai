@@ -8,6 +8,7 @@ export const useAdminCheck = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let active = true;
     const checkAdminStatus = async () => {
       if (!user || !session) {
         setIsAdmin(false);
@@ -15,6 +16,7 @@ export const useAdminCheck = () => {
         return;
       }
 
+      setLoading(true);
       try {
         const { data, error } = await backend
           .from('user_roles')
@@ -23,22 +25,18 @@ export const useAdminCheck = () => {
           .eq('role', 'admin')
           .maybeSingle();
 
-        if (error) {
-          console.error('Error checking admin status:', error);
-          setIsAdmin(false);
-        } else {
-          setIsAdmin(!!data);
-        }
-      } catch (error) {
-        console.error('Error checking admin status:', error);
-        setIsAdmin(false);
+        if (!active) return;
+        setIsAdmin(!error && !!data);
+      } catch {
+        if (active) setIsAdmin(false);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     };
 
-    checkAdminStatus();
-  }, [user, session]);
+    void checkAdminStatus();
+    return () => { active = false; };
+  }, [user?.id, !!session]);
 
   return { isAdmin, loading };
 };

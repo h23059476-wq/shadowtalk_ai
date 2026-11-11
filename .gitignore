@@ -54,18 +54,24 @@ Thumbs.db
 *.tmp
 *.temp
 .cache/
+dev-dist/
 
-# Bundled Ollama binaries (stage with npm run desktop:stage-ollama before desktop:make)
-electron/resources/ollama/bin/**
-
-# Desktop installers (large binaries — stage with npm run desktop:stage before deploy)
-public/downloads/*.exe
-public/downloads/*.dmg
-public/downloads/*.AppImage
-!public/downloads/manifest.json
-!public/downloads/README.md
+# Full backup files
+*.full-backup
 
 # Sensitive files (auto-detected)
 .env
 
 artifacts/
+dist_electron/
+.firebase/
+
+# Offline Model Weights
+public/models/
+
+# Ignore local LLM models
+Llama-*/
+public/models/
+.venv/
+tsconfig.app.tsbuildinfo
+tsconfig.node.tsbuildinfo

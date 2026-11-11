@@ -98,6 +98,41 @@ const AboutFounderStory = () => {
           viewport={viewportOnce}
           className="mt-16 md:mt-20 text-center glass-subtle rounded-2xl p-8 md:p-10 border border-border/50"
         >
+          <div className="max-w-2xl mx-auto mb-8">
+            <h3 className="text-2xl font-bold mb-4">Meet the Founder</h3>
+            <p className="text-muted-foreground leading-relaxed mb-6">
+              Zain Ahmed is a 17-year-old developer from Karachi who built ShadowTalk AI from the ground up. Driven by a passion for privacy and autonomous AI, he created a platform where conversations belong to the user, not the server. ShadowTalk is proof that age and location are not limits when you have the vision to build the future.
+            </p>
+            <div className="flex justify-center gap-4 mb-8">
+              <a 
+                href="https://www.instagram.com/onlyz_ain1/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                <span className="text-sm font-medium">Instagram</span>
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/zain-ahmed-917b6b3a6" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+                <span className="text-sm font-medium">LinkedIn</span>
+              </a>
+            </div>
+          </div>
+          
           <p className="text-lg md:text-xl font-semibold text-foreground/95 mb-2">
             The shadow founder doesn&apos;t disappear when the light comes.
           </p>

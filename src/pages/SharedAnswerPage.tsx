@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Sparkles, ArrowRight, Loader2, MessageSquare } from "lucide-react";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL as string;
+const API_URL = '' as const;
 
 interface SharedAnswer {
   slug: string;
@@ -30,19 +30,38 @@ const SharedAnswerPage = () => {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data, error } = await (backend as any).rpc("get_shared_answer", { _slug: slug });
+      // Final completion phase: the previous read went through a Postgres
+      // RPC ("get_shared_answer") that the Firebase adapter always refuses,
+      // so EVERY /s/:slug page rendered "no longer available".
+      // shared_answers is publicly readable per the security rules; query it
+      // directly by slug instead.
+      const { data, error } = await backend
+        .from("shared_answers")
+        .select("*")
+        .eq("slug", slug)
+        .limit(1)
+        .maybeSingle();
       if (cancelled) return;
-      const row = Array.isArray(data) ? data[0] : null;
-      if (error || !row) {
+      if (error || !data) {
         setState("missing");
         return;
       }
-      setData(row as SharedAnswer);
+      const row = data as unknown as SharedAnswer;
+      setData({
+        slug: row.slug ?? slug,
+        title: row.title ?? null,
+        prompt: row.prompt ?? "",
+        answer: row.answer ?? "",
+        model: row.model ?? null,
+        source: row.source ?? "chat",
+        views: typeof row.views === "number" ? row.views : 0,
+        created_at: row.created_at ?? new Date().toISOString(),
+      });
       setState("ready");
-      // fire-and-forget view increment
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      void (backend as any).rpc("increment_shared_answer_views", { _slug: slug });
+      // NOTE: view counting is intentionally not implemented client-side —
+      // the security rules correctly forbid anonymous visitors from updating
+      // documents. `views` stays server-managed; the old remote view-increment
+      // call never worked and has been removed rather than faked.
     })();
     return () => { cancelled = true; };
   }, [slug]);
@@ -51,7 +70,7 @@ const SharedAnswerPage = () => {
     () => (typeof window !== "undefined" ? window.location.href : ""),
     [],
   );
-  const ogImage = `${API_URL}/functions/v1/og-answer?slug=${slug}`;
+  const ogImage = '';
   const title = data?.title || "Answer from ShadowTalk AI";
   const description = data?.prompt?.slice(0, 155) ?? "Free AI chatbot — no login required.";
 
@@ -134,7 +153,7 @@ const SharedAnswerPage = () => {
             <Card className="p-6 md:p-8 bg-gradient-to-br from-violet-500/10 via-transparent to-cyan-500/10 border-violet-500/30 text-center space-y-4">
               <h2 className="text-2xl font-bold">Get your own answer in seconds</h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                ShadowTalk is a free, privacy-first AI chatbot. No login required to start.
+                ShadowTalk is a free, intelligent multi-model AI assistant. Fast, powerful, and ready to build.
               </p>
               <Button asChild size="lg" className="bg-gradient-to-r from-violet-500 to-cyan-500 text-white">
                 <Link to="/chatbot?utm_source=shared_answer&utm_medium=viral">

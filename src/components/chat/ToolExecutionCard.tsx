@@ -23,15 +23,10 @@ export interface ToolExecutionCardProps {
 
 const TOOL_META: Record<string, { label: string; icon: React.ElementType; color: string }> = {
   deep_research: { label: 'Deep Research', icon: Search, color: 'text-blue-400' },
-  image_generator: { label: 'Image Generator', icon: Image, color: 'text-violet-400' },
-  image_decoder: { label: 'Image Analysis', icon: Eye, color: 'text-purple-400' },
-  image_edit: { label: 'Image Editor', icon: Wand2, color: 'text-pink-400' },
   agentic_runner: { label: 'Task Runner', icon: Play, color: 'text-green-400' },
-  creative_synthesis: { label: 'Creative Studio', icon: Wand2, color: 'text-pink-400' },
   shadow_browser: { label: 'Web Browser', icon: Globe, color: 'text-cyan-400' },
   security_audit: { label: 'Security Scan', icon: Shield, color: 'text-red-400' },
   document_generator: { label: 'Document Generator', icon: FileText, color: 'text-amber-400' },
-  music_generator: { label: 'Music Studio', icon: Music, color: 'text-fuchsia-400' },
   visual_reasoning: { label: 'Visual Reasoning', icon: Brain, color: 'text-indigo-400' },
   camera_capture: { label: 'Camera', icon: Camera, color: 'text-teal-400' },
   data_organizer: { label: 'Data Organizer', icon: Table, color: 'text-orange-400' },
@@ -44,7 +39,6 @@ const TOOL_META: Record<string, { label: string; icon: React.ElementType; color:
   eco_actions: { label: 'Eco Actions', icon: Globe, color: 'text-green-400' },
   web_search: { label: 'Web Search', icon: Search, color: 'text-blue-400' },
   vision_agent: { label: 'Vision Agent', icon: Eye, color: 'text-purple-400' },
-  wordle_game: { label: 'Wordle', icon: Zap, color: 'text-green-400' },
   knowledge_vault: { label: 'Knowledge Vault', icon: Brain, color: 'text-indigo-400' },
   mission_control: { label: 'Mission Control', icon: Play, color: 'text-orange-400' },
   stealth_vault: { label: 'Stealth Vault', icon: Shield, color: 'text-red-400' },

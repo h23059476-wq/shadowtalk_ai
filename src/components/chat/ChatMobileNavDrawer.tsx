@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SETTINGS_SPRING } from "@/lib/settingsMotion";
-import { ChatShadowSidebar } from "@/components/chat/ChatShadowSidebar";
+import { ChatShadowSidebar, Conversation } from "@/components/chat/ChatShadowSidebar";
 
 interface ChatMobileNavDrawerProps {
   open: boolean;
@@ -10,7 +10,14 @@ interface ChatMobileNavDrawerProps {
   userInitials: string;
   userDisplayName: string;
   onNewChat: () => void;
-  onOpenHistory: () => void;
+  conversations: Conversation[];
+  currentConversationId: string | null;
+  isArchived: (conversation: Conversation) => boolean;
+  onSelect: (id: string) => void;
+  onDelete: (id: string) => void;
+  onArchive: (id: string) => void;
+  onUnarchive: (id: string) => void;
+  onOpenSettings: () => void;
 }
 
 export function ChatMobileNavDrawer({
@@ -19,7 +26,14 @@ export function ChatMobileNavDrawer({
   userInitials,
   userDisplayName,
   onNewChat,
-  onOpenHistory,
+  conversations,
+  currentConversationId,
+  isArchived,
+  onSelect,
+  onDelete,
+  onArchive,
+  onUnarchive,
+  onOpenSettings,
 }: ChatMobileNavDrawerProps) {
   return (
     <AnimatePresence>
@@ -38,7 +52,7 @@ export function ChatMobileNavDrawer({
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
-            transition={SETTINGS_SPRING}
+            transition={{ duration: 0.28, ease: [0.2, 0.8, 0.2, 1] }}
             className="fixed left-0 top-0 bottom-0 z-[70] md:hidden shadow-elevated"
           >
             <div className="relative h-full">
@@ -47,7 +61,7 @@ export function ChatMobileNavDrawer({
                 variant="ghost"
                 size="icon"
                 onClick={onClose}
-                className="absolute right-2 top-2 z-20 h-9 w-9 rounded-xl"
+                className="absolute right-2 top-2 z-40 h-9 w-9 rounded-xl text-cyan-400 bg-black/20 hover:bg-black/40"
                 aria-label="Close navigation"
               >
                 <X className="h-5 w-5" />
@@ -61,8 +75,18 @@ export function ChatMobileNavDrawer({
                   onNewChat();
                   onClose();
                 }}
-                onOpenHistory={() => {
-                  onOpenHistory();
+                conversations={conversations}
+                currentConversationId={currentConversationId}
+                isArchived={isArchived}
+                onSelect={(id) => {
+                  onSelect(id);
+                  onClose();
+                }}
+                onDelete={onDelete}
+                onArchive={onArchive}
+                onUnarchive={onUnarchive}
+                onOpenSettings={() => {
+                  onOpenSettings();
                   onClose();
                 }}
                 onNavigate={onClose}

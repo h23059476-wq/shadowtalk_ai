@@ -1,3 +1,6 @@
+import { getCachedAiAccessMode } from "@/lib/aiAccessMode";
+import { getByokConfig } from "@/lib/byok";
+
 /**
  * Turbo Provider Configuration — Key resolution & provider constants.
  *
@@ -5,7 +8,7 @@
  * Keeps key resolution logic DRY.
  */
 
-import { loadCustomAiConfig, hasActiveCustomKey, type CustomAiKeysConfig } from '@/lib/customApiKeys';
+
 
 // ---- Provider Constants ----
 
@@ -24,54 +27,40 @@ export const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 /** OpenRouter API endpoint */
 export const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
-// ---- Embedded Platform Key ----
-// Powers ShadowTalk for all free-tier users (bypasses broken Lovable edge function).
-const _K = ['gsk_oqo0','ziSXZ4dP','gkFD8BMj','WGdyb3FY','Gm9foOab','DlsTC8pE','lPq3GRXn'];
-const PLATFORM_GROQ_KEY = _K.join('');
+/** OpenAI API endpoint */
+export const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
+
+/** OpenAI model */
+export const TURBO_MODEL_OPENAI = 'gpt-4o';
 
 // ---- Key Resolution ----
 
 /**
- * Resolve the Turbo API key from multiple sources.
- * Non-reactive — safe to call from any context (React hooks, forge/execute libs).
+ * Resolve a user-supplied key only. Shared provider credentials must remain
+ * server-side and are never bundled into the browser.
  *
- * Priority:
- *   1. localStorage (shadowtalk_custom_ai_keys — if provider is groq or turbo)
- *   2. sessionStorage (shadowtalk_turbo_groq_key — set by settings page)
- *   3. Embedded platform Groq key (always available — powers free tier)
+ * Reads the v2 per-user BYOK namespace (`shadowtalk.byok.v2.<uid>`) — the
+ * legacy un-namespaced `shadowtalk.byok.v1` key is no longer consulted.
  */
 export function resolveTurboKey(): string | null {
-  // 1. Check localStorage (BYOK config)
-  try {
-    const config: CustomAiKeysConfig = loadCustomAiConfig();
-    if (hasActiveCustomKey(config)) {
-      if ((config.provider as string) === 'groq' || (config.provider as string) === 'turbo') {
-        return config.apiKey;
-      }
-      if (config.apiKey.startsWith('gsk_')) {
-        return config.apiKey;
-      }
-    }
-  } catch {
-    // silent — localStorage may be unavailable
-  }
+  if (typeof window === "undefined" || getCachedAiAccessMode() !== "byok") return null;
+  const cfg = getByokConfig();
+  const key = cfg?.apiKey?.trim();
+  return key ? key : null;
+}
 
-  // 2. Check sessionStorage (dedicated turbo key from settings)
-  try {
-    const turboKey = sessionStorage.getItem('shadowtalk_turbo_groq_key');
-    if (turboKey && turboKey.startsWith('gsk_')) return turboKey;
-  } catch {
-    // silent
-  }
-
-  // 3. Platform embedded key — always available for free-tier users
-  return PLATFORM_GROQ_KEY;
+/**
+ * Client-side provider API keys are configured through the BYOK settings UI,
+ * not Vite environment variables.
+ */
+export function resolveOpenAIKey(): string | null {
+  return null;
 }
 
 // ---- Provider Info ----
 
 export interface TurboProviderInfo {
-  id: 'groq' | 'openrouter';
+  id: 'groq' | 'openrouter' | 'openai';
   name: string;
   model: string;
   url: string;
@@ -88,6 +77,14 @@ export const TURBO_PROVIDERS: TurboProviderInfo[] = [
     url: GROQ_API_URL,
     maxTokens: 8192,
     avgTtftMs: 250,
+  },
+  {
+    id: 'openai',
+    name: 'OpenAI (GPT-4o)',
+    model: TURBO_MODEL_OPENAI,
+    url: OPENAI_API_URL,
+    maxTokens: 16384,
+    avgTtftMs: 600,
   },
   {
     id: 'openrouter',

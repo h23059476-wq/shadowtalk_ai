@@ -12,6 +12,8 @@ import {
   Link2,
   User,
   LayoutGrid,
+  TrendingUp,
+  WifiOff,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SettingsAmbientBackground } from "@/components/settings/SettingsAmbientBackground";
@@ -25,24 +27,24 @@ import { SettingsLoading } from "@/components/settings/SettingsLoading";
 import { useSettingsMotion } from "@/hooks/useSettingsMotion";
 import { useSettingsSectionNav } from "@/hooks/useSettingsSectionNav";
 import { isLearningEnabled, setLearningEnabled } from "@/lib/autoImprove/learningConsent";
-import { isAutonomousModeEnabled, setAutonomousModeEnabled } from "@/lib/autonomy/config";
-import {
-  isAnonymousAutonomousEnabled,
-  setAnonymousAutonomousEnabled,
-  setAutoApproveMissions,
-  shouldAutoApproveMissions,
-} from "@/lib/anonymousAutonomousMode";
+
+import { useState } from "react";
 import { settingsHapticTick } from "@/lib/settingsFeedback";
 import type { SettingsSectionId } from "@/lib/settingsTypes";
-import { useState } from "react";
 
 const SECTIONS: readonly SettingsNavSection[] = [
   { id: "home", label: "Overview", icon: LayoutGrid, desc: "Quick access to all areas" },
   { id: "general", label: "General", icon: Settings, desc: "Theme, language, sounds" },
   { id: "personalization", label: "Personalization", icon: Sparkles, desc: "Instructions & tone" },
   { id: "chat", label: "Chat behavior", icon: MessageSquare, desc: "Sending, timestamps, routing" },
-  { id: "models", label: "Models & AI", icon: Bot, desc: "Provider, offline, sovereign" },
+  { id: "models", label: "Models & AI", icon: Bot, desc: "Provider, sovereign" },
+  // "offline" was previously implemented (SettingsSectionPanels renders
+  // LocalModelStatus + OfflineSetup under section === "offline") but missing
+  // from this list, so /settings?section=offline silently fell back to
+  // "home" and no reachable UI could initialize the local AI engine.
+  { id: "offline", label: "Offline AI", icon: WifiOff, desc: "Local model & install" },
   { id: "data", label: "Data controls", icon: Database, desc: "Learning & privacy" },
+  { id: "growth", label: "Growth Engine", icon: TrendingUp, desc: "Strategy & Scale AI" },
   { id: "connections", label: "Connections", icon: Link2, desc: "API keys & integrations" },
   { id: "account", label: "Account", icon: User, desc: "Profile, billing, security" },
 ];
@@ -55,9 +57,6 @@ export default function SettingsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { user, loading: authLoading } = useAuth();
   const [learningEnabled, setLearningEnabledState] = useState(isLearningEnabled());
-  const [autonomyEnabled, setAutonomyEnabledState] = useState(isAutonomousModeEnabled());
-  const [anonymousAutonomous, setAnonymousAutonomousState] = useState(isAnonymousAutonomousEnabled());
-  const [autoApproveMissions, setAutoApproveMissionsState] = useState(shouldAutoApproveMissions());
   const { headerReveal, shouldAnimateAmbient, heroCollapse, sectionPanel, spring } =
     useSettingsMotion();
   const mainRef = useRef<HTMLDivElement>(null);
@@ -89,7 +88,7 @@ export default function SettingsPage() {
     mainRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [section]);
 
-  if (authLoading || !user) {
+  if (authLoading) {
     return <SettingsLoading />;
   }
 
@@ -107,11 +106,27 @@ export default function SettingsPage() {
       >
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
         <div className="container mx-auto px-4 h-14 flex items-center gap-3 max-w-7xl">
-          <motion.div whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.94 }} transition={spring}>
+          <motion.div
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.94 }}
+            transition={spring}
+            onClick={() => {
+              settingsHapticTick();
+              // Hard redirect — guarantees navigation regardless of React
+              // Router state (same pattern as the auth redirect fix).
+              window.location.assign("/chatbot");
+            }}
+            className="cursor-pointer"
+          >
             <Button
+              type="button"
               variant="ghost"
               size="icon"
-              onClick={() => navigate("/chatbot")}
+              onClick={(e) => {
+                e.stopPropagation();
+                settingsHapticTick();
+                window.location.assign("/chatbot");
+              }}
               aria-label="Back to chat"
               className="rounded-xl"
             >
@@ -230,21 +245,6 @@ export default function SettingsPage() {
                       onLearningChange={(v) => {
                         setLearningEnabled(v);
                         setLearningEnabledState(v);
-                      }}
-                      autonomyEnabled={autonomyEnabled}
-                      onAutonomyChange={(v) => {
-                        setAutonomousModeEnabled(v);
-                        setAutonomyEnabledState(v);
-                      }}
-                      anonymousAutonomous={anonymousAutonomous}
-                      onAnonymousAutonomousChange={(v) => {
-                        setAnonymousAutonomousEnabled(v);
-                        setAnonymousAutonomousState(v);
-                      }}
-                      autoApproveMissions={autoApproveMissions}
-                      onAutoApproveMissionsChange={(v) => {
-                        setAutoApproveMissions(v);
-                        setAutoApproveMissionsState(v);
                       }}
                     />
                   </motion.div>

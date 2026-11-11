@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import { backend } from "@/integrations/local/client";
 import { useAuth } from "@/components/AuthProvider";
-import { isHeavyDownloadInProgress } from "@/lib/offline/forceOfflineSession";
+
 import { markExplicitSignOut } from "@/lib/persistentAuth";
+import { clearUserLocalData } from "@/lib/signOutCleanup";
 
 const SESSION_TOKEN_KEY = "shadowtalk_session_token";
 const HEARTBEAT_MS = 60_000;
@@ -77,6 +78,7 @@ export function useSessionTracking() {
         const { data: existing } = await backend
           .from("user_sessions")
           .select("id")
+          .eq("user_id", user.id)
           .eq("session_token", token)
           .maybeSingle();
 
@@ -91,6 +93,7 @@ export function useSessionTracking() {
               user_agent: navigator.userAgent,
               ip_hash,
             })
+            .eq("user_id", user.id)
             .eq("session_token", token);
         } else {
           await backend.from("user_sessions").insert({
@@ -109,15 +112,20 @@ export function useSessionTracking() {
 
     const heartbeat = setInterval(async () => {
       if (cancelled) return;
-      if (isHeavyDownloadInProgress()) return;
+
       try {
         const { data } = await backend
           .from("user_sessions")
           .select("revoked_at")
+          .eq("user_id", user.id)
           .eq("session_token", token)
           .maybeSingle();
 
         if (data?.revoked_at) {
+          // Final completion phase — keep cleanup consistent with interactive
+          // sign-out: ephemeral user-scoped state (E2EE session keys,
+          // private-mode flags) must not outlive the revoked identity.
+          try { clearUserLocalData(user.id); } catch { /* best effort */ }
           markExplicitSignOut();
           await backend.auth.signOut();
           localStorage.removeItem(SESSION_TOKEN_KEY);
@@ -128,6 +136,7 @@ export function useSessionTracking() {
         await backend
           .from("user_sessions")
           .update({ last_seen_at: new Date().toISOString() })
+          .eq("user_id", user.id)
           .eq("session_token", token);
       } catch {
         // ignore transient errors

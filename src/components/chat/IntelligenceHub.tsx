@@ -23,6 +23,7 @@ export const IntelligenceHub: React.FC<IntelligenceHubProps> = ({ isOpen, onClos
     memories, insights, knowledgeEntries, streak,
     unreadInsights, markInsightRead, togglePinInsight,
     searchKnowledge, deleteMemory, deleteKnowledgeEntry,
+    isSynthesizing,
   } = useIntelligenceHub();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -116,7 +117,12 @@ export const IntelligenceHub: React.FC<IntelligenceHubProps> = ({ isOpen, onClos
             </TabsContent>
 
             <TabsContent value="insights" className="mt-0 pb-4">
-              <InsightsTab insights={insights} onRead={markInsightRead} onPin={togglePinInsight} />
+              <InsightsTab 
+                insights={insights} 
+                isSynthesizing={isSynthesizing}
+                onRead={markInsightRead} 
+                onPin={togglePinInsight} 
+              />
             </TabsContent>
 
             <TabsContent value="knowledge" className="mt-0 pb-4">
@@ -300,11 +306,33 @@ const MemoryTab = ({ memories, onDelete }: { memories: AIMemory[]; onDelete: (id
   );
 };
 
-const InsightsTab = ({ insights, onRead, onPin }: {
-  insights: DailyInsight[]; onRead: (id: string) => void; onPin: (id: string) => void;
+const InsightsTab = ({ insights, isSynthesizing, onRead, onPin }: {
+  insights: DailyInsight[]; 
+  isSynthesizing?: boolean;
+  onRead: (id: string) => void; 
+  onPin: (id: string) => void;
 }) => {
   const pinned = insights.filter(i => i.is_pinned);
   const recent = insights.filter(i => !i.is_pinned);
+
+  if (isSynthesizing && insights.length === 0) {
+    return (
+      <div className="space-y-3">
+        <div className="flex flex-col items-center justify-center py-12 text-center animate-pulse">
+          <Lightbulb className="h-10 w-10 mx-auto text-primary/40 mb-3 animate-pulse" />
+          <p className="text-sm font-medium text-primary/70">Synthesizing your daily insights...</p>
+          <p className="text-xs text-muted-foreground mt-1">Analyzing your recent activity to generate personalized intelligence</p>
+        </div>
+        {[1, 2, 3].map(i => (
+          <div key={i} className="p-3 rounded-lg border bg-muted/20 border-border/30 animate-pulse">
+            <div className="h-4 bg-muted/40 rounded w-2/3 mb-2" />
+            <div className="h-3 bg-muted/30 rounded w-full mb-1" />
+            <div className="h-3 bg-muted/30 rounded w-4/5" />
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   if (insights.length === 0) {
     return (

@@ -11,7 +11,7 @@
 1. I am Zain Ahmed Fahad Patel from Karachi.
 2. Started building ShadowTalk AI at 17.
 3. Core belief: AI should be sovereign, private, and useful.
-4. Stack: React, Monaco, BYOK, local models.
+4. Stack: React, Monaco, local models.
 5. Join: shadowtalk-ai.com
 
 ## Thread 3: distribution lesson

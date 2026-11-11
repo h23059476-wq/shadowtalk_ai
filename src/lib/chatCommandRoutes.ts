@@ -5,7 +5,6 @@ export const CHAT_COMMAND_NAV_ROUTES: Record<string, string> = {
   "script-automation": "/workspace?tab=automate",
   "fine-tuning": "/personal-llm",
   "white-label": "/enterprise",
-  document: "/forge?mode=documents",
   sovereign: "/sovereign-data",
   security: "/security?tab=audit",
   code: "/ide",
@@ -18,7 +17,7 @@ export const CHAT_COMMAND_NAV_ROUTES: Record<string, string> = {
   "privacy-score": "/security?tab=score",
   theme: "/templates?tab=custom",
   templates: "/templates",
-  missions: "/execute",
+  missions: "/missioncontrol",
 };
 
 /** Open in-chat modals instead of navigating away */
@@ -30,8 +29,6 @@ export const CHAT_COMMAND_MODAL_ACTIONS = new Set([
   "google",
   "voice",
   "browser",
-  "offline-tools",
-  "offline",
   "multi-model",
   "creative",
   "vision",
@@ -56,4 +53,8 @@ export const CHAT_COMMAND_MODAL_ACTIONS = new Set([
   "organize",
   "uncensored-arena",
   "shadow-cowork",
+  "document-studio",
+  "document-generator",
+  "document",
 ]);
+

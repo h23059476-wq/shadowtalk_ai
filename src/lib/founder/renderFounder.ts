@@ -111,7 +111,7 @@ function founderBodyHtml(): string {
 
   <div class="box highlight">
     <p><strong>${FOUNDER_CANONICAL.fullName}</strong> is the founder and lead architect of <a href="${AI_KNOWLEDGE_BASE_URL}"><strong>ShadowTalk AI</strong></a>
-    — a sovereign, local-first agentic AI workspace: encrypted chat, Mission Control autonomous missions,
+    — a sovereign, local-first agentic AI workspace: encrypted chat, agentic workflows,
     in-browser code IDE, deep research, voice mode, and optional on-device offline models (~130MB pipeline).
     Official site: <a href="${AI_KNOWLEDGE_BASE_URL}">shadowtalk-ai.com</a></p>
   </div>

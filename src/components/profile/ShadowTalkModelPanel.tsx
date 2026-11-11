@@ -9,7 +9,7 @@ export function ShadowTalkModelPanel() {
 
   if (!enabled) {
     return (
-      <Card className="glass border-border/50">
+      <Card className="card-glass border-border/50">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
             <Brain className="h-5 w-5 text-primary" />
@@ -27,7 +27,7 @@ export function ShadowTalkModelPanel() {
   const status = state?.status ?? "untrained";
 
   return (
-    <Card className="glass border-border/50">
+    <Card className="card-glass border-border/50">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-base">
           <Brain className="h-5 w-5 text-primary" />
@@ -103,7 +103,7 @@ export function ShadowTalkModelPanel() {
 
         <p className="text-[11px] text-muted-foreground leading-relaxed">
           Select <strong>ShadowTalk Model</strong> in chat to use learned context. Inference uses
-          your local Gemma/SmolLM when available, with cloud fallback. Embeddings and clusters stay
+          your local Llama model when available, with cloud fallback. Embeddings and clusters stay
           on this device.
         </p>
       </CardContent>

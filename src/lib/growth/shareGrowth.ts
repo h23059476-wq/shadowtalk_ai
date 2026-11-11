@@ -28,7 +28,7 @@ export function buildAppShareUrl(opts: {
   return url.toString();
 }
 
-/** Public share link with dynamic Open Graph HTML (ShadowTalk backend edge). */
+/** Public share link — falls back to redirect when no cloud base. */
 export function buildShareOgLink(opts: {
   title: string;
   subtitle?: string;
@@ -48,7 +48,7 @@ export function buildShareOgLink(opts: {
     return redirect;
   }
 
-  const url = new URL(`${base}/functions/v1/share-og`);
+  const url = new URL(`""`);
   url.searchParams.set("title", opts.title.slice(0, 120));
   if (opts.subtitle) url.searchParams.set("subtitle", opts.subtitle.slice(0, 200));
   if (opts.ref) url.searchParams.set("ref", opts.ref);

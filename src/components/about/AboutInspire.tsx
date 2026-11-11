@@ -19,7 +19,7 @@ const PILLARS = [
   {
     icon: Heart,
     title: "Mission over hype",
-    body: "Every feature points to one idea: your mind should stay yours. Privacy, offline mode, BYOK — not marketing slogans. Architecture choices.",
+    body: "Every feature points to one idea: your mind should stay yours. Privacy, offline mode— not marketing slogans. Architecture choices.",
   },
   {
     icon: Sparkles,

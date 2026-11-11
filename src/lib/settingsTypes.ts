@@ -6,4 +6,5 @@ export type SettingsSectionId =
   | "models"
   | "data"
   | "connections"
-  | "account";
+  | "account"
+  | "offline";

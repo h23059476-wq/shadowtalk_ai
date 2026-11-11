@@ -11,36 +11,8 @@ export interface ShadowTalkDesktopInfo {
   /** Tier C: installer shipped default MLC model cache */
   offlineModelBundled?: boolean;
   offlineModelPath?: string;
-  /** Odysseus-style Ollama sidecar available on desktop */
+  /** Sovereign desktop capable */
   sovereignDesktopCapable?: boolean;
-  /** Tier D: installer shipped bundled Ollama binary */
-  ollamaBundled?: boolean;
-  ollamaManagedProcess?: boolean;
-  ollamaDefaultModel?: string;
-  ollamaModelsPath?: string;
-  ollamaReachable?: boolean;
-}
-
-export interface OllamaBootstrapState {
-  bundledBinaryPresent: boolean;
-  managedProcess: boolean;
-  reachable: boolean;
-  models: string[];
-  defaultModel: string;
-  modelsPath: string;
-  seeding: boolean;
-  pulling: boolean;
-  message?: string;
-  error?: string;
-}
-
-export interface OllamaStatusInfo {
-  reachable: boolean;
-  version?: string;
-  models: string[];
-  activeModel: string;
-  baseUrl: string;
-  error?: string;
 }
 
 export interface ShadowTalkDesktopAPI {
@@ -62,27 +34,7 @@ export interface ShadowTalkDesktopAPI {
     onChunk: (chunk: string) => void,
     onEnd: (result: { ok: boolean; status: number; body: string }) => void,
   ) => Promise<{ started: boolean }>;
-  ollamaStatus: (opts?: { baseUrl?: string; model?: string }) => Promise<OllamaStatusInfo>;
-  ollamaConfigure: (opts: { baseUrl?: string; model?: string }) => Promise<OllamaStatusInfo>;
-  ollamaPull: (
-    model: string,
-    onProgress?: (status: string, percent?: number) => void,
-  ) => Promise<{ ok: boolean; error?: string }>;
-  ollamaBootstrap: (
-    options?: { pullDefaultModel?: boolean },
-    onProgress?: (status: string, percent?: number) => void,
-  ) => Promise<OllamaBootstrapState>;
-  ollamaBootstrapSnapshot: () => Promise<OllamaBootstrapState>;
   fetchUrl: (url: string) => Promise<{ ok: boolean; status: number; text: string; error?: string }>;
-  ollamaChat: (
-    payload: {
-      messages: Array<{ role: 'system' | 'user' | 'assistant'; content: string }>;
-      baseUrl?: string;
-      model?: string;
-    },
-    onToken: (token: string) => void,
-    signal?: AbortSignal,
-  ) => Promise<{ content: string; ok: boolean; error?: string }>;
   preferredLogin?: () => Promise<{ redirected: boolean; error?: Error }>;
   secureStore?: {
     getItem(key: string): Promise<string | null>;

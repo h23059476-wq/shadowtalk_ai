@@ -22,6 +22,11 @@
       ]
     },
     "skipLibCheck": true,
+    "types": [
+      "node",
+      "vite/client",
+      "vitest/globals"
+    ],
     "strict": false,
     "target": "ES2020",
     "useDefineForClassFields": true

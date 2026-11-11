@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const proofCards = [
   {
     icon: Search,
-    title: "Google ranks ShadowTalk #1",
+    title: "Search ShadowTalk AI on Google",
     desc: 'Search "shadowtalk ai" — our site and founder profile appear first. Real traction before paid ads.',
     borderColor: "border-l-primary",
     bg: "bg-primary/10",
@@ -13,7 +13,7 @@ const proofCards = [
   },
   {
     icon: Award,
-    title: "5/5 from real users",
+    title: "A user rated offline access 5/5",
     desc: 'Ejaz rated offline access and UX five stars: "everything I used felt heavy and smooth."',
     borderColor: "border-l-success",
     bg: "bg-success/10",

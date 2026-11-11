@@ -1,6 +1,5 @@
 import type {
   TauriLocalAuth,
-  TauriOllamaClient,
   TauriSecureStore,
   TauriWhatsAppLocalBridge,
   TauriMediaPipeline,
@@ -23,7 +22,6 @@ declare global {
 
     interface TauriBackends {
       localAuth?: TauriLocalAuth;
-      ollamaClient?: TauriOllamaClient;
       secureStore?: TauriSecureStore;
       whatsappLocalBridge?: TauriWhatsAppLocalBridge;
       mediaPipeline?: TauriMediaPipeline;

@@ -1,55 +1,41 @@
-import { useState, useEffect, useRef, lazy, Suspense, useCallback } from "react";
-import { Loader2 } from "lucide-react";
+import { useState, useEffect, useRef, lazy, Suspense, useCallback, useMemo } from "react";
+import { Loader2, Phone, TriangleAlert } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useSearchParams } from "react-router-dom";
+// Removed broken imports
 import { useAuth } from "@/components/AuthProvider";
 import { backend } from "@/integrations/local/client";
 import { useToast } from "@/hooks/use-toast";
-import { ChatMode } from "@/components/chat/ModeSelector";
-import { AIProvider } from "@/components/chat/ProviderSelector";
+import { ChatMode, getModePrompt } from "@/components/chat/ModeSelector";
+type AIProvider = "turbo" | string;
 import { ChatHeader } from "@/components/chat/ChatHeader";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { AiAccessOnboarding } from "@/components/chat/AiAccessOnboarding";
+const LiveVoiceMode = lazy(() => import("@/components/chat/LiveVoiceMode").then(m => ({ default: m.LiveVoiceMode })));
+const SettingsByokCard = lazy(() => import("@/components/settings/SettingsByokCard").then(m => ({ default: m.SettingsByokCard })));
 import { ChatToolbar } from "@/components/chat/ChatToolbar";
 import { EnterpriseWelcomeBanner } from "@/components/chat/EnterpriseWelcomeBanner";
-import { EnterpriseEmployeeGate } from "@/components/enterprise/EnterpriseEmployeeGate";
-import { EnterpriseOnboarding } from "@/components/enterprise/EnterpriseOnboarding";
-import { EnterpriseHelpFab } from "@/components/enterprise/EnterpriseHelpFab";
-import { EnterpriseInviteColleagues } from "@/components/enterprise/EnterpriseInviteColleagues";
-import { useEnterpriseExperience } from "@/hooks/useEnterpriseExperience";
-import { ChatIconRail } from "@/components/chat/ChatIconRail";
 import { ChatShadowSidebar } from "@/components/chat/ChatShadowSidebar";
 import { ChatInput } from "@/components/chat/ChatInput";
+import { ShareWinBanner } from "@/components/growth/ShareWinBanner";
+import { ShareResultDialog } from "@/components/growth/ShareResultDialog";
 import { ChatMessages } from "@/components/chat/ChatMessages";
-import { ConversationSidebar } from "@/components/chat/ConversationSidebar";
-import { ImageGenerator } from "@/components/chat/ImageGenerator";
-import { MusicGenerator } from "@/components/chat/MusicGenerator";
-import { WordleGame } from "@/components/chat/WordleGame";
-import { GoogleIntegrationPanel } from "@/components/chat/GoogleIntegrationPanel";
-import { PerceptionDashboard } from "@/components/chat/PerceptionDashboard";
-import { UserContextPanel, type UserContext } from "@/components/chat/UserContextPanel";
-import { DeepResearchPanel } from "@/components/chat/DeepResearchPanel";
-import { CommandPalette } from "@/components/chat/CommandPalette";
+import type { UserContext } from "@/components/chat/UserContextPanel";
+import { inferDocumentTypeFromMessage } from "@/lib/kimiDocumentGeneration";
 
-const ShadowTalkLive = lazy(() =>
-  import("@/components/chat/ShadowTalkLive").then((m) => ({ default: m.ShadowTalkLive })),
-);
-const ShadowBrowser = lazy(() =>
-  import("@/components/chat/ShadowBrowser").then((m) => ({ default: m.ShadowBrowser })),
-);
-import { useFeatureGating } from "@/hooks/useFeatureGating";
-import { usePushNotifications } from "@/hooks/usePushNotifications";
-import { useUsageTracking } from "@/hooks/useUsageTracking";
-import { useOfflineAuth } from "@/hooks/useOfflineAuth";
-import { useOfflineChatHistory } from "@/hooks/useOfflineChatHistory";
-import { useGeoLocation } from "@/hooks/useGeoLocation";
-import { useGuestUsage, GUEST_LIMITS } from "@/hooks/useGuestUsage";
-import { useDailyLimits } from "@/hooks/useDailyLimits";
-import { useToolOrchestrator } from "@/hooks/useToolOrchestrator";
-import { useAgenticToolDispatch } from "@/hooks/useAgenticToolDispatch";
-import { detectShadowExecutionFromChat } from "@/lib/execution/inferFromChat";
+
+
+
+
+
+import { streamCloudChat, isCloudChatConfigured, type CloudChatMessage } from "@/lib/cloudChat";
+import { buildChatSystemPrompt } from "@/lib/shadowTalkPersona";
+import { loadAiAccessMode, saveAiAccessMode, getPreferLocal } from "@/lib/aiAccessMode";
+
 import { ChatAmbientBackground } from "@/components/chat/ChatAmbientBackground";
 import { ChatEmptyState } from "@/components/chat/ChatEmptyState";
-import { ChatbotTrustStrip } from "@/components/chat/ChatbotTrustStrip";
 import { ChatMainPanel } from "@/components/chat/ChatMainPanel";
+import { LegacyVaultRecoveryDialog } from "@/components/chat/LegacyVaultRecoveryDialog";
 import { SETTINGS_SPRING } from "@/lib/settingsMotion";
 import { useChatSidebarCollapse } from "@/hooks/useChatSidebarCollapse";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -58,82 +44,36 @@ import { ChatMobileNavDrawer } from "@/components/chat/ChatMobileNavDrawer";
 import { useShadowMemoryContext } from "@/contexts/ShadowMemoryContext";
 import { useIntelligenceHub } from "@/hooks/useIntelligenceHub";
 import { useAutoImproveContext } from "@/contexts/AutoImproveContext";
-import { useSEEFromChat } from "@/hooks/useSEEFromChat";
-import { SEEMissionPanel } from "@/components/chat/SEEMissionPanel";
-import { resolveAutonomousRoute } from "@/lib/autonomy/autonomousRouter";
-import { trackAgenticEvent } from "@/lib/agenticMetrics";
-import { upsertGoalsFromMessage, syncGoalToAiMemories } from "@/lib/autonomy/goalPersistence";
-import { selfHealedFetch } from "@/lib/selfHealing/selfHealedFetch";
-import { detectChatImageIntent } from "@/lib/chatImageIntent";
-import {
-  buildVisionUserMessage,
-  callChatImageAnalyze,
-  callChatImageEdit,
-} from "@/lib/chatImageApi";
-import { CognitiveLoopPanel } from "@/components/chat/CognitiveLoopPanel";
-import { useGemmaOffline } from "@/hooks/useGemmaOffline";
-import { useMarketplace } from "@/hooks/useMarketplace";
-import { resolveAgentRuntime } from "@/lib/marketplace/resolveAgentConfig";
-import { prependAgentSystemPrompt } from "@/lib/marketplace/applyAgentToChat";
-import { prependChatKnowledgeContext } from "@/lib/shadowTalkProductKnowledge";
-import {
-  ensureDefaultPersonalModel,
-  getActivePersonalModel,
-  getPersonalModelSampling,
-  learnPersonalExampleFromTurn,
-  prependPersonalModelToMessages,
-} from "@/lib/personalModel";
-import {
-  clearActiveMarketplaceAgent,
-  getActiveMarketplaceSession,
-  setActiveMarketplaceAgent,
-} from "@/lib/marketplace/activeAgentSession";
-import { MarketplaceAgentBanner } from "@/components/chat/MarketplaceAgentBanner";
-import type { MarketplaceAgent, MarketplaceAgentRuntime } from "@/lib/marketplace/types";
-import { runOfflineCompletion } from "@/lib/offline/runOfflineCompletion";
+
+/**
+ * Firestore (or the backend adapter) rejected a persistence write/read.
+ * Matches both the FirestoreError code and the PostgREST-style error shape.
+ */
+const isPermissionDeniedError = (err: unknown): boolean => {
+  const e = err as { code?: string; message?: string } | null | undefined;
+  if (!e) return false;
+  return e.code === "permission-denied" || /insufficient permissions|permission denied/i.test(e.message || "");
+};
+
+
+
+
 import { prewarmFastestLocalPath, warmHardwareProfile } from "@/lib/hardwareIntelligence";
-import { runOllamaChat } from "@/lib/desktop/ollamaInference";
-import {
-  augmentMessagesWithLocalMemory,
-  indexSovereignMemory,
-} from "@/lib/desktop/sovereignMemoryRag";
-import { isSovereignModeEnabled, shouldPreferOllamaInference } from "@/lib/desktop/sovereignMode";
-import {
-  canUseCloudAI,
-  DEVICE_ONLY_BLOCKED_MESSAGE,
-  ensureAutoCloudUntilLocalReady,
-  shouldPersistChatToCloud,
-  setInterimCloudConsent,
-} from "@/lib/privacy/deviceOnlyPledge";
-import {
-  isLocalInferenceReady,
-  LOCAL_MODEL_READY_EVENT,
-} from "@/lib/privacy/localInferenceReady";
-import { bootstrapCachedLocalModel } from "@/lib/offline/bootstrapLocalModel";
-import { bootstrapSeamlessOfflineForLoggedInUser } from "@/lib/offline/seamlessOfflineBootstrap";
-import {
-  getShadowSpectreScope,
-  hasAcceptedShadowSpectreTerms,
-  routeShadowSpectreHead,
-  streamShadowSpectre,
-} from "@/lib/cyber/shadowspectre";
-import { ShadowSpectreScopeBar } from "@/components/cyber/ShadowSpectreScopeBar";
-import { ShadowSpectrePanel } from "@/components/cyber/ShadowSpectrePanel";
-import { ShadowSpectreTermsDialog } from "@/components/cyber/ShadowSpectreTermsDialog";
-import { runLocalChat, isAnyLocalModelReady } from "@/lib/offline/localChat";
-import type { RouterMessage } from "@/lib/offline/hybridRouter";
-import { decideRoute } from "@/lib/offline/hybridRouter";
-import { useCustomApiKeys } from "@/hooks/useCustomApiKeys";
+import { useTokenCostTracker } from "@/hooks/useTokenCostTracker";
+import { useSessionActivation } from "@/hooks/useSessionActivation";
+import { useGlobalHotkeys } from "@/hooks/useGlobalHotkeys";
+import { useToolOrchestrator } from "@/hooks/useToolOrchestrator";
+import { executeShadowTool } from "@/lib/shadowTools/executeShadowTool";
+import { generateCloudImage } from "@/lib/cloudImage";
+// Lazy-load document + video intelligence (saves ~800KB from initial chat load)
+// These are only needed when a user attaches a file, not on every page visit.
+const lazyDocIntel = () => import("@/lib/documentIntelligence");
+const lazyVidIntel = () => import("@/lib/videoIntelligence");
+import { TokenCostBadge } from "@/components/chat/TokenCostBadge";
+
+
+// Removed broken imports
 import { useUserSettings } from "@/hooks/useUserSettings";
-import { stringifyChatBody } from "@/lib/chatRequest";
-import { ByokProviderKeyDialog } from "@/components/chat/ByokProviderKeyDialog";
-import {
-  buildChatProviderPayload,
-  hasStoredKeyForProvider,
-  resolveActiveUiProvider,
-} from "@/lib/chatProviderBridge";
-import { loadCustomAiConfig, saveCustomAiConfig } from "@/lib/customApiKeys";
-import { turboComplete, resolveTurboKey } from "@/lib/turbo";
 import {
   getGuestArchivedIds,
   isConversationArchived,
@@ -142,43 +82,26 @@ import {
 import { CHAT_COMMAND_MODAL_ACTIONS, CHAT_COMMAND_NAV_ROUTES } from "@/lib/chatCommandRoutes";
 import { consumePendingChatInsert } from "@/lib/pendingChatInsert";
 import { useChatSpeech } from "@/hooks/useChatSpeech";
-import { OfflineToolsPanel } from "@/components/chat/OfflineToolsPanel";
-import { BrowseActivityPanel, useAutoBrowse } from "@/components/chat/BrowseActivityPanel";
-import { MultiModelOrchestrator } from "@/components/chat/MultiModelOrchestrator";
-import { CreativeSynthesis } from "@/components/chat/CreativeSynthesis";
-import { VisualReasoning } from "@/components/chat/VisualReasoning";
-import { ImageDecoder } from "@/components/chat/ImageDecoder";
-import { DailyPlanner } from "@/components/chat/DailyPlanner";
-import { IntelligenceHub } from "@/components/chat/IntelligenceHub";
-import { KnowledgeVault } from "@/components/chat/KnowledgeVault";
+
+const IntelligenceHub = lazy(() =>
+  import("@/components/chat/IntelligenceHub").then((m) => ({ default: m.IntelligenceHub })),
+);
+
+
+import { useSubscriptionNudge } from "@/hooks/useSubscriptionNudge";
 import { CHAT_LIMIT_TOAST } from "@/lib/conversionCopy";
-import { getDailyMessageCount, incrementDailyMessageCount } from "@/lib/dailyMessageCounter";
 import { openProjectInIde, saveIdePayload } from "@/lib/idePayloadStorage";
 import { detectAppBuilderIntent, generateAppProject } from "@/lib/appBuilder";
 import { useShadowTalkModel } from "@/hooks/useShadowTalkModel";
 import { SEOHead } from "@/components/SEOHead";
 import { PAGE_SEO, getFounderHomeStructuredData, getChatbotFAQSchema, getSpeakableSchema, getWebSiteWithSearchSchema } from "@/lib/seo";
-import { FounderCrawlStrip } from "@/components/founder/FounderCrawlStrip";
-import { PlanetaryActionModal } from "@/components/chat/PlanetaryActionModal";
-import { ScreenAgent } from "@/components/chat/ScreenAgent";
-import { VisionAgentModal } from "@/components/chat/VisionAgentModal";
-import { AgenticTaskRunner } from "@/components/chat/AgenticTaskRunner";
-import { AIAgentWorkflows } from "@/components/chat/AIAgentWorkflows";
-import { AnalyticsDashboard } from "@/components/chat/AnalyticsDashboard";
-import { GeminiKeyAnalytics } from "@/components/chat/GeminiKeyAnalytics";
-import { DataOrganizer } from "@/components/chat/DataOrganizer";
-import { UncensoredArena } from "@/components/chat/UncensoredArena";
-import { ShadowCowork } from "@/components/chat/ShadowCowork";
-import { SignInPrompt } from "@/components/chat/SignInPrompt";
-import { InterimCloudConsentDialog } from "@/components/chat/InterimCloudConsentDialog";
+
 import { BRAND } from "@/lib/brand";
-import { ReferralNudgeBanner } from "@/components/growth/ReferralNudgeBanner";
-import { ShareResultDialog } from "@/components/growth/ShareResultDialog";
-import { ShareWinBanner } from "@/components/growth/ShareWinBanner";
 import { recordSuccessfulChatSession, getSuccessfulSessionCount } from "@/lib/growth/sessionMilestones";
 import { markHasChatted, completeQuickPrompt, hasChattedBefore } from "@/lib/growth/firstVisit";
 import { recordFunnelEvent, recordChatbotView } from "@/lib/growth/funnelEvents";
-import { isAnonymousAutonomousEnabled } from "@/lib/anonymousAutonomousMode";
+import { trackShadowTalkEvent } from "@/lib/analyticsEventTracker";
+
 import {
   buildChatShareSubtitle,
   buildChatShareTitle,
@@ -198,11 +121,24 @@ import {
   DESKTOP_ENV_SETUP_HINT,
   formatChatFetchError,
 } from "@/lib/cloudEnv";
-import { isShadowTalkDesktop } from "@/lib/desktopBridge";
-import { desktopChatStream } from "@/lib/desktopChatFetch";
 import { reflectOnConversation, shouldReflect, type MemoryReflection } from "@/lib/memory/reflectionEngine";
 import { getActiveMemories, maybeReflectAndPersist } from "@/lib/memory/agentMemories";
 import { buildMemoryContext } from "@/lib/memory/promptInjector";
+// Batch R1 (Research-to-Visualization): structured research capture.
+import type { Citation, ResearchDataBlock } from "@/lib/visualization/types";
+import { extractResearchDataBlocks } from "@/lib/visualization/dataDoc";
+// Batch 2: visualization specs, planning and chat pipeline.
+import type { VizSpecKind, VisualizationSpec } from "@/lib/visualization/spec";
+import { transformKind } from "@/lib/visualization/planner";
+import { detectVisualizationIntent } from "@/lib/visualization/intentDetector";
+import {
+  handleVisualizationRequest,
+  lastVisualizationSpec,
+  type PipelineMessage,
+} from "@/lib/visualization/chatPipeline";
+// Batch 3: AI-assisted conceptual generation — model/research call contracts.
+import type { ConceptModelCall, ConceptResearchCall } from "@/lib/visualization/conceptual/modelBridge";
+import { buildMessageMetadata, encodeMessageMetadata, decodeMessageMetadata, type ChatMessageMetadata } from "@/lib/chatMessageMetadata";
 // Types
 interface Message { 
   id: string; 
@@ -212,6 +148,20 @@ interface Message {
   attachment?: { type: 'image' | 'file'; data: string; name: string; mimeType: string };
   imageUrl?: string;
   toolExecution?: { tool: string; status: string; result?: string; params?: Record<string, string> };
+  isShadowTwin?: boolean;
+  shadowTwinName?: string;
+  /** Batch 4 — provider-source label. Values: "byok" | "shared" | "local" | "omniroute". */
+  source?: string;
+  /** Batch 4 — model actually used. */
+  modelUsed?: string;
+  /** Batch 4 — upstream provider name (e.g. "openai", "openrouter"). */
+  provider?: string;
+  /** Batch R1 — provider-reported citations (web research), preserved from the SSE layer. */
+  citations?: Citation[];
+  /** Batch R1 — structured research datasets captured from ```shadowdata blocks. */
+  researchData?: ResearchDataBlock[];
+  /** Batch 2 — visualization artifact (validated spec) attached to this reply. */
+  visualization?: VisualizationSpec;
 }
 type Conversation = {
   id: string;
@@ -242,19 +192,10 @@ function parseSseContentLines(
 const ChatbotPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { user, userPlan, signOut, checkSubscription, isOffline, isAnonymous } = useAuth();
-  const guestUsage = useGuestUsage();
-  const dailyLimits = useDailyLimits();
-  const enterprise = useEnterpriseExperience();
+  const { user, userPlan, signOut, checkSubscription, isAnonymous, loading: authLoading } = useAuth();
   const { toast } = useToast();
   
   // Hooks
-  const { checkAccess, isElite, isProOrHigher } = useFeatureGating();
-  const { requestPermission } = usePushNotifications();
-  const { trackChatMessage, trackConversationCreated } = useUsageTracking();
-  const { getOfflineSession } = useOfflineAuth();
-  const toolOrchestrator = useToolOrchestrator();
-  const { dispatchDetectionAsync, continueFromCritic, goToExecute } = useAgenticToolDispatch();
   const {
     captureChatSend,
     capture: captureAutoImprove,
@@ -263,44 +204,43 @@ const ChatbotPage = () => {
     getChatDefaults,
   } = useAutoImproveContext();
   const { extractMemories, extractKnowledge, getMemoryContext } = useIntelligenceHub();
-  const {
-    chatMission,
-    activeMission,
-    isExecuting: isMissionExecuting,
-    pendingApproval,
-    launchMissionFromChat,
-    approveChatMissionStep,
-    rejectPendingStep,
-    cancelExecution,
-    dismissChatMission,
-  } = useSEEFromChat();
-  const gemmaOffline = useGemmaOffline();
-  const sovereignModel = useShadowTalkModel();
-  const { getAgentById, agents: marketplaceAgents, loading: marketplaceCatalogLoading } = useMarketplace();
-  const [activeMarketplaceAgent, setActiveMarketplaceAgentState] = useState<MarketplaceAgent | null>(null);
-  const marketplaceRuntimeRef = useRef<MarketplaceAgentRuntime | null>(null);
-  const { aiConfig, hasVerifiedKey, keys, switchToPlatformDefault, setDefault, refresh: refreshApiKeys } =
-    useCustomApiKeys();
   
-  // State
+  // Mocks for removed enterprise and self-healing features
+  const enterprise = {
+    isEnterpriseUser: false,
+    hideMonetization: false,
+    hideReferralNudges: false,
+    includeReferralInShare: false,
+    allowProductSharing: true,
+    needsWorkEmailSignIn: false,
+    tenant: null,
+    displayOrgName: null,
+    showInviteColleagues: false,
+    showOnboarding: false,
+    showHelpFab: false
+  };
+
+  const chatMission = { mission: null };
+  const activeMission = null;
+  const isMissionExecuting = false;
+  const pendingApproval = false;
+  const approveChatMissionStep = async () => {};
+  const rejectPendingStep = async () => {};
+  const cancelExecution = async () => {};
+  
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [dailyChats, setDailyChats] = useState(() => getDailyMessageCount());
   const [conversations, setConversations] = useState<Conversation[]>([]);
-  const messageCount =
-    user && dailyLimits.isLoaded ? dailyLimits.usage.messages : dailyChats;
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
   const [personality, setPersonality] = useState<Personality>("friendly");
   const [chatMode, setChatMode] = useState<ChatMode>("general");
-  const [aiProvider, setAiProvider] = useState<AIProvider>('turbo');
   const { preferences: chatPreferences, isLoading: chatPrefsLoading } = useChatSettings();
-  const hasOllamaDesktop = typeof window !== 'undefined' && (window as any).__TAURI__ && isAnyLocalModelReady();
+  const [localModelReady, setLocalModelReady] = useState(false);
+  const hasLocalDesktop = typeof window !== 'undefined' && (window as any).__TAURI__ && localModelReady;
   const e2ee = useE2EE();
   const chatPrivate = useChatPrivateMode(e2ee);
   const appliedChatDefaults = useRef(false);
-  const [byokDialogOpen, setByokDialogOpen] = useState(false);
-  const [pendingByokProvider, setPendingByokProvider] = useState<AIProvider | null>(null);
   const [showSidebar, setShowSidebar] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
   const { collapsed: sidebarCollapsed, toggle: toggleSidebar, width: sidebarWidth } =
@@ -310,54 +250,58 @@ const ChatbotPage = () => {
   const inputDockStyle =
     keyboardOffset > 0 ? { paddingBottom: keyboardOffset } : undefined;
   const historyPanelLeft = isMobile ? 0 : sidebarWidth;
-  const [isListening, setIsListening] = useState(false);
-  const { isSpeaking, speakingMessageId, speakMessage } = useChatSpeech();
+  const { isListening, toggleDictation, isSpeaking, speakingMessageId, speakMessage } = useChatSpeech();
   const [selectedFile, setSelectedFile] = useState<{ type: 'image' | 'file'; data: string; name: string; mimeType: string } | null>(null);
   
   // Modals
   const [showImageGenerator, setShowImageGenerator] = useState(false);
+  const [showByok, setShowByok] = useState(false);
   const [showMusicGenerator, setShowMusicGenerator] = useState(false);
   const [musicPrompt, setMusicPrompt] = useState("");
   const [musicAutoGenerate, setMusicAutoGenerate] = useState(false);
+  const [showDocumentGenerator, setShowDocumentGenerator] = useState(false);
+  const [documentTopic, setDocumentTopic] = useState("");
+  /**
+   * 2026-11-09 incident: the deployed Firestore rules denied every
+   * conversations/messages write, chats kept working in memory only, and a
+   * refresh silently wiped them. When persistence is rejected we now show an
+   * honest, persistent hint instead of letting the user lose history unseen.
+   */
+  const [persistenceBlocked, setPersistenceBlocked] = useState(false);
   const [showWordle, setShowWordle] = useState(false);
   const [showGoogleIntegration, setShowGoogleIntegration] = useState(false);
-  const [showShadowSpectrePanel, setShowShadowSpectrePanel] = useState(false);
-  const [showShadowSpectreTerms, setShowShadowSpectreTerms] = useState(false);
-  const [shadowSpectreHead, setShadowSpectreHead] = useState<string>("general");
-  const [localModelReady, setLocalModelReady] = useState(() => isLocalInferenceReady());
+
   const [showAnalytics, setShowAnalytics] = useState(false);
-  const [showDeepResearch, setShowDeepResearch] = useState(false);
   const [showShadowTalkLive, setShowShadowTalkLive] = useState(false);
   const [showShadowBrowser, setShowShadowBrowser] = useState(false);
   const [showCommandPalette, setShowCommandPalette] = useState(false);
-  const [showOfflineTools, setShowOfflineTools] = useState(false);
   const [toolsMenuOpen, setToolsMenuOpen] = useState(false);
   const [chatShareOffer, setChatShareOffer] = useState<{ title: string; subtitle?: string; prompt?: string; answer?: string } | null>(null);
   const [chatShareDialogOpen, setChatShareDialogOpen] = useState(false);
+  // Final completion phase — consent-gated legacy E2EE vault recovery.
+  const [legacyVaultRecoveryOpen, setLegacyVaultRecoveryOpen] = useState(false);
   const [chatShareCustomLink, setChatShareCustomLink] = useState<string | null>(null);
-  const [showCognitiveLoop, setShowCognitiveLoop] = useState(false);
-  const [cognitiveQuery, setCognitiveQuery] = useState("");
   const [showMultiModel, setShowMultiModel] = useState(false);
-  const [showCreativeSynthesis, setShowCreativeSynthesis] = useState(false);
   const [showVisualReasoning, setShowVisualReasoning] = useState(false);
   const [showImageDecoder, setShowImageDecoder] = useState(false);
   const [showDailyPlanner, setShowDailyPlanner] = useState(false);
   const [showPlanetaryActions, setShowPlanetaryActions] = useState(false);
   const [showScreenAgent, setShowScreenAgent] = useState(false);
-  const [showVisionAgent, setShowVisionAgent] = useState(false);
   const [showIntelligenceHub, setShowIntelligenceHub] = useState(false);
-  const [showKnowledgeVault, setShowKnowledgeVault] = useState(false);
+
   const [showAgenticRunner, setShowAgenticRunner] = useState(false);
   const [showAgentWorkflows, setShowAgentWorkflows] = useState(false);
   const [showGeminiAnalytics, setShowGeminiAnalytics] = useState(false);
   const [showDataOrganizer, setShowDataOrganizer] = useState(false);
   const [showUncensoredArena, setShowUncensoredArena] = useState(false);
   const [showShadowCowork, setShowShadowCowork] = useState(false);
+  const [showSwarmMode, setShowSwarmMode] = useState(false);
+  const [swarmPrompt, setSwarmPrompt] = useState("");
   const [showSignInPrompt, setShowSignInPrompt] = useState(false);
   const [signInPromptReason, setSignInPromptReason] = useState<"chats" | "images" | "deepResearch" | "general">("chats");
-  const [showInterimCloudConsent, setShowInterimCloudConsent] = useState(false);
   const [showBrowseActivity, setShowBrowseActivity] = useState(false);
-  const { browseSession, startBrowseSession, closeBrowseSession } = useAutoBrowse();
+  const [shadowTwinActive, setShadowTwinActive] = useState(false);
+
   const pushPermissionAskedRef = useRef(false);
   const referralCode = useUserReferralCode();
   const [guestArchivedIds, setGuestArchivedIdsState] = useState<Set<string>>(() =>
@@ -384,23 +328,27 @@ const ChatbotPage = () => {
   }, [savedUserContext, userContextLoading]);
 
   const abortControllerRef = useRef<AbortController | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesRef = useRef<Message[]>([]);
+  // Final completion phase: shown at most once per mount when prefer-local is
+  // enabled but the local engine is not loaded, so a cloud reply is never a
+  // SILENT provider switch.
+  const preferLocalNoticeShownRef = useRef(false);
+  useEffect(() => { messagesRef.current = messages; }, [messages]);
 
-  useGeoLocation();
+  // Abort any in-flight chat request when the chat page unmounts — otherwise
+  // the SSE reader keeps streaming (and may still write to the DB) after the
+  // user has navigated away.
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+      abortControllerRef.current = null;
+    };
+  }, []);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     warmHardwareProfile();
     prewarmFastestLocalPath();
-    ensureDefaultPersonalModel();
-    void bootstrapCachedLocalModel().then((ok) => {
-      if (ok) setLocalModelReady(true);
-    });
-  }, []);
-
-  useEffect(() => {
-    const onReady = () => setLocalModelReady(true);
-    window.addEventListener(LOCAL_MODEL_READY_EVENT, onReady);
-    return () => window.removeEventListener(LOCAL_MODEL_READY_EVENT, onReady);
   }, []);
 
   useEffect(() => {
@@ -420,13 +368,10 @@ const ChatbotPage = () => {
     // Every visitor on the chat page kicks off the silent on-device model
     // download. Cloud is used until the model is ready, then routing flips
     // to local automatically (see tierAInstall → onLocalModelReady).
-    bootstrapSeamlessOfflineForLoggedInUser();
+
   }, [user, isAnonymous]);
 
   useEffect(() => {
-    if (chatMode === "shadowspectre" && !hasAcceptedShadowSpectreTerms()) {
-      setShowShadowSpectreTerms(true);
-    }
   }, [chatMode]);
 
   useEffect(() => {
@@ -440,58 +385,12 @@ const ChatbotPage = () => {
     return () => window.removeEventListener("keydown", onKey, true);
   }, []);
 
-  useEffect(() => {
-    if (keys.length === 0 && !aiConfig.useCustomKey && loadCustomAiConfig().usePlatformDefault) return;
-    setAiProvider(resolveActiveUiProvider(keys, aiConfig));
-  }, [keys, aiConfig.useCustomKey, aiConfig.preferredProvider]);
 
-  const hasKeyForProvider = useCallback(
-    (p: AIProvider) => hasStoredKeyForProvider(p, keys),
-    [keys],
-  );
-
-  const handleProviderChange = useCallback(
-    async (next: AIProvider) => {
-      if (next === "shadowtalk") {
-        setAiProvider("shadowtalk");
-        return;
-      }
-
-      if (next === "lovable") {
-        await switchToPlatformDefault();
-        saveCustomAiConfig({ ...loadCustomAiConfig(), usePlatformDefault: true, apiKey: "" });
-        setAiProvider("lovable");
-        return;
-      }
-
-      if (!hasStoredKeyForProvider(next, keys)) {
-        setPendingByokProvider(next);
-        setByokDialogOpen(true);
-        return;
-      }
-
-      setAiProvider(next);
-      const serverId = next === "gemini" ? "google" : null;
-      if (serverId && keys.some((k) => k.provider === serverId && k.verified_at)) {
-        await setDefault(serverId);
-      }
-    },
-    [keys, setDefault, switchToPlatformDefault],
-  );
-
-  const handleByokSaved = useCallback(
-    async (saved: AIProvider) => {
-      setAiProvider(saved);
-      await refreshApiKeys();
-      setPendingByokProvider(null);
-    },
-    [refreshApiKeys],
-  );
 
   useEffect(() => {
     if (chatPrefsLoading || appliedChatDefaults.current) return;
     appliedChatDefaults.current = true;
-    setAiProvider(chatPreferences.defaultProvider);
+
     setPersonality(chatPreferences.defaultPersonality as Personality);
     setChatMode(chatPreferences.defaultMode);
     applyChatDefaultsOnce((defaults) => {
@@ -507,7 +406,6 @@ const ChatbotPage = () => {
         void extractMemories(userMsg, assistantReply);
         void extractKnowledge(userMsg, assistantReply, conversationId);
       }
-      learnPersonalExampleFromTurn(userMsg, assistantReply);
     },
     [extractMemories, extractKnowledge, user],
   );
@@ -521,66 +419,7 @@ const ChatbotPage = () => {
 
   useEffect(() => {
     const convId = searchParams.get("conversation");
-    if (convId) {
-      void loadConversation(convId);
-    }
-  }, [searchParams]);
-
-  const activateMarketplaceAgent = useCallback((agent: MarketplaceAgent) => {
-    const runtime = resolveAgentRuntime(agent);
-    if (!runtime) return;
-    setActiveMarketplaceAgent(agent);
-    setActiveMarketplaceAgentState(agent);
-    marketplaceRuntimeRef.current = runtime;
-    if (runtime.chatMode) setChatMode(runtime.chatMode);
-    if (runtime.personality) setPersonality(runtime.personality);
-    setCurrentConversationId(null);
-    setMessages([
-      {
-        id: "agent-welcome",
-        type: "ai",
-        content: runtime.welcomeMessage ?? `**${agent.name}** is now active. Ask anything in this specialty.`,
-        timestamp: new Date(),
-      },
-    ]);
-  }, []);
-
-  useEffect(() => {
-    const agentId = searchParams.get("agent") ?? getActiveMarketplaceSession()?.agentId;
-    if (!agentId) {
-      setActiveMarketplaceAgentState(null);
-      marketplaceRuntimeRef.current = null;
-      return;
-    }
-
-    const fromCatalog = getAgentById(agentId);
-    if (fromCatalog) {
-      activateMarketplaceAgent(fromCatalog);
-      return;
-    }
-
-    if (marketplaceCatalogLoading) return;
-
-    void backend
-      .from("marketplace_agents")
-      .select("*")
-      .eq("id", agentId)
-      .eq("is_active", true)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (data) activateMarketplaceAgent(data as MarketplaceAgent);
-      });
-  }, [searchParams, marketplaceAgents, marketplaceCatalogLoading, getAgentById, activateMarketplaceAgent]);
-
-  const clearMarketplaceAgentSession = useCallback(() => {
-    setActiveMarketplaceAgentState(null);
-    marketplaceRuntimeRef.current = null;
-    clearActiveMarketplaceAgent();
-  }, []);
-
-  useEffect(() => {
-    const offlineSession = getOfflineSession();
-    if (user || offlineSession) {
+    if (user) {
       loadConversations();
       checkSubscription();
     }
@@ -595,9 +434,14 @@ const ChatbotPage = () => {
       .from('conversations')
       .select('*')
       .eq('user_id', user.id)
-      .order('updated_at', { ascending: false });
+      .order('created_at', { ascending: false });
     
+    if (error) {
+      console.error("[chat] loadConversations FAILED:", error?.message || error);
+      if (isPermissionDeniedError(error)) setPersistenceBlocked(true);
+    }
     if (data && !error) {
+      setPersistenceBlocked(false);
       const rows = await Promise.all(
         data.map(async (c) => ({
           ...c,
@@ -605,9 +449,9 @@ const ChatbotPage = () => {
           archived_at: (c as Conversation).archived_at ?? null,
         })),
       );
-      setConversations(rows);
+      setConversations(rows.filter(r => r && r.id));
       const active = rows.filter(
-        (c) => !isConversationArchived(c.id, c.archived_at, guestArchivedIds),
+        (c) => c && c.id && !isConversationArchived(c.id, c.archived_at, guestArchivedIds),
       );
       if (active.length > 0 && !currentConversationId) {
         loadConversation(active[0].id);
@@ -623,16 +467,37 @@ const ChatbotPage = () => {
       .from('messages')
       .select('*')
       .eq('conversation_id', conversationId)
+      .eq('user_id', user?.id ?? '')
       .order('created_at', { ascending: true });
     
+    if (error) {
+      console.error("[chat] loadConversation FAILED:", error?.message || error);
+    }
     if (data && !error) {
       const loadedMessages: Message[] = await Promise.all(
-        data.map(async (m) => ({
-          id: m.id,
-          type: m.role === "user" ? "user" : "ai",
-          content: await chatPrivate.resolveDisplayText(m.content),
-          timestamp: new Date(m.created_at),
-        })),
+        data.map(async (m) => {
+          // Batch R1 — restore structured research metadata (citations,
+          // shadowdata datasets, provider provenance) through the SAME
+          // decrypt-or-passthrough resolver used for message content.
+          const meta = await decodeMessageMetadata(
+            (m as Record<string, unknown>).metadata,
+            (raw) => chatPrivate.resolveDisplayText(raw),
+          );
+          return {
+            id: m.id,
+            type: m.role === "user" ? "user" : "ai",
+            content: await chatPrivate.resolveDisplayText(m.content),
+            timestamp: new Date(m.created_at),
+            ...(meta?.citations?.length ? { citations: meta.citations } : {}),
+            ...(meta?.researchData?.length ? { researchData: meta.researchData } : {}),
+            ...(meta?.source ? { source: meta.source } : {}),
+            ...(meta?.modelUsed ? { modelUsed: meta.modelUsed } : {}),
+            ...(meta?.provider ? { provider: meta.provider } : {}),
+            // Batch 2 — restored visualization artifacts survive reloads
+            // (decodeMessageMetadata re-validates the spec before restore).
+            ...(meta?.visualizations?.length ? { visualization: meta.visualizations[0] } : {}),
+          };
+        }),
       );
       setMessages(
         loadedMessages.length === 0
@@ -664,7 +529,6 @@ const ChatbotPage = () => {
     setMessages([welcomeMessage()]);
     setMessage("");
     setSelectedFile(null);
-    clearMarketplaceAgentSession();
   };
 
   const handleNewChat = () => {
@@ -692,6 +556,8 @@ const ChatbotPage = () => {
 
     if (!user) return;
 
+    // Try deleting messages first. If that fails (permission issue on a
+    // legacy doc), fall back to deleting the whole conversation.
     const { error: msgError } = await backend
       .from("messages")
       .delete()
@@ -699,23 +565,36 @@ const ChatbotPage = () => {
       .eq("user_id", user.id);
 
     if (msgError) {
+      // Messages delete failed — try removing the whole conversation instead.
       const { error: convError } = await backend
         .from("conversations")
         .delete()
         .eq("id", convId)
         .eq("user_id", user.id);
       if (convError) {
-        toast({ title: "Could not clear chat", description: convError.message, variant: "destructive" });
+        // Both failed — clear local state so the user isn't stuck. The server
+        // docs may persist but the user's intent (clear the current chat view)
+        // is honored.
+        setConversations((prev) => prev.filter((c) => c.id !== convId));
+        resetToNewChat();
+        setMessages([welcomeMessage()]);
+        toast({
+          title: "Chat cleared locally",
+          description: "Server delete failed (permission issue). Your view is cleared; the chat may reappear on refresh.",
+        });
+        setShowSidebar(false);
         return;
       }
       setConversations((prev) => prev.filter((c) => c.id !== convId));
       resetToNewChat();
     } else {
+      // Messages deleted — keep the conversation row but reset its title.
       await backend
         .from("conversations")
         .update({ title: "New Chat", updated_at: new Date().toISOString() })
         .eq("id", convId)
-        .eq("user_id", user.id);
+        .eq("user_id", user.id)
+        .catch(() => {}); // non-fatal — title update isn't critical
       setConversations((prev) =>
         prev.map((c) => (c.id === convId ? { ...c, title: "New Chat" } : c)),
       );
@@ -861,10 +740,71 @@ const ChatbotPage = () => {
       return;
     }
 
+    // Delete messages first (orphaned messages are useless without conversations).
+    // Errors here are non-fatal — we still want to delete the conversations.
+    await backend.from("messages").delete().eq("user_id", user.id).catch(() => {});
+
+    // Try the batch delete. If it fails (often due to legacy docs with missing
+    // user_id failing the Firestore delete rule), fall back to per-doc delete
+    // and skip the failures so the user gets a partial-success result.
     const { error } = await backend.from("conversations").delete().eq("user_id", user.id);
 
     if (error) {
-      toast({ title: "Could not delete chats", description: error.message, variant: "destructive" });
+      // Fallback: fetch conversation IDs, delete each one individually.
+      const { data: convs } = await backend
+        .from("conversations")
+        .select("id")
+        .eq("user_id", user.id)
+        .catch(() => ({ data: null, error: null }));
+
+      const convList = Array.isArray(convs) ? convs : [];
+      if (convList.length > 0) {
+        let deleted = 0;
+        let failed = 0;
+        for (const c of convList) {
+          const { error: docErr } = await backend
+            .from("conversations")
+            .delete()
+            .eq("id", c.id)
+            .eq("user_id", user.id);
+          if (docErr) failed++;
+          else deleted++;
+        }
+
+        // Always clear local state — the user asked to delete all chats, so
+        // the UI should reflect that intent even if some server docs remain.
+        setConversations([]);
+        resetToNewChat();
+        setShowSidebar(false);
+
+        if (deleted > 0 && failed === 0) {
+          toast({ title: "All chats deleted", description: "Your conversation history was cleared." });
+        } else if (deleted > 0 && failed > 0) {
+          toast({
+            title: `Deleted ${deleted} of ${convList.length} chats`,
+            description: `${failed} chat(s) could not be deleted due to a permission issue. They may reappear on refresh.`,
+            variant: "default",
+          });
+        } else {
+          toast({
+            title: "Could not delete chats",
+            description: "Permission denied. Try refreshing the page and signing in again — your session may have expired.",
+            variant: "destructive",
+          });
+        }
+        return;
+      }
+
+      // No conversations to fetch (maybe a read permission issue too) — clear
+      // local state anyway so the user isn't stuck looking at chats they can't delete.
+      setConversations([]);
+      resetToNewChat();
+      setShowSidebar(false);
+      toast({
+        title: "Could not delete chats from server",
+        description: "Your local chat list has been cleared. Refresh the page to reload server state.",
+        variant: "default",
+      });
       return;
     }
 
@@ -875,59 +815,90 @@ const ChatbotPage = () => {
   };
 
   const ensureConversation = async (): Promise<string | null> => {
-    if (!user) return currentConversationId;
     if (currentConversationId) return currentConversationId;
 
-  if (!user || isAnonymous) {
-    const localId = `local-${crypto.randomUUID()}`;
-    setCurrentConversationId(localId);
-    setConversations((prev) => [
-      { id: localId, title: "Private Chat", created_at: new Date().toISOString() },
-      ...prev,
-    ]);
-    return localId;
-  }
+    if (!user || isAnonymous) {
+      const localId = `local-${(typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); }))}`;
+      setCurrentConversationId(localId);
+      setConversations((prev) => [
+        { id: localId, title: "Private Chat", created_at: new Date().toISOString() },
+        ...prev,
+      ]);
+      return localId;
+    }
 
     const titleToSave = chatPrivate.active
       ? await chatPrivate.wrapForStorage("New Chat")
       : "New Chat";
-    const { data, error } = await backend
-      .from('conversations')
-      .insert({ user_id: user.id, title: titleToSave })
-      .select()
-      .single();
 
-    if (error || !data) {
-      toast({ title: "Could not start chat", description: "Try again in a moment.", variant: "destructive" });
-      return null;
+    // Private mode encryption failed — never create a remote conversation
+    // that would persist plaintext titles. Fall through to the local fallback.
+    let insertDenied = false;
+    if (titleToSave !== null) {
+      try {
+      const { data, error } = await backend
+        .from('conversations')
+        .insert({ user_id: user.id, title: titleToSave })
+        .select()
+        .single();
+
+      if (!error && data?.id) {
+        setCurrentConversationId(data.id);
+        const displayTitle = chatPrivate.active
+          ? "Private Chat"
+          : (await chatPrivate.resolveDisplayText(data.title || "New Chat")) || "New Chat";
+        setConversations((prev) => [
+          { id: data.id, title: displayTitle, created_at: data.created_at },
+          ...prev,
+        ]);
+        return data.id;
+      }
+      if (error) {
+        insertDenied = isPermissionDeniedError(error);
+        console.error("[chat] remote conversation insert FAILED:", {
+          message: error?.message || String(error),
+          code: (error as any)?.code || 'unknown',
+          name: error?.name || 'Error',
+          userId: user?.id || 'none',
+        });
+      }
+      } catch (err: any) {
+        insertDenied = isPermissionDeniedError(err);
+        console.error("[chat] exception creating remote conversation:", err);
+      }
     }
+    if (insertDenied) setPersistenceBlocked(true);
 
-    setCurrentConversationId(data.id);
-    const displayTitle = chatPrivate.active
-      ? "Private Chat"
-      : (await chatPrivate.resolveDisplayText(data.title || "New Chat")) || "New Chat";
+    // RESILIENT FALLBACK: Create a local conversation ID so the user can still chat.
+    // Messages saved with this ID will be stored in Firestore (if rules allow) but
+    // won't appear in the sidebar (no conversation doc). When the rules are fixed,
+    // new conversations will be created properly.
+    // Show a SUBTLE warning (not destructive — don't scare the user), and be
+    // HONEST about the cause: a permission denial is a rules problem, not a
+    // connection problem (2026-11-09 incident).
+    toast({
+      title: insertDenied ? "Chat history can't be saved" : "Using local chat",
+      description: insertDenied
+        ? "The server's security rules rejected saving your chats. Messaging still works, but this conversation will not survive a refresh until the database rules are updated."
+        : "Your messages will work. Chat history may not be saved until the database connection is restored.",
+    });
+    const localId = `local-${Date.now()}`;
+    setCurrentConversationId(localId);
     setConversations((prev) => [
-      { id: data.id, title: displayTitle, created_at: data.created_at },
+      { id: localId, title: "New Chat", created_at: new Date().toISOString() },
       ...prev,
     ]);
-    return data.id;
+    return localId;
   };
 
-  const resolveConversationId = async (): Promise<string | null> => {
+  const resolveConversationId = async (): Promise<string> => {
+    if (currentConversationId) return currentConversationId;
     const hasRealUser = user && !isAnonymous;
     if (hasRealUser) {
       const id = await ensureConversation();
-      if (!id) {
-        toast({
-          title: "Could not start chat",
-          description: "Check your connection and try again.",
-          variant: "destructive",
-        });
-        recordFunnelEvent("send_blocked", "ensure_conversation_failed");
-      }
-      return id;
+      if (id) return id;
     }
-    if (currentConversationId) return currentConversationId;
+    // Guest or fallback — user can still chat
     const guestConvId = `guest-${Date.now()}`;
     setCurrentConversationId(guestConvId);
     setConversations((prev) => [
@@ -937,28 +908,72 @@ const ChatbotPage = () => {
     return guestConvId;
   };
 
-  const saveMessage = async (content: string, role: 'user' | 'assistant', conversationId: string) => {
-    if (!user || !conversationId || !shouldPersistChatToCloud()) return null;
+  const saveMessage = async (
+    content: string,
+    role: 'user' | 'assistant',
+    conversationId: string,
+    metadata?: ChatMessageMetadata | null,
+  ) => {
+    if (!user || !conversationId) return null;
+    // Skip saving for guest conversations (no user account)
+    if (isGuestConversationId(conversationId)) return null;
 
-    const contentToSave = await chatPrivate.wrapForStorage(content);
-    const { data } = await backend
-      .from('messages')
-      .insert({ conversation_id: conversationId, user_id: user.id, content: contentToSave, role, personality })
-      .select().single();
-    
-    if (role === 'user' && messages.length <= 1) {
-      const titlePlain = content.trim().split(/\s+/).slice(0, 3).join(' ').slice(0, 25) || 'New Chat';
-      const title = await chatPrivate.wrapForStorage(titlePlain);
-      await backend.from('conversations').update({ title, updated_at: new Date().toISOString() }).eq('id', conversationId);
-      const displayTitle = chatPrivate.active
-        ? "Private Chat"
-        : titlePlain;
-      setConversations(prev => prev.map(c => c.id === conversationId ? { ...c, title: displayTitle } : c));
+    try {
+      const contentToSave = await chatPrivate.wrapForStorage(content);
+      // Strict encrypt-or-null: while private mode is engaged, a failed
+      // encryption must skip the DB write — never persist plaintext.
+      if (contentToSave === null) {
+        console.warn("[chat] private-mode encryption failed — message not persisted");
+        return null;
+      }
+      // Batch R1 — optional structured metadata (citations, research datasets,
+      // provenance) goes through the SAME encrypt-or-null gate as content.
+      // If encryption fails in private mode, the metadata field is skipped —
+      // it is never written as plaintext fallback (D4 security condition).
+      const metadataToSave = await encodeMessageMetadata(metadata, (plain) =>
+        chatPrivate.wrapForStorage(plain),
+      );
+      const { data, error: insertError } = await backend
+        .from('messages')
+        .insert({
+          conversation_id: conversationId,
+          user_id: user.id,
+          content: contentToSave,
+          role,
+          personality,
+          ...(metadataToSave ? { metadata: metadataToSave } : {}),
+        })
+        .select().single();
+
+      // A denied message write used to disappear without a trace — surface it
+      // at least once so the user understands why refresh loses history.
+      if (insertError) {
+        console.error("[chat] message insert FAILED:", insertError?.message || insertError);
+        if (isPermissionDeniedError(insertError)) setPersistenceBlocked(true);
+      }
+      
+      if (data && role === 'user' && messages.length <= 1) {
+        const titlePlain = content.trim().split(/\s+/).slice(0, 3).join(' ').slice(0, 25) || 'New Chat';
+        const title = await chatPrivate.wrapForStorage(titlePlain);
+        if (title !== null) {
+          await backend.from('conversations').update({ title, updated_at: new Date().toISOString() }).eq('id', conversationId);
+        }
+        const displayTitle = chatPrivate.active
+          ? "Private Chat"
+          : titlePlain;
+        setConversations(prev => prev.map(c => c.id === conversationId ? { ...c, title: displayTitle } : c));
+      }
+      return data;
+    } catch (err: any) {
+      console.error("[chat] saveMessage FAILED:", err?.message || err);
+      // Don't show a toast here — it would spam the user on every message.
+      // The conversation-creation toast above is sufficient.
+      return null;
     }
-    return data;
   };
 
-  const handleEnableChatEncryption = async () => {
+  /** Engage private mode for the current (or newly ensured) conversation. */
+  const startPrivateModeForCurrentConversation = async () => {
     let conversationId = currentConversationId;
     if (user && !conversationId) {
       conversationId = await ensureConversation();
@@ -991,6 +1006,34 @@ const ChatbotPage = () => {
     }
   };
 
+  const handleEnableChatEncryption = async () => {
+    // Final completion phase: if this account has no vault yet but legacy
+    // device-global vault material exists, offer passphrase-verified recovery
+    // instead of silently minting a fresh vault (which would permanently
+    // orphan the legacy ciphertext). Recovery restores the legacy key, so
+    // startPrivateModeForCurrentConversation keeps it (enablePrivateMode skips
+    // re-engagement when the vault is already unlocked).
+    if (e2ee.legacyVaultAvailable && !e2ee.isUnlocked) {
+      setLegacyVaultRecoveryOpen(true);
+      return;
+    }
+    await startPrivateModeForCurrentConversation();
+  };
+
+  const handleLegacyVaultRestore = async (passphrase: string): Promise<boolean> => {
+    const recovered = await e2ee.recoverLegacyVault(passphrase);
+    if (recovered) {
+      setLegacyVaultRecoveryOpen(false);
+      await startPrivateModeForCurrentConversation();
+    }
+    return recovered;
+  };
+
+  const handleLegacyVaultStartFresh = async () => {
+    setLegacyVaultRecoveryOpen(false);
+    await startPrivateModeForCurrentConversation();
+  };
+
   type ChatCompletionMessage = {
     role: string;
     content: string | Array<{ type: "text"; text: string } | { type: "image_url"; image_url: { url: string } }>;
@@ -1011,12 +1054,7 @@ const ChatbotPage = () => {
       const controller = new AbortController();
       abortControllerRef.current = controller;
 
-      let augmented = prependAgentSystemPrompt(chatMessages, marketplaceRuntimeRef.current);
-      augmented = prependChatKnowledgeContext(
-        augmented,
-        user?.email,
-        user?.user_metadata?.full_name as string | undefined,
-      );
+      let augmented = chatMessages;
       const lastUserMsg = [...chatMessages].reverse().find((m) => m.role === "user");
       const lastUser =
         typeof lastUserMsg?.content === "string"
@@ -1025,336 +1063,103 @@ const ChatbotPage = () => {
             ? (lastUserMsg.content.find((p) => p.type === "text") as { text?: string } | undefined)?.text?.trim() ?? ""
             : "";
 
-      augmented = prependPersonalModelToMessages(
-        augmented,
-        getActivePersonalModel(),
-        lastUser,
-      );
-
       const userMemoryContext = await buildMemoryContextForUser(user);
       if (userMemoryContext) {
         augmented = [{ role: "system", content: userMemoryContext }, ...augmented];
       }
 
-      if (aiProvider === "shadowtalk" && sovereignModel.enabled && lastUser) {
-        const learned = await sovereignModel.getLearnedSystemPrompt(lastUser);
-        if (learned) {
-          augmented = [{ role: "system", content: learned }, ...augmented];
-        }
+      // Document generation — ONLY on explicit slash command (/doc, /draft,
+      // /write, /document). Removed the auto-detection that matched casual
+      // mentions of "report", "email", "memo", "article" etc. — that caused
+      // unwanted document generation (audit fix, see commit ea8e98f).
+      const isExplicitDocCommand = /^\/(doc|draft|write|document)\b/i.test(lastUser);
+
+      if (isExplicitDocCommand) {
+        const docTypeMatch = inferDocumentTypeFromMessage(lastUser);
+        const inferredType = docTypeMatch || "report";
+        const docDirective = `[PUBLICATION-QUALITY DOCUMENT STANDARDS]
+You are generating a world-class, publication-grade ${inferredType}.
+Structure and Content Guidelines:
+- Line 1: '# Title' (descriptive, authoritative)
+- Line 2: '*Subtitle with key scope or date*'
+- Include an '## Executive Summary' or '## Abstract'
+- Where relevant, include key metrics using [STAT: value | label] syntax (e.g. [STAT: 99.9% | Availability SLA] or [STAT: +45% | Projected ROI])
+- Use clean Markdown tables with aligned headers for data or comparisons
+- Use structured headings: ## for major sections, ### for subsections
+- Include concrete recommendations or next steps
+- Include a '## References' section if data or research is cited
+- NO throat-clearing opening (e.g. 'Sure!', 'Here is your document', 'Below is...'). Begin immediately with '# Title'.
+- Output ONLY the finished Markdown document.`;
+        augmented = [{ role: "system", content: docDirective }, ...augmented];
       }
 
-      const routerMessages: RouterMessage[] = augmented.map((m) => ({
-        role: m.role as RouterMessage["role"],
-        content: typeof m.content === "string"
-          ? m.content
-          : (m.content.find((p) => p.type === "text") as { text?: string } | undefined)?.text ?? "",
+
+
+      const routerMessages = augmented.map((m) => ({
+        role: m.role as "user" | "assistant" | "system",
+        content: m.content,
       }));
 
-      if (chatMode === "shadowspectre") {
-        if (!user || isAnonymous) {
-          throw new Error("Sign in required to use ShadowSpectre.");
-        }
-        if (!hasAcceptedShadowSpectreTerms()) {
-          setShowShadowSpectreTerms(true);
-          throw new Error("Accept ShadowSpectre authorized-use terms to continue.");
-        }
-        if (!canUseCloudAI()) {
-          throw new Error(DEVICE_ONLY_BLOCKED_MESSAGE);
-        }
-
-        const head = routeShadowSpectreHead(lastUser);
-        setShadowSpectreHead(head);
-        const aiMessageId = crypto.randomUUID();
-        let assistantContent = "";
-        const streamToken = (token: string) => {
-          assistantContent += token;
-          setMessages((prev) => {
-            const exists = prev.find((m) => m.id === aiMessageId);
-            if (exists) {
-              return prev.map((m) =>
-                m.id === aiMessageId ? { ...m, content: assistantContent } : m,
-              );
-            }
-            return [
-              ...prev,
-              { id: aiMessageId, type: "ai", content: assistantContent, timestamp: new Date() },
-            ];
-          });
-        };
-
-        const spectre = await streamShadowSpectre({
-          messages: routerMessages,
-          head,
-          authorization: getShadowSpectreScope(),
-          onToken: streamToken,
-          signal: controller.signal,
+      const shadowMatchInitial = lastUser.match(/@([a-zA-Z0-9_-]+)-shadow/i);
+      if (shadowMatchInitial || shadowTwinActive) {
+        const shadowName = shadowMatchInitial ? shadowMatchInitial[1] : "User";
+        routerMessages.unshift({
+          role: "system",
+          content: `You are acting as the Shadow Twin for ${shadowName}. You must speak and act entirely on their behalf based on their specific context, tone, and knowledge. Do not break character. Do not say you are an AI.`
         });
-        setShadowSpectreHead(spectre.head);
-        if (lastUser) {
-          void indexSovereignMemory(lastUser, { category: "chat", source: "user" });
-        }
-        void indexSovereignMemory(spectre.content, { category: "chat", source: "assistant" });
-        if (user) {
-          void saveMessage(spectre.content, "assistant", conversationId);
-        }
-        return spectre.content;
+        augmented.unshift({
+          role: "system",
+          content: `You are acting as the Shadow Twin for ${shadowName}. You must speak and act entirely on their behalf based on their specific context, tone, and knowledge. Do not break character. Do not say you are an AI.`
+        });
       }
 
       const hasMultimodalImage = chatMessages.some((m) => Array.isArray(m.content));
-      if (user && !isAnonymous) {
-        ensureAutoCloudUntilLocalReady();
-      }
 
-      const route = decideRoute(routerMessages, navigator.onLine);
-      const useLocal =
-        !hasMultimodalImage &&
-        (route.target === "local" ||
-          route.backend === "ollama" ||
-          (aiProvider === "shadowtalk" && isAnyLocalModelReady()));
-      if (useLocal) {
-        if (!isAnyLocalModelReady() && route.backend !== "ollama") {
-          prewarmFastestLocalPath();
-        }
-
-        const localMessages = await augmentMessagesWithLocalMemory(routerMessages);
-        const lastUserText =
-          [...routerMessages].reverse().find((m) => m.role === "user")?.content ?? "";
-
-        const aiMessageId = crypto.randomUUID();
-        let assistantContent = "";
-
-        const streamToken = (token: string) => {
-          assistantContent += token;
-          setMessages((prev) => {
-            const exists = prev.find((m) => m.id === aiMessageId);
-            if (exists) {
-              return prev.map((m) =>
-                m.id === aiMessageId ? { ...m, content: assistantContent } : m,
-              );
-            }
-            return [
-              ...prev,
-              { id: aiMessageId, type: "ai", content: assistantContent, timestamp: new Date() },
-            ];
-          });
-        };
-
-        if (route.backend === "ollama") {
-          try {
-            const ollama = await runOllamaChat(localMessages, streamToken);
-            if (ollama.ok && (assistantContent || ollama.content)) {
-              const final = assistantContent || ollama.content;
-              if (lastUserText) {
-                void indexSovereignMemory(lastUserText, { category: "chat", source: "user" });
-              }
-              void indexSovereignMemory(final, { category: "chat", source: "assistant" });
-              if (user) {
-                void saveMessage(final, "assistant", conversationId);
-              }
-              void maybeReflectAndPersist({ user }, messages.map((m) => ({ role: m.type === "ai" ? "assistant" : "user", content: m.content })));
-              return final;
-            }
-            if (isSovereignModeEnabled() || !canUseCloudAI()) {
-              throw new Error(ollama.error ?? "Ollama chat failed on-device");
-            }
-            console.warn("[Chat] Ollama path failed, trying browser/cloud:", ollama.error);
-          } catch (e) {
-            if (isSovereignModeEnabled() || !canUseCloudAI()) {
-              throw e instanceof Error ? e : new Error("Ollama unavailable on-device");
-            }
-            console.warn("[Chat] Ollama path failed:", e);
-          }
-        }
-
-        const offline = await runOfflineCompletion({
-          messages: localMessages,
-          personality,
-          isOnline: navigator.onLine,
-          onToken: streamToken,
-        });
-
-        if (offline?.content) {
-          const useCloudInstead =
-            offline.source === "fallback" && canUseCloudAI() && navigator.onLine;
-          if (!useCloudInstead) {
-            if (!assistantContent) {
-              streamToken(offline.content);
-            }
-            if (lastUserText) {
-              void indexSovereignMemory(lastUserText, { category: "chat", source: "user" });
-            }
-            void indexSovereignMemory(offline.content, { category: "chat", source: "assistant" });
-            if (user) {
-              void saveMessage(offline.content, "assistant", conversationId);
-            }
-            return assistantContent || offline.content;
-          }
-        }
-
-        if (isAnyLocalModelReady()) {
-          try {
-            const { content } = await runLocalChat(localMessages, streamToken);
-            if (content) {
-              if (lastUserText) {
-                void indexSovereignMemory(lastUserText, { category: "chat", source: "user" });
-              }
-              void indexSovereignMemory(content, { category: "chat", source: "assistant" });
-            }
-            if (content && user) {
-              void saveMessage(content, "assistant", conversationId);
-            }
-            const reply = assistantContent || content;
-            if (reply) {
-              void maybeReflectAndPersist({ user }, messages.map((m) => ({ role: m.type === "ai" ? "assistant" : "user", content: m.content })));
-            }
-            return reply;
-          } catch (e) {
-            if (isSovereignModeEnabled() || !canUseCloudAI()) {
-              throw e instanceof Error ? e : new Error("Local chat failed on-device");
-            }
-            console.warn("[Chat] Local turbo path failed, using cloud:", e);
-          }
-        }
-
-        if (isSovereignModeEnabled() || !canUseCloudAI()) {
-          throw new Error(
-            canUseCloudAI()
-              ? "Sovereign mode is on but no local model responded. Install Ollama, pull a model in Settings → Offline AI, then retry."
-              : DEVICE_ONLY_BLOCKED_MESSAGE,
-          );
-        }
-      }
-
-      if (!canUseCloudAI()) {
-        throw new Error(DEVICE_ONLY_BLOCKED_MESSAGE);
-      }
-
-      // Ollama default provider — last chance before cloud for non-complex chat
-      if (!hasMultimodalImage && shouldPreferOllamaInference()) {
-        const aiMessageId = crypto.randomUUID();
-        let assistantContent = "";
-        const streamToken = (token: string) => {
-          assistantContent += token;
-          setMessages((prev) => {
-            const exists = prev.find((m) => m.id === aiMessageId);
-            if (exists) {
-              return prev.map((m) =>
-                m.id === aiMessageId ? { ...m, content: assistantContent } : m,
-              );
-            }
-            return [
-              ...prev,
-              { id: aiMessageId, type: "ai", content: assistantContent, timestamp: new Date() },
-            ];
-          });
-        };
-        try {
-          const ollama = await runOllamaChat(routerMessages, streamToken, controller.signal);
-          if (ollama.ok && (assistantContent || ollama.content)) {
-            const final = assistantContent || ollama.content;
-            const lastUserText =
-              [...routerMessages].reverse().find((m) => m.role === "user")?.content ?? "";
-            if (lastUserText) {
-              void indexSovereignMemory(lastUserText, { category: "chat", source: "user" });
-            }
-            void indexSovereignMemory(final, { category: "chat", source: "assistant" });
-            if (user) {
-              void saveMessage(final, "assistant", conversationId);
-            }
-            void maybeReflectAndPersist({ user }, messages.map((m) => ({ role: m.type === "ai" ? "assistant" : "user", content: m.content })));
-            return final;
-          }
-        } catch (e) {
-          console.warn("[Chat] Ollama default provider unavailable, using cloud:", e);
-        }
-      }
-
-      const chatUrl = getChatFunctionUrl();
-      if (!chatUrl || !isCloudConfigured()) {
+      if (!isCloudChatConfigured()) {
         throw new Error(
           `Chat is not configured for this build. ${DESKTOP_ENV_SETUP_HINT}`,
         );
       }
 
-      const { data: { session } } = await backend.auth.getSession();
       const learnedHint = getChatDefaults()?.systemHintAddon;
       const memoryContext = getMemoryContext();
       const businessMemory = [learnedHint, memoryContext].filter(Boolean).join("\n").trim();
-      const hasUserContext = Boolean(
-        userContext.country ||
-          userContext.city ||
-          userContext.incomeRange ||
-          userContext.employmentStatus ||
-          userContext.familyStatus ||
-          userContext.recentLifeEvents.length,
-      );
 
-      const requestBody = stringifyChatBody({
-        messages: augmented,
-        personality,
-        mode: chatMode,
-        ...buildChatProviderPayload(aiProvider, aiConfig, keys),
-        ...(businessMemory ? { businessMemory } : {}),
-        ...(hasUserContext
-          ? {
-              userContext: {
-                country: userContext.country || undefined,
-                city: userContext.city || undefined,
-                incomeRange: userContext.incomeRange || undefined,
-                employmentStatus: userContext.employmentStatus || undefined,
-                familyStatus: userContext.familyStatus || undefined,
-                recentLifeEvents: userContext.recentLifeEvents.length
-                  ? userContext.recentLifeEvents
-                  : undefined,
-              },
-            }
-          : {}),
-        ...(chatFlags?.webSearch
-          ? { webSearch: true, searchQuery: chatFlags.searchQuery }
-          : {}),
-        ...(chatFlags?.deepResearch
-          ? { deepResearch: true, researchQuery: chatFlags.researchQuery }
-          : {}),
-      });
 
       const raiseChatHttpError = async (status: number, rawBody: string) => {
         let detail = "Chat request failed";
-        let needsByok = false;
         try {
           const errJson = JSON.parse(rawBody);
           detail = typeof errJson.error === "string" ? errJson.error : detail;
-          needsByok = errJson?.needsByok === true || errJson?.code === "PLATFORM_CREDITS_EXHAUSTED";
         } catch {
           detail = rawBody || detail;
         }
-        if (status === 402 && needsByok) {
-          saveCustomAiConfig({ ...loadCustomAiConfig(), usePlatformDefault: false, provider: '' as const, apiKey: '' });
-          setAiProvider('shadowtalk');
-          toast({
-            title: 'Switching to local AI',
-            description: 'Platform credits are exhausted. Continuing on-device with Ollama/local ShadowTalk.',
-          });
-          const offline = await runOfflineCompletion({
-            messages: chatMessages.map((m) => ({ role: (m.role === 'assistant' ? 'assistant' : m.role === 'system' ? 'system' : 'user') as 'assistant' | 'system' | 'user', content: typeof m.content === 'string' ? m.content : '' })),
-            personality,
-            isOnline: navigator.onLine,
-            onToken: (token) => pushAssistant(token),
-          });
-          if (offline?.content.trim()) {
-            finalizeAssistant();
-            return assistantContent;
-          }
+        if (status === 402) {
+          throw new Error(
+            "The free platform quota is temporarily exhausted. Add your own AI provider API key in Settings (BYOK) to keep chatting — it is free and unlimited.",
+          );
         }
         throw new Error(detail);
       };
 
-      const aiMessageId = crypto.randomUUID();
+      const aiMessageId = (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); }));
       let assistantContent = "";
 
       // SPEED: coalesce setMessages calls to one per frame so streaming
       // doesn't trigger a full React reconcile on every SSE chunk.
       let pendingContent: string | null = null;
       let rafId: number | null = null;
+      const shadowMatch = lastUser.match(/@([a-zA-Z0-9_-]+)-shadow/i);
+      const isShadowTwin = !!shadowMatch || shadowTwinActive;
+      const shadowTwinName = shadowMatch ? `${shadowMatch[1]}-shadow` : undefined;
+
+      // Batch 4: provider-source label captured from streamCloudChat's result.
+      // Set on the final assistant message so MessageBubble can render the
+      // source provenance (BYOK provider / shared / local / omniroute).
+      let assistantSource: string | undefined;
+      let assistantModelUsed: string | undefined;
+      let assistantProvider: string | undefined;
+
       const flushAssistant = () => {
         rafId = null;
         if (pendingContent === null) return;
@@ -1364,12 +1169,16 @@ const ChatbotPage = () => {
           const exists = prev.find((m) => m.id === aiMessageId);
           if (exists) {
             return prev.map((m) =>
-              m.id === aiMessageId ? { ...m, content } : m,
+              m.id === aiMessageId ? { ...m, content,
+                source: assistantSource ?? m.source,
+                modelUsed: assistantModelUsed ?? m.modelUsed,
+                provider: assistantProvider ?? m.provider } : m,
             );
           }
           return [
             ...prev,
-            { id: aiMessageId, type: "ai", content, timestamp: new Date() },
+            { id: aiMessageId, type: "ai", content, timestamp: new Date(), isShadowTwin, shadowTwinName,
+              source: assistantSource, modelUsed: assistantModelUsed, provider: assistantProvider },
           ];
         });
       };
@@ -1391,105 +1200,167 @@ const ChatbotPage = () => {
         if (pendingContent !== null) flushAssistant();
       };
 
-      // ---- SHADOWTALK-TURBO FAST PATH ----
-      // Try direct Groq streaming first (bypasses edge function, ~5x faster TTFB).
-      // Falls through to standard path if no Groq key or if Turbo fails.
-      const turboKey = resolveTurboKey();
-      const turboUserText =
-        [...routerMessages].reverse().find((m) => m.role === "user")?.content ?? "";
-      if (
-        turboKey &&
-        !hasMultimodalImage &&
-        !chatFlags?.webSearch &&
-        !chatFlags?.deepResearch &&
-        typeof turboUserText === "string" &&
-        turboUserText.trim().length > 0
-      ) {
-        try {
-          const turboResult = await turboComplete(
-            `You are ShadowTalk AI. Be ${personality || 'friendly'} and helpful. Use markdown formatting. Current date: ${new Date().toISOString().split('T')[0]}.`,
-            turboUserText,
-            {
-              signal: controller.signal,
-              onDelta: (accumulated) => pushAssistant(accumulated),
-            },
-          );
-          if (turboResult.source !== 'fallback' && turboResult.content.trim()) {
+      // SPEED: only the recent turns are sent — long histories slow the model's
+      // first token dramatically without improving answers.
+      const trimmedRouterMessages = routerMessages.slice(-14);
+
+      const cloudMessages: CloudChatMessage[] = [
+        {
+          role: 'system',
+          content: `${buildChatSystemPrompt({
+            personality,
+            businessMemory,
+          })}\n\n${getModePrompt(chatMode)}`,
+        },
+        ...trimmedRouterMessages.map((m) => ({
+          role: (m.role === 'assistant' ? 'assistant' : m.role === 'system' ? 'system' : 'user') as CloudChatMessage['role'],
+          content: m.content as CloudChatMessage['content'],
+        })),
+      ];
+
+      // --- Prefer-local routing (final completion phase) --------------------
+      // Honors the explicit "Prefer on-device AI" opt-in (Settings → Chat
+      // behavior → ChatAIPreferencesCard). Contract:
+      //  - The engine module is dynamically imported so @mlc-ai/web-llm stays
+      //    out of the chat bundle unless the user actually opted in.
+      //  - Local replies carry source:"local" — MessageBubble renders
+      //    "via Local (<model>)" — cloud replies keep their provider label.
+      //  - NO silent provider switch: if the local engine fails mid-turn the
+      //    error is surfaced instead of quietly retrying on cloud; if
+      //    prefer-local is on but the engine is not loaded while ONLINE, the
+      //    cloud path runs with a one-time explicit notice (matches
+      //    AIProviderRouter's documented fall-through semantics); while
+      //    OFFLINE it fails with actionable guidance.
+      const preferLocal = getPreferLocal(user?.id ?? undefined);
+      if (preferLocal) {
+        const { localInferenceEngine } = await import("@/offline/LocalInferenceEngine");
+        const engineState = localInferenceEngine.getState();
+        const isOffline = typeof navigator !== "undefined" && navigator.onLine === false;
+
+        if (engineState === "ready") {
+          const localResult = await localInferenceEngine.generate(cloudMessages, {
+            signal: controller.signal,
+            temperature: 0.7,
+            onDelta: (accumulated) => pushAssistant(accumulated),
+          });
+
+          if (localResult.error && !localResult.content) {
+            // Local generation failed — surface the error honestly.
             finalizeAssistant();
-            return assistantContent;
+            throw new Error(localResult.error);
           }
-          // Turbo returned empty/fallback — fall through to standard path
-        } catch (turboErr) {
-          console.warn('[Chat] Turbo fast-path failed, using standard:', turboErr);
+          if (localResult.content) pushAssistant(localResult.content);
+          finalizeAssistant();
+
+          // Batch R1 — capture structured shadowdata blocks from local replies
+          // (no citations: local inference has no web access).
+          const localResearchBlocks = extractResearchDataBlocks(localResult.content).blocks;
+          if (localResearchBlocks.length) {
+            setMessages((prev) => prev.map((m) =>
+              m.id === aiMessageId ? { ...m, researchData: localResearchBlocks } : m,
+            ));
+          }
+
+          // Product bookkeeping (no cloud cost tracking — local is free).
+          session.recordModelCall();
+          if (localResult.content && user) {
+            void saveMessage(localResult.content, "assistant", conversationId, buildMessageMetadata({
+              researchData: localResearchBlocks.length ? localResearchBlocks : undefined,
+              source: "local",
+            })).catch((e) =>
+              console.warn("[chat] saveMessage(assistant/local) failed", e),
+            );
+          }
+          if (localResult.content.trim().length > 0) {
+            recordSuccessfulChatSession();
+            recordFunnelEvent("first_reply");
+            markHasChatted();
+          }
+          return localResult.content || undefined;
+        }
+
+        if (isOffline) {
+          throw new Error(
+            "You're offline and the local AI engine isn't loaded yet. Open Settings → Offline AI while connected to install it (one-time download).",
+          );
+        }
+
+        // Online but engine not loaded — fall through to cloud with an
+        // explicit one-time notice (never a silent provider switch).
+        if (!preferLocalNoticeShownRef.current) {
+          preferLocalNoticeShownRef.current = true;
+          toast({
+            title: "Local AI not loaded",
+            description:
+              "Using the cloud provider for this message. Load the on-device engine in Settings → Offline AI to chat locally.",
+          });
         }
       }
 
-      if (isShadowTalkDesktop()) {
-        let lineBuffer = "";
-        const end = await desktopChatStream(
-          chatUrl,
-          requestBody,
-          session?.access_token,
-          controller.signal,
-          (chunk) => {
-            lineBuffer += chunk;
-            const lines = lineBuffer.split("\n");
-            lineBuffer = lines.pop() ?? "";
-            const next = parseSseContentLines(lines, assistantContent);
-            if (next !== assistantContent) pushAssistant(next);
-          },
-        );
-        if (!end.ok) {
-          await raiseChatHttpError((end as unknown as { status?: number }).status ?? 500, (end as unknown as { body?: string }).body);
-        }
-      } else {
-        const resp = await selfHealedFetch(chatUrl, {
-          method: "POST",
-          headers: getChatFetchHeaders(session?.access_token),
-          signal: controller.signal,
-          body: requestBody,
-        });
+      const { content: streamedContent, error: cloudError, source: resultSource, modelUsed: resultModel, provider: resultProvider, citations: resultCitations } = await streamCloudChat(cloudMessages, {
+        signal: controller.signal,
+        temperature: 0.7,
+        maxTokens: 8192,
+        onDelta: (accumulated) => {
+          pushAssistant(accumulated);
+          // Fire token-cost tracker — one call per delta chunk
+          costTracker.onToken("gpt-4o-mini");
+        },
+      });
 
-        if (!resp.ok) {
-          const cloudFailed = new Error((await resp.text().catch(() => "")) || "Cloud chat failed");
-          const localCandidates = runOfflineCompletion({
-            messages: chatMessages.map((m) => ({ role: (m.role === "assistant" ? "assistant" : m.role === "system" ? "system" : "user") as "assistant" | "system" | "user", content: typeof m.content === "string" ? m.content : "" })),
-            personality,
-            isOnline: navigator.onLine,
-            onToken: (token) => pushAssistant(token),
-          });
-          const local = await localCandidates;
-          if (local && local.content.trim()) {
-            finalizeAssistant();
-            return assistantContent;
-          }
-          await raiseChatHttpError(resp.status, cloudFailed.message);
-        }
+      // Batch 4: capture the response's source provenance so the rendered
+      // assistant message can display its provider-source label.
+      if (resultSource) assistantSource = resultSource;
+      if (resultModel) assistantModelUsed = resultModel;
+      if (resultProvider) assistantProvider = resultProvider;
 
-        const contentType = resp.headers.get("content-type") || "";
-        if (!contentType.includes("text/event-stream")) {
-          await raiseChatHttpError(resp.status, await resp.text().catch(() => ""));
-        }
-
-        const reader = resp.body?.getReader();
-        const decoder = new TextDecoder();
-        let lineBuffer = "";
-
-        while (reader) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          lineBuffer += decoder.decode(value, { stream: true });
-          const lines = lineBuffer.split("\n");
-          lineBuffer = lines.pop() ?? "";
-          const next = parseSseContentLines(lines, assistantContent);
-          if (next !== assistantContent) pushAssistant(next);
-        }
+      if (cloudError && !streamedContent) {
+        throw new Error(cloudError);
+      }
+      if (cloudError && streamedContent) {
+        // Mid-stream failure with partial output: show what arrived, mark it
+        // incomplete, and NEVER silently persist a truncated response.
+        pushAssistant(`${streamedContent}\n\n_[Response interrupted — ${cloudError}]_`);
+        finalizeAssistant();
+        toast({ title: "Response incomplete", description: cloudError, variant: "destructive" });
+        return assistantContent || undefined;
+      }
+      if (streamedContent) {
+        pushAssistant(streamedContent);
       }
 
       finalizeAssistant();
+
+      // Batch R1 — capture research citations + structured shadowdata blocks
+      // so the assistant message carries source provenance into state and
+      // persistence (previously both were lost on reload).
+      const researchBlocks = extractResearchDataBlocks(assistantContent).blocks;
+      if (resultCitations?.length || researchBlocks.length) {
+        setMessages((prev) => prev.map((m) =>
+          m.id === aiMessageId
+            ? {
+                ...m,
+                ...(resultCitations?.length ? { citations: resultCitations } : {}),
+                ...(researchBlocks.length ? { researchData: researchBlocks } : {}),
+              }
+            : m,
+        ));
+      }
+
+      // === Session monetization: record this model call + project cost ===
+      const _outputTokens = Math.ceil((streamedContent || assistantContent || "").length / 4);
+      const _inputTokens = Math.ceil(cloudMessages.reduce((n, m) => n + (typeof m.content === 'string' ? m.content.length : 0), 0) / 4);
+      costTracker.onRequestComplete("gpt-4o-mini", _inputTokens, _outputTokens);
+      session.recordModelCall();
       // SPEED: don't block UI on DB write — fire and forget.
       if (assistantContent && user) {
-        void saveMessage(assistantContent, "assistant", conversationId).catch((e) =>
+        void saveMessage(assistantContent, "assistant", conversationId, buildMessageMetadata({
+          citations: resultCitations,
+          researchData: researchBlocks.length ? researchBlocks : undefined,
+          source: assistantSource,
+          modelUsed: assistantModelUsed,
+          provider: assistantProvider,
+        })).catch((e) =>
           console.warn("[chat] saveMessage(assistant) failed", e),
         );
       }
@@ -1500,8 +1371,29 @@ const ChatbotPage = () => {
       }
       return assistantContent || undefined;
     },
-    [aiProvider, aiConfig, keys, chatMode, personality, user, gemmaOffline.chatLocal, sovereignModel, getChatDefaults, getMemoryContext],
+    [chatMode, personality, user, getChatDefaults, getMemoryContext],
   );
+
+  // === Session monetization + cost tracking (roadmap batch integration) ===
+  const costTracker = useTokenCostTracker();
+  const session = useSessionActivation();
+
+  // Wire global hotkeys — Cmd+Enter is already handled by ChatInput, but we
+  // expose the others via custom events the host can listen for.
+  useGlobalHotkeys({
+    onSynthesizeConsensus: () => {
+      window.dispatchEvent(new CustomEvent("shadowtalk:synthesize-consensus"));
+    },
+    onToggleSplitView: () => {
+      window.dispatchEvent(new CustomEvent("shadowtalk:toggle-split-view"));
+    },
+  });
+
+  // Tool detection — intercepts messages like "/image <prompt>" or
+  // "generate an image of..." and routes them to the right executor
+  // (image generation, web search, calculator, etc.) instead of sending
+  // them to the text completion API.
+  const { detectTool, executeCalculator } = useToolOrchestrator();
 
   const handleStopGeneration = () => {
     abortControllerRef.current?.abort();
@@ -1545,15 +1437,29 @@ const ChatbotPage = () => {
     if (chatMessages.length === 0) return;
 
     const conversationId = await resolveConversationId();
-    if (!conversationId) return;
+    if (!conversationId) {
+      setIsLoading(false);
+      return;
+    }
 
     setMessages(prior);
     setIsLoading(true);
 
     try {
+      const startTime = performance.now();
+      trackShadowTalkEvent("mission_started", { mission_id: conversationId, user_id: user?.id, model: "turbo", tool_name: "core_chat" });
       await runChatCompletion(chatMessages, conversationId);
+      const endTime = performance.now();
+      const totalDuration = endTime - startTime;
+      trackShadowTalkEvent("mission_completed", { 
+        mission_id: conversationId, 
+        user_id: user?.id, 
+        duration_ms: totalDuration, 
+        success: true 
+      });
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") return;
+      trackShadowTalkEvent("mission_failed", { mission_id: conversationId, user_id: user?.id, error_type: err instanceof Error ? err.message : "unknown", success: false });
       const msg = err instanceof Error ? err.message : "Regeneration failed.";
       toast({ title: "Regeneration failed", description: msg, variant: "destructive" });
     } finally {
@@ -1561,58 +1467,392 @@ const ChatbotPage = () => {
     }
   };
 
+  // =================== Batch 2 — visualization pipeline ===================
+  // Handles /visualize + natural-language visualization intents. The pipeline
+  // (src/lib/visualization/chatPipeline.ts) is deterministic: it resolves the
+  // session's research context, plans/validates a spec, and returns honest
+  // text on any failure. This wrapper only wires React state + persistence.
+
+  /** Firestore row ids for assistant messages (metadata updates on transforms). */
+  const vizRowIdsRef = useRef<Map<string, string>>(new Map());
+  const [vizTransformNotes, setVizTransformNotes] = useState<Record<string, string>>({});
+
+  const toPipelineMessages = (list: Message[]): PipelineMessage[] =>
+    list
+      .filter((m) => m.id !== "welcome")
+      .map((m) => ({
+        id: m.id,
+        type: m.type,
+        content: m.content,
+        ...(m.citations?.length ? { citations: m.citations } : {}),
+        ...(m.researchData?.length ? { researchData: m.researchData } : {}),
+        ...(m.toolExecution ? { toolExecution: { tool: m.toolExecution.tool, status: m.toolExecution.status } } : {}),
+        ...(m.visualization ? { visualization: m.visualization } : {}),
+      }));
+
+  /**
+   * Batch 3 — BYOK model completion for AI-assisted conceptual diagrams.
+   * Uses streamCloudChat, which respects the user's access mode and their
+   * OWN key (BYOK-only preserved; no shared keys, no provider switching).
+   * structuredOutput requests JSON from the provider when supported.
+   */
+  const vizModelCall: ConceptModelCall = useCallback(async ({ system, user, maxTokens, structuredOutput }) => {
+    const res = await streamCloudChat(
+      [
+        { role: "system", content: system },
+        { role: "user", content: user },
+      ],
+      {
+        ...(structuredOutput ? { structuredOutput: true } : {}),
+        maxTokens: maxTokens ?? 2000,
+      },
+    );
+    if (res.error) throw new Error(res.error);
+    return { content: res.content, ...(res.citations?.length ? { citations: res.citations } : {}) };
+  }, []);
+
+  /**
+   * Batch 3 — gap-driven research call. Uses the existing web_search tool
+   * (provider-backed, citation-preserving — Batch R1). Throws propagate;
+   * the pipeline converts them into honest limitation notes.
+   */
+  const vizResearchCall: ConceptResearchCall = useCallback(
+    async ({ query }) => {
+      const res = await executeShadowTool("web_search", { query }, query, {
+        personality,
+        mode: chatMode,
+      });
+      if (res.kind !== "inline") throw new Error("Research tool did not return text results.");
+      return { content: res.content, ...(res.citations?.length ? { citations: res.citations } : {}) };
+    },
+    [personality, chatMode],
+  );
+
+  const runVisualizationRequest = async (
+    intent: { kind: "create" | "refine" | "explain"; requestedType?: import("@/lib/visualization/types").VizTypeHint; timeRange?: string; compareTarget?: string; interactive?: boolean; confidence: number },
+    requestText: string,
+    sessionMessages: Message[],
+  ) => {
+    const vizMessageId = (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `viz-${Date.now()}`);
+    setIsLoading(true);
+    setMessages((prev) => [...prev, { id: vizMessageId, type: "ai", content: "", timestamp: new Date() }]);
+    try {
+      const outcome = await handleVisualizationRequest({
+        intent,
+        request: requestText,
+        messages: toPipelineMessages(sessionMessages),
+        // Batch 3 — AI-assisted conceptual generation + gap-driven research.
+        model: vizModelCall,
+        research: vizResearchCall,
+      });
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === vizMessageId
+            ? {
+                ...m,
+                content: outcome.content,
+                ...(outcome.spec ? { visualization: outcome.spec } : {}),
+                ...(outcome.citations?.length ? { citations: outcome.citations } : {}),
+              }
+            : m,
+        ),
+      );
+      recordSuccessfulChatSession();
+      // Persist through the SAME encrypt-or-null metadata gate as chat
+      // content (approved D4 approach). Guest conversations skip storage.
+      const conversationId = await resolveConversationId();
+      if (user && conversationId && !isGuestConversationId(conversationId)) {
+        const row = await saveMessage(
+          outcome.content,
+          "assistant",
+          conversationId,
+          buildMessageMetadata({
+            citations: outcome.citations,
+            source: "shadowviz",
+            tool: "visualization",
+            visualizations: outcome.spec ? [outcome.spec] : undefined,
+          }),
+        ).catch((e) => {
+          console.warn("[viz] saveMessage(visualization) failed", e);
+          return null;
+        });
+        if (row?.id) vizRowIdsRef.current.set(vizMessageId, row.id);
+      }
+    } catch (err) {
+      const errMsg = err instanceof Error ? err.message : "Visualization failed.";
+      setMessages((prev) => prev.map((m) => (m.id === vizMessageId ? { ...m, content: `⚠️ ${errMsg}` } : m)));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  /** Type-switch handler wired into the visualization card toolbar. */
+  const handleVizTransform = async (messageId: string, spec: VisualizationSpec, targetKind: VizSpecKind) => {
+    const result = transformKind(spec, targetKind, new Date());
+    if (result.status === "unavailable") {
+      setVizTransformNotes((prev) => ({ ...prev, [messageId]: result.reason }));
+      return;
+    }
+    setVizTransformNotes((prev) => {
+      const next = { ...prev };
+      delete next[messageId];
+      return next;
+    });
+    setMessages((prev) => prev.map((m) => (m.id === messageId ? { ...m, visualization: result.spec } : m)));
+    // Persist the transform on the stored row so it survives reloads.
+    const rowId = vizRowIdsRef.current.get(messageId) ?? messageId;
+    const msg = messages.find((m) => m.id === messageId);
+    const conversationId = await resolveConversationId();
+    if (!user || !msg || !conversationId || isGuestConversationId(conversationId)) return;
+    try {
+      const metadata = buildMessageMetadata({
+        citations: msg.citations,
+        researchData: msg.researchData,
+        source: msg.source,
+        modelUsed: msg.modelUsed,
+        provider: msg.provider,
+        tool: "visualization",
+        visualizations: [result.spec],
+      });
+      const toSave = await encodeMessageMetadata(metadata, (plain) => chatPrivate.wrapForStorage(plain));
+      // Private-mode encryption failure → skip the update (never plaintext).
+      if (toSave) {
+        await backend.from("messages").update({ metadata: toSave }).eq("id", rowId);
+      }
+    } catch (e) {
+      console.warn("[viz] persist transform failed", e);
+    }
+  };
+
   const handleSendMessage = async (overrideText?: string) => {
     const msgContent = (overrideText ?? message).trim();
     if ((!msgContent && !selectedFile) || isLoading) return;
 
-    const isGuestLike = !user || isAnonymous;
-    if (isGuestLike && !isAnonymousAutonomousEnabled()) {
-      if (guestUsage.isLoaded && !guestUsage.canPerform("chats")) {
-        toast({ title: "Guest chat limit", description: "Sign in later to lift limits; continuing now." });
-      }
-      if (guestUsage.isLoaded) {
-        guestUsage.trackGuestAction("chats");
-      }
+    if (authLoading) {
+      toast({ title: "Restoring your session", description: "Wait a moment, then send your message again." });
+      return;
+    }
+    if (!user) {
+      toast({
+        title: "Sign in to use ShadowTalk AI",
+        description: "Your AI access choice and daily usage are tied to your account.",
+        variant: "destructive",
+      });
+      navigate(`/auth?q=${encodeURIComponent(msgContent)}`);
+      return;
     }
 
-    if (!isProOrHigher && dailyLimits.isLoaded && !dailyLimits.canPerform("messages") && !isAnonymousAutonomousEnabled()) {
-      // Soft downgrade: keep chat flowing for anonymous users.
+    try {
+      let accessMode = await loadAiAccessMode(user.id);
+      // ShadowTalk is BYOK-only. Default to 'byok' mode when no mode is set.
+      // If the user has no API key, the cloudChat layer will prompt them to
+      // add one in Settings — we don't fall back to the shared tier.
+      if (!accessMode) {
+        try {
+          await saveAiAccessMode(user.id, "byok");
+        } catch {
+          // saveAiAccessMode is resilient (localStorage-first)
+        }
+      }
+    } catch (error) {
+      toast({
+        title: "Could not load AI setup",
+        description: error instanceof Error ? error.message : "Check your connection and try again.",
+        variant: "destructive",
+      });
+      return;
     }
+
+
 
     recordFunnelEvent("first_send_attempt");
     markHasChatted();
 
-    const conversationId = await resolveConversationId();
-    if (!conversationId) {
-      recordFunnelEvent("send_blocked", "no_conversation_id");
-      return;
-    }
-
     const userMessage: Message = {
-      id: crypto.randomUUID(),
+      id: (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); })),
       type: "user",
       content: msgContent,
       timestamp: new Date(),
       attachment: selectedFile || undefined,
     };
+    const cachedFile = selectedFile;
+    
+    // OPTIMISTIC UI: Update state synchronously before any network requests
     setMessages((prev) => [...prev, userMessage]);
     if (!overrideText) {
       setMessage("");
     }
     setSelectedFile(null);
     setIsLoading(true);
-    // SPEED: persist user message in the background; don't block the AI call on a DB write.
-    if (user) void saveMessage(msgContent, "user", conversationId).catch((e) =>
-      console.warn("[chat] saveMessage(user) failed", e),
-    );
 
-    if (!isProOrHigher) {
-      if (user && dailyLimits.isLoaded) {
-        dailyLimits.trackUsage("messages");
-      } else {
-        setDailyChats(incrementDailyMessageCount());
+    // Yield briefly to allow the browser to paint the optimistic updates
+    await new Promise(resolve => requestAnimationFrame(resolve));
+
+    // === Batch 2 — visualization intents (/visualize + natural language) ===
+    // Runs BEFORE tool interception so "/visualize …" is never hijacked by
+    // another tool, and so viz requests resolve the session's research
+    // context instead of starting unrelated research. Attachments take the
+    // normal chat path (visualizations analyze structured data, not files).
+    if (!selectedFile) {
+      const vizIntent = detectVisualizationIntent(msgContent);
+      const hasLiveSpec = lastVisualizationSpec(toPipelineMessages(messages)) !== null;
+      const bareCompareMatch = vizIntent
+        ? null
+        : msgContent.match(/\bcompare\s+[\w.-]+\s+(?:with|vs\.?|versus|against|and)\s+([\w .-]{2,40}?)(?=\s+(?:in|on|as|using|over|under|during|for|per|to)\b|[.?!]|$)/i);
+      const vizBareCompare = !vizIntent && hasLiveSpec && bareCompareMatch !== null;
+      if (vizIntent || vizBareCompare) {
+        const intent = vizIntent ?? {
+          kind: "refine" as const,
+          compareTarget: bareCompareMatch?.[1]?.trim(),
+          confidence: 0.7,
+        };
+        await runVisualizationRequest(intent, msgContent, [...messages, userMessage]);
+        return;
       }
     }
+
+    // === Tool interception ===
+    // Check if the message triggers a tool (image generation, web search, etc.)
+    // before sending it to the text completion API. Strip slash-command prefixes
+    // like "/image " so the tool detector sees the actual prompt.
+    const explicitImageCommand = /^\/(image|img|draw|picture)\s+/i.test(msgContent);
+    const strippedForTools = msgContent.replace(/^\/(image|img|draw|picture)\s+/i, "").trim();
+    const toolResult = chatMode === "image" || explicitImageCommand
+      ? { tool: "image_generator" as const, autoExecute: true, params: { prompt: strippedForTools } }
+      : detectTool(strippedForTools);
+
+    if (toolResult.tool && toolResult.autoExecute) {
+      const conversationId = await resolveConversationId();
+      if (!conversationId) {
+        setIsLoading(false);
+        throw new Error("Could not open a conversation for this tool request.");
+      }
+      const toolMessageId = (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `ai-${Date.now()}`);
+      const toolAiMessage: Message = {
+        id: toolMessageId,
+        type: "ai",
+        content: "",
+        timestamp: new Date(),
+        toolExecution: { tool: toolResult.tool, status: "running", params: toolResult.params },
+      };
+      setMessages((prev) => [...prev, toolAiMessage]);
+      setIsLoading(true);
+
+      try {
+        let finalToolContent = "";
+        // Batch R1 — citations returned by research tools, preserved on the
+        // message for provenance-aware visualization downstream.
+        let toolCitations: Citation[] | undefined;
+        // Image generation — BYOK only. Uses the user's own OpenAI or OpenRouter
+        // key. No fallback to free services. If the key is missing or fails,
+        // the error is shown to the user so they can fix their setup.
+        if (toolResult.tool === "image_generator") {
+          const imgPrompt = toolResult.params?.prompt || strippedForTools;
+          const imageUrl = await generateCloudImage(imgPrompt, { watermark: true });
+          finalToolContent = `Generated image for: *${imgPrompt}*`;
+          setMessages((prev) => prev.map((m) => m.id === toolMessageId ? {
+            ...m,
+            content: finalToolContent,
+            imageUrl,
+            toolExecution: { tool: toolResult.tool, status: "completed", params: toolResult.params },
+          } : m));
+          // The image provider does not return usage metadata here, so do not
+          // attribute this request to a chat model or report fabricated cost.
+          session.recordModelCall();
+        } else {
+          // Other auto-execute tools (calculator, web_search, deep_research, etc.)
+          const result = toolResult.tool === "calculator"
+            ? { kind: "inline" as const, tool: toolResult.tool, content: executeCalculator(strippedForTools) }
+            : await executeShadowTool(
+            toolResult.tool,
+            toolResult.params,
+            strippedForTools,
+            { personality, mode: chatMode, attachment: selectedFile || undefined },
+          );
+          if (result.kind === "inline") {
+            finalToolContent = result.content;
+            toolCitations = result.citations;
+            setMessages((prev) => prev.map((m) => m.id === toolMessageId ? {
+              ...m,
+              content: result.content,
+              imageUrl: result.imageUrl,
+              toolExecution: { tool: toolResult.tool, status: "completed", params: toolResult.params },
+            } : m));
+          } else if (result.kind === "ui" && result.path) {
+            finalToolContent = result.message || `Opening ${result.path}...`;
+            setMessages((prev) => prev.map((m) => m.id === toolMessageId ? {
+              ...m,
+              content: result.message || `Opening ${result.path}...`,
+              toolExecution: { tool: toolResult.tool, status: "completed", params: toolResult.params },
+            } : m));
+            navigate(result.path);
+          } else {
+            // chat_flags or none — render a generic confirmation
+            finalToolContent = `Tool ${toolResult.tool} completed.`;
+            setMessages((prev) => prev.map((m) => m.id === toolMessageId ? {
+              ...m,
+              content: finalToolContent,
+              toolExecution: { tool: toolResult.tool, status: "completed", params: toolResult.params },
+            } : m));
+          }
+          session.recordModelCall();
+        }
+
+        // Batch R1 — capture structured shadowdata + citations from tool
+        // output onto the message state and persistence.
+        const toolResearchBlocks = extractResearchDataBlocks(finalToolContent).blocks;
+        if (toolCitations?.length || toolResearchBlocks.length) {
+          setMessages((prev) => prev.map((m) => m.id === toolMessageId ? {
+            ...m,
+            ...(toolCitations?.length ? { citations: toolCitations } : {}),
+            ...(toolResearchBlocks.length ? { researchData: toolResearchBlocks } : {}),
+          } : m));
+        }
+
+        // Save the tool execution as an assistant message
+        if (user) void saveMessage(finalToolContent, "assistant", conversationId, buildMessageMetadata({
+          citations: toolCitations,
+          researchData: toolResearchBlocks.length ? toolResearchBlocks : undefined,
+          tool: toolResult.tool,
+        })).catch(() => {});
+        recordSuccessfulChatSession();
+        recordFunnelEvent("first_reply");
+        markHasChatted();
+        setIsLoading(false);
+        return; // Don't proceed to streamCloudChat — tool handled it
+      } catch (toolErr) {
+        const errMsg = toolErr instanceof Error ? toolErr.message : "Tool execution failed.";
+        setMessages((prev) => prev.map((m) => m.id === toolMessageId ? {
+          ...m,
+          content: `⚠️ ${errMsg}`,
+          toolExecution: { tool: toolResult.tool, status: "failed", params: toolResult.params },
+        } : m));
+        setIsLoading(false);
+        return;
+      }
+    }
+    // === End tool interception — if no tool matched, fall through to streamCloudChat ===
+
+    const conversationId = await resolveConversationId();
+    if (!conversationId) {
+      // Revert optimistic update on critical failure
+      setMessages((prev) => prev.filter(m => m.id !== userMessage.id));
+      if (!overrideText) setMessage(msgContent);
+      setSelectedFile(cachedFile);
+      setIsLoading(false);
+      recordFunnelEvent("send_blocked", "no_conversation_id");
+      return;
+    }
+
+    // SPEED: persist user message in the background; don't block the AI call on a DB write.
+    // Only save if we have a real (non-guest) conversation ID
+    if (user && conversationId && !isGuestConversationId(conversationId)) {
+      void saveMessage(msgContent, "user", conversationId).catch((e) =>
+        console.error("[chat] saveMessage(user) failed:", e?.message || e),
+      );
+    }
+
+
 
     const chatMessages: Array<{
       role: string;
@@ -1625,245 +1865,175 @@ const ChatbotPage = () => {
       }));
     chatMessages.push({ role: "user", content: msgContent });
 
+    // === Document Intelligence — extract text from PDF/DOCX/TXT/etc. ===
+    if (userMessage.attachment?.type === "file") {
+      const { name, mimeType, data } = userMessage.attachment;
+      // Lightweight format detection (inline — no import needed)
+      const ext = name.split(".").pop()?.toLowerCase() || "";
+      const isVideo = ["mp4", "webm", "ogg", "mov", "mkv"].includes(ext) || mimeType.startsWith("video/");
+      const isDoc = ["pdf", "docx", "pptx", "xlsx", "odt", "txt", "md", "csv", "json", "js", "ts", "jsx", "tsx", "py", "rb", "go", "rs", "java", "c", "cpp", "h", "css", "html", "xml", "yml", "yaml", "sh", "sql"].includes(ext);
+
+      // Check if it's a video file
+      if (isVideo) {
+        // Lazy-load the video intelligence module only when needed
+        const { extractVideoFrames, formatFramesForChat } = await lazyVidIntel();
+        // Video analysis — extract frames + send as image array
+        // Wrapped in try/finally to guarantee setIsLoading(false) runs
+        // even if an unexpected error occurs (prevents stuck loading state)
+        try {
+          // Convert data URL back to a File for the video extractor
+          // NOTE: This creates a temporary copy of the video in memory.
+          // The video extractor creates an object URL from this File,
+          // then revokes it in its finally block. Memory is freed after
+          // extraction completes.
+          const base64 = data.split(",")[1] || "";
+          const binaryString = atob(base64);
+          const bytes = new Uint8Array(binaryString.length);
+          for (let i = 0; i < binaryString.length; i++) bytes[i] = binaryString.charCodeAt(i);
+          const videoFile = new File([bytes], name, { type: mimeType });
+
+          toast({ title: "Processing video…", description: "Extracting frames for analysis. This may take a moment." });
+          const result = await extractVideoFrames(videoFile, { maxFrames: 6 });
+          if (result.error) {
+            toast({ title: "Video analysis failed", description: result.error, variant: "destructive" });
+            setIsLoading(false);
+            return;
+          }
+          if (result.frames.length > 0) {
+            chatMessages[chatMessages.length - 1].content = formatFramesForChat(
+              result.frames,
+              msgContent || "Describe what's happening in this video.",
+              result.metadata,
+            );
+            if (result.notice) {
+              toast({ title: "Video processed", description: result.notice });
+            }
+          }
+        } catch (err) {
+          toast({
+            title: "Video analysis failed",
+            description: err instanceof Error ? err.message : "Could not process the video.",
+            variant: "destructive",
+          });
+          setIsLoading(false);
+          return;
+        }
+      } else if (isDoc) {
+        // Document analysis — extract text locally, then use retrieval for large docs
+        // Lazy-load the document intelligence module
+        const { extractDocument, formatDocumentForChat, chunkDocument, selectRelevantChunks, formatRetrievedChunksForChat, validateFileSize, estimateFileSize, renderScannedPdfPages } = await lazyDocIntel();
+        try {
+          const sizeCheck = validateFileSize({ size: estimateFileSize(data) }, 25 * 1024 * 1024);
+          if (!sizeCheck.ok) {
+            toast({ title: "File too large", description: sizeCheck.error, variant: "destructive" });
+            setIsLoading(false);
+            return;
+          }
+          toast({ title: "Processing document…", description: `Extracting text from ${name}.` });
+          const doc = await extractDocument(data, name, mimeType);
+          const scannedPages = doc.empty && doc.format === "pdf" ? await renderScannedPdfPages(data, 5) : [];
+          if (doc.empty) {
+            toast({
+              title: scannedPages.length ? "Scanned PDF ready for visual analysis" : "No text extracted",
+              description: scannedPages.length ? `Sending ${scannedPages.length} rendered pages to your vision model.` : doc.notice || "The document appears to be empty or scanned.",
+              variant: "default",
+            });
+          }
+
+          if (scannedPages.length) {
+            chatMessages[chatMessages.length - 1].content = [
+              { type: "text", text: `${msgContent || "Analyze this scanned PDF."}\n\nPages rendered locally for visual analysis: ${scannedPages.map((page) => page.page).join(", ")}.` },
+              ...scannedPages.map((page) => ({ type: "image_url" as const, image_url: { url: page.dataUrl } })),
+            ];
+          } else {
+
+          // Chunk the document, then select relevant chunks for the question
+          const chunks = chunkDocument(doc.text, 30_000, doc.format);
+          const retrieval = selectRelevantChunks(chunks, msgContent || "summarize");
+
+          if (retrieval.fullDocument) {
+            // Small document — send everything
+            const docContext = formatDocumentForChat(doc);
+            chatMessages[chatMessages.length - 1].content = `${docContext}\n\n--- User Question ---\n${msgContent || "Summarize this document."}`;
+          } else {
+            // Large document — send only retrieved chunks + disclosure
+            const retrievedContext = formatRetrievedChunksForChat(retrieval, name, doc.format);
+            chatMessages[chatMessages.length - 1].content = `${retrievedContext}\n\n--- User Question ---\n${msgContent || "Summarize the analyzed portions of this document."}`;
+          }
+
+          if (doc.notice) {
+            toast({ title: "Document processed", description: doc.notice });
+          }
+          if (!retrieval.fullDocument) {
+            toast({ title: "Partial analysis", description: retrieval.disclosure });
+          }
+          }
+        } catch (err) {
+          toast({
+            title: "Document analysis failed",
+            description: err instanceof Error ? err.message : "Could not process the document.",
+            variant: "destructive",
+          });
+          setIsLoading(false);
+          return;
+        }
+      } else {
+        // Unsupported file type
+        toast({
+          title: "Unsupported file",
+          description: `${name}: supported formats are PDF, DOCX, TXT, MD, CSV, JSON, code files, and common video formats (MP4, WebM, MOV, MKV).`,
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
+    } else if (userMessage.attachment?.type === "image") {
+      const imageData = userMessage.attachment.data;
+      const { detectChatImageIntent } = await import("@/lib/chatImageIntent");
+      if (detectChatImageIntent(msgContent) === "edit") {
+        try {
+          const editedImage = await generateCloudImage(msgContent, { referenceImage: imageData, watermark: true });
+          const reply = `Edited your image: ${msgContent}`;
+          const editedMessage: Message = { id: crypto.randomUUID(), type: "ai", content: reply, imageUrl: editedImage, timestamp: new Date() };
+          setMessages((prev) => [...prev, editedMessage]);
+          if (user) {
+            void saveMessage(msgContent, "user", conversationId).catch(() => {});
+            void saveMessage(reply, "assistant", conversationId).catch(() => {});
+          }
+          setIsLoading(false);
+          return;
+        } catch (error) {
+          toast({ title: "Image edit failed", description: error instanceof Error ? error.message : "Could not edit this image with the selected provider.", variant: "destructive" });
+          setIsLoading(false);
+          return;
+        }
+      }
+      chatMessages[chatMessages.length - 1].content = [
+        { type: "text", text: msgContent || "Analyze this image." },
+        { type: "image_url", image_url: { url: imageData } },
+      ];
+    }
+
 
     void captureChatSend(msgContent, chatMode, personality, Boolean(userMessage.attachment));
-
-    if (user) {
-      for (const g of upsertGoalsFromMessage(msgContent)) {
-        void syncGoalToAiMemories(user.id, g);
-      }
-    }
 
     const imageAttachment =
       userMessage.attachment?.type === "image" ? userMessage.attachment : null;
 
-    if (imageAttachment) {
-      const imageIntent = detectChatImageIntent(msgContent);
-
-      if (imageIntent === "edit" || imageIntent === "analyze") {
-        const statusId = crypto.randomUUID();
-        const isEdit = imageIntent === "edit";
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: statusId,
-            type: "ai",
-            content: isEdit ? "✏️ Editing your image…" : "🔍 Analyzing your image…",
-            timestamp: new Date(),
-            toolExecution: {
-              tool: isEdit ? "image_edit" : "image_decoder",
-              status: "running",
-            },
-          },
-        ]);
-
-        try {
-          const result = isEdit
-            ? await callChatImageEdit(
-                imageAttachment.data,
-                msgContent.trim() || "Enhance this image",
-              )
-            : await callChatImageAnalyze(imageAttachment.data);
-
-          const reply =
-            result.content ||
-            (isEdit ? "Here is your edited image." : "Analysis complete.");
-
-          setMessages((prev) =>
-            prev.map((m) =>
-              m.id === statusId
-                ? {
-                    ...m,
-                    content: reply,
-                    imageUrl: result.imageUrl,
-                    toolExecution: {
-                      tool: isEdit ? "image_edit" : "image_decoder",
-                      status: "complete",
-                      result: isEdit ? "Edited" : "Analyzed",
-                    },
-                  }
-                : m,
-            ),
-          );
-          if (user) void saveMessage(reply, "assistant", conversationId).catch(() => {});
-          learnFromTurn(msgContent || "[image]", reply, conversationId);
-        } catch (err) {
-          const errMsg = err instanceof Error ? err.message : "Image processing failed.";
-          setMessages((prev) =>
-            prev.map((m) =>
-              m.id === statusId
-                ? {
-                    ...m,
-                    content: `Could not process the image: ${errMsg}`,
-                    toolExecution: {
-                      tool: isEdit ? "image_edit" : "image_decoder",
-                      status: "error",
-                    },
-                  }
-                : m,
-            ),
-          );
-          toast({ title: "Image failed", description: errMsg, variant: "destructive" });
-        } finally {
-          setIsLoading(false);
-        }
-        return;
+    try {
+      const assistantReply = await runChatCompletion(chatMessages, conversationId);
+      learnFromTurn(msgContent, assistantReply ?? "", conversationId);
+    } catch (err) {
+      if (!(err instanceof DOMException && err.name === "AbortError")) {
+        const errMsg = formatChatFetchError(err);
+        toast({ title: "Message failed", description: errMsg, variant: "destructive" });
       }
-
-      chatMessages[chatMessages.length - 1] = buildVisionUserMessage(
-        msgContent,
-        imageAttachment.data,
-      );
-
-      try {
-        const assistantReply = await runChatCompletion(chatMessages, conversationId);
-        if (aiProvider === "shadowtalk" && sovereignModel.enabled) {
-          void sovereignModel.learnFromTurn(msgContent, assistantReply);
-        }
-        learnFromTurn(msgContent || "[image]", assistantReply ?? "", conversationId);
-      } catch (err) {
-        if (!(err instanceof DOMException && err.name === "AbortError")) {
-          const errMsg = formatChatFetchError(err);
-          toast({ title: "Message failed", description: errMsg, variant: "destructive" });
-        }
-      } finally {
-        setIsLoading(false);
-      }
-      return;
-    }
-
-    const execHint = detectShadowExecutionFromChat(msgContent);
-    const route = resolveAutonomousRoute(msgContent, execHint, { preferSeeRouting });
-
-    if (route.launchInChat) {
-      try {
-        trackAgenticEvent("mission_start", { source: "chat_autonomous", goal: msgContent.slice(0, 120) });
-        void captureAutoImprove("see_launch", { goal: msgContent.slice(0, 80) });
-        const state = await launchMissionFromChat(msgContent);
-        if (state) {
-          const intro =
-            state.status === "completed" && state.result
-              ? `**Autonomous mission complete.**\n\n${state.result}`
-              : state.status === "paused"
-                ? `**Mission paused** — approve the next step in the panel below, or open full execution.`
-                : state.status === "failed"
-                  ? `**Mission could not finish.** Open Shadow Execution to adjust the plan or retry.`
-                  : `**Autonomous mission running** — multi-step plan in progress for: *${state.goal.slice(0, 100)}${state.goal.length > 100 ? "…" : ""}*`;
-          setMessages((prev) => [
-            ...prev,
-            {
-              id: crypto.randomUUID(),
-              type: "ai",
-              content: intro,
-              timestamp: new Date(),
-              toolExecution: {
-                tool: "shadow_execution",
-                status: state.status === "completed" ? "complete" : "running",
-                params: { goal: msgContent, mode: execHint.deliverableType },
-                result: state.result ?? "In progress",
-              },
-            },
-          ]);
-          if (user) void saveMessage(intro, "assistant", conversationId).catch(() => {});
-          if (state.result) learnFromTurn(msgContent, state.result, conversationId);
-          trackAgenticEvent("mission_complete", { source: "chat_autonomous" });
-          setIsLoading(false);
-          return;
-        }
-      } catch (err) {
-        console.warn("[Autonomy] In-chat mission failed, falling back:", err);
-      }
-    }
-
-    if (route.redirectToExecute) {
-      goToExecute(msgContent, execHint.deliverableType);
-      const label =
-        execHint.deliverableType === "strategy_report"
-          ? "Strategy report"
-          : execHint.deliverableType === "research_brief"
-            ? "Research brief"
-            : "Shadow Execution";
-      const routeMsg = `**${label}** fits this request better than a single chat reply — opening the execution workspace with your goal pre-filled. I'll run a visible plan with live web research and a saved deliverable.`;
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: crypto.randomUUID(),
-          type: "ai",
-          content: routeMsg,
-          timestamp: new Date(),
-          toolExecution: {
-            tool: "shadow_execution",
-            status: "complete",
-            params: { goal: msgContent, mode: execHint.deliverableType },
-            result: label,
-          },
-        },
-      ]);
-      if (user) void saveMessage(routeMsg, "assistant", conversationId).catch(() => {});
+    } finally {
       setIsLoading(false);
-      return;
     }
-
-    const toolDispatchUi = {
-      openDeepResearch: (q?: string) => {
-        setShowDeepResearch(true);
-        if (q) setMessage(q);
-      },
-      openImageGenerator: () => setShowImageGenerator(true),
-      openMusicGenerator: (prompt?: string) => {
-        setMusicPrompt(prompt ?? "");
-        setMusicAutoGenerate(Boolean(prompt));
-        setShowMusicGenerator(true);
-      },
-      openAgenticRunner: (g: string) => goToExecute(g, "general"),
-      openBrowser: () => setShowShadowBrowser(true),
-      openShadowLive: () => setShowShadowTalkLive(true),
-      openMissionControl: () => goToExecute(msgContent, "general"),
-      openShadowExecution: (g: string, mode?: import("@/lib/execution/types").DeliverableType) =>
-        goToExecute(g, mode),
-      setPendingMessage: (text: string) => setMessage(text),
-      appendAssistantMessage: (
-        content: string,
-        toolExecution?: {
-          tool: string;
-          status: "complete" | "confirm" | "running";
-          params?: Record<string, string>;
-          result?: string;
-        },
-      ) => {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: crypto.randomUUID(),
-            type: "ai",
-            content,
-            timestamp: new Date(),
-            toolExecution,
-          },
-        ]);
-        if (user) void saveMessage(content, "assistant", conversationId).catch(() => {});
-      },
-    };
-
-    const { outcome: toolOutcome, executedStep } = await dispatchDetectionAsync(
-      msgContent,
-      toolDispatchUi,
-    );
-
-    if (toolOutcome.handled && toolOutcome.cognitiveLoop) {
-      setCognitiveQuery(toolOutcome.query ?? msgContent);
-      setShowCognitiveLoop(true);
-      setIsLoading(false);
-      return;
-    }
-
-    if (toolOutcome.handled) {
-      const flags = toolOutcome.chatFlags;
-      if (flags?.webSearch || flags?.deepResearch) {
-        try {
-          if (flags.webSearch) {
-            void startBrowseSession(flags.searchQuery ?? msgContent).then(() =>
-              setShowBrowseActivity(true),
+    return;
+    // The following was ripped out:
+    /*
             );
           }
           const assistantReply = await runChatCompletion(
@@ -1886,54 +2056,36 @@ const ChatbotPage = () => {
             recordChatShareBannerShown();
           }
 
-          if (executedStep && assistantReply) {
-            const criticFollowUp = await continueFromCritic(
-              msgContent,
-              executedStep,
-              assistantReply,
-              toolDispatchUi,
-            );
-            if (criticFollowUp?.outcome.handled && criticFollowUp.outcome.cognitiveLoop) {
-              setCognitiveQuery(criticFollowUp.outcome.query ?? msgContent);
-              setShowCognitiveLoop(true);
-              setIsLoading(false);
-              return;
-            }
-            const followFlags =
-              criticFollowUp && !criticFollowUp.outcome.handled
-                ? criticFollowUp.outcome.chatFlags
-                : undefined;
-            if (followFlags?.webSearch || followFlags?.deepResearch) {
-              const followReply = await runChatCompletion(chatMessages, conversationId, followFlags);
-              learnFromTurn(msgContent, followReply, conversationId);
-            }
-          }
+
         } catch (err) {
           if (!(err instanceof DOMException && err.name === "AbortError")) {
             const msg = formatChatFetchError(err);
             toast({ title: "Message failed", description: msg, variant: "destructive" });
           }
-        }
-      }
-      setIsLoading(false);
-      return;
-    }
-
-    const toolDetection = toolOrchestrator.detectTool(msgContent);
-    const appIntent =
-      detectAppBuilderIntent(msgContent) ??
-      (toolDetection.tool === "app_builder"
-        ? {
-            platform: (toolDetection.params?.platform === "mobile" ? "mobile" : "web") as
               | "web"
               | "mobile",
             confidence: toolDetection.confidence,
           }
         : null);
 
+    // Document generator — only opens on explicit slash command (/doc, /draft)
+    // or explicit "open document studio" phrasing. Casual mentions of
+    // "document" or "report" no longer trigger this (autoExecute is now false).
+    if (
+      toolDetection.tool === "document_generator" &&
+      (/^\/(doc|draft|write|document)\b/i.test(msgContent) ||
+       /\b(open|launch|show)\s+(the\s+)?(document\s+(studio|generator|creator)|doc\s+(studio|generator))\b/i.test(msgContent))
+    ) {
+      if (toolDetection.params?.topic) {
+        setDocumentTopic(String(toolDetection.params.topic));
+      }
+      setShowDocumentGenerator(true);
+      return;
+    }
+
     if (appIntent && appIntent.confidence >= 50) {
       const platform = appIntent.platform;
-      const statusId = crypto.randomUUID();
+      const statusId = (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); }));
       const platformLabel = platform === "mobile" ? "mobile" : "web";
       setMessages((prev) => [
         ...prev,
@@ -1954,7 +2106,7 @@ const ChatbotPage = () => {
           accessToken: session?.access_token,
           personality,
           mode: "code",
-          providerPayload: buildChatProviderPayload(aiProvider, aiConfig, keys),
+          providerPayload: {},
         });
 
         openProjectInIde(
@@ -2006,10 +2158,21 @@ const ChatbotPage = () => {
     }
 
     try {
+      const startTime = performance.now();
+      trackShadowTalkEvent("mission_started", { mission_id: conversationId, user_id: user?.id, model: "turbo", tool_name: "core_chat" });
+      
       const assistantReply = await runChatCompletion(chatMessages, conversationId);
-      if (aiProvider === "shadowtalk" && sovereignModel.enabled) {
-        void sovereignModel.learnFromTurn(msgContent, assistantReply);
-      }
+
+      const endTime = performance.now();
+      const totalDuration = endTime - startTime;
+      // In a real streaming implementation, TTFV would be tracked on the first chunk.
+      trackShadowTalkEvent("mission_completed", { 
+        mission_id: conversationId, 
+        user_id: user?.id, 
+        duration_ms: totalDuration, 
+        success: true 
+      });
+
       learnFromTurn(msgContent, assistantReply, conversationId);
       if (assistantReply && isShareWorthyReply(assistantReply) && shouldShowChatShareBanner()) {
         setChatShareOffer({
@@ -2020,18 +2183,42 @@ const ChatbotPage = () => {
       }
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") return;
+      trackShadowTalkEvent("mission_failed", { mission_id: conversationId, user_id: user?.id, error_type: err instanceof Error ? err.message : "unknown", success: false });
       const msg = formatChatFetchError(err);
-      if (msg.includes("Device-only mode") || msg.includes("Stay device-only")) {
-        setShowInterimCloudConsent(true);
-      }
+
       recordFunnelEvent("send_error", msg.slice(0, 80));
       toast({ title: "Message failed", description: msg, variant: "destructive" });
-      setMessages((prev) => [
-        ...prev,
-        { id: crypto.randomUUID(), type: "ai", content: msg, timestamp: new Date() },
-      ]);
     } finally {
       setIsLoading(false);
+    }
+    */
+  };
+
+
+  const handleSwarmComplete = async (finalAnswer: string) => {
+    setShowSwarmMode(false);
+    if (!finalAnswer) return;
+
+    const userMessage = {
+      id: (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); })),
+      type: "user" as const,
+      content: swarmPrompt,
+      timestamp: new Date(),
+    };
+    
+    const aiMessage = {
+      id: (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); })),
+      type: "ai" as const,
+      content: finalAnswer,
+      timestamp: new Date(),
+    };
+    
+    setMessages((prev) => [...prev, userMessage, aiMessage]);
+    
+    const conversationId = await resolveConversationId();
+    if (conversationId && user) {
+      await saveMessage(swarmPrompt, "user", conversationId).catch(console.error);
+      await saveMessage(finalAnswer, "assistant", conversationId).catch(console.error);
     }
   };
 
@@ -2046,13 +2233,22 @@ const ChatbotPage = () => {
       ? user.email.charAt(0).toUpperCase()
       : "G";
 
+  const goToExecute = useCallback(
+    (goal: string, deliverable?: string) => {
+      const params = new URLSearchParams({ goal });
+      if (deliverable) params.set("deliverable", deliverable);
+      navigate(`/mission-control?${params.toString()}`);
+    },
+    [navigate],
+  );
+
   const handleConfirmTool = useCallback(
     (messageId: string) => {
       const msg = messages.find((m) => m.id === messageId);
       const te = msg?.toolExecution;
       if (!te?.params?.goal) return;
       const mode = (te.params.mode as "general" | "strategy_report" | "research_brief" | "content_pack") || "general";
-      goToExecute(te.params.goal, mode);
+      goToExecute(te.params.goal);
     },
     [messages, goToExecute],
   );
@@ -2094,33 +2290,25 @@ const ChatbotPage = () => {
   );
 
 
-  const handleExport = () => {
+  const handleExport = async () => {
     try {
-      const payload = {
-        exportedAt: new Date().toISOString(),
-        conversationId: currentConversationId,
-        personality,
-        mode: chatMode,
-        sharedVia: BRAND.fullName,
-        inviteUrl: "https://www.shadowtalk-ai.com/chatbot?utm_source=export&utm_medium=json&utm_campaign=chat_export",
-        messages: messages.map((m) => ({
-          role: m.type,
-          content: m.content,
-          timestamp: m.timestamp instanceof Date ? m.timestamp.toISOString() : String(m.timestamp),
-        })),
-      };
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `shadowtalk-history-${currentConversationId || "chat"}-${Date.now()}.json`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-      toast({ title: "Exported", description: "Downloaded chat history JSON." });
-    } catch {
-      toast({ title: "Export failed", description: "Could not export chat history.", variant: "destructive" });
+      const { exportChatToPdf } = await import("@/lib/exportToPdf");
+      const pdfMessages = messages.map(m => ({
+        role: m.type === "user" ? "user" : "assistant",
+        content: m.content,
+        timestamp: m.timestamp instanceof Date ? m.timestamp : new Date(m.timestamp)
+      }));
+      await exportChatToPdf(pdfMessages, currentConversationId ? `Conversation ${currentConversationId.slice(0, 6)}` : "ShadowTalk Chat");
+      toast({
+        title: "Export Successful",
+        description: "Your chat log has been saved as a PDF.",
+      });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Export Failed",
+        description: error.message || "An error occurred while generating the PDF.",
+      });
     }
   };
 
@@ -2128,7 +2316,7 @@ const ChatbotPage = () => {
     (content: string) => {
       setMessages((prev) => [
         ...prev,
-        { id: crypto.randomUUID(), type: "ai", content, timestamp: new Date() },
+        { id: (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); })), type: "ai", content, timestamp: new Date() },
       ]);
       if (user && currentConversationId) {
         void saveMessage(content, "assistant", currentConversationId).catch(() => {});
@@ -2158,184 +2346,72 @@ const ChatbotPage = () => {
     [handleSendMessage],
   );
 
-  const handleCommandAction = (action: string) => {
-    setShowCommandPalette(false);
-
-    if (!CHAT_COMMAND_MODAL_ACTIONS.has(action)) {
-      const navPath = CHAT_COMMAND_NAV_ROUTES[action];
-      if (navPath) {
-        navigate(navPath);
-        return;
-      }
-    }
-
-    switch (action) {
-      case "new-chat":
-        handleNewChat();
-        return;
-      case "deep-research":
-        setShowDeepResearch(true);
-        return;
-      case "image":
-        setShowImageGenerator(true);
-        return;
-      case "music":
-        setMusicPrompt(message.trim());
-        setMusicAutoGenerate(false);
-        setShowMusicGenerator(true);
-        return;
-      case "google":
-        setShowGoogleIntegration(true);
-        return;
-      case "shadowspectre":
-        setChatMode("shadowspectre");
-        setShowShadowSpectrePanel(true);
-        return;
-      case "voice":
-        setShowShadowTalkLive(true);
-        return;
-      case "browser":
-        setShowShadowBrowser(true);
-        return;
-      case "missions":
-        navigate("/execute");
-        return;
-      case "agentic":
-        setShowAgenticRunner(true);
-        return;
-      case "agent-workflows":
-        setShowAgentWorkflows(true);
-        return;
-      case "analytics":
-        setShowAnalytics(true);
-        return;
-      case "gemini-analytics":
-        setShowGeminiAnalytics(true);
-        return;
-      case "organize":
-        setShowDataOrganizer(true);
-        return;
-      case "knowledge-vault":
-      case "knowledge-vault-modal":
-        setShowKnowledgeVault(true);
-        return;
-      case "uncensored-arena":
-        setShowUncensoredArena(true);
-        return;
-      case "shadow-cowork":
-        setShowShadowCowork(true);
-        return;
-      case "offline-tools":
-      case "offline":
-        setShowOfflineTools(true);
-        return;
-      case "multi-model":
-        setShowMultiModel(true);
-        return;
-      case "creative":
-        setShowCreativeSynthesis(true);
-        return;
-      case "vision":
-      case "camera":
-        setShowVisualReasoning(true);
-        return;
-      case "image-decoder":
-        setShowImageDecoder(true);
-        return;
-      case "planner":
-        setShowDailyPlanner(true);
-        return;
-      case "eco":
-        setShowPlanetaryActions(true);
-        return;
-      case "screen-agent":
-        setShowScreenAgent(true);
-        return;
-      case "vision-agent":
-        setShowVisionAgent(true);
-        return;
-      case "cognitive-loop":
-        setCognitiveQuery(message.trim() || "Analyze this decision from multiple expert perspectives.");
-        setShowCognitiveLoop(true);
-        return;
-      case "memory":
-      case "memory-panel":
-      case "intelligence-hub":
-        setShowIntelligenceHub(true);
-        return;
-      case "bunker": {
-        const enabled = localStorage.getItem("shadowtalk_bunker_mode") === "true";
-        localStorage.setItem("shadowtalk_bunker_mode", enabled ? "false" : "true");
-        window.dispatchEvent(
-          new CustomEvent("shadowtalk-bunker-changed", { detail: { enabled: !enabled } }),
-        );
-        toast({
-          title: !enabled ? "Bunker mode enabled" : "Bunker mode disabled",
-          description: !enabled
-            ? "Background model downloads can run when configured in Profile."
-            : "Background downloads paused.",
-        });
-        return;
-      }
-      case "wordle":
-        setShowWordle(true);
-        return;
-      case "branching":
-        handleNewChat();
-        toast({
-          title: "New conversation branch",
-          description: "Started a fresh thread — explore an alternate path from here.",
-        });
-        return;
-      default:
-        toast({
-          title: "Try the chat tools menu",
-          description: "Open Tools (⊞) in the header for more actions.",
-        });
-    }
-  };
-
   const [promptSuggestion, setPromptSuggestion] = useState("");
-  const chatInputProps = {
+
+  const handleInputSend = useCallback(() => {
+    void handleSendMessage();
+  }, [handleSendMessage]);
+
+  const handleInputKeyPress = useCallback((_e: React.KeyboardEvent) => {}, []);
+
+  const handleToggleLiveVoice = useCallback(() => {
+    setShowShadowTalkLive(true);
+  }, []);
+
+  const handleOpenImageGen = useCallback(() => {
+    setChatMode("image");
+    setMessage((current) => current ? `${current} ` : "/image ");
+  }, []);
+
+  const handlePromptClear = useCallback(() => {
+    setPromptSuggestion("");
+  }, []);
+
+  const chatInputProps = useMemo(() => ({
     message,
     onMessageChange: setMessage,
-    onSend: () => void handleSendMessage(),
-    onKeyPress: (e: React.KeyboardEvent) => e.key === "Enter" && void handleSendMessage(),
+    onSend: handleInputSend,
+    onKeyPress: handleInputKeyPress,
+    onToggleVoice: () => toggleDictation(setMessage),
+    onOpenImageGenerator: handleOpenImageGen,
     isLoading,
     isListening,
-    onToggleVoice: () => setShowShadowTalkLive(true),
-    onOpenImageGenerator: () => setShowImageGenerator(true),
     onStopGeneration: handleStopGeneration,
     selectedFile,
     onFileSelect: setSelectedFile,
+    shadowTwinActive,
+    onToggleShadowTwin: () => setShadowTwinActive(v => !v),
     chatMode,
     onModeChange: setChatMode,
     personality,
     layout: "composer" as const,
-    aiProvider,
-    onProviderChange: handleProviderChange,
-    hasKeyForProvider,
+
     promptSuggestion,
     onPromptAccept: setMessage,
-    onPromptClear: () => setPromptSuggestion(""),
-  };
+    onPromptClear: handlePromptClear,
+  }), [
+    message,
+    handleInputSend,
+    handleInputKeyPress,
+    toggleDictation,
+    handleOpenImageGen,
+    isLoading,
+    isListening,
+    handleStopGeneration,
+    selectedFile,
+    chatMode,
+    personality,
 
-  if (enterprise.needsWorkEmailSignIn) {
-    return (
-      <div className="shadowtalk-chat-shell neural-bg flex flex-col" style={{ height: "var(--vvh, 100dvh)" }}>
-        <SEOHead meta={PAGE_SEO.chatbot} structuredData={[...getFounderHomeStructuredData(), getChatbotFAQSchema(), getSpeakableSchema(["h1", "[data-speakable]"]), getWebSiteWithSearchSchema()]} />
-        <ChatAmbientBackground />
-        <EnterpriseEmployeeGate
-          tenant={enterprise.tenant}
-          orgName={enterprise.displayOrgName ?? "Your organization"}
-        />
-      </div>
-    );
-  }
+    promptSuggestion,
+    handlePromptClear,
+  ]);
+
+
+
 
   return (
     <div className="shadowtalk-chat-shell neural-bg settings-scroll-smooth flex h-full min-h-0 flex-col overflow-hidden">
-      <SEOHead meta={PAGE_SEO.chatbot} structuredData={[...getFounderHomeStructuredData(), getChatbotFAQSchema(), getSpeakableSchema(["h1", "[data-speakable]"]), getWebSiteWithSearchSchema()]} />
+      <SEOHead meta={PAGE_SEO.chatbot} structuredData={[getChatbotFAQSchema(), getSpeakableSchema(["h1", "[data-speakable]"]), getWebSiteWithSearchSchema()]} />
       <ChatAmbientBackground />
       <motion.div
         className="shadowtalk-chat-main flex w-full min-h-0 flex-1 relative overflow-hidden"
@@ -2347,17 +2423,18 @@ const ChatbotPage = () => {
           userInitials={userInitials}
           userDisplayName={userDisplayName}
           onNewChat={handleNewChat}
-          onOpenHistory={() => setShowSidebar(true)}
           collapsed={sidebarCollapsed}
           onToggleCollapse={toggleSidebar}
-        />
-        <ChatIconRail
-          userInitials={userInitials}
-          onNewChat={handleNewChat}
-          onOpenHistory={() => setShowSidebar(true)}
-          onOpenTools={() => setToolsMenuOpen(true)}
+          conversations={conversations}
+          currentConversationId={currentConversationId}
+          isArchived={conversationIsArchived}
+          onSelect={(id) => {
+            void loadConversation(id);
+          }}
+          onDelete={handleDeleteConversation}
+          onArchive={handleArchiveConversation}
+          onUnarchive={handleUnarchiveConversation}
           onOpenSettings={() => navigate("/settings")}
-          onOpenNav={() => setShowMobileNav(true)}
         />
         <ChatMobileNavDrawer
           open={showMobileNav}
@@ -2365,138 +2442,68 @@ const ChatbotPage = () => {
           userInitials={userInitials}
           userDisplayName={userDisplayName}
           onNewChat={handleNewChat}
-          onOpenHistory={() => setShowSidebar(true)}
+          conversations={conversations}
+          currentConversationId={currentConversationId}
+          isArchived={conversationIsArchived}
+          onSelect={(id) => {
+            void loadConversation(id);
+          }}
+          onDelete={handleDeleteConversation}
+          onArchive={handleArchiveConversation}
+          onUnarchive={handleUnarchiveConversation}
+          onOpenSettings={() => navigate("/settings")}
         />
-        <AnimatePresence>
-          {showSidebar && (
-            <>
-              <motion.button
-                type="button"
-                aria-label="Close history"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="fixed top-0 right-0 bottom-0 z-40 bg-background/75 backdrop-blur-md"
-                style={{ left: historyPanelLeft }}
-                onClick={() => setShowSidebar(false)}
-              />
-              <motion.div
-                initial={{ x: -320, opacity: 0.6 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: -320, opacity: 0 }}
-                transition={SETTINGS_SPRING}
-                className="fixed top-0 bottom-0 z-50 shadow-elevated"
-                style={{ left: historyPanelLeft }}
-              >
-                <ConversationSidebar
-                  conversations={conversations}
-                  currentConversationId={currentConversationId}
-                  isArchived={conversationIsArchived}
-                  onCreateNew={handleNewChat}
-                  onSelect={(id) => {
-                    loadConversation(id);
-                    setShowSidebar(false);
-                  }}
-                  onDelete={handleDeleteConversation}
-                  onArchive={handleArchiveConversation}
-                  onUnarchive={handleUnarchiveConversation}
-                  onClearAll={handleClearAllChats}
-                  onClearCurrent={handleClearCurrentChat}
-                  onOpenSettings={() => {
-                    setShowSidebar(false);
-                    navigate("/settings");
-                  }}
-                  onOpenWorkspace={() => {
-                    setShowSidebar(false);
-                    navigate("/workspace");
-                  }}
-                  onClose={() => setShowSidebar(false)}
-                />
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
         <ChatMainPanel>
-          <div className="sticky top-0 z-30 shrink-0 bg-background/85 backdrop-blur-md border-b border-border/30">
+          <div className="sticky top-0 z-30 shrink-0 ios-glass-nav border-b border-white/[0.06]">
             <ChatHeader
               variant="minimal"
               userPlan={userPlan}
               personality={personality}
               onPersonalityChange={setPersonality}
-              onToggleSidebar={() => setShowSidebar(!showSidebar)}
-              onExport={handleExport}
-              onManageSubscription={() => navigate("/billing")}
-              onSignOut={signOut}
-              onOpenAnalytics={() => setShowAnalytics(true)}
-              onOpenScriptAutomation={() => navigate("/workspace?tab=automate")}
-              onOpenStealthVault={() => navigate("/security?tab=vault")}
-              onOpenAgentWorkflows={() => setShowAgentWorkflows(true)}
-              onOpenModelFineTuning={() => navigate("/personal-llm")}
-              onOpenWhiteLabelBranding={() => navigate("/enterprise")}
-              onOpenGeminiAnalytics={() => setShowGeminiAnalytics(true)}
-              onOpenCanvas={() => navigate("/ide")}
-              onOpenDeepResearch={() => setShowDeepResearch(true)}
-              onOpenGoogleIntegration={() => setShowGoogleIntegration(true)}
-              onOpenAgenticRunner={() => setShowAgenticRunner(true)}
-              onOpenVisualReasoning={() => setShowVisualReasoning(true)}
-              onOpenCreativeSynthesis={() => setShowCreativeSynthesis(true)}
-              onOpenImageGenerator={() => setShowImageGenerator(true)}
-              onOpenMusicGenerator={() => {
-                setMusicPrompt(message.trim());
-                setMusicAutoGenerate(false);
-                setShowMusicGenerator(true);
+              onToggleSidebar={() => {
+                if (isMobile) setShowMobileNav(!showMobileNav);
+                else toggleSidebar();
               }}
-              onOpenShadowTalkLive={() => setShowShadowTalkLive(true)}
-              onOpenBrowser={() => setShowShadowBrowser(true)}
-              aiProvider={aiProvider}
-              onProviderChange={handleProviderChange}
-              hasKeyForProvider={hasKeyForProvider}
+              onSignOut={async () => { await signOut(); navigate("/auth", { replace: true }); }}
+              onOpenCanvas={(type) => navigate("/ide")}
+
               maxChats="∞"
-              dailyChats={messageCount}
+              dailyChats={messages.length}
               toolsMenuOpen={toolsMenuOpen}
               onToolsMenuOpenChange={setToolsMenuOpen}
+              onOpenByok={() => setShowByok(true)}
             />
-            {chatMode === "shadowspectre" && (
-              <div className="px-3 pb-2">
-                <ShadowSpectreScopeBar activeHead={shadowSpectreHead} />
-              </div>
-            )}
           </div>
-          <motion.p
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, ...SETTINGS_SPRING }}
-            className="shadowtalk-chat-top-label hidden md:block"
-          >
-            {BRAND.tagline}
-          </motion.p>
-          <EnterpriseWelcomeBanner email={user?.email} displayName={userDisplayName} />
-          {enterprise.showInviteColleagues && enterprise.tenant && (
-            <EnterpriseInviteColleagues tenant={enterprise.tenant} />
+          {hasActiveChat && (
+            <motion.p
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, ...SETTINGS_SPRING }}
+              className="shadowtalk-chat-top-label hidden md:block"
+            >
+              {BRAND.tagline}
+            </motion.p>
           )}
+          <EnterpriseWelcomeBanner email={user?.email} displayName={userDisplayName} />
+
           <ChatToolbar
             hasActiveChat={hasActiveChat}
             conversationCount={conversations.length}
             onNewChat={handleNewChat}
-            onOpenHistory={() => setShowSidebar(true)}
+            onOpenHistory={() => {
+              if (isMobile) setShowMobileNav(true);
+              else if (sidebarCollapsed) toggleSidebar();
+            }}
             onClearChat={handleClearCurrentChat}
             onDeleteAllChats={handleClearAllChats}
             encryptionActive={chatPrivate.active}
             encryptionBusy={chatPrivate.busy}
             onEnableEncryption={handleEnableChatEncryption}
             onDisableEncryption={chatPrivate.disablePrivateMode}
+            onToggleLiveVoice={handleToggleLiveVoice}
           />
-          <div className="hidden md:flex items-center justify-between gap-3 px-4 md:px-6 py-2 border-b border-border/20">
-            {!userContextLoading && (
-              <UserContextPanel
-                context={userContext}
-                onContextChange={setUserContext}
-                onSave={() => void saveUserContext(userContext)}
-              />
-            )}
-            <PerceptionDashboard onProactiveSuggestion={(suggestion) => setMessage(suggestion)} />
-          </div>
+
+
           {chatPrivate.active && (
             <motion.div
               initial={{ opacity: 0, y: -4 }}
@@ -2510,7 +2517,16 @@ const ChatbotPage = () => {
               End-to-end encrypted · Anonymous session
             </motion.div>
           )}
-          {!enterprise.hideReferralNudges && <ReferralNudgeBanner />}
+          {persistenceBlocked && (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mx-4 md:mx-6 mb-2 flex items-center justify-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 text-[11px] font-medium text-amber-600 dark:text-amber-400"
+            >
+              <TriangleAlert className="h-3 w-3 shrink-0" />
+              Chat history unavailable — the server denied access, so new messages won't survive a refresh.
+            </motion.div>
+          )}
           <div className={`flex-1 min-h-0 relative flex flex-col ${isEmptyChat ? "overflow-y-auto" : "overflow-hidden"}`}>
             <AnimatePresence mode="wait">
               {isEmptyChat ? (
@@ -2522,16 +2538,18 @@ const ChatbotPage = () => {
                   transition={SETTINGS_SPRING}
                   className="flex-1 flex flex-col justify-center min-h-0"
                 >
-                  <ChatbotTrustStrip />
+                  
                   <ChatEmptyState
                     userDisplayName={userDisplayName}
                     onSelectPrompt={handleQuickPrompt}
-                    apiConnectedLabel={
-                      hasVerifiedKey && aiConfig.useCustomKey
-                        ? `${aiConfig.preferredProvider} API connected`
-                        : null
-                    }
+                    apiConnectedLabel={null}
                     composerDockStyle={inputDockStyle}
+                    onOpenAppIde={() => navigate("/ide")}
+                    isDemo={searchParams.get("demo") === "true"}
+                    onExecuteDemo={(promptStr: string) => {
+                      setMessage(promptStr);
+                      setTimeout(() => handleSendMessage(promptStr), 100);
+                    }}
                   >
                     <ChatInput {...chatInputProps} isEmptyState />
                   </ChatEmptyState>
@@ -2545,14 +2563,6 @@ const ChatbotPage = () => {
                   transition={SETTINGS_SPRING}
                   className="h-full flex flex-col overflow-hidden"
                 >
-                  {activeMarketplaceAgent && marketplaceRuntimeRef.current && (
-                    <MarketplaceAgentBanner
-                      agentName={activeMarketplaceAgent.name}
-                      runtime={marketplaceRuntimeRef.current}
-                      onClear={clearMarketplaceAgentSession}
-                      onStarterSelect={(p) => setMessage(p)}
-                    />
-                  )}
                   <ChatMessages
                     messages={messages}
                     isLoading={isLoading}
@@ -2585,6 +2595,8 @@ const ChatbotPage = () => {
                     enterpriseShare={enterprise.isEnterpriseUser}
                     includeReferralInShare={enterprise.includeReferralInShare}
                     onConfirmTool={handleConfirmTool}
+                    onVizTransform={handleVizTransform}
+                    vizTransformNotes={vizTransformNotes}
                     messagesEndRef={messagesEndRef}
                     layout="gemini"
                   />
@@ -2592,6 +2604,10 @@ const ChatbotPage = () => {
               )}
             </AnimatePresence>
           </div>
+
+
+
+
           {!isEmptyChat && (
             <>
               {enterprise.allowProductSharing && (
@@ -2606,20 +2622,7 @@ const ChatbotPage = () => {
                   onDismiss={() => setChatShareOffer(null)}
                 />
               )}
-              {(chatMission.mission || activeMission || isMissionExecuting) && (
-                <div className="px-4 md:px-6 pb-2 max-w-4xl mx-auto w-full">
-                  <SEEMissionPanel
-                    mission={chatMission.mission || activeMission}
-                    isExecuting={isMissionExecuting}
-                    pendingApproval={pendingApproval}
-                    onApprove={() => void approveChatMissionStep()}
-                    onReject={() => void rejectPendingStep()}
-                    onCancel={() => void cancelExecution()}
-                    onOpenFullControl={() => navigate("/execute")}
-                    compact
-                  />
-                </div>
-              )}
+
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -2627,6 +2630,17 @@ const ChatbotPage = () => {
                 className="shadowtalk-chat-input-dock shrink-0"
                 style={inputDockStyle}
               >
+                {costTracker.requestCount > 0 && (
+                  <div className="flex justify-center px-4 pb-1.5">
+                    <TokenCostBadge
+                      tokensPerSecond={costTracker.tokensPerSecond}
+                      lastRequestCost={costTracker.lastRequestCost}
+                      monthSpendUsd={costTracker.monthSpendUsd}
+                      savingsVsChatGptPlus={costTracker.savingsVsChatGptPlus}
+                      compact
+                    />
+                  </div>
+                )}
                 <div className="shadowtalk-chat-input-shell w-full">
                   <ChatInput {...chatInputProps} />
                 </div>
@@ -2651,280 +2665,52 @@ const ChatbotPage = () => {
             customLink={chatShareCustomLink ?? undefined}
           />
         </ChatMainPanel>
-      {showImageGenerator && <ImageGenerator onClose={() => setShowImageGenerator(false)} onImageGenerated={(url) => setMessages(prev => [...prev, { id: crypto.randomUUID(), type: 'ai', content: '🎨 Generated image', timestamp: new Date(), imageUrl: url }])} />}
-      <MusicGenerator
-        isOpen={showMusicGenerator}
-        onClose={() => {
-          setShowMusicGenerator(false);
-          setMusicAutoGenerate(false);
-        }}
-        initialPrompt={musicPrompt}
-        autoGenerate={musicAutoGenerate}
-        onInsertToChat={(content) => {
-          insertAssistantToChat(content);
-          setShowMusicGenerator(false);
-        }}
-      />
-      <WordleGame isOpen={showWordle} onClose={() => setShowWordle(false)} />
-      <GoogleIntegrationPanel
-        isOpen={showGoogleIntegration}
-        onClose={() => setShowGoogleIntegration(false)}
-        onImportContent={(content, source) => {
-          insertAssistantToChat(`**Imported from ${source}**\n\n${content}`);
-          setShowGoogleIntegration(false);
-        }}
-      />
-      {showDeepResearch && <DeepResearchPanel isOpen={showDeepResearch} onClose={() => setShowDeepResearch(false)} onInsertToChat={(c) => setMessages(prev => [...prev, { id: crypto.randomUUID(), type: 'ai', content: c, timestamp: new Date() }])} />}
-      {showCognitiveLoop && (
-        <CognitiveLoopPanel
-          isOpen={showCognitiveLoop}
-          onClose={() => setShowCognitiveLoop(false)}
-          initialQuery={cognitiveQuery}
-          onResult={(result) => {
-            setMessages((prev) => [
-              ...prev,
-              {
-                id: crypto.randomUUID(),
-                type: "ai",
-                content: result,
-                timestamp: new Date(),
-                toolExecution: {
-                  tool: "cognitive_loop",
-                  status: "complete",
-                  result: "Multi-agent synthesis",
-                },
-              },
-            ]);
-            if (user && currentConversationId) {
-              void saveMessage(result, "assistant", currentConversationId).catch(() => {});
-            }
-            learnFromTurn(cognitiveQuery, result, currentConversationId ?? "");
-            setShowCognitiveLoop(false);
-          }}
+
+        <Dialog open={showByok} onOpenChange={setShowByok}>
+          <DialogContent className="max-w-lg">
+            <DialogHeader>
+              <DialogTitle>Your own API key (BYOK)</DialogTitle>
+              <DialogDescription>
+                Use your own AI provider key when ShadowTalk's built-in AI is down or out of credits.
+              </DialogDescription>
+            </DialogHeader>
+            <SettingsByokCard />
+          </DialogContent>
+        </Dialog>
+
+        {user && <AiAccessOnboarding userId={user.id} />}
+
+        {/* Consent-gated recovery for pre-account-scoping E2EE vaults. */}
+        <LegacyVaultRecoveryDialog
+          open={legacyVaultRecoveryOpen}
+          onRestore={handleLegacyVaultRestore}
+          onStartFresh={handleLegacyVaultStartFresh}
+          onDismiss={() => setLegacyVaultRecoveryOpen(false)}
         />
-      )}
-      {showOfflineTools && (
-        <OfflineToolsPanel
-          isOpen={showOfflineTools}
-          onClose={() => setShowOfflineTools(false)}
-          onInsertToChat={(text) => {
-            setMessage(text);
-            setShowOfflineTools(false);
-            toast({ title: "Inserted into chat", description: "Edit the prompt and send when ready." });
-          }}
+
+        {/* Floating Live Voice button — visible on ALL screen sizes */}
+        <button
+          type="button"
+          onClick={handleToggleLiveVoice}
+          className="fixed bottom-24 right-4 z-40 w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-[0_4px_24px_rgba(99,102,241,0.4)] flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
+          aria-label="Start live voice conversation"
+        >
+          <Phone className="w-6 h-6" />
+        </button>
+
+        {/* Live Voice Mode overlay */}
+        <LiveVoiceMode
+          open={showShadowTalkLive}
+          onClose={() => setShowShadowTalkLive(false)}
+          personality={personality}
         />
-      )}
-      {showMultiModel && (
-        <MultiModelOrchestrator
-          isOpen={showMultiModel}
-          onClose={() => setShowMultiModel(false)}
-          onResult={(result) => {
-            insertAssistantToChat(result);
-            setShowMultiModel(false);
-          }}
-          initialPrompt={message}
-        />
-      )}
-      {showCreativeSynthesis && (
-        <CreativeSynthesis
-          isOpen={showCreativeSynthesis}
-          onClose={() => setShowCreativeSynthesis(false)}
-          onInsertToChat={(c) => {
-            insertAssistantToChat(c);
-            setShowCreativeSynthesis(false);
-          }}
-          initialPrompt={message}
-        />
-      )}
-      {showVisualReasoning && (
-        <VisualReasoning
-          isOpen={showVisualReasoning}
-          onClose={() => setShowVisualReasoning(false)}
-          onInsertToChat={(c) => {
-            insertAssistantToChat(c);
-            setShowVisualReasoning(false);
-          }}
-        />
-      )}
-      {showImageDecoder && (
-        <ImageDecoder
-          onClose={() => setShowImageDecoder(false)}
-          onDecoded={(analysis) => {
-            insertAssistantToChat(analysis);
-            setShowImageDecoder(false);
-          }}
-          initialImage={selectedFile?.type === "image" ? selectedFile.data : undefined}
-          autoAnalyze={Boolean(selectedFile?.type === "image")}
-        />
-      )}
-      {showDailyPlanner && (
-        <DailyPlanner
-          isOpen={showDailyPlanner}
-          onClose={() => setShowDailyPlanner(false)}
-          onPlanGenerated={(plan) => {
-            insertAssistantToChat(plan);
-            setShowDailyPlanner(false);
-          }}
-        />
-      )}
-      <PlanetaryActionModal
-        isOpen={showPlanetaryActions}
-        onClose={() => setShowPlanetaryActions(false)}
-      />
-      <ScreenAgent
-        isOpen={showScreenAgent}
-        onClose={() => setShowScreenAgent(false)}
-        onSendToChat={(text) => {
-          setMessage(text);
-          setShowScreenAgent(false);
-        }}
-      />
-      <VisionAgentModal
-        isOpen={showVisionAgent}
-        onClose={() => setShowVisionAgent(false)}
-        onMessage={(text, isProactive) => {
-          if (isProactive) {
-            insertAssistantToChat(text);
-          } else {
-            setMessage(text);
-          }
-        }}
-      />
-      {showIntelligenceHub && (
-        <IntelligenceHub isOpen={showIntelligenceHub} onClose={() => setShowIntelligenceHub(false)} />
-      )}
-      {showKnowledgeVault && (
-        <KnowledgeVault isOpen={showKnowledgeVault} onClose={() => setShowKnowledgeVault(false)} />
-      )}
-      {showBrowseActivity && browseSession && (
-        <BrowseActivityPanel
-          isOpen={showBrowseActivity}
-          onClose={() => {
-            setShowBrowseActivity(false);
-            closeBrowseSession();
-          }}
-          session={browseSession}
-          onResultReady={(result) => {
-            insertAssistantToChat(result);
-            setShowBrowseActivity(false);
-            closeBrowseSession();
-          }}
-        />
-      )}
-      <CommandPalette open={showCommandPalette} onOpenChange={setShowCommandPalette} onAction={handleCommandAction} />
-      {showShadowTalkLive && (
-        <Suspense fallback={null}>
-          <ShadowTalkLive
-            isOpen={showShadowTalkLive}
-            onClose={() => setShowShadowTalkLive(false)}
-            onInsertToChat={(content) => setMessage(content)}
-          />
-        </Suspense>
-      )}
-      {showShadowBrowser && (
-        <Suspense fallback={null}>
-          <ShadowBrowser
-            isOpen={showShadowBrowser}
-            onClose={() => setShowShadowBrowser(false)}
-            onInsertToChat={(content) => setMessage(content)}
-          />
-        </Suspense>
-      )}
-      <ByokProviderKeyDialog
-        open={byokDialogOpen}
-        onOpenChange={setByokDialogOpen}
-        provider={pendingByokProvider}
-        onSaved={handleByokSaved}
-      />
-      {enterprise.showOnboarding && enterprise.tenant && (
-        <EnterpriseOnboarding tenant={enterprise.tenant} />
-      )}
-      {enterprise.showHelpFab && enterprise.tenant && (
-        <EnterpriseHelpFab tenant={enterprise.tenant} />
-      )}
-      <ShadowSpectrePanel
-        open={showShadowSpectrePanel}
-        onClose={() => setShowShadowSpectrePanel(false)}
-      />
-      <ShadowSpectreTermsDialog
-        open={showShadowSpectreTerms}
-        onAccepted={() => setShowShadowSpectreTerms(false)}
-        onDecline={() => {
-          setShowShadowSpectreTerms(false);
-          if (chatMode === "shadowspectre") setChatMode("general");
-        }}
-      />
-      <AgenticTaskRunner
-        isOpen={showAgenticRunner}
-        onClose={() => setShowAgenticRunner(false)}
-        onTaskComplete={(result) => {
-          insertAssistantToChat(result);
-          setShowAgenticRunner(false);
-        }}
-      />
-      <AIAgentWorkflows
-        isOpen={showAgentWorkflows}
-        onClose={() => setShowAgentWorkflows(false)}
-        onResult={(result) => {
-          insertAssistantToChat(result);
-          setShowAgentWorkflows(false);
-        }}
-      />
-      {showAnalytics && (
-        <AnalyticsDashboard
-          onClose={() => setShowAnalytics(false)}
-          messageCount={messages.length}
-          conversationCount={conversations.length}
-        />
-      )}
-      {showGeminiAnalytics && (
-        <GeminiKeyAnalytics onClose={() => setShowGeminiAnalytics(false)} />
-      )}
-      <DataOrganizer
-        isOpen={showDataOrganizer}
-        onClose={() => setShowDataOrganizer(false)}
-        onOrganize={(input, output) => {
-          insertAssistantToChat(`**Organized data**\n\n${output}`);
-          setShowDataOrganizer(false);
-        }}
-      />
-      <UncensoredArena
-        open={showUncensoredArena}
-        onClose={() => setShowUncensoredArena(false)}
-      />
-      <ShadowCowork
-        isOpen={showShadowCowork}
-        onClose={() => setShowShadowCowork(false)}
-        onInsertToChat={(content) => {
-          setMessage(content);
-          setShowShadowCowork(false);
-        }}
-      />
-      <SignInPrompt
-        open={showSignInPrompt}
-        onOpenChange={setShowSignInPrompt}
-        reason={signInPromptReason}
-        usedCount={guestUsage.usage?.chats}
-        limitCount={GUEST_LIMITS.chats}
-      />
-      <InterimCloudConsentDialog
-        open={showInterimCloudConsent}
-        onOpenChange={setShowInterimCloudConsent}
-        isDownloading={!localModelReady}
-        onUseCloudUntilReady={() => {
-          setInterimCloudConsent(true);
-          setShowInterimCloudConsent(false);
-          toast({ title: "Cloud AI enabled", description: "Temporary until your on-device model is ready." });
-        }}
-        onGoToDownload={() => {
-          setShowInterimCloudConsent(false);
-          navigate("/settings?section=offline");
-        }}
-        onStayDeviceOnly={() => setShowInterimCloudConsent(false)}
-      />
+
+      
+
       </motion.div>
-      <FounderCrawlStrip />
+      
     </div>
   );
 };
 export default ChatbotPage;
+

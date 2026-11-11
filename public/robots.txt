@@ -16,6 +16,22 @@ Allow: /shadowtalk.json
 Allow: /aeo-answers.json
 Allow: /aeo.txt
 
+User-agent: OAI-SearchBot
+Allow: /aeo-answers.html
+Allow: /facts.html
+Allow: /zain-ahmed-fahad-patel.html
+Allow: /zain-ahmed.html
+Allow: /llms.txt
+Allow: /shadowtalk.json
+Allow: /aeo-answers.json
+Allow: /aeo.txt
+Allow: /learn/
+Allow: /vs/
+Allow: /pricing
+Allow: /about
+Allow: /faq
+Allow: /docs
+
 User-agent: ClaudeBot
 Allow: /aeo-answers.html
 Allow: /facts.html

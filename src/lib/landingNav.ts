@@ -37,27 +37,15 @@ export const LANDING_PRODUCT_LINKS: LandingProductLink[] = [
     icon: MessageSquare,
   },
   {
-    label: "Mission Control",
+    label: "Agentic Workspace",
     description: "Autonomous workflows",
-    href: "/missioncontrol",
+    href: "/agentic-ai-workspace",
     icon: Target,
   },
   {
-    label: "Strategy Agent",
-    description: "Planning & research",
-    href: "/strategy",
-    icon: Brain,
-  },
-  {
-    label: "Code IDE",
-    description: "Build in the browser",
-    href: "/ide",
-    icon: Code,
-  },
-  {
-    label: "AI Workspace",
-    description: "Unified tools hub",
-    href: "/workspace",
+    label: "Knowledge Graph",
+    description: "Visual knowledge connections",
+    href: "/knowledge-graph",
     icon: Sparkles,
   },
   {
@@ -70,8 +58,7 @@ export const LANDING_PRODUCT_LINKS: LandingProductLink[] = [
 
 export const LANDING_MORE_LINKS: LandingNavLink[] = [
   { label: "About", href: "/about" },
-  { label: "Developers", href: "/developers" },
-  { label: "Marketplace", href: "/marketplace" },
+  { label: "Docs", href: "/docs" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];

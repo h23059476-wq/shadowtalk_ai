@@ -45,16 +45,7 @@
  
    private reportError = async (error: Error, errorInfo: ErrorInfo) => {
      try {
-       const { capture } = await import("@/lib/selfHealing/errorCapture");
-       capture({
-         kind: "react",
-         message: error.message,
-         stack: error.stack,
-         context: {
-           errorId: this.state.errorId,
-           componentStack: errorInfo.componentStack?.slice(0, 2000),
-         },
-       });
+       console.error('[ErrorBoundary] Error reported:', error.message, errorInfo);
      } catch (e) {
        console.error('[ErrorBoundary] Failed to report error:', e);
      }
@@ -138,7 +129,7 @@
                  Go Home
                </Button>
                <Button
-                 onClick={() => window.open(`mailto:shadowtalk68@gmail.com?subject=Error Report: ${this.state.errorId}`)}
+                 onClick={() => window.open(`mailto:shadowtalk@shadowtalk-ai.com?subject=Error Report: ${this.state.errorId}`)}
                  variant="ghost"
                  size="sm"
                >

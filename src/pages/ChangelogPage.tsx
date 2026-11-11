@@ -15,10 +15,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { PRODUCT_CHANGELOG } from "@/content/productChangelog";
 import { useChangelogEntries } from "@/hooks/useCMSContent";
 import { format, parseISO } from "date-fns";
+import { SEOHead } from "@/components/SEOHead";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import {
   mergeChangelogWithCms,
   type ChangelogChangeType,
@@ -206,6 +210,18 @@ const ChangelogPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        meta={{
+          title: 'Product Changelog & Release Notes — ShadowTalk AI',
+          description: 'Track every ShadowTalk AI update: OmniRoute gateway integration, PWA offline support, i18n locales, BYOK system, and security hardening.',
+          canonical: 'https://www.shadowtalk-ai.com/changelog',
+          keywords: ['changelog', 'release notes', 'product updates', 'version history'],
+          ogType: 'website',
+          twitterCard: 'summary',
+          noIndex: false,
+        }}
+      />
+      <Navigation />
       <div className="fixed inset-0 pointer-events-none">
         <FloatingOrbs className="absolute inset-0" />
         <div className="absolute inset-0 bg-grid opacity-[0.10]" />
@@ -283,6 +299,7 @@ const ChangelogPage = () => {
           </SpotlightCard>
         </motion.div>
       </main>
+      <Footer />
     </div>
   );
 };

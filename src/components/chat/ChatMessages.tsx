@@ -11,6 +11,11 @@ interface Message {
   content: string;
   timestamp: Date;
   attachment?: { type: 'image' | 'file'; data: string; name: string; mimeType: string };
+  /** Batch R1 — forwarded to MessageBubble (research citations + structured datasets). */
+  citations?: Array<{ url: string; title?: string }>;
+  researchData?: unknown[];
+  /** Batch 2 — visualization artifact (validated spec) attached to the reply. */
+  visualization?: unknown;
 }
 
 interface ChatMessagesProps {
@@ -32,6 +37,10 @@ interface ChatMessagesProps {
   onConfirmTool?: (messageId: string) => void;
   onCancelTool?: (messageId: string) => void;
   onShareReply?: (content: string) => void;
+  /** Batch 2 — transform a visualization spec to a compatible kind. */
+  onVizTransform?: (messageId: string, spec: unknown, targetKind: string) => void;
+  /** Batch 2 — notes from infeasible transforms, keyed by message id. */
+  vizTransformNotes?: Record<string, string>;
   messagesEndRef: React.RefObject<HTMLDivElement>;
   thinkingStage?: 'understanding' | 'reasoning' | 'generating' | 'refining' | null;
   layout?: 'default' | 'gemini' | 'shadow-pulse';
@@ -39,7 +48,7 @@ interface ChatMessagesProps {
   includeReferralInShare?: boolean;
 }
 
-export const ChatMessages: React.FC<ChatMessagesProps> = ({
+export const ChatMessagesInner: React.FC<ChatMessagesProps> = ({
   messages,
   isLoading,
   showSuggestions,
@@ -56,6 +65,8 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
   onLaunchWebsite,
   onOpenInBrowser,
   onShareReply,
+  onVizTransform,
+  vizTransformNotes,
   messagesEndRef,
   thinkingStage,
   layout = 'default',
@@ -94,13 +105,19 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
     }
   }, [showSuggestions]);
 
-  // Scroll inside the messages panel only — never grow the page,
-  // and only if the user is already near the bottom.
+  // Scroll to bottom on new messages, but use instant scroll while streaming
+  // to avoid triggering layout thrashing on every token.
   useEffect(() => {
     const el = scrollContainerRef.current;
     if (!el || showSuggestions) return;
     if (!stickToBottomRef.current) return;
-    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+    // Use instant scroll while loading (streaming) to avoid triggering
+    // heavy layout recalcs via smooth scroll on every token.
+    if (isLoading) {
+      el.scrollTop = el.scrollHeight;
+    } else {
+      el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
+    }
   }, [messages, isLoading, showSuggestions]);
 
   return (
@@ -108,7 +125,7 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
 
       <div
         className={`mx-auto px-3 xs:px-4 sm:px-6 py-4 xs:py-6 sm:py-10 w-full min-w-0 ${
-          isGemini ? 'max-w-[720px] space-y-5 sm:space-y-8' : 'max-w-4xl space-y-6 sm:space-y-12'
+          isGemini ? 'max-w-[800px] space-y-5 sm:space-y-8' : 'max-w-5xl space-y-6 sm:space-y-12'
         }`}
       >
         {/* Suggested prompts */}
@@ -142,6 +159,8 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
             enterpriseShare={enterpriseShare}
             includeReferralInShare={includeReferralInShare}
             layout={isGemini ? 'gemini' : 'default'}
+            onVizTransform={onVizTransform}
+            vizTransformNote={vizTransformNotes?.[msg.id]}
           />
         ))}
 
@@ -229,3 +248,5 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
     </div>
   );
 };
+
+export const ChatMessages = React.memo(ChatMessagesInner);

@@ -1,6 +1,16 @@
 <!doctype html>
 <html lang="en" class="dark">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YC202MNN7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-YC202MNN7');
+    </script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
 
@@ -16,7 +26,7 @@
     <!-- Primary Meta Tags - SEO Optimized -->
     <title>Think AI. Think ShadowTalk.</title>
     <meta name="title" content="Think AI. Think ShadowTalk. — Agentic AI Workspace" />
-    <meta name="description" content="ShadowTalk AI by Zain Ahmed Fahad Patel — agentic chat, missions, 30+ tools, voice & code, desktop app. Free to use: bring your own AI provider API key; your provider may charge separately for API usage.">
+    <meta name="description" content="ShadowTalk AI by Zain Ahmed Fahad Patel — encrypted chat, deep research, voice & code, desktop app. Free to use, no card. Founder: Karachi, Pakistan.">
     <meta name="author" content="Zain Ahmed Fahad Patel, ShadowTalk AI" />
     <meta name="keywords" content="ShadowTalk AI, Zain Ahmed Fahad Patel, Zain Ahmed founder, AI chatbot, free AI, agentic AI, GPT alternative, Karachi AI founder" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -73,13 +83,12 @@
     <!-- Favicon and Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#38bdf8" />
 
-    <!-- iOS Splash Screens -->
-    <link rel="apple-touch-startup-image" href="/splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" />
-    <link rel="apple-touch-startup-image" href="/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" />
-    <link rel="apple-touch-startup-image" href="/splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)" />
-    <link rel="apple-touch-startup-image" href="/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" />
+    <!-- Batch 5: removed dead asset references. The iOS splash PNGs
+         (splash-*.png) and safari-pinned-tab.svg were referenced here but the
+         files do not exist in public/, so every page load produced 404s and
+         iOS fell back to a plain screenshot anyway. Restoring real splash
+         artwork is tracked in the stabilization backlog. -->
 
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -101,7 +110,7 @@
         "price": "0",
         "priceCurrency": "USD"
       },
-      "description": "ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage. Agentic chat, missions, 30+ tools, voice and code, desktop app.",
+      "description": "Stop juggling AI tabs. ShadowTalk finishes the job—encrypted chat, deep research, voice and code, desktop app. Free to use, no card.",
       "author": {
         "@type": "Person",
         "@id": "https://www.shadowtalk-ai.com/#zain-ahmed-fahad-patel-shadowtalk",
@@ -119,13 +128,11 @@
         ]
       },
       "featureList": [
-        "Mission Control autonomous missions",
-        "30+ AI tools from natural language",
         "End-to-end encrypted chat",
         "Deep Research with citations",
         "ShadowTalk Live voice mode",
         "Code IDE and App Builder",
-        "Stealth Vault and BYOK",
+        "BYOK (Bring Your Own Key)",
         "Marketplace AI agents",
         "Optional offline on-device AI",
         "Desktop app and PWA"
@@ -162,7 +169,7 @@
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer support",
-        "email": "shadowtalk68@gmail.com",
+        "email": "shadowtalk@shadowtalk-ai.com",
         "availableLanguage": ["English"]
       }
     }
@@ -174,7 +181,7 @@
       "name": "ShadowTalk AI",
       "alternateName": ["ShadowTalk", "shadowtalk-ai.com"],
       "url": "https://www.shadowtalk-ai.com",
-      "description": "Agentic AI workspace — Mission Control, 30+ tools, encrypted chat. Founded by Zain Ahmed Fahad Patel.",
+      "description": "Agentic AI workspace — encrypted chat, deep research, voice & code. Founded by Zain Ahmed Fahad Patel.",
       "publisher": { "@type": "Organization", "name": "ShadowTalk AI", "url": "https://www.shadowtalk-ai.com" },
       "potentialAction": {
         "@type": "SearchAction",
@@ -213,7 +220,7 @@
       "@type": "WebSite",
       "name": "ShadowTalk AI",
       "url": "https://www.shadowtalk-ai.com",
-      "description": "ShadowTalk AI is free to use — bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage.",
+      "description": "Stop juggling AI tabs. ShadowTalk finishes the job—encrypted chat, deep research, voice and code, desktop app. Free to use, no card.",
       "potentialAction": {
         "@type": "SearchAction",
         "target": "https://www.shadowtalk-ai.com/chatbot?q={search_term_string}",
@@ -249,23 +256,6 @@
 
   <body>
     <div id="root"></div>
-    <script>
-      (function () {
-        var host = location.hostname || "";
-        if (!host.endsWith("lovableproject.com") && !host.endsWith("lovable.app")) return;
-        window.addEventListener("error", function (e) {
-          var msg = (e && e.message) || "";
-          if (msg.indexOf("reading 'useState'") === -1 && msg.indexOf("Invalid hook call") === -1) return;
-          try {
-            if (sessionStorage.getItem("shadowtalk_vite_deps_reload_v1")) return;
-            sessionStorage.setItem("shadowtalk_vite_deps_reload_v1", "1");
-          } catch (err) { return; }
-          var u = new URL(location.href);
-          u.searchParams.set("vite_refresh", String(Date.now()));
-          location.replace(u.href);
-        }, true);
-      })();
-    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -126,26 +126,8 @@ export function warmWebGPUProbe(): void {
   }
 }
 
-let transformersConfigured = false;
-
-/** Tune Transformers.js for browser inference (WebGPU + WASM fallback). */
 export async function configureTransformersEnv(): Promise<void> {
-  if (transformersConfigured || typeof window === "undefined") return;
-  transformersConfigured = true;
-
-  try {
-    const { env, LogLevel } = await import("@huggingface/transformers");
-    env.logLevel = LogLevel.WARNING;
-
-    const cores = navigator.hardwareConcurrency ?? 4;
-    const wasmThreads = cores > 1 ? Math.min(4, cores) : 1;
-    (env.backends.onnx as unknown as { wasm: Record<string, unknown> }).wasm = {
-      ...(env.backends.onnx as unknown as { wasm: Record<string, unknown> }).wasm,
-      numThreads: wasmThreads,
-    };
-  } catch (e) {
-    console.warn("[WebGPU] Transformers env setup skipped:", e);
-  }
+  // Stubbed to avoid importing @huggingface/transformers
 }
 
 export function deviceLabel(device: ComputeDevice, probe: WebGPUProbe): string {

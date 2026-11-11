@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "@/components/AuthProvider";
 import { useAutoImproveContext } from "@/contexts/AutoImproveContext";
-import { maybeFetchDailyInsights } from "@/lib/autoImprove/dailyInsightsClient";
+
 import { hasAnalyticsConsent } from "@/lib/autoImprove/consent";
 import { isLearningEnabled } from "@/lib/autoImprove/learningConsent";
 import { detectBotLikely } from "@/lib/analyticsBotGuard";
@@ -42,12 +42,7 @@ export const AutoImproveEngine = () => {
     return () => clearTimeout(t);
   }, [location.pathname, runAnalysis]);
 
-  useEffect(() => {
-    if (!user?.id || !hasAnalyticsConsent()) return;
-    maybeFetchDailyInsights(user.id).catch((e) =>
-      console.warn("[AutoImprove] daily insights", e)
-    );
-  }, [user?.id]);
+
 
   if (enterprise.isEnterpriseUser || enterprise.isEnterpriseDeployment) {
     return null;

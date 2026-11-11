@@ -13,10 +13,10 @@ export const PROOF_LINKS = [
 ] as const;
 
 export const PRICING_TRANSPARENCY = {
-  cancel: "There is nothing to cancel — ShadowTalk AI is free to use, with no subscription.",
-  refund: "No payments are collected by ShadowTalk AI. Provider API usage is billed by your provider, not us.",
+  cancel: "There is nothing to cancel — ShadowTalk AI is free to use with no subscriptions.",
+  refund: "No payments are collected, so there is nothing to refund. Provider API charges are billed by your provider.",
   data:
-    "Cloud chat uses our servers; Stealth Vault, BYOK, and optional on-device models keep sensitive work under your control.",
+    "Cloud chat uses our servers; the encrypted vault, and optional on-device models keep sensitive work under your control.",
   privacyLinks: [
     { href: "/privacy", label: "Privacy Policy" },
     { href: "/transparency", label: "Transparency" },

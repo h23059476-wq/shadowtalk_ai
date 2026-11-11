@@ -1,63 +1,44 @@
 import { useCallback } from 'react';
 
 export type ToolType = 
+  | 'strategy_agent'
+  | 'stealth_vault'
+  | 'knowledge_vault'
+  | 'memory_panel'
+  | 'document_generator'
+  | 'presentation_builder'
+  | 'calculator'
+  | 'web_search'
+  | 'deep_research'
+  | 'image_generator'
+  | 'image_editor'
+  | 'image_edit'
+  | 'music_generator'
+  | 'image_decoder'
+  | 'visual_reasoning'
+  | 'security_audit'
+  | 'shadow_browser'
+  | 'shadow_live'
   | 'code_executor'
+  | 'code_canvas'
   | 'file_manager'
   | 'database_query'
   | 'analytics_agent'
   | 'api_integrator'
   | 'workflow_automation'
-  | 'executor'
-  | 'image_generator'
-  | 'image_decoder'
-  | 'deep_research'
-  | 'agentic_runner'
-  | 'visual_reasoning'
-  | 'creative_synthesis'
-  | 'shadow_browser'
-  | 'shadow_live'
-  | 'multi_model'
-  | 'api_marketplace'
-  | 'code_canvas'
   | 'computer_mode'
-  | 'app_builder'
-  | 'analytics'
-  | 'stealth_vault'
-  | 'data_organizer'
-  | 'camera_capture'
-  | 'calculator'
-  | 'web_search'
-  | 'document_generator'
-  | 'daily_planner'
-  | 'wordle_game'
-  | 'script_automation'
-  | 'agent_workflows'
-  | 'model_fine_tuning'
-  | 'white_label'
-  | 'gemini_analytics'
-  | 'google_integration'
-  | 'sovereign_models'
-  | 'security_audit'
   | 'eco_actions'
-  | 'vision_agent'
-  | 'command_palette'
-  | 'knowledge_vault'
-  | 'memory_panel'
-  | 'mission_control'
-  | 'shadow_execution'
-  | 'custom_instructions'
-  | 'conversation_branching'
-  | 'bunker_mode'
-  | 'strategy_agent'
+  | 'sovereign_models'
   | 'cognitive_loop'
-  | 'canvas_document'
-  | 'referral'
   | 'workspace'
+  | 'ide'
   | 'marketplace'
   | 'privacy_score'
-  | 'presentation_builder'
-  | 'ide'
-  | 'music_generator';
+  | 'referral'
+  | 'analytics'
+  | 'api_marketplace'
+  | 'command_palette'
+  | 'executor';
 
 export interface ToolDetectionResult {
   tool: ToolType | null;
@@ -68,7 +49,6 @@ export interface ToolDetectionResult {
   originalMessage?: string;
 }
 
-// Tool detection patterns with priority
 const TOOL_PATTERNS: Array<{
   tool: ToolType;
   patterns: RegExp[];
@@ -76,717 +56,91 @@ const TOOL_PATTERNS: Array<{
   autoExecute?: boolean;
   extractParams?: (message: string) => Record<string, string>;
 }> = [
-  // Image Decoder - Hidden built-in tool (high priority)
-  {
-    tool: 'image_decoder',
-    patterns: [
-      /\b(decode|analyze|describe|explain|interpret|read)\s+(this\s+)?(image|picture|photo|screenshot)/i,
-      /\bwhat('s| is)\s+in\s+(this\s+)?(image|picture|photo)/i,
-      /\bextract\s+(text\s+|data\s+)?from\s+(this\s+)?(image|picture)/i,
-      /\bimage\s+(analysis|decode|decoding)/i,
-      /\bwhat\s+does\s+(this\s+)?(image|picture)\s+show/i,
-      /\b(scan|process)\s+(this\s+)?(image|picture)/i,
-    ],
-    priority: 11,
-    autoExecute: true,
-    extractParams: (msg) => ({ query: msg }),
-  },
-  {
-    tool: 'music_generator',
-    patterns: [
-      /\b(generate|create|make|compose)\s+(a\s+)?(song|music|track|beat|melody|tune|jingle|soundtrack)/i,
-      /\b(generate|create|make)\s+(a\s+)?(sound\s*effect|sfx|audio|noise)/i,
-      /\bplay\s+(me\s+)?(a\s+)?(song|music|beat|tune)/i,
-      /\b(lo-?fi|synthwave|jazz|ambient|cinematic|orchestral)\s+(music|track|beat)/i,
-      /\bmusic\s+(generation|generator|studio)/i,
-    ],
-    priority: 10,
-    autoExecute: true,
-    extractParams: (msg) => {
-      const cleaned = msg
-        .replace(/^(generate|create|make|compose|play)\s+(me\s+)?(a\s+)?(song|music|track|beat|melody|tune|jingle|soundtrack|sound\s*effect|sfx|audio)\s*(of|for|about|like|called)?\s*/i, '')
-        .trim();
-      return { prompt: cleaned || msg };
-    }
-  },
-  {
-    tool: 'image_generator',
-    patterns: [
-      /\b(generate|create|make|draw|design|imagine)\s+(an?\s+)?(image|picture|illustration|artwork|logo|icon|banner|poster)/i,
-      /\/imagine\s+/i,
-      /\b(visualize|render|sketch)\s+/i,
-      /\bshow\s+me\s+(an?\s+)?(image|picture|visual)\s+of/i,
-      /\b(create|generate)\s+.*\s+(logo|banner|poster|artwork)/i,
-    ],
-    priority: 10,
-    autoExecute: true,
-    extractParams: (msg) => {
-      const cleaned = msg
-        .replace(/^(generate|create|make|draw|design|imagine|visualize|render|show me)\s+(an?\s+)?(image|picture|illustration|artwork|logo|icon|banner|poster)\s*(of|for|about|showing)?\s*/i, '')
-        .trim();
-      return { prompt: cleaned || msg };
-    }
-  },
-  {
-    tool: 'deep_research',
-    patterns: [
-      /\b(research|investigate|deep\s*dive|analyze|study|explore)\s+(about|on|into|the)?\s*.{5,}/i,
-      /\bwhat\s+(?:is|are)\s+the\s+latest\s+.{5,}/i,
-      /\b(find|search|look\s+up)\s+(?:detailed|comprehensive|in-?depth)\s+information/i,
-      /\bgive\s+me\s+(?:a\s+)?(?:detailed|comprehensive|full)\s+(?:report|analysis|overview)/i,
-      /\bmarket\s+(?:research|analysis)/i,
-      /\bcompetitor\s+analysis/i,
-      /\btrend\s+analysis/i,
-    ],
-    priority: 9,
-    autoExecute: true,
-    extractParams: (msg) => {
-      const cleaned = msg
-        .replace(/^(research|investigate|deep\s*dive|analyze|study|explore|find|search|look\s+up|give\s+me)\s+(about|on|into|the|a|an|detailed|comprehensive|in-?depth|information)?\s*/gi, '')
-        .replace(/^(market|competitor|trend)\s+(research|analysis)\s*(on|about|of|for)?\s*/i, '')
-        .trim();
-      return { query: cleaned || msg };
-    }
-  },
-  {
-    tool: 'agentic_runner',
-    patterns: [
-      /\b(automate|run\s+agent|execute\s+workflow|multi-?step|autonomous)/i,
-      /\b(send\s+(?:an?\s+)?(?:email|whatsapp|message)\s+to)/i,
-      /\b(schedule|book|create)\s+(?:a\s+)?(?:meeting|appointment|event)/i,
-      /\b(check|read|fetch)\s+(?:my\s+)?(?:emails?|calendar|contacts)/i,
-      /\b(search|browse)\s+(?:google\s+)?drive/i,
-      /\bopen\s+(?:the\s+)?(?:app|application)/i,
-    ],
-    priority: 8,
-    autoExecute: true,
-    extractParams: (msg) => {
-      return { goal: msg };
-    }
-  },
-  {
-    tool: 'shadow_browser',
-    patterns: [
-      /\b(browse|open|visit|go\s+to|navigate\s+to)\s+(?:the\s+)?(?:website|webpage|page|site|url)/i,
-      /\b(browse|open|visit)\s+(https?:\/\/|www\.)/i,
-      /\b(scrape|extract|crawl)\s+(?:data\s+from|the)\s+(?:website|webpage|page)/i,
-      /\bopen\s+(?:this\s+)?url/i,
-    ],
-    priority: 7,
-    autoExecute: false,
-    extractParams: (msg) => {
-      const urlMatch = msg.match(/(https?:\/\/[^\s]+)/i);
-      return { url: urlMatch?.[1] || '' };
-    }
-  },
-  {
-    tool: 'visual_reasoning',
-    patterns: [
-      /\b(analyze|explain|describe|understand)\s+(?:this\s+)?(?:image|picture|photo|screenshot|diagram|chart)/i,
-      /\bwhat(?:'s| is)\s+(?:in\s+)?(?:this\s+)?(?:image|picture|photo)/i,
-      /\b(read|extract|ocr)\s+(?:text\s+from|the)\s+(?:this\s+)?(?:image|picture|screenshot)/i,
-    ],
-    priority: 6,
-    autoExecute: false,
-  },
-  {
-    tool: 'creative_synthesis',
-    patterns: [
-      /\b(brainstorm|ideate|creative|generate\s+ideas)/i,
-      /\b(write|compose|draft)\s+(?:a\s+)?(?:story|poem|song|script|essay|article|blog)/i,
-      /\bcreative\s+writing/i,
-      /\bstoryboard/i,
-      /\b(repurpose|fusion|stakeholder)\s+(content|data|strategy)/i,
-      /\b(transform|convert)\s+(?:this\s+)?(?:into|to)\s+(?:multiple|different)\s+formats/i,
-    ],
-    priority: 5,
-    autoExecute: true,
-    extractParams: (msg) => {
-      const cleaned = msg
-        .replace(/^(brainstorm|ideate|generate\s+ideas|write|compose|draft|creative\s+writing|storyboard)\s+(a\s+)?(story|poem|song|script|essay|article|blog)?\s*(about|on|for)?\s*/i, '')
-        .trim();
-      return { prompt: cleaned || msg };
-    }
-  },
-  {
-    tool: 'app_builder',
-    patterns: [
-      /\b(build|create|make|generate|scaffold|develop)\s+(?:me\s+)?(?:a\s+)?(?:entire|full|complete|whole\s+)?(?:mobile|web|ios|android)?\s*(?:app|application|website|web\s*app|mobile\s*app)/i,
-      /\b(build|create|make)\s+(?:a\s+)?(?:todo|fitness|e-?commerce|social|chat|dashboard|saas|landing)\s+app/i,
-      /\b(generate|scaffold)\s+(?:a\s+)?(?:full|complete)\s+(?:web|mobile)\s+(?:app|application|project)/i,
-      /\bcreate\s+(?:an?\s+)?(?:entire|full)\s+(?:website|web\s+application)/i,
-    ],
-    priority: 9,
-    autoExecute: true,
-    extractParams: (msg) => {
-      const mobile = /\b(mobile|ios|android|iphone|pwa)\b/i.test(msg);
-      const web = /\b(web|website|landing|saas|browser)\b/i.test(msg);
-      return {
-        platform: mobile && !web ? "mobile" : "web",
-        prompt: msg,
-      };
-    },
-  },
-  {
-    tool: 'computer_mode',
-    patterns: [
-      /\b(open|launch|start)\s+(?:the\s+)?computer\s*(?:mode)?/i,
-      /\bcomputer\s+mode/i,
-      /\brun\s+(?:this\s+)?(?:on\s+)?(?:the\s+)?(?:shell|terminal|sandbox)/i,
-      /\b(use|give)\s+(?:me\s+)?(?:a\s+)?computer/i,
-      /\bnpm\s+install/i,
-      /\bexecute\s+(?:shell|terminal)\s+command/i,
-    ],
-    priority: 8,
-    autoExecute: true,
-    extractParams: (msg) => ({ command: msg }),
-  },
-  {
-    tool: 'code_canvas',
-    patterns: [
-      /\b(write|create|generate|build)\s+(?:some\s+)?(?:code|program|script|function)(?!\s+(?:mobile|web)\s+app)/i,
-      /\b(write|create|generate|build)\s+(?:a\s+)?(?:python|javascript|typescript|react|java|c\+\+)\s+(?:script|function|component)/i,
-      /\b(code|program|develop|implement)\s+(?:a\s+|an\s+)?(?:\w+\s+)?(?:in\s+)?(?:python|javascript|typescript|react|java|c\+\+)/i,
-      /\b(fix|debug|refactor)\s+(?:this\s+)?code/i,
-      /\bopen\s+(?:the\s+)?code\s+(?:editor|canvas|workspace)/i,
-    ],
-    priority: 5,
-    autoExecute: false,
-  },
-  {
-    tool: 'shadow_live',
-    patterns: [
-      /\b(voice\s+chat|talk\s+to\s+ai|live\s+conversation|speak\s+with)/i,
-      /\bstart\s+(?:a\s+)?(?:voice|live)\s+(?:call|chat|session)/i,
-      /\b(?:launch|open|start|enable)\s+(?:your\s+)?(?:live\s+mode|shadowtalk\s+live)/i,
-      /\b(?:can\s+you\s+)?(?:launch|open|start)\s+(?:the\s+)?live\s+mode/i,
-      /\blive\s+mode\b/i,
-      /\bshadowtalk\s+live\b/i,
-      /\bvoice\s+mode/i,
-    ],
-    priority: 4,
-    autoExecute: false,
-  },
-  {
-    tool: 'data_organizer',
-    patterns: [
-      /\b(organize|sort|manage|structure)\s+(?:my\s+)?(?:data|files|documents|notes)/i,
-      /\b(create|make)\s+(?:a\s+)?(?:table|spreadsheet|database)/i,
-      /\b(convert|transform)\s+(?:this\s+)?(?:data|text)\s+(?:into|to)\s+(?:a\s+)?(?:table|json|csv)/i,
-    ],
-    priority: 4,
-    autoExecute: false,
-  },
-  {
-    tool: 'camera_capture',
-    patterns: [
-      /\b(take|capture|snap)\s+(?:a\s+)?(?:photo|picture|screenshot)/i,
-      /\bopen\s+(?:the\s+)?camera/i,
-      /\buse\s+(?:my\s+)?camera/i,
-    ],
-    priority: 4,
-    autoExecute: false,
-  },
-  {
-    tool: 'stealth_vault',
-    patterns: [
-      /\b(encrypt|secure|protect|hide)\s+(?:my\s+)?(?:data|notes|secrets|passwords)/i,
-      /\bopen\s+(?:the\s+)?(?:stealth\s+)?vault/i,
-      /\bsave\s+(?:to\s+)?(?:stealth\s+)?vault/i,
-      /\bprivacy\s+vault/i,
-    ],
-    priority: 3,
-    autoExecute: false,
-  },
   {
     tool: 'calculator',
     patterns: [
-      /^[\d\s+\-*/().^%=]+$/,
-      /\b(calculate|compute|solve|what\s+is)\s+[\d\s+\-*/().^%]+/i,
-      /\bmath\s+(?:problem|equation|calculation)/i,
+      /^\s*(calc|calculate|compute)\s+/i,
+      /^\s*[-(]?\d[\d\s+\-*/().%^]*[)\s]*$/,
+      /\bwhat(?:'s| is)\s+(?:the\s+)?(?:result\s+of\s+)?[\d\s+\-*/().%^]+\?/i,
     ],
-    priority: 3,
+    priority: 9,
     autoExecute: true,
-    extractParams: (msg) => {
-      const expr = msg.replace(/^(calculate|compute|solve|what\s+is)\s*/i, '');
-      return { expression: expr.trim() };
-    }
+    extractParams: (msg) => ({ expression: msg.replace(/^\s*(calc|calculate|compute|what(?:'s| is) the result of)\s*/i, '').replace(/\?$/, '').trim() }),
   },
   {
     tool: 'web_search',
     patterns: [
-      /\b(search|google|look\s+up|find)\s+(?:for\s+)?(?:information\s+(?:about|on))?\s*.{3,}/i,
-      /\bwhat(?:'s| is)\s+(?:the\s+)?(?:latest|current|recent|new)\b/i,
-      /\b(?:latest|current|recent|new)\s+(?:news|updates?|info|information|developments?|trends?)\b/i,
-      /\b(?:tell me|give me|show me)\s+(?:about|the)\s+(?:latest|current|recent)\b/i,
-      /\b(?:what(?:'s| is)\s+happening|what(?:'s| is)\s+going on)\s+(?:in|with|about)\b/i,
-      /\b(?:research|investigate|explore)\s+.{3,}/i,
-      /\b(?:real.?time|live|up.?to.?date|today(?:'s)?)\s+(?:data|info|news|results?|stats?|statistics?)\b/i,
-      // Factual lookups only — exclude conversational "how are you", "what is up", etc.
-      /\b(?:who|what|when|where|how)\s+(?:is|are|was|were|did)\s+(?!you\b|u\b|we\b|i\b|it\s+going\b|things\b|up\b)(?:.{5,})\??\s*$/i,
-
-      /\b(?:update|updates)\s+(?:on|about|regarding)\s+/i,
-      /\bfind\s+(?:out|me)\s+(?:about|if|whether)\b/i,
+      /\b(search|look\s*up|find|google)\s+(the\s+)?(web|internet|online)\b/i,
+      /\bsearch\s+(?:for|about)\s+/i,
+      /\bweb\s+search\b/i,
+      /\blatest\s+(news|updates|releases)\b/i,
     ],
-    priority: 3,
+    priority: 7,
     autoExecute: true,
-    extractParams: (msg) => {
-      const cleaned = msg
-        .replace(/^(?:search|google|look\s+up|find|research|investigate|explore)\s+(?:for\s+)?(?:information\s+)?(?:about|on)?\s*/i, '')
-        .replace(/^(?:tell me|give me|show me)\s+(?:about|the)\s*/i, '')
-        .replace(/^(?:what(?:'s| is)\s+(?:the\s+)?(?:latest|current|recent)\s+(?:news|updates?|info)\s+(?:about|on|for|regarding)\s*)/i, '')
-        .trim();
-      return { query: cleaned || msg };
-    }
+    extractParams: (msg) => ({
+      query: msg
+        .replace(/^(search|look\s*up|find|google)\s+(the\s+)?(web|internet|online)?\s*(for|about|on)?\s*/i, '')
+        .replace(/\b(web|internet|online)\s*search\b/i, '')
+        .trim() || msg,
+    }),
   },
-  // Document Generator
+  {
+    tool: 'deep_research',
+    patterns: [
+      /\b(deep\s+research|research\s+deeply|in[- ]?depth\s+(research|analysis|dive))\b/i,
+      /\b(research|investigate|analyze)\s+(competitors|market|industry|topic)\b/i,
+      // Batch 2 — allow words between the verb and the topic noun so natural
+      // requests like "Research the current USDT market" route to research
+      // (with web search + shadowdata capture) instead of plain chat.
+      /\b(?:research|investigate)\b[^.?!]{0,40}?\b(?:market|industry|topic|competitors?|landscape|trends?)\b/i,
+    ],
+    priority: 8,
+    autoExecute: true,
+    extractParams: (msg) => ({
+      query: msg
+        .replace(/^(deep\s+research|research|investigate|analyze)\s+(deeply\s+|about\s+|on\s+)?/i, '')
+        .trim() || msg,
+    }),
+  },
+  {
+    tool: 'image_generator',
+    patterns: [
+      /\b(generate|create|make|draw|design|imagine)\s+(me\s+)?(a\s+|an\s+)?(image|picture|photo|illustration|artwork|logo|icon|banner|poster)\b/i,
+      /\bshow\s+me\s+(a\s+|an\s+)?(image|picture|visual)\s+of\b/i,
+    ],
+    priority: 9,
+    autoExecute: true,
+    extractParams: (msg) => ({ prompt: msg }),
+  },
+  {
+    tool: 'music_generator',
+    patterns: [
+      /\b(generate|create|make|compose)\s+(me\s+)?(a\s+|an\s+)?(song|music|track|beat|melody)\b/i,
+    ],
+    priority: 9,
+    autoExecute: true,
+    extractParams: (msg) => ({ prompt: msg }),
+  },
   {
     tool: 'document_generator',
+    // Only trigger on EXPLICIT slash commands — not casual mentions of
+    // "document" or "report" in natural language. This stops the unwanted
+    // auto-generation of documents when users are just chatting.
+    // Slash commands: /doc, /draft, /write, /document
     patterns: [
-      /\b(write|create|generate|draft|compose)\s+(a\s+|an\s+)?(document|doc|article|email|letter|report|proposal|blog\s*post|resume|cv)/i,
-      /\b(generate|write|create)\s+(?:me\s+)?(a\s+|an\s+)?(professional\s+)?(email|letter|report)/i,
-      /\bmake\s+(?:me\s+)?(a\s+|an\s+)?(document|article|email|report|pdf)/i,
-      /\bdraft\s+(an?\s+)?(email|letter|proposal|article)/i,
-      /\b(pdf|doc|article|email)\s+(?:about|for|on)\s+/i,
-      /\b(write|create|generate|draft)\s+(a\s+|an\s+)?(book|book\s*extract|book\s*chapter|chapter|excerpt|novel\s*excerpt)/i,
-      /\bbook\s*(extract|chapter|excerpt|section)\s*(?:about|on|for)?\s*/i,
-      /\b(generate|write)\s+(?:me\s+)?(a\s+)?(story|fiction|narrative|book\s*content)/i,
+      /^\/(doc|draft|write|document)\b/i,
+      /\b(open|launch|show)\s+(the\s+)?(document\s+(studio|generator|creator)|doc\s+(studio|generator))\b/i,
     ],
-    priority: 8,
-    autoExecute: true,
+    priority: 9,
+    autoExecute: false,  // was: true — caused unwanted document generation
     extractParams: (msg) => {
-      const isBookRequest = /\b(book|chapter|excerpt|novel|story|fiction|narrative)/i.test(msg);
       const cleaned = msg
-        .replace(/^(write|create|generate|draft|compose|make)\s+(me\s+)?(a\s+|an\s+)?(professional\s+)?(document|doc|article|email|letter|report|proposal|blog\s*post|resume|cv|book|book\s*extract|book\s*chapter|chapter|excerpt|novel\s*excerpt|story|fiction|narrative)\s*(about|for|on)?\s*/i, '')
+        .replace(/^\/(doc|draft|write|document)\s*/i, '')
+        .replace(/^(open|launch|show)\s+(me\s+)?(the\s+)?(document\s+(studio|generator|creator)|doc\s+(studio|generator))?\s*/i, '')
         .trim();
-      return { topic: cleaned || msg, docType: isBookRequest ? 'book_extract' : undefined };
-    }
+      return { topic: cleaned || msg, prompt: cleaned || msg };
+    },
   },
-  // Daily Planner
-  {
-    tool: 'daily_planner',
-    patterns: [
-      /\b(plan|schedule|organize)\s+(my\s+)?(day|daily|today|tomorrow|schedule)/i,
-      /\bdaily\s+(plan|planner|schedule|agenda)/i,
-      /\b(create|make|generate)\s+(a\s+)?(daily\s+)?(plan|schedule|agenda)/i,
-      /\bwhat\s+should\s+i\s+do\s+today/i,
-      /\bhelp\s+me\s+plan\s+(my\s+)?day/i,
-      /\bday\s+planner/i,
-    ],
-    priority: 7,
-    autoExecute: true,
-    extractParams: (msg) => {
-      return { prompt: msg };
-    }
-  },
-  // Wordle Game
-  {
-    tool: 'wordle_game',
-    patterns: [
-      /\b(play|start|open|launch)\s+(a\s+)?wordle/i,
-      /\bwordle\s*(game|bot|puzzle)?/i,
-      /\bword\s*guess(ing)?\s*(game|puzzle)/i,
-      /\blet'?s?\s+play\s+wordle/i,
-      /\bi\s+want\s+to\s+play\s+wordle/i,
-    ],
-    priority: 8,
-    autoExecute: true,
-    extractParams: () => ({})
-  },
-
-  // ========== NEW TOOLS ==========
-
-  // Script Automation
-  {
-    tool: 'script_automation',
-    patterns: [
-      /\b(create|build|write|make)\s+(?:a\s+)?(?:automation|automated)\s+(?:script|workflow|task)/i,
-      /\bscript\s+automation/i,
-      /\b(automate|automation)\s+(?:my\s+)?(?:tasks?|workflows?|processes?)/i,
-      /\bopen\s+(?:the\s+)?(?:script|automation)\s+(?:editor|manager|panel)/i,
-      /\b(create|run|manage)\s+(?:custom\s+)?scripts?/i,
-      /\btrigger-?based\s+(?:automation|scripts?)/i,
-    ],
-    priority: 6,
-    autoExecute: false,
-  },
-
-  // Agent Workflows
-  {
-    tool: 'agent_workflows',
-    patterns: [
-      /\bai\s+(?:agent\s+)?workflows?/i,
-      /\b(create|build|design)\s+(?:an?\s+)?(?:ai\s+)?workflow/i,
-      /\bworkflow\s+(?:builder|designer|editor|automation)/i,
-      /\bopen\s+(?:the\s+)?(?:agent\s+)?workflows?/i,
-      /\borchestrate\s+(?:ai\s+)?(?:agents?|tasks?)/i,
-    ],
-    priority: 6,
-    autoExecute: false,
-  },
-
-  // Model Fine-Tuning
-  {
-    tool: 'model_fine_tuning',
-    patterns: [
-      /\b(fine[- ]?tune|train|customize)\s+(?:a\s+|the\s+)?(?:ai\s+)?model/i,
-      /\bmodel\s+(?:fine[- ]?tuning|training|customization)/i,
-      /\b(create|build)\s+(?:a\s+)?custom\s+(?:ai\s+)?model/i,
-      /\btrain\s+(?:my\s+)?(?:own\s+)?(?:ai|model)/i,
-      /\bopen\s+(?:the\s+)?(?:model\s+)?(?:fine[- ]?tun|train)/i,
-    ],
-    priority: 6,
-    autoExecute: false,
-  },
-
-  // White-Label Branding
-  {
-    tool: 'white_label',
-    patterns: [
-      /\bwhite[- ]?label/i,
-      /\b(custom|change|update)\s+(?:the\s+)?branding/i,
-      /\bbrand\s+(?:customization|settings|manager)/i,
-      /\b(customize|change)\s+(?:the\s+)?(?:logo|theme|colors?|appearance)/i,
-      /\bopen\s+(?:the\s+)?branding/i,
-    ],
-    priority: 5,
-    autoExecute: false,
-  },
-
-  // Gemini Analytics
-  {
-    tool: 'gemini_analytics',
-    patterns: [
-      /\b(gemini|api)\s+(?:key\s+)?analytics/i,
-      /\bapi\s+(?:key\s+)?(?:usage|stats|statistics|metrics)/i,
-      /\b(show|view|check)\s+(?:my\s+)?(?:gemini|api)\s+(?:key\s+)?(?:usage|analytics)/i,
-      /\bkey\s+(?:rotation|health|performance)/i,
-    ],
-    priority: 5,
-    autoExecute: false,
-  },
-
-  // Google Integration
-  {
-    tool: 'google_integration',
-    patterns: [
-      /\bgoogle\s+(?:integration|connect|workspace|drive|calendar|docs|sheets)/i,
-      /\bconnect\s+(?:to\s+)?google/i,
-      /\b(sync|link|connect)\s+(?:my\s+)?(?:google\s+)?(?:drive|calendar|docs|gmail|sheets)/i,
-      /\bopen\s+(?:the\s+)?google\s+(?:integration|panel)/i,
-    ],
-    priority: 6,
-    autoExecute: false,
-  },
-
-  // Sovereign Models
-  {
-    tool: 'sovereign_models',
-    patterns: [
-      /\bsovereign\s+(?:model|ai|mode)/i,
-      /\blocal\s+(?:ai|model|inference)/i,
-      /\boffline\s+(?:ai|model|inference)/i,
-      /\b(download|install|manage)\s+(?:local\s+)?(?:ai\s+)?models?/i,
-      /\bon[- ]?device\s+(?:ai|model|inference)/i,
-      /\brun\s+(?:ai\s+)?(?:locally|offline)/i,
-    ],
-    priority: 6,
-    autoExecute: false,
-  },
-
-  // Security Audit
-  {
-    tool: 'security_audit',
-    patterns: [
-      /\bsecurity\s+(?:audit|scan|check|analysis|review)/i,
-      /\b(scan|audit|check|analyze)\s+(?:for\s+)?(?:security\s+)?(?:vulnerabilities|threats|risks|issues)/i,
-      /\bvulnerability\s+(?:scan|check|assessment)/i,
-      /\bpenetration\s+test/i,
-      /\bpen[- ]?test/i,
-      /\bfind\s+(?:security\s+)?(?:vulnerabilities|bugs|flaws)/i,
-      /\bsecurity\s+(?:report|assessment)/i,
-      /\bhsca/i,
-    ],
-    priority: 7,
-    autoExecute: false,
-    extractParams: (msg) => ({ query: msg }),
-  },
-
-  // Eco / Planetary Actions
-  {
-    tool: 'eco_actions',
-    patterns: [
-      /\b(eco|green|carbon|sustainability|environmental|climate)\s+(actions?|impact|footprint|tracker)/i,
-      /\b(track|log|record)\s+(?:my\s+)?(?:eco|carbon|green|environmental)\s+(?:actions?|impact)/i,
-      /\bcarbon\s+(?:footprint|offset|tracker|savings?)/i,
-      /\bplanetary\s+(?:action|impact|dashboard)/i,
-      /\bsustainability\s+(?:dashboard|tracker|report)/i,
-      /\beco\s+(?:leaderboard|stats|dashboard)/i,
-    ],
-    priority: 5,
-    autoExecute: false,
-  },
-
-  // Vision Agent (real-time camera AI)
-  {
-    tool: 'vision_agent',
-    patterns: [
-      /\bvision\s+agent/i,
-      /\b(start|open|launch|enable)\s+(?:the\s+)?vision\s+(?:agent|mode)/i,
-      /\breal[- ]?time\s+(?:camera|video|vision)\s+(?:analysis|ai|mode)/i,
-      /\b(analyze|watch|observe)\s+(?:me|my\s+face|my\s+room)\s+(?:in\s+)?real[- ]?time/i,
-      /\blive\s+(?:camera|vision|video)\s+(?:ai|analysis|mode)/i,
-    ],
-    priority: 7,
-    autoExecute: false,
-  },
-
-  // Command Palette
-  {
-    tool: 'command_palette',
-    patterns: [
-      /\bcommand\s+palette/i,
-      /\bopen\s+(?:the\s+)?command\s+(?:palette|menu)/i,
-      /\bshow\s+(?:me\s+)?(?:all\s+)?(?:commands?|shortcuts?|features?|tools?)/i,
-      /\bwhat\s+(?:can\s+you|tools?\s+(?:do\s+you|are))/i,
-      /\blist\s+(?:all\s+)?(?:available\s+)?(?:tools?|features?|commands?)/i,
-    ],
-    priority: 4,
-    autoExecute: false,
-  },
-
-  // Analytics Dashboard
-  {
-    tool: 'analytics',
-    patterns: [
-      /\b(show|view|open|check)\s+(?:my\s+)?(?:usage\s+)?analytics/i,
-      /\banalytics\s+(?:dashboard|panel|report)/i,
-      /\b(show|view)\s+(?:my\s+)?(?:usage|stats|statistics|metrics)/i,
-      /\bhow\s+(?:much\s+)?(?:have\s+)?i\s+(?:used|chatted)/i,
-    ],
-    priority: 4,
-    autoExecute: false,
-  },
-
-  // Multi-Model Orchestrator
-  {
-    tool: 'multi_model',
-    patterns: [
-      /\bmulti[- ]?model/i,
-      /\b(compare|use)\s+(?:multiple\s+)?(?:ai\s+)?models/i,
-      /\bmodel\s+(?:comparison|consensus|orchestrat)/i,
-      /\bask\s+(?:multiple|all|several)\s+(?:ai|models?)/i,
-      /\bconsensus\s+mode/i,
-    ],
-    priority: 5,
-    autoExecute: false,
-  },
-
-  // API Marketplace
-  {
-    tool: 'api_marketplace',
-    patterns: [
-      /\bapi\s+marketplace/i,
-      /\b(manage|view|check)\s+(?:my\s+)?api\s+keys?/i,
-      /\bdeveloper\s+(?:portal|tools|dashboard)/i,
-      /\bopen\s+(?:the\s+)?(?:api\s+)?marketplace/i,
-    ],
-    priority: 4,
-    autoExecute: false,
-  },
-
-  // ========== FULL FEATURE ACCESS ==========
-
-  // Knowledge Vault
-  {
-    tool: 'knowledge_vault',
-    patterns: [
-      /\bknowledge\s+(?:vault|base|graph)/i,
-      /\b(open|show|manage)\s+(?:my\s+)?knowledge/i,
-      /\bsave\s+(?:this\s+)?(?:to\s+)?knowledge/i,
-      /\brag\s+(?:search|query)/i,
-    ],
-    priority: 5,
-    autoExecute: false,
-  },
-
-  // Memory Panel
-  {
-    tool: 'memory_panel',
-    patterns: [
-      /\b(open|show|manage)\s+(?:my\s+)?(?:ai\s+)?memory/i,
-      /\bmemory\s+(?:panel|vault|manager)/i,
-      /\bwhat\s+do\s+you\s+(?:remember|know)\s+about\s+me/i,
-      /\bbusiness\s+(?:memory|context|profile)/i,
-      /\bremember\s+(?:this|that|my)/i,
-    ],
-    priority: 5,
-    autoExecute: false,
-  },
-
-  // Shadow Execution — unified autonomous workspace (/execute)
-  {
-    tool: 'shadow_execution',
-    patterns: [
-      /\bshadow\s+execution\b/i,
-      /\b(?:open|launch|run|start)\s+(?:\/)?execute\b/i,
-      /\bexecute\s+(?:tool|workspace|playbook)\b/i,
-      /\b(?:run|execute)\s+(?:the\s+)?playbook\b/i,
-      /\bautonomous\s+(?:execution|workspace|run)\b/i,
-      /\b(?:create|build|generate)\s+(?:a\s+)?(?:strategy\s+report|investor(?:-ready)?\s+report)\b/i,
-      /\b(?:full|complete)\s+(?:market\s+research|competitive\s+analysis)\s+(?:report|with\s+sources)\b/i,
-      /\b(?:plan|research|analyze)\s+.{20,120}\s+(?:with\s+)?(?:real\s+)?(?:tools|web\s+search|sources)\b/i,
-    ],
-    priority: 8,
-    autoExecute: true,
-    extractParams: (msg) => ({ goal: msg }),
-  },
-
-  // Mission Control (S.E.E.) → routes to /execute
-  {
-    tool: 'mission_control',
-    patterns: [
-      /\bmission\s+(?:control|dashboard|center)/i,
-      /\b(create|start|launch|run)\s+(?:a\s+)?mission/i,
-      /\bs\.?e\.?e\.?\s+(?:engine|missions?)/i,
-      /\bbackground\s+(?:task|agent|mission)/i,
-      /\bautonomous\s+(?:task|mission)\b/i,
-    ],
-    priority: 7,
-    autoExecute: true,
-    extractParams: (msg) => ({ goal: msg, mode: "general" }),
-  },
-
-  // Custom Instructions
-  {
-    tool: 'custom_instructions',
-    patterns: [
-      /\bcustom\s+instructions?/i,
-      /\bset\s+(?:my\s+)?(?:ai\s+)?(?:instructions?|rules?|preferences?)/i,
-      /\bsystem\s+prompt/i,
-      /\bhow\s+should\s+(?:you|ai)\s+(?:behave|respond|act)/i,
-    ],
-    priority: 5,
-    autoExecute: false,
-  },
-
-  // Conversation Branching
-  {
-    tool: 'conversation_branching',
-    patterns: [
-      /\b(branch|fork|split)\s+(?:this\s+)?conversation/i,
-      /\bconversation\s+(?:branch|tree|fork)/i,
-      /\b(create|make)\s+(?:a\s+)?(?:conversation\s+)?branch/i,
-    ],
-    priority: 4,
-    autoExecute: false,
-  },
-
-  // Bunker Mode
-  {
-    tool: 'bunker_mode',
-    patterns: [
-      /\bbunker\s+mode/i,
-      /\bgo\s+(?:completely\s+)?offline/i,
-      /\bair[- ]?gap(?:ped)?\s+(?:mode|ai)/i,
-      /\b(enable|activate|start)\s+(?:full\s+)?(?:bunker|offline|sovereign)\s+mode/i,
-    ],
-    priority: 7,
-    autoExecute: false,
-  },
-
-  // Strategy Agent → routes to /execute?mode=strategy_report
-  {
-    tool: 'strategy_agent',
-    patterns: [
-      /\bstrategy\s+(?:agent|advisor|consultant)/i,
-      /\bbusiness\s+(?:strategy|plan|analysis)/i,
-      /\bswot\s+analysis/i,
-      /\b(open|launch|run)\s+(?:the\s+)?strategy/i,
-      /\bcompetitive\s+(?:analysis|intelligence)/i,
-      /\bmarket\s+expansion\s+analysis/i,
-      /\binvestor(?:-ready)?\s+(?:report|deck|update)/i,
-    ],
-    priority: 7,
-    autoExecute: true,
-    extractParams: (msg) => ({ goal: msg, mode: "strategy_report" }),
-  },
-
-  // Cognitive Loop
-  {
-    tool: 'cognitive_loop',
-    patterns: [
-      /\bcognitive\s+loop/i,
-      /\bmulti[- ]?agent\s+(?:debate|reasoning|consensus)/i,
-      /\b(enable|activate)\s+(?:the\s+)?cognitive/i,
-      /\bdebate\s+mode/i,
-    ],
-    priority: 5,
-    autoExecute: false,
-  },
-
-  // Canvas Document
-  {
-    tool: 'canvas_document',
-    patterns: [
-      /\bopen\s+(?:the\s+)?(?:document\s+)?canvas/i,
-      /\b(create|new)\s+(?:a\s+)?(?:document|canvas)/i,
-      /\bdocument\s+editor/i,
-    ],
-    priority: 4,
-    autoExecute: false,
-  },
-
-  // Referral
-  {
-    tool: 'referral',
-    patterns: [
-      /\breferral\s+(?:program|code|link)/i,
-      /\binvite\s+(?:a\s+)?friend/i,
-      /\b(share|get)\s+(?:my\s+)?referral/i,
-      /\bearn\s+(?:rewards?|credits?)/i,
-    ],
-    priority: 3,
-    autoExecute: false,
-  },
-
-  // Workspace
-  {
-    tool: 'workspace',
-    patterns: [
-      /\b(open|go\s+to|show)\s+(?:my\s+)?workspace/i,
-      /\bai\s+workspace/i,
-      /\bpersistent\s+(?:workspace|context)/i,
-    ],
-    priority: 4,
-    autoExecute: false,
-  },
-
-  // Marketplace
-  {
-    tool: 'marketplace',
-    patterns: [
-      /\b(open|browse|show)\s+(?:the\s+)?marketplace/i,
-      /\bplugins?\s+(?:store|marketplace|manager)/i,
-      /\b(install|browse)\s+(?:plugins?|extensions?)/i,
-    ],
-    priority: 4,
-    autoExecute: false,
-  },
-
-  // Privacy Score
-  {
-    tool: 'privacy_score',
-    patterns: [
-      /\bprivacy\s+(?:score|rating|check)/i,
-      /\b(check|show|view)\s+(?:my\s+)?privacy/i,
-      /\bdigital\s+(?:privacy|footprint)/i,
-    ],
-    priority: 4,
-    autoExecute: false,
-  },
-
-  // Presentation Builder (Kimi Slides–class)
   {
     tool: 'presentation_builder',
     patterns: [
@@ -808,50 +162,103 @@ const TOOL_PATTERNS: Array<{
       return { topic: cleaned || msg, mode: /\bvisual\b/i.test(msg) ? "visual" : "adaptive" };
     }
   },
+  {
+    tool: 'strategy_agent',
+    patterns: [
+      /\b(strategy|swot|business\s+plan|market\s+analysis)\b/i,
+      /\b(analyze|run)\s+strategy/i,
+    ],
+    priority: 9,
+    autoExecute: true,
+  },
+  {
+    tool: 'stealth_vault',
+    patterns: [
+      /\b(encrypt|secure|protect|hide)\s+(?:my\s+)?(?:data|notes|secrets|passwords)/i,
+      /\bopen\s+(?:the\s+)?(?:stealth\s+)?vault/i,
+      /\bsave\s+(?:to\s+)?(?:stealth\s+)?vault/i,
+      /\bprivacy\s+vault/i,
+    ],
+    priority: 3,
+    autoExecute: false,
+  },
+  {
+    tool: 'knowledge_vault',
+    patterns: [
+      /\bknowledge\s+(?:vault|base|graph)/i,
+      /\b(open|show|manage)\s+(?:my\s+)?knowledge/i,
+      /\bsave\s+(?:this\s+)?(?:to\s+)?knowledge/i,
+      /\brag\s+(?:search|query)/i,
+    ],
+    priority: 5,
+    autoExecute: false,
+  },
+  {
+    tool: 'memory_panel',
+    patterns: [
+      /\b(open|show|manage)\s+(?:my\s+)?(?:ai\s+)?memory/i,
+      /\bmemory\s+(?:panel|vault|manager)/i,
+      /\bwhat\s+do\s+you\s+(?:remember|know)\s+about\s+me/i,
+      /\bbusiness\s+(?:memory|context|profile)/i,
+      /\bremember\s+(?:this|that|my)/i,
+    ],
+    priority: 5,
+    autoExecute: false,
+  },
 ];
 
-export const useToolOrchestrator = () => {
-  // Detect which tool should be triggered based on user message
-  const detectTool = useCallback((message: string): ToolDetectionResult => {
-    const normalizedMessage = message.trim().toLowerCase();
-    
-    if (!normalizedMessage || normalizedMessage.length < 3) {
-      return { tool: null, confidence: 0 };
+/** Evaluate a plain arithmetic expression safely (no identifiers, no calls). */
+export function executeCalculator(expression: string): string {
+  const expr = expression.trim();
+  if (!expr) return "I couldn't find a math expression in that.";
+  const sanitized = expr.replace(/[×]/g, "*").replace(/[÷]/g, "/").replace(/\^/g, "**");
+  if (!/^[0-9+\-*/().%\s]+$/.test(sanitized)) {
+    return `I can only evaluate plain arithmetic — "${expr}" contains letters or symbols I won't execute.`;
+  }
+  try {
+    const result = Function(`"use strict"; return (${sanitized});`)();
+    if (typeof result !== "number" || !isFinite(result)) {
+      return "That expression didn't produce a finite number.";
     }
+    return `**${expr} = ${Number.isInteger(result) ? result : Number(result.toFixed(6))}**`;
+  } catch {
+    return "I couldn't calculate that expression. Check the syntax and try again.";
+  }
+}
 
-    let bestMatch: ToolDetectionResult = { tool: null, confidence: 0 };
-
-    for (const toolDef of TOOL_PATTERNS) {
-      for (const pattern of toolDef.patterns) {
-        if (pattern.test(message)) {
-          const confidence = toolDef.priority * 10;
-          if (confidence > bestMatch.confidence) {
-            bestMatch = {
-              tool: toolDef.tool,
-              confidence,
-              params: toolDef.extractParams?.(message),
-              autoExecute: toolDef.autoExecute ?? false,
-              originalMessage: message,
-            };
-          }
-          break;
+/**
+ * Pure tool detection (Batch 2 — extracted from the hook for testability).
+ * Same behavior: highest-confidence pattern match wins.
+ */
+export function detectToolSync(message: string): ToolDetectionResult {
+  const normalizedMessage = message.trim().toLowerCase();
+  if (!normalizedMessage || normalizedMessage.length < 3) {
+    return { tool: null, confidence: 0 };
+  }
+  let bestMatch: ToolDetectionResult = { tool: null, confidence: 0 };
+  for (const toolDef of TOOL_PATTERNS) {
+    for (const pattern of toolDef.patterns) {
+      if (pattern.test(message)) {
+        const confidence = toolDef.priority * 10;
+        if (confidence > bestMatch.confidence) {
+          bestMatch = {
+            tool: toolDef.tool,
+            confidence,
+            params: toolDef.extractParams?.(message),
+            autoExecute: toolDef.autoExecute ?? false,
+            originalMessage: message,
+          };
         }
+        break;
       }
     }
+  }
+  return bestMatch;
+}
 
-    return bestMatch;
-  }, []);
-
-  // Execute calculator inline
-  const executeCalculator = useCallback((expression: string): string => {
-    try {
-      const sanitized = expression.replace(/[^0-9+\-*/().^% ]/g, '');
-      // eslint-disable-next-line no-eval
-      const result = eval(sanitized);
-      return `**Result:** ${result}`;
-    } catch {
-      return 'Could not calculate. Please check the expression.';
-    }
+export const useToolOrchestrator = () => {
+  const detectTool = useCallback((message: string): ToolDetectionResult => {
+    return detectToolSync(message);
   }, []);
 
   return {
@@ -859,5 +266,3 @@ export const useToolOrchestrator = () => {
     executeCalculator,
   };
 };
-
-export default useToolOrchestrator;

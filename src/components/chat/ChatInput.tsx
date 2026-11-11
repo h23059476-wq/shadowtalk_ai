@@ -1,6 +1,6 @@
+import React, { useEffect, useRef, useMemo, useState } from "react";
 import { getChatEnterToSend } from "@/lib/profilePreferences";
-import { useEffect, useRef, useMemo } from "react";
-import { Send, Mic, MicOff, Square, Plus, Sparkles, Volume2 } from "lucide-react";
+import { Send, Mic, MicOff, Square, Plus, Sparkles, Volume2, Brain } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { FileUpload } from "@/components/chat/FileUpload";
@@ -8,6 +8,7 @@ import { ModeSelector, ChatMode } from "@/components/chat/ModeSelector";
 import { SearchHistory } from "@/components/chat/SearchHistory";
 import type { AIProvider } from "@/lib/aiProviders";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 import {
   Tooltip,
@@ -16,6 +17,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+import { useSoundEffects } from "@/hooks/useSoundEffects";
+import { SlashCommandMenu } from "@/components/chat/SlashCommandMenu";
+import type { SlashCommand } from "@/lib/slashCommands";
 import { usePromptAutocomplete } from "@/hooks/usePromptAutocomplete";
 import { buildInAppSharePayload, getViralShareLinks } from "@/lib/viralShare";
 import { ViralShareButton } from "@/components/chat/ViralShareButton";
@@ -28,8 +32,8 @@ interface ChatInputProps {
   isLoading: boolean;
   isListening: boolean;
   isSpeaking?: boolean;
-  onToggleVoice: () => void;
-  onOpenImageGenerator: () => void;
+  onToggleVoice?: () => void;
+  onOpenImageGenerator?: () => void;
   onStopGeneration: () => void;
   selectedFile: { type: "image" | "file"; data: string; name: string; mimeType: string } | null;
   onFileSelect: (file: { type: "image" | "file"; data: string; name: string; mimeType: string } | null) => void;
@@ -45,9 +49,13 @@ interface ChatInputProps {
   onPromptAccept?: (value: string) => void;
   onPromptClear?: () => void;
   onSuggestionChange?: (suggestion: string) => void;
+  /** Whether Shadow Twin mode is active */
+  shadowTwinActive?: boolean;
+  /** Toggle Shadow Twin mode */
+  onToggleShadowTwin?: () => void;
 }
 
-export const ChatInput = ({
+const ChatInputInner = ({
   message,
   onMessageChange,
   onSend,
@@ -64,7 +72,7 @@ export const ChatInput = ({
   onModeChange,
   personality,
   layout = "default",
-  aiProvider = "lovable",
+  aiProvider = "shadowtalk",
   onProviderChange,
   hasKeyForProvider,
   isEmptyState = false,
@@ -72,8 +80,45 @@ export const ChatInput = ({
   onPromptAccept,
   onPromptClear,
   onSuggestionChange,
+  shadowTwinActive = false,
+  onToggleShadowTwin,
 }: ChatInputProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [slashMenuOpen, setSlashMenuOpen] = useState(false);
+
+  // Show the slash menu when the input starts with '/'
+  useEffect(() => {
+    const trimmed = message.trimStart();
+    setSlashMenuOpen(trimmed.startsWith("/") && !trimmed.includes("\n"));
+  }, [message]);
+
+  const handleSlashSelect = (cmd: SlashCommand) => {
+    // Insert the command + a space, ready for the user to type their prompt
+    onMessageChange(cmd.command + " ");
+    setSlashMenuOpen(false);
+    // Focus back to the textarea so the user can keep typing
+    setTimeout(() => textareaRef.current?.focus(), 50);
+  };
+  const { play } = useSoundEffects();
+
+  const [isMultiLine, setIsMultiLine] = useState(false);
+
+  // Fast auto-resize for composer textarea without layout thrashing
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    if (!message) {
+      textarea.style.height = "38px";
+      setIsMultiLine(false);
+      return;
+    }
+    textarea.style.height = "auto";
+    const scrollHeight = textarea.scrollHeight;
+    const multiline = message.includes("\n") || scrollHeight > 46;
+    setIsMultiLine(multiline);
+    const newHeight = Math.min(Math.max(scrollHeight, 38), 200);
+    textarea.style.height = `${newHeight}px`;
+  }, [message]);
 
   // Auto-focus the composer on mount so users can start typing immediately.
   // Skip on touch devices so the mobile keyboard doesn't pop up unprompted.
@@ -100,6 +145,7 @@ export const ChatInput = ({
     }
     if (e.key === "Enter" && !e.shiftKey && getChatEnterToSend()) {
       e.preventDefault();
+      play('send');
       onSend();
       return;
     }
@@ -142,14 +188,15 @@ export const ChatInput = ({
               {[...Array(5)].map((_, i) => (
                 <motion.div
                   key={i}
-                  animate={{ height: isListening ? [8, 16, 8] : [4, 10, 4] }}
+                  animate={{ scaleY: isListening ? [0.5, 1, 0.5] : [0.25, 0.625, 0.25] }}
+                  style={{ originY: 0.5 }}
                   transition={{
                     duration: isListening ? 0.6 : 1.2,
                     repeat: Infinity,
                     delay: i * 0.1,
                     ease: "easeInOut",
                   }}
-                  className="w-1 bg-primary rounded-full"
+                  className="w-1 h-4 bg-primary rounded-full"
                 />
               ))}
             </div>
@@ -168,105 +215,151 @@ export const ChatInput = ({
       <div className="relative w-full">
         {voiceBanner}
         <div className={isEmptyState ? "w-full" : "w-full px-0 py-0"}>
-          {selectedFile && (
-            <div className="mb-2 px-3">
-              <FileUpload
-                onFileSelect={onFileSelect}
-                selectedFile={selectedFile}
-                onClear={() => onFileSelect(null)}
-                disabled={isLoading}
-                variant="gemini"
-              />
-            </div>
-          )}
-
-          <div className="shadowtalk-composer group">
-            {!selectedFile && (
-              <FileUpload
-                onFileSelect={onFileSelect}
-                selectedFile={selectedFile}
-                onClear={() => onFileSelect(null)}
-                disabled={isLoading}
-                variant="composer"
-              />
+          <div className="ios-glass-input shadowtalk-composer group relative flex flex-col justify-between w-full rounded-2xl sm:rounded-3xl backdrop-blur-2xl transition-all duration-200">
+            <SlashCommandMenu
+              query={message}
+              open={slashMenuOpen}
+              onSelect={handleSlashSelect}
+              onClose={() => setSlashMenuOpen(false)}
+            />
+            {selectedFile && (
+              <div className="p-3 pb-0">
+                <FileUpload
+                  onFileSelect={onFileSelect}
+                  selectedFile={selectedFile}
+                  onClear={() => onFileSelect(null)}
+                  disabled={isLoading}
+                  variant="gemini"
+                />
+              </div>
             )}
 
-            <div className="relative">
+            {/* Top Area: Full-width Textarea with generous padding */}
+            <div className="w-full px-4 pt-3.5 pb-2">
               <Textarea
                 ref={textareaRef}
                 value={message}
                 onChange={(e) => onMessageChange(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder={isListening ? "Listening..." : "Ask ShadowTalk"}
-                className="shadowtalk-composer__textarea flex-1 min-h-[40px] max-h-[200px] resize-none border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 py-2.5 pl-2 pr-2 text-base sm:text-[15px] placeholder:text-muted-foreground/50 leading-relaxed overflow-y-auto custom-scrollbar"
+                placeholder={isListening ? "Listening..." : "Message ShadowTalk, draft a document, or generate code..."}
+                className="w-full resize-none border-0 bg-transparent p-0 text-base sm:text-[15px] text-foreground placeholder:text-muted-foreground/50 leading-relaxed focus-visible:ring-0 focus-visible:ring-offset-0 custom-scrollbar min-h-[44px] max-h-[220px]"
                 disabled={isLoading}
                 rows={1}
                 aria-label="Chat message"
               />
-
-              {hasComposerGhost ? (
-                <div
-                  className="pointer-events-none absolute inset-0 flex items-center px-2 overflow-hidden select-none"
-                  aria-hidden
-                >
-                  <span className="whitespace-pre text-base sm:text-[15px] leading-relaxed text-muted-foreground/40">
-                    {message}
-                    <span className="text-muted-foreground/30">{promptSuggestion}</span>
-                  </span>
-                </div>
-              ) : null}
             </div>
 
-            <div className="shadowtalk-composer__actions">
+            {/* Bottom Toolbar: Tools on Left, Actions on Right */}
+            <div className="flex items-center justify-between px-3 pb-3 pt-1 border-t border-border/50">
+              <div className="flex items-center gap-2">
+                {!selectedFile && (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center">
+                          <FileUpload
+                            onFileSelect={onFileSelect}
+                            selectedFile={selectedFile}
+                            onClear={() => onFileSelect(null)}
+                            disabled={isLoading}
+                            variant="composer"
+                          />
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent side="top" className="text-xs">
+                        Attach document or image
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                )}
+                <ModeSelector mode={chatMode} onModeChange={(mode) => {
+                  onModeChange(mode);
+                  if (mode === "image") onOpenImageGenerator?.();
+                }} disabled={isLoading} />
+                <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium text-muted-foreground/75 bg-card/60 border border-border/50 select-none">
+                  <Sparkles className="h-3 w-3 text-primary" />
+                  <span>Quantum Studio v4.2</span>
+                </span>
+              </div>
 
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    {isLoading ? (
-                      <Button
-                        onClick={onStopGeneration}
-                        size="icon"
-                        variant="ghost"
-                        className="shadowtalk-composer__mic text-destructive hover:bg-destructive/10"
-                      >
-                        <Square className="h-4 w-4 fill-current" />
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={onToggleVoice}
-                        variant="ghost"
-                        size="icon"
-                        className={`shadowtalk-composer__mic ${
-                          isListening ? "bg-primary text-primary-foreground border-primary" : ""
-                        }`}
-                        disabled={isLoading}
-                      >
-                        {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
-                      </Button>
-                    )}
-                  </TooltipTrigger>
-                  <TooltipContent side="top" className="text-xs">
-                    {isLoading ? "Stop" : "Voice"}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <div className="flex items-center gap-2">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      {isLoading ? (
+                        <Button
+                          onClick={onStopGeneration}
+                          size="icon"
+                          variant="ghost"
+                          className="h-8 w-8 rounded-full text-destructive hover:bg-destructive/10"
+                          aria-label="Stop generating"
+                        >
+                          <Square className="h-4 w-4 fill-current" />
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={onToggleVoice}
+                          variant="ghost"
+                          size="icon"
+                          className={cn(
+                            "h-8 w-8 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors",
+                            isListening && "bg-primary text-primary-foreground border-primary"
+                          )}
+                          disabled={isLoading}
+                          aria-label={isListening ? "Stop voice input" : "Start voice input"}
+                          aria-pressed={isListening}
+                        >
+                          {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+                        </Button>
+                      )}
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="text-xs">
+                      {isLoading ? "Stop" : "Voice input"}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
 
-              <Button
-                onClick={onSend}
-                size="icon"
-                className="shadowtalk-composer__send"
-                disabled={!canSend || isLoading}
-                aria-label="Send message"
-              >
-                <Send className="h-4 w-4" />
-              </Button>
-              <ViralShareButton />
+                {onToggleShadowTwin && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        onClick={onToggleShadowTwin}
+                        variant="ghost"
+                        size="icon"
+                        className={cn(
+                          "shrink-0 rounded-full transition-all",
+                          shadowTwinActive
+                            ? "bg-purple-500/30 border border-purple-400/50 text-purple-300"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted/40"
+                        )}
+                        aria-label={shadowTwinActive ? "Deactivate Shadow Twin" : "Activate Shadow Twin"}
+                        aria-pressed={shadowTwinActive}
+                      >
+                        <Brain className="h-3.5 w-3.5" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">
+                      {shadowTwinActive ? "Shadow Twin: ON" : "Shadow Twin"}
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+
+                <Button
+                  onClick={() => { play('send'); onSend(); }}
+                  size="icon"
+                  className={cn(
+                    "shadowtalk-composer__send",
+                    "hover:scale-105 active:scale-95 hover:brightness-110",
+                    "disabled:opacity-25 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:brightness-100"
+                  )}
+                  disabled={!canSend || isLoading}
+                  aria-label="Send message"
+                >
+                  <Send className="h-3.5 w-3.5" />
+                </Button>
+              </div>
             </div>
           </div>
-
-          <p className="shadowtalk-composer__hint hidden sm:block">
-            Enter to send · Shift+Enter for new line
-          </p>
         </div>
       </div>
     );
@@ -297,7 +390,7 @@ export const ChatInput = ({
               mode={chatMode}
               onModeChange={(mode) => {
                 onModeChange(mode);
-                if (mode === "image") onOpenImageGenerator();
+                if (mode === "image") onOpenImageGenerator?.();
               }}
               disabled={isLoading}
             />
@@ -321,10 +414,10 @@ export const ChatInput = ({
           <div
             className={
               isShadowPulse
-                ? "relative flex items-center gap-2 bg-transparent rounded-[18px] px-2 py-1"
+                ? "ios-glass-input relative flex items-center gap-2 bg-transparent rounded-[18px] px-2 py-1"
                 : isComposer
-                  ? "relative flex items-center gap-1 bg-[#2f2f2f] hover:bg-[#383838] focus-within:bg-[#383838] rounded-[26px] border border-[#404040] px-3 py-2 shadow-none transition-colors duration-200"
-                  : "relative flex items-end gap-2 bg-[#1e1f20]/60 backdrop-blur-2xl rounded-[30px] border border-white/10 p-2.5 px-4 shadow-2xl transition-all duration-500 group-focus-within:bg-[#1e1f20]/80 group-focus-within:border-white/20 ring-1 ring-white/5"
+                  ? "ios-glass-input relative flex items-center gap-1 bg-[#2f2f2f] hover:bg-[#383838] focus-within:bg-[#383838] rounded-[26px] border border-[#404040] px-3 py-2 shadow-none transition-colors duration-200"
+                  : `ios-glass-input relative flex items-end gap-2 bg-[#1e1f20]/60 backdrop-blur-3xl rounded-[30px] border border-white/10 p-2.5 px-4 shadow-2xl transition-all duration-500 group-focus-within:bg-[#1e1f20]/80 group-focus-within:border-white/20 ring-1 ${message.trim() ? "ring-primary/50 shadow-primary/20" : "ring-white/5"}`
             }
           >
             <div className={`flex items-center shrink-0 ${isComposer ? "" : "pb-1"}`}>
@@ -373,6 +466,7 @@ export const ChatInput = ({
                         size="icon"
                         variant="ghost"
                         className="h-9 w-9 rounded-full text-destructive hover:bg-destructive/10"
+                        aria-label="Stop generating"
                       >
                         <Square className="h-4 w-4 fill-current" />
                       </Button>
@@ -387,6 +481,8 @@ export const ChatInput = ({
                             : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
                         }`}
                         disabled={isLoading}
+                        aria-label={isListening ? "Stop voice input" : "Start voice input"}
+                        aria-pressed={isListening}
                       >
                         {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
                       </Button>
@@ -402,10 +498,11 @@ export const ChatInput = ({
                 (message.trim() || selectedFile) &&
                 !isLoading && (
                   <Button
-                    onClick={onSend}
+                    onClick={() => { play('send'); onSend(); }}
                     size="icon"
                     className="h-9 w-9 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-all disabled:opacity-40"
                     disabled={!message.trim() && !selectedFile}
+                    aria-label="Send message"
                   >
                     <Send className="h-4 w-4" />
                   </Button>
@@ -415,16 +512,18 @@ export const ChatInput = ({
                   onClick={onStopGeneration}
                   size="icon"
                   className="h-9 w-9 rounded-full bg-destructive/80 hover:bg-destructive text-white shadow-lg shadow-destructive/20"
+                  aria-label="Stop generating"
                 >
                   <Square className="h-3.5 w-3.5 fill-current" />
                 </Button>
               ) : (
                 <>
                   <Button
-                    onClick={onSend}
+                    onClick={() => { play('send'); onSend(); }}
                     size="icon"
                     className="h-9 w-9 rounded-full bg-white text-black hover:bg-white/90 shadow-lg transition-all duration-300 disabled:opacity-10 disabled:bg-white/5 disabled:text-white/20 hover:scale-105 active:scale-95"
                     disabled={!message.trim() && !selectedFile}
+                    aria-label="Send message"
                   >
                     <Send className="h-4 w-4" />
                   </Button>
@@ -437,10 +536,13 @@ export const ChatInput = ({
 
         {!isComposer && !isShadowPulse && (
           <p className="text-[10px] text-muted-foreground/25 font-medium text-center mt-4 select-none tracking-widest uppercase">
-            ShadowTalk Neural OS • Enterprise Grade Privacy
+            ShadowTalk Studio • Multi-Model Intelligence
           </p>
         )}
       </div>
     </div>
   );
 };
+
+export const ChatInput = React.memo(ChatInputInner);
+

@@ -19,22 +19,9 @@ const Footer = () => {
         { name: "Features", href: "/home#features" },
         { name: "Pricing", href: "/pricing" },
         { name: "Chatbot", href: "/chatbot" },
-        { name: "Marketplace", href: "/marketplace" },
-        { name: "API Docs", href: "/api" },
         { name: "Changelog", href: "/changelog" },
-        { name: "UI Templates", href: "/templates" },
         { name: "Download desktop", href: "/downloads" },
-      ],
-    },
-    {
-      title: "Tools",
-      links: [
-        { name: "Computer Mode", href: "/computer" },
-        { name: "Mission Control", href: "/missioncontrol" },
-        { name: "Content Forge", href: "/forge" },
-        { name: "Privacy Score", href: "/privacy-score" },
-        { name: "Developers", href: "/developers" },
-        { name: "Billing", href: "/billing" },
+        { name: "Knowledge Graph", href: "/knowledge-graph" },
       ],
     },
     {
@@ -44,6 +31,8 @@ const Footer = () => {
         { name: "FAQ", href: "/faq" },
         { name: "Contact", href: "/contact" },
         { name: "Status", href: "/status" },
+        { name: "Security", href: "/security" },
+        { name: "Docs", href: "/docs" },
       ],
     },
     {
@@ -62,8 +51,7 @@ const Footer = () => {
       title: "Learn",
       links: [
         { name: "Google SEO Hub", href: "/google-seo" },
-        { name: "GEO Docs", href: "/docs/geos" },
-        { name: "Case Study: AI Strategy PSF", href: "/case-study-ai-strategy-psf" },
+        { name: "Case Studies", href: "/case-studies" },
         { name: "Blog", href: "/blog" },
         { name: "Discover", href: "/discover" },
       ],
@@ -72,9 +60,9 @@ const Footer = () => {
       title: "Company",
       links: [
         { name: "About", href: "/about" },
-        { name: "Zain Ahmed Fahad Patel", href: "/zain-ahmed-fahad-patel" },
+        { name: "Founder (Zain Ahmed)", href: "/founder" },
+        { name: "Co-Founder (Fatima)", href: "/fatima" },
         { name: "Press", href: "/press" },
-        { name: "Careers", href: "/careers" },
         { name: "Founder Access", href: "/founder-access" },
       ],
     },
@@ -91,7 +79,7 @@ const Footer = () => {
 
   const socials = [
     ...SOCIAL_LINKS,
-    { icon: Mail, href: "mailto:shadowtalk68@gmail.com", label: "Email" },
+    { icon: Mail, href: "mailto:shadowtalk@shadowtalk-ai.com", label: "Email" },
   ];
 
   return (

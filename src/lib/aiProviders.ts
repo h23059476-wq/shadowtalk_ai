@@ -1,10 +1,10 @@
 /**
- * Simple Lovable-only AI provider configuration.
+ * Simple ShadowTalk Pro AI provider configuration.
  */
 
 export type AiProviderId =
   | 'turbo'
-  | 'lovable'
+  | 'shadowtalk'
   | 'shadowtalk'
   | 'google'
   | 'openai'
@@ -13,7 +13,6 @@ export type AiProviderId =
   | 'groq'
   | 'gemini'
   | 'kimi'
-  | 'ollama'
   | '';
 
 /** Legacy alias used across chat components. */
@@ -40,7 +39,7 @@ export const AI_PROVIDER_OPTIONS: AiProviderOption[] = [
     defaultModel: 'llama-3.3-70b-versatile',
   },
   {
-    id: 'lovable',
+    id: 'shadowtalk',
     name: 'ShadowTalk Pro (platform)',
     description: 'Built-in ShadowTalk cloud AI',
     keyPlaceholder: '',

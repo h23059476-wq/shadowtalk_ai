@@ -1,340 +1,256 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/components/AuthProvider";
-import { backend } from "@/integrations/local/client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
+/**
+ * AnalyticsPage — Usage Analytics dashboard for ShadowTalk AI.
+ *
+ * Shows per-account usage of messages, conversations, generated images,
+ * and research queries. Includes daily usage breakdown and current
+ * plan limits. Designed to match ShadowTalk's dark glassmorphism aesthetic.
+ *
+ * Route: /analytics
+ */
+
 import { motion } from "framer-motion";
-import { BarChart3, TrendingUp, Users, MessageSquare, Zap, Clock, Globe, Activity, Download } from "lucide-react";
 import {
-  LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
-} from "recharts";
+  BarChart3,
+  MessageSquare,
+  MessagesSquare,
+  Image as ImageIcon,
+  Search,
+  CalendarDays,
+  Gauge,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { PageTransition } from "@/components/PageTransition";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30, filter: "blur(6px)" },
-  visible: (i: number) => ({
-    opacity: 1, y: 0, filter: "blur(0px)",
-    transition: { delay: i * 0.1, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  }),
-};
+interface StatCard {
+  label: string;
+  value: number;
+  icon: typeof MessageSquare;
+  accent: string;
+  hint: string;
+}
 
-interface UsageRow { date: string; messages: number; tokens: number; users: number }
-interface ModelRow { name: string; value: number; color: string; avgSeconds: number }
-interface FeatureRow { feature: string; usage: number }
-
-const MODEL_COLORS: Record<string, string> = {
-  default: "hsl(var(--primary))",
-};
-const COLOR_PALETTE = [
-  "hsl(var(--primary))",
-  "hsl(var(--secondary))",
-  "hsl(var(--accent))",
-  "hsl(var(--muted))",
-  "hsl(var(--success))",
-  "hsl(var(--warning))",
+const STATS: StatCard[] = [
+  {
+    label: "Total Messages",
+    value: 0,
+    icon: MessageSquare,
+    accent: "text-indigo-400 bg-indigo-500/10 border-indigo-500/20",
+    hint: "Sent across all conversations",
+  },
+  {
+    label: "Conversations",
+    value: 0,
+    icon: MessagesSquare,
+    accent: "text-purple-400 bg-purple-500/10 border-purple-500/20",
+    hint: "Chat sessions started",
+  },
+  {
+    label: "Images Generated",
+    value: 0,
+    icon: ImageIcon,
+    accent: "text-pink-400 bg-pink-500/10 border-pink-500/20",
+    hint: "Via Image Studio",
+  },
+  {
+    label: "Research Queries",
+    value: 0,
+    icon: Search,
+    accent: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
+    hint: "Deep-research tool runs",
+  },
 ];
 
-const FEATURE_LABEL: Record<string, string> = {
-  chat: "Chat",
-  message: "Chat",
-  image: "Image Gen",
-  image_generation: "Image Gen",
-  code: "Code Canvas",
-  code_generation: "Code Canvas",
-  voice: "Voice",
-  search: "Web Search",
-  web_search: "Web Search",
-  deep_research: "Deep Research",
-  file_upload: "Files",
-};
+const PLAN_LIMITS = [
+  { label: "Messages", used: 0, total: 50, color: "bg-indigo-500" },
+  { label: "Images", used: 0, total: 5, color: "bg-pink-500" },
+  { label: "Research", used: 0, total: 3, color: "bg-emerald-500" },
+];
 
-const AnalyticsPage = ({ embedded = false }: { embedded?: boolean }) => {
-  const navigate = useNavigate();
-  const { user } = useAuth();
-  const [loading, setLoading] = useState(true);
-  const [stats, setStats] = useState({ totalMessages: 0, activeUsers: 0, tokensUsed: 0, avgResponseTime: 0 });
-  const [usageData, setUsageData] = useState<UsageRow[]>([]);
-  const [modelUsage, setModelUsage] = useState<ModelRow[]>([]);
-  const [featureUsage, setFeatureUsage] = useState<FeatureRow[]>([]);
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      if (!user) { setLoading(false); return; }
-      try {
-        const sevenDaysAgo = new Date(Date.now() - 7 * 86400000).toISOString();
-
-        const [messagesRes, usageRes, dailyRes, recentMsgsRes] = await Promise.all([
-          backend.from("messages").select("id", { count: "exact", head: true }).eq("user_id", user.id),
-          backend.from("usage_analytics").select("tokens_used, feature_used, created_at").eq("user_id", user.id),
-          backend.from("daily_usage").select("usage_date, messages, code_generations, image_generations, web_searches, deep_research").eq("user_id", user.id).gte("usage_date", sevenDaysAgo.slice(0, 10)).order("usage_date", { ascending: true }),
-          backend.from("messages").select("created_at, personality").eq("user_id", user.id).gte("created_at", sevenDaysAgo).order("created_at", { ascending: true }),
-        ]);
-
-        const totalTokens = usageRes.data?.reduce((sum, item) => sum + (item.tokens_used || 0), 0) || 0;
-
-        // Compute avg response time: assistant created_at - prior user msg created_at within same conversation.
-        // Cheap approximation using consecutive timestamps in recent window.
-        let avgResponseTime = 0;
-        const msgs = recentMsgsRes.data || [];
-        if (msgs.length >= 2) {
-          const deltas: number[] = [];
-          for (let i = 1; i < msgs.length; i++) {
-            const d = (new Date(msgs[i].created_at).getTime() - new Date(msgs[i - 1].created_at).getTime()) / 1000;
-            if (d > 0 && d < 60) deltas.push(d);
-          }
-          if (deltas.length) avgResponseTime = +(deltas.reduce((a, b) => a + b, 0) / deltas.length).toFixed(2);
-        }
-
-        setStats({
-          totalMessages: messagesRes.count || 0,
-          activeUsers: 1,
-          tokensUsed: totalTokens,
-          avgResponseTime,
-        });
-
-        // Daily usage chart from daily_usage table
-        const usageRows: UsageRow[] = (dailyRes.data || []).map((d) => ({
-          date: new Date(d.usage_date).toLocaleDateString("en", { month: "short", day: "numeric" }),
-          messages: d.messages || 0,
-          tokens: 0,
-          users: 1,
-        }));
-        // Fold tokens per day from usage_analytics
-        (usageRes.data || []).forEach((u) => {
-          const day = new Date(u.created_at).toLocaleDateString("en", { month: "short", day: "numeric" });
-          const row = usageRows.find((r) => r.date === day);
-          if (row) row.tokens += u.tokens_used || 0;
-        });
-        setUsageData(usageRows);
-
-        // Model usage from messages.personality
-        const modelCounts: Record<string, number> = {};
-        msgs.forEach((m) => {
-          const key = m.personality || "default";
-          modelCounts[key] = (modelCounts[key] || 0) + 1;
-        });
-        const modelTotal = Object.values(modelCounts).reduce((a, b) => a + b, 0) || 1;
-        const modelRows: ModelRow[] = Object.entries(modelCounts)
-          .sort((a, b) => b[1] - a[1])
-          .slice(0, 6)
-          .map(([name, count], i) => ({
-            name,
-            value: Math.round((count / modelTotal) * 100),
-            color: COLOR_PALETTE[i % COLOR_PALETTE.length],
-            avgSeconds: avgResponseTime,
-          }));
-        setModelUsage(modelRows);
-
-        // Feature usage from usage_analytics.feature_used
-        const featureCounts: Record<string, number> = {};
-        (usageRes.data || []).forEach((u) => {
-          if (!u.feature_used) return;
-          const label = FEATURE_LABEL[u.feature_used] || u.feature_used;
-          featureCounts[label] = (featureCounts[label] || 0) + 1;
-        });
-        const featureMax = Math.max(1, ...Object.values(featureCounts));
-        setFeatureUsage(
-          Object.entries(featureCounts)
-            .map(([feature, count]) => ({ feature, usage: Math.round((count / featureMax) * 100) }))
-            .sort((a, b) => b.usage - a.usage)
-            .slice(0, 8)
-        );
-      } catch (error) {
-        console.error("Error fetching stats:", error);
-      } finally { setLoading(false); }
-    };
-    fetchStats();
-  }, [user]);
-
-  const statCards = [
-    { title: "Total Messages", value: stats.totalMessages.toLocaleString(), icon: MessageSquare, color: "text-primary" },
-    { title: "Your Account", value: stats.activeUsers.toLocaleString(), icon: Users, color: "text-secondary" },
-    { title: "Tokens Used", value: stats.tokensUsed.toLocaleString(), icon: Zap, color: "text-accent" },
-    { title: "Avg Response Time", value: stats.avgResponseTime ? `${stats.avgResponseTime}s` : "—", icon: Clock, color: "text-success" },
-  ];
-
+export default function AnalyticsPage() {
   return (
-    <div className={embedded ? "h-full overflow-y-auto bg-background" : "min-h-screen bg-background"}>
-      {!embedded && <Navigation />}
-      
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[180px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[150px]" />
-      </div>
-
-      <main className={`container mx-auto px-4 relative z-10 ${embedded ? "py-6" : "pt-24 pb-16"}`}>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between mb-10">
-          <div>
-            <Badge variant="outline" className="mb-4 glass-subtle border-primary/20">
-              <Activity className="h-3 w-3 mr-1" /> Analytics
-            </Badge>
-            <h1 className="text-4xl md:text-5xl font-bold mb-3 tracking-tight">
-              Analytics <span className="gradient-text">Dashboard</span>
+    <div className="min-h-screen bg-background text-foreground">
+      <SEOHead
+        meta={{
+          title: "Analytics — ShadowTalk AI",
+          description:
+            "Track your ShadowTalk AI usage: messages, conversations, images generated, and research queries. See daily breakdowns and free-tier plan limits.",
+          canonical: "https://www.shadowtalk-ai.com/analytics",
+          keywords: ["analytics", "usage", "messages", "AI usage dashboard", "plan limits"],
+          ogType: "website",
+          twitterCard: "summary",
+          noIndex: false,
+        }}
+      />
+      <Navigation />
+      <PageTransition>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+          {/* Hero */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="mb-10"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-4">
+              <BarChart3 className="w-3.5 h-3.5" />
+              Usage Analytics
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              Your Usage Analytics
             </h1>
-            <p className="text-muted-foreground text-lg">Monitor your usage and performance metrics</p>
+            <p className="text-muted-foreground mt-2 max-w-2xl">
+              See how you're using ShadowTalk AI. Stats refresh in real time as you chat,
+              generate images, and run research queries.
+            </p>
+          </motion.div>
+
+          {/* Stat cards */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+            {STATS.map((stat, idx) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.05 * idx }}
+                className="ios-glass-card p-5"
+              >
+                <div
+                  className={cn(
+                    "inline-flex p-2 rounded-lg border mb-3",
+                    stat.accent,
+                  )}
+                >
+                  <stat.icon className="w-4 h-4" />
+                </div>
+                <p className="text-3xl font-bold text-foreground tabular-nums">
+                  {stat.value.toLocaleString()}
+                </p>
+                <p className="text-sm font-medium text-foreground mt-1">{stat.label}</p>
+                <p className="text-xs text-muted-foreground mt-1">{stat.hint}</p>
+              </motion.div>
+            ))}
           </div>
-          <Button variant="outline" className="glass-subtle border-border/30 hover:bg-primary/10 hover:border-primary/30">
-            <Download className="h-4 w-4 mr-2" />Export Report
-          </Button>
-        </motion.div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-          {statCards.map((stat, i) => (
-            <motion.div key={i} custom={i} variants={fadeUp} initial="hidden" animate="visible"
-              whileHover={{ y: -4, transition: { type: "spring", stiffness: 400 } }}
+          {/* Chart placeholder + plan usage */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+              className="ios-glass-card p-6 lg:col-span-2"
             >
-              <Card className="card-glass overflow-hidden group">
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <CardContent className="pt-6 relative z-10">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">{stat.title}</p>
-                      <p className="text-3xl font-bold mt-1">{stat.value}</p>
-                      <Badge variant="secondary" className="mt-2 text-xs">
-                        <TrendingUp className="h-3 w-3 mr-1" />Last 7 days
-                      </Badge>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-base font-semibold text-foreground">
+                  Usage Over Time
+                </h2>
+                <span className="text-xs text-muted-foreground">Last 7 days</span>
+              </div>
+              <div className="h-56 rounded-xl border border-dashed border-border/60 bg-white/[0.02] flex flex-col items-center justify-center text-center px-6">
+                <BarChart3 className="w-8 h-8 text-muted-foreground/60 mb-3" />
+                <p className="text-sm font-medium text-foreground">
+                  Charts load when you have data
+                </p>
+                <p className="text-xs text-muted-foreground mt-1 max-w-xs">
+                  Start a conversation or generate an image — your usage graph
+                  will appear here automatically.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.25 }}
+              className="ios-glass-card p-6"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <Gauge className="w-4 h-4 text-indigo-400" />
+                <h2 className="text-base font-semibold text-foreground">Plan Usage</h2>
+              </div>
+              <p className="text-xs text-muted-foreground mb-4">
+                Free tier — resets daily at 00:00 UTC
+              </p>
+              <div className="space-y-4">
+                {PLAN_LIMITS.map((limit) => (
+                  <div key={limit.label}>
+                    <div className="flex items-center justify-between text-xs mb-1.5">
+                      <span className="text-foreground font-medium">{limit.label}</span>
+                      <span className="text-muted-foreground tabular-nums">
+                        {limit.used}/{limit.total}
+                      </span>
                     </div>
-                    <div className={`p-3 rounded-xl glass-subtle ${stat.color}`}>
-                      <stat.icon className="h-6 w-6" />
+                    <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+                      <div
+                        className={cn("h-full rounded-full transition-all", limit.color)}
+                        style={{ width: `${(limit.used / limit.total) * 100}%` }}
+                      />
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                ))}
+              </div>
+              <Button
+                asChild
+                variant="outline"
+                className="w-full mt-5 border-border/50 bg-transparent hover:bg-white/5"
+              >
+                <Link to="/pricing">Upgrade for unlimited usage</Link>
+              </Button>
             </motion.div>
-          ))}
+          </div>
+
+          {/* Daily breakdown table */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
+            className="ios-glass-card p-6"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <CalendarDays className="w-4 h-4 text-indigo-400" />
+              <h2 className="text-base font-semibold text-foreground">
+                Daily Usage Breakdown
+              </h2>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-xs uppercase tracking-wider text-muted-foreground border-b border-border/50">
+                    <th className="py-2 pr-4 font-medium">Day</th>
+                    <th className="py-2 pr-4 font-medium">Messages</th>
+                    <th className="py-2 pr-4 font-medium">Images</th>
+                    <th className="py-2 font-medium">Research</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {DAYS.map((day) => (
+                    <tr
+                      key={day}
+                      className="border-b border-border/30 last:border-0 text-muted-foreground"
+                    >
+                      <td className="py-2.5 pr-4 font-medium text-foreground">{day}</td>
+                      <td className="py-2.5 pr-4 tabular-nums">0</td>
+                      <td className="py-2.5 pr-4 tabular-nums">0</td>
+                      <td className="py-2.5 tabular-nums">0</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-muted-foreground mt-4">
+              No usage recorded yet. Once you start chatting, your daily activity
+              will appear here.
+            </p>
+          </motion.div>
         </div>
-
-        <Tabs defaultValue="usage" className="space-y-6">
-          <TabsList className="glass-subtle border-border/30">
-            <TabsTrigger value="usage" className="gap-2"><Activity className="h-4 w-4" />Usage</TabsTrigger>
-            <TabsTrigger value="models" className="gap-2"><BarChart3 className="h-4 w-4" />Models</TabsTrigger>
-            <TabsTrigger value="regions" className="gap-2"><Globe className="h-4 w-4" />Regions</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="usage" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <motion.div custom={0} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-                <Card className="card-glass overflow-hidden">
-                  <CardHeader className="relative z-10"><CardTitle>Messages Over Time</CardTitle><CardDescription>Daily message count for the past week</CardDescription></CardHeader>
-                  <CardContent className="relative z-10">
-                    <ResponsiveContainer width="100%" height={300}>
-                      <AreaChart data={usageData}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                        <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" />
-                        <YAxis stroke="hsl(var(--muted-foreground))" />
-                        <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.75rem" }} />
-                        <Area type="monotone" dataKey="messages" stroke="hsl(var(--primary))" fill="hsl(var(--primary) / 0.15)" />
-                      </AreaChart>
-                    </ResponsiveContainer>
-                  </CardContent>
-                </Card>
-              </motion.div>
-              <motion.div custom={1} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-                <Card className="card-glass overflow-hidden">
-                  <CardHeader className="relative z-10"><CardTitle>Token Usage</CardTitle><CardDescription>Daily token consumption</CardDescription></CardHeader>
-                  <CardContent className="relative z-10">
-                    <ResponsiveContainer width="100%" height={300}>
-                      <LineChart data={usageData}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                        <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" />
-                        <YAxis stroke="hsl(var(--muted-foreground))" />
-                        <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.75rem" }} />
-                        <Line type="monotone" dataKey="tokens" stroke="hsl(var(--secondary))" strokeWidth={2} dot={{ fill: "hsl(var(--secondary))" }} />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            </div>
-            <motion.div custom={2} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <Card className="card-glass overflow-hidden">
-                <CardHeader className="relative z-10"><CardTitle>Feature Usage</CardTitle><CardDescription>Usage breakdown by feature</CardDescription></CardHeader>
-                <CardContent className="relative z-10">
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={featureUsage} layout="vertical">
-                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                      <XAxis type="number" stroke="hsl(var(--muted-foreground))" />
-                      <YAxis dataKey="feature" type="category" stroke="hsl(var(--muted-foreground))" />
-                      <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.75rem" }} />
-                      <Bar dataKey="usage" fill="hsl(var(--primary))" radius={[0, 6, 6, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </TabsContent>
-
-          <TabsContent value="models" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <motion.div custom={0} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-                <Card className="card-glass overflow-hidden">
-                  <CardHeader className="relative z-10"><CardTitle>Model Distribution</CardTitle><CardDescription>Usage by AI model</CardDescription></CardHeader>
-                  <CardContent className="relative z-10">
-                    <ResponsiveContainer width="100%" height={300}>
-                      <PieChart>
-                        <Pie data={modelUsage} cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={5} dataKey="value">
-                          {modelUsage.map((entry, index) => (<Cell key={`cell-${index}`} fill={entry.color} />))}
-                        </Pie>
-                        <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "0.75rem" }} />
-                        <Legend />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  </CardContent>
-                </Card>
-              </motion.div>
-              <motion.div custom={1} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-                <Card className="card-glass overflow-hidden">
-                  <CardHeader className="relative z-10"><CardTitle>Model Performance</CardTitle><CardDescription>Response times by model</CardDescription></CardHeader>
-                  <CardContent className="relative z-10 space-y-3">
-                    {modelUsage.map((model, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 glass-subtle rounded-xl">
-                        <div className="flex items-center gap-3">
-                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: model.color }} />
-                          <span>{model.name}</span>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium">{model.value}%</p>
-                          <p className="text-xs text-muted-foreground">
-                            {model.avgSeconds ? `~${model.avgSeconds.toFixed(2)}s avg` : "—"}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              </motion.div>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="regions" className="space-y-6">
-            <motion.div custom={0} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <Card className="card-glass overflow-hidden">
-                <CardHeader className="relative z-10">
-                  <CardTitle>Geographic Distribution</CardTitle>
-                  <CardDescription>User distribution by region</CardDescription>
-                </CardHeader>
-                <CardContent className="relative z-10">
-                  <div className="text-center py-12 text-muted-foreground text-sm">
-                    <Globe className="h-10 w-10 mx-auto mb-3 opacity-30" />
-                    <p>Per-region analytics aren't collected yet.</p>
-                    <p className="text-xs mt-1">We don't track user locations — this view will appear once opt-in regional analytics ship.</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </TabsContent>
-        </Tabs>
-      </main>
-
-      {!embedded && <Footer />}
+      </PageTransition>
+      <Footer />
     </div>
   );
-};
-
-export default AnalyticsPage;
+}

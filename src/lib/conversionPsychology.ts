@@ -1,9 +1,10 @@
 import { PLAN_DETAILS } from "@/lib/stripe";
 
 /**
- * DORMANT since the free-access transition: ShadowTalk AI has no paid plans,
- * so these conversion helpers no longer drive any UI. Kept for optional
- * monetization in the future.
+ * Best default for ShadowTalk: Premium BYOK.
+ * - BYOK) = entry hook for price-sensitive users only
+ * - BYOK) = main revenue + matches ChatGPT Plus anchor with more tools
+ * - BYOK) = decoy that makes Premium feel like the smart middle
  */
 export const RECOMMENDED_MONTHLY_PLAN = "premium" as const;
 export const BEST_MONTHLY_PLAN = RECOMMENDED_MONTHLY_PLAN;
@@ -26,7 +27,11 @@ export const COMPETITOR_ANCHORS = {
 
 export function dailyPrice(monthlyUsd: number): string {
   const perDay = monthlyUsd / 30;
-  return perDay < 1 ? `$${perDay.toFixed(2)}` : `$${perDay.toFixed(0)}`;
+  // Always show 2 decimals when <$1 so BYOK renders "$0.50/day", not "$0/day".
+  if (perDay < 1) {
+    return `$${perDay.toFixed(2)}`;
+  }
+  return `$${perDay.toFixed(0)}`;
 }
 
 export function getPlanPsychology(planId: MonthlyPlanId) {
@@ -73,14 +78,22 @@ export function getSocialProofLine(creatorCount?: number | null): string {
 
 export function getRiskReversalBullets(): string[] {
   return [
-    "Cancel anytime — no lock-in",
-    "30-day money-back guarantee",
-    "Instant activation after payment",
+    "Free to use — no subscription, no card",
+    "Nothing to cancel and nothing to refund",
+    "Instant start — no payment step at all",
     "Keep your chats & settings",
   ];
 }
 
-export function getValueAnchorLine(planId: MonthlyPlanId): string {
+export type AnchorPlanId = MonthlyPlanId | "byok" | "enterprise";
+
+export function getValueAnchorLine(planId: AnchorPlanId): string {
+  if (planId === "byok") {
+    return "Zero platform fees — pay your AI provider directly";
+  }
+  if (planId === "enterprise") {
+    return "Custom pricing — contact sales";
+  }
   if (planId === "pro") {
     return `Less than ${dailyPrice(PLAN_DETAILS.pro.price)}/day · 4× cheaper than ChatGPT Plus`;
   }

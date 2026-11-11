@@ -56,7 +56,7 @@ export const FOUNDER_STORY_CHAPTERS: FounderStoryChapter[] = [
     id: "light",
     title: "Still writing it",
     body: [
-      "Google ranks ShadowTalk #1. Nearly half his traffic is from the US. Revenue was zero for too long — not because the product failed, but because the last mile wasn't wired yet.",
+      "Search ShadowTalk AI on Google. Nearly half his traffic is from the US. Revenue was zero for too long — not because the product failed, but because the last mile wasn't wired yet.",
       "The story isn't finished. Ejaz's heart reaction is in the screenshots. Tayyab said carry on. The podcast is next. The first Rs 1,499 from a stranger is the chapter after that.",
     ],
     pullQuote: "Yes. I made it. And I'm still making it. Come see.",

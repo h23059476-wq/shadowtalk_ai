@@ -31,7 +31,7 @@ import {
   Palette, Users, Download, Search, ChevronRight, ExternalLink, Sparkles,
   Settings, Lock, Bell, Globe, Keyboard, FileText, HelpCircle, Lightbulb,
   Terminal, Database, Cloud, Smartphone, Monitor, Wifi, WifiOff, Volume2,
-  Upload, Share2, History, Star, Crown, Check, X, Compass, Eye, TrendingUp,
+  Upload, Share2, History, Star, Crown, Check, Compass, Eye, TrendingUp,
   Link2, Bookmark, Rocket, LayoutDashboard, KeyRound
 } from "lucide-react";
 
@@ -126,59 +126,22 @@ const CodeExample = ({ title, code, language = "bash" }: { title: string; code: 
   </div>
 );
 
-type PlanCell = boolean | string;
-
-const PlanCellValue = ({ value, accent }: { value: PlanCell; accent?: "primary" | "secondary" }) => {
-  if (typeof value === "boolean") {
-    return value ? (
-      <Check className={`h-5 w-5 mx-auto ${accent === "secondary" ? "text-secondary" : "text-primary"}`} />
-    ) : (
-      <X className="h-5 w-5 text-muted-foreground/30 mx-auto" />
-    );
-  }
-  const textClass =
-    accent === "secondary" ? "text-secondary font-medium" : accent === "primary" ? "text-primary font-medium" : "text-muted-foreground";
-  return <span className={textClass}>{value}</span>;
-};
-
 const FeatureComparison = () => (
-  <div className="overflow-x-auto">
-    <table className="w-full border-collapse text-sm">
-      <thead>
-        <tr className="border-b border-border/30">
-          <th className="text-left p-3 text-foreground/80">Feature</th>
-          <th className="text-center p-3 text-foreground/80">Free</th>
-          <th className="text-center p-3 text-primary font-bold">Pro</th>
-          <th className="text-center p-3 text-foreground/80 font-bold">Premium</th>
-          <th className="text-center p-3 text-secondary font-bold">Elite</th>
-        </tr>
-      </thead>
-      <tbody>
-        {[
-          { feature: "Daily messages", free: "50", pro: "Unlimited", premium: "Unlimited", elite: "Unlimited" },
-          { feature: "Image generation", free: "4/day", pro: "20/day", premium: "50/day", elite: "Unlimited" },
-          { feature: "Deep research", free: "5/day", pro: "20/day", premium: "50/day", elite: "Unlimited" },
-          { feature: "Voice sessions", free: "3/day", pro: "Unlimited", premium: "Unlimited", elite: "Unlimited" },
-          { feature: "File uploads", free: "3/day", pro: "50/day", premium: "Unlimited", elite: "Unlimited" },
-          { feature: "ShadowBrowser & IDE", free: true, pro: true, premium: true, elite: true },
-          { feature: "Mission Control (S.E.E.)", free: "3/mo", pro: "15/mo", premium: "30/mo", elite: "50/mo" },
-          { feature: "Collaborative rooms", free: false, pro: true, premium: true, elite: true },
-          { feature: "Chat export", free: false, pro: true, premium: true, elite: true },
-          { feature: "Offline / on-device AI", free: false, pro: false, premium: false, elite: true },
-          { feature: "Stealth Vault", free: false, pro: false, premium: false, elite: true },
-          { feature: "API access", free: false, pro: false, premium: false, elite: true },
-          { feature: "Priority support", free: false, pro: "<4h", premium: "<2h", elite: "24/7" },
-        ].map((row, i) => (
-          <tr key={i} className="border-b border-border/20 hover:bg-primary/5 transition-colors">
-            <td className="p-3 font-medium text-foreground/90">{row.feature}</td>
-            <td className="text-center p-3"><PlanCellValue value={row.free} /></td>
-            <td className="text-center p-3"><PlanCellValue value={row.pro} accent="primary" /></td>
-            <td className="text-center p-3"><PlanCellValue value={row.premium} /></td>
-            <td className="text-center p-3"><PlanCellValue value={row.elite} accent="secondary" /></td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+  <div className="space-y-3 text-sm">
+    <p className="text-muted-foreground">
+      ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage.
+    </p>
+    {[
+      "Every feature included for every account — no plans, no tiers, no checkout",
+      "BYOK: connect your preferred AI provider and switch any time",
+      "Provider rate limits and API billing apply directly from your provider",
+      "Account security, encrypted storage, and abuse protections unchanged",
+    ].map((line) => (
+      <div key={line} className="flex items-start gap-2">
+        <Check className="h-4 w-4 mt-0.5 text-primary" />
+        <span className="text-foreground/90">{line}</span>
+      </div>
+    ))}
   </div>
 );
 
@@ -189,81 +152,40 @@ const DocsPage = () => {
   const q = searchQuery.trim().toLowerCase();
   const matches = (text: string) => !q || text.toLowerCase().includes(q);
 
-  const features = useMemo(
-    () =>
-      DOC_FEATURES.filter(
-        (f) => matches(f.title) || matches(f.description) || matches(f.badge ?? ""),
-      ).map((f) => ({
-        icon: DOC_FEATURE_ICONS[f.icon],
-        title: f.title,
-        description: f.description,
-        badge: f.badge,
-      })),
-    [q],
-  );
+  const features = useMemo(() => DOC_FEATURES.filter(
+    (f) => matches(f.title) || matches(f.description) || matches(f.badge ?? ""),
+  ).map((f) => ({
+    icon: DOC_FEATURE_ICONS[f.icon],
+    title: f.title,
+    description: f.description,
+    badge: f.badge,
+  })), [q]);
 
-  const quickStartSteps = useMemo(
-    () => DOC_QUICK_START.filter((s) => matches(s.title) || matches(s.description)),
-    [q],
-  );
+  const quickStartSteps = useMemo(() => DOC_QUICK_START.filter((s) => matches(s.title) || matches(s.description)), [q]);
 
-  const docRoutes = useMemo(
-    () => DOC_ROUTES.filter((r) => matches(r.path) || matches(r.label) || matches(r.desc)),
-    [q],
-  );
+  const docRoutes = useMemo(() => DOC_ROUTES.filter((r) => matches(r.path) || matches(r.label) || matches(r.desc)), [q]);
 
-  const workspaceGuide = useMemo(
-    () =>
-      DOC_WORKSPACE_GUIDE.filter(
-        (w) => matches(w.title) || w.items.some((item) => matches(item)),
-      ),
-    [q],
-  );
+  const workspaceGuide = useMemo(() => DOC_WORKSPACE_GUIDE.filter(
+    (w) => matches(w.title) || w.items.some((item) => matches(item)),
+  ), [q]);
 
-  const faqItems = useMemo(
-    () => DOC_FAQ.filter((f) => matches(f.q) || matches(f.a)),
-    [q],
-  );
+  const faqItems = useMemo(() => DOC_FAQ.filter((f) => matches(f.q) || matches(f.a)), [q]);
 
-  const troubleshooting = useMemo(
-    () => DOC_TROUBLESHOOTING.filter((t) => matches(t.issue) || t.solutions.some(matches)),
-    [q],
-  );
+  const troubleshooting = useMemo(() => DOC_TROUBLESHOOTING.filter((t) => matches(t.issue) || t.solutions.some(matches)), [q]);
 
-  const tools = useMemo(
-    () => DOC_TOOLS.filter((t) => matches(t.name) || matches(t.trigger) || matches(t.description) || matches(t.plan ?? "")),
-    [q],
-  );
+  const tools = useMemo(() => DOC_TOOLS.filter((t) => matches(t.name) || matches(t.trigger) || matches(t.description) || matches(t.plan ?? "")), [q]);
 
-  const overviewSections = useMemo(
-    () => DOC_OVERVIEW.filter((o) => matches(o.title) || o.paragraphs.some(matches)),
-    [q],
-  );
+  const overviewSections = useMemo(() => DOC_OVERVIEW.filter((o) => matches(o.title) || o.paragraphs.some(matches)), [q]);
 
-  const privacySections = useMemo(
-    () => DOC_PRIVACY_SECTIONS.filter((p) => matches(p.title) || p.items.some(matches)),
-    [q],
-  );
+  const privacySections = useMemo(() => DOC_PRIVACY_SECTIONS.filter((p) => matches(p.title) || p.items.some(matches)), [q]);
 
-  const pricingTiers = useMemo(
-    () => DOC_PRICING_TIERS.filter((p) => matches(p.name) || matches(p.tagline) || p.highlights.some(matches)),
-    [q],
-  );
+  const pricingTiers = useMemo(() => DOC_PRICING_TIERS.filter((p) => matches(p.name) || matches(p.tagline) || p.highlights.some(matches)), [q]);
 
-  const glossary = useMemo(
-    () => DOC_GLOSSARY.filter((g) => matches(g.term) || matches(g.definition)),
-    [q],
-  );
+  const glossary = useMemo(() => DOC_GLOSSARY.filter((g) => matches(g.term) || matches(g.definition)), [q]);
 
-  const missionSteps = useMemo(
-    () => DOC_MISSION_CONTROL.filter((m) => matches(m.title) || matches(m.description)),
-    [q],
-  );
+  const missionSteps = useMemo(() => DOC_MISSION_CONTROL.filter((m) => matches(m.title) || matches(m.description)), [q]);
 
-  const desktopSections = useMemo(
-    () => DOC_DESKTOP.filter((d) => matches(d.title) || d.items.some(matches)),
-    [q],
-  );
+  const desktopSections = useMemo(() => DOC_DESKTOP.filter((d) => matches(d.title) || d.items.some(matches)), [q]);
 
   const routeGroups = useMemo(() => {
     const groups = new Map<string, typeof docRoutes>();
@@ -293,22 +215,82 @@ const DocsPage = () => {
     : null;
 
   const hasSearchResults = useMemo(() => {
-    if (!q) return true;
-    if (activeTab && Object.values(activeTab).some(Boolean)) return true;
-    return docSearchBlob({
-      features: DOC_FEATURES,
-      faq: DOC_FAQ,
-      troubleshooting: DOC_TROUBLESHOOTING,
-      workspace: DOC_WORKSPACE_GUIDE,
-    }).includes(q);
-  }, [q, activeTab]);
+      if (!q) return true;
+      if (activeTab && Object.values(activeTab).some(Boolean)) return true;
+      return docSearchBlob({
+        features: DOC_FEATURES,
+        faq: DOC_FAQ,
+        troubleshooting: DOC_TROUBLESHOOTING,
+        workspace: DOC_WORKSPACE_GUIDE,
+      }).includes(q);
+    }, [q, activeTab]);
 
   const apiEndpoints = [
-    { method: "POST", endpoint: "/functions/v1/chat", description: "Send a message and receive streaming AI response", example: `{\n  "messages": [{"role": "user", "content": "Hello!"}],\n  "personality": "friendly"\n}` },
-    { method: "POST", endpoint: "/functions/v1/cyber-ai-copilot", description: "Security-focused AI assistant with specialized modes", example: `{\n  "messages": [{"role": "user", "content": "Analyze CVE-2026-0217"}],\n  "mode": "exploit"\n}` },
-    { method: "POST", endpoint: "/functions/v1/website-security-scan", description: "Scan a website for security headers and vulnerabilities", example: `{\n  "url": "https://example.com",\n  "scanDepth": "standard"\n}` },
-    { method: "POST", endpoint: "/functions/v1/web-search", description: "AI-powered web search with summarization", example: `{\n  "query": "latest CVE vulnerabilities 2026"\n}` },
-    { method: "POST", endpoint: "/functions/v1/generate-blog", description: "Generate AI-written blog posts", example: null },
+    {
+      method: "POST",
+      endpoint: "/api/v1/chat/completions",
+      description: "Dispatches a chat completion prompt to the Turbo Engine with low-latency streaming response.",
+      example: JSON.stringify(
+        {
+          model: "llama-3.3-70b-versatile",
+          messages: [
+            { role: "system", content: "You are ShadowTalk AI with Business Memory active." },
+            { role: "user", content: "Synthesize our quarterly strategy roadmap." },
+          ],
+          stream: true,
+          temperature: 0.7,
+        },
+        null,
+        2
+      ),
+    },
+    {
+      method: "GET",
+      endpoint: "/api/v1/workspace/memories",
+      description: "Retrieves active business context memory items for the authenticated user or organization.",
+      example: null,
+    },
+    {
+      method: "POST",
+      endpoint: "/api/v1/workspace/memories",
+      description: "Creates or updates an active business memory item in your organization context.",
+      example: JSON.stringify(
+        {
+          category: "voice",
+          title: "Executive Tone Guardrails",
+          content: "Be concise, authoritative, deeply technical, and avoid boilerplate filler.",
+          priority: 9,
+          is_active: true,
+        },
+        null,
+        2
+      ),
+    },
+    {
+      method: "GET",
+      endpoint: "/api/v1/analytics/usage",
+      description: "Returns aggregated message volumes, token metrics, and response latencies.",
+      example: null,
+    },
+    {
+      method: "GET",
+      endpoint: "/api/v1/shadow-twin/:username",
+      description: "Fetches public metadata and knowledge parameters for a published Shadow Twin.",
+      example: null,
+    },
+    {
+      method: "POST",
+      endpoint: "/api/v1/tools/search",
+      description: "Executes a private web intelligence search query with scrubbed referrers.",
+      example: JSON.stringify(
+        {
+          query: "zero trust confidential LLM execution 2026",
+          limit: 5,
+        },
+        null,
+        2
+      ),
+    },
   ];
 
   const chatModes = [
@@ -371,22 +353,31 @@ const DocsPage = () => {
                 <Input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search documentation..."
+                  placeholder="Search documentation (e.g., workspace, analytics, API, memory)..."
                   className="relative pl-10 rounded-xl glass-subtle border-border/30 focus:border-primary/50"
                 />
               </div>
             </motion.div>
             
             {/* Quick Links */}
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="flex flex-wrap justify-center gap-3 mt-8">
-              <Button variant="outline" size="sm" className="rounded-full glass-subtle border-border/30 hover:border-primary/40" onClick={() => navigate('/chatbot')}>
-                <MessageSquare className="h-4 w-4 mr-2" /> Try Chatbot
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="flex flex-wrap justify-center gap-2 mt-8">
+              <Button variant="outline" size="sm" className="rounded-full glass-subtle border-border/30 hover:border-primary/40 text-xs" onClick={() => navigate('/chatbot')}>
+                <MessageSquare className="h-3.5 w-3.5 mr-1.5 text-primary" /> Chatbot
               </Button>
-              <Button variant="outline" size="sm" className="rounded-full glass-subtle border-border/30 hover:border-primary/40" onClick={() => navigate('/changelog')}>
-                <History className="h-4 w-4 mr-2" /> Changelog
+              <Button variant="outline" size="sm" className="rounded-full glass-subtle border-border/30 hover:border-primary/40 text-xs" onClick={() => navigate('/workspace')}>
+                <Brain className="h-3.5 w-3.5 mr-1.5 text-secondary" /> Business Memory
               </Button>
-              <Button variant="outline" size="sm" className="rounded-full glass-subtle border-border/30 hover:border-primary/40" onClick={() => navigate('/pricing')}>
-                <Crown className="h-4 w-4 mr-2" /> Pricing
+              <Button variant="outline" size="sm" className="rounded-full glass-subtle border-border/30 hover:border-primary/40 text-xs" onClick={() => navigate('/analytics')}>
+                <TrendingUp className="h-3.5 w-3.5 mr-1.5 text-emerald-400" /> Analytics
+              </Button>
+              <Button variant="outline" size="sm" className="rounded-full glass-subtle border-border/30 hover:border-primary/40 text-xs" onClick={() => navigate('/shadow-memory')}>
+                <Shield className="h-3.5 w-3.5 mr-1.5 text-amber-400" /> Shadow Memory
+              </Button>
+              <Button variant="outline" size="sm" className="rounded-full glass-subtle border-border/30 hover:border-primary/40 text-xs" onClick={() => navigate('/developers')}>
+                <Code className="h-3.5 w-3.5 mr-1.5 text-violet-400" /> Developers API
+              </Button>
+              <Button variant="outline" size="sm" className="rounded-full glass-subtle border-border/30 hover:border-primary/40 text-xs" onClick={() => navigate('/pricing')}>
+                <Crown className="h-3.5 w-3.5 mr-1.5 text-pink-400" /> Pricing
               </Button>
             </motion.div>
           </div>
@@ -401,7 +392,6 @@ const DocsPage = () => {
                 <TabsTrigger value="getting-started">Get Started</TabsTrigger>
                 <TabsTrigger value="workspace">Workspace</TabsTrigger>
                 <TabsTrigger value="features">Features</TabsTrigger>
-                <TabsTrigger value="missions">Missions</TabsTrigger>
                 <TabsTrigger value="tools">Tools</TabsTrigger>
                 <TabsTrigger value="privacy">Privacy</TabsTrigger>
                 <TabsTrigger value="pricing">Pricing</TabsTrigger>
@@ -413,7 +403,7 @@ const DocsPage = () => {
 
             {q && !hasSearchResults && (
               <p className="text-center text-muted-foreground py-8 glass-subtle rounded-xl">
-                No results for &ldquo;{searchQuery}&rdquo;. Try &ldquo;chatbot&rdquo;, &ldquo;BYOK&rdquo;, or &ldquo;offline&rdquo;.
+                No results for &ldquo;{searchQuery}&rdquo;. Try &ldquo;chatbot&rdquo;, &ldquo;&rdquo;, or &ldquo;privacy&rdquo;.
               </p>
             )}
 
@@ -447,12 +437,12 @@ const DocsPage = () => {
               <DocSection title="Tech stack (summary)">
                 <Card className="card-glass">
                   <CardContent className="pt-6 grid gap-3 md:grid-cols-2 text-sm text-muted-foreground">
-                    <p><strong className="text-foreground">Frontend:</strong> React 18, Vite, TypeScript, Tailwind, Framer Motion, shadcn/ui</p>
-                    <p><strong className="text-foreground">Backend:</strong> ShadowTalk backend (Auth, Postgres, RLS, Edge Functions)</p>
-                    <p><strong className="text-foreground">AI routing:</strong> Edge functions → Gemini / Kimi / local WebGPU</p>
-                    <p><strong className="text-foreground">IDE sandbox:</strong> Monaco + WebContainer (Computer Mode)</p>
-                    <p><strong className="text-foreground">Offline:</strong> SmolLM / Gemma via WebGPU + WASM transformers</p>
-                    <p><strong className="text-foreground">Desktop:</strong> Electron + Capacitor builds at /downloads</p>
+                    <p><strong className="text-foreground">Frontend:</strong> React 18, Vite, TypeScript, Tailwind CSS, Framer Motion, shadcn/ui, Recharts</p>
+                    <p><strong className="text-foreground">AI Intelligence:</strong> Multi-Model Turbo Engine (Groq Llama-3.3 70B, DeepSeek R1, OpenAI GPT-4o)</p>
+                    <p><strong className="text-foreground">Edge & Offline:</strong> In-browser WebGPU runtime + Transformers.js zero-network execution</p>
+                    
+                    <p><strong className="text-foreground">Telemetry & Audit:</strong> On-device tamper-evident cryptographic ledger + downloadable JSON reports</p>
+                    <p><strong className="text-foreground">Platform:</strong> Desktop PWA, mobile-responsive layout, and developer REST APIs</p>
                   </CardContent>
                 </Card>
               </DocSection>
@@ -588,18 +578,77 @@ const DocsPage = () => {
                   ))}
                 </div>
                 <div className="mt-4">
-                  <Button variant="outline" className="rounded-xl" onClick={() => navigate("/downloads")}>
-                    <Download className="h-4 w-4 mr-2" /> Desktop downloads
+                  <Button variant="outline" className="rounded-xl" onClick={() => navigate("/chatbot")}>
+                    <Rocket className="h-4 w-4 mr-2" /> Launch Web App
                   </Button>
                 </div>
+              </DocSection>
+
+              <DocSection title="How to Get Your API Key (BYOK Setup)">
+                <p className="text-muted-foreground mb-4">
+                  ShadowTalk's Power User (BYOK) mode lets you bring your own API key for unlimited
+                  messages and direct provider access. Here's how to get a free key in 60 seconds.
+                </p>
+                <div className="grid gap-5 md:grid-cols-2">
+                  {/* OpenRouter Guide */}
+                  <Card className="card-glass overflow-hidden">
+                    <CardHeader className="relative z-10 pb-3">
+                      <CardTitle className="flex items-center gap-2 text-base">
+                        <span className="text-lg">🔑</span> OpenRouter (Recommended)
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="pt-2 space-y-3 text-sm text-muted-foreground">
+                      <p>OpenRouter gives you access to GPT-4, Claude, Gemini, and 100+ models with one key. Free tier available.</p>
+                      <ol className="space-y-2 text-xs">
+                        <li className="flex gap-2"><span className="font-bold text-indigo-400">1.</span> Go to <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:underline">openrouter.ai/keys</a></li>
+                        <li className="flex gap-2"><span className="font-bold text-indigo-400">2.</span> Sign up with Google or GitHub (free, no credit card)</li>
+                        <li className="flex gap-2"><span className="font-bold text-indigo-400">3.</span> Click <strong className="text-foreground">"Create Key"</strong></li>
+                        <li className="flex gap-2"><span className="font-bold text-indigo-400">4.</span> Name it "ShadowTalk" and copy the key (<code className="text-[10px] bg-muted/30 px-1 rounded">sk-or-v1-...</code>)</li>
+                        <li className="flex gap-2"><span className="font-bold text-indigo-400">5.</span> Paste it into ShadowTalk's onboarding or Settings → BYOK</li>
+                      </ol>
+                      <div className="mt-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20 text-xs text-emerald-300">
+                        ✅ Free models available (Gemini, Llama) — no payment required for basic use.
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Google Gemini Guide */}
+                  <Card className="card-glass overflow-hidden">
+                    <CardHeader className="relative z-10 pb-3">
+                      <CardTitle className="flex items-center gap-2 text-base">
+                        <span className="text-lg">✨</span> Google Gemini API
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="pt-2 space-y-3 text-sm text-muted-foreground">
+                      <p>Google AI Studio offers free Gemini API access (generous free tier, no credit card needed).</p>
+                      <ol className="space-y-2 text-xs">
+                        <li className="flex gap-2"><span className="font-bold text-indigo-400">1.</span> Go to <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:underline">aistudio.google.com/apikey</a></li>
+                        <li className="flex gap-2"><span className="font-bold text-indigo-400">2.</span> Sign in with your Google account</li>
+                        <li className="flex gap-2"><span className="font-bold text-indigo-400">3.</span> Click <strong className="text-foreground">"Create API Key"</strong></li>
+                        <li className="flex gap-2"><span className="font-bold text-indigo-400">4.</span> Select a project (or create a new one — free)</li>
+                        <li className="flex gap-2"><span className="font-bold text-indigo-400">5.</span> Copy the key (<code className="text-[10px] bg-muted/30 px-1 rounded">AIza...</code>) and paste into ShadowTalk</li>
+                      </ol>
+                      <div className="mt-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20 text-xs text-emerald-300">
+                        ✅ Free tier: 15 requests/min, 1,500/day — perfect for personal use.
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+                <div className="mt-4 p-4 rounded-lg bg-indigo-500/5 border border-indigo-500/20 text-sm text-slate-300">
+                  <p className="font-semibold text-indigo-300 mb-1">💡 Which should I choose?</p>
+                  <p className="text-xs text-muted-foreground">OpenRouter is recommended — it gives you access to all major models (GPT-4, Claude, Gemini, Llama) with a single key and has a free tier. Gemini is great if you only need Google models and want the highest free-tier limits.</p>
+                </div>
+                <p className="text-xs text-muted-foreground mt-4">
+                  Your API key is stored <strong className="text-foreground">locally in your browser only</strong> — it never touches ShadowTalk's servers. See our <a href="/security" className="text-indigo-400 hover:underline">Security & Trust Center</a> for details.
+                </p>
               </DocSection>
             </TabsContent>
 
             {/* Workspace */}
             <TabsContent value="workspace" className="space-y-8">
-              <DocSection title="Using the /chatbot workspace">
+              <DocSection title="Enterprise Workspace & Business Intelligence">
                 <p className="text-muted-foreground mb-6">
-                  The main product workspace at /chatbot — streaming chat, tools, missions, and history. Returning users land here automatically.
+                  ShadowTalk provides a complete four-part workspace ecosystem: AI Chatbot, persistent Business Memory, production Analytics, and zero-cloud on-device Shadow Memory.
                 </p>
                 <div className="grid gap-5 md:grid-cols-2">
                   {workspaceGuide.map((section, idx) => (
@@ -633,11 +682,11 @@ const DocsPage = () => {
                 <SpotlightCard>
                 <Card className="card-glass">
                   <CardContent className="pt-6 space-y-3 text-sm text-muted-foreground">
-                    <p><strong className="text-foreground">+ Attach</strong> — images or files before sending.</p>
-                    <p><strong className="text-foreground">Provider chip</strong> — Sovereign (platform) or your BYOK provider when keys are saved.</p>
-                    <p><strong className="text-foreground">Mic</strong> — voice input / ShadowTalk Live.</p>
-                    <p><strong className="text-foreground">Send</strong> — gradient button inside the pill; Enter to send, Shift+Enter for new line.</p>
-                    <p className="text-xs pt-2">Hardware speed routing is automatic — there is no Turbo toggle in the UI.</p>
+                    <p><strong className="text-foreground">+ Attach</strong> — Attach documents, code snippets, or images prior to dispatch.</p>
+                    <p><strong className="text-foreground">Provider chip</strong> — Displays active Turbo Engine routing (Groq, DeepSeek, or OpenAI).</p>
+                    <p><strong className="text-foreground">Mic</strong> — Instant voice input transcription powered by Whisper.</p>
+                    <p><strong className="text-foreground">Send</strong> — Gradient action button; press Enter to send, Shift+Enter for newline.</p>
+                    <p className="text-xs pt-2 text-muted-foreground/70">Hardware speed routing dynamically balances latency and reasoning depth.</p>
                   </CardContent>
                 </Card>
                 </SpotlightCard>
@@ -645,10 +694,16 @@ const DocsPage = () => {
 
               <div className="flex flex-wrap gap-3">
                 <Button className="btn-glow rounded-xl" onClick={() => navigate("/chatbot")}>
-                  <Rocket className="h-4 w-4 mr-2" /> Open workspace
+                  <MessageSquare className="h-4 w-4 mr-2" /> Open Chatbot
                 </Button>
-                <Button variant="outline" className="rounded-xl" onClick={() => navigate("/changelog")}>
-                  <History className="h-4 w-4 mr-2" /> View changelog
+                <Button variant="outline" className="rounded-xl" onClick={() => navigate("/workspace")}>
+                  <Brain className="h-4 w-4 mr-2" /> Business Memory
+                </Button>
+                <Button variant="outline" className="rounded-xl" onClick={() => navigate("/analytics")}>
+                  <TrendingUp className="h-4 w-4 mr-2" /> Analytics Dashboard
+                </Button>
+                <Button variant="outline" className="rounded-xl" onClick={() => navigate("/shadow-memory")}>
+                  <Shield className="h-4 w-4 mr-2" /> Shadow Memory Journal
                 </Button>
               </div>
             </TabsContent>
@@ -656,7 +711,7 @@ const DocsPage = () => {
             {/* Features */}
             <TabsContent value="features" className="space-y-8">
               <DocSection title="Core Features">
-                <p className="text-muted-foreground mb-6">Agentic workspace capabilities — chat, code, missions, security, and offline.</p>
+                <p className="text-muted-foreground mb-6">Agentic workspace capabilities — chat, code, missions, security, and security.</p>
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                   {features.map((feature, i) => (
                     <motion.div key={i} custom={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
@@ -792,39 +847,6 @@ const DocsPage = () => {
               </DocSection>
             </TabsContent>
 
-            {/* Missions */}
-            <TabsContent value="missions" className="space-y-8">
-              <DocSection title="Mission Control & S.E.E.">
-                <p className="text-muted-foreground mb-6">
-                  ShadowTalk runs multi-step autonomous work through Mission Control (/missioncontrol) and the Shadow Execution Engine (/execute).
-                  Sensitive tool calls pause for your approval before continuing.
-                </p>
-                <div className="grid gap-5 md:grid-cols-2">
-                  {missionSteps.map((step, i) => (
-                    <motion.div key={step.step} custom={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-                      <SpotlightCard className="h-full">
-                        <Card className="card-glass h-full">
-                          <CardHeader>
-                            <Badge variant="outline" className="mb-2 w-fit glass-subtle">Step {step.step}</Badge>
-                            <CardTitle className="text-lg">{step.title}</CardTitle>
-                            <CardDescription className="mt-2">{step.description}</CardDescription>
-                          </CardHeader>
-                        </Card>
-                      </SpotlightCard>
-                    </motion.div>
-                  ))}
-                </div>
-              </DocSection>
-              <div className="flex flex-wrap gap-3">
-                <Button className="btn-glow rounded-xl" onClick={() => navigate("/missioncontrol")}>
-                  <Rocket className="h-4 w-4 mr-2" /> Open Mission Control
-                </Button>
-                <Button variant="outline" className="rounded-xl" onClick={() => navigate("/execute")}>
-                  <Zap className="h-4 w-4 mr-2" /> Shadow Execution
-                </Button>
-              </div>
-            </TabsContent>
-
             {/* Tools & modes */}
             <TabsContent value="tools" className="space-y-8">
               <DocSection title="Chat tools reference">
@@ -883,7 +905,7 @@ const DocsPage = () => {
                 <Accordion type="single" collapsible className="space-y-3">
                   {[
                     { value: "code", title: "Code Mode Tips", tips: ["Specify the programming language for better results", "Include context about your project structure", "Use the Code Canvas for interactive editing", "Ask for explanations along with code solutions", "Request unit tests for generated code"] },
-                    { value: "image", title: "Image Generation Tips", tips: ["Be specific about style (photorealistic, cartoon, watercolor, etc.)", "Include details about lighting and mood", "Mention aspect ratio if important", "Use negative prompts to exclude unwanted elements", "Check your plan's daily image limit on /pricing"] },
+                    { value: "image", title: "Image Generation Tips", tips: ["Be specific about style (photorealistic, cartoon, watercolor, etc.)", "Include details about lighting and mood", "Mention aspect ratio if important", "Use negative prompts to exclude unwanted elements"] },
                     { value: "translate", title: "Translation Tips", tips: ["Specify source and target languages", "Provide context for better accuracy", "Ask for formal or informal translations", "Request pronunciation guides when needed", "Supports 100+ languages"] },
                     { value: "summarize", title: "Summarization Tips", tips: ["Specify desired length (bullet points, paragraph, one-liner)", "Ask for key takeaways or action items", "Upload documents for longer content", "Request summaries for specific audiences", "Great for meeting notes and articles"] },
                   ].map((section) => (
@@ -909,7 +931,7 @@ const DocsPage = () => {
             <TabsContent value="privacy" className="space-y-8">
               <DocSection title="Privacy & security">
                 <p className="text-muted-foreground mb-6">
-                  ShadowTalk is privacy-native: choose cloud routing, BYOK, client-side vault, or on-device inference per task.
+                  ShadowTalk is privacy-native: choose cloud routing, client-side vault, or on-device inference per task.
                 </p>
                 <div className="grid gap-5 md:grid-cols-2">
                   {privacySections.map((section, idx) => (
@@ -939,9 +961,9 @@ const DocsPage = () => {
                 </div>
               </DocSection>
               <div className="flex flex-wrap gap-3">
-                <Button variant="outline" className="rounded-xl" onClick={() => navigate("/privacy")}>Privacy policy</Button>
-                <Button variant="outline" className="rounded-xl" onClick={() => navigate("/transparency")}>Transparency</Button>
-                <Button variant="outline" className="rounded-xl" onClick={() => navigate("/security")}>Security hub</Button>
+                <Button variant="outline" className="rounded-xl" onClick={() => navigate("/private-ai")}>Private AI Hub</Button>
+                <Button variant="outline" className="rounded-xl" onClick={() => navigate("/shadow-memory")}>Shadow Memory Journal</Button>
+                <Button variant="outline" className="rounded-xl" onClick={() => navigate("/about")}>Ethics & Privacy</Button>
               </div>
             </TabsContent>
 
@@ -949,8 +971,8 @@ const DocsPage = () => {
             <TabsContent value="pricing" className="space-y-8">
               <DocSection title="Plans & limits">
                 <p className="text-muted-foreground mb-6">
-                  Free unlocks all feature types with daily limits. Paid plans remove caps and add vault, offline, and API access.
-                  Pakistan local payments: <button type="button" className="text-primary underline" onClick={() => navigate("/founder-access")}>/founder-access</button>.
+                  ShadowTalk AI is free to use — every feature included, no subscription, no credit card. Bring your own AI provider API key; your provider may charge separately for API usage.
+                  The former <button type="button" className="text-primary underline" onClick={() => navigate("/founder-access")}>/founder-access</button> checkout page now explains free access.
                 </p>
                 <div className="grid gap-5 md:grid-cols-2">
                   {pricingTiers.map((tier, i) => (
@@ -988,7 +1010,7 @@ const DocsPage = () => {
                 </Card>
                 <div className="mt-4">
                   <Button className="btn-glow rounded-xl" onClick={() => navigate("/pricing")}>
-                    <Crown className="h-4 w-4 mr-2" /> View live pricing
+                    <Crown className="h-4 w-4 mr-2" /> View free access details
                   </Button>
                 </div>
               </DocSection>
@@ -998,7 +1020,7 @@ const DocsPage = () => {
             <TabsContent value="api" className="space-y-8">
               <DocSection title="API Reference">
                 <div className="flex items-center gap-2 mb-6">
-                  <Badge className="bg-secondary/10 text-secondary border-secondary/20">Elite Plan Required</Badge>
+                  <Badge className="bg-secondary/10 text-secondary border-secondary/20">Free — BYOK required</Badge>
                 </div>
                 <p className="text-muted-foreground mb-6">
                   Access ShadowTalk AI programmatically through our REST API.
@@ -1076,7 +1098,7 @@ const DocsPage = () => {
                 <div className="grid gap-5 md:grid-cols-2">
                   {[
                     { icon: Wifi, title: "Online Mode", color: "text-primary", items: ["Minimum 5 Mbps connection", "WebSocket support required", "Ports 443 (HTTPS) must be open", "Low latency recommended for voice"] },
-                    { icon: WifiOff, title: "Offline Mode (Elite)", color: "text-secondary", items: ["Full offline login with cached credentials", "In-browser AI (WebLLM) for responses", "Cached conversations available", "Auto-sync when back online", "PWA installation required"] },
+                    { icon: WifiOff, title: "Mode (Elite)", color: "text-secondary", items: ["Full login with cached credentials", "In-browser AI (WebLLM) for responses", "Cached conversations available", "Auto-sync when back online", "PWA installation required"] },
                   ].map((section, idx) => (
                     <motion.div key={idx} custom={idx} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
                       <SpotlightCard className="h-full">
@@ -1119,8 +1141,8 @@ const DocsPage = () => {
                     <Button variant="outline" className="rounded-xl glass-subtle border-border/30 hover:border-primary/40" onClick={() => navigate('/chatbot')}>
                       <MessageSquare className="h-4 w-4 mr-2" /> Open workspace
                     </Button>
-                    <Button variant="outline" className="rounded-xl glass-subtle border-border/30 hover:border-primary/40" onClick={() => navigate('/contact')}>
-                      <ExternalLink className="h-4 w-4 mr-2" /> Contact support
+                    <Button variant="outline" className="rounded-xl glass-subtle border-border/30 hover:border-primary/40" onClick={() => navigate('/about')}>
+                      <Users className="h-4 w-4 mr-2" /> About & Contact
                     </Button>
                   </div>
                 </div>

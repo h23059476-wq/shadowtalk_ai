@@ -54,7 +54,7 @@ export async function ingestMessage(
 
   const embedding = await embedText(trimmed);
   const item: CorpusItem = {
-    id: crypto.randomUUID(),
+    id: (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16); })),
     text: trimmed.slice(0, 1200),
     embedding,
     role,

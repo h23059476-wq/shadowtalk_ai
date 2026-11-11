@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect, useRef } from "react";
 import { backend } from "@/integrations/local/client";
 import { useToast } from "@/hooks/use-toast";
 import type { useE2EE } from "@/hooks/useE2EE";
@@ -27,6 +27,31 @@ export function useChatPrivateMode(e2ee: E2EEApi) {
   const [anonymousUi, setAnonymousUi] = useState(() => isChatAnonymousUiActive());
   const [busy, setBusy] = useState(false);
 
+  // Private-mode flag lifetime = encryption-key lifetime. The key is held only
+  // in memory (the dead sessionStorage persistence was removed from useE2EE),
+  // so a flag that survived a reload would claim encryption was active while
+  // the key was gone — every new message would then fail to save. Clear the
+  // stale flag on mount and tell the user honestly.
+  const clearedStaleFlag = useRef(false);
+  useEffect(() => {
+    if (clearedStaleFlag.current) return;
+    clearedStaleFlag.current = true;
+    if (isChatPrivateModeActive() && !e2ee.isUnlocked) {
+      setChatPrivateModeActive(false);
+      setChatAnonymousUiActive(false);
+      setActive(false);
+      setAnonymousUi(false);
+      toast({
+        title: "Private mode ended",
+        description:
+          "Encryption keys live only for the current session. Re-enable private mode to encrypt this chat.",
+      });
+    }
+    // Runs once per mount; e2ee.isUnlocked is always false at mount because
+    // the key is never persisted.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const resolveDisplayText = useCallback(
     async (raw: string): Promise<string> => {
       if (!e2ee.isEncrypted(raw)) return raw;
@@ -39,12 +64,22 @@ export function useChatPrivateMode(e2ee: E2EEApi) {
     [e2ee],
   );
 
+  /**
+   * Strict encrypt-or-null contract:
+   * - Private mode off  → plaintext is fine.
+   * - Private mode on   → ciphertext or `null`. NEVER a silent plaintext
+   *   fallback (a `null` caller must skip the DB write instead).
+   * `forceActive` lets the enable-path encrypt rows in the same tick where
+   * the mode is switched on (state closure would still see the old value).
+   */
   const wrapForStorage = useCallback(
-    async (plaintext: string): Promise<string> => {
-      if (!active || !e2ee.isUnlocked) return plaintext;
+    async (plaintext: string, forceActive?: boolean): Promise<string | null> => {
+      const isActive = forceActive ?? active;
+      if (!isActive) return plaintext;
+      if (!e2ee.isUnlocked) return null;
       const encrypted = await e2ee.encryptData(plaintext);
-      if (encrypted) return e2ee.wrapEncrypted(encrypted.data, encrypted.iv);
-      return plaintext;
+      if (!encrypted) return null;
+      return e2ee.wrapEncrypted(encrypted.data, encrypted.iv);
     },
     [active, e2ee],
   );
@@ -54,18 +89,26 @@ export function useChatPrivateMode(e2ee: E2EEApi) {
       conversationId: string,
       rows: { id: string; content: string }[],
       titlePlain = "Private Chat",
+      forceActive?: boolean,
     ) => {
+      const encryptOrFail = async (plain: string): Promise<string> => {
+        if (e2ee.isEncrypted(plain)) return plain;
+        const wrapped = await wrapForStorage(plain, forceActive);
+        if (wrapped === null) {
+          throw new Error("Encryption failed — plaintext was not persisted.");
+        }
+        return wrapped;
+      };
+
       for (const row of rows) {
         if (row.id === "welcome") continue;
-        const contentToSave = e2ee.isEncrypted(row.content)
-          ? row.content
-          : await wrapForStorage(row.content);
+        const contentToSave = await encryptOrFail(row.content);
         if (contentToSave !== row.content) {
           await backend.from("messages").update({ content: contentToSave }).eq("id", row.id);
         }
       }
 
-      const titleToSave = await wrapForStorage(titlePlain);
+      const titleToSave = await encryptOrFail(titlePlain);
       await backend
         .from("conversations")
         .update({ title: titleToSave, updated_at: new Date().toISOString() })
@@ -82,7 +125,10 @@ export function useChatPrivateMode(e2ee: E2EEApi) {
     }) => {
       setBusy(true);
       try {
-        const engaged = await e2ee.engageSessionEncryption();
+        // If the vault is already unlocked (e.g. a legacy passphrase recovery
+        // just succeeded), keep THAT key — re-engaging would mint a fresh
+        // random key and permanently orphan the ciphertext we just recovered.
+        const engaged = e2ee.isUnlocked || (await e2ee.engageSessionEncryption());
         if (!engaged) {
           toast({
             title: "Encryption failed",
@@ -98,7 +144,10 @@ export function useChatPrivateMode(e2ee: E2EEApi) {
         setAnonymousUi(true);
 
         if (options.conversationId && !options.isGuest) {
-          await encryptConversationInDb(options.conversationId, options.messages);
+          // forceActive: the `active` state closure is still false in this
+          // tick — without the override every row would be "encrypted" as
+          // plaintext while the UI claims E2EE protection.
+          await encryptConversationInDb(options.conversationId, options.messages, "Private Chat", true);
         }
 
         toast({
@@ -142,10 +191,15 @@ export function useChatPrivateMode(e2ee: E2EEApi) {
           out.push(m);
           continue;
         }
-        out.push({
-          id: m.id,
-          content: e2ee.isEncrypted(m.content) ? m.content : await wrapForStorage(m.content),
-        });
+        if (e2ee.isEncrypted(m.content)) {
+          out.push(m);
+          continue;
+        }
+        const wrapped = await wrapForStorage(m.content);
+        if (wrapped === null) {
+          throw new Error("Encryption failed — message was not saved.");
+        }
+        out.push({ id: m.id, content: wrapped });
       }
       return out;
     },

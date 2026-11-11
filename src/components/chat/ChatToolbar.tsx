@@ -1,9 +1,8 @@
+import React from "react";
 import { motion } from "framer-motion";
-import { MessageSquarePlus, History, Eraser, Trash2, Settings } from "lucide-react";
+import { MessageSquarePlus, History, Eraser, Trash2, Settings, Phone } from "lucide-react";
 import { ChatEncryptionToggle } from "@/components/chat/ChatEncryptionToggle";
-import { OfflineModeIndicator } from "@/components/chat/OfflineModeIndicator";
-import { OfflineAIIndicator } from "@/components/chat/OfflineAIIndicator";
-import { SovereignModeIndicator } from "@/components/chat/SovereignModeIndicator";
+
 import { HardwareTurboBadge } from "@/components/chat/HardwareTurboBadge";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -36,10 +35,11 @@ interface ChatToolbarProps {
   encryptionBusy?: boolean;
   onEnableEncryption?: () => void | Promise<void>;
   onDisableEncryption?: () => void;
+  onToggleLiveVoice?: () => void;
   className?: string;
 }
 
-export function ChatToolbar({
+function ChatToolbarInner({
   hasActiveChat,
   conversationCount,
   onNewChat,
@@ -50,6 +50,7 @@ export function ChatToolbar({
   encryptionBusy = false,
   onEnableEncryption,
   onDisableEncryption,
+  onToggleLiveVoice,
   className = "",
 }: ChatToolbarProps) {
   const navigate = useNavigate();
@@ -63,9 +64,8 @@ export function ChatToolbar({
         animate="visible"
         className={`hidden md:flex items-center gap-1 px-4 md:px-6 py-2 border-b border-border/40 glass-subtle shrink-0 overflow-x-auto scrollbar-none ${className}`}
       >
-        <OfflineModeIndicator compact />
-        <OfflineAIIndicator />
-        <SovereignModeIndicator />
+
+
         <HardwareTurboBadge />
         <div className="ml-auto flex items-center gap-1">
         {onEnableEncryption && onDisableEncryption && (
@@ -75,6 +75,24 @@ export function ChatToolbar({
             onEnable={onEnableEncryption}
             onDisable={onDisableEncryption}
           />
+        )}
+
+        {onToggleLiveVoice && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={onToggleLiveVoice}
+                className="h-8 gap-1.5 rounded-full text-xs font-medium text-purple-400 hover:text-purple-300 hover:bg-purple-500/10 border border-transparent hover:border-purple-500/20"
+              >
+                <Phone className="h-4 w-4" />
+                <span className="hidden sm:inline">Live Voice</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Start live voice conversation</TooltipContent>
+          </Tooltip>
         )}
 
         <Tooltip>
@@ -185,3 +203,6 @@ export function ChatToolbar({
     </TooltipProvider>
   );
 }
+
+export const ChatToolbar = React.memo(ChatToolbarInner);
+

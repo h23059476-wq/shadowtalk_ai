@@ -1,11 +1,13 @@
 /**
  * useGlobalChat — standard (cloud/offline) chat path used as the fallback
- * for ShadowTalk-Turbo when no BYOK Groq key is available.
+ * for ShadowTalk-Turbo when no Groq key is available.
  */
 
 import { useCallback, useRef, useState } from "react";
 import { backend } from "@/integrations/local/client";
-import { streamChatCompletion } from "@/lib/see/chatCompletion";
+import { streamChatCompletion } from "@/lib/turbo/chatCompletion";
+import { globalMemory, buildRecallPacket } from "@/lib/memory/adaptiveMemory";
+import { AIProviderRouter } from "@/ai/AIProviderRouter";
 
 export interface GlobalChatMessage {
   role: "user" | "assistant" | "system";
@@ -33,27 +35,58 @@ export function useGlobalChat() {
   const send = useCallback(
     async (messages: GlobalChatMessage[], opts: GlobalChatOptions = {}): Promise<GlobalChatResponse> => {
       setIsLoading(true);
+      // Wire the abort controller so `abort()` (and unmount cleanup) can
+      // actually cancel the in-flight stream — previously abortRef was never
+      // assigned, so abort() was a silent no-op.
+      const controller = new AbortController();
+      abortRef.current = controller;
+      const onExternalAbort = () => controller.abort();
+      opts.signal?.addEventListener("abort", onExternalAbort);
       try {
-        const { data } = await backend.auth.getSession();
-        const token = data.session?.access_token || import.meta.env.VITE_API_KEY;
-
         const lastUser = [...messages].reverse().find((m) => m.role === "user");
-        const prompt = [opts.systemPrompt, lastUser?.content].filter(Boolean).join("\n\n");
+        
+        let contextPrefix = opts.systemPrompt;
+        if (lastUser) {
+          const recall = await buildRecallPacket(globalMemory, lastUser.content);
+          if (recall) {
+            contextPrefix = (contextPrefix ? contextPrefix + "\n\n" : "") + recall;
+          }
+        }
+        
+        // Build final message list
+        const chatMessages = [...messages];
+        if (contextPrefix) {
+           chatMessages.unshift({ role: "system", content: contextPrefix });
+        }
 
-        const content = await streamChatCompletion(token as string, prompt, {
-          model: opts.model,
-          signal: opts.signal,
+        const provider = await AIProviderRouter.getBestProvider();
+        const { content, error } = await provider.streamChat(chatMessages, {
+          signal: controller.signal,
+          temperature: 0.7,
+          onDelta: opts.onDelta,
         });
+        if (error) throw new Error(error);
 
-        opts.onDelta?.(content);
         return { content, source: "cloud" };
-      } catch (err) {
+      } catch (err: any) {
+        if (controller.signal.aborted || err?.name === "AbortError") {
+          return { content: "", source: "error", error: "Chat stopped." };
+        }
+        if (err?.message === "offline_not_provisioned") {
+          return {
+            content: "",
+            source: "error",
+            error: "I'm offline and Local AI is not installed. Please connect to the internet or install Local AI in Settings.",
+          };
+        }
         return {
           content: "",
           source: "error",
           error: err instanceof Error ? err.message : "Chat request failed",
         };
       } finally {
+        opts.signal?.removeEventListener("abort", onExternalAbort);
+        if (abortRef.current === controller) abortRef.current = null;
         setIsLoading(false);
       }
     },

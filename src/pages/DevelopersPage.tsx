@@ -1,173 +1,239 @@
+/**
+ * DevelopersPage — Developer Portal for ShadowTalk AI.
+ *
+ * Hero, quick-start cards, an annotated code example, and SDK info.
+ * Routes developers to /docs for full reference.
+ *
+ * Route: /developers
+ */
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Code2,
+  KeyRound,
+  Plug,
+  MessageSquare,
+  Image as ImageIcon,
+  ArrowRight,
+  Copy,
+  Check,
+  Terminal,
+  Cloud,
+  Server,
+} from "lucide-react";
+import { SEOHead } from "@/components/SEOHead";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Code, Cpu, Shield, Zap, Terminal, Key, Globe, ArrowRight, Construction } from "lucide-react";
-import { PRIVACY_COPY } from "@/lib/productClaims";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { APIMarketplace } from "@/components/chat/APIMarketplace";
 
-const codeExamples = {
-  quickstart: `// Initialize the Shadow SDK
-import { ShadowAI } from '@shadowtalk/sdk';
-
-const shadow = new ShadowAI({
-  apiKey: 'stk_your_api_key',
-  mode: 'hybrid', // 'online' | 'offline' | 'hybrid'
-});
-
-// Run inference locally or in the cloud
-const response = await shadow.chat({
-  model: 'phi-3.5-mini',
-  messages: [
-    { role: 'user', content: 'Analyze Q3 revenue trends' }
-  ],
-  privacy: 'sovereign', // optional on-device path when SDK ships
-});
-
-console.log(response.content);`,
-  embedding: `// Use the local embedding engine
-const embeddings = await shadow.embed({
-  input: ['privacy-first AI', 'on-device inference'],
-  model: 'local-minilm',
-});
-
-// Semantic search across your private data
-const results = await shadow.search({
-  query: 'board meeting preparation',
-  index: 'business-memories',
-  topK: 5,
-});`,
-  agent: `// Create an autonomous agent
-const agent = shadow.createAgent({
-  name: 'MarketWatcher',
-  tools: ['web-search', 'pdf-export', 'email-notify'],
-  schedule: '0 9 * * *', // daily at 9 AM
-});
-
-agent.on('complete', (report) => {
-  console.log('Market report:', report.summary);
-});
-
-await agent.run({
-  goal: 'Monitor competitor pricing changes',
-  scope: ['stripe.com', 'openai.com'],
-});`,
-};
-
-const sdkFeatures = [
-  { icon: Cpu, title: "On-Device Inference", description: "Run 7B+ models locally via WebGPU. Zero cloud dependency." },
-  { icon: Shield, title: "Sovereign Privacy", description: PRIVACY_COPY.vault },
-  { icon: Zap, title: "Hybrid Mode", description: "Automatic fallback between local and cloud inference." },
-  { icon: Globe, title: "Edge-First", description: "Optimized for low-latency, offline-capable applications." },
-  { icon: Terminal, title: "Agent Framework", description: "Build autonomous agents with built-in tool orchestration." },
-  { icon: Key, title: "API Keys & Billing", description: "Metered usage, rate limiting, and developer dashboard." },
+const QUICK_START = [
+  {
+    icon: KeyRound,
+    title: "Get an API Key",
+    body: "Generate a key from Settings → Developer. Keys are scoped per-workspace and rotatable on demand.",
+  },
+  {
+    icon: Plug,
+    title: "BYOK Setup",
+    body: "Bring your own OpenRouter, Gemini, or Groq key. We never store the plaintext — keys are encrypted at rest.",
+  },
+  {
+    icon: MessageSquare,
+    title: "Chat API",
+    body: "Stream completions with SSE. OpenAI-compatible request shape so existing SDKs drop right in.",
+  },
+  {
+    icon: ImageIcon,
+    title: "Image Generation API",
+    body: "Generate, edit, and upscale images. Returns signed URLs valid for 24 hours.",
+  },
 ];
 
-const DevelopersPage = () => {
-  const navigate = useNavigate();
-  const [showApiMarketplace, setShowApiMarketplace] = useState(false);
+const CODE_SAMPLE = `// ShadowTalk AI — basic chat completion (Node.js)
+import fetch from "node-fetch";
+
+const res = await fetch("https://api.shadowtalk-ai.com/v1/chat", {
+  method: "POST",
+  headers: {
+    "Authorization": "Bearer sk-shadow-...",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    model: "shadowtalk-pro",
+    messages: [
+      { role: "system", content: "You are a concise research assistant." },
+      { role: "user", content: "Summarize the latest GDPR enforcement actions." },
+    ],
+    stream: true, // SSE streaming supported
+  }),
+});
+
+for await (const chunk of res.body) {
+  console.log(chunk.toString());
+}`;
+
+export default function DevelopersPage() {
+  const [copied, setCopied] = useState(false);
+
+  const copyCode = async () => {
+    try {
+      await navigator.clipboard.writeText(CODE_SAMPLE);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      // Clipboard may be blocked — fail silently.
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background text-foreground">
+      <SEOHead
+        meta={{
+          title: "Developer Portal — ShadowTalk AI",
+          description:
+            "Build with ShadowTalk AI. REST API, SSE streaming, OpenAI-compatible endpoints, BYOK support, and image generation. Get an API key and ship in minutes.",
+          canonical: "https://www.shadowtalk-ai.com/developers",
+          keywords: ["ShadowTalk API", "developer portal", "BYOK", "SSE streaming", "OpenAI-compatible"],
+          ogType: "website",
+          twitterCard: "summary",
+          noIndex: false,
+        }}
+      />
       <Navigation />
-      <div className="container mx-auto px-4 pt-24 pb-16">
-        {/* Hero */}
-        <div className="text-center mb-16">
-          <Badge variant="outline" className="mb-4 border-amber-500/40 text-amber-600 dark:text-amber-400">
-            <Construction className="h-3.5 w-3.5 mr-1.5" />
-            Shadow SDK — Roadmap (preview docs)
-          </Badge>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            The <span className="gradient-text">"Intel Inside"</span> for On-Device AI
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Embed ShadowTalk's local inference engine into your own apps. Privacy-first, offline-capable AI for every developer.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Button size="lg" onClick={() => setShowApiMarketplace(true)}>
-              <Key className="mr-2 h-5 w-5" />
-              Manage API Keys
-            </Button>
-            <Button size="lg" variant="outline" onClick={() => navigate('/api')}>
-              API Reference
-            </Button>
-            <Button size="lg" variant="outline" onClick={() => navigate('/docs')}>
-              Read Docs
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </div>
-        </div>
-
-        {/* SDK Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {sdkFeatures.map((f, i) => (
-            <Card key={i} className="hover:border-primary/30 transition-colors">
-              <CardContent className="p-6">
-                <div className="p-2 rounded-lg bg-primary/10 w-fit mb-4">
-                  <f.icon className="h-5 w-5 text-primary" />
-                </div>
-                <h3 className="font-semibold mb-2">{f.title}</h3>
-                <p className="text-sm text-muted-foreground">{f.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Code Examples */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Ship in <span className="gradient-text">Minutes</span>, Not Months
-          </h2>
-          <Tabs defaultValue="quickstart" className="max-w-4xl mx-auto">
-            <TabsList className="mx-auto flex w-fit">
-              <TabsTrigger value="quickstart">Quick Start</TabsTrigger>
-              <TabsTrigger value="embedding">Embeddings & Search</TabsTrigger>
-              <TabsTrigger value="agent">Autonomous Agents</TabsTrigger>
-            </TabsList>
-            {Object.entries(codeExamples).map(([key, code]) => (
-              <TabsContent key={key} value={key}>
-                <Card className="bg-card border-border">
-                  <CardContent className="p-0">
-                    <pre className="p-6 overflow-x-auto text-sm">
-                      <code className="text-muted-foreground">{code}</code>
-                    </pre>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            ))}
-          </Tabs>
-        </div>
-
-        {/* Pricing */}
-        <Card className="border-primary/20 bg-primary/5 max-w-2xl mx-auto">
-          <CardContent className="p-8 text-center">
-            <h3 className="text-2xl font-bold mb-2">Developer Pricing</h3>
-            <p className="text-muted-foreground mb-6">Start free. Scale with usage.</p>
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div>
-                <p className="text-2xl font-bold text-foreground">Free</p>
-                <p className="text-xs text-muted-foreground">1K requests/mo</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold gradient-text">$29/mo</p>
-                <p className="text-xs text-muted-foreground">50K requests/mo</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-foreground">Custom</p>
-                <p className="text-xs text-muted-foreground">Enterprise</p>
-              </div>
+      <PageTransition>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+          {/* Hero */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="text-center mb-12"
+          >
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 mb-4">
+              <Code2 className="w-8 h-8 text-indigo-400" />
             </div>
-          </CardContent>
-        </Card>
-      </div>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Build with ShadowTalk AI</h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-3 max-w-2xl mx-auto leading-relaxed">
+              A production-grade API for chat, research, and image generation. OpenAI-compatible,
+              SSE-streamed, and BYOK-friendly. Ship your first integration in under five minutes.
+            </p>
+            <div className="flex items-center justify-center gap-3 mt-6">
+              <Button onClick={() => (window.location.href = "/settings")} className="gap-2">
+                <KeyRound className="h-4 w-4" />
+                Get an API Key
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => (window.location.href = "/docs")}
+                className="gap-2 border-border/50 bg-transparent hover:bg-white/5"
+              >
+                Full Documentation
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </motion.div>
+
+          {/* Quick start cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+            {QUICK_START.map((card, i) => (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25, delay: 0.04 * i }}
+                className="ios-glass-card p-5"
+              >
+                <div className="inline-flex p-2 rounded-lg bg-white/5 border border-border/50 mb-3">
+                  <card.icon className="h-4 w-4 text-indigo-400" />
+                </div>
+                <h3 className="text-sm font-semibold text-foreground">{card.title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed mt-1">{card.body}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Code example */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="ios-glass-card p-6 mb-12"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Terminal className="h-4 w-4 text-indigo-400" />
+                <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                  Quick Example — Chat Completion
+                </h2>
+              </div>
+              <button
+                onClick={copyCode}
+                className="flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-md bg-white/[0.04] border border-border/50 text-muted-foreground hover:text-foreground hover:border-indigo-500/40 transition"
+              >
+                {copied ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
+                {copied ? "Copied" : "Copy"}
+              </button>
+            </div>
+            <pre className="overflow-x-auto rounded-xl bg-[#0a0e1a] border border-border/50 p-4 text-[12px] leading-relaxed text-slate-200">
+              <code>{CODE_SAMPLE}</code>
+            </pre>
+          </motion.div>
+
+          {/* SDK info card */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.15 }}
+            className="ios-glass-card p-6"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <Server className="h-4 w-4 text-indigo-400" />
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                SDK & Protocol Support
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {[
+                {
+                  icon: Code2,
+                  title: "REST API",
+                  body: "Predictable JSON over HTTPS. Versioned at /v1. Stable, documented, and OpenAPI-described.",
+                },
+                {
+                  icon: Cloud,
+                  title: "SSE Streaming",
+                  body: "Server-Sent Events for token-by-token streaming. Same shape as OpenAI's stream API.",
+                },
+                {
+                  icon: Plug,
+                  title: "OpenAI-compatible",
+                  body: "Point any OpenAI SDK at api.shadowtalk-ai.com and it just works. BYOK keys supported.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-xl border border-border/50 bg-white/[0.02] p-4"
+                >
+                  <item.icon className="h-4 w-4 text-indigo-400 mb-2" />
+                  <p className="text-xs font-semibold text-foreground">{item.title}</p>
+                  <p className="text-[11px] text-muted-foreground leading-relaxed mt-1">{item.body}</p>
+                </div>
+              ))}
+            </div>
+            <Button
+              variant="outline"
+              className="mt-5 gap-2 border-border/50 bg-transparent hover:bg-white/5"
+              onClick={() => (window.location.href = "/docs")}
+            >
+              Open Full Documentation
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </motion.div>
+        </div>
+      </PageTransition>
       <Footer />
-      <APIMarketplace isOpen={showApiMarketplace} onClose={() => setShowApiMarketplace(false)} />
     </div>
   );
-};
-
-export default DevelopersPage;
+}
