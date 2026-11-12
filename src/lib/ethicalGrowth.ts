@@ -1,6 +1,8 @@
 import { FREE_TIER_DAILY } from "@/lib/productClaims";
-import { PLAN_DETAILS } from "@/lib/stripe";
 import { getRiskReversalBullets } from "@/lib/conversionPsychology";
+
+// Free-access transition: Stripe `PLAN_DETAILS` import removed.
+// See docs/audit/CLAIMS_REALITY_REPORT.md P1-1, P2-2.
 
 /** Public proof pages — always link to real product surfaces */
 export const PROOF_LINKS = [

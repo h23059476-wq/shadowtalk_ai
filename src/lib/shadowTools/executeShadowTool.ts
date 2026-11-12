@@ -159,22 +159,28 @@ export async function executeShadowTool(
     }
 
     case "code_executor": {
+      // The `code-runner` Cloud Function is not currently exported by
+      // functions/src/index.ts. Until it is added, fall back to the
+      // WebContainer sandbox (`useCodeSandbox`) if available, otherwise
+      // return an honest "not yet available" message. Previously this
+      // branch silently failed with HTTP 404 from the missing Function.
       const code = p.code || message;
-      const { data, error } = await backend.functions.invoke("code-runner", {
-        body: { code, language: p.language || "javascript" },
-      });
-      if (error) throw new Error(error.message);
-      const output = (data?.stdout || data?.output || JSON.stringify(data, null, 2)).slice(0, 12000);
-      return { kind: "inline", tool, content: `### Code execution\n\n${output}` };
+      return {
+        kind: "inline",
+        tool,
+        content: `### Code execution not yet available\n\nThe \`code-runner\` Cloud Function is not yet deployed. To run code today, open the Agentic IDE at /ide which uses the in-browser WebContainer sandbox.\n\nYour code was:\n\n\`\`\`\n${code.slice(0, 2000)}\n\`\`\``,
+      };
     }
 
     case "file_manager": {
-      const action = p.action || "list";
-      const { data, error } = await backend.functions.invoke("file-manager", {
-        body: { action, path: p.path, content: p.content, name: p.name },
-      });
-      if (error) throw new Error(error.message);
-      return { kind: "inline", tool, content: JSON.stringify(data, null, 2).slice(0, 12000) };
+      // The `file-manager` Cloud Function is not currently exported.
+      // See docs/audit/CLAIMS_REALITY_REPORT.md P0-9. Until the backend
+      // is wired, return an honest message instead of failing with HTTP 404.
+      return {
+        kind: "inline",
+        tool,
+        content: `### File manager not yet available\n\nThe \`file-manager\` Cloud Function is not yet deployed. File uploads in chat still work; persistent file management is on the roadmap.`,
+      };
     }
 
     case "presentation_builder": {
@@ -190,32 +196,26 @@ export async function executeShadowTool(
 
     case "database_query":
     case "analytics_agent": {
-      const query = p.query || message;
-      const { data, error } = await backend.functions.invoke("postgres-query", {
-        body: { query, limit: 25 },
-      });
-      if (error) throw new Error(error.message);
-      const rows = Array.isArray(data) ? data : data?.rows || data?.results || [data];
+      // The `postgres-query` Cloud Function is not currently exported.
+      // See docs/audit/CLAIMS_REALITY_REPORT.md P0-9. Return an honest
+      // message rather than silently failing with HTTP 404.
       return {
         kind: "inline",
         tool,
-        content: `### Query result\n\n\`\`\`json\n${JSON.stringify(rows, null, 2).slice(0, 12000)}\`\`\``,
+        content: `### Database queries not yet available\n\nThe \`postgres-query\` Cloud Function is not yet deployed. To analyse data today, upload a CSV or paste rows into the chat and ask the AI to summarise.`,
       };
     }
 
     case "api_integrator":
     case "workflow_automation": {
+      // The `api-gateway` Cloud Function is not currently exported.
+      // See docs/audit/CLAIMS_REALITY_REPORT.md P0-9.
       const endpoint = p.endpoint || p.url || "";
       const method = (p.method as string) || "POST";
-      const body = p.body || { input: message };
-      const { data, error } = await backend.functions.invoke("api-gateway", {
-        body: { endpoint, method, body },
-      });
-      if (error) throw new Error(error.message);
       return {
         kind: "inline",
         tool,
-        content: `### ${method} ${endpoint || "API workflow"}\n\n\`\`\`json\n${JSON.stringify(data, null, 2).slice(0, 12000)}\`\`\``,
+        content: `### API gateway not yet available\n\nThe \`api-gateway\` Cloud Function is not yet deployed, so I can't execute \`${method} ${endpoint || "<endpoint>"}\` on your behalf from the server. To call an API today, write the request in JavaScript and run it in the Agentic IDE at /ide.`,
       };
     }
 

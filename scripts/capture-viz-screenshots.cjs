@@ -24,7 +24,7 @@ const puppeteer = require("puppeteer");
   );
   await new Promise((r) => setTimeout(r, 2500));
 
-  await page.screenshot({ path: "/home/z/my-project/ShadowTalk-AI/docs/architecture/research-visualization/screenshots/viz-demo-full.png", fullPage: true });
+  await page.screenshot({ path: "/home/z/my-project/shadowtalk_ai/docs/architecture/research-visualization/screenshots/viz-demo-full.png", fullPage: true });
 
   // Focus shots: scroll to each artifact.
   const shot = async (text, name) => {
@@ -38,7 +38,7 @@ const puppeteer = require("puppeteer");
     }, text);
     if (!ok) console.log(`[shot] "${text}" not found`);
     await new Promise((r) => setTimeout(r, 700));
-    await page.screenshot({ path: `/home/z/my-project/ShadowTalk-AI/docs/architecture/research-visualization/screenshots/${name}` });
+    await page.screenshot({ path: `/home/z/my-project/shadowtalk_ai/docs/architecture/research-visualization/screenshots/${name}` });
     console.log(`[shot] saved ${name} (${text})`);
   };
 

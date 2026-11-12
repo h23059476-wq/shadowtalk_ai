@@ -4,7 +4,10 @@ import path from "path";
 
 import { VitePWA } from 'vite-plugin-pwa';
 
-// ShadowScan MVP — Lean build config (original backed up as vite.config.ts.full-backup)
+// ShadowTalk AI — Vite build configuration.
+// (Historical note: this file was once part of a "ShadowScan MVP" experiment
+// whose original was backed up as vite.config.ts.full-backup. That backup is
+// no longer in the repository. This is the canonical ShadowTalk config.)
 export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
 

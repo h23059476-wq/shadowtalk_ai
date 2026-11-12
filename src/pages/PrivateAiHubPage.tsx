@@ -88,9 +88,12 @@ export default function PrivateAiHubPage() {
           className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
           data-speakable
         >
-          ShadowTalk AI is a free, anonymous alternative to ChatGPT. Chat runs on your
-          device once the model finishes downloading — nothing is stored on our
-          servers, and your conversations are never used for training.
+          ShadowTalk AI is a free, BYOK-first alternative to ChatGPT. In BYOK mode (your own
+          provider API key) your prompts go directly to your provider — they never touch
+          ShadowTalk servers. In Offline mode, chat runs entirely on your device once the
+          model finishes downloading. In Shared mode (free, 100 requests/day, no key needed),
+          prompts do transit ShadowTalk's OpenRouter gateway to serve you. Your conversations
+          are never used for training.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
           <Button asChild size="lg" className="gap-2">

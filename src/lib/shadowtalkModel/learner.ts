@@ -30,10 +30,10 @@ function buildSystemHint(clusters: TopicCluster[]): string {
   const top = [...clusters].sort((a, b) => b.size - a.size).slice(0, 5);
   const lines = top.map((c) => `- ${c.label} (${c.size} messages)`);
   return (
-    "ShadowTalk Sovereign Model (on-device, unsupervised):\n" +
-    "Topic patterns learned from this user without manual labels:\n" +
+    "ShadowTalk on-device topic summary (keyword-based, not embedding-based):\n" +
+    "Frequently-discussed themes, derived from keyword frequency in this user's messages:\n" +
     lines.join("\n") +
-    "\nAdapt tone and examples to these interests. Do not mention clustering or training."
+    "\nAdapt tone and examples to these interests. Note: on-device embeddings are not yet wired, so topic clustering is currently keyword-only. Do not mention clustering, training, or embeddings."
   );
 }
 

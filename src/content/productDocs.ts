@@ -186,14 +186,14 @@ export const DOC_ROUTES: DocRouteLink[] = [
   { path: "/s/:slug", label: "Shared Answer Viewer", desc: "Clean, read-only public viewer for shared chat solutions and code artifacts", group: "Shadow Twin" },
 
   // Enterprise & Developers
-  { path: "/developers", label: "Developer Portal", desc: "REST API keys, webhook endpoints, rate limit quotas, and SDK documentation", group: "Enterprise" },
-  { path: "/admin", label: "Organization Admin", desc: "Manage team members, seat allocation, role-based access control", group: "Enterprise" },
-  { path: "/audit-logs", label: "Compliance Audit Trail", desc: "Tamper-evident logs of logins, role changes, key generations, and security events", group: "Enterprise" },
-  { path: "/billing", label: "Billing & Subscriptions", desc: "Manage usage tiers, token allowances, invoices, and enterprise billing contracts", group: "Enterprise" },
+  { path: "/developers", label: "Developer Portal", desc: "BYOK provider keys, model selection, and provider switching (in /settings → Personalization)", group: "Enterprise" },
+  { path: "/admin", label: "Organization Admin", desc: "Internal admin shell — currently shows zero placeholder metrics until live Firestore aggregates are wired", group: "Enterprise" },
+  { path: "/billing", label: "Billing & Subscriptions", desc: "Free access — no subscriptions, no invoices. Provider API charges are between you and your provider.", group: "Enterprise" },
+  // Note: /audit-logs route was previously listed here but does not exist in the app. Removed during the 2026-11-13 audit. See docs/audit/CLAIMS_REALITY_REPORT.md P2-9.
 
   // Public & Portal
   { path: "/home", label: "Marketing Home", desc: "Feature showcases, speed benchmarks, use-case wedges, and product tour", group: "Public" },
-  { path: "/pricing", label: "Pricing & Plans", desc: "Transparent tier comparisons: Free, Pro, and Enterprise SaaS plans", group: "Public" },
+  { path: "/pricing", label: "Pricing & Plans", desc: "Free access — every feature, no subscriptions, no checkout. BYOK model.", group: "Public" },
   { path: "/docs", label: "System Documentation", desc: "Complete reference guides, API specifications, and troubleshooting playbooks", group: "Public" },
   { path: "/about", label: "About ShadowTalk", desc: "Our team, privacy philosophy, architectural principles, and leadership", group: "Public" },
   { path: "/changelog", label: "Product Changelog", desc: "Release notes, deployed optimizations, and platform version milestones", group: "Public" },
@@ -313,7 +313,7 @@ export const DOC_TOOLS: DocToolItem[] = [
     name: "Deep Web Search",
     trigger: "Natural language query or Search mode",
     description: "Fetches grounded, up-to-date web intelligence with source citations.",
-    plan: "Pro / Elite",
+    plan: "Free (BYOK)",
   },
   {
     name: "Analytics Report Generator",
@@ -461,7 +461,7 @@ export const DOC_TROUBLESHOOTING: DocTroubleshootItem[] = [
     issue: "Messages not streaming or sending",
     solutions: [
       "Check your internet connection.",
-      "Verify your API keys in .env or /settings (OpenAI, Groq).",
+      "Verify your API keys in /settings → Personalization → BYOK (OpenAI, Groq, Anthropic, etc.). Do NOT put provider API keys in .env — VITE_* values are embedded in browser bundles.",
       "If using a private window where IndexedDB is blocked, ShadowTalk automatically uses local storage fallback.",
     ],
   },

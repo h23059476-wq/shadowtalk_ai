@@ -123,11 +123,9 @@ const HeroSection = () => {
 
           <div className="mb-3 w-full max-w-2xl mx-auto px-2">
             <div className="glass-subtle rounded-xl border border-success/25 bg-success/5 px-4 py-2.5 text-sm sm:text-center">
-              <span className="font-semibold text-success">Early access pricing now:</span>
-              <span className="text-muted-foreground"> Unlimited plans from </span>
-              <span className="font-semibold text-foreground">$5</span>
-              <span className="text-muted-foreground">/mo</span>
-              <span className="text-muted-foreground"> · activate within 2h · 14-day guarantee · cancel anytime.</span>
+              <span className="font-semibold text-success">Free access:</span>
+              <span className="text-muted-foreground"> every feature, no subscriptions, no credit card. </span>
+              <span className="text-muted-foreground">Bring your own AI provider key and go.</span>
             </div>
           </div>
 
@@ -159,7 +157,7 @@ const HeroSection = () => {
                 className="btn-3d-tertiary text-sm sm:text-base px-5 sm:px-6 py-4 sm:py-5 border-border/60 bg-card/40 hover:border-primary/40 hover:bg-card/60 rounded-xl w-full sm:w-auto"
                 onClick={() => navigate("/pricing")}
               >
-                View pricing — from $5/mo
+                View pricing — free to use
               </Button>
               <Button
                 variant="outline"
@@ -226,7 +224,7 @@ const HeroSection = () => {
           </div>
 
           <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 px-2">
-            {["🤖 Agentic missions", "⚡ Tool orchestration", "🎙️ Voice Mode", "⚡ Ultra-Low Latency Turbo"].map(
+            {["🤖 Agentic missions", "⚡ Tool orchestration", "🎙️ Text-to-Speech", "⚡ Ultra-Low Latency Turbo"].map(
               (badge) => (
                 <div
                   key={badge}

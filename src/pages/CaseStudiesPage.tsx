@@ -149,14 +149,16 @@ export const CaseStudiesPage = () => {
           <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <Badge variant="outline" className="mb-4 glass-subtle border-primary/30 text-primary py-1 px-3">
               <TrendingUp className="h-3.5 w-3.5 mr-1.5" />
-              Verified Enterprise & Builder Case Studies
+              Illustrative Scenarios — Not Named Customer Engagements
             </Badge>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
-              Real Workflows. <span className="gradient-text">Measurable ROI.</span>
+              Representative Workflows. <span className="gradient-text">Illustrative ROI.</span>
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-              Explore how software engineers, venture founders, compliance leaders, and fast-moving teams 
-              use ShadowTalk to eliminate fragmented tabs and automate complex objectives.
+              The scenarios below are illustrative composites showing how software engineers, venture founders,
+              compliance leaders, and fast-moving teams could use ShadowTalk to eliminate fragmented tabs and
+              automate complex objectives. They are not named customer engagements; no client names, signed
+              contracts, or third-party audits back these figures. Metrics are directional, not measured.
             </p>
 
             {/* Aggregate Metric Highlights */}
@@ -223,7 +225,9 @@ export const CaseStudiesPage = () => {
                         {study.persona}
                       </Badge>
                     </div>
-                    <span className="text-xs text-muted-foreground font-mono">PSOF Verified</span>
+                    <span className="text-xs text-muted-foreground font-mono" title="Illustrative scenario, not a verified named customer engagement.">
+                      Illustrative scenario
+                    </span>
                   </div>
 
                   <CardTitle className="text-2xl sm:text-3xl font-bold leading-tight">

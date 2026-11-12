@@ -1,11 +1,13 @@
-import { PLAN_DETAILS } from "@/lib/stripe";
+import { FREE_TIER_DAILY } from "@/lib/productClaims";
 
-/**
- * Best default for ShadowTalk: Premium BYOK.
- * - BYOK) = entry hook for price-sensitive users only
- * - BYOK) = main revenue + matches ChatGPT Plus anchor with more tools
- * - BYOK) = decoy that makes Premium feel like the smart middle
- */
+// Free-access transition: Stripe `PLAN_DETAILS` import removed.
+// The paid-tier psychology lines (Pro $5, Premium $15, Elite $20) were
+// contradicting the canonical free-access claim. The remaining
+// `MonthlyPlanId` type is kept for backward compatibility with callers
+// that import it, but all `getValueAnchorLine(planId)` branches now
+// return honest free-access wording. See docs/audit/CLAIMS_REALITY_REPORT.md P1-1.
+
+/** Best default — now unused under free access; kept for type compatibility. */
 export const RECOMMENDED_MONTHLY_PLAN = "premium" as const;
 export const BEST_MONTHLY_PLAN = RECOMMENDED_MONTHLY_PLAN;
 
@@ -34,26 +36,18 @@ export function dailyPrice(monthlyUsd: number): string {
   return `$${perDay.toFixed(0)}`;
 }
 
-export function getPlanPsychology(planId: MonthlyPlanId) {
-  const details = PLAN_DETAILS[planId];
-  return {
-    id: planId,
-    name: details.name,
-    price: details.price,
-    daily: dailyPrice(details.price),
-    comparison: details.comparison,
-    topFeatures: details.features.slice(1, 5),
-  };
-}
+// `getPlanPsychology` removed — it depended on PLAN_DETAILS, which is no
+// longer imported. If you need plan display info, use the free-access
+// canonical strings in src/lib/productClaims.ts instead.
 
 /** @deprecated Prefer getHonestLimitSubline from @/lib/ethicalGrowth */
 export function getLossAversionMessage(used: number, limit: number, unit = "messages"): string {
   const remaining = Math.max(0, limit - used);
   if (remaining === 0) {
-    return `You've used today's ${limit} free ${unit}. Limits reset at midnight — upgrade for unlimited or continue tomorrow.`;
+    return `You've used today's ${limit} free ${unit}. Limits reset at midnight — add a BYOK API key for unlimited, or continue tomorrow.`;
   }
   if (remaining <= 5) {
-    return `${remaining} free ${unit} left today on the Free plan. See /pricing for unlimited access.`;
+    return `${remaining} free ${unit} left today on the shared tier. Add a BYOK API key for unlimited.`;
   }
   const pct = Math.round((used / limit) * 100);
   return `${pct}% of today's free ${unit} used (${used}/${limit}).`;
@@ -61,12 +55,12 @@ export function getLossAversionMessage(used: number, limit: number, unit = "mess
 
 export function getEndowmentMessage(conversationCount: number): string {
   if (conversationCount <= 0) {
-    return "Your workspace is ready — unlock unlimited messages before your next deep session.";
+    return "Your workspace is ready — add a BYOK API key to remove daily caps before your next deep session.";
   }
   if (conversationCount === 1) {
     return "You've started building context in ShadowTalk. Don't lose momentum to daily caps.";
   }
-  return `You've got ${conversationCount} conversations here. Premium keeps history, speed, and tools unlocked.`;
+  return `You've got ${conversationCount} conversations here. A BYOK key keeps history, speed, and tools unlocked.`;
 }
 
 export function getSocialProofLine(creatorCount?: number | null): string {
@@ -88,17 +82,14 @@ export function getRiskReversalBullets(): string[] {
 export type AnchorPlanId = MonthlyPlanId | "byok" | "enterprise";
 
 export function getValueAnchorLine(planId: AnchorPlanId): string {
+  // Free-access transition: paid plan tiers no longer exist. All branches
+  // return honest free-access wording.
   if (planId === "byok") {
     return "Zero platform fees — pay your AI provider directly";
   }
   if (planId === "enterprise") {
     return "Custom pricing — contact sales";
   }
-  if (planId === "pro") {
-    return `Less than ${dailyPrice(PLAN_DETAILS.pro.price)}/day · 4× cheaper than ChatGPT Plus`;
-  }
-  if (planId === "premium") {
-    return `Same price tier as ChatGPT Plus — more agentic tools included`;
-  }
-  return `90% less than ChatGPT Pro ($${COMPETITOR_ANCHORS.chatgptPro}/mo)`;
+  // pro / premium / elite — return canonical free-access wording
+  return "Free to use — add a BYOK API key to remove the daily shared-tier cap";
 }

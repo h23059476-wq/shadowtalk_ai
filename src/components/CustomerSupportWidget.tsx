@@ -8,17 +8,30 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "react-router-dom";
 import { backend } from "@/integrations/local/client";
+import { functionsBaseUrl } from "@/integrations/firebase/app";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
+const SUPPORT_SYSTEM_PROMPT = `You are a professional customer support specialist for ShadowTalk AI — an AI workspace that is free to use with a bring-your-own-key (BYOK) model. Follow this response framework strictly:
+
+1. Opening: One clear, direct sentence addressing the user's issue. No filler phrases like "Of course!", "Absolutely!", "Great question!", or "Sure!".
+2. Body: Structured, factual information in 2–3 short paragraphs separated by a blank line. Be specific and accurate.
+3. Closing: One concrete next step or action the user can take.
+
+Tone: Authoritative, calm, professional. Never casual or overly enthusiastic.
+Format: Plain text only — no markdown headers, no bullet emojis, no excessive formatting. Use numbered steps only when explaining a process.
+Length: Keep responses concise. Aim for under 120 words unless complexity demands more.
+
+Accurate product context: ShadowTalk AI is free to use. Users bring their own AI provider API key (OpenAI, Anthropic, Google, Groq, OpenRouter, etc.); their provider may charge separately for API usage. Core capabilities that genuinely work today: AI chat (BYOK or shared 100/day), end-to-end encrypted vault (opt-in), offline WebLLM, image generation, document generation, ProofLoop verification, Firebase Auth, and account deletion. Capabilities that are NOT yet implemented: OCR, audio transcription, FCM push notifications, real-time collaboration, Slack/Discord/Google Workspace integrations, and live voice. Do not promise features that are not in this list. If asked about something not listed, direct the user to email shadowtalk@shadowtalk-ai.com.`;
+
 const CustomerSupportWidget = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "Hi! I'm your 24/7 AI support assistant. How can I help you today?" }
+    { role: "assistant", content: "Hi! I'm the ShadowTalk AI assistant. Ask me about features, setup, or how BYOK works. (This widget uses the same shared chat backend with a 100/day limit.)" }
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -43,31 +56,21 @@ const CustomerSupportWidget = () => {
       const { data: sessionData } = await backend.auth.getSession();
       const accessToken = sessionData.session?.access_token;
 
+      if (!functionsBaseUrl) {
+        throw new Error("Support backend is not configured.");
+      }
+
       const response = await fetch(
-        '',
+        `${functionsBaseUrl}/chat`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            apikey: "",
             ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
           },
           body: JSON.stringify({
             messages: [
-              {
-                role: "system",
-                content: `You are a professional customer support specialist for ShadowTalk AI — an advanced AI platform. Follow this response framework strictly:
-
-1. Opening: One clear, direct sentence addressing the user's issue. No filler phrases like "Of course!", "Absolutely!", "Great question!", or "Sure!".
-2. Body: Structured, factual information in 2–3 short paragraphs separated by a blank line. Be specific and accurate.
-3. Closing: One concrete next step or action the user can take.
-
-Tone: Authoritative, calm, professional. Never casual or overly enthusiastic.
-Format: Plain text only — no markdown headers, no bullet emojis, no excessive formatting. Use numbered steps only when explaining a process.
-Length: Keep responses concise. Aim for under 120 words unless complexity demands more.
-
-Product context: ShadowTalk AI is free to use — no subscriptions and no paid feature tiers. All features (AI chat, image generation, code execution, web search, voice, file uploads, offline mode, PWA, API access, developer marketplace) are included. Users bring their own AI provider API key; their provider may charge separately for API usage.`
-              },
+              { role: "system", content: SUPPORT_SYSTEM_PROMPT },
               ...messages.map(m => ({ role: m.role, content: m.content })),
               { role: "user", content: userMessage }
             ]
@@ -109,12 +112,11 @@ Product context: ShadowTalk AI is free to use — no subscriptions and no paid f
         <Button
           onClick={() => setIsOpen(true)}
           size="lg"
-          aria-label="Open 24/7 AI support"
+          aria-label="Open AI support chat"
           className="rounded-full w-14 h-14 shadow-lg bg-primary hover:bg-primary/90 transition-all hover:scale-105 relative"
           style={{ boxShadow: '0 0 20px hsl(var(--primary) / 0.4), 0 4px 15px hsl(0 0% 0% / 0.3)' }}
         >
           <MessageCircle className="h-6 w-6" />
-          <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse" />
         </Button>
       </div>
     );
@@ -130,13 +132,12 @@ Product context: ShadowTalk AI is free to use — no subscriptions and no paid f
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
                 <ChatbotLogo size={28} />
               </div>
-              <div className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-green-500" />
             </div>
             <div>
               <h3 className="font-semibold text-sm flex items-center gap-1.5">
                 AI Assistant
               </h3>
-              <p className="text-xs text-muted-foreground">24/7 Customer Support</p>
+              <p className="text-xs text-muted-foreground">Support Chat</p>
             </div>
           </div>
           <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)} aria-label="Close support chat">
@@ -193,7 +194,7 @@ Product context: ShadowTalk AI is free to use — no subscriptions and no paid f
             </Button>
           </div>
           <p className="text-xs text-center text-muted-foreground mt-2">
-            ShadowTalk AI • 24/7 Verified Support
+            ShadowTalk AI • AI Support (shared 100/day limit)
           </p>
         </div>
       </Card>

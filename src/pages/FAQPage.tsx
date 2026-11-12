@@ -52,7 +52,7 @@ const STATIC_FAQS: FAQItem[] = [
     id: "faq-how-different-chatgpt",
     category: "product",
     question: "How is ShadowTalk AI different from ChatGPT or simple chat wrappers?",
-    answer: "Standard chatbots are reactive single-turn engines. ShadowTalk is an agentic workspace that plans and finishes multi-step tasks across real-world tools, includes a built-in browser IDE, provides Business Memory across sessions, supports , and offers ultra-low latency inference via Groq Llama 3.3 70B (600+ tok/s) and DeepSeek R1 reasoning.",
+    answer: "Standard chatbots are reactive single-turn engines. ShadowTalk is an agentic workspace that plans and finishes multi-step tasks across real-world tools, includes a built-in browser IDE, provides per-user ShadowMemory across sessions, supports BYOK across 16+ providers (OpenAI, Anthropic, Google, Groq, OpenRouter, etc.), and offers low-latency streaming via SSE. Some premium-sounding features (real-time collaboration, FCM push, OCR, audio transcription, live voice) are not yet implemented — see /docs for current capabilities.",
   },
   {
     id: "faq-free-tier",

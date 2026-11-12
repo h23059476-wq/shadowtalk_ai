@@ -23,7 +23,8 @@ import { useSettingsMotion } from "@/hooks/useSettingsMotion";
 import { useProfileSectionNav } from "@/hooks/useProfileSectionNav";
 import type { ProfileTabId } from "@/lib/profileTypes";
 import ReferralProgram from "@/components/ReferralProgram";
-import { PLAN_DETAILS } from "@/lib/stripe";
+// Free-access transition: `PLAN_DETAILS` import from `@/lib/stripe` removed.
+// See docs/audit/CLAIMS_REALITY_REPORT.md P1-1, P2-2.
 import { MissionValueDashboard } from "@/components/MissionValueDashboard";
 import { UsageHistoryTable } from "@/components/UsageHistoryTable";
 import { CreditEmptyPrompt } from "@/components/CreditEmptyPrompt";
@@ -121,9 +122,12 @@ const ProfilePage = () => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState("");
 
-  const planKey =
-    userPlan === "lifetime" ? "elite" : (userPlan as keyof typeof PLAN_DETAILS);
-  const currentPlanDetails = PLAN_DETAILS[planKey] || PLAN_DETAILS.free;
+  // Free-access transition: paid plan tiers no longer exist. The previous
+  // implementation imported `PLAN_DETAILS` from `@/lib/stripe` (dormant
+  // Stripe config) and resolved the user's plan to one of free/byok/pro/
+  // premium/elite. Under free-access, the canonical plan is "Free" for
+  // everyone. See docs/audit/CLAIMS_REALITY_REPORT.md P1-1, P2-2.
+  // `currentPlanDetails` was declared but never rendered in this file.
   const { balance, transactions, isLoading: creditsLoading } = useShadowCredits();
 
   const loadProfile = useCallback(async () => {

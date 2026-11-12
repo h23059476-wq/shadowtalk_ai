@@ -25,7 +25,7 @@ export const PRODUCT_CHANGELOG: ProductChangelogEntry[] = [
     changes: [
       { type: "feature", text: "OmniRoute AI Gateway: NON_TECH (Instant Start) users now route through the load-balanced OmniRoute proxy with automatic 429 circuit-breaker rotation across Gemini, Groq, and Mistral." },
       { type: "feature", text: "Hybrid API Key onboarding: One-time modal on /chatbot splits users into Instant Start (50 msgs/day) or BYOK (unlimited, own key)." },
-      { type: "feature", text: "New /status page: Real-time system health for OmniRoute, Firebase Auth, OpenRouter, Gemini, Firestore, and Hosting with uptime percentages and incident history." },
+      { type: "feature", text: "New /status page: Service catalog listing ShadowTalk's components (OmniRoute, Firebase Auth, OpenRouter, Gemini, Firestore, Hosting) with an explicit honest notice that live monitoring is unavailable. Uptime percentages and incident history are not yet wired — see /security for the current trust posture." },
       { type: "feature", text: "New /security route: Trust center documenting client-side key storage, zero-training guarantee, encryption protocol, and OmniRoute proxy safety." },
       { type: "improvement", text: "Daily usage tracking: UTC-midnight-resetting 50/day cap for NON_TECH users with auto-detection of date rollover." },
       { type: "security", text: "BYOK keys stored strictly in browser localStorage — never sent to ShadowTalk backend servers." },

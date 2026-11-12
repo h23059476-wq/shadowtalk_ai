@@ -1,22 +1,25 @@
-import { PLAN_DETAILS } from "@/lib/stripe";
 import { FREE_TIER_DAILY } from "@/lib/productClaims";
 import {
   getEndowmentMessage,
-  getValueAnchorLine,
-  RECOMMENDED_MONTHLY_PLAN,
-  type MonthlyPlanId,
+  getRiskReversalBullets,
+  type AnchorPlanId,
 } from "@/lib/conversionPsychology";
 import { getHonestLimitHeadline, getHonestLimitSubline } from "@/lib/ethicalGrowth";
 
-export type UpgradeNudgeLevel = "soft" | "strong" | "blocking";
+// Free-access transition: ShadowTalk AI is free to use. The previous
+// implementation imported `PLAN_DETAILS` from `@/lib/stripe` (dormant
+// Stripe config) and surfaced "Premium ($15/mo)" upgrade copy. That copy
+// contradicted the canonical free-access claim. We now reference only
+// the canonical free-access wording and let BYOK / shared mode do the
+// explaining. See docs/audit/CLAIMS_REALITY_REPORT.md P1-1 and P2-2.
 
-const premium = PLAN_DETAILS[RECOMMENDED_MONTHLY_PLAN];
+export type UpgradeNudgeLevel = "soft" | "strong" | "blocking";
 
 /** Strong, truthful upgrade lines for in-chat nudges */
 export function getUpgradeNudgeHeadline(used: number, limit: number, level: UpgradeNudgeLevel): string {
   const honest = getHonestLimitHeadline(used, limit);
   if (level === "soft") {
-    return honest || "Free tier — full agent stack, daily message cap";
+    return honest || "Free shared AI — daily message cap";
   }
   if (level === "strong") {
     return honest || "You're close to today's free message limit";
@@ -29,19 +32,18 @@ export function getUpgradeNudgeSubline(
   limit: number,
   level: UpgradeNudgeLevel,
   conversationCount = 0,
-  plan: MonthlyPlanId = RECOMMENDED_MONTHLY_PLAN,
+  _plan?: AnchorPlanId,
 ): string {
   const honest = getHonestLimitSubline(used, limit);
-  const anchor = getValueAnchorLine(plan);
   const endowment = getEndowmentMessage(conversationCount);
 
   if (level === "blocking") {
-    return `${honest} ${premium.name} ($${premium.price}/mo) — unlimited messages, ${anchor}.`;
+    return `${honest} Add your own AI provider API key in Settings → Personalization → BYOK for unlimited messages, or continue tomorrow on the free shared tier.`;
   }
   if (level === "strong") {
-    return `${endowment} ${premium.name} keeps momentum without daily caps — ${anchor}.`;
+    return `${endowment} Adding a BYOK key keeps momentum without daily caps.`;
   }
-  return `${honest} When ShadowTalk is your daily driver, ${premium.name} removes caps and unlocks the full tool stack.`;
+  return `${honest} When ShadowTalk is your daily driver, BYOK removes the shared-tier cap and lets you choose any provider.`;
 }
 
 export const FREE_TIER_MARKETING = {
@@ -68,7 +70,8 @@ export const PROACTIVE_MARKETING = {
 
 export const CHAT_LIMIT_TOAST = {
   title: "Daily free limit reached",
-  description: `Premium ($${premium.price}/mo) — unlimited messages, 50 images/day, 50 research/day. Or use BYOK mode with your own API key for unlimited everything. Limits reset at midnight UTC on Free.`,
+  description:
+    "Free shared AI is capped at 100 requests/day. Add your own AI provider API key (BYOK) in Settings → Personalization → BYOK for unlimited messages. Limits reset at midnight UTC.",
 } as const;
 
 export const PROOF_BAR_LABEL = "Verify before you buy:";

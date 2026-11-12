@@ -112,18 +112,20 @@ export function getSoftwareApplicationSchema() {
       url: FOUNDER_SOCIAL.linkedin.url,
     },
     featureList: [
-      'End-to-end encrypted chat',
-      'Deep Research with citations',
-      'ShadowTalk Live voice mode',
-      'Code IDE and App Builder',
-      'Encrypted vault for sensitive data',
-      'Marketplace AI agents',
-      'Local-first privacy architecture',
-      'Multi-model intelligent routing',
-      '100% BYOK (bring your own API key) for OpenAI, Anthropic, Google, Groq, OpenRouter',
-      'BYOK multi-model canvas with live color-coded diffing',
-      'WebGPU local inference via WebLLM (Llama, Mistral, Qwen on-device)',
-      'Local browser vector RAG (on-device embeddings + retrieval, zero egress)',
+      'AI chat with BYOK (Bring Your Own Key) for OpenAI, Anthropic, Google, Groq, OpenRouter, and 11 more providers',
+      'Shared AI chat (free, 100 requests/day, platform-funded OpenRouter gateway)',
+      'End-to-end encrypted vault (opt-in, PBKDF2 + AES-GCM 256-bit)',
+      'Offline AI via WebGPU / WebLLM (Llama, Mistral, Qwen on-device) — no silent cloud fallback',
+      'Image generation (BYOK providers + shared OpenRouter gateway)',
+      'Document generation and PDF export',
+      'ProofLoop verification engine with public proof cards',
+      'Firebase Authentication (Google, Apple, email/password)',
+      'Account deletion (GDPR-grade, recursive Firestore + Storage cleanup)',
+      'PWA installable, multi-model intelligent routing',
+      // Note: previously listed 'ShadowTalk Live voice mode', 'Marketplace AI agents',
+      // 'Local browser vector RAG (on-device embeddings + retrieval, zero egress)' —
+      // these were removed because live voice, marketplace, and on-device
+      // embeddings are not yet implemented. See docs/audit/CLAIMS_REALITY_REPORT.md.
     ],
     offers: {
       '@type': 'Offer',
@@ -132,13 +134,10 @@ export function getSoftwareApplicationSchema() {
       priceCurrency: 'USD',
       description: 'Bring your own provider API key. No platform fee. Pay your provider directly.',
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      reviewCount: '127',
-      bestRating: '5',
-      worstRating: '1',
-    },
+    // aggregateRating intentionally omitted — there is no review collection
+    // system in the codebase. Publishing a fabricated aggregateRating
+    // violates Google's review-snippet spam policy. Re-add only after a
+    // real review system is wired.
   };
 }
 

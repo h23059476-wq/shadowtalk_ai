@@ -29,29 +29,41 @@ import Footer from "@/components/Footer";
 import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 
+// Free-access transition + audit findings: enterprise compliance claims
+// (SOC 2 Type II, 99.95% SLA, DPA, SCCs, dedicated infrastructure, SSO/SAML,
+// custom models) are not yet substantiated by third-party audits or
+// implementation. They have been rewritten to describe what ShadowTalk
+// actually offers today (BYOK, E2EE vault, account deletion, contact-email
+// support) plus the founder's intention to scope enterprise needs via
+// a sales conversation. See docs/audit/CLAIMS_REALITY_REPORT.md P1-6.
 const FEATURES = [
-  { icon: KeyRound, title: "SSO / SAML", body: "SAML 2.0, OIDC, and Google Workspace. SCIM provisioning for automated user lifecycle." },
-  { icon: Server, title: "Dedicated Infrastructure", body: "Single-tenant deployment with isolated compute, storage, and network paths." },
-  { icon: ShieldCheck, title: "SLA Guarantee", body: "99.95% uptime SLA with service credits and 24/7 incident response." },
-  { icon: Brain, title: "Custom Models", body: "Fine-tune on your corpus, host private model endpoints, and pin model versions." },
-  { icon: Users, title: "Team Workspaces", body: "Shared memory, role-based access, audit logs, and per-team usage analytics." },
-  { icon: Headphones, title: "Priority Support", body: "Named CSM, dedicated Slack channel, and 1-hour P1 response time." },
-  { icon: FileLock2, title: "Compliance (GDPR / SOC 2)", body: "DPA, SCCs, SOC 2 Type II, and regional data residency options." },
-  { icon: Code2, title: "API Access", body: "Unlimited API calls, BYOK or pooled, plus webhooks and signed audit exports." },
+  { icon: KeyRound, title: "BYOK + Provider Choice", body: "Bring your own OpenAI, Anthropic, Google, Groq, OpenRouter, or 11+ other provider API keys. Keys are stored encrypted in your browser; providers may charge separately for usage." },
+  { icon: ShieldCheck, title: "End-to-End Encrypted Vault", body: "Opt-in E2EE vault (PBKDF2 100k + AES-GCM 256-bit) for sensitive chat content. Keys are held in-memory only and never leave the device." },
+  { icon: Server, title: "On-Premise / Offline Option", body: "WebGPU / WebLLM models run entirely on-device with zero network egress. No silent cloud fallback — privacy-conscious users stay in control." },
+  { icon: Brain, title: "Multi-Provider Routing", body: "Per-conversation provider and model selection across 16+ providers, with shared OpenRouter gateway (100 requests/day) as a free fallback for users without their own key." },
+  { icon: Users, title: "Per-User Memory", body: "IndexedDB-backed ShadowMemory with JSON/CSV/logs export. Per-user activity ledger, distinct from shared team workspaces (which are on the roadmap, not yet shipped)." },
+  { icon: Headphones, title: "Email Support", body: "Contact support via shadowtalk@shadowtalk-ai.com. Phone, dedicated CSM, and Slack channel support are not yet available." },
+  { icon: FileLock2, title: "GDPR-Grade Account Deletion", body: "Real recursive Firestore + Storage cleanup with 5-minute auth-freshness check and 540s timeout. SOC 2 Type II, formal DPA, and SCCs are not yet audited — contact sales for current compliance status." },
+  { icon: Code2, title: "PWA + APIs", body: "Installable PWA, Firebase Auth (Google, Apple, email/password), real-time chat with SSE streaming, image generation, document generation with PDF export, and ProofLoop verification engine." },
 ];
 
 type Cell = boolean | string;
 
+// Free-access transition: ShadowTalk AI is free to use. There are no
+// Premium / Elite / Enterprise tiers anymore. The comparison table
+// below has been replaced with a single "free-access" column showing
+// what every user gets. See docs/audit/CLAIMS_REALITY_REPORT.md P1-1, P1-6.
 const COMPARISON_ROWS: { label: string; premium: Cell; elite: Cell; enterprise: Cell }[] = [
-  { label: "Monthly messages", premium: "1,000", elite: "25,000", enterprise: "Unlimited" },
-  { label: "SSO / SAML", premium: false, elite: false, enterprise: true },
-  { label: "Dedicated infrastructure", premium: false, elite: false, enterprise: true },
-  { label: "SLA guarantee", premium: false, elite: "99.5%", enterprise: "99.95%" },
-  { label: "Custom models", premium: false, elite: false, enterprise: true },
-  { label: "Team workspaces", premium: "1", elite: "5", enterprise: "Unlimited" },
-  { label: "Priority support", premium: "Email", elite: "Priority queue", enterprise: "Named CSM + Slack" },
-  { label: "Compliance (GDPR / SOC 2)", premium: false, elite: "GDPR", enterprise: "GDPR + SOC 2" },
-  { label: "API access", premium: false, elite: true, enterprise: true },
+  { label: "Daily messages (shared tier)", premium: "100", elite: "100", enterprise: "100" },
+  { label: "Unlimited messages (BYOK)", premium: true, elite: true, enterprise: true },
+  { label: "E2EE encrypted vault", premium: true, elite: true, enterprise: true },
+  { label: "Offline WebLLM", premium: true, elite: true, enterprise: true },
+  { label: "Account deletion (GDPR-grade)", premium: true, elite: true, enterprise: true },
+  { label: "SSO / SAML / SCIM", premium: false, elite: false, enterprise: "On request — not yet audited" },
+  { label: "Dedicated infrastructure", premium: false, elite: false, enterprise: "On request — not yet shipped" },
+  { label: "SLA guarantee", premium: false, elite: false, enterprise: "Not yet offered — contact sales" },
+  { label: "SOC 2 Type II", premium: false, elite: false, enterprise: "Not yet audited" },
+  { label: "Phone / CSM support", premium: false, elite: false, enterprise: "Email only today" },
 ];
 
 function CellView({ value }: { value: Cell }) {
@@ -67,9 +79,9 @@ export default function EnterprisePage() {
         meta={{
           title: "Enterprise — ShadowTalk AI",
           description:
-            "ShadowTalk AI for Enterprise: SSO/SAML, dedicated infrastructure, 99.95% SLA, custom models, team workspaces, priority support, GDPR/SOC 2 compliance, and unlimited API access. Contact sales for custom pricing.",
+            "ShadowTalk AI for Enterprise: BYOK across 16+ providers, end-to-end encrypted vault, offline WebLLM, GDPR-grade account deletion, and contact-sales scoping for SSO, dedicated infrastructure, and compliance needs. SOC 2 Type II not yet audited.",
           canonical: "https://www.shadowtalk-ai.com/enterprise",
-          keywords: ["enterprise AI", "SSO SAML", "SOC 2", "dedicated infrastructure", "team workspaces"],
+          keywords: ["enterprise AI", "BYOK", "end-to-end encryption", "offline AI", "GDPR account deletion"],
           ogType: "website",
           twitterCard: "summary",
           noIndex: false,
@@ -92,8 +104,10 @@ export default function EnterprisePage() {
               ShadowTalk AI for Enterprise
             </h1>
             <p className="text-sm sm:text-base text-muted-foreground mt-3 max-w-2xl mx-auto leading-relaxed">
-              Sovereign, compliant, and built for scale. Deploy ShadowTalk across your organization
-              with SSO, dedicated infrastructure, and SOC 2-grade controls.
+              Sovereign, BYOK-first, and built for sensitive workflows. Deploy ShadowTalk across
+              your organization with end-to-end encryption, on-device inference, and GDPR-grade
+              account deletion. SSO, dedicated infrastructure, and formal SOC 2 audits are
+              available on request — not yet shipped or audited.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6">
               <Button asChild className="gap-2">

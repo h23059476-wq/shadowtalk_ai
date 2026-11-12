@@ -54,11 +54,15 @@ type AdminDashboardProps = {
 
 const AdminDashboardTyped = AdminDashboard as unknown as ComponentType<AdminDashboardProps>;
 
+// Live Firestore aggregates are not yet wired. Until they are, we display
+// honest placeholder values rather than fabricated metrics. The previous
+// implementation hardcoded "12,847 users / $48,210 MRR" — those numbers
+// were never real and have been removed.
 const STATS = [
-  { label: "Total Users", value: "12,847", icon: Users, accent: "text-indigo-400 bg-indigo-500/10" },
-  { label: "Active Subscriptions", value: "1,204", icon: CreditCard, accent: "text-emerald-400 bg-emerald-500/10" },
-  { label: "Daily Messages", value: "184,920", icon: MessageSquare, accent: "text-purple-400 bg-purple-500/10" },
-  { label: "Revenue (MRR)", value: "$48,210", icon: DollarSign, accent: "text-amber-400 bg-amber-500/10" },
+  { label: "Total Users", value: "—", icon: Users, accent: "text-indigo-400 bg-indigo-500/10" },
+  { label: "Active Subscriptions", value: "N/A", icon: CreditCard, accent: "text-emerald-400 bg-emerald-500/10" },
+  { label: "Daily Messages", value: "—", icon: MessageSquare, accent: "text-purple-400 bg-purple-500/10" },
+  { label: "Revenue (MRR)", value: "Free", icon: DollarSign, accent: "text-amber-400 bg-amber-500/10" },
 ];
 
 const QUICK_ACTIONS = [
@@ -68,14 +72,11 @@ const QUICK_ACTIONS = [
   { label: "Review Feedback", icon: MessageSquareHeart, section: "feedback" },
 ];
 
-const RECENT_ACTIVITY = [
-  { time: "2m ago", text: "New Enterprise lead submitted contact form" },
-  { time: "11m ago", text: "Pro subscriber upgraded to Elite tier" },
-  { time: "38m ago", text: "Changelog entry published: v2.4.0" },
-  { time: "1h ago", text: "Broadcast sent to 12,847 users — 4.2% CTR" },
-  { time: "3h ago", text: "New feedback flagged as high-priority" },
-  { time: "5h ago", text: "Manual payment recorded — $99 Pro plan" },
-];
+// Recent activity feed is intentionally empty until real activity events
+// are streamed from Firestore. Previously this array contained fabricated
+// entries ("Pro subscriber upgraded to Elite tier", "Manual payment
+// recorded — $99 Pro plan") that did not correspond to any real event.
+const RECENT_ACTIVITY: { time: string; text: string }[] = [];
 
 const AccessDeniedFallback = () => (
   <div className="ios-glass-card p-8 sm:p-10 text-center max-w-xl mx-auto">
@@ -141,8 +142,9 @@ export default function AdminPage() {
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Admin Dashboard</h1>
             <p className="text-sm text-muted-foreground mt-2 max-w-2xl">
-              Operational overview for the ShadowTalk AI team. Stats are illustrative until connected
-              to live Firestore aggregates.
+              Operational overview for the ShadowTalk AI team. Live Firestore aggregates
+              are not yet wired — all metrics below show zero or "—" until backend
+              wiring is added.
             </p>
           </motion.div>
 
@@ -198,15 +200,15 @@ export default function AdminPage() {
                 <div className="ios-glass-card p-6 mb-8">
                   <AdminDashboardTyped
                     stats={{
-                      totalUsers: 12847,
-                      totalConversations: 38210,
-                      totalMessages: 184920,
-                      activeSubscribers: 1204,
-                      proSubscribers: 812,
-                      eliteSubscribers: 392,
-                      totalFeedback: 538,
-                      pendingFeedback: 17,
-                      pendingGrowthActions: 3,
+                      totalUsers: 0,
+                      totalConversations: 0,
+                      totalMessages: 0,
+                      activeSubscribers: 0,
+                      proSubscribers: 0,
+                      eliteSubscribers: 0,
+                      totalFeedback: 0,
+                      pendingFeedback: 0,
+                      pendingGrowthActions: 0,
                     }}
                     loading={false}
                     onNavigate={handleNavigate}
@@ -222,16 +224,23 @@ export default function AdminPage() {
                     Recent Activity
                   </h2>
                 </div>
-                <ol className="space-y-3">
-                  {RECENT_ACTIVITY.map((entry, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm">
-                      <span className="text-[11px] text-muted-foreground tabular-nums shrink-0 w-16">
-                        {entry.time}
-                      </span>
-                      <span className="flex-1 text-slate-200">{entry.text}</span>
-                    </li>
-                  ))}
-                </ol>
+                {RECENT_ACTIVITY.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">
+                    No live activity yet. Activity events will appear here once
+                    backend streaming is wired.
+                  </p>
+                ) : (
+                  <ol className="space-y-3">
+                    {RECENT_ACTIVITY.map((entry, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm">
+                        <span className="text-[11px] text-muted-foreground tabular-nums shrink-0 w-16">
+                          {entry.time}
+                        </span>
+                        <span className="flex-1 text-slate-200">{entry.text}</span>
+                      </li>
+                    ))}
+                  </ol>
+                )}
               </div>
             </>
           )}

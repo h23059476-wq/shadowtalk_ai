@@ -131,7 +131,7 @@ Choosing the right model for the task ensures optimal response times and token e
     tags: ["Free Access", "BYOK", "Providers"],
     content: `
 ### One Plan: Free Access
-ShadowTalk AI is free to use. ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage.
+ShadowTalk AI is free to use. Bring your own AI provider API key and choose your preferred models. Your provider may charge separately for API usage.
 
 - **Every feature included**: agentic chat, Mission Control missions, research and visualization, document analysis, themes, desktop app — nothing is gated behind a tier.
 - **Bring your own AI provider API key (BYOK)**: you choose the provider and the models; switch any time from Settings.
@@ -142,14 +142,14 @@ ShadowTalk does not collect payments, so there are no subscriptions or invoices 
     `,
   },
 
-  // Category: Developer API & 
+  // Category: Developer API & Configuration
   {
     id: "developer--guide",
-    title: ": Configuring Custom API Providers",
+    title: "Configuring Custom API Providers",
     category: "developer",
     summary: "Store your personal Groq, OpenAI, or Anthropic keys in your browser sandbox with zero markup.",
     readTime: "4 min read",
-    tags: ["", "API Keys", "Security"],
+    tags: ["Providers", "API Keys", "Security"],
     content: `
 ### Client-Side Architecture
 ShadowTalk supports  for power users:
@@ -176,7 +176,7 @@ If on-device edge execution fails to initialize:
 1. **Browser Compatibility**: Ensure you are running Chrome 113+, Edge 113+, or modern Chromium browsers with hardware acceleration enabled.
 2. **VRAM Requirements**: WebGPU models require a minimum of 4GB allocated system or dedicated GPU memory.
 3. **Driver Updates**: Ensure your GPU drivers (Nvidia, AMD, or Apple Silicon Metal) are up to date.
-4. **Fallback Mode**: If WebGPU is unavailable on your device, ShadowTalk automatically falls back to low-latency cloud inference without interrupting your session.
+4. **No Silent Cloud Fallback**: If WebGPU is unavailable on your device, ShadowTalk will not silently fall back to cloud inference. The offline engine will refuse to start and you will see an explicit error. To keep chatting, switch to BYOK mode (cloud, your provider) or shared mode (cloud, platform-funded). This is intentional: users who chose ShadowTalk for on-device-only inference should never have their prompts silently routed through the cloud.
     `,
   },
 ];
@@ -186,7 +186,7 @@ const CATEGORIES = [
   { id: "getting-started", label: "Getting Started", icon: BookOpen },
   { id: "models", label: "Model Engines", icon: Cpu },
   { id: "billing", label: "Billing & Plans", icon: CreditCard },
-  { id: "developer", label: "Developer & ", icon: Code },
+  { id: "developer", label: "Developer & API", icon: Code },
   { id: "troubleshooting", label: "Troubleshooting", icon: HelpCircle },
 ];
 

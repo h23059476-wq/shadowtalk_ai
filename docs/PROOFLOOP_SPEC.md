@@ -1,11 +1,24 @@
 # ProofLoop — Implementation Specification (ShadowTalk)
 
-**Status: SPECIFICATION ONLY — not implemented.** This document was produced in the
-final engineering completion phase as directed: ProofLoop could not be found anywhere
-in the codebase, git history, or the north-star document, so no code was written for
-it. This spec is derived exclusively from systems that already exist in the product.
-The open product decisions in §9 must be answered by Zain before implementation,
-because they cannot be derived from any existing requirement.
+**Status (as of 2026-11-13 audit): IMPLEMENTED.** ~3,631 lines of ProofLoop code are
+live across:
+- `src/lib/proofloop/` (8 modules, 2,361 lines)
+- `src/components/proofloop/ProofLoopWorkspace.tsx` (887 lines)
+- `src/hooks/useProofLoop.ts` (242 lines)
+- The `/proofloop` route is live and accessible
+- Public proof cards publish at `/proof/:proofId` and `/mission/:id`
+
+This document was originally produced during the final engineering completion phase
+when ProofLoop could not be found anywhere in the codebase. It was subsequently
+implemented. The spec is retained as design documentation; the
+"SPECIFICATION ONLY — not implemented" claim below is preserved for historical
+context but is NO LONGER ACCURATE.
+
+> **Update note (2026-11-13):** Verified working per `docs/audit/VERIFIED_FEATURES.md`.
+> Capability: deterministic CSV/JSON/hash inspection, recovery loops, approval gates,
+> privacy-safe proof cards. The `forceFailureMode` escape hatch in
+> `src/lib/proofloop/proofloopInferenceBridge.ts:97-104` is intentional, labeled
+> test-only, not a production defect.
 
 ---
 

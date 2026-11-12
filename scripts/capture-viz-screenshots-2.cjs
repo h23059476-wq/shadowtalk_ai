@@ -30,7 +30,7 @@ const puppeteer = require("puppeteer");
 
   // Dashboard card (KPI labels are humanized keys: "Price Usd", "Market Cap Usd")
   if (await scrollTo("Price Usd")) {
-    await page.screenshot({ path: "/home/z/my-project/ShadowTalk-AI/docs/architecture/research-visualization/screenshots/viz-2-dashboard.png" });
+    await page.screenshot({ path: "/home/z/my-project/shadowtalk_ai/docs/architecture/research-visualization/screenshots/viz-2-dashboard.png" });
     console.log("[shot] saved viz-2-dashboard.png (KPI dashboard)");
   }
 
@@ -44,7 +44,7 @@ const puppeteer = require("puppeteer");
   if (clicked) {
     await page.waitForFunction(() => document.body.textContent.includes("Underlying data"), { timeout: 15000 });
     await new Promise((r) => setTimeout(r, 1200));
-    await page.screenshot({ path: "/home/z/my-project/ShadowTalk-AI/docs/architecture/research-visualization/screenshots/viz-4-expanded-dialog.png" });
+    await page.screenshot({ path: "/home/z/my-project/shadowtalk_ai/docs/architecture/research-visualization/screenshots/viz-4-expanded-dialog.png" });
     console.log("[shot] saved viz-4-expanded-dialog.png");
     // Scroll inside the dialog to the data table
     await page.evaluate(() => {
@@ -52,7 +52,7 @@ const puppeteer = require("puppeteer");
       heading?.scrollIntoView({ block: "start" });
     });
     await new Promise((r) => setTimeout(r, 500));
-    await page.screenshot({ path: "/home/z/my-project/ShadowTalk-AI/docs/architecture/research-visualization/screenshots/viz-5-data-inspector.png" });
+    await page.screenshot({ path: "/home/z/my-project/shadowtalk_ai/docs/architecture/research-visualization/screenshots/viz-5-data-inspector.png" });
     console.log("[shot] saved viz-5-data-inspector.png");
     // Close the dialog
     await page.keyboard.press("Escape");
@@ -60,7 +60,7 @@ const puppeteer = require("puppeteer");
   }
 
   // Full page (final state, all artifacts)
-  await page.screenshot({ path: "/home/z/my-project/ShadowTalk-AI/docs/architecture/research-visualization/screenshots/viz-demo-full.png", fullPage: true });
+  await page.screenshot({ path: "/home/z/my-project/shadowtalk_ai/docs/architecture/research-visualization/screenshots/viz-demo-full.png", fullPage: true });
   console.log("[shot] saved viz-demo-full.png");
 
   await browser.close();
