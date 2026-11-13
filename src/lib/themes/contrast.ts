@@ -14,6 +14,9 @@ export interface HSL {
 
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
 
+/** CSS-variable HSL triplet string, e.g. "220 14% 8%". */
+export type HslTriplet = string;
+
 export function clampHsl(hsl: HSL): HSL {
   return {
     h: ((hsl.h % 360) + 360) % 360,

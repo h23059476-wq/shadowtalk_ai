@@ -20,6 +20,8 @@ export interface ThemeColorTokens {
   foreground: string;
   card: string;
   cardForeground: string;
+  popover: string;
+  popoverForeground: string;
   primary: string;
   primaryForeground: string;
   primaryGlow: string;
@@ -29,14 +31,20 @@ export interface ThemeColorTokens {
   mutedForeground: string;
   accent: string;
   accentForeground: string;
-  border: string;
-  ring: string;
+  destructive: string;
+  destructiveForeground: string;
   success: string;
   warning: string;
+  border: string;
+  input: string;
+  ring: string;
   sidebarBackground: string;
   sidebarForeground: string;
   sidebarPrimary: string;
   sidebarBorder: string;
+  sidebarAccent: string;
+  sidebarAccentForeground: string;
+  sidebarRing: string;
 }
 
 export interface ThemeTemplate {

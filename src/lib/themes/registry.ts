@@ -118,7 +118,7 @@ export function buildTheme(seed: ThemeSeed): ResolvedTheme {
   const warning = ensureContrast(clampHsl(toHsl(seed.wa ?? { h: 38, s: 88, l: dark ? 56 : 40 })), bg, WCAG_AA_NORMAL);
   const destructiveRaw = clampHsl(toHsl(seed.dx ?? { h: 0, s: 70, l: dark ? 54 : 46 }));
   const destructive = ensureTextable(destructiveRaw, darkCandidate(), lightCandidate(destructiveRaw), READABLE_TARGET);
-  const destructiveForeground = readableForeground(destructive, darkCandidate(destructive), lightCandidate(destructive), READABLE_TARGET);
+  const destructiveForeground = readableForeground(destructive, darkCandidate(), lightCandidate(destructive), READABLE_TARGET);
 
   const sidebarBackground = clampHsl({ h: bg.h, s: dark ? bg.s * 0.75 : bg.s * 0.7, l: dark ? bg.l + 2 : bg.l - 1.5 });
   const sidebarForeground = ensureContrast({ ...fg, s: fg.s * 0.9 }, sidebarBackground, READABLE_TARGET);
@@ -126,6 +126,7 @@ export function buildTheme(seed: ThemeSeed): ResolvedTheme {
   const sidebarAccent = clampHsl({ h: bg.h, s: bg.s * 0.5, l: dark ? bg.l + 8 : bg.l - 8 });
   const sidebarAccentForeground = ensureContrast({ ...fg, s: fg.s * 0.9 }, sidebarAccent, READABLE_TARGET);
   const sidebarBorder = border;
+  const sidebarRing = primary;
 
   const primaryGlow = clampHsl({ ...primary, l: Math.min(primary.l + (dark ? 12 : 8), 90) });
   const ring = primary;
@@ -171,6 +172,9 @@ export function buildTheme(seed: ThemeSeed): ResolvedTheme {
     sidebarForeground: hslToTriplet(sidebarForeground),
     sidebarPrimary: hslToTriplet(sidebarPrimary),
     sidebarBorder: hslToTriplet(sidebarBorder),
+    sidebarAccent: hslToTriplet(sidebarAccent),
+    sidebarAccentForeground: hslToTriplet(sidebarAccentForeground),
+    sidebarRing: hslToTriplet(sidebarRing),
   };
 
   return {
