@@ -5,6 +5,14 @@
 import type { CloudChatMessage, CloudChatOptions, CloudChatResult } from "@/lib/cloudChat";
 import type { Citation } from "@/lib/visualization/types";
 import { fbAuth } from "@/integrations/firebase/app";
+import {
+  parseAnthropicUsageEvent,
+  parseOpenAiUsageChunk,
+  mergeUsage,
+  type ProviderUsage,
+} from "@/lib/tokenOptimizer/usage";
+import { estimateTokens } from "@/lib/tokenOptimizer/tokenEstimation";
+import { STREAM_USAGE_PROVIDERS } from "@/lib/tokenOptimizer/modelRegistry";
 
 /**
  * Batch 1 (Research-to-Visualization) — citation capture.
@@ -140,7 +148,7 @@ function toPlainMessages(messages: CloudChatMessage[]) {
 }
 
 type AnthropicContentBlock =
-  | { type: "text"; text: string }
+  | { type: "text"; text: string; cache_control?: { type: "ephemeral" } }
   | { type: "image"; source: { type: "base64"; media_type: string; data: string } | { type: "url"; url: string } };
 
 function toAnthropicBlocks(message: CloudChatMessage): AnthropicContentBlock[] {
@@ -161,7 +169,7 @@ function toAnthropicBlocks(message: CloudChatMessage): AnthropicContentBlock[] {
   });
 }
 
-function toAnthropicMessages(messages: CloudChatMessage[]) {
+function toAnthropicMessages(messages: CloudChatMessage[], applyCacheControl: boolean) {
   const merged: Array<{ role: "user" | "assistant"; content: AnthropicContentBlock[] }> = [];
   for (const message of messages) {
     if (message.role === "system") continue;
@@ -176,7 +184,20 @@ function toAnthropicMessages(messages: CloudChatMessage[]) {
       merged.push({ role, content: blocks });
     }
   }
-  return merged.filter((m) => m.content.length > 0);
+  const usable = merged.filter((m) => m.content.length > 0);
+  if (applyCacheControl && usable.length > 0) {
+    // Second cache breakpoint on the LAST block of the LAST message — with
+    // streaming chat the previous turns are the stable prefix that repeats.
+    const finalMessage = usable[usable.length - 1];
+    const finalBlock = finalMessage.content[finalMessage.content.length - 1];
+    if (finalBlock.type === "text") {
+      finalMessage.content = [
+        ...finalMessage.content.slice(0, -1),
+        { ...finalBlock, cache_control: { type: "ephemeral" as const } },
+      ];
+    }
+  }
+  return usable;
 }
 
 async function streamAnthropicChat(
@@ -190,6 +211,18 @@ async function streamAnthropicChat(
     .filter(Boolean)
     .join("\n\n");
   let response: Response;
+  // Batch 1 (intelligent-workspace): Anthropic explicit prompt caching.
+  // Documented mechanism: `cache_control: { type: "ephemeral" }` breakpoints
+  // on content blocks (≤4 per request, 5-minute TTL). We place ONE breakpoint
+  // on the system prompt and ONE on the final message block — the stable
+  // prefix — so repeated turns hit the cache. Applied only when the cached
+  // prefix can actually exceed Anthropic's 1024-token caching minimum.
+  const estimatedPrefixTokens =
+    estimateTokens(system) + estimateTokens(messages.map((m) => (typeof m.content === "string" ? m.content : "")).join("\n"));
+  const applyCacheControl = estimatedPrefixTokens >= 1_024;
+  const systemPayload = applyCacheControl && system
+    ? [{ type: "text", text: system, cache_control: { type: "ephemeral" } }]
+    : system || undefined;
   try {
     response = await fetch(BYOK_PROVIDERS.anthropic.url, {
       method: "POST",
@@ -202,8 +235,8 @@ async function streamAnthropicChat(
       body: JSON.stringify({
         model: opts.model || cfg.model || BYOK_PROVIDERS.anthropic.defaultModel,
         max_tokens: opts.maxTokens ?? 4096,
-        messages: toAnthropicMessages(messages),
-        ...(system ? { system } : {}),
+        messages: toAnthropicMessages(messages, applyCacheControl),
+        ...(systemPayload ? { system: systemPayload } : {}),
         ...(typeof opts.temperature === "number" ? { temperature: opts.temperature } : {}),
         stream: true,
       }),
@@ -237,6 +270,8 @@ async function streamAnthropicChat(
   // failed streams look like successful empty answers.
   let streamError: string | null = null;
   const citations = new CitationCollector();
+  // Batch 1: real usage from Anthropic's message_start / message_delta events.
+  let anthropicUsage: ProviderUsage | null = null;
 
   const handleDataLine = (payload: string): boolean => {
     if (!payload) return true;
@@ -252,6 +287,8 @@ async function streamAnthropicChat(
       } else if (event?.type === "error") {
         streamError = event.error?.message || "Anthropic reported a mid-stream error.";
       }
+      const usageEvent = parseAnthropicUsageEvent(event);
+      if (usageEvent) anthropicUsage = mergeUsage(anthropicUsage, usageEvent);
       return true;
     } catch {
       return false;
@@ -282,9 +319,9 @@ async function streamAnthropicChat(
   }
 
   if (streamError) {
-    return { content, error: streamError, source: "byok", citations: citations.toList() };
+    return { content, error: streamError, source: "byok", citations: citations.toList(), usage: anthropicUsage ?? undefined };
   }
-  return { content, source: "byok", modelUsed: opts.model || cfg.model, citations: citations.toList() };
+  return { content, source: "byok", modelUsed: opts.model || cfg.model, citations: citations.toList(), usage: anthropicUsage ?? undefined };
 }
 
 /** Stream a chat completion directly from the user's own provider. */
@@ -305,6 +342,10 @@ export async function streamByokChat(
     return { content: "", error: "URL reading currently requires an OpenRouter key.", source: "byok" };
   }
   if (cfg.provider === "anthropic") return streamAnthropicChat(cfg, messages, opts);
+  // Batch 1: request real usage only from providers documented to support
+  // `stream_options.include_usage` — unknown params on other gateways can
+  // hard-reject the request and break chat entirely.
+  const requestUsage = STREAM_USAGE_PROVIDERS.has(cfg.provider);
   let resp: Response;
   try {
     resp = await fetch(provider.url, {
@@ -314,6 +355,7 @@ export async function streamByokChat(
         model: opts.model || cfg.model || provider.defaultModel,
         messages: toPlainMessages(messages),
         stream: true,
+        ...(requestUsage ? { stream_options: { include_usage: true } } : {}),
         ...(typeof opts.temperature === "number" ? { temperature: opts.temperature } : {}),
         ...(typeof opts.maxTokens === "number" ? { max_tokens: opts.maxTokens } : {}),
         ...(opts.structuredOutput ? { response_format: { type: "json_object" } } : {}),
@@ -352,6 +394,8 @@ export async function streamByokChat(
   // ignoring them made failed streams look like successful empty answers.
   let streamError: string | null = null;
   const citations = new CitationCollector();
+  // Batch 1: real usage from the final chunk (include_usage providers).
+  let openAiUsage: ProviderUsage | null = null;
 
   const handleDataLine = (payload: string): boolean => {
     if (!payload || payload === "[DONE]") return true;
@@ -374,6 +418,8 @@ export async function streamByokChat(
       if (choice?.delta?.annotations) citations.addOpenRouterAnnotations(choice.delta.annotations);
       if (Array.isArray(parsed?.citations)) citations.addPerplexityCitations(parsed.citations);
       if (Array.isArray(parsed?.search_results)) citations.addSearchResults(parsed.search_results);
+      const usageChunk = parseOpenAiUsageChunk(parsed);
+      if (usageChunk) openAiUsage = mergeUsage(openAiUsage, usageChunk);
       return true;
     } catch {
       return false;
@@ -404,7 +450,7 @@ export async function streamByokChat(
   }
 
   if (streamError) {
-    return { content, error: streamError, source: "byok", citations: citations.toList() };
+    return { content, error: streamError, source: "byok", citations: citations.toList(), usage: openAiUsage ?? undefined };
   }
-  return { content, source: "byok", modelUsed: opts.model || cfg.model, citations: citations.toList() };
+  return { content, source: "byok", modelUsed: opts.model || cfg.model, citations: citations.toList(), usage: openAiUsage ?? undefined };
 }

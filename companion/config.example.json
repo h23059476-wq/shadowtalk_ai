@@ -1,0 +1,25 @@
+{
+  "port": 7717,
+  "servers": [
+    {
+      "name": "filesystem",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/YOU/shadowtalk-workspace"],
+      "allowedRoots": ["/home/YOU/shadowtalk-workspace"],
+      "callTimeoutMs": 30000
+    },
+    {
+      "name": "git",
+      "command": "uvx",
+      "args": ["mcp-server-git", "--repository", "/home/YOU/shadowtalk-workspace"],
+      "callTimeoutMs": 30000
+    },
+    {
+      "name": "postgres",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://localhost:5432/mydb"],
+      "callTimeoutMs": 60000
+    }
+  ],
+  "auditLog": "~/.shadowtalk-mcp-bridge.audit.jsonl"
+}

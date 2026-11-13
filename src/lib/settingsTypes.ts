@@ -7,4 +7,5 @@ export type SettingsSectionId =
   | "data"
   | "connections"
   | "account"
-  | "offline";
+  | "offline"
+  | "localtools";

@@ -9,6 +9,7 @@ import { fbAuth, functionsBaseUrl } from "@/integrations/firebase/app";
 import { getByokConfig, streamByokChat } from "@/lib/byok";
 import { getCachedAiAccessMode } from "@/lib/aiAccessMode";
 import type { Citation } from "@/lib/visualization/types";
+import { parseOpenAiUsageChunk, mergeUsage, type ProviderUsage } from "@/lib/tokenOptimizer/usage";
 
 export type CloudChatContent =
   | string
@@ -55,6 +56,10 @@ export interface CloudChatResult {
    *  deltas. Previously these were silently dropped at the SSE layer, which
    *  made source-preserving visualizations impossible. */
   citations?: Citation[];
+  /** Intelligent-workspace Batch 1: provider-measured token usage when the
+   *  provider reports it. Absent = caller falls back to documented
+   *  char-based estimation (labeled as estimated in telemetry). */
+  usage?: ProviderUsage;
 }
 
 export function isCloudChatConfigured(): boolean {
@@ -167,6 +172,10 @@ async function streamBuiltInChat(
   // Mid-stream `data: {"error": ...}` events must surface — previously they
   // were swallowed, so a failed stream returned an empty answer with no error.
   let streamError: string | null = null;
+  // Intelligent-workspace Batch 1: the shared gateway proxies OpenRouter,
+  // which emits a usage-bearing final chunk. Parse when present; absence is
+  // normal and callers fall back to estimation.
+  let sharedUsage: ProviderUsage | null = null;
 
   const handleDataLine = (payload: string): boolean => {
     if (!payload || payload === "[DONE]") return true;
@@ -184,6 +193,8 @@ async function streamBuiltInChat(
         content += delta;
         opts.onDelta?.(content);
       }
+      const usageChunk = parseOpenAiUsageChunk(parsed);
+      if (usageChunk) sharedUsage = mergeUsage(sharedUsage, usageChunk);
       return true;
     } catch {
       return false; // partial JSON — caller decides whether it's a truncation
@@ -219,7 +230,7 @@ async function streamBuiltInChat(
   if (streamError) {
     // Partial content is still returned so the UI can show it, but the
     // error forces callers to treat this as an incomplete response.
-    return { content, error: streamError, source: "shared", modelUsed: headerModel };
+    return { content, error: streamError, source: "shared", modelUsed: headerModel, usage: sharedUsage ?? undefined };
   }
-  return { content, source: "shared", modelUsed: headerModel, provider: headerProvider };
+  return { content, source: "shared", modelUsed: headerModel, provider: headerProvider, usage: sharedUsage ?? undefined };
 }

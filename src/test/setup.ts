@@ -6,8 +6,11 @@ vi.mock('@/integrations/local/client', () => ({
   backend: createMockBackend(),
 }));
 
-// Mock matchMedia for components that use it
-Object.defineProperty(window, 'matchMedia', {
+const isDomEnvironment = typeof window !== 'undefined';
+
+// Mock matchMedia for components that use it (DOM environments only —
+// node-environment test files skip these).
+if (isDomEnvironment) Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: vi.fn().mockImplementation((query) => ({
     matches: false,
@@ -22,14 +25,14 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Mock ResizeObserver
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
+if (isDomEnvironment) global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn(),
 }));
 
 // Mock IntersectionObserver
-global.IntersectionObserver = vi.fn().mockImplementation(() => ({
+if (isDomEnvironment) global.IntersectionObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn(),
@@ -39,8 +42,10 @@ global.IntersectionObserver = vi.fn().mockImplementation(() => ({
 }));
 
 // Mock scrollTo
-Element.prototype.scrollTo = vi.fn() as any;
-Element.prototype.scrollIntoView = vi.fn();
+if (isDomEnvironment) {
+  Element.prototype.scrollTo = vi.fn() as any;
+  Element.prototype.scrollIntoView = vi.fn();
+}
 
 // Mock crypto for UUID generation
 Object.defineProperty(global, 'crypto', {
@@ -72,8 +77,8 @@ const localStorageMock = (() => {
   };
 })();
 
-Object.defineProperty(window, 'localStorage', { value: localStorageMock });
-Object.defineProperty(window, 'sessionStorage', { value: localStorageMock });
+if (isDomEnvironment) Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+if (isDomEnvironment) Object.defineProperty(window, 'sessionStorage', { value: localStorageMock });
 
 // Mock import.meta.env for ShadowTalk backend
 if (typeof process !== 'undefined') {

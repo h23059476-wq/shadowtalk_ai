@@ -411,4 +411,34 @@ rulesDescribe("Firestore auth and profile rules", () => {
       setDoc(doc(aliceDb, "user_settings/alice-forged"), { ...appearanceDoc, user_id: "bob" }),
     );
   });
+
+  // Intelligent-workspace Batch 1 — token-optimizer compaction summaries are
+  // user-owned like messages; cross-user access and ownership forgery must
+  // fail even though the collection is new.
+  it("isolates conversation_compactions across accounts", async () => {
+    const aliceDb = testEnv.authenticatedContext("alice").firestore();
+    const bobDb = testEnv.authenticatedContext("bob").firestore();
+    const anonDb = testEnv.unauthenticatedContext().firestore();
+    const compactionDoc = {
+      user_id: "alice",
+      conversation_id: "conv-1",
+      block_id: "cmp-1",
+      kind: "extractive",
+      summary: "Alice decided on the storage layer and set a Friday deadline.",
+      source_message_ids: JSON.stringify(["msg-3", "msg-4"]),
+      source_count: 2,
+      created_at: serverTimestamp(),
+    };
+    await assertSucceeds(setDoc(doc(aliceDb, "conversation_compactions/cmp-1"), compactionDoc));
+    await assertFails(getDoc(doc(bobDb, "conversation_compactions/cmp-1")));
+    await assertFails(updateDoc(doc(bobDb, "conversation_compactions/cmp-1"), { summary: "tampered" }));
+    await assertFails(deleteDoc(doc(bobDb, "conversation_compactions/cmp-1")));
+    await assertFails(getDoc(doc(anonDb, "conversation_compactions/cmp-1")));
+    // Ownership forgery: bob cannot write a row claiming alice's user_id.
+    await assertFails(
+      setDoc(doc(bobDb, "conversation_compactions/bob-cmp"), { ...compactionDoc, block_id: "cmp-bob" }),
+    );
+    await assertSucceeds(getDoc(doc(aliceDb, "conversation_compactions/cmp-1")));
+    await assertSucceeds(deleteDoc(doc(aliceDb, "conversation_compactions/cmp-1")));
+  });
 });

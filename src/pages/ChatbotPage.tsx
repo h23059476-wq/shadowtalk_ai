@@ -14,6 +14,9 @@ import { AiAccessOnboarding } from "@/components/chat/AiAccessOnboarding";
 const LiveVoiceMode = lazy(() => import("@/components/chat/LiveVoiceMode").then(m => ({ default: m.LiveVoiceMode })));
 const SettingsByokCard = lazy(() => import("@/components/settings/SettingsByokCard").then(m => ({ default: m.SettingsByokCard })));
 import { ChatToolbar } from "@/components/chat/ChatToolbar";
+import { ContextIndicator } from "@/components/chat/ContextIndicator";
+import { TokenTelemetryBadge } from "@/components/chat/TokenTelemetryBadge";
+import { McpApprovalDialog, type McpApprovalRequest } from "@/components/chat/McpApprovalDialog";
 import { EnterpriseWelcomeBanner } from "@/components/chat/EnterpriseWelcomeBanner";
 import { ChatShadowSidebar } from "@/components/chat/ChatShadowSidebar";
 import { ChatInput } from "@/components/chat/ChatInput";
@@ -138,7 +141,27 @@ import {
 } from "@/lib/visualization/chatPipeline";
 // Batch 3: AI-assisted conceptual generation — model/research call contracts.
 import type { ConceptModelCall, ConceptResearchCall } from "@/lib/visualization/conceptual/modelBridge";
-import { buildMessageMetadata, encodeMessageMetadata, decodeMessageMetadata, type ChatMessageMetadata } from "@/lib/chatMessageMetadata";
+import { buildMessageMetadata, encodeMessageMetadata, decodeMessageMetadata, type ChatMessageMetadata, type TokenTelemetry } from "@/lib/chatMessageMetadata";
+// Intelligent Workspace Batch 1 — Dynamic Token Optimizer.
+import {
+  compactForBudget,
+  resolveContextBudget,
+  estimateTokens,
+  TOKEN_ESTIMATION_METHOD,
+} from "@/lib/tokenOptimizer";
+import { saveCompactionBlocks } from "@/lib/tokenOptimizer/compactionStore";
+import { getCachedAiAccessMode } from "@/lib/aiAccessMode";
+import { getByokConfig } from "@/lib/byok";
+import {
+  McpBridgeClient,
+  loadConnection,
+  permissionCategory,
+  checkPermission,
+  loadGrants,
+  matchMessageToTool,
+  extractArgsFromMessage,
+  recordActivity,
+} from "@/lib/mcpBridge";
 // Types
 interface Message { 
   id: string; 
@@ -158,6 +181,10 @@ interface Message {
   provider?: string;
   /** Batch R1 — provider-reported citations (web research), preserved from the SSE layer. */
   citations?: Citation[];
+  /** Intelligent-workspace Batch 2 — Stealth RAG context used for this reply. */
+  ragContext?: { sources: Array<{ name: string; chunks: number }>; localProcessing: boolean; providerIds: string[] };
+  /** Intelligent-workspace Batch 1 — honest per-turn token/cost accounting. */
+  tokenTelemetry?: TokenTelemetry;
   /** Batch R1 — structured research datasets captured from ```shadowdata blocks. */
   researchData?: ResearchDataBlock[];
   /** Batch 2 — visualization artifact (validated spec) attached to this reply. */
@@ -230,6 +257,13 @@ const ChatbotPage = () => {
   
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
+  // Intelligent-workspace Batch 4 — unified experience state.
+  /** Bumped after (drag-drop) ingestion so the context indicator re-reads the index. */
+  const [ragRefreshKey, setRagRefreshKey] = useState(0);
+  /** Files currently being indexed from a drag-drop (drives the progress toast). */
+  const [ragIndexingCount, setRagIndexingCount] = useState(0);
+  /** Pending MCP tool approval — resolved by the McpApprovalDialog. */
+  const [mcpApproval, setMcpApproval] = useState<McpApprovalRequest | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
@@ -1041,7 +1075,178 @@ const ChatbotPage = () => {
   type ChatCompletionMessage = {
     role: string;
     content: string | Array<{ type: "text"; text: string } | { type: "image_url"; image_url: { url: string } }>;
+    /** Stable message id — compaction traceability anchor (Intelligent Workspace Batch 1). */
+    id?: string;
   };
+
+  // === Intelligent-workspace Batch 2/4 — Stealth RAG ingestion ===
+  // Drag-and-drop onto the chat ingests documents into the local index
+  // (extraction reuses documentIntelligence; embeddings follow the user's
+  // preference). Does NOT attach the file to a message — that remains the
+  // composer's paperclip flow. Cancellable per file; failures are per-file.
+  const ingestFiles = useCallback(
+    async (files: File[]) => {
+      if (!user || files.length === 0) return;
+      const rag = await import("@/lib/rag");
+      const preference = rag.getEmbeddingPreference(user.id);
+      let embedder: import("@/lib/rag/embeddings").EmbeddingProvider = rag.createLocalEmbedder();
+      if (
+        preference.kind === "remote" &&
+        getByokConfig() &&
+        rag.EMBEDDING_CAPABLE_PROVIDERS.has(getByokConfig()!.provider) &&
+        preference.provider === getByokConfig()!.provider
+      ) {
+        embedder = new rag.RemoteEmbedder(preference.provider, getByokConfig()!.apiKey, preference.model);
+      }
+      setRagIndexingCount(files.length);
+      const results = await Promise.allSettled(
+        files.map(async (file) => {
+          try {
+            return await rag.ingestDocument(file, {
+              userId: user.id,
+              projectId: null,
+              embedder,
+            });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Indexing failed.";
+            toast({ title: `Could not index ${file.name}`, description: message, variant: "destructive" });
+            throw error;
+          }
+        }),
+      );
+      setRagIndexingCount(0);
+      const fulfilled = results.filter((r) => r.status === "fulfilled").map((r) => r.value);
+      const dupes = fulfilled.filter((r) => r.duplicate).length;
+      const fresh = fulfilled.length - dupes;
+      if (fulfilled.length > 0) {
+        setRagRefreshKey((k) => k + 1);
+        toast({
+          title: `Indexed ${fresh} document${fresh === 1 ? "" : "s"}${dupes ? ` · ${dupes} already indexed` : ""}`,
+          description: "Relevant passages are now retrieved automatically while you chat.",
+        });
+      }
+    },
+    [user],
+  );
+
+  // Window-level drag-and-drop: drop anywhere on the chat page to index.
+  // (The composer paperclip keeps its own attachment flow.)
+  useEffect(() => {
+    const onDragOver = (event: DragEvent) => {
+      if (event.dataTransfer?.types?.includes("Files")) event.preventDefault();
+    };
+    const onDrop = (event: DragEvent) => {
+      if (!event.dataTransfer?.types?.includes("Files")) return;
+      event.preventDefault();
+      const files = Array.from(event.dataTransfer.files ?? []);
+      if (files.length > 0) void ingestFiles(files);
+    };
+    window.addEventListener("dragover", onDragOver);
+    window.addEventListener("drop", onDrop);
+    return () => {
+      window.removeEventListener("dragover", onDragOver);
+      window.removeEventListener("drop", onDrop);
+    };
+  }, [ingestFiles]);
+
+  // === Intelligent-workspace Batch 3/4 — MCP intent-based invocation ===
+  // Returns "handled" when the message was routed to a local tool (approved,
+  // denied, or failed visibly), "skip" when no authorized tool matched.
+  const tryMcpInvocation = useCallback(
+    async (messageText: string): Promise<"handled" | "skip"> => {
+      const connection = loadConnection();
+      if (!connection) return "skip";
+      const client = new McpBridgeClient(connection);
+      let servers;
+      try {
+        servers = await client.listServers();
+      } catch {
+        return "skip"; // bridge not running — chat proceeds; Settings shows status
+      }
+      const authorized = servers
+        .filter((s) => s.status === "ready")
+        .flatMap((s) => s.tools.map((tool) => ({ server: s.server, tool })));
+      const match = matchMessageToTool(messageText, authorized);
+      if (!match) return "skip";
+
+      const toolKey = `${match.server}/${match.tool.name}`;
+      const category = permissionCategory(match.tool);
+      const args = extractArgsFromMessage(messageText, match.tool);
+      const grants = loadGrants();
+      const permission = checkPermission(toolKey, match.tool, grants);
+
+      const finishWithCard = (content: string, outcome: "ok" | "error" | "denied") => {
+        recordActivity({
+          ts: new Date().toISOString(),
+          server: match.server,
+          tool: match.tool.name,
+          outcome,
+          detail: content.slice(0, 120),
+        });
+        const cardId = `mcp-${Date.now()}`;
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: cardId,
+            type: "ai",
+            content,
+            timestamp: new Date(),
+            toolExecution: { tool: `local:${match.server}/${match.tool.name}`, status: outcome === "ok" ? "completed" : outcome === "denied" ? "failed" : "failed", params: {} },
+          },
+        ]);
+        if (user) {
+          void (async () => {
+            const convId = await resolveConversationId();
+            if (!convId || isGuestConversationId(convId)) return;
+            void saveMessage(content, "assistant", convId, buildMessageMetadata({
+              tool: `local:${match.server}/${match.tool.name}`,
+            })).catch(() => {});
+          })();
+        }
+      };
+
+      if (permission.decision === "denied-by-user") {
+        finishWithCard(`Local tool \`${toolKey}\` is currently denied in Settings → Local Tools. Re-allow it there to use it here.`, "denied");
+        return "handled";
+      }
+
+      let approved = permission.decision === "allowed";
+      if (!approved) {
+        approved = await new Promise<boolean>((resolve) => {
+          setMcpApproval({
+            server: match.server,
+            tool: match.tool.name,
+            category,
+            args,
+            description: match.tool.description,
+            resolve,
+          });
+        });
+        setMcpApproval(null);
+      }
+      if (!approved) {
+        recordActivity({ ts: new Date().toISOString(), server: match.server, tool: match.tool.name, outcome: "denied" });
+        finishWithCard(`Not executed — you declined the \`${match.tool.name}\` tool call. Nothing was sent to your local bridge.`, "denied");
+        return "handled";
+      }
+
+      try {
+        const result = await client.invoke(match.server, match.tool.name, args);
+        const text = (result.content ?? []).map((c) => (typeof c.text === "string" ? c.text : "")).filter(Boolean).join("\n") || "(tool returned no content)";
+        if (result.isError) {
+          finishWithCard(`The local tool \`${toolKey}\` reported a failure:\n\n${text}`, "error");
+        } else {
+          finishWithCard(`**Local tool result — \`${toolKey}\`**\n\n${text}`, "ok");
+        }
+        return "handled";
+      } catch (error) {
+        const detail = error instanceof Error ? error.message : "Invocation failed.";
+        finishWithCard(`Local tool \`${toolKey}\` failed: ${detail}`, "error");
+        return "handled";
+      }
+    },
+    [user, resolveConversationId, isGuestConversationId],
+  );
 
   const runChatCompletion = useCallback(
     async (
@@ -1067,9 +1272,59 @@ const ChatbotPage = () => {
             ? (lastUserMsg.content.find((p) => p.type === "text") as { text?: string } | undefined)?.text?.trim() ?? ""
             : "";
 
+      // Intelligent-workspace Batch 1/2: resolve the ACTUAL provider context
+      // once, up front — used by the token budget AND by Stealth RAG's
+      // remote-embedding decision (which must never switch providers).
+      const accessModeForBudget = getCachedAiAccessMode();
+      const byokForBudget = accessModeForBudget === "byok" ? getByokConfig() : null;
+
       const userMemoryContext = await buildMemoryContextForUser(user);
       if (userMemoryContext) {
         augmented = [{ role: "system", content: userMemoryContext }, ...augmented];
+      }
+
+      // Intelligent-workspace Batch 2 (Stealth RAG): automatic retrieval.
+      // When the user has indexed documents, relevant passages are retrieved
+      // for THIS message and injected as one system block (with source
+      // references). Rules: relevance threshold + top-K + char budget decide
+      // what is sent; unrelated content is rejected; retrieval failure is
+      // non-fatal (chat proceeds without context). The RAG module is
+      // dynamically imported so it stays out of the initial chat bundle.
+      let ragContext: { sources: Array<{ name: string; chunks: number }>; localProcessing: boolean; providerIds: string[] } | null = null;
+      if (user && lastUser.length >= 3) {
+        try {
+          const rag = await import("@/lib/rag");
+          const preference = rag.getEmbeddingPreference(user.id);
+          let embedder: import("@/lib/rag").EmbeddingProvider;
+          if (
+            preference.kind === "remote" &&
+            byokForBudget &&
+            rag.EMBEDDING_CAPABLE_PROVIDERS.has(byokForBudget.provider) &&
+            preference.provider === byokForBudget.provider
+          ) {
+            embedder = new rag.RemoteEmbedder(preference.provider, byokForBudget.apiKey, preference.model);
+          } else {
+            embedder = rag.createLocalEmbedder();
+          }
+          const result = await rag.retrieveContext(lastUser, {
+            userId: user.id,
+            projectId: null, // chat-level scope; project-scoped retrieval ships with the workspace wiring
+            embedder,
+            signal: controller.signal,
+          });
+          if (result) {
+            const formatted = rag.formatRetrievedContext(result);
+            augmented = [{ role: "system", content: formatted.systemContent }, ...augmented];
+            ragContext = {
+              sources: rag.summarizeSources(result),
+              localProcessing: result.localProcessing,
+              providerIds: result.embeddingProviders,
+            };
+          }
+        } catch (error) {
+          // Retrieval must never break chat.
+          console.warn("[rag] retrieval failed (non-fatal)", error);
+        }
       }
 
       // Document generation — ONLY on explicit slash command (/doc, /draft,
@@ -1102,6 +1357,7 @@ Structure and Content Guidelines:
       const routerMessages = augmented.map((m) => ({
         role: m.role as "user" | "assistant" | "system",
         content: m.content,
+        ...(m.id ? { id: m.id } : {}),
       }));
 
       const shadowMatchInitial = lastUser.match(/@([a-zA-Z0-9_-]+)-shadow/i);
@@ -1204,17 +1460,70 @@ Structure and Content Guidelines:
         if (pendingContent !== null) flushAssistant();
       };
 
-      // SPEED: only the recent turns are sent — long histories slow the model's
-      // first token dramatically without improving answers.
-      const trimmedRouterMessages = routerMessages.slice(-14);
+      // Intelligent-workspace Batch 1: replace the fixed `slice(-14)` cap
+      // with a provider-aware context budget + non-destructive compaction.
+      //  - resolveContextBudget reads the ACTUAL provider/model (BYOK config
+      //    or the shared gateway) instead of assuming one window fits all.
+      //  - compactForBudget always keeps a verbatim recent tail (14 messages,
+      //    matching the old window) plus every continuity-protected message
+      //    (decisions, requirements, constraints, tasks, questions, file/
+      //    research references) regardless of age; older unprotected runs
+      //    become locally-computed extractive summaries with source-message
+      //    traceability. Original history is never mutated or deleted.
+      //  - When everything fits the budget, the full history is sent — the
+      //    old behavior, unchanged.
+      const systemPromptContent = `${buildChatSystemPrompt({
+        personality,
+        businessMemory,
+      })}\n\n${getModePrompt(chatMode)}`;
+
+      const budget = resolveContextBudget(
+        byokForBudget ? byokForBudget.provider : "shared",
+        byokForBudget?.model,
+        { requestedMaxOutputTokens: 8192 },
+      );
+
+      const compaction = compactForBudget({
+        messages: routerMessages.map((m, i) => ({
+          id: m.id ?? `hist-${i}`,
+          role: m.role,
+          content:
+            typeof m.content === "string"
+              ? m.content
+              : m.content.map((p) => (p.type === "text" ? p.text : "")).join("\n"),
+        })),
+        budget,
+        fixedPrefixTokens: estimateTokens(systemPromptContent),
+        recentKeepCount: 14,
+      });
+
+      const trimmedRouterMessages: typeof routerMessages = [];
+      for (const entry of compaction.outgoing) {
+        if (entry.kind === "message") {
+          // Reference the ORIGINAL router message — rich array content
+          // (vision image parts) passes through untouched.
+          trimmedRouterMessages.push(routerMessages[entry.sourceIndex]);
+        } else {
+          trimmedRouterMessages.push({
+            role: "system" as const,
+            content:
+              `[Compacted earlier conversation — ${entry.block.sourceCount} messages summarized; originals remain in history]\n${entry.block.summary}`,
+          });
+        }
+      }
+
+      // Compaction summaries persist separately from the conversation for
+      // traceability and later inspection; originals are never overwritten.
+      if (compaction.blocks.length > 0 && user && conversationId && !isGuestConversationId(conversationId)) {
+        void saveCompactionBlocks(user.id, conversationId, compaction.blocks).catch((e) =>
+          console.warn("[chat] compaction persistence failed", e),
+        );
+      }
 
       const cloudMessages: CloudChatMessage[] = [
         {
           role: 'system',
-          content: `${buildChatSystemPrompt({
-            personality,
-            businessMemory,
-          })}\n\n${getModePrompt(chatMode)}`,
+          content: systemPromptContent,
         },
         ...trimmedRouterMessages.map((m) => ({
           role: (m.role === 'assistant' ? 'assistant' : m.role === 'system' ? 'system' : 'user') as CloudChatMessage['role'],
@@ -1301,14 +1610,17 @@ Structure and Content Guidelines:
         }
       }
 
-      const { content: streamedContent, error: cloudError, source: resultSource, modelUsed: resultModel, provider: resultProvider, citations: resultCitations } = await streamCloudChat(cloudMessages, {
+      const { content: streamedContent, error: cloudError, source: resultSource, modelUsed: resultModel, provider: resultProvider, citations: resultCitations, usage: resultUsage } = await streamCloudChat(cloudMessages, {
         signal: controller.signal,
         temperature: 0.7,
-        maxTokens: 8192,
+        // Intelligent-workspace Batch 1: clamp the requested completion cap to
+        // the selected provider's documented output limit instead of a fixed
+        // 8192 that exceeded some providers' entire context windows.
+        maxTokens: budget.reservedOutput,
         onDelta: (accumulated) => {
           pushAssistant(accumulated);
           // Fire token-cost tracker — one call per delta chunk
-          costTracker.onToken("gpt-4o-mini");
+          costTracker.onToken(byokForBudget?.model || "shared");
         },
       });
 
@@ -1352,9 +1664,41 @@ Structure and Content Guidelines:
       }
 
       // === Session monetization: record this model call + project cost ===
-      const _outputTokens = Math.ceil((streamedContent || assistantContent || "").length / 4);
-      const _inputTokens = Math.ceil(cloudMessages.reduce((n, m) => n + (typeof m.content === 'string' ? m.content.length : 0), 0) / 4);
-      costTracker.onRequestComplete("gpt-4o-mini", _inputTokens, _outputTokens);
+      // Intelligent-workspace Batch 1: use provider-MEASURED usage when the
+      // provider reports it; otherwise the documented CJK-aware estimation —
+      // always labeled honestly, never presented as measured. The hard-coded
+      // "gpt-4o-mini" model string is gone: cost uses the model that actually
+      // served the request.
+      const requestModel = resultModel || byokForBudget?.model || "unknown";
+      const outputText = streamedContent || assistantContent || "";
+      const estimateRequestTokens = (msgs: CloudChatMessage[]) =>
+        msgs.reduce((n, m) => {
+          if (typeof m.content === "string") return n + estimateTokens(m.content);
+          return n + m.content.reduce((k, p) => k + (p.type === "text" ? estimateTokens(p.text) : 0), 0);
+        }, 0);
+      const inputTokens = resultUsage?.inputTokens ?? estimateRequestTokens(cloudMessages);
+      const outputTokens = resultUsage?.outputTokens ?? estimateTokens(outputText);
+      costTracker.onRequestComplete(requestModel, inputTokens, outputTokens);
+
+      const tokenTelemetry: TokenTelemetry = {
+        provider: assistantProvider,
+        model: requestModel,
+        inputTokens,
+        inputMeasured: resultUsage?.measured === true && resultUsage.inputTokens !== undefined,
+        outputTokens,
+        outputMeasured: resultUsage?.measured === true && resultUsage.outputTokens !== undefined,
+        ...(resultUsage?.cachedInputTokens ? { cachedInputTokens: resultUsage.cachedInputTokens } : {}),
+        estimationMethod: TOKEN_ESTIMATION_METHOD,
+        compaction: {
+          applied: compaction.telemetry.applied,
+          compactedMessages: compaction.telemetry.compactedMessageCount,
+          estimatedSavingsTokens: compaction.telemetry.estimatedSavingsTokens,
+        },
+      };
+      setMessages((prev) => prev.map((m) =>
+        m.id === aiMessageId ? { ...m, tokenTelemetry, ...(ragContext ? { ragContext } : {}) } : m,
+      ));
+
       session.recordModelCall();
       // SPEED: don't block UI on DB write — fire and forget.
       if (assistantContent && user) {
@@ -1364,6 +1708,8 @@ Structure and Content Guidelines:
           source: assistantSource,
           modelUsed: assistantModelUsed,
           provider: assistantProvider,
+          tokenTelemetry,
+          ...(ragContext ? { rag: ragContext } : {}),
         })).catch((e) =>
           console.warn("[chat] saveMessage(assistant) failed", e),
         );
@@ -1375,7 +1721,7 @@ Structure and Content Guidelines:
       }
       return assistantContent || undefined;
     },
-    [chatMode, personality, user, getChatDefaults, getMemoryContext],
+    [chatMode, personality, user, getChatDefaults, getMemoryContext, isGuestConversationId],
   );
 
   // === Session monetization + cost tracking (roadmap batch integration) ===
