@@ -12,6 +12,7 @@ import { THEME_JSON_STORAGE_KEY, THEME_STORAGE_KEY } from "./types";
 import { normalizeTheme } from "./normalize";
 import { getMonoFont, getSansFont } from "./fonts";
 import { getThemeById } from "./registry";
+import { buildPaletteVars, PALETTE_VAR_NAMES } from "./palette";
 
 /** Semantic token → CSS variable. Complete set used by tailwind.config + index.css. */
 export const TOKEN_MAP: Record<string, string> = {
@@ -84,6 +85,11 @@ export function applyTheme(
   });
   root.style.setProperty("--code-background", theme.codeColors.background);
   root.style.setProperty("--code-foreground", theme.codeColors.foreground);
+
+  // Tailwind palette ramps — remaps slate/purple/blue/… utilities site-wide
+  for (const [cssVar, triplet] of Object.entries(buildPaletteVars(theme))) {
+    root.style.setProperty(cssVar, triplet);
+  }
 
   // Document-level state attributes
   root.dataset.shadowtalkTemplate = theme.id;
@@ -161,6 +167,9 @@ export function clearAppliedTheme(): void {
     root.style.removeProperty(cssVar);
   }
   for (const cssVar of [...CHART_VAR_NAMES, "--radius", "--app-font-sans", "--app-font-mono", "--code-background", "--code-foreground"]) {
+    root.style.removeProperty(cssVar);
+  }
+  for (const cssVar of PALETTE_VAR_NAMES) {
     root.style.removeProperty(cssVar);
   }
   delete root.dataset.shadowtalkTemplate;
