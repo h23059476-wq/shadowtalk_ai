@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { BarChart3, Users, Code2, Globe, Zap, Clock } from "lucide-react";
 import { backend } from "@/integrations/local/client";
+import { fbAuth } from "@/integrations/firebase/app";
 
 function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
   const [displayed, setDisplayed] = useState(0);
@@ -50,30 +51,40 @@ const AboutStats = () => {
 
   useEffect(() => {
     const fetchStats = async () => {
+      // Production fix: several of these collections are per-user (rules deny
+      // anonymous counts) and `feedback` is a write-only intake collection —
+      // denied queries degrade to 0 instead of throwing unhandled.
+      const signed = Boolean(fbAuth().currentUser);
       const [usersRes, convsRes, scansRes, bugsRes, feedbackRes, ratingsRes] = await Promise.all([
         backend.from("public_profiles").select("id", { count: "exact", head: true }),
-        backend.from("conversations").select("id", { count: "exact", head: true }),
-        backend.from("cyber_scan_results").select("id", { count: "exact", head: true }),
-        backend.from("bug_bounty_submissions").select("id", { count: "exact", head: true }),
-        backend.from("feedback").select("id", { count: "exact", head: true }),
-        backend.from("feedback").select("rating").not("rating", "is", null),
+        signed
+          ? backend.from("conversations").select("id", { count: "exact", head: true })
+          : Promise.resolve({ count: null } as { count?: number | null }),
+        signed
+          ? backend.from("cyber_scan_results").select("id", { count: "exact", head: true })
+          : Promise.resolve({ count: null } as { count?: number | null }),
+        signed
+          ? backend.from("bug_bounty_submissions").select("id", { count: "exact", head: true })
+          : Promise.resolve({ count: null } as { count?: number | null }),
+        Promise.resolve({ count: null } as { count?: number | null }),
+        Promise.resolve({ data: [] } as { data: Array<{ rating?: number }> }),
       ]);
 
-      const ratings = ratingsRes.data || [];
+      const ratings = ((ratingsRes as { data?: Array<{ rating?: number }> }).data || []);
       const avgRating = ratings.length > 0
         ? Math.round((ratings.reduce((s, r) => s + (r.rating || 0), 0) / ratings.length) * 10) / 10
         : 0;
 
       setStats([
-        { icon: Users, label: "Registered Users", value: usersRes.count || 0, suffix: "", color: "text-primary" },
-        { icon: Zap, label: "AI Conversations", value: convsRes.count || 0, suffix: "", color: "text-success" },
-        { icon: Globe, label: "Scans Completed", value: scansRes.count || 0, suffix: "", color: "text-accent" },
-        { icon: Code2, label: "Bug Reports Tracked", value: bugsRes.count || 0, suffix: "", color: "text-secondary" },
-        { icon: Clock, label: "Feedback Received", value: feedbackRes.count || 0, suffix: "", color: "text-warning" },
+        { icon: Users, label: "Registered Users", value: (usersRes as { count?: number | null }).count || 0, suffix: "", color: "text-primary" },
+        { icon: Zap, label: "AI Conversations", value: (convsRes as { count?: number | null }).count || 0, suffix: "", color: "text-success" },
+        { icon: Globe, label: "Scans Completed", value: (scansRes as { count?: number | null }).count || 0, suffix: "", color: "text-accent" },
+        { icon: Code2, label: "Bug Reports Tracked", value: (bugsRes as { count?: number | null }).count || 0, suffix: "", color: "text-secondary" },
+        { icon: Clock, label: "Feedback Received", value: (feedbackRes as { count?: number | null }).count || 0, suffix: "", color: "text-warning" },
         { icon: BarChart3, label: "Avg Rating", value: avgRating, suffix: "/5", color: "text-primary" },
       ]);
     };
-    fetchStats();
+    fetchStats().catch(() => {});
   }, []);
 
   return (

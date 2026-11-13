@@ -1699,6 +1699,22 @@ Structure and Content Guidelines:
         m.id === aiMessageId ? { ...m, tokenTelemetry, ...(ragContext ? { ragContext } : {}) } : m,
       ));
 
+      // Production pass: memory reflection now runs for REAL — local
+      // extractive analysis (no provider calls, no cost) persisted to
+      // user_memories (signed-in) or the guest store. Previously imported
+      // but never invoked, so the feature was silently dead.
+      void maybeReflectAndPersist(
+        { user, isAnonymous },
+        [
+          ...messagesRef.current
+            .filter((m) => m.id !== "welcome")
+            .map((m) => ({ role: m.type === "user" ? ("user" as const) : ("assistant" as const), content: m.content })),
+          ...(assistantContent && !messagesRef.current.some((m) => m.id === aiMessageId)
+            ? [{ role: "assistant" as const, content: assistantContent }]
+            : []),
+        ],
+      ).catch(() => {});
+
       session.recordModelCall();
       // SPEED: don't block UI on DB write — fire and forget.
       if (assistantContent && user) {
