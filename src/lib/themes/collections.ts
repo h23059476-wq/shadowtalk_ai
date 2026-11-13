@@ -70,6 +70,11 @@ export function getCollection(id: string): ThemeCollection | undefined {
   return THEME_COLLECTIONS.find((c) => c.id === id);
 }
 
+export function getCollectionLabel(collectionId: string): string {
+  if (collectionId === CUSTOM_COLLECTION_ID) return "Custom";
+  return THEME_COLLECTIONS.find((c) => c.id === collectionId)?.label ?? collectionId;
+}
+
 export function isCollectionId(id: string): id is ThemeCollectionId {
   return THEME_COLLECTIONS.some((c) => c.id === id);
 }

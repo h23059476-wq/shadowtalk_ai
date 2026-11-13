@@ -49,6 +49,7 @@ const SharedAnswerPage = lazy(() => import("./pages/SharedAnswerPage"));
 const DocsPage = lazy(() => import("./pages/DocsPage"));
 // Batch 2 — dev-only visualization demo (redirects to /chatbot in prod builds).
 const VizDemoPage = lazy(() => import("./pages/dev/VizDemoPage"));
+const AppearanceStudioPage = lazy(() => import("./pages/AppearanceStudioPage"));
 const ChangelogPage = lazy(() => import("./pages/ChangelogPage"));
 const PrivateAiHubPage = lazy(() => import("./pages/PrivateAiHubPage"));
 const FounderPage = lazy(() => import("./pages/FounderPage"));
@@ -151,6 +152,7 @@ const AnimatedRoutes = () => {
           
           {/* Core App Routes */}
           <Route path="/chatbot" element={<Suspense fallback={<PageLoader />}><ChatbotPage /></Suspense>} />
+          <Route path="/themes" element={<Suspense fallback={<PageLoader />}><PageTransition><AppearanceStudioPage /></PageTransition></Suspense>} />
           <Route path="/profile" element={<PageTransition><ProfilePage /></PageTransition>} />
           <Route path="/settings" element={<PageTransition><SettingsPage /></PageTransition>} />
           <Route path="/shadow-twin" element={<PageTransition><ShadowTwinSettingsPage /></PageTransition>} />

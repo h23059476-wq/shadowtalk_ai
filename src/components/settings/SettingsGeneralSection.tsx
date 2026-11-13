@@ -103,7 +103,7 @@ export function SettingsGeneralSection() {
               type="button"
               variant="secondary"
               className="w-full gap-2"
-              onClick={() => navigate("/templates?tab=custom")}
+              onClick={() => navigate("/themes?design=new")}
             >
               <Paintbrush className="h-4 w-4" />
               Open custom theme designer
@@ -112,10 +112,10 @@ export function SettingsGeneralSection() {
               type="button"
               variant="outline"
               className="w-full gap-2"
-              onClick={() => navigate("/templates")}
+              onClick={() => navigate("/themes")}
             >
               <Palette className="h-4 w-4" />
-              Browse 100 UI templates
+              Browse 100+ themes
             </Button>
           </SettingsShellCard>
 

@@ -111,13 +111,16 @@ export function getCustomTheme(id: string): ResolvedTheme | undefined {
 
 export function saveCustomTheme(theme: ResolvedTheme): { ok: boolean; error?: string; themes: ResolvedTheme[] } {
   const themes = listCustomThemes();
-  const existingIndex = themes.findIndex((t) => t.id === theme.id);
+  // Themes created from the designer may arrive with an empty id — mint one.
+  const themedId = theme.id || newCustomId(theme.name || "theme");
   const next: ResolvedTheme = {
     ...theme,
+    id: themedId,
     collection: CUSTOM_COLLECTION_ID,
     source: theme.source === "imported" ? "imported" : "custom",
     updatedAt: Date.now(),
   };
+  const existingIndex = themes.findIndex((t) => t.id === themedId);
   if (existingIndex >= 0) {
     themes[existingIndex] = next;
   } else {
