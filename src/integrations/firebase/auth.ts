@@ -24,6 +24,12 @@ import {
   type User as FbUser,
 } from 'firebase/auth';
 import { fbAuth } from './app';
+import {
+  clearPendingOAuthFlag,
+  hasPendingOAuthFlag,
+  setOAuthReturnDestination,
+  setPendingOAuthFlag,
+} from '../../lib/oauthReturn';
 
 export interface AdapterUser {
   id: string;
@@ -147,7 +153,6 @@ function currentUser(): Promise<FbUser | null> {
 
 export function createAuthAdapter() {
   let redirectResultHandled = false;
-  const oauthRedirectPendingKey = 'shadowtalk_auth_redirect_pending';
 
   return {
     async getSession() {
@@ -234,6 +239,7 @@ export function createAuthAdapter() {
 
     async signInWithOAuth({
       provider,
+      options,
     }: {
       provider: string;
       options?: { redirectTo?: string; queryParams?: Record<string, string>; scopes?: string };
@@ -251,18 +257,21 @@ export function createAuthAdapter() {
           p = new OAuthProvider(provider.includes('.') ? provider : `${provider}.com`);
         }
 
-        window.sessionStorage.setItem(oauthRedirectPendingKey, '1');
+        // signInWithRedirect always returns the browser to the initiating page
+        // (/auth) — the caller's intended destination is honored by persisting
+        // it here so the return handoff can navigate there once the session
+        // is restored (the previous implementation dropped it entirely).
+        setPendingOAuthFlag();
+        if (options?.redirectTo) setOAuthReturnDestination(options.redirectTo);
         await signInWithRedirect(fbAuth(), p);
         return {
           data: { provider, url: window.location.href, user: null, session: null },
           error: null,
         };
       } catch (error: any) {
-        try {
-          window.sessionStorage.removeItem(oauthRedirectPendingKey);
-        } catch {
-          // Keep the authentication error as the primary failure.
-        }
+        // The redirect never left the page — clear the handoff state so the
+        // auth page doesn't mistake the next visit for a return from Google.
+        clearPendingOAuthFlag();
         return { data: { provider, url: '', user: null, session: null }, error: friendlyError(error) };
       }
     },
@@ -382,9 +391,9 @@ export function createAuthAdapter() {
               // flag AND the user is already signed in (Firebase may have
               // completed the sign-in internally without getRedirectResult
               // surfacing it).
-              const pending = window.sessionStorage.getItem(oauthRedirectPendingKey) === '1';
+              const pending = hasPendingOAuthFlag();
               if (pending) {
-                window.sessionStorage.removeItem(oauthRedirectPendingKey);
+                clearPendingOAuthFlag();
                 const currentUser = auth.currentUser;
                 if (currentUser) {
                   const session = await toAdapterSession(currentUser);
@@ -393,6 +402,10 @@ export function createAuthAdapter() {
               }
               return;
             }
+            // Redirect completed successfully — clear the pending flag so a
+            // later page load can't mistake the stale flag for a fresh
+            // sign-in attempt (the previous code only cleared it on failure).
+            clearPendingOAuthFlag();
             const session = await toAdapterSession(result.user);
             callback('SIGNED_IN', session);
           })
@@ -408,7 +421,7 @@ export function createAuthAdapter() {
               });
             }
             try {
-              window.sessionStorage.removeItem(oauthRedirectPendingKey);
+              clearPendingOAuthFlag();
               window.sessionStorage.setItem('shadowtalk.firebase-auth-redirect-error', message);
             } catch {
               // The console error remains available if browser storage is disabled.
