@@ -80,7 +80,7 @@ export interface DocMissionStep {
 }
 
 export const DOC_TAGLINE =
-  "ShadowTalk AI is an elite agentic intelligence platform combining ultra-fast cloud models, high-performance WebGPU execution, persistent Business Memory, real-time analytics, and client-side cryptographic audit ledgers.";
+  "ShadowTalk AI is a BYOK-first agentic workspace: bring your own provider key, feed it documents with local-first Stealth RAG, run approved local tools via MCP, and talk to a living voice presence in LIVE Mode — with on-device memory, honest token telemetry, and zero training on your data.";
 
 export const DOC_OVERVIEW: DocOverviewSection[] = [
   {
@@ -93,9 +93,9 @@ export const DOC_OVERVIEW: DocOverviewSection[] = [
   {
     title: "Core Architectural Foundations",
     paragraphs: [
-      "1. Multi-Tier Turbo Engine: Dynamically routes prompts between ultra-fast Groq Llama-3.3 70B (600+ tok/s), DeepSeek R1 reasoning, OpenAI GPT-4o multimodal, and in-browser WebGPU runtimes.",
-      "2. Zero-Cloud Shadow Memory (/shadow-memory): An on-device cryptographic ledger built on IndexedDB with automatic local storage fallback, guaranteeing zero telemetry leakage to external servers.",
-      "3. Enterprise SaaS & Governance: Organization administration (/admin), developer APIs (/developers), and immutable compliance trails (/audit-logs).",
+      "1. BYOK-First Multi-Provider Engine: Your provider API key stays in your browser and streams directly to the provider — 16+ supported providers with per-provider context budgeting, honest token telemetry, and optional on-device WebLLM inference when the model/device path is available.",
+      "2. Zero-Cloud Shadow Memory (/shadow-memory): An on-device activity ledger built on IndexedDB with automatic local storage fallback, guaranteeing zero telemetry leakage to external servers.",
+      "3. The Intelligent Workspace: Stealth RAG ingests and retrieves your documents locally, the Dynamic Token Optimizer compacts context non-destructively, and the MCP Bridge runs your local tools behind explicit approvals.",
     ],
   },
   {
@@ -105,11 +105,27 @@ export const DOC_OVERVIEW: DocOverviewSection[] = [
     ],
   },
   {
+    title: "The Intelligent Workspace (Stealth RAG · Token Optimizer · MCP Bridge)",
+    paragraphs: [
+      "Stealth RAG: drop a document into chat and it is extracted, chunked, embedded and indexed entirely on your device (IndexedDB, isolated per user and project), then retrieved automatically into the conversation. The default embedder is honest on-device feature hashing; neural embeddings are an explicit opt-in via your own BYOK key on documented provider endpoints only.",
+      "Dynamic Token Optimizer: per-provider context windows and output caps for every BYOK provider, CJK-aware token estimation, and non-destructive compaction — decisions, requirements, open questions and your recent message floor are protected, summaries are computed locally at zero cost, and your stored conversation is never rewritten.",
+      "MCP Bridge: a zero-dependency Node companion pairs with your browser over loopback (127.0.0.1 only, token-gated, DNS-rebinding defended) so approved local tools can be invoked from chat — every tool starts at ask-every-use, and write/execute tools always prompt.",
+    ],
+  },
+  {
+    title: "LIVE Voice Mode — A Presence, Not a Chatbot",
+    paragraphs: [
+      "LIVE Mode is a full-screen voice conversation with a living avatar: a canvas-rendered presence that breathes, blinks, and morphs with real microphone and TTS amplitude, its aura re-tinting per phase (idle, listening, thinking, speaking).",
+      "Interruption is hands-free: while the AI speaks, the mic keeps metering and sustained speech hands you the floor instantly (echo-cancelled, with a grace period and cooldown so the AI never interrupts itself). Tap-to-interrupt remains as a fallback.",
+      "Replies stream in as they generate — the first sentence is spoken roughly a second after you stop talking — and a rhythm engine strips emoji and markdown before TTS and inserts punctuation-aware pauses between sentences.",
+    ],
+  },
+  {
     title: "AI Provider Routing & Hybrid Intelligence",
     paragraphs: [
-      "The AIProviderRouter serves as the brain of ShadowTalk's hybrid execution model. It intercepts every prompt and intelligently routes it based on network availability and model constraints.",
-      "CloudAIProvider: Manages lightning-fast streaming for Groq, DeepSeek, and OpenAI endpoints via standardized fetch protocols.",
-      "LocalAIProvider: Manages fully offline inference using the WebLLM engine, dynamically falling back to local models when disconnected."
+      "ShadowTalk is BYOK-first: the browser streams directly to your configured provider (OpenAI, Anthropic, Google, Groq, Mistral, OpenRouter, Together, Fireworks, DeepSeek, xAI, Cohere, Perplexity, Hyperbolic, Novita, DeepInfra, and more) using your own key from Settings → Personalization → BYOK.",
+      "Streaming is native: provider deltas (onDelta) feed both the chat surface and LIVE Mode's speech pipeline, so voice replies begin speaking the first completed sentence while the rest is still generating.",
+      "LocalAIProvider: Manages fully offline inference using the WebLLM engine, dynamically falling back to local models when disconnected. A shared-gateway path exists for accounts without a key — with honest errors, never fake responses."
     ]
   },
   {
@@ -131,9 +147,15 @@ export const DOC_OVERVIEW: DocOverviewSection[] = [
 export const DOC_PRODUCT_PILLARS: DocFeatureItem[] = [
   {
     icon: "zap",
-    title: "Multi-Model Turbo Engine",
-    description: "Intelligent high-speed routing across Groq Llama-3.3 70B, DeepSeek R1, GPT-4o, and on-device WebGPU models.",
+    title: "BYOK Multi-Provider Engine",
+    description: "Direct browser-to-provider streaming across 16+ providers with per-provider context budgeting and on-device WebGPU fallback.",
     badge: "Core Engine",
+  },
+  {
+    icon: "file",
+    title: "Intelligent Workspace",
+    description: "Stealth RAG document ingestion and retrieval, non-destructive context compaction, and approval-gated local MCP tools.",
+    badge: "Workspace",
   },
   {
     icon: "lock",
@@ -160,7 +182,7 @@ export const DOC_QUICK_START: DocStep[] = [
     step: 2,
     title: "Engage with Multi-Model AI",
     description:
-      "Send prompts in /chatbot using Turbo Engine speed routing. Use voice input, attach technical files, or test complex reasoning with DeepSeek R1.",
+      "Send prompts in /chatbot on your own BYOK provider key, drag documents in for automatic local retrieval, or tap the phone icon for LIVE voice conversation with a hands-free, interruptible presence.",
   },
   {
     step: 3,
@@ -172,7 +194,7 @@ export const DOC_QUICK_START: DocStep[] = [
 
 export const DOC_ROUTES: DocRouteLink[] = [
   // Core AI & Chat
-  { path: "/chatbot", label: "AI Chatbot Workspace", desc: "Main product — streaming chat, multi-model selection, prompt injection defense, and voice input", group: "Core AI" },
+  { path: "/chatbot", label: "AI Chatbot Workspace", desc: "Main product — streaming chat on your BYOK provider, drag-drop document ingestion (Stealth RAG), MCP tool approvals, and LIVE voice mode", group: "Core AI" },
   { path: "/analytics", label: "Production Analytics", desc: "Interactive charts for message volume, token synthesis, model distribution, and downloadable reports", group: "Core AI" },
   { path: "/shadow-memory", label: "Shadow Memory Journal", desc: "100% on-device IndexedDB cryptographic ledger with parameter inspection and CSV/JSON/Log export", group: "Core AI" },
   { path: "/sessions", label: "Session History", desc: "Browse, restore, search, and manage archived chat sessions across devices", group: "Core AI" },
@@ -198,6 +220,8 @@ export const DOC_ROUTES: DocRouteLink[] = [
   { path: "/about", label: "About ShadowTalk", desc: "Our team, privacy philosophy, architectural principles, and leadership", group: "Public" },
   { path: "/changelog", label: "Product Changelog", desc: "Release notes, deployed optimizations, and platform version milestones", group: "Public" },
   { path: "/auth", label: "Authentication Portal", desc: "Sign in, account creation, password recovery, and enterprise OAuth", group: "Public" },
+  { path: "/status", label: "Service Status", desc: "Component catalog of ShadowTalk services with an honest notice that live monitoring and incident history are not yet wired", group: "Public" },
+  { path: "/security", label: "Security & Trust Center", desc: "Client-side key storage, zero-training guarantee, encryption posture, and proxy safety documentation", group: "Public" },
 ];
 
 export const DOC_WORKSPACE_GUIDE: DocWorkspaceTopic[] = [
@@ -205,9 +229,30 @@ export const DOC_WORKSPACE_GUIDE: DocWorkspaceTopic[] = [
     title: "AI Chatbot Workspace (/chatbot)",
     items: [
       "Center Feed: High-speed streaming AI responses with syntax-highlighted code blocks, copy actions, and markdown rendering.",
-      "Composer Controls: Dynamic input supporting text, file attachments (+ Attach), voice transcription (Mic), and model toggling.",
+      "Composer Controls: Dynamic input supporting text, file attachments (+ Attach), voice input (Mic), keyboard fallback in LIVE Mode, and model toggling.",
       "Prompt Injection Shield: Real-time client-side heuristics that detect and neutralize prompt hacking attempts before reaching the LLM.",
-      "Multi-Model Switching: Seamlessly swap between Groq Llama-3.3 70B Turbo, DeepSeek R1, and OpenAI GPT-4o.",
+      "Multi-Model Switching: Bring your own key and swap between any supported BYOK provider and model per conversation.",
+      "Context Indicator: See which documents and memories are in scope for the current conversation.",
+    ],
+  },
+  {
+    title: "Intelligent Workspace (Stealth RAG & Token Optimizer)",
+    items: [
+      "Drag-Drop Ingestion: Drop documents into chat or use the composer paperclip — extraction supports PDF, DOCX, PPTX, XLSX, ODT, TXT/MD/CSV/JSON and code (25 MB cap).",
+      "Local Indexing: Documents are chunked and embedded on-device in IndexedDB, isolated by user and project; deletion removes everything atomically.",
+      "Automatic Retrieval: Relevant passages are retrieved into the conversation automatically — non-fatal on any failure, and the RAG module stays out of the initial chat bundle.",
+      "Honest Embeddings: The default on-device embedder is lexical feature hashing (disclosed as such); remote neural embeddings are an explicit opt-in using your own BYOK key on documented endpoints only.",
+      "Non-Destructive Compaction: When context overflows, a local extractive summary reshapes only the outgoing request — decisions, requirements, open questions and your recent message floor are never compacted, and stored history is never rewritten.",
+    ],
+  },
+  {
+    title: "LIVE Voice Mode",
+    items: [
+      "Living Avatar: A canvas-rendered presence that breathes, blinks, and morphs with real microphone and TTS amplitude, with a phase-colored aura (idle, listening, thinking, speaking).",
+      "Hands-Free Barge-In: Talk over the AI while it speaks — sustained speech interrupts it (echo-cancelled, with grace period and cooldown). Tap-to-interrupt remains as a fallback.",
+      "Streaming Speech: Replies are spoken sentence by sentence as the model generates, with punctuation-aware pauses and emoji/markdown stripped before TTS.",
+      "Premium Voices: ElevenLabs HD voices with your own key, browser speech-synthesis fallback otherwise.",
+      "Captions & Transcript: Live captions show your words and the AI's current sentence; a compact transcript strip keeps recent turns visible.",
     ],
   },
   {
@@ -271,15 +316,33 @@ export const DOC_FEATURES: DocFeatureItem[] = [
     badge: "Offline",
   },
   {
+    icon: "file",
+    title: "Stealth RAG Ingestion",
+    description: "Drag documents into chat — extracted, chunked, embedded and indexed on-device with automatic, non-fatal retrieval.",
+    badge: "Workspace",
+  },
+  {
+    icon: "message",
+    title: "LIVE Voice Mode",
+    description: "Full-screen voice conversation with a living avatar, hands-free barge-in, and streaming sentence-by-sentence speech.",
+    badge: "Voice",
+  },
+  {
+    icon: "brain",
+    title: "MCP Local Tools",
+    description: "Run your local MCP servers via a zero-dependency companion with loopback pairing and approval-gated invocation.",
+    badge: "Agentic",
+  },
+  {
     icon: "code",
-    title: "Developer REST API",
-    description: "Programmatic API key generation, webhooks, and SDK quickstarts for enterprise automation (/developers).",
+    title: "BYOK Provider Portal",
+    description: "Manage your own provider keys, model selection, and provider switching (/developers, configured in /settings → Personalization).",
     badge: "API",
   },
   {
     icon: "compass",
-    title: "Enterprise Administration",
-    description: "Manage team seats, organizational governance, and compliance audit logs (/admin & /audit-logs).",
+    title: "Organization Administration",
+    description: "Internal admin console at /admin — organization seats and governance; metrics land as Firestore aggregates go live.",
     badge: "Enterprise",
   },
 ];
@@ -298,9 +361,21 @@ export const DOC_TOOLS: DocToolItem[] = [
     plan: "All Plans",
   },
   {
-    name: "Voice Transcription (Whisper)",
-    trigger: "Composer Microphone button",
-    description: "Transcribes voice queries in real-time with high-accuracy speech-to-text recognition.",
+    name: "Voice Input & LIVE Mode",
+    trigger: "Composer Microphone button or LIVE phone icon",
+    description: "Web Speech recognition for dictation; LIVE Mode adds a living avatar, hands-free barge-in, and streaming TTS (ElevenLabs with your key, browser fallback otherwise).",
+    plan: "All Plans",
+  },
+  {
+    name: "Stealth RAG Retrieval",
+    trigger: "Drag-drop or paperclip in /chatbot",
+    description: "Local-first document ingestion and automatic retrieval — on-device embeddings, user/project isolation, zero configuration.",
+    plan: "All Plans",
+  },
+  {
+    name: "MCP Local Tools",
+    trigger: "Settings → Local Tools (companion pairing)",
+    description: "Intent-matched invocation of your local MCP servers with granular permissions and approval dialogs for sensitive actions.",
     plan: "All Plans",
   },
   {
@@ -350,10 +425,10 @@ export const DOC_PRIVACY_SECTIONS: DocWorkspaceTopic[] = [
     ],
   },
   {
-    title: "",
+    title: "Bring Your Own Keys (BYOK)",
     items: [
-      "Configure your personal Groq, OpenAI, or Anthropic API keys in /settings.",
-      "Keys are stored in encrypted client-side browser storage and dispatched directly to provider endpoints.",
+      "Configure your personal provider keys in /settings → Personalization → BYOK.",
+      "Keys are stored client-side in your browser (localStorage, per-user) and dispatched directly to provider endpoints — never to ShadowTalk backend servers.",
     ],
   },
   {
@@ -400,8 +475,20 @@ export const DOC_DESKTOP: DocWorkspaceTopic[] = [
 
 export const DOC_GLOSSARY: DocGlossaryItem[] = [
   {
-    term: "Turbo Engine",
-    definition: "ShadowTalk's dynamic routing mechanism that balances lightning-fast Groq Llama-3.3 70B with DeepSeek R1 and OpenAI GPT-4o.",
+    term: "BYOK Engine",
+    definition: "ShadowTalk's direct browser-to-provider request path: your key streams to your chosen provider, with per-provider context budgeting from the Dynamic Token Optimizer.",
+  },
+  {
+    term: "Stealth RAG",
+    definition: "Local-first retrieval: documents are extracted, chunked, embedded and indexed on-device and retrieved automatically into conversations — no retrieval configuration exposed.",
+  },
+  {
+    term: "MCP Bridge",
+    definition: "A zero-dependency local companion that pairs with your browser over loopback to run your MCP tools behind explicit, per-tool approvals.",
+  },
+  {
+    term: "LIVE Mode",
+    definition: "Full-screen voice conversation with a living canvas avatar, hands-free barge-in, and streaming sentence-by-sentence TTS.",
   },
   {
     term: "Business Memory",
@@ -444,11 +531,19 @@ export const DOC_FAQ: DocFaqItem[] = [
   },
   {
     q: "Which AI models can I use?",
-    a: "ShadowTalk natively routes between Groq Llama-3.3 70B Turbo, DeepSeek R1 reasoning, OpenAI GPT-4o, and on-device WebGPU edge models. You can also supply your own API keys in /settings.",
+    a: "Whatever your provider offers — ShadowTalk streams directly to your BYOK provider (OpenAI, Anthropic, Google, Groq, Mistral, OpenRouter, DeepSeek, and more) with per-provider context budgeting. On capable devices, on-device WebGPU (WebLLM) models work fully offline.",
   },
   {
-    q: "How do I access the Developer API?",
-    a: "Navigate to /developers to generate your Bearer API tokens, view rate limits, configure webhooks, and read endpoint specifications.",
+    q: "How do I manage my provider keys?",
+    a: "ShadowTalk is BYOK-first: add your provider key in /settings → Personalization → BYOK. Keys stay in your browser's local storage and are sent directly to the provider — never to ShadowTalk servers. The /developers page documents the provider portal.",
+  },
+  {
+    q: "How does LIVE voice mode work?",
+    a: "Tap the phone icon in /chatbot. You get a full-screen conversation with a living avatar: replies stream in sentence by sentence, and you can interrupt hands-free simply by speaking. ElevenLabs HD voices use your own key; browser speech synthesis is the fallback.",
+  },
+  {
+    q: "What happens to documents I drop into chat?",
+    a: "They are extracted, chunked, embedded and indexed entirely on your device (IndexedDB, isolated per user and project), and relevant passages are retrieved automatically into the conversation. Nothing is uploaded unless you explicitly opt into a remote embedding provider with your own key.",
   },
   {
     q: "How does authentication and session persistence work?",
@@ -478,6 +573,15 @@ export const DOC_TROUBLESHOOTING: DocTroubleshootItem[] = [
     solutions: [
       "Click 'Seed Demo Logs' in /shadow-memory to populate baseline security and telemetry activities.",
       "Ensure browser storage permissions are granted for IndexedDB.",
+    ],
+  },
+  {
+    issue: "LIVE voice mode has no sound or can't hear me",
+    solutions: [
+      "Allow microphone permissions for the site — barge-in and dictation both need the mic.",
+      "Use Chrome, Edge, or Safari: Web Speech recognition is not supported in all browsers (Firefox lacks it).",
+      "For premium HD voices, add an ElevenLabs key in LIVE Mode settings (gear icon); otherwise browser speech synthesis is used.",
+      "If the AI interrupts itself, lower the speaker volume — echo cancellation handles most bleed, but very loud speakers can re-trigger barge-in.",
     ],
   },
 ];

@@ -17,6 +17,39 @@ export interface ProductChangelogEntry {
 /** Built-in release notes — shown on /changelog (merged with CMS entries). */
 export const PRODUCT_CHANGELOG: ProductChangelogEntry[] = [
   {
+    version: "3.4.0",
+    title: "LIVE Mode: A Voice Presence, Not a Chatbot",
+    summary: "Complete redesign of live voice conversation: an animated living avatar, hands-free auto barge-in, streaming sentence-by-sentence speech, and a natural speech rhythm engine.",
+    publishedAt: "2026-11-13",
+    tags: ["Voice", "Avatar", "Barge-in", "Streaming"],
+    changes: [
+      { type: "feature", text: "LiveAvatar: a canvas-rendered living presence that breathes, blinks, drifts with micro-saccades, morphs with real microphone/TTS amplitude, and re-tints its aura per phase (idle/listening/thinking/speaking) — replacing the static CSS orb." },
+      { type: "feature", text: "Hands-free barge-in: the mic keeps metering (echo-cancelled) while the AI speaks; sustained speech interrupts it — talk over the AI mid-sentence and it hands you the floor. Tap-to-interrupt still works." },
+      { type: "feature", text: "Streaming speech pipeline: replies are spoken sentence by sentence as the LLM generates them (first audio ~1s after you stop talking) instead of waiting for the entire response." },
+      { type: "feature", text: "Speech rhythm engine: punctuation-aware pauses (150–420ms), abbreviations-safe sentence splitting, and emoji/markdown/URL stripped before TTS so nothing robotic is read aloud." },
+      { type: "improvement", text: "Immersive full-screen live UI: ambient stage, live captions for both sides of the conversation, compact transcript strip, keyboard fallback input, and mobile safe-area padding." },
+      { type: "improvement", text: "Voice-natural persona rules for spoken replies: no markdown or emoji, varied sentence rhythm, react-then-answer flow." },
+      { type: "security", text: "Barge-in is guarded by an echo grace period and cooldown so the AI never interrupts itself." },
+    ],
+  },
+  {
+    version: "3.3.0",
+    title: "The Intelligent Workspace: Stealth RAG, Token Optimizer & MCP Bridge",
+    summary: "The workspace becomes intelligent: local-first document retrieval, provider-aware context budgeting, approval-gated local tools — plus production hardening for memory, chat history, sign-in, and mobile.",
+    publishedAt: "2026-11-13",
+    tags: ["RAG", "MCP", "Tokens", "Memory", "PWA"],
+    changes: [
+      { type: "feature", text: "Stealth RAG: drag-and-drop document ingestion (25 MB cap; PDF, DOCX, PPTX, XLSX, ODT, text/code) extracted, chunked, embedded and indexed entirely on-device, with automatic retrieval into conversation — no retrieval configuration exposed." },
+      { type: "feature", text: "Dynamic Token Optimizer: per-provider context budgeting across all BYOK providers, CJK-aware token estimation, and non-destructive conversation compaction that protects decisions, requirements, open questions and recent context." },
+      { type: "feature", text: "Native MCP Bridge: a zero-dependency Node companion exposes your local MCP tools to the workspace over loopback-only pairing, with permission categories, ask-every-use defaults, and approval dialogs for write/execute tools." },
+      { type: "improvement", text: "Unified workspace experience: drag-drop ingestion, context indicator, telemetry badge, MCP approvals, and Local Tools settings in one surface." },
+      { type: "improvement", text: "Memory reflection and on-device embeddings are now genuinely functional; signed-out 403 errors eliminated." },
+      { type: "bugfix", text: "Chat history is recognizable after reload, with the missing Firestore composite indexes deployed." },
+      { type: "bugfix", text: "Google redirect sign-in lands deterministically back on the workspace — no more sign-in loop." },
+      { type: "improvement", text: "Mobile: route-level responsive redesign across the app and a PWA manifest fix that restores mobile install (display/start_url/scope satisfy Chrome install criteria)." },
+    ],
+  },
+  {
     version: "3.2.0",
     title: "Hybrid API Key & OmniRoute Gateway Integration",
     summary: "Launched the cohort-based onboarding system (Instant Start vs BYOK) with OmniRoute gateway routing for non-tech users. Added real-time /status page and /security trust center.",
