@@ -53,6 +53,20 @@ export default defineConfig(({ mode }) => {
           // Batch 5: stable install identity (recommended for PWA updates to
           // target the same installed app across manifest revisions).
           id: '/',
+          // Install criteria fix: Chrome refuses to fire `beforeinstallprompt`
+          // unless the manifest declares display: standalone (the default is
+          // 'browser', which fails Chrome's installability requirements), so
+          // the in-app install button could never trigger the native prompt.
+          // start_url and scope pin the installed app to the site root.
+          display: 'standalone',
+          display_override: ['standalone', 'minimal-ui'],
+          start_url: '/',
+          scope: '/',
+          orientation: 'any',
+          lang: 'en',
+          dir: 'ltr',
+          categories: ['productivity', 'utilities'],
+          prefer_related_applications: false,
           // Batch 5: align theme_color with index.html (#050508). The old
           // value (#000000) disagreed with the <meta name="theme-color">,
           // producing a mismatched title-bar/splash color on Android.

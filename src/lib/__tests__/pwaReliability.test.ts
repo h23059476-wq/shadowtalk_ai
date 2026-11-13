@@ -86,6 +86,20 @@ describe("PWA manifest correctness", () => {
     expect(cfg).toMatch(/id:\s*'\//);
   });
 
+  it("manifest declares display: standalone (Chrome install criteria)", () => {
+    // Chrome never fires beforeinstallprompt when the manifest's display is
+    // missing or 'browser' — the exact bug that hid the mobile install flow.
+    const cfg = read("vite.config.ts");
+    expect(cfg).toMatch(/display:\s*'standalone'/);
+    expect(cfg).toMatch(/display_override:\s*\[[^\]]*'standalone'/);
+  });
+
+  it("manifest pins start_url and scope to the site root", () => {
+    const cfg = read("vite.config.ts");
+    expect(cfg).toMatch(/start_url:\s*'\//);
+    expect(cfg).toMatch(/scope:\s*'\//);
+  });
+
   it("manifest icons declare maskable purpose", () => {
     const cfg = read("vite.config.ts");
     const iconBlock = cfg.slice(cfg.indexOf("icons: ["), cfg.indexOf("workbox:"));
