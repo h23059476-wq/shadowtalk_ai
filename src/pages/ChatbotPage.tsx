@@ -990,7 +990,14 @@ const ChatbotPage = () => {
         if (isPermissionDeniedError(insertError)) setPersistenceBlocked(true);
       }
       
-      if (data && role === 'user' && messages.length <= 1) {
+      // Title the conversation from the first user message. The previous
+      // guard (messages.length <= 1) was never true after the welcome
+      // message, so every conversation stayed titled "New Chat" — making
+      // real, persisted chats unrecognizable (and easy to mistake for lost
+      // data) in the sidebar after a reload.
+      const convRow = conversations.find((c) => c.id === conversationId);
+      const needsTitle = role === 'user' && (!convRow || convRow.title === "New Chat" || convRow.title === "Private Chat" || !convRow.title);
+      if (data && needsTitle) {
         const titlePlain = content.trim().split(/\s+/).slice(0, 3).join(' ').slice(0, 25) || 'New Chat';
         const title = await chatPrivate.wrapForStorage(titlePlain);
         if (title !== null) {
