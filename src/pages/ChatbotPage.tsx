@@ -168,6 +168,8 @@ interface Message {
   provider?: string;
   /** Batch R1 — provider-reported citations (web research), preserved from the SSE layer. */
   citations?: Citation[];
+  /** Intelligent-workspace Batch 2 — Stealth RAG context used for this reply. */
+  ragContext?: { sources: Array<{ name: string; chunks: number }>; localProcessing: boolean; providerIds: string[] };
   /** Intelligent-workspace Batch 1 — honest per-turn token/cost accounting. */
   tokenTelemetry?: TokenTelemetry;
   /** Batch R1 — structured research datasets captured from ```shadowdata blocks. */
@@ -1081,9 +1083,59 @@ const ChatbotPage = () => {
             ? (lastUserMsg.content.find((p) => p.type === "text") as { text?: string } | undefined)?.text?.trim() ?? ""
             : "";
 
+      // Intelligent-workspace Batch 1/2: resolve the ACTUAL provider context
+      // once, up front — used by the token budget AND by Stealth RAG's
+      // remote-embedding decision (which must never switch providers).
+      const accessModeForBudget = getCachedAiAccessMode();
+      const byokForBudget = accessModeForBudget === "byok" ? getByokConfig() : null;
+
       const userMemoryContext = await buildMemoryContextForUser(user);
       if (userMemoryContext) {
         augmented = [{ role: "system", content: userMemoryContext }, ...augmented];
+      }
+
+      // Intelligent-workspace Batch 2 (Stealth RAG): automatic retrieval.
+      // When the user has indexed documents, relevant passages are retrieved
+      // for THIS message and injected as one system block (with source
+      // references). Rules: relevance threshold + top-K + char budget decide
+      // what is sent; unrelated content is rejected; retrieval failure is
+      // non-fatal (chat proceeds without context). The RAG module is
+      // dynamically imported so it stays out of the initial chat bundle.
+      let ragContext: { sources: Array<{ name: string; chunks: number }>; localProcessing: boolean; providerIds: string[] } | null = null;
+      if (user && lastUser.length >= 3) {
+        try {
+          const rag = await import("@/lib/rag");
+          const preference = rag.getEmbeddingPreference(user.id);
+          let embedder: import("@/lib/rag").EmbeddingProvider;
+          if (
+            preference.kind === "remote" &&
+            byokForBudget &&
+            rag.EMBEDDING_CAPABLE_PROVIDERS.has(byokForBudget.provider) &&
+            preference.provider === byokForBudget.provider
+          ) {
+            embedder = new rag.RemoteEmbedder(preference.provider, byokForBudget.apiKey, preference.model);
+          } else {
+            embedder = rag.createLocalEmbedder();
+          }
+          const result = await rag.retrieveContext(lastUser, {
+            userId: user.id,
+            projectId: null, // chat-level scope; project-scoped retrieval ships with the workspace wiring
+            embedder,
+            signal: controller.signal,
+          });
+          if (result) {
+            const formatted = rag.formatRetrievedContext(result);
+            augmented = [{ role: "system", content: formatted.systemContent }, ...augmented];
+            ragContext = {
+              sources: rag.summarizeSources(result),
+              localProcessing: result.localProcessing,
+              providerIds: result.embeddingProviders,
+            };
+          }
+        } catch (error) {
+          // Retrieval must never break chat.
+          console.warn("[rag] retrieval failed (non-fatal)", error);
+        }
       }
 
       // Document generation — ONLY on explicit slash command (/doc, /draft,
@@ -1236,8 +1288,6 @@ Structure and Content Guidelines:
         businessMemory,
       })}\n\n${getModePrompt(chatMode)}`;
 
-      const accessModeForBudget = getCachedAiAccessMode();
-      const byokForBudget = accessModeForBudget === "byok" ? getByokConfig() : null;
       const budget = resolveContextBudget(
         byokForBudget ? byokForBudget.provider : "shared",
         byokForBudget?.model,
@@ -1457,7 +1507,7 @@ Structure and Content Guidelines:
         },
       };
       setMessages((prev) => prev.map((m) =>
-        m.id === aiMessageId ? { ...m, tokenTelemetry } : m,
+        m.id === aiMessageId ? { ...m, tokenTelemetry, ...(ragContext ? { ragContext } : {}) } : m,
       ));
 
       session.recordModelCall();
@@ -1470,6 +1520,7 @@ Structure and Content Guidelines:
           modelUsed: assistantModelUsed,
           provider: assistantProvider,
           tokenTelemetry,
+          ...(ragContext ? { rag: ragContext } : {}),
         })).catch((e) =>
           console.warn("[chat] saveMessage(assistant) failed", e),
         );

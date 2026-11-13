@@ -37,6 +37,27 @@ export interface ChatMessageMetadata {
   visualizations?: VisualizationSpec[];
   /** Intelligent-workspace Batch 1 — honest per-turn token/cost accounting. */
   tokenTelemetry?: TokenTelemetry;
+  /** Intelligent-workspace Batch 2 — retrieved document context for this reply. */
+  rag?: RagContextInfo;
+}
+
+/** Stealth RAG provenance for an assistant reply. */
+export interface RagContextInfo {
+  sources: Array<{ name: string; chunks: number }>;
+  localProcessing: boolean;
+  providerIds: string[];
+}
+
+function isValidRagContext(value: unknown): value is RagContextInfo {
+  if (typeof value !== "object" || value === null) return false;
+  const r = value as RagContextInfo;
+  return (
+    Array.isArray(r.sources) &&
+    r.sources.every((s) => s && typeof s.name === "string" && typeof s.chunks === "number") &&
+    typeof r.localProcessing === "boolean" &&
+    Array.isArray(r.providerIds) &&
+    r.providerIds.every((p) => typeof p === "string")
+  );
 }
 
 /**
@@ -113,6 +134,10 @@ export function buildMessageMetadata(
   if (parts.tokenTelemetry && isValidTokenTelemetry(parts.tokenTelemetry)) {
     cleaned.tokenTelemetry = parts.tokenTelemetry;
   }
+  // Intelligent-workspace Batch 2 — RAG provenance.
+  if (parts.rag && isValidRagContext(parts.rag)) {
+    cleaned.rag = parts.rag;
+  }
   return Object.keys(cleaned).length > 0 ? cleaned : null;
 }
 
@@ -176,6 +201,7 @@ export async function decodeMessageMetadata(
     tool: typeof meta.tool === "string" ? meta.tool : undefined,
     visualizations: Array.isArray(meta.visualizations) ? meta.visualizations : undefined,
     tokenTelemetry: isValidTokenTelemetry(meta.tokenTelemetry) ? meta.tokenTelemetry : undefined,
+    rag: isValidRagContext(meta.rag) ? meta.rag : undefined,
   });
   return cleaned;
 }
