@@ -512,6 +512,18 @@ function useViewport(width: number, height: number, displayHeight: number, conta
   );
   const [view, setView] = useState<ViewportState>({ scale: fitScale, tx: 0, ty: 0 });
   const dragRef = useRef<{ x: number; y: number; tx: number; ty: number; moved: boolean } | null>(null);
+  // Touch support: active pointers are tracked so two fingers form a pinch
+  // gesture (scale + pan follows the midpoint). One finger pans, exactly
+  // like mouse drag; `touch-none` on the viewport disables native gestures.
+  const pointersRef = useRef<Map<number, { x: number; y: number }>>(new Map());
+  const pinchRef = useRef<{
+    startDist: number;
+    startScale: number;
+    startMidX: number;
+    startMidY: number;
+    startTx: number;
+    startTy: number;
+  } | null>(null);
 
   const fit = useCallback(() => {
     setView({ scale: fitScale, tx: 0, ty: 0 });
@@ -521,11 +533,48 @@ function useViewport(width: number, height: number, displayHeight: number, conta
     setView((v) => ({ ...v, scale: Math.min(3, Math.max(0.25, v.scale * factor)) }));
   }, []);
 
+  const pinchDistance = () => {
+    const [a, b] = [...pointersRef.current.values()];
+    return Math.hypot(a.x - b.x, a.y - b.y);
+  };
+  const pinchMidpoint = () => {
+    const [a, b] = [...pointersRef.current.values()];
+    return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+  };
+
   const onPointerDown = (e: React.PointerEvent) => {
-    dragRef.current = { x: e.clientX, y: e.clientY, tx: view.tx, ty: view.ty, moved: false };
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointersRef.current.size === 2) {
+      // Second finger landed — switch from pan to pinch.
+      dragRef.current = null;
+      const mid = pinchMidpoint();
+      pinchRef.current = {
+        startDist: pinchDistance(),
+        startScale: view.scale,
+        startMidX: mid.x,
+        startMidY: mid.y,
+        startTx: view.tx,
+        startTy: view.ty,
+      };
+    } else if (pointersRef.current.size === 1) {
+      dragRef.current = { x: e.clientX, y: e.clientY, tx: view.tx, ty: view.ty, moved: false };
+    }
   };
   const onPointerMove = (e: React.PointerEvent) => {
+    if (!pointersRef.current.has(e.pointerId)) return;
+    pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const pinch = pinchRef.current;
+    if (pointersRef.current.size >= 2 && pinch && pinch.startDist > 0) {
+      const scale = Math.min(3, Math.max(0.25, pinch.startScale * (pinchDistance() / pinch.startDist)));
+      const mid = pinchMidpoint();
+      setView({
+        scale,
+        tx: pinch.startTx + (mid.x - pinch.startMidX),
+        ty: pinch.startTy + (mid.y - pinch.startMidY),
+      });
+      return;
+    }
     const drag = dragRef.current;
     if (!drag) return;
     const dx = e.clientX - drag.x;
@@ -533,8 +582,10 @@ function useViewport(width: number, height: number, displayHeight: number, conta
     if (Math.abs(dx) + Math.abs(dy) > 3) drag.moved = true;
     setView((v) => ({ ...v, tx: drag.tx + dx, ty: drag.ty + dy }));
   };
-  const onPointerUp = () => {
-    dragRef.current = null;
+  const onPointerUp = (e?: React.PointerEvent) => {
+    if (e) pointersRef.current.delete(e.pointerId);
+    if (pointersRef.current.size < 2) pinchRef.current = null;
+    if (pointersRef.current.size === 0) dragRef.current = null;
   };
   const dragMoved = () => dragRef.current?.moved ?? false;
 
@@ -615,12 +666,12 @@ export function ConceptualDiagramRenderer({ spec, height }: { spec: Visualizatio
 
   return (
     <div className="relative w-full" data-testid="conceptual-diagram">
-      {/* Toolbar */}
-      <div className="absolute right-2 top-2 z-10 flex items-center gap-1 rounded-lg border border-border/40 bg-background/70 p-1 backdrop-blur">
+      {/* Toolbar — 36px targets so the controls are usable on touch */}
+      <div className="absolute right-2 top-2 z-10 flex items-center gap-0.5 rounded-lg border border-border/40 bg-background/70 p-1 backdrop-blur">
         <button
           type="button"
           aria-label="Zoom out"
-          className="h-6 w-6 rounded text-muted-foreground hover:bg-muted/40 hover:text-foreground"
+          className="h-9 w-9 rounded-md text-lg leading-none text-muted-foreground hover:bg-muted/40 hover:text-foreground"
           onClick={() => viewport.zoomBy(0.85)}
         >
           −
@@ -629,7 +680,7 @@ export function ConceptualDiagramRenderer({ spec, height }: { spec: Visualizatio
         <button
           type="button"
           aria-label="Zoom in"
-          className="h-6 w-6 rounded text-muted-foreground hover:bg-muted/40 hover:text-foreground"
+          className="h-9 w-9 rounded-md text-lg leading-none text-muted-foreground hover:bg-muted/40 hover:text-foreground"
           onClick={() => viewport.zoomBy(1.15)}
         >
           +
@@ -637,7 +688,7 @@ export function ConceptualDiagramRenderer({ spec, height }: { spec: Visualizatio
         <button
           type="button"
           aria-label="Reset view"
-          className="h-6 rounded px-1.5 text-[10px] text-muted-foreground hover:bg-muted/40 hover:text-foreground"
+          className="h-9 rounded-md px-2.5 text-[11px] text-muted-foreground hover:bg-muted/40 hover:text-foreground"
           onClick={viewport.fit}
         >
           Reset
@@ -652,6 +703,7 @@ export function ConceptualDiagramRenderer({ spec, height }: { spec: Visualizatio
         onPointerMove={viewport.onPointerMove}
         onPointerUp={viewport.onPointerUp}
         onPointerLeave={viewport.onPointerUp}
+        onPointerCancel={viewport.onPointerUp}
       >
         <svg
           viewBox={`0 0 ${dims.width} ${dims.height}`}
@@ -668,7 +720,7 @@ export function ConceptualDiagramRenderer({ spec, height }: { spec: Visualizatio
         </svg>
       </div>
       <p className="mt-1 text-[10px] text-muted-foreground/50">
-        Scroll to zoom · drag to pan{spec.encoding.kind === "mindmap" || spec.encoding.kind === "architecture" ? " · click a node to collapse/expand" : ""}
+        Scroll or pinch to zoom · drag to pan{spec.encoding.kind === "mindmap" || spec.encoding.kind === "architecture" ? " · tap a node to collapse/expand" : ""}
       </p>
     </div>
   );

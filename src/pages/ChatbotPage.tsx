@@ -246,9 +246,13 @@ const ChatbotPage = () => {
   const { collapsed: sidebarCollapsed, toggle: toggleSidebar, width: sidebarWidth } =
     useChatSidebarCollapse();
   const isMobile = useIsMobile();
+  // Keyboard handling: the conversation composer dock lifts via CSS only
+  // (--kbd from MobileViewportFix + translateY in index.css) — the previous
+  // inline useIosKeyboard padding there DOUBLED the lift on iOS. The
+  // empty-state hero capsule is NOT that CSS dock, so it keeps the inline
+  // padding as its only lift mechanism.
   const keyboardOffset = useIosKeyboard();
-  const inputDockStyle =
-    keyboardOffset > 0 ? { paddingBottom: keyboardOffset } : undefined;
+  const heroDockStyle = keyboardOffset > 0 ? { paddingBottom: keyboardOffset } : undefined;
   const historyPanelLeft = isMobile ? 0 : sidebarWidth;
   const { isListening, toggleDictation, isSpeaking, speakingMessageId, speakMessage } = useChatSpeech();
   const [selectedFile, setSelectedFile] = useState<{ type: 'image' | 'file'; data: string; name: string; mimeType: string } | null>(null);
@@ -2543,7 +2547,7 @@ Structure and Content Guidelines:
                     userDisplayName={userDisplayName}
                     onSelectPrompt={handleQuickPrompt}
                     apiConnectedLabel={null}
-                    composerDockStyle={inputDockStyle}
+                    composerDockStyle={heroDockStyle}
                     onOpenAppIde={() => navigate("/ide")}
                     isDemo={searchParams.get("demo") === "true"}
                     onExecuteDemo={(promptStr: string) => {
@@ -2628,7 +2632,6 @@ Structure and Content Guidelines:
                 animate={{ opacity: 1, y: 0 }}
                 transition={SETTINGS_SPRING}
                 className="shadowtalk-chat-input-dock shrink-0"
-                style={inputDockStyle}
               >
                 {costTracker.requestCount > 0 && (
                   <div className="flex justify-center px-4 pb-1.5">
@@ -2688,11 +2691,12 @@ Structure and Content Guidelines:
           onDismiss={() => setLegacyVaultRecoveryOpen(false)}
         />
 
-        {/* Floating Live Voice button — visible on ALL screen sizes */}
+        {/* Floating Live Voice button — visible on ALL screen sizes; fades out
+            while the on-screen keyboard is open (html.kbd-open CSS rule). */}
         <button
           type="button"
           onClick={handleToggleLiveVoice}
-          className="fixed bottom-24 right-4 z-40 w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-[0_4px_24px_rgba(99,102,241,0.4)] flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
+          className="chat-voice-fab fixed bottom-24 right-4 z-40 w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-[0_4px_24px_rgba(99,102,241,0.4)] flex items-center justify-center hover:scale-110 active:scale-95 transition-transform mb-[env(safe-area-inset-bottom)]"
           aria-label="Start live voice conversation"
         >
           <Phone className="w-6 h-6" />

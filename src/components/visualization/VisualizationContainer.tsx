@@ -281,11 +281,12 @@ export const VisualizationContainer: React.FC<VisualizationContainerProps> = ({
               Expand
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-h-[85vh] max-w-2xl overflow-y-auto sm:max-w-3xl">
+          {/* Mobile: true full-screen viewer (safe-area aware); desktop: large modal */}
+          <DialogContent className="h-[100dvh] max-h-[100dvh] w-full max-w-full overflow-y-auto rounded-none border-0 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:h-auto sm:max-h-[85vh] sm:max-w-3xl sm:rounded-lg sm:border sm:pb-6">
             <DialogHeader>
-              <DialogTitle className="flex items-center gap-2 text-base">
-                <Icon className="h-4 w-4 text-primary" />
-                {spec.title}
+              <DialogTitle className="flex items-center gap-2 pr-6 text-base">
+                <Icon className="h-4 w-4 shrink-0 text-primary" />
+                <span className="min-w-0">{spec.title}</span>
               </DialogTitle>
               <DialogDescription className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
                 <span className={badge.className + " rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider"}>

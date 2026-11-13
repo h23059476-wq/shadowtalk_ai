@@ -397,15 +397,15 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
                   thead({ children }) {
                     return <thead className="bg-muted/20">{children}</thead>;
                   },
-                  th({ children }) { 
+                  th({ children }) {
                     return (
-                      <th className="px-5 py-3 text-left text-[12px] font-semibold text-muted-foreground uppercase tracking-widest">
+                      <th className="px-3 sm:px-5 py-3 text-left text-[12px] font-semibold text-muted-foreground uppercase tracking-widest">
                         {children}
                       </th>
-                    ); 
+                    );
                   },
-                  td({ children }) { 
-                    return <td className="border-t border-border/10 px-5 py-3.5 text-[15px] text-foreground/80">{children}</td>; 
+                  td({ children }) {
+                    return <td className="border-t border-border/10 px-3 sm:px-5 py-3.5 text-[15px] text-foreground/80">{children}</td>;
                   },
                   tr({ children }) {
                     return <tr className="hover:bg-muted/5 transition-colors duration-150">{children}</tr>;
@@ -525,28 +525,28 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
           </p>
         )}
 
-        {/* Actions */}
+        {/* Actions — always visible on touch (no hover), hover-revealed on desktop */}
         {!isWelcome && (
-          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0 focus-within:translate-y-0 mt-2">
+          <div className="flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus-within:opacity-100 transition-all duration-300 sm:translate-y-1 sm:group-hover:translate-y-0 sm:focus-within:translate-y-0 mt-2">
             {isUser ? (
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => onEdit(index, message.content)} 
-                disabled={isLoading} 
-                className="h-8 px-3 text-[11px] text-muted-foreground/60 hover:text-foreground rounded-full hover:bg-muted/40"
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onEdit(index, message.content)}
+                disabled={isLoading}
+                className="h-9 px-3 text-[11px] text-muted-foreground/60 hover:text-foreground rounded-full hover:bg-muted/40"
               >
                 <Edit2 className="h-3 w-3 mr-1.5" />
                 Edit
               </Button>
             ) : (
               <>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => onRegenerate(index)} 
-                  disabled={isLoading} 
-                  className="h-8 px-3 text-[11px] text-muted-foreground/60 hover:text-foreground rounded-full hover:bg-muted/40"
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onRegenerate(index)}
+                  disabled={isLoading}
+                  className="h-9 px-3 text-[11px] text-muted-foreground/60 hover:text-foreground rounded-full hover:bg-muted/40"
                   aria-label="Regenerate response"
                 >
                   <RefreshCw className={`h-3 w-3 mr-1.5 ${isLoading ? 'animate-spin' : ''}`} />
@@ -554,11 +554,11 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
                 </Button>
               </>
             )}
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={handleCopy} 
-              className="h-8 px-3 text-[11px] text-muted-foreground/60 hover:text-foreground rounded-full hover:bg-muted/40"
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleCopy}
+              className="h-9 px-3 text-[11px] text-muted-foreground/60 hover:text-foreground rounded-full hover:bg-muted/40"
               aria-label="Copy message"
             >
               <Copy className="h-3 w-3 mr-1.5" />
