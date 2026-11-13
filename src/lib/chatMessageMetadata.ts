@@ -35,6 +35,41 @@ export interface ChatMessageMetadata {
   tool?: string;
   /** Batch 2 — validated visualization artifacts attached to this reply. */
   visualizations?: VisualizationSpec[];
+  /** Intelligent-workspace Batch 1 — honest per-turn token/cost accounting. */
+  tokenTelemetry?: TokenTelemetry;
+}
+
+/**
+ * Intelligent-workspace Batch 1 — per-turn token accounting. Numbers are
+ * provider-MEASURED when `*Measured` is true, otherwise produced by the
+ * documented estimation method. Nothing here is inferred or fabricated:
+ * cached tokens appear only when the provider itself reported them.
+ */
+export interface TokenTelemetry {
+  provider?: string;
+  model?: string;
+  inputTokens: number;
+  inputMeasured: boolean;
+  outputTokens: number;
+  outputMeasured: boolean;
+  cachedInputTokens?: number;
+  estimationMethod?: string;
+  compaction?: {
+    applied: boolean;
+    compactedMessages: number;
+    estimatedSavingsTokens: number;
+  };
+}
+
+function isValidTokenTelemetry(value: unknown): value is TokenTelemetry {
+  if (typeof value !== "object" || value === null) return false;
+  const t = value as TokenTelemetry;
+  return (
+    typeof t.inputTokens === "number" && Number.isFinite(t.inputTokens) &&
+    typeof t.outputTokens === "number" && Number.isFinite(t.outputTokens) &&
+    typeof t.inputMeasured === "boolean" &&
+    typeof t.outputMeasured === "boolean"
+  );
 }
 
 /** Hard cap — oversized metadata is dropped rather than persisted. */
@@ -72,6 +107,11 @@ export function buildMessageMetadata(
       .map((v) => parseVisualizationSpec(v))
       .filter((v): v is VisualizationSpec => v !== null);
     if (valid.length > 0) cleaned.visualizations = valid;
+  }
+  // Intelligent-workspace Batch 1 — telemetry passes through only when the
+  // required numeric shape validates.
+  if (parts.tokenTelemetry && isValidTokenTelemetry(parts.tokenTelemetry)) {
+    cleaned.tokenTelemetry = parts.tokenTelemetry;
   }
   return Object.keys(cleaned).length > 0 ? cleaned : null;
 }
@@ -135,6 +175,7 @@ export async function decodeMessageMetadata(
     provider: typeof meta.provider === "string" ? meta.provider : undefined,
     tool: typeof meta.tool === "string" ? meta.tool : undefined,
     visualizations: Array.isArray(meta.visualizations) ? meta.visualizations : undefined,
+    tokenTelemetry: isValidTokenTelemetry(meta.tokenTelemetry) ? meta.tokenTelemetry : undefined,
   });
   return cleaned;
 }

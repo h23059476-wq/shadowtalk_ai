@@ -138,7 +138,17 @@ import {
 } from "@/lib/visualization/chatPipeline";
 // Batch 3: AI-assisted conceptual generation — model/research call contracts.
 import type { ConceptModelCall, ConceptResearchCall } from "@/lib/visualization/conceptual/modelBridge";
-import { buildMessageMetadata, encodeMessageMetadata, decodeMessageMetadata, type ChatMessageMetadata } from "@/lib/chatMessageMetadata";
+import { buildMessageMetadata, encodeMessageMetadata, decodeMessageMetadata, type ChatMessageMetadata, type TokenTelemetry } from "@/lib/chatMessageMetadata";
+// Intelligent Workspace Batch 1 — Dynamic Token Optimizer.
+import {
+  compactForBudget,
+  resolveContextBudget,
+  estimateTokens,
+  TOKEN_ESTIMATION_METHOD,
+} from "@/lib/tokenOptimizer";
+import { saveCompactionBlocks } from "@/lib/tokenOptimizer/compactionStore";
+import { getCachedAiAccessMode } from "@/lib/aiAccessMode";
+import { getByokConfig } from "@/lib/byok";
 // Types
 interface Message { 
   id: string; 
@@ -158,6 +168,8 @@ interface Message {
   provider?: string;
   /** Batch R1 — provider-reported citations (web research), preserved from the SSE layer. */
   citations?: Citation[];
+  /** Intelligent-workspace Batch 1 — honest per-turn token/cost accounting. */
+  tokenTelemetry?: TokenTelemetry;
   /** Batch R1 — structured research datasets captured from ```shadowdata blocks. */
   researchData?: ResearchDataBlock[];
   /** Batch 2 — visualization artifact (validated spec) attached to this reply. */
@@ -1041,6 +1053,8 @@ const ChatbotPage = () => {
   type ChatCompletionMessage = {
     role: string;
     content: string | Array<{ type: "text"; text: string } | { type: "image_url"; image_url: { url: string } }>;
+    /** Stable message id — compaction traceability anchor (Intelligent Workspace Batch 1). */
+    id?: string;
   };
 
   const runChatCompletion = useCallback(
@@ -1102,6 +1116,7 @@ Structure and Content Guidelines:
       const routerMessages = augmented.map((m) => ({
         role: m.role as "user" | "assistant" | "system",
         content: m.content,
+        ...(m.id ? { id: m.id } : {}),
       }));
 
       const shadowMatchInitial = lastUser.match(/@([a-zA-Z0-9_-]+)-shadow/i);
@@ -1204,17 +1219,72 @@ Structure and Content Guidelines:
         if (pendingContent !== null) flushAssistant();
       };
 
-      // SPEED: only the recent turns are sent — long histories slow the model's
-      // first token dramatically without improving answers.
-      const trimmedRouterMessages = routerMessages.slice(-14);
+      // Intelligent-workspace Batch 1: replace the fixed `slice(-14)` cap
+      // with a provider-aware context budget + non-destructive compaction.
+      //  - resolveContextBudget reads the ACTUAL provider/model (BYOK config
+      //    or the shared gateway) instead of assuming one window fits all.
+      //  - compactForBudget always keeps a verbatim recent tail (14 messages,
+      //    matching the old window) plus every continuity-protected message
+      //    (decisions, requirements, constraints, tasks, questions, file/
+      //    research references) regardless of age; older unprotected runs
+      //    become locally-computed extractive summaries with source-message
+      //    traceability. Original history is never mutated or deleted.
+      //  - When everything fits the budget, the full history is sent — the
+      //    old behavior, unchanged.
+      const systemPromptContent = `${buildChatSystemPrompt({
+        personality,
+        businessMemory,
+      })}\n\n${getModePrompt(chatMode)}`;
+
+      const accessModeForBudget = getCachedAiAccessMode();
+      const byokForBudget = accessModeForBudget === "byok" ? getByokConfig() : null;
+      const budget = resolveContextBudget(
+        byokForBudget ? byokForBudget.provider : "shared",
+        byokForBudget?.model,
+        { requestedMaxOutputTokens: 8192 },
+      );
+
+      const compaction = compactForBudget({
+        messages: routerMessages.map((m, i) => ({
+          id: m.id ?? `hist-${i}`,
+          role: m.role,
+          content:
+            typeof m.content === "string"
+              ? m.content
+              : m.content.map((p) => (p.type === "text" ? p.text : "")).join("\n"),
+        })),
+        budget,
+        fixedPrefixTokens: estimateTokens(systemPromptContent),
+        recentKeepCount: 14,
+      });
+
+      const trimmedRouterMessages: typeof routerMessages = [];
+      for (const entry of compaction.outgoing) {
+        if (entry.kind === "message") {
+          // Reference the ORIGINAL router message — rich array content
+          // (vision image parts) passes through untouched.
+          trimmedRouterMessages.push(routerMessages[entry.sourceIndex]);
+        } else {
+          trimmedRouterMessages.push({
+            role: "system" as const,
+            content:
+              `[Compacted earlier conversation — ${entry.block.sourceCount} messages summarized; originals remain in history]\n${entry.block.summary}`,
+          });
+        }
+      }
+
+      // Compaction summaries persist separately from the conversation for
+      // traceability and later inspection; originals are never overwritten.
+      if (compaction.blocks.length > 0 && user && conversationId && !isGuestConversationId(conversationId)) {
+        void saveCompactionBlocks(user.id, conversationId, compaction.blocks).catch((e) =>
+          console.warn("[chat] compaction persistence failed", e),
+        );
+      }
 
       const cloudMessages: CloudChatMessage[] = [
         {
           role: 'system',
-          content: `${buildChatSystemPrompt({
-            personality,
-            businessMemory,
-          })}\n\n${getModePrompt(chatMode)}`,
+          content: systemPromptContent,
         },
         ...trimmedRouterMessages.map((m) => ({
           role: (m.role === 'assistant' ? 'assistant' : m.role === 'system' ? 'system' : 'user') as CloudChatMessage['role'],
@@ -1301,14 +1371,17 @@ Structure and Content Guidelines:
         }
       }
 
-      const { content: streamedContent, error: cloudError, source: resultSource, modelUsed: resultModel, provider: resultProvider, citations: resultCitations } = await streamCloudChat(cloudMessages, {
+      const { content: streamedContent, error: cloudError, source: resultSource, modelUsed: resultModel, provider: resultProvider, citations: resultCitations, usage: resultUsage } = await streamCloudChat(cloudMessages, {
         signal: controller.signal,
         temperature: 0.7,
-        maxTokens: 8192,
+        // Intelligent-workspace Batch 1: clamp the requested completion cap to
+        // the selected provider's documented output limit instead of a fixed
+        // 8192 that exceeded some providers' entire context windows.
+        maxTokens: budget.reservedOutput,
         onDelta: (accumulated) => {
           pushAssistant(accumulated);
           // Fire token-cost tracker — one call per delta chunk
-          costTracker.onToken("gpt-4o-mini");
+          costTracker.onToken(byokForBudget?.model || "shared");
         },
       });
 
@@ -1352,9 +1425,41 @@ Structure and Content Guidelines:
       }
 
       // === Session monetization: record this model call + project cost ===
-      const _outputTokens = Math.ceil((streamedContent || assistantContent || "").length / 4);
-      const _inputTokens = Math.ceil(cloudMessages.reduce((n, m) => n + (typeof m.content === 'string' ? m.content.length : 0), 0) / 4);
-      costTracker.onRequestComplete("gpt-4o-mini", _inputTokens, _outputTokens);
+      // Intelligent-workspace Batch 1: use provider-MEASURED usage when the
+      // provider reports it; otherwise the documented CJK-aware estimation —
+      // always labeled honestly, never presented as measured. The hard-coded
+      // "gpt-4o-mini" model string is gone: cost uses the model that actually
+      // served the request.
+      const requestModel = resultModel || byokForBudget?.model || "unknown";
+      const outputText = streamedContent || assistantContent || "";
+      const estimateRequestTokens = (msgs: CloudChatMessage[]) =>
+        msgs.reduce((n, m) => {
+          if (typeof m.content === "string") return n + estimateTokens(m.content);
+          return n + m.content.reduce((k, p) => k + (p.type === "text" ? estimateTokens(p.text) : 0), 0);
+        }, 0);
+      const inputTokens = resultUsage?.inputTokens ?? estimateRequestTokens(cloudMessages);
+      const outputTokens = resultUsage?.outputTokens ?? estimateTokens(outputText);
+      costTracker.onRequestComplete(requestModel, inputTokens, outputTokens);
+
+      const tokenTelemetry: TokenTelemetry = {
+        provider: assistantProvider,
+        model: requestModel,
+        inputTokens,
+        inputMeasured: resultUsage?.measured === true && resultUsage.inputTokens !== undefined,
+        outputTokens,
+        outputMeasured: resultUsage?.measured === true && resultUsage.outputTokens !== undefined,
+        ...(resultUsage?.cachedInputTokens ? { cachedInputTokens: resultUsage.cachedInputTokens } : {}),
+        estimationMethod: TOKEN_ESTIMATION_METHOD,
+        compaction: {
+          applied: compaction.telemetry.applied,
+          compactedMessages: compaction.telemetry.compactedMessageCount,
+          estimatedSavingsTokens: compaction.telemetry.estimatedSavingsTokens,
+        },
+      };
+      setMessages((prev) => prev.map((m) =>
+        m.id === aiMessageId ? { ...m, tokenTelemetry } : m,
+      ));
+
       session.recordModelCall();
       // SPEED: don't block UI on DB write — fire and forget.
       if (assistantContent && user) {
@@ -1364,6 +1469,7 @@ Structure and Content Guidelines:
           source: assistantSource,
           modelUsed: assistantModelUsed,
           provider: assistantProvider,
+          tokenTelemetry,
         })).catch((e) =>
           console.warn("[chat] saveMessage(assistant) failed", e),
         );
@@ -1375,7 +1481,7 @@ Structure and Content Guidelines:
       }
       return assistantContent || undefined;
     },
-    [chatMode, personality, user, getChatDefaults, getMemoryContext],
+    [chatMode, personality, user, getChatDefaults, getMemoryContext, isGuestConversationId],
   );
 
   // === Session monetization + cost tracking (roadmap batch integration) ===

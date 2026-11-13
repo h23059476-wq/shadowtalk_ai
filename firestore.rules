@@ -293,6 +293,11 @@ service cloud.firestore {
         'search_history',
         'shadow_credits',
         'credit_transactions',
+        // Intelligent-workspace Batch 1 — non-destructive conversation
+        // compaction summaries (token optimizer). User-owned, same
+        // ownership strength as messages: rows carry user_id == auth.uid;
+        // summaries reference source messages but never replace them.
+        'conversation_compactions',
       ];
     }
 
