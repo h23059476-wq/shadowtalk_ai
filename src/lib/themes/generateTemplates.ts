@@ -43,13 +43,21 @@ function buildTokens(
     accent,
     accentForeground: hsl(primaryHue, 12, bgL),
     border: hsl(primaryHue, 8, 14 + (variant % 2)),
+    input: hsl(primaryHue, 8, 15 + (variant % 2)),
     ring: primary,
+    popover: hsl(primaryHue, 10, bgL + 3),
+    popoverForeground: "0 0% 96%",
+    destructive: "0 70% 54%",
+    destructiveForeground: "0 0% 98%",
     success: "150 80% 45%",
     warning: "40 95% 55%",
     sidebarBackground: hsl(primaryHue, 10, bgL + 2),
     sidebarForeground: "0 0% 96%",
     sidebarPrimary: primary,
     sidebarBorder: hsl(primaryHue, 8, 14),
+    sidebarAccent: hsl(primaryHue, 8, 16 + (variant % 3)),
+    sidebarAccentForeground: "0 0% 96%",
+    sidebarRing: primary,
   };
 }
 

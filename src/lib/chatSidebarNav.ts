@@ -3,6 +3,7 @@ import {
   Home,
   MessageSquare,
   Brain,
+  Palette,
   Sparkles,
   BookOpen,
   User,
@@ -28,6 +29,7 @@ export const CHAT_SIDEBAR_NAV: ChatSidebarNavItem[] = [
 
   // Explore section — only real pages
   { label: "Shadow Twin", icon: Brain, to: "/shadow-twin", section: "explore" },
+  { label: "Appearance", icon: Palette, to: "/themes", section: "explore", badge: "NEW" },
   { label: "Settings", icon: Settings, to: "/settings", section: "explore" },
   { label: "Pricing", icon: Sparkles, to: "/pricing", section: "explore" },
   { label: "Docs", icon: BookOpen, to: "/docs", section: "explore" },

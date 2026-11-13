@@ -35,6 +35,7 @@ import {
   LogIn,
   Eye,
   PenTool,
+  Palette,
   BookOpen,
   Globe,
   History,
@@ -298,12 +299,12 @@ export const pages: PageEntry[] = [
     keywords: ["auth", "designs", "gallery", "cards", "themes"],
   },
   {
-    name: "UI Templates & Themes",
-    href: "/templates",
-    icon: PenTool,
-    desc: "100+ prompt presets and responsive design theme customizations",
+    name: "Appearance Studio",
+    href: "/themes",
+    icon: Palette,
+    desc: "100+ curated themes, favorites and a visual custom theme designer",
     group: "Account & Customization",
-    keywords: ["templates", "presets", "themes", "styling", "prompts"],
+    keywords: ["themes", "appearance", "colors", "designer", "dark", "light", "styling"],
   },
 
   // === Resources & Company ===

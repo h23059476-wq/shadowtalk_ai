@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Fira+Code:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -75,6 +75,18 @@
     --sidebar-accent-foreground: 0 0% 96%;
     --sidebar-border: 240 6% 14%;
     --sidebar-ring: 195 100% 55%;
+
+    /* Appearance Studio — themeable app fonts, chart palette and code colors.
+       Overridden inline by the theme engine when a theme is active. */
+    --app-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --app-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --chart-1: 195 100% 55%;
+    --chart-2: 270 90% 62%;
+    --chart-3: 315 90% 58%;
+    --chart-4: 15 80% 55%;
+    --chart-5: 150 60% 45%;
+    --code-background: 240 10% 8%;
+    --code-foreground: 0 0% 96%;
   }
 }
 
@@ -94,14 +106,47 @@
 }
 
 @layer base {
+  /* Appearance Studio — light-theme surface overrides.
+     A few utility classes hardcode dark glass/gradient values; re-derive
+     them from semantic tokens when a light theme is active. */
+  html[data-shadowtalk-mode="light"] {
+    --glass-bg: 240 20% 97% / 0.65;
+    --glass-border: 220 14% 78% / 0.6;
+    --gradient-card: linear-gradient(160deg, hsl(var(--card)), hsl(var(--background)));
+    --ios-glass-bg: 240 20% 100% / 0.5;
+    --ios-glass-bg-light: 240 20% 100% / 0.4;
+    --ios-glass-border: 220 14% 60% / 0.25;
+    --ios-glass-border-hover: 220 14% 45% / 0.4;
+    --shadow-card: 0 8px 32px hsl(220 30% 30% / 0.12), 0 0 0 1px hsl(var(--border));
+    --shadow-elevated: 0 16px 64px hsl(220 30% 30% / 0.18), 0 0 0 1px hsl(var(--border));
+  }
+  html[data-shadowtalk-mode="light"] .glass-subtle {
+    background: hsl(240 20% 97% / 0.6);
+  }
+  html[data-shadowtalk-mode="light"] .glass-strong {
+    background: hsl(240 20% 98% / 0.85);
+    border: 1px solid hsl(220 14% 78% / 0.6);
+  }
+
+  /* Appearance Studio title — perf-low devices strip gradient backgrounds
+     (background-image: none), which would leave gradient-text invisible.
+     Scope a solid readable fallback to the studio heading only. */
+  html.perf-low [data-appearance-title] {
+    background-image: none;
+    color: hsl(var(--primary));
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+@layer base {
   * { @apply border-border; }
   body { 
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: var(--app-font-sans);
     letter-spacing: -0.01em;
   }
   code, pre, .font-mono {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-family: var(--app-font-mono);
   }
 }
 
@@ -647,24 +692,26 @@
   .trust-badge { @apply transition-all duration-300; }
   .trust-badge:hover { transform: scale(1.05); }
   
-  /* Shadow Mode — deeper sovereign dark (NOT a light theme) */
+  /* Shadow Mode — deeper sovereign dark (NOT a light theme).
+     !important keeps stealth tokens winning over inline theme variables so
+     Appearance Studio themes can never leak into stealth mode. */
   .stealth-mode {
-    --background: 240 16% 2%;
-    --foreground: 0 0% 94%;
-    --card: 240 14% 4%;
-    --card-foreground: 0 0% 94%;
-    --popover: 240 14% 5%;
-    --popover-foreground: 0 0% 94%;
-    --primary: 195 85% 48%;
-    --primary-foreground: 240 16% 2%;
-    --secondary: 270 60% 52%;
-    --muted: 240 8% 8%;
-    --muted-foreground: 240 5% 52%;
-    --accent: 315 70% 50%;
-    --border: 240 8% 12%;
-    --input: 240 8% 7%;
-    --glass-bg: 240 14% 6% / 0.75;
-    --glass-border: 240 10% 18% / 0.45;
+    --background: 240 16% 2% !important;
+    --foreground: 0 0% 94% !important;
+    --card: 240 14% 4% !important;
+    --card-foreground: 0 0% 94% !important;
+    --popover: 240 14% 5% !important;
+    --popover-foreground: 0 0% 94% !important;
+    --primary: 195 85% 48% !important;
+    --primary-foreground: 240 16% 2% !important;
+    --secondary: 270 60% 52% !important;
+    --muted: 240 8% 8% !important;
+    --muted-foreground: 240 5% 52% !important;
+    --accent: 315 70% 50% !important;
+    --border: 240 8% 12% !important;
+    --input: 240 8% 7% !important;
+    --glass-bg: 240 14% 6% / 0.75 !important;
+    --glass-border: 240 10% 18% / 0.45 !important;
   }
   .stealth-mode .neon-glow,
   .stealth-mode .neon-glow-strong {
