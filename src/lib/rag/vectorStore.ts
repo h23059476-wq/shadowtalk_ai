@@ -16,9 +16,14 @@
  *    to Firestore or Storage. Remote embeddings (if the user opted in) send
  *    chunk text to the user's own provider at ingestion time — that is the
  *    only network touch, and it is disclosed in the UI.
+ *
+ * IMPLEMENTATION NOTE: uses the RAW IndexedDB API through a micro-promise
+ * helper instead of the `idb` package — pulling idb's type declarations into
+ * the app-side TypeScript program poisoned global type resolution in
+ * unrelated modules (generic DB types clashed with lib.dom narrowing).
+ * Operations are the exact ones the idb helpers wrap: transactions, stores,
+ * indexes, cursors.
  */
-
-import { openDB, type IDBPDatabase } from "idb";
 
 export const RAG_DB_NAME = "shadowtalk-rag";
 const DB_VERSION = 1;
@@ -33,7 +38,7 @@ export interface RagDocumentRecord {
   sizeBytes: number;
   charCount: number;
   chunkCount: number;
-  /** sha-256-ish content hash (hex) — duplicate detection. */
+  /** content hash (hex) — duplicate detection. */
   contentHash: string;
   /** "local-hash" or "remote:<provider>" — disclosure + re-index decisions. */
   embeddingProvider: string;
@@ -53,38 +58,54 @@ export interface RagChunkRecord {
   createdAt: string;
 }
 
-interface RagDB extends IDBPDatabase {
-  // idb's generic typing is intentionally loose here; every method below
-  // validates user scoping before touching records.
+function req<T>(request: IDBRequest<T>): Promise<T> {
+  return new Promise((resolve, reject) => {
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error ?? new Error("IndexedDB request failed"));
+  });
 }
 
-let dbPromise: Promise<RagDB> | null = null;
+function done(tx: IDBTransaction): Promise<void> {
+  return new Promise((resolve, reject) => {
+    tx.oncomplete = () => resolve();
+    tx.onabort = () => reject(tx.error ?? new Error("IndexedDB transaction aborted"));
+    tx.onerror = () => reject(tx.error ?? new Error("IndexedDB transaction failed"));
+  });
+}
 
-function getDb(): Promise<RagDB> {
-  if (!dbPromise) {
-    dbPromise = openDB(RAG_DB_NAME, DB_VERSION, {
-      upgrade(db) {
-        if (!db.objectStoreNames.contains("documents")) {
-          const documents = db.createObjectStore("documents", { keyPath: "id" });
-          documents.createIndex("user_id", "user_id");
-          documents.createIndex("user_project", ["user_id", "project_id"]);
-        }
-        if (!db.objectStoreNames.contains("chunks")) {
-          const chunks = db.createObjectStore("chunks", { keyPath: "id" });
-          chunks.createIndex("user_id", "user_id");
-          chunks.createIndex("document_id", "document_id");
-          chunks.createIndex("user_project", ["user_id", "project_id"]);
-        }
-        if (!db.objectStoreNames.contains("meta")) {
-          db.createObjectStore("meta", { keyPath: "key" });
-        }
-      },
-    });
-  }
+function openDb(): Promise<IDBDatabase> {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(RAG_DB_NAME, DB_VERSION);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains("documents")) {
+        const documents = db.createObjectStore("documents", { keyPath: "id" });
+        documents.createIndex("user_id", "user_id");
+        documents.createIndex("user_project", ["user_id", "project_id"]);
+      }
+      if (!db.objectStoreNames.contains("chunks")) {
+        const chunks = db.createObjectStore("chunks", { keyPath: "id" });
+        chunks.createIndex("user_id", "user_id");
+        chunks.createIndex("document_id", "document_id");
+        chunks.createIndex("user_project", ["user_id", "project_id"]);
+      }
+      if (!db.objectStoreNames.contains("meta")) {
+        db.createObjectStore("meta", { keyPath: "key" });
+      }
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error ?? new Error("Could not open the RAG database"));
+  });
+}
+
+let dbPromise: Promise<IDBDatabase> | null = null;
+
+function getDb(): Promise<IDBDatabase> {
+  if (!dbPromise) dbPromise = openDb();
   return dbPromise;
 }
 
-/** FNV-1a (128-bit-ish via two rounds) hex content hash — duplicate detection. */
+/** FNV-1a (two rounds) hex content hash — duplicate detection. */
 export function contentHash(text: string): string {
   const h1 = fnv(text, 0x811c9dc5);
   const h2 = fnv(text, 0x01000193 ^ text.length);
@@ -110,28 +131,40 @@ export async function putDocument(input: PutDocumentInput): Promise<void> {
   const db = await getDb();
   const now = new Date().toISOString();
   const tx = db.transaction(["documents", "chunks"], "readwrite");
-  await tx.objectStore("documents").put(input.document);
+  tx.objectStore("documents").put(input.document);
   const chunkStore = tx.objectStore("chunks");
   for (const chunk of input.chunks) {
-    await chunkStore.put({ ...chunk, createdAt: now });
+    chunkStore.put({ ...chunk, createdAt: now });
   }
-  await tx.done;
+  await done(tx);
+}
+
+/** Iterate an index cursor inside an open readwrite transaction, deleting entries. */
+async function drainCursorForDelete(index: IDBIndex, keyValue: IDBValidKey): Promise<void> {
+  await new Promise<void>((resolve, reject) => {
+    const request = index.openCursor(keyValue);
+    request.onsuccess = () => {
+      const cursor = request.result;
+      if (cursor) {
+        cursor.delete();
+        cursor.continue();
+      } else {
+        resolve();
+      }
+    };
+    request.onerror = () => reject(request.error ?? new Error("Cursor failed"));
+  });
 }
 
 /** Delete a document AND all of its chunks/embeddings in one transaction. */
 export async function deleteDocument(userId: string, documentId: string): Promise<boolean> {
   const db = await getDb();
-  const doc = await db.get("documents", documentId);
-  if (!doc || (doc as RagDocumentRecord).user_id !== userId) return false;
+  const doc = (await req(db.transaction("documents").objectStore("documents").get(documentId))) as RagDocumentRecord | undefined;
+  if (!doc || doc.user_id !== userId) return false;
   const tx = db.transaction(["documents", "chunks"], "readwrite");
-  await tx.objectStore("documents").delete(documentId);
-  const chunkIndex = tx.objectStore("chunks").index("document_id");
-  let cursor = await chunkIndex.openCursor(documentId);
-  while (cursor) {
-    await cursor.delete();
-    cursor = await cursor.continue();
-  }
-  await tx.done;
+  tx.objectStore("documents").delete(documentId);
+  await drainCursorForDelete(tx.objectStore("chunks").index("document_id"), documentId);
+  await done(tx);
   return true;
 }
 
@@ -142,7 +175,7 @@ export interface ListDocumentsOptions {
 /** List a user's documents, optionally scoped to one project. */
 export async function listDocuments(userId: string, opts: ListDocumentsOptions = {}): Promise<RagDocumentRecord[]> {
   const db = await getDb();
-  const all = (await db.getAllFromIndex("documents", "user_id", userId)) as RagDocumentRecord[];
+  const all = (await req(db.transaction("documents").index("user_id").getAll(userId))) as RagDocumentRecord[];
   if (opts.projectId === undefined) return all;
   return all.filter((d) => d.project_id === opts.projectId);
 }
@@ -154,14 +187,13 @@ export interface GetChunksOptions {
 
 /**
  * Fetch a user's chunks for retrieval, strictly user-scoped, optionally
- * narrowed to one project (null included for user-level docs when projectId
- * is a specific project? NO — strict: project queries return ONLY that
- * project's chunks; user-level queries return ONLY user-level chunks.
- * Cross-scope bleed is a privacy bug, not a feature.)
+ * narrowed to one project. Project queries return ONLY that project's
+ * chunks; user-level queries return ONLY user-level chunks — cross-scope
+ * bleed is a privacy bug, not a feature.
  */
 export async function getChunks(userId: string, opts: GetChunksOptions = {}): Promise<RagChunkRecord[]> {
   const db = await getDb();
-  const all = (await db.getAllFromIndex("chunks", "user_id", userId)) as RagChunkRecord[];
+  const all = (await req(db.transaction("chunks").index("user_id").getAll(userId))) as RagChunkRecord[];
   let scoped = all;
   if (opts.projectId !== undefined) {
     scoped = scoped.filter((c) => c.project_id === opts.projectId);
@@ -178,19 +210,14 @@ export async function deleteAllUserData(userId: string): Promise<void> {
   const db = await getDb();
   const tx = db.transaction(["documents", "chunks"], "readwrite");
   for (const storeName of ["documents", "chunks"] as const) {
-    const index = tx.objectStore(storeName).index("user_id");
-    let cursor = await index.openCursor(IDBKeyRange.only(userId));
-    while (cursor) {
-      await cursor.delete();
-      cursor = await cursor.continue();
-    }
+    await drainCursorForDelete(tx.objectStore(storeName).index("user_id"), userId);
   }
-  await tx.done;
+  await done(tx);
 }
 
 export async function getDocument(userId: string, documentId: string): Promise<RagDocumentRecord | null> {
   const db = await getDb();
-  const doc = (await db.get("documents", documentId)) as RagDocumentRecord | undefined;
+  const doc = (await req(db.transaction("documents").objectStore("documents").get(documentId))) as RagDocumentRecord | undefined;
   return doc && doc.user_id === userId ? doc : null;
 }
 

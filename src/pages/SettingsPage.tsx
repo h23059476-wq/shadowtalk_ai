@@ -14,6 +14,7 @@ import {
   LayoutGrid,
   TrendingUp,
   WifiOff,
+  Plug,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SettingsAmbientBackground } from "@/components/settings/SettingsAmbientBackground";
@@ -43,6 +44,10 @@ const SECTIONS: readonly SettingsNavSection[] = [
   // from this list, so /settings?section=offline silently fell back to
   // "home" and no reachable UI could initialize the local AI engine.
   { id: "offline", label: "Offline AI", icon: WifiOff, desc: "Local model & install" },
+  // Intelligent-workspace Batch 4 — MCP bridge pairing + RAG embedding
+  // preference. One section inside the existing Settings surface (explicitly
+  // NOT a separate dashboard).
+  { id: "localtools", label: "Local Tools", icon: Plug, desc: "MCP bridge pairing & approvals" },
   { id: "data", label: "Data controls", icon: Database, desc: "Learning & privacy" },
   { id: "growth", label: "Growth Engine", icon: TrendingUp, desc: "Strategy & Scale AI" },
   { id: "connections", label: "Connections", icon: Link2, desc: "API keys & integrations" },

@@ -14,6 +14,9 @@ import { AiAccessOnboarding } from "@/components/chat/AiAccessOnboarding";
 const LiveVoiceMode = lazy(() => import("@/components/chat/LiveVoiceMode").then(m => ({ default: m.LiveVoiceMode })));
 const SettingsByokCard = lazy(() => import("@/components/settings/SettingsByokCard").then(m => ({ default: m.SettingsByokCard })));
 import { ChatToolbar } from "@/components/chat/ChatToolbar";
+import { ContextIndicator } from "@/components/chat/ContextIndicator";
+import { TokenTelemetryBadge } from "@/components/chat/TokenTelemetryBadge";
+import { McpApprovalDialog, type McpApprovalRequest } from "@/components/chat/McpApprovalDialog";
 import { EnterpriseWelcomeBanner } from "@/components/chat/EnterpriseWelcomeBanner";
 import { ChatShadowSidebar } from "@/components/chat/ChatShadowSidebar";
 import { ChatInput } from "@/components/chat/ChatInput";
@@ -149,6 +152,16 @@ import {
 import { saveCompactionBlocks } from "@/lib/tokenOptimizer/compactionStore";
 import { getCachedAiAccessMode } from "@/lib/aiAccessMode";
 import { getByokConfig } from "@/lib/byok";
+import {
+  McpBridgeClient,
+  loadConnection,
+  permissionCategory,
+  checkPermission,
+  loadGrants,
+  matchMessageToTool,
+  extractArgsFromMessage,
+  recordActivity,
+} from "@/lib/mcpBridge";
 // Types
 interface Message { 
   id: string; 
@@ -244,6 +257,13 @@ const ChatbotPage = () => {
   
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
+  // Intelligent-workspace Batch 4 — unified experience state.
+  /** Bumped after (drag-drop) ingestion so the context indicator re-reads the index. */
+  const [ragRefreshKey, setRagRefreshKey] = useState(0);
+  /** Files currently being indexed from a drag-drop (drives the progress toast). */
+  const [ragIndexingCount, setRagIndexingCount] = useState(0);
+  /** Pending MCP tool approval — resolved by the McpApprovalDialog. */
+  const [mcpApproval, setMcpApproval] = useState<McpApprovalRequest | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
@@ -1058,6 +1078,175 @@ const ChatbotPage = () => {
     /** Stable message id — compaction traceability anchor (Intelligent Workspace Batch 1). */
     id?: string;
   };
+
+  // === Intelligent-workspace Batch 2/4 — Stealth RAG ingestion ===
+  // Drag-and-drop onto the chat ingests documents into the local index
+  // (extraction reuses documentIntelligence; embeddings follow the user's
+  // preference). Does NOT attach the file to a message — that remains the
+  // composer's paperclip flow. Cancellable per file; failures are per-file.
+  const ingestFiles = useCallback(
+    async (files: File[]) => {
+      if (!user || files.length === 0) return;
+      const rag = await import("@/lib/rag");
+      const preference = rag.getEmbeddingPreference(user.id);
+      let embedder: import("@/lib/rag/embeddings").EmbeddingProvider = rag.createLocalEmbedder();
+      if (
+        preference.kind === "remote" &&
+        getByokConfig() &&
+        rag.EMBEDDING_CAPABLE_PROVIDERS.has(getByokConfig()!.provider) &&
+        preference.provider === getByokConfig()!.provider
+      ) {
+        embedder = new rag.RemoteEmbedder(preference.provider, getByokConfig()!.apiKey, preference.model);
+      }
+      setRagIndexingCount(files.length);
+      const results = await Promise.allSettled(
+        files.map(async (file) => {
+          try {
+            return await rag.ingestDocument(file, {
+              userId: user.id,
+              projectId: null,
+              embedder,
+            });
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Indexing failed.";
+            toast({ title: `Could not index ${file.name}`, description: message, variant: "destructive" });
+            throw error;
+          }
+        }),
+      );
+      setRagIndexingCount(0);
+      const fulfilled = results.filter((r) => r.status === "fulfilled").map((r) => r.value);
+      const dupes = fulfilled.filter((r) => r.duplicate).length;
+      const fresh = fulfilled.length - dupes;
+      if (fulfilled.length > 0) {
+        setRagRefreshKey((k) => k + 1);
+        toast({
+          title: `Indexed ${fresh} document${fresh === 1 ? "" : "s"}${dupes ? ` · ${dupes} already indexed` : ""}`,
+          description: "Relevant passages are now retrieved automatically while you chat.",
+        });
+      }
+    },
+    [user],
+  );
+
+  // Window-level drag-and-drop: drop anywhere on the chat page to index.
+  // (The composer paperclip keeps its own attachment flow.)
+  useEffect(() => {
+    const onDragOver = (event: DragEvent) => {
+      if (event.dataTransfer?.types?.includes("Files")) event.preventDefault();
+    };
+    const onDrop = (event: DragEvent) => {
+      if (!event.dataTransfer?.types?.includes("Files")) return;
+      event.preventDefault();
+      const files = Array.from(event.dataTransfer.files ?? []);
+      if (files.length > 0) void ingestFiles(files);
+    };
+    window.addEventListener("dragover", onDragOver);
+    window.addEventListener("drop", onDrop);
+    return () => {
+      window.removeEventListener("dragover", onDragOver);
+      window.removeEventListener("drop", onDrop);
+    };
+  }, [ingestFiles]);
+
+  // === Intelligent-workspace Batch 3/4 — MCP intent-based invocation ===
+  // Returns "handled" when the message was routed to a local tool (approved,
+  // denied, or failed visibly), "skip" when no authorized tool matched.
+  const tryMcpInvocation = useCallback(
+    async (messageText: string): Promise<"handled" | "skip"> => {
+      const connection = loadConnection();
+      if (!connection) return "skip";
+      const client = new McpBridgeClient(connection);
+      let servers;
+      try {
+        servers = await client.listServers();
+      } catch {
+        return "skip"; // bridge not running — chat proceeds; Settings shows status
+      }
+      const authorized = servers
+        .filter((s) => s.status === "ready")
+        .flatMap((s) => s.tools.map((tool) => ({ server: s.server, tool })));
+      const match = matchMessageToTool(messageText, authorized);
+      if (!match) return "skip";
+
+      const toolKey = `${match.server}/${match.tool.name}`;
+      const category = permissionCategory(match.tool);
+      const args = extractArgsFromMessage(messageText, match.tool);
+      const grants = loadGrants();
+      const permission = checkPermission(toolKey, match.tool, grants);
+
+      const finishWithCard = (content: string, outcome: "ok" | "error" | "denied") => {
+        recordActivity({
+          ts: new Date().toISOString(),
+          server: match.server,
+          tool: match.tool.name,
+          outcome,
+          detail: content.slice(0, 120),
+        });
+        const cardId = `mcp-${Date.now()}`;
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: cardId,
+            type: "ai",
+            content,
+            timestamp: new Date(),
+            toolExecution: { tool: `local:${match.server}/${match.tool.name}`, status: outcome === "ok" ? "completed" : outcome === "denied" ? "failed" : "failed", params: {} },
+          },
+        ]);
+        if (user) {
+          void (async () => {
+            const convId = await resolveConversationId();
+            if (!convId || isGuestConversationId(convId)) return;
+            void saveMessage(content, "assistant", convId, buildMessageMetadata({
+              tool: `local:${match.server}/${match.tool.name}`,
+            })).catch(() => {});
+          })();
+        }
+      };
+
+      if (permission.decision === "denied-by-user") {
+        finishWithCard(`Local tool \`${toolKey}\` is currently denied in Settings → Local Tools. Re-allow it there to use it here.`, "denied");
+        return "handled";
+      }
+
+      let approved = permission.decision === "allowed";
+      if (!approved) {
+        approved = await new Promise<boolean>((resolve) => {
+          setMcpApproval({
+            server: match.server,
+            tool: match.tool.name,
+            category,
+            args,
+            description: match.tool.description,
+            resolve,
+          });
+        });
+        setMcpApproval(null);
+      }
+      if (!approved) {
+        recordActivity({ ts: new Date().toISOString(), server: match.server, tool: match.tool.name, outcome: "denied" });
+        finishWithCard(`Not executed — you declined the \`${match.tool.name}\` tool call. Nothing was sent to your local bridge.`, "denied");
+        return "handled";
+      }
+
+      try {
+        const result = await client.invoke(match.server, match.tool.name, args);
+        const text = (result.content ?? []).map((c) => (typeof c.text === "string" ? c.text : "")).filter(Boolean).join("\n") || "(tool returned no content)";
+        if (result.isError) {
+          finishWithCard(`The local tool \`${toolKey}\` reported a failure:\n\n${text}`, "error");
+        } else {
+          finishWithCard(`**Local tool result — \`${toolKey}\`**\n\n${text}`, "ok");
+        }
+        return "handled";
+      } catch (error) {
+        const detail = error instanceof Error ? error.message : "Invocation failed.";
+        finishWithCard(`Local tool \`${toolKey}\` failed: ${detail}`, "error");
+        return "handled";
+      }
+    },
+    [user, resolveConversationId, isGuestConversationId],
+  );
 
   const runChatCompletion = useCallback(
     async (

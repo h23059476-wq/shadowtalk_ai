@@ -10,6 +10,7 @@ import {
   ChevronRight,
   TrendingUp,
   WifiOff,
+  Plug,
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,7 @@ import { ShadowTalkModelPanel } from "@/components/profile/ShadowTalkModelPanel"
 import { AutoImproveInsights } from "@/components/autoImprove/AutoImproveInsights";
 import { OfflineSetup } from "@/components/offline/OfflineSetup";
 import { LocalModelStatus } from "@/components/offline/LocalModelStatus";
+import { LocalToolsPanel } from "@/components/settings/LocalToolsPanel";
 
 
 import { DesktopAppSettings } from "@/components/desktop/DesktopAppSettings";
@@ -223,6 +225,23 @@ export function SettingsSectionPanels({
               <LocalModelStatus />
               <OfflineSetup />
             </div>
+          </AnimatedCard>
+        </SettingsStaggerItem>
+      </SettingsStagger>
+    );
+  }
+
+  if (section === "localtools") {
+    return (
+      <SettingsStagger className="space-y-6">
+        <SettingsSectionHeader
+          icon={Plug}
+          title="Local Tools"
+          description="Pair your local MCP bridge, control tool permissions, and choose how document context is embedded."
+        />
+        <SettingsStaggerItem>
+          <AnimatedCard>
+            <LocalToolsPanel />
           </AnimatedCard>
         </SettingsStaggerItem>
       </SettingsStagger>
