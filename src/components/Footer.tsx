@@ -160,7 +160,7 @@ const Footer = () => {
               <LandingAnimate preset="fadeUp" index={0} as="span">
                 © 2026 {BRAND.fullName}. All rights reserved.
               </LandingAnimate>
-              <div className="hidden md:flex items-center gap-4">
+              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 md:justify-start">
                 {[
                   { icon: Shield, text: "SOC 2" },
                   { icon: Globe, text: "Global CDN" },

@@ -110,13 +110,13 @@ const ChatHeaderInner = ({
   if (variant === "minimal") {
     return (
       <>
-        <div className="ios-glass-nav flex md:hidden items-center justify-between px-3 py-1.5 shrink-0 safe-top">
+        <div className="ios-glass-nav flex md:hidden items-center justify-between gap-2 px-3 py-2 shrink-0 safe-top">
           <Button
             type="button"
             variant="outline"
             size="sm"
             onClick={() => window.location.assign("/home")}
-            className="gap-1.5 rounded-full border-border/60 bg-background/70 backdrop-blur-md shadow-sm h-8 px-3 text-xs"
+            className="gap-1.5 rounded-full border-border/60 bg-background/70 backdrop-blur-md shadow-sm h-9 px-3 text-xs touch-target"
             aria-label="Back to home"
           >
             <Home className="h-3.5 w-3.5" />
@@ -128,7 +128,7 @@ const ChatHeaderInner = ({
               type="button"
               onClick={onOpenKeySettings}
               className={
-                "gap-1 rounded-full border backdrop-blur-md shadow-sm h-8 px-2.5 text-[11px] font-semibold flex items-center transition-colors " +
+                "gap-1 rounded-full border backdrop-blur-md shadow-sm h-9 px-2.5 text-[11px] font-semibold flex items-center transition-colors touch-target " +
                 (userCohort === 'TECH'
                   ? "border-indigo-500/30 bg-indigo-950/40 text-indigo-300 hover:bg-indigo-900/50"
                   : "border-amber-500/30 bg-amber-950/40 text-amber-300 hover:bg-amber-900/50")
@@ -152,7 +152,7 @@ const ChatHeaderInner = ({
             variant="outline"
             size="sm"
             onClick={onOpenByok}
-            className="gap-1.5 rounded-full border-border/60 bg-background/70 backdrop-blur-md shadow-sm h-8 px-3 text-xs"
+            className="gap-1.5 rounded-full border-border/60 bg-background/70 backdrop-blur-md shadow-sm h-9 px-3 text-xs touch-target"
             aria-label="Add your own API key"
           >
             <KeyRound className="h-3.5 w-3.5" />

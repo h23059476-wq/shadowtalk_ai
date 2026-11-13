@@ -206,7 +206,13 @@ function buildConceptSpecs(): {
     provenance: "ai-extracted",
     sources,
     generatedAt,
-    gaps,
+    // P0-1 contract: "o1" carries no edges on purpose — the gate requires an
+    // explicit acknowledgment, and the renderer shows it in the dashed
+    // "Unlinked" band. The demo keeps it to showcase that behaviour.
+    gaps: [
+      ...gaps,
+      "Includes an unlinked side note 'Review reserve reports' (unlinked) — intentionally outside the decision flow.",
+    ],
   };
 
   const architecture: VisualizationSpec = {

@@ -62,12 +62,14 @@ function ChatToolbarInner({
         variants={headerReveal}
         initial="hidden"
         animate="visible"
-        className={`hidden md:flex items-center gap-1 px-4 md:px-6 py-2 border-b border-border/40 glass-subtle shrink-0 overflow-x-auto scrollbar-none ${className}`}
+        className={`flex items-center gap-1 px-3 md:px-6 py-1.5 md:py-2 border-b border-border/40 glass-subtle shrink-0 overflow-x-auto scrollbar-none ${className}`}
       >
 
 
-        <HardwareTurboBadge />
-        <div className="ml-auto flex items-center gap-1">
+        <div className="hidden sm:block">
+          <HardwareTurboBadge />
+        </div>
+        <div className="ml-auto flex items-center gap-1 shrink-0">
         {onEnableEncryption && onDisableEncryption && (
           <ChatEncryptionToggle
             active={encryptionActive}
@@ -85,10 +87,11 @@ function ChatToolbarInner({
                 variant="ghost"
                 size="sm"
                 onClick={onToggleLiveVoice}
-                className="h-8 gap-1.5 rounded-full text-xs font-medium text-purple-400 hover:text-purple-300 hover:bg-purple-500/10 border border-transparent hover:border-purple-500/20"
+                className="h-9 min-w-9 gap-1.5 rounded-full text-xs font-medium text-purple-400 hover:text-purple-300 hover:bg-purple-500/10 border border-transparent hover:border-purple-500/20"
+                aria-label="Start live voice conversation"
               >
                 <Phone className="h-4 w-4" />
-                <span className="hidden sm:inline">Live Voice</span>
+                <span className="hidden md:inline">Live Voice</span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>Start live voice conversation</TooltipContent>
@@ -102,10 +105,11 @@ function ChatToolbarInner({
               variant="ghost"
               size="sm"
               onClick={() => navigate("/settings")}
-              className="h-8 gap-1.5 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-primary/10 hover:border-primary/20 border border-transparent"
+              className="h-9 min-w-9 gap-1.5 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-primary/10 hover:border-primary/20 border border-transparent"
+              aria-label="Open settings"
             >
               <Settings className="h-4 w-4" />
-              <span className="hidden sm:inline">Settings</span>
+              <span className="hidden md:inline">Settings</span>
             </Button>
           </TooltipTrigger>
           <TooltipContent>Chat & AI settings</TooltipContent>
@@ -118,10 +122,11 @@ function ChatToolbarInner({
               variant="ghost"
               size="sm"
               onClick={onNewChat}
-              className="h-8 gap-1.5 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              className="h-9 min-w-9 gap-1.5 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              aria-label="Start a new conversation"
             >
               <MessageSquarePlus className="h-4 w-4" />
-              <span className="hidden sm:inline">New chat</span>
+              <span className="hidden md:inline">New chat</span>
             </Button>
           </TooltipTrigger>
           <TooltipContent>Start a new conversation</TooltipContent>
@@ -134,10 +139,11 @@ function ChatToolbarInner({
               variant="ghost"
               size="sm"
               onClick={onOpenHistory}
-              className="h-8 gap-1.5 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              className="h-9 min-w-9 gap-1.5 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              aria-label="View chat history"
             >
               <History className="h-4 w-4" />
-              <span className="hidden sm:inline">History</span>
+              <span className="hidden md:inline">History</span>
             </Button>
           </TooltipTrigger>
           <TooltipContent>View chat history</TooltipContent>
@@ -151,10 +157,11 @@ function ChatToolbarInner({
               size="sm"
               onClick={onClearChat}
               disabled={!hasActiveChat}
-              className="h-8 gap-1.5 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 disabled:opacity-30"
+              className="h-9 min-w-9 gap-1.5 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 disabled:opacity-30"
+              aria-label="Clear messages in this chat"
             >
               <Eraser className="h-4 w-4" />
-              <span className="hidden sm:inline">Clear chat</span>
+              <span className="hidden md:inline">Clear chat</span>
             </Button>
           </TooltipTrigger>
           <TooltipContent>Clear messages in this chat</TooltipContent>
@@ -171,10 +178,11 @@ function ChatToolbarInner({
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="h-8 gap-1.5 rounded-full text-xs font-medium text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                    className="h-9 min-w-9 gap-1.5 rounded-full text-xs font-medium text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                    aria-label="Delete all conversations"
                   >
                     <Trash2 className="h-4 w-4" />
-                    <span className="hidden sm:inline">Delete all</span>
+                    <span className="hidden md:inline">Delete all</span>
                   </Button>
                 </AlertDialogTrigger>
               </TooltipTrigger>
