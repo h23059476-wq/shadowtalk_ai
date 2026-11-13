@@ -557,8 +557,9 @@ const AuthPage = () => {
             {authFlowNotice && <p className="mt-3 rounded-xl border border-cyan-400/20 bg-cyan-950/30 px-3 py-2 text-xs text-cyan-100" role="status" aria-live="polite">{authFlowNotice}</p>}
           </div>
 
-          {/* One-Tap OAuth Buttons (Google and Apple Only) */}
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          {/* One-Tap OAuth Buttons (Google and Apple Only) — stacked below 475px so
+              both buttons keep ≥44px touch height on 320–414px phones */}
+          <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 mb-5">
             {/* Google */}
             <motion.button
               type="button"
