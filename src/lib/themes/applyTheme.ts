@@ -59,7 +59,10 @@ export interface ApplyThemeOptions {
  * Apply any theme (builtin, custom, legacy) to the live document.
  * Legacy/partial themes are normalized first, so this never throws.
  */
-export function applyTheme(themeInput: ThemeTemplate | ResolvedTheme, options: ApplyThemeOptions = {}): ResolvedTheme {
+export function applyTheme(
+  themeInput: ThemeTemplate | ResolvedTheme | object,
+  options: ApplyThemeOptions = {},
+): ResolvedTheme {
   const { persist = true, silent = false } = options;
   const theme = normalizeTheme(themeInput);
   if (!theme) return normalizeTheme(getThemeById("graphite"))!;

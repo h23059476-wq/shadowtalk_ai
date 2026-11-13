@@ -368,4 +368,47 @@ rulesDescribe("Firestore auth and profile rules", () => {
     await assertFails(getDocs(query(collection(anonDb, "daily_usage"), where("usage_date", "==", "2026-11-06"))));
     await assertSucceeds(getDocs(query(collection(adminDb, "daily_usage"), where("usage_date", "==", "2026-11-06"))));
   });
+
+  it("keeps user_settings (Appearance Studio sync) owner-only", async () => {
+    const aliceDb = testEnv.authenticatedContext("alice").firestore();
+    const bobDb = testEnv.authenticatedContext("bob").firestore();
+    const anonDb = testEnv.unauthenticatedContext().firestore();
+
+    const appearanceDoc = {
+      user_id: "alice",
+      setting_key: "appearance_studio",
+      setting_value: {
+        activeThemeId: "obsidian-indigo",
+        customThemes: [],
+        favorites: ["graphite"],
+        recents: ["graphite"],
+        updatedAt: 1,
+      },
+      updated_at: "2026-11-13T00:00:00.000Z",
+    };
+
+    // Owner can create, read, update, delete their appearance settings.
+    await assertSucceeds(setDoc(doc(aliceDb, "user_settings/alice-appearance"), appearanceDoc));
+    await assertSucceeds(getDoc(doc(aliceDb, "user_settings/alice-appearance")));
+    await assertSucceeds(
+      updateDoc(doc(aliceDb, "user_settings/alice-appearance"), { "setting_value.favorites": ["graphite", "obsidian-indigo"] }),
+    );
+    await assertSucceeds(deleteDoc(doc(aliceDb, "user_settings/alice-appearance")));
+
+    await assertSucceeds(setDoc(doc(aliceDb, "user_settings/alice-appearance"), appearanceDoc));
+
+    // Another user cannot read or overwrite Alice's settings.
+    await assertFails(getDoc(doc(bobDb, "user_settings/alice-appearance")));
+    await assertFails(updateDoc(doc(bobDb, "user_settings/alice-appearance"), { setting_value: { hacked: true } }));
+    await assertFails(deleteDoc(doc(bobDb, "user_settings/alice-appearance")));
+
+    // Anonymous users have no access at all.
+    await assertFails(getDoc(doc(anonDb, "user_settings/alice-appearance")));
+    await assertFails(setDoc(doc(anonDb, "user_settings/alice-appearance"), appearanceDoc));
+
+    // Owner cannot forge another user's user_id on write.
+    await assertFails(
+      setDoc(doc(aliceDb, "user_settings/alice-forged"), { ...appearanceDoc, user_id: "bob" }),
+    );
+  });
 });

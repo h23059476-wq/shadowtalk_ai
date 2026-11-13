@@ -9,6 +9,7 @@ import {
 import { downloadThemeTemplate } from "@/lib/themes/downloadTheme";
 import {
   deleteCustomTheme,
+  downloadThemeJson,
   duplicateCustomTheme,
   importThemeJson,
   listCustomThemes,
@@ -34,7 +35,7 @@ import { publishAutoImproveEvent } from "@/lib/autoImprove/eventBus";
 
 export type AppearanceSyncState = "local" | "syncing" | "synced" | "offline";
 
-type ThemeTemplateContextValue = {
+export type ThemeTemplateContextValue = {
   // ---- Legacy API (auto-improve suggestion panel) ----
   templates: ThemeTemplate[];
   activeTemplateId: string | null;
@@ -161,7 +162,9 @@ export function ThemeTemplateProvider({ children }: { children: ReactNode }) {
       if (persist) {
         const nextRecents = pushRecentId(applied.id);
         setRecents(nextRecents);
-        void publishAutoImproveEvent("theme_apply", { templateId: applied.id, category: applied.collection });
+        // Best-effort analytics — never let telemetry failures surface.
+        publishAutoImproveEvent("theme_apply", { templateId: applied.id, category: applied.collection })
+          .catch(() => undefined);
         schedulePush({
           activeThemeId: applied.id,
           customThemes,
@@ -196,7 +199,8 @@ export function ThemeTemplateProvider({ children }: { children: ReactNode }) {
 
   const downloadTemplate = useCallback((template: ThemeTemplate) => {
     downloadThemeTemplate(template);
-    void publishAutoImproveEvent("template_browse", { action: "download", templateId: template.id });
+    publishAutoImproveEvent("template_browse", { action: "download", templateId: template.id })
+      .catch(() => undefined);
   }, []);
 
   const resetTheme = useCallback(() => {
@@ -285,7 +289,7 @@ export function ThemeTemplateProvider({ children }: { children: ReactNode }) {
   );
 
   const exportTheme = useCallback((theme: ResolvedTheme) => {
-    void import("@/lib/themes/customThemes").then(({ downloadThemeJson }) => downloadThemeJson(theme));
+    downloadThemeJson(theme);
   }, []);
 
   const toggleFavorite = useCallback(
