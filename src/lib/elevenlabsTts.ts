@@ -63,6 +63,10 @@ export interface SpeakOptions {
   onStart?: () => void;
   onEnd?: () => void;
   onError?: (err: string) => void;
+  /** Live Mode visualizer: exposes the playing audio element for amplitude analysis. */
+  onAudioEl?: (audio: HTMLAudioElement) => void;
+  /** Browser-TTS fallback: fires per spoken word so visuals can pulse to speech. */
+  onBoundary?: () => void;
 }
 
 /**
@@ -125,6 +129,7 @@ export async function speakWithElevenLabs(
     const audioUrl = URL.createObjectURL(blob);
     const audio = new Audio(audioUrl);
     audio.volume = 0.9;
+    opts.onAudioEl?.(audio);
 
     opts.onStart?.();
 
@@ -182,6 +187,7 @@ function speakWithBrowserTTS(text: string, opts: SpeakOptions = {}) {
   utterance.onstart = () => opts.onStart?.();
   utterance.onend = () => opts.onEnd?.();
   utterance.onerror = () => opts.onError?.("Speech synthesis error");
+  utterance.onboundary = () => opts.onBoundary?.();
 
   if (opts.signal) {
     opts.signal.addEventListener("abort", () => {
