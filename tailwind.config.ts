@@ -1,5 +1,51 @@
 import type { Config } from "tailwindcss";
 import animate from "tailwindcss-animate";
+import tailwindPalette from "tailwindcss/colors";
+import { hexToHsl, hslToTriplet } from "./src/lib/themes/contrast";
+
+/**
+ * Theme-driven palette remap (Appearance Studio).
+ *
+ * Every Tailwind palette family is re-pointed at an `--st-*` CSS variable
+ * ramp that `applyTheme` derives from the active theme (see
+ * src/lib/themes/palette.ts). Each utility keeps the family's original
+ * Tailwind color as a var() fallback, so before any theme is applied the
+ * site renders exactly as before. `<alpha-value>` keeps bg-white/10-style
+ * opacity modifiers working.
+ */
+const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+
+const fallbackTriplet = (family: Record<string, string | undefined>, shade: number): string => {
+  const hex = family[shade] ?? family[900] ?? "#0f172a";
+  const hsl = hexToHsl(hex);
+  return hsl ? hslToTriplet(hsl) : "240 6% 12%";
+};
+
+const ramp = (anchor: string, family: Record<string, string | undefined>) =>
+  Object.fromEntries(
+    SHADES.map((shade) => [
+      String(shade),
+      `hsl(var(--st-${anchor}-${shade}, ${fallbackTriplet(family, shade)}) / <alpha-value>)`,
+    ]),
+  );
+
+const themedPalette: Record<string, Record<string, string>> = (() => {
+  const familyToAnchor: Record<string, string> = {
+    slate: "neutral", gray: "neutral", zinc: "neutral", neutral: "neutral", stone: "neutral",
+    purple: "primary", violet: "primary", fuchsia: "primary", pink: "primary",
+    indigo: "glow", blue: "glow", sky: "glow", cyan: "glow",
+    teal: "success", emerald: "success", green: "success", lime: "success",
+    yellow: "warning", amber: "warning", orange: "warning",
+    red: "destructive", rose: "destructive",
+  };
+  const palette: Record<string, Record<string, string>> = {};
+  for (const [family, anchor] of Object.entries(familyToAnchor)) {
+    palette[family] = ramp(anchor, tailwindPalette[family] as unknown as Record<string, string>);
+  }
+  palette.white = { DEFAULT: "hsl(var(--st-white, 0 0% 100%) / <alpha-value>)" };
+  palette.black = { DEFAULT: "hsl(var(--st-black, 0 0% 0%) / <alpha-value>)" };
+  return palette;
+})();
 
 export default {
   darkMode: ["class"],
@@ -31,6 +77,7 @@ export default {
         mono: ['var(--app-font-mono)', 'JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       colors: {
+        ...themedPalette,
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
