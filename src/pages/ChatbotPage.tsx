@@ -990,7 +990,14 @@ const ChatbotPage = () => {
         if (isPermissionDeniedError(insertError)) setPersistenceBlocked(true);
       }
       
-      if (data && role === 'user' && messages.length <= 1) {
+      // Title the conversation from the first user message. The previous
+      // guard (messages.length <= 1) was never true after the welcome
+      // message, so every conversation stayed titled "New Chat" — making
+      // real, persisted chats unrecognizable (and easy to mistake for lost
+      // data) in the sidebar after a reload.
+      const convRow = conversations.find((c) => c.id === conversationId);
+      const needsTitle = role === 'user' && (!convRow || convRow.title === "New Chat" || convRow.title === "Private Chat" || !convRow.title);
+      if (data && needsTitle) {
         const titlePlain = content.trim().split(/\s+/).slice(0, 3).join(' ').slice(0, 25) || 'New Chat';
         const title = await chatPrivate.wrapForStorage(titlePlain);
         if (title !== null) {
@@ -1698,6 +1705,22 @@ Structure and Content Guidelines:
       setMessages((prev) => prev.map((m) =>
         m.id === aiMessageId ? { ...m, tokenTelemetry, ...(ragContext ? { ragContext } : {}) } : m,
       ));
+
+      // Production pass: memory reflection now runs for REAL — local
+      // extractive analysis (no provider calls, no cost) persisted to
+      // user_memories (signed-in) or the guest store. Previously imported
+      // but never invoked, so the feature was silently dead.
+      void maybeReflectAndPersist(
+        { user, isAnonymous },
+        [
+          ...messagesRef.current
+            .filter((m) => m.id !== "welcome")
+            .map((m) => ({ role: m.type === "user" ? ("user" as const) : ("assistant" as const), content: m.content })),
+          ...(assistantContent && !messagesRef.current.some((m) => m.id === aiMessageId)
+            ? [{ role: "assistant" as const, content: assistantContent }]
+            : []),
+        ],
+      ).catch(() => {});
 
       session.recordModelCall();
       // SPEED: don't block UI on DB write — fire and forget.

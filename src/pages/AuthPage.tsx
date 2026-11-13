@@ -30,6 +30,7 @@ import ChatbotLogo from "@/components/ChatbotLogo";
 import { isEnterpriseDeployment } from "@/hooks/useEnterpriseExperience";
 import { ENTERPRISE_TENANTS } from "@/lib/enterpriseTenants";
 import { setStoredAuthDesignChoice } from "@/lib/authDesigns";
+import { useOAuthReturnHandoff } from "@/lib/useOAuthReturnHandoff";
 
 // Rate limiter hook
 const useRateLimiter = (maxAttempts = 5, windowMs = 60000) => {
@@ -83,7 +84,7 @@ const AuthPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
 
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
@@ -103,6 +104,16 @@ const AuthPage = () => {
   const { checkLimit } = useRateLimiter(5, 60000);
   const strength = getPasswordStrength(password);
 
+  // OAuth redirect return handoff — while auth is restoring, show the
+  // "completing" state; when it finishes, either navigate to the intended
+  // destination or surface a meaningful failure (see useOAuthReturnHandoff).
+  const { completing: oauthCompleting } = useOAuthReturnHandoff({
+    authenticated: !!user,
+    authLoading,
+    fallbackDestination: getChatbotPath(searchParams),
+    toast,
+  });
+
   useEffect(() => {
     setStoredAuthDesignChoice("sovereign-split");
   }, []);
@@ -118,13 +129,15 @@ const AuthPage = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    if (user) {
+    if (user && !oauthCompleting) {
       // Use hard redirect for reliability — if the user lands on /auth while
       // already signed in (e.g. page refresh), a full reload ensures all
       // auth state is cleanly hydrated before chatbot code runs.
+      // (During an OAuth return handoff, useOAuthReturnHandoff navigates to
+      // the stored destination instead — this effect must not race it.)
       window.location.assign(getChatbotPath(searchParams));
     }
-  }, [user, searchParams]);
+  }, [user, oauthCompleting, searchParams]);
 
   useEffect(() => {
     const oauthError = searchParams.get("error");
@@ -339,6 +352,20 @@ const AuthPage = () => {
       setOauthProvider(null);
     }
   };
+
+  // OAuth redirect in flight: auth is still restoring the Google session.
+  // Show an explicit completing screen — never flash the login form here,
+  // because that is exactly what reads to the user as "sign-in dropped me
+  // back on /auth".
+  if (oauthCompleting && authLoading) {
+    return (
+      <div className="min-h-screen w-full bg-[#05070d] text-slate-100 flex flex-col items-center justify-center gap-4 font-sans">
+        <div className="animate-spin rounded-full h-9 w-9 border-2 border-cyan-400/30 border-t-cyan-400" />
+        <p className="text-sm text-slate-300">Completing Google sign-in…</p>
+        <p className="text-xs text-slate-500">Restoring your session securely.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen w-full bg-[#05070d] text-slate-100 flex flex-col lg:flex-row relative overflow-x-hidden font-sans selection:bg-cyan-500/30 selection:text-cyan-200">

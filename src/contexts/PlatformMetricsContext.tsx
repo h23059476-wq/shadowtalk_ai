@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { backend } from "@/integrations/local/client";
+import { fbAuth } from "@/integrations/firebase/app";
 import {
   buildCommunityHighlights,
   type PlatformMetrics,
@@ -77,23 +78,40 @@ async function fetchMetrics(): Promise<PlatformMetrics> {
   }
 
   const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+  // Production fix: `conversations` and `usage_analytics` are per-user
+  // collections — counting them while signed out 403s under Firestore rules
+  // and polluted the first-load console with errors. Only query them when a
+  // user is authenticated; guests get public data only.
+  const signed = Boolean(fbAuth().currentUser);
 
-  const [usersRes, convsRes, activityRes] = await Promise.all([
-    backend.from("public_profiles").select("id", { count: "exact", head: true }),
-    backend.from("conversations").select("id", { count: "exact", head: true }),
-    backend.from("usage_analytics").select("user_id").gte("created_at", dayAgo).limit(400),
-  ]);
+  try {
+    const [usersRes, convsRes, activityRes] = await Promise.all([
+      backend.from("public_profiles").select("id", { count: "exact", head: true }),
+      signed
+        ? backend.from("conversations").select("id", { count: "exact", head: true })
+        : Promise.resolve({ count: null, data: [] } as { count: number | null; data: unknown[] }),
+      signed
+        ? backend.from("usage_analytics").select("user_id").gte("created_at", dayAgo).limit(400)
+        : Promise.resolve({ data: [] } as { data: Array<{ user_id?: string }> }),
+    ]);
 
-  const dau = new Set((activityRes.data ?? []).map((r) => r.user_id)).size;
+    const dau = new Set(((activityRes.data ?? []) as Array<{ user_id?: string }>).map((r) => r.user_id)).size;
 
-  const metrics: PlatformMetrics = {
-    totalUsers: usersRes.count ?? 0,
-    dailyActiveUsers: dau,
-    totalConversations: convsRes.count ?? 0,
-    isLoading: false,
-  };
-  writeCache(metrics);
-  return metrics;
+    const metrics: PlatformMetrics = {
+      totalUsers: (usersRes as { count?: number | null }).count ?? 0,
+      dailyActiveUsers: dau,
+      totalConversations: (convsRes as { count?: number | null }).count ?? 0,
+      isLoading: false,
+    };
+    writeCache(metrics);
+      return metrics;
+    } catch {
+      // Rules denial or network failure must never hang the page or throw —
+      // degrade to zeros.
+      const metrics: PlatformMetrics = { totalUsers: 0, dailyActiveUsers: 0, totalConversations: 0, isLoading: false };
+      writeCache(metrics);
+      return metrics;
+    }
 }
 
 export function PlatformMetricsProvider({ children }: { children: ReactNode }) {
