@@ -527,15 +527,114 @@ function validateRoadmapKind(spec: VisualizationSpec, enc: { phases: Array<{ id:
   }
 }
 
-function validateDecisionKind(spec: VisualizationSpec, enc: { nodes: Array<{ id: string; kind?: string }>; edges: Array<{ from: string; to: string }> }, errors: string[]): void {
+function validateDecisionKind(spec: VisualizationSpec, enc: { nodes: Array<{ id: string; label?: string; kind?: string }>; edges: Array<{ from: string; to: string; label?: string }> }, errors: string[]): void {
   const nodeIds = new Set(enc.nodes.map((n) => n.id));
   if (nodeIds.size !== enc.nodes.length) errors.push("decision-tree node ids must be unique");
+  const byId = new Map(enc.nodes.map((n) => [n.id, n]));
   for (const edge of enc.edges) {
     if (!nodeIds.has(edge.from)) errors.push(`decision-tree edge references unknown node "${edge.from}"`);
     if (!nodeIds.has(edge.to)) errors.push(`decision-tree edge references unknown node "${edge.to}"`);
   }
-  if (!enc.nodes.some((n) => (n.kind ?? "decision") === "decision")) {
-    errors.push("decision-tree requires at least one node of kind \"decision\"");
+
+  // P0-1 (confirmed defect CD-8): duplicate edges and self-loops are
+  // structurally illegal — overlapping curves and folded-back edges.
+  const seenEdges = new Set<string>();
+  for (const edge of enc.edges) {
+    if (edge.from === edge.to) {
+      errors.push(`decision-tree edge from "${edge.from}" to itself is a self-loop and is not allowed`);
+      continue;
+    }
+    const key = `${edge.from}->${edge.to}`;
+    if (seenEdges.has(key)) {
+      errors.push(`decision-tree has a duplicate edge "${key}" — merge the conditions into one labelled edge`);
+    }
+    seenEdges.add(key);
+  }
+
+  // P1-1 (confirmed defect CD-7): the renderer types untyped nodes as
+  // "option"; the validator uses the SAME default so semantics agree.
+  // A spec without ANY explicit decision kind is rejected (the model
+  // bridge infers kinds before this gate, so this only hits raw input).
+  const kindOf = (id: string): "decision" | "option" | "outcome" => {
+    const k = byId.get(id)?.kind;
+    return k === "decision" || k === "option" || k === "outcome" ? k : "option";
+  };
+  const entry = enc.nodes.find((n) => n.kind === "decision") ?? enc.nodes[0];
+  if (!enc.nodes.some((n) => n.kind === "decision")) {
+    errors.push('decision-tree requires at least one node with an explicit kind "decision"');
+  }
+
+  // P0-1 (confirmed defect CD-1): the ≥2-branch contract is ENFORCED here,
+  // not just requested in the prompt — a decision node with fewer than two
+  // outgoing labelled branches used to validate cleanly (the "Reserves
+  // verified?" single-branch node in the viz-8 screenshot).
+  for (const n of enc.nodes) {
+    if (kindOf(n.id) !== "decision") continue;
+    const out = enc.edges.filter((e) => e.from === n.id);
+    if (out.length < 2) {
+      errors.push(`decision node "${n.id}" has ${out.length} outgoing edge(s) — every decision needs at least 2 labelled branches`);
+      continue;
+    }
+    for (const e of out) {
+      if (!e.label || !e.label.trim()) {
+        errors.push(`edge "${n.id}" → "${e.to}" is missing its condition label — every decision branch needs one`);
+      }
+    }
+  }
+
+  // P0-1 (confirmed defect CD-2): connectivity. Nodes are either reachable
+  // from the entry decision, or carry NO edges at all — an intentional
+  // side-note — which must be acknowledged with a gap note containing
+  // "unlinked" (mirrors the unverified-gap pattern below). Half-connected
+  // nodes (edges that never reach the entry) are always rejected.
+  if (entry) {
+    const reachable = new Set<string>([entry.id]);
+    const queue: string[] = [entry.id];
+    while (queue.length > 0) {
+      const id = queue.shift()!;
+      for (const e of enc.edges) {
+        if (e.from === id && nodeIds.has(e.to) && !reachable.has(e.to)) {
+          reachable.add(e.to);
+          queue.push(e.to);
+        }
+      }
+    }
+    for (const n of enc.nodes) {
+      if (reachable.has(n.id)) continue;
+      const linked = enc.edges.some((e) => e.from === n.id || e.to === n.id);
+      if (!linked) {
+        if (!spec.gaps.some((g) => g.toLowerCase().includes("unlinked"))) {
+          errors.push(`node "${n.id}" has no edges — connect it to the tree or acknowledge it with a gap note containing "unlinked"`);
+        }
+      } else {
+        errors.push(`node "${n.id}" is not reachable from the entry decision "${entry.id}" — connect it or remove it`);
+      }
+    }
+
+    // P1-2 / CD-8: acyclicity — a decision tree branches forward only.
+    const color = new Map<string, 0 | 1 | 2>(enc.nodes.map((n) => [n.id, 0 as 0 | 1 | 2]));
+    let cycleAt: string | null = null;
+    const dfs = (id: string): void => {
+      if (cycleAt) return;
+      color.set(id, 1);
+      for (const e of enc.edges) {
+        if (e.from !== id) continue;
+        const c = color.get(e.to);
+        if (c === 1) {
+          cycleAt = e.to;
+          return;
+        }
+        if (c === 0) dfs(e.to);
+      }
+      color.set(id, 2);
+    };
+    for (const n of enc.nodes) {
+      if ((color.get(n.id) ?? 0) === 0) dfs(n.id);
+      if (cycleAt) break;
+    }
+    if (cycleAt) {
+      errors.push(`decision-tree contains a cycle through "${cycleAt}" — decisions must branch forward, not loop`);
+    }
   }
 }
 

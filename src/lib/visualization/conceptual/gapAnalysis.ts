@@ -15,6 +15,7 @@
  */
 
 import { SPEC_LIMITS } from "../spec";
+import { isReferentialRequest } from "../referential";
 import type { Citation, ProvenanceClass, ResearchContext } from "../types";
 import type { ShadowDataset } from "../types";
 
@@ -30,12 +31,23 @@ export interface ContextDigest {
   citations: Citation[];
   provenance: ProvenanceClass;
   declaredGaps: string[];
+  /** P1-3 traceability: message ids of the evidence chosen for this digest. */
+  evidenceMessageIds: string[];
+  /** P0-2 traceability: how the request's topic relates to the context. */
+  topicOverlap?: boolean;
+  overlapRatio?: number;
+  /** True when the request explicitly points at the existing conversation. */
+  referentialRequest?: boolean;
 }
 
 const DIGEST_EVIDENCE_LIMIT = 6;
 const DIGEST_EVIDENCE_CHARS = 400;
 
-export function buildContextDigest(context: ResearchContext, maxEvidence = DIGEST_EVIDENCE_LIMIT): ContextDigest {
+export function buildContextDigest(
+  context: ResearchContext,
+  assessment?: GapAssessment,
+  maxEvidence = DIGEST_EVIDENCE_LIMIT,
+): ContextDigest {
   return {
     datasets: context.datasets.slice(0, SPEC_LIMITS.maxDatasets).map((ds) => {
       const cols = ds.columns.map((c) => c.key).slice(0, 12).join(", ");
@@ -47,6 +59,14 @@ export function buildContextDigest(context: ResearchContext, maxEvidence = DIGES
     citations: context.citations.slice(0, SPEC_LIMITS.maxSources),
     provenance: context.provenance,
     declaredGaps: context.gaps.slice(0, SPEC_LIMITS.maxGaps),
+    evidenceMessageIds: context.evidence.slice(0, maxEvidence).map((e) => e.messageId),
+    ...(assessment
+      ? {
+          topicOverlap: assessment.topicOverlap,
+          ...(assessment.overlapTokens > 0 ? { overlapRatio: assessment.overlapHits / assessment.overlapTokens } : {}),
+          referentialRequest: assessment.referential,
+        }
+      : {}),
   };
 }
 
@@ -72,6 +92,11 @@ export interface GapAssessment {
   researchQuery?: string;
   /** True when the request's topic overlaps the resolved context. */
   topicOverlap: boolean;
+  /** P0-2 traceability: request tokens and how many hit the context. */
+  overlapHits: number;
+  overlapTokens: number;
+  /** True when the request explicitly points at the existing conversation. */
+  referential: boolean;
 }
 
 function tokenize(text: string): string[] {
@@ -82,7 +107,10 @@ function tokenize(text: string): string[] {
 
 /**
  * Classify whether the resolved context can ground the requested diagram.
- *  - sufficient:    context has datasets/evidence AND topic overlap;
+ *  - sufficient:    context has datasets/evidence AND genuine topic overlap
+ *                   (or the request is explicitly referential — P0-2: a
+ *                   dataset captured anywhere in the session no longer
+ *                   marks every later request as sufficient, CD-3);
  *  - needs-research: no usable overlap — research tools may fix it;
  *  - cannot-derive:  no context AND research unavailable/blocked.
  */
@@ -97,11 +125,13 @@ export function assessGaps(context: ResearchContext, request: string, researchAv
   const contextSet = new Set(contextTokens);
   const overlapHits = requestTokens.filter((t) => contextSet.has(t));
   const topicOverlap = requestTokens.length > 0 && overlapHits.length / requestTokens.length >= 0.34;
+  const referential = isReferentialRequest(request);
+  const overlapTrace = { overlapHits: overlapHits.length, overlapTokens: requestTokens.length, referential };
 
   const hasContext = context.datasets.length > 0 || context.evidence.length > 0;
 
-  if (hasContext && (topicOverlap || context.datasets.length > 0)) {
-    return { verdict: "sufficient", missing: [], topicOverlap };
+  if (hasContext && (topicOverlap || referential)) {
+    return { verdict: "sufficient", missing: [], topicOverlap, ...overlapTrace };
   }
   if (!hasContext) {
     if (!researchAvailable) {
@@ -111,6 +141,7 @@ export function assessGaps(context: ResearchContext, request: string, researchAv
           "No research was captured in this conversation and research tools are not available right now (offline or no key).",
         ],
         topicOverlap: false,
+        ...overlapTrace,
       };
     }
     return {
@@ -118,6 +149,7 @@ export function assessGaps(context: ResearchContext, request: string, researchAv
       missing: [`No research about "${requestTokens.slice(0, 6).join(" ") || "the requested topic"}" exists in this conversation yet.`],
       researchQuery: buildResearchQuery(request),
       topicOverlap: false,
+      ...overlapTrace,
     };
   }
   // Context exists but does not match the request — additional research
@@ -128,12 +160,14 @@ export function assessGaps(context: ResearchContext, request: string, researchAv
       missing: [`The captured research does not cover: ${requestTokens.slice(0, 6).join(" ")}.`],
       researchQuery: buildResearchQuery(request),
       topicOverlap: false,
+      ...overlapTrace,
     };
   }
   return {
     verdict: "cannot-derive",
     missing: ["The captured research does not cover the requested topic and research tools are unavailable right now."],
     topicOverlap: false,
+    ...overlapTrace,
   };
 }
 

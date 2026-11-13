@@ -28,7 +28,15 @@ Structurally safe but not yet semantically trustworthy. The closed-schema securi
   prompt's source list → cross-request provenance carry-over (CD-5) and fabricated-citation risk (CD-6).
 
 8 confirmed defects (CD-1…CD-8), 4 suspected (SD-1…SD-4); prioritized fixes P0-1…P2-2 in Section 10
-of the report — none implemented.
+of the report.
+
+**Status update:** all recommendations (P0-1…P2-2) are now IMPLEMENTED — the decision-tree graph
+contract (≥2 labelled branches, no duplicate edges/self-loops/cycles, reachability from the entry,
+acknowledged "unlinked" nodes), genuine topic-overlap for context sufficiency, the conditional
+zero-candidate fallback, the source-URL allowlist, explicit node-kind inference, distinct rendering
+of unlinked nodes, the START cue and deterministic layouts — with permanent regression tests in
+`src/lib/visualization/__tests__/`, `src/lib/visualization/conceptual/__tests__/` and
+`src/components/visualization/__tests__/`.
 
 ## Tooling (`tooling/`)
 

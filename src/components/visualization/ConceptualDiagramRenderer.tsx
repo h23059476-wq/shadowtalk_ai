@@ -265,7 +265,10 @@ const DT_GAP_Y = 76;
 
 function layoutDecisionTree(spec: VisualizationSpec): {
   nodes: FlowPlaced[];
-  edges: Array<{ x1: number; y1: number; x2: number; y2: number; label?: string }>;
+  edges: Array<{ x1: number; y1: number; x2: number; y2: number; label?: string; lx: number; ly: number }>;
+  /** Zero-edge nodes (acknowledged via gaps) — rendered in their own band. */
+  unlinked: FlowPlaced[];
+  entryId: string;
   width: number;
   height: number;
 } | null {
@@ -277,11 +280,19 @@ function layoutDecisionTree(spec: VisualizationSpec): {
     if (!adjacency.has(e.from)) adjacency.set(e.from, []);
     adjacency.get(e.from)!.push(e.to);
   }
-  const start = enc.nodes.find((n) => n.kind === "decision") ?? enc.nodes[0];
+  const linked = new Set<string>();
+  for (const e of enc.edges) {
+    linked.add(e.from);
+    linked.add(e.to);
+  }
+  const entry = enc.nodes.find((n) => n.kind === "decision") ?? enc.nodes[0];
+  const start = entry;
   const levelOf = new Map<string, number>([[start.id, 0]]);
   const queue: string[] = [start.id];
   while (queue.length > 0) {
     const id = queue.shift()!;
+    // P2-1: adjacency preserves spec edge order and the node loop follows
+    // spec node order — the layout is fully deterministic across renders.
     for (const next of adjacency.get(id) ?? []) {
       if (!levelOf.has(next)) {
         levelOf.set(next, (levelOf.get(id) ?? 0) + 1);
@@ -291,6 +302,7 @@ function layoutDecisionTree(spec: VisualizationSpec): {
   }
   const levels = new Map<number, string[]>();
   for (const n of enc.nodes) {
+    if (!linked.has(n.id)) continue; // unlinked nodes get their own band below
     const lvl = levelOf.get(n.id) ?? 0;
     if (!levels.has(lvl)) levels.set(lvl, []);
     levels.get(lvl)!.push(n.id);
@@ -311,6 +323,15 @@ function layoutDecisionTree(spec: VisualizationSpec): {
     });
   }
   const byPlaced = new Map(placed.map((n) => [n.id, n]));
+  // P1-2 (SD-1): edge labels move from the bare midpoint (where a long
+  // diagonal's label landed next to an unrelated node in the viz-8
+  // screenshot) to a point near the source edge, staggered per sibling
+  // branch so labels from one decision never stack on top of each other.
+  const outTotal = new Map<string, number>();
+  for (const e of enc.edges) outTotal.set(e.from, (outTotal.get(e.from) ?? 0) + 1);
+  const outSeen = new Map<string, number>();
+  const at = (t: number, a: number, b: number, c: number, d: number): number =>
+    (1 - t) ** 3 * a + 3 * (1 - t) ** 2 * t * b + 3 * (1 - t) * t * t * c + t ** 3 * d;
   const edges = enc.edges.flatMap((e) => {
     const from = byPlaced.get(e.from);
     const to = byPlaced.get(e.to);
@@ -319,10 +340,36 @@ function layoutDecisionTree(spec: VisualizationSpec): {
     const y1 = from.y + DT_NODE_H;
     const x2 = to.x + DT_NODE_W / 2;
     const y2 = to.y;
-    return [{ x1, y1, x2, y2, ...(e.label ? { label: e.label } : {}) }];
+    const midY = (y1 + y2) / 2;
+    const t = 0.32;
+    const idx = outSeen.get(e.from) ?? 0;
+    outSeen.set(e.from, idx + 1);
+    const stagger = (idx - (outTotal.get(e.from)! - 1) / 2) * 12;
+    const lx = Math.max(14, Math.min(width - 14, at(t, x1, x1, x2, x2)));
+    const ly = at(t, y1, midY, midY, y2) + stagger;
+    return [{ x1, y1, x2, y2, ...(e.label ? { label: e.label } : {}), lx, ly }];
   });
-  const height = PADDING * 2 + (Math.max(...placed.map((n) => n.y), 0) + DT_NODE_H);
-  return { nodes: placed, edges, width, height };
+  const mainBottom = PADDING * 2 + (Math.max(...placed.map((n) => n.y), 0) + DT_NODE_H);
+  // P1-2 (CD-2): acknowledged unlinked nodes are no longer camouflaged in
+  // the root row — they render in a separate captioned band with a dashed
+  // border, visually distinct from connected option nodes.
+  const unlinked = enc.nodes
+    .filter((n) => !linked.has(n.id))
+    .map((n, i) => ({
+      id: n.id,
+      label: n.label,
+      kind: n.kind ?? "option",
+      x: PADDING + i * (DT_NODE_W + DT_GAP_X),
+      y: 0, // y assigned below once the band origin is known
+    }));
+  let height = mainBottom;
+  if (unlinked.length > 0) {
+    const bandY = mainBottom + 26;
+    for (const n of unlinked) n.y = bandY;
+    width = Math.max(width, PADDING + unlinked.length * (DT_NODE_W + DT_GAP_X));
+    height = bandY + DT_NODE_H + PADDING;
+  }
+  return { nodes: placed, edges, unlinked, entryId: entry.id, width, height };
 }
 
 /* ------------------------------------------------------------------ */
@@ -769,6 +816,7 @@ function RoadmapSvg({ spec, layout }: { spec: VisualizationSpec; layout: NonNull
 function DecisionTreeSvg({ spec, layout, specId }: { spec: VisualizationSpec; layout: NonNullable<ReturnType<typeof layoutDecisionTree>>; specId: string }) {
   if (spec.encoding.kind !== "decision-tree") return null;
   const byId = new Map(layout.nodes.map((n) => [n.id, n]));
+  const entry = byId.get(layout.entryId);
   return (
     <g role="img" aria-label={spec.title}>
       <defs>
@@ -783,7 +831,7 @@ function DecisionTreeSvg({ spec, layout, specId }: { spec: VisualizationSpec; la
           <g key={`e${i}`}>
             <path d={d} fill="none" stroke={VIZ_MUTED} strokeWidth={1.3} markerEnd={`url(#dt-arrow-${specId})`} />
             {edge.label && (
-              <text x={(edge.x1 + edge.x2) / 2} y={midY - 4} fontSize={10} fill={VIZ_MUTED} textAnchor="middle">
+              <text x={edge.lx} y={edge.ly - 4} fontSize={10} fill={VIZ_MUTED} textAnchor="middle">
                 {truncate(edge.label, 22)}
               </text>
             )}
@@ -796,6 +844,19 @@ function DecisionTreeSvg({ spec, layout, specId }: { spec: VisualizationSpec; la
         const lines = wrapLabel(n.label, 24, 2);
         return (
           <g key={n.id}>
+            {entry && n.id === layout.entryId && (
+              <text
+                x={n.x + DT_NODE_W / 2}
+                y={n.y - 6}
+                fontSize={9}
+                fill={VIZ_SERIES_COLORS[4]}
+                textAnchor="middle"
+                fontWeight={700}
+                letterSpacing={1.5}
+              >
+                START
+              </text>
+            )}
             <rect
               x={n.x}
               y={n.y}
@@ -822,6 +883,43 @@ function DecisionTreeSvg({ spec, layout, specId }: { spec: VisualizationSpec; la
           </g>
         );
       })}
+      {layout.unlinked.length > 0 && (
+        <g>
+          <text x={PADDING} y={layout.unlinked[0].y - 8} fontSize={10} fill={VIZ_MUTED} textAnchor="start" fontStyle="italic">
+            Unlinked — intentionally outside the decision flow
+          </text>
+          {layout.unlinked.map((n) => {
+            const lines = wrapLabel(n.label, 24, 2);
+            return (
+              <g key={n.id}>
+                <rect
+                  x={n.x}
+                  y={n.y}
+                  width={DT_NODE_W}
+                  height={DT_NODE_H}
+                  rx={9}
+                  fill="hsl(240 6% 10%)"
+                  stroke="hsl(240 6% 30%)"
+                  strokeWidth={1.1}
+                  strokeDasharray="4 3"
+                />
+                {lines.map((line, li) => (
+                  <text
+                    key={li}
+                    x={n.x + DT_NODE_W / 2}
+                    y={n.y + DT_NODE_H / 2 + 4 + (li - (lines.length - 1) / 2) * 13}
+                    fontSize={11}
+                    fill="hsl(0 0% 72%)"
+                    textAnchor="middle"
+                  >
+                    {line}
+                  </text>
+                ))}
+              </g>
+            );
+          })}
+        </g>
+      )}
     </g>
   );
 }

@@ -102,7 +102,7 @@ const cap = (s: unknown, max: number): string => (typeof s === "string" ? s.slic
  */
 export function normalizeConceptCandidate(
   raw: unknown,
-  opts: { targetKind?: VizSpecKind; id?: string; generatedAt?: string } = {},
+  opts: { targetKind?: VizSpecKind; id?: string; generatedAt?: string; allowedUrls?: string[] } = {},
 ): VisualizationSpec | null {
   if (typeof raw !== "object" || raw === null) return null;
   const obj = raw as Record<string, unknown>;
@@ -205,9 +205,29 @@ export function normalizeConceptCandidate(
         }))
         .filter((e) => nodeIds.has(e.from) && nodeIds.has(e.to))
         .slice(0, SPEC_LIMITS.maxFlowEdges);
+      // P1-1 (confirmed defect CD-7): node kinds must be EXPLICIT. Untyped
+      // nodes used to mean "decision" to the validator and "option" to the
+      // renderer; they are now inferred from the graph shape (recorded as a
+      // gap note), so validator, renderer and branch checks agree.
+      const outCount = new Map<string, number>();
+      for (const e of normEdges) outCount.set(e.from, (outCount.get(e.from) ?? 0) + 1);
+      let kindsInferred = false;
+      for (const n of normNodes) {
+        if (n.kind) continue;
+        kindsInferred = true;
+        const outs = outCount.get(n.id) ?? 0;
+        n.kind = outs >= 2 ? "decision" : outs === 0 ? "outcome" : "option";
+      }
       if (!normNodes.some((n) => n.kind === "decision")) {
-        // Default the first node to a decision when the model omitted kinds.
-        if (normNodes.length > 0) normNodes[0].kind = "decision";
+        // Fall back to the first node when the shape implies no decision.
+        if (normNodes.length > 0) {
+          normNodes[0].kind = "decision";
+          kindsInferred = true;
+        }
+      }
+      if (kindsInferred) {
+        base.gaps.push("Node kinds were inferred from the graph shape (the model did not declare them explicitly).");
+        base.gaps.splice(SPEC_LIMITS.maxGaps);
       }
       if (normNodes.length < 2 || normEdges.length < 1) return null;
       encoding = { kind: "decision-tree", nodes: normNodes, edges: normEdges };
@@ -286,9 +306,14 @@ export function normalizeConceptCandidate(
       return null;
   }
 
-  // Sources from the candidate: http(s) only — the schema validator
-  // re-checks everything below anyway.
-  const sources = (Array.isArray(obj.sources) ? obj.sources : [])
+  // Sources from the candidate: http(s) only, and — P0-4 (confirmed defect
+  // CD-6) — restricted to the ALLOWLIST of urls that were actually supplied
+  // in the prompt. A fabricated or carried-over url is dropped with a gap
+  // note instead of dressing the card in a plausible-looking citation.
+  const allowedSet = opts.allowedUrls
+    ? new Set(opts.allowedUrls.map((u) => u.trim().toLowerCase()).filter(Boolean))
+    : null;
+  const httpSources = (Array.isArray(obj.sources) ? obj.sources : [])
     .filter((s): s is Record<string, unknown> => typeof s === "object" && s !== null)
     .map((s) => ({
       url: cap(s.url, 2048),
@@ -296,8 +321,18 @@ export function normalizeConceptCandidate(
       ...(cap(s.retrievedAt, 64) ? { retrievedAt: cap(s.retrievedAt, 64) } : {}),
       ...(cap(s.dataTimestamp, 64) ? { dataTimestamp: cap(s.dataTimestamp, 64) } : {}),
     }))
-    .filter((s) => /^https?:\/\//i.test(s.url))
+    .filter((s) => /^https?:\/\//i.test(s.url));
+  const rejectedSources = allowedSet
+    ? httpSources.filter((s) => !allowedSet.has(s.url.trim().toLowerCase())).length
+    : 0;
+  const sources = (allowedSet ? httpSources.filter((s) => allowedSet.has(s.url.trim().toLowerCase())) : httpSources)
     .slice(0, SPEC_LIMITS.maxSources);
+  if (rejectedSources > 0) {
+    base.gaps.push(
+      `The model attached ${rejectedSources} source url(s) that were not supplied in the prompt — dropped (source allowlist enforced).`,
+    );
+    base.gaps.splice(SPEC_LIMITS.maxGaps);
+  }
 
   const candidate: VisualizationSpec = {
     ...base,
@@ -322,11 +357,12 @@ export type CandidateValidation = {
  */
 export function validateConceptCandidate(
   raw: unknown,
-  opts: { targetKind?: VizSpecKind; generatedAt?: string } = {},
+  opts: { targetKind?: VizSpecKind; generatedAt?: string; allowedUrls?: string[] } = {},
 ): CandidateValidation {
   const candidate = normalizeConceptCandidate(raw, {
     targetKind: opts.targetKind,
     generatedAt: opts.generatedAt,
+    ...(opts.allowedUrls ? { allowedUrls: opts.allowedUrls } : {}),
   });
   if (!candidate) {
     return { ok: false, errors: ["candidate could not be normalized into a supported conceptual kind"] };

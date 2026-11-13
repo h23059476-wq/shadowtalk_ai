@@ -27,6 +27,7 @@ import type {
   ResolverMessage,
   ShadowDataset,
 } from "./types";
+import { isReferentialRequest } from "./referential";
 
 /** Tools whose completed output counts as research evidence. */
 const RESEARCH_TOOLS = new Set(["deep_research", "web_search"]);
@@ -175,16 +176,25 @@ export function resolveResearchContext(
     }
   }
 
-  // Highest score first; when nothing matches at all, fall back to the
-  // newest research-data / research-tool message so "show me this visually"
-  // still works when the request carries no extra keywords.
+  // Highest score first. P0-3 (confirmed defect CD-4): the zero-candidate
+  // fallback used to inject the newest assistant message UNCONDITIONALLY —
+  // even plain text with zero keyword overlap (e.g. literature answers
+  // injected into a product-launch request). Research-artifact messages
+  // (research-data / research-tool / citations) are always candidates in
+  // the loop above, so a fallback candidate is plain text by construction;
+  // it is injected ONLY when the request is referential ("visualize this
+  // research", or no topic tokens at all) or the message carries research
+  // artifacts after all.
   candidates.sort((a, b) => b.score - a.score);
   if (candidates.length === 0) {
-    const fallback = messages
-      .filter((m) => m.type === "ai" && m.content.trim().length > 0)
-      .pop();
+    const aiMessages = messages.filter((m) => m.type === "ai" && m.content.trim().length > 0);
+    const fallback = aiMessages[aiMessages.length - 1];
     if (fallback) {
-      candidates.push({ message: fallback, priority: "text-match", score: 0 });
+      const carriesResearch =
+        (fallback.researchData?.length ?? 0) > 0 || (fallback.citations?.length ?? 0) > 0;
+      if (isReferentialRequest(request) || carriesResearch) {
+        candidates.push({ message: fallback, priority: "text-match", score: 0 });
+      }
     }
   }
 

@@ -181,6 +181,8 @@ async function generateConceptSpec(
 ): Promise<{ status: "ok"; spec: VisualizationSpec; notes: string[] } | { status: "failed"; reason: string }> {
   if (!input.model) return { status: "failed", reason: MODEL_UNAVAILABLE_TEXT };
   const now = input.now ?? new Date();
+  // P0-4: the model may attach ONLY the urls offered in the prompt.
+  const allowedUrls = sources.map((s) => s.url);
 
   const call = async (userPrompt: string): Promise<unknown | null> => {
     const res = await input.model!({
@@ -213,7 +215,7 @@ async function generateConceptSpec(
     return { status: "failed", reason: "The model did not return a usable JSON diagram. Nothing was rendered rather than guessing." };
   }
 
-  let validation = validateConceptCandidate(raw, { targetKind, generatedAt: now.toISOString() });
+  let validation = validateConceptCandidate(raw, { targetKind, generatedAt: now.toISOString(), allowedUrls });
   if (!validation.ok) {
     // One repair round with the exact validation errors.
     const repairPrompt = [
@@ -232,7 +234,7 @@ async function generateConceptSpec(
     if (raw === null) {
       return { status: "failed", reason: `The model's diagram failed validation (${validation.errors[0]}) and no valid repair followed. Nothing was rendered.` };
     }
-    validation = validateConceptCandidate(raw, { targetKind, generatedAt: now.toISOString() });
+    validation = validateConceptCandidate(raw, { targetKind, generatedAt: now.toISOString(), allowedUrls });
     if (!validation.ok) {
       return {
         status: "failed",
@@ -263,6 +265,12 @@ async function editConceptSpec(
     request: input.request,
   });
   const digestText = formatDigestForPrompt(buildContextDigest(context));
+  // P0-4: the model may attach only urls that were already legitimate for
+  // this diagram — the current spec's own sources plus resolved citations.
+  const allowedUrls = [
+    ...current.sources.map((s) => s.url),
+    ...context.citations.map((c) => c.url),
+  ];
 
   const call = async (userPrompt: string): Promise<unknown | null> => {
     const res = await input.model!({
@@ -294,6 +302,7 @@ async function editConceptSpec(
   let validation = validateConceptCandidate(raw, {
     ...(detectConceptRefineOp(instruction)?.targetKind ? { targetKind: detectConceptRefineOp(instruction)!.targetKind! } : { targetKind }),
     generatedAt: now.toISOString(),
+    allowedUrls,
   });
   if (!validation.ok) {
     const repairPrompt = [
@@ -313,6 +322,7 @@ async function editConceptSpec(
     validation = validateConceptCandidate(raw, {
       ...(detectConceptRefineOp(instruction)?.targetKind ? { targetKind: detectConceptRefineOp(instruction)!.targetKind! } : { targetKind }),
       generatedAt: now.toISOString(),
+      allowedUrls,
     });
     if (!validation.ok) {
       return { status: "failed", reason: `The edited diagram still failed validation after one repair round (${validation.errors[0]}). The original diagram is unchanged.` };
@@ -389,18 +399,36 @@ export function pruneConceptSpec(spec: VisualizationSpec): VisualizationSpec | n
       if (!adjacency.has(e.from)) adjacency.set(e.from, []);
       adjacency.get(e.from)!.push(e.to);
     }
-    // BFS from the first decision, keep at most 9 nodes.
-    const kept = new Set<string>([firstDecision.id]);
-    const queue = [firstDecision.id];
-    while (queue.length > 0 && kept.size < 9) {
-      const id = queue.shift()!;
-      for (const next of adjacency.get(id) ?? []) {
-        if (!kept.has(next) && byId.has(next) && kept.size < 9) {
-          kept.add(next);
-          queue.push(next);
+    // P0-1 compat: BFS keeps only COMPLETE levels, and the kept prefix must
+    // end on a decision-free level — otherwise truncation would leave a
+    // decision with fewer than two branches, which the validation gate
+    // (correctly) rejects.
+    const levelOf = new Map<string, number>([[firstDecision.id, 0]]);
+    const order: string[][] = [[firstDecision.id]];
+    let queue = [firstDecision.id];
+    while (queue.length > 0) {
+      const next: string[] = [];
+      for (const id of queue) {
+        for (const child of adjacency.get(id) ?? []) {
+          if (!levelOf.has(child) && byId.has(child)) {
+            levelOf.set(child, order.length);
+            next.push(child);
+          }
         }
       }
+      if (next.length > 0) order.push(next);
+      queue = next;
     }
+    let best = -1;
+    let cumulative = 0;
+    for (let l = 0; l < order.length; l++) {
+      cumulative += order[l].length;
+      if (cumulative > 9) break;
+      const endsWithDecision = order[l].some((id) => byId.get(id)?.kind === "decision");
+      if (!endsWithDecision) best = l;
+    }
+    if (best < 0) return null;
+    const kept = new Set<string>(order.slice(0, best + 1).flat());
     const nodes = enc.nodes.filter((n) => kept.has(n.id));
     const edges = enc.edges.filter((e) => kept.has(e.from) && kept.has(e.to));
     if (nodes.length < 2 || edges.length < 1) return null;
@@ -461,11 +489,11 @@ async function conceptualCreateFlow(input: ConceptualPipelineInput): Promise<Vis
 
   // 1. Resolve the research context (Batch 1) — never re-research blindly.
   const context = resolveResearchContext({ messages: input.messages as ResolverMessage[], request });
-  const digest = buildContextDigest(context);
   const researchAvailable = Boolean(input.research);
 
   // 2. Gap-driven research: classify what the context can ground.
   const assessment = assessGaps(context, request, researchAvailable);
+  const digest = buildContextDigest(context, assessment);
 
   // 3. Deterministic derivation first — structured research data beats
   //    model synthesis (no fabrication risk at all).
@@ -522,6 +550,20 @@ async function conceptualCreateFlow(input: ConceptualPipelineInput): Promise<Vis
   const generation = await generateConceptSpec(input, targetKind, formatDigestForPrompt(mergedDigest), sources);
   if (generation.status === "failed") {
     return textMessage(generation.reason);
+  }
+
+  // P1-3 (CD-3/CD-4 traceability): record WHICH conversation evidence
+  // grounded this diagram so the card is inspectable without a session
+  // export — verdict, topic overlap and evidence message ids travel with
+  // the spec's gaps.
+  if (digest.evidenceMessageIds.length > 0) {
+    flowGaps.push(
+      `Grounded in conversation message(s) ${digest.evidenceMessageIds.slice(0, 3).join(", ")} (context verdict: ${assessment.verdict}; topic overlap: ${
+        assessment.topicOverlap ? "yes" : assessment.referential ? "referential request" : "no"
+      }).`,
+    );
+  } else if (assessment.verdict === "needs-research") {
+    flowGaps.push("Grounded in freshly retrieved research only — no conversation evidence was used.");
   }
 
   const finalized = finalizeConceptProvenance(generation.spec, [...flowGaps, ...mergedContext.gaps]);
