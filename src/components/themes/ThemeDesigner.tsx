@@ -160,7 +160,7 @@ function TripletInput({
       onBlur={commit}
       onKeyDown={(e) => e.key === "Enter" && commit()}
       className={cn(
-        "h-8 w-24 rounded-md border bg-transparent px-2 font-mono text-[11px]",
+        "h-8 w-28 rounded-md border bg-transparent px-2 font-mono text-[11px]",
         invalid ? "border-destructive" : "border-input",
       )}
     />

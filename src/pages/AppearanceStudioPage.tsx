@@ -236,12 +236,17 @@ export default function AppearanceStudioPage() {
 
   return (
     <PageTransition>
-      <div className="mx-auto min-h-screen w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8" data-testid="appearance-studio">
+      <div
+        className="mx-auto min-h-screen w-full max-w-7xl px-4 pt-24 pb-8 sm:px-6 md:pt-8 lg:px-8"
+        data-testid="appearance-studio"
+      >
         {/* ---------- Header ---------- */}
         <header className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="mb-2 flex flex-wrap items-center gap-2">
-              <h1 className="gradient-text text-3xl font-bold tracking-tight sm:text-4xl">Appearance Studio</h1>
+              <h1 className="gradient-text text-3xl font-bold tracking-tight sm:text-4xl" data-appearance-title>
+                Appearance Studio
+              </h1>
               <span
                 className="flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] text-muted-foreground"
                 data-testid="sync-state"

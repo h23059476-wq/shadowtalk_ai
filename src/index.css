@@ -127,6 +127,15 @@
     background: hsl(240 20% 98% / 0.85);
     border: 1px solid hsl(220 14% 78% / 0.6);
   }
+
+  /* Appearance Studio title — perf-low devices strip gradient backgrounds
+     (background-image: none), which would leave gradient-text invisible.
+     Scope a solid readable fallback to the studio heading only. */
+  html.perf-low [data-appearance-title] {
+    background-image: none;
+    color: hsl(var(--primary));
+    -webkit-text-fill-color: currentColor;
+  }
 }
 
 @layer base {
