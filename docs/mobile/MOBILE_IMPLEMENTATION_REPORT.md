@@ -4,7 +4,7 @@ Branch: `feature/mobile-responsive-redesign` (based on `main` @ `809792b2`) · D
 
 ## 1. Executive summary
 
-The application already had a solid mobile foundation (mobile nav drawer, dual chat header, keyboard/viewport tracking, safe-area utilities, PWA). This initiative **extended that system** rather than introducing a second one, closing the 15 audited gaps (G1–G15) with 12 source files touched, 2 reusable capture scripts, 5 new regression tests and 16 verification screenshots.
+The application already had a solid mobile foundation (mobile nav drawer, dual chat header, keyboard/viewport tracking, safe-area utilities, PWA). This initiative **extended that system** rather than introducing a second one, closing the 15 audited gaps (G1–G15) with 15 source files touched, 6 new tests, 2 reusable capture scripts and 16 verification screenshots.
 
 Result: every route is usable at 320px with **zero horizontal overflow across 124 route/width combinations**, the `/chatbot` workspace is fully operable on a phone, and desktop layouts are unchanged (verified at 1024/1280/1440).
 
@@ -20,11 +20,13 @@ Result: every route is usable at 320px with **zero horizontal overflow across 12
 | `src/pages/ChatbotPage.tsx` | Removed double keyboard compensation on the composer dock (CSS `--kbd` lift only; hero capsule keeps inline padding) |
 | `src/components/visualization/ConceptualDiagramRenderer.tsx` | **Two-finger pinch-zoom** via Pointer Events, pan preserved, pointercancel cleanup, 36px zoom controls, touch-first copy |
 | `src/components/visualization/VisualizationContainer.tsx` | Expand dialog: full-screen on mobile (100dvh + safe-area), large modal on desktop |
+| `src/components/chat/ChatInput.tsx` | Mobile-aware composer placeholder (long sentence wrapped to a clipped second line at phone widths) |
+| `src/pages/dev/VizDemoPage.tsx` | Demo decision-tree fixture updated to the P0-1 graph contract (acknowledged "unlinked" side-note — also showcases the dashed Unlinked band + START cue) |
 | `src/pages/AuthPage.tsx` | OAuth buttons stack below 475px |
 | `src/pages/AppearanceStudioPage.tsx` | Search input min-width removed (320–360px overflow) |
 | `src/components/Footer.tsx` | Trust badges no longer hidden on mobile |
 
-New files: `src/components/chat/__tests__/mobileResponsive.test.tsx` (5 tests), `scripts/mobile/capture_mobile.cjs`, `scripts/mobile/capture_viz_mobile.cjs`, `docs/mobile/*` (4 documents).
+New files: `src/components/chat/__tests__/mobileResponsive.test.tsx` (5 tests), `src/pages/__tests__/vizDemoPage.test.tsx` (gate-drift guard for the demo fixtures), `scripts/mobile/capture_mobile.cjs`, `scripts/mobile/capture_viz_mobile.cjs`, `docs/mobile/*` (4 documents).
 
 ## 3. Phase-2 requirements — how each was met
 

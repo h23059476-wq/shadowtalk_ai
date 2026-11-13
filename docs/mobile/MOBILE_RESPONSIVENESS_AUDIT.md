@@ -28,7 +28,7 @@ Already in place (do NOT recreate):
 | G1 | `ChatToolbar` is desktop-only (`hidden md:flex`): encryption toggle, Live Voice, Clear chat, Delete all unreachable on mobile | `ChatToolbar.tsx:65` | High |
 | G2 | No pinch-zoom in diagrams; viewport `touch-none` (blocks native pinch), wheel-zoom gated on ctrl/meta only; zoom buttons 24px (< 44px target) | `ConceptualDiagramRenderer.tsx:524–660` | High |
 | G3 | Viz expand dialog `max-h-[85vh] max-w-2xl` with fixed `height={420}` spec — not full-screen on mobile, small canvas | `VisualizationContainer.tsx:284,300` | High |
-| G4 | Markdown tables render without horizontal-scroll wrapper + prose container `overflow-hidden` → clipped tables on phones | `MessageBubble.tsx:286,390–398` | High |
+| G4 | Markdown tables render without horizontal-scroll wrapper + prose container `overflow-hidden` → clipped tables on phones | `MessageBubble.tsx:286,390–398` | High (downgraded on verify: tables already scroll — padding polish only) |
 | G5 | Message actions (edit/regenerate) are hover-only (`opacity-0 group-hover:opacity-100`) — invisible on touch | `MessageBubble.tsx:530` | High |
 | G6 | Floating voice FAB `fixed bottom-24 right-4` overlaps composer; stays when keyboard opens | `ChatbotPage.tsx:2692–2699` | Medium |
 | G7 | Double keyboard compensation: dock gets BOTH `--kbd` CSS transform AND `useIosKeyboard` inline padding | `index.css:1156–1165` + `ChatbotPage.tsx:249–251,2631` | Medium |

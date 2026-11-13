@@ -23,6 +23,7 @@ import type { SlashCommand } from "@/lib/slashCommands";
 import { usePromptAutocomplete } from "@/hooks/usePromptAutocomplete";
 import { buildInAppSharePayload, getViralShareLinks } from "@/lib/viralShare";
 import { ViralShareButton } from "@/components/chat/ViralShareButton";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ChatInputProps {
   message: string;
@@ -85,6 +86,7 @@ const ChatInputInner = ({
 }: ChatInputProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [slashMenuOpen, setSlashMenuOpen] = useState(false);
+  const isNarrow = useIsMobile();
 
   // Show the slash menu when the input starts with '/'
   useEffect(() => {
@@ -241,7 +243,7 @@ const ChatInputInner = ({
                 value={message}
                 onChange={(e) => onMessageChange(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder={isListening ? "Listening..." : "Message ShadowTalk, draft a document, or generate code..."}
+                placeholder={isListening ? "Listening..." : isNarrow ? "Message ShadowTalk…" : "Message ShadowTalk, draft a document, or generate code..."}
                 className="w-full resize-none border-0 bg-transparent p-0 text-base sm:text-[15px] text-foreground placeholder:text-muted-foreground/50 leading-relaxed focus-visible:ring-0 focus-visible:ring-offset-0 custom-scrollbar min-h-[44px] max-h-[220px]"
                 disabled={isLoading}
                 rows={1}
@@ -443,7 +445,11 @@ const ChatInputInner = ({
                   : isShadowPulse
                     ? "Ask anything..."
                     : isComposer
-                      ? "Ask ShadowTalk"
+                      ? // Short placeholder on phones — the full sentence wraps to a
+                        // second line that a fixed-height textarea would clip.
+                        isNarrow
+                          ? "Message ShadowTalk…"
+                          : "Message ShadowTalk, draft a document, or generate code..."
                       : "Type, talk, or share..."
               }
               className={
