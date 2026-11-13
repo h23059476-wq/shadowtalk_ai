@@ -175,7 +175,7 @@ export interface ListDocumentsOptions {
 /** List a user's documents, optionally scoped to one project. */
 export async function listDocuments(userId: string, opts: ListDocumentsOptions = {}): Promise<RagDocumentRecord[]> {
   const db = await getDb();
-  const all = (await req(db.transaction("documents").index("user_id").getAll(userId))) as RagDocumentRecord[];
+  const all = (await req(db.transaction("documents").objectStore("documents").index("user_id").getAll(userId))) as RagDocumentRecord[];
   if (opts.projectId === undefined) return all;
   return all.filter((d) => d.project_id === opts.projectId);
 }
@@ -193,7 +193,7 @@ export interface GetChunksOptions {
  */
 export async function getChunks(userId: string, opts: GetChunksOptions = {}): Promise<RagChunkRecord[]> {
   const db = await getDb();
-  const all = (await req(db.transaction("chunks").index("user_id").getAll(userId))) as RagChunkRecord[];
+  const all = (await req(db.transaction("chunks").objectStore("chunks").index("user_id").getAll(userId))) as RagChunkRecord[];
   let scoped = all;
   if (opts.projectId !== undefined) {
     scoped = scoped.filter((c) => c.project_id === opts.projectId);
