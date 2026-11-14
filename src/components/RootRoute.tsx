@@ -7,8 +7,10 @@ import { recordLandingView } from "@/lib/growth/funnelEvents";
 import { useEffect } from "react";
 
 /**
- * Root route. First-time anonymous visitors see the marketing home at `/`.
- * Signed-in users and anyone who has chatted before go straight to `/chatbot`.
+ * Root route. Anonymous visitors (first-time and returning) see the marketing
+ * home at `/`; signed-in users go straight to `/chatbot`. The landing-skip for
+ * return visitors is currently disabled — `shouldSkipLandingForReturnVisitor`
+ * always returns false (see src/lib/growth/firstVisit.ts).
  */
 export default function RootRoute() {
   const { loading, user } = useAuth();
@@ -18,7 +20,7 @@ export default function RootRoute() {
   }, [loading]);
 
   if (loading) return <PageLoader />;
-  // Anonymous users go straight to chat; real users too.
+  // Signed-in users skip marketing entirely.
   if (user) return <Navigate to="/chatbot" replace />;
   if (shouldSkipLandingForReturnVisitor()) return <Navigate to="/chatbot" replace />;
   return <Index />;
