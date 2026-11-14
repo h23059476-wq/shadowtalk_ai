@@ -21,39 +21,16 @@ const Footer = () => {
         { name: "Chatbot", href: "/chatbot" },
         { name: "Changelog", href: "/changelog" },
         { name: "Download desktop", href: "/downloads" },
-        { name: "Knowledge Graph", href: "/knowledge-graph" },
       ],
     },
     {
       title: "Support",
       links: [
-        { name: "Help Center", href: "/help" },
+        { name: "Docs", href: "/docs" },
         { name: "FAQ", href: "/faq" },
         { name: "Contact", href: "/contact" },
         { name: "Status", href: "/status" },
         { name: "Security", href: "/security" },
-        { name: "Docs", href: "/docs" },
-      ],
-    },
-    {
-      title: "Use Cases",
-      links: [
-        { name: "Anonymous AI", href: "/anonymous-ai" },
-        { name: "AI Strategy Consultant", href: "/ai-strategy-consultant" },
-        { name: "AI Business Planner", href: "/ai-business-planner" },
-        { name: "Multilingual AI", href: "/multilingual-ai" },
-        { name: "Best AI non-English", href: "/best-ai-non-english" },
-        { name: "AI Translator Chat", href: "/ai-translation-chat" },
-        { name: "20+ Languages", href: "/support/20-languages" },
-      ],
-    },
-    {
-      title: "Learn",
-      links: [
-        { name: "Google SEO Hub", href: "/google-seo" },
-        { name: "Case Studies", href: "/case-studies" },
-        { name: "Blog", href: "/blog" },
-        { name: "Discover", href: "/discover" },
       ],
     },
     {
@@ -61,9 +38,7 @@ const Footer = () => {
       links: [
         { name: "About", href: "/about" },
         { name: "Founder (Zain Ahmed)", href: "/founder" },
-        { name: "Co-Founder (Fatima)", href: "/fatima" },
-        { name: "Press", href: "/press" },
-        { name: "Founder Access", href: "/founder-access" },
+        { name: "Benchmarks", href: "/benchmarks" },
       ],
     },
     {
@@ -93,7 +68,7 @@ const Footer = () => {
       />
 
       <div className="container mx-auto px-4 py-12 sm:py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-8 sm:gap-10 mb-12 sm:mb-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 sm:gap-10 mb-12 sm:mb-14">
           <LandingAnimate preset="slideLeft" className="lg:col-span-2">
             <div className="flex items-center space-x-2.5 mb-5 sm:mb-6">
               <div className="relative">

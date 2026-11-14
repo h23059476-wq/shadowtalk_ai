@@ -59,6 +59,6 @@ export const LANDING_PRODUCT_LINKS: LandingProductLink[] = [
 export const LANDING_MORE_LINKS: LandingNavLink[] = [
   { label: "About", href: "/about" },
   { label: "Docs", href: "/docs" },
-  { label: "Blog", href: "/blog" },
+  { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];

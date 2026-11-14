@@ -51,18 +51,11 @@ export const FOUNDER_CANONICAL = {
   instagramHandle: "@shadowtalk_ai",
   email: "shadowtalk@shadowtalk-ai.com",
   github: "https://github.com/zain836/shadowtalk-ai-903ca615",
-  /** Primary entity URL — full unique name slug (easier to rank #1 on Google) */
-  canonicalProfileUrl: "https://www.shadowtalk-ai.com/zain-ahmed-fahad-patel.html",
+  /** Primary entity URL — the in-app founder page */
+  canonicalProfileUrl: "https://www.shadowtalk-ai.com/founder",
   profilePages: [
-    "https://www.shadowtalk-ai.com/zain-ahmed-fahad-patel",
-    "https://www.shadowtalk-ai.com/zain-ahmed-fahad-patel.html",
-    "https://www.shadowtalk-ai.com/zain-ahmed",
-    "https://www.shadowtalk-ai.com/zain-ahmed.html",
-    "https://www.shadowtalk-ai.com/founder-zain-ahmed.html",
+    "https://www.shadowtalk-ai.com/founder",
     "https://www.shadowtalk-ai.com/about",
-    "https://www.shadowtalk-ai.com/facts",
-    "https://www.shadowtalk-ai.com/facts.html",
-    "https://www.shadowtalk-ai.com/answers",
   ],
   knowsAbout: [
     "Artificial Intelligence",

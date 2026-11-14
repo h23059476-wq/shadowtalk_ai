@@ -1,6 +1,0 @@
-{
-  "template_name": "ShadowTalk Code Output Template",
-  "description": "Minimal React snippet showing how to embed a CTA back into a community post.",
-  "snippet": "(<a className='cta' href='https://www.shadowtalk-ai.com/chatbot?utm_source=community&utm_medium=code-snippet&utm_campaign=product_led'>Try ShadowTalk free</a>)",
-  "cta_url": "https://www.shadowtalk-ai.com/chatbot?utm_source=shareable&utm_medium=code-snippet&utm_campaign=product_led"
-}

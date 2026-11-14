@@ -14,7 +14,6 @@ import {
 } from "@/lib/seo";
 import LandingPageShell from "@/components/landing/LandingPageShell";
 import { PlatformMetricsProvider } from "@/contexts/PlatformMetricsContext";
-import { COMPARISON_PAGES } from "@/lib/comparisonPages";
 import { ChevronDown, ChevronUp, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -53,19 +52,26 @@ const Index = () => {
       description: PAGE_SEO.home.description,
       url: PAGE_SEO.home.canonical || "https://www.shadowtalk-ai.com/home",
       about: [
-        "Professional Intelligence Suite",
-        "Strategy Agent",
-        "Neural Memory",
-        "E2EE Privacy",
-        "Document Studio",
-        "Presentation Builder",
+        "Agentic AI workspace",
+        "Encrypted multi-model chat",
+        "Deep Research with citations",
+        "ProofLoop verified missions",
+        "ShadowTalk Live voice",
+        "BYOK privacy",
       ],
     }),
     getItemListSchema(
-      COMPARISON_PAGES.map((page) => ({
-        name: page.title,
-        url: page.canonical,
-        description: page.description,
+      [
+        PAGE_SEO.chatbot,
+        PAGE_SEO.pricing,
+        PAGE_SEO.docs,
+        PAGE_SEO.proofloop,
+        PAGE_SEO.themes,
+        PAGE_SEO.faq,
+      ].map((meta) => ({
+        name: meta.title,
+        url: meta.canonical!,
+        description: meta.description,
       })),
     ),
     ...getFounderHomeStructuredData(),

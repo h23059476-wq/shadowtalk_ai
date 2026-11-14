@@ -1,9 +1,0 @@
-{
-  "template_name": "Meme Prompt Bundle",
-  "description": "Fun prompts generating marketing memes inside ShadowTalk.",
-  "prompts": [
-    "Make a meme: using 5 AI tools vs one ShadowTalk workspace.",
-    "Meme concept: privacy-first AI in Pakistan vs random chatbots everywhere."
-  ],
-  "cta_url": "https://www.shadowtalk-ai.com/chatbot?utm_source=shareable&utm_medium=meme-prompts&utm_campaign=product_led"
-}
