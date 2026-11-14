@@ -60,7 +60,7 @@ export const ProviderSelector = ({
           size="sm"
           className={
             variant === 'chip'
-              ? 'gap-1 h-8 px-2.5 rounded-full border border-[#2a3548] bg-[#0d121c] text-[11px] font-medium text-muted-foreground hover:text-foreground hover:bg-[#1a2233] focus-visible:ring-0'
+              ? 'gap-1 h-8 px-2.5 rounded-full border border-border bg-popover text-[11px] font-medium text-muted-foreground hover:text-foreground hover:bg-accent focus-visible:ring-0'
               : variant === 'inline'
                 ? 'gap-1.5 h-9 px-2.5 rounded-full bg-transparent hover:bg-muted/20 text-sm font-medium text-muted-foreground hover:text-foreground focus-visible:ring-0'
                 : 'gap-1 h-9 px-2 bg-transparent hover:bg-muted/15 border-none shadow-none text-base md:text-[17px] font-semibold text-foreground/80 hover:text-foreground focus-visible:ring-0 focus-visible:ring-offset-0 rounded-xl'
@@ -77,7 +77,7 @@ export const ProviderSelector = ({
           </Badge>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="w-72 p-1.5 bg-[#1e1f20]/95 backdrop-blur-2xl border border-border/10 rounded-2xl shadow-2xl">
+      <DropdownMenuContent align="start" className="w-72 p-1.5 bg-card/95 backdrop-blur-2xl border border-border/10 rounded-2xl shadow-2xl">
         {PROVIDERS.map(p => {
           const Icon = p.icon;
           const isCurrent = p.id === provider;

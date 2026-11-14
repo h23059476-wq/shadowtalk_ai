@@ -160,13 +160,13 @@ function ChatEmptyStateInner({
                     settingsHapticTick();
                     if (onExecuteDemo) onExecuteDemo(item.prompt);
                   }}
-                  className="flex items-center space-x-3 p-3 rounded-2xl bg-[#1e1e20]/60 hover:bg-[#212124] border border-[#2b2c31]/80 hover:border-[#383a42] transition-all text-left group"
+                  className="flex items-center space-x-3 p-3 rounded-2xl bg-card/60 hover:bg-muted border border-border/80 hover:border-border transition-all text-left group"
                 >
                   <div className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 ${item.iconBg}`}>
                     <Icon className="w-3.5 h-3.5" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-medium text-slate-200 group-hover:text-white truncate">{item.title}</p>
+                    <p className="text-xs font-medium text-foreground group-hover:text-white truncate">{item.title}</p>
                     <p className="text-[11px] text-slate-400 truncate">{item.subtitle}</p>
                   </div>
                 </button>
@@ -185,13 +185,13 @@ function ChatEmptyStateInner({
                     settingsHapticTick();
                     onSelectPrompt(item.prompt);
                   }}
-                  className="flex items-center space-x-3 p-3 rounded-2xl bg-[#1e1e20]/60 hover:bg-[#212124] border border-[#2b2c31]/80 hover:border-[#383a42] transition-all text-left group"
+                  className="flex items-center space-x-3 p-3 rounded-2xl bg-card/60 hover:bg-muted border border-border/80 hover:border-border transition-all text-left group"
                 >
                   <div className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 ${item.iconBg}`}>
                     <Icon className="w-3.5 h-3.5" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-medium text-slate-200 group-hover:text-white truncate">{item.title}</p>
+                    <p className="text-xs font-medium text-foreground group-hover:text-white truncate">{item.title}</p>
                     <p className="text-[11px] text-slate-400 truncate">{item.subtitle}</p>
                   </div>
                 </button>

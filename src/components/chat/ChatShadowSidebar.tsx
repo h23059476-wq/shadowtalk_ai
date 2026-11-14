@@ -91,10 +91,10 @@ function ChatShadowSidebarInner({
         animate={{ width }}
         transition={{ duration: 0.28, ease: SIDEBAR_EASE }}
         className={cn(
-          "shrink-0 flex flex-col relative z-30 overflow-hidden select-none will-change-[width] bg-[#171717] text-slate-200",
+          "shrink-0 flex flex-col relative z-30 overflow-hidden select-none will-change-[width] bg-sidebar-background text-foreground",
           mobileDrawer
             ? "flex h-full min-h-0"
-            : "hidden md:flex h-full min-h-0 border-r border-[#26262b]"
+            : "hidden md:flex h-full min-h-0 border-r border-sidebar-border"
         )}
       >
         {/* Top Header: Brand & Collapse */}
@@ -113,7 +113,7 @@ function ChatShadowSidebarInner({
             <div className="w-6 h-6 shrink-0 rounded-lg bg-gradient-to-tr from-sky-400 to-indigo-600 flex items-center justify-center text-white font-semibold text-xs shadow-sm">
               S
             </div>
-            <span className="font-semibold text-sm tracking-tight text-white">ShadowTalk</span>
+            <span className="font-semibold text-sm tracking-tight text-foreground">ShadowTalk</span>
             <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">
               PRO
             </span>
@@ -128,7 +128,7 @@ function ChatShadowSidebarInner({
                     settingsHapticTick();
                     onToggleCollapse();
                   }}
-                  className="p-1.5 shrink-0 text-slate-400 hover:text-white rounded-lg hover:bg-white/[0.06] transition-colors"
+                  className="p-1.5 shrink-0 text-slate-400 hover:text-foreground rounded-lg hover:bg-white/[0.06] transition-colors"
                   aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
                 >
                   <PanelLeft className="w-4 h-4" />
@@ -156,12 +156,12 @@ function ChatShadowSidebarInner({
                 whileTap={{ scale: 0.98 }}
                 className={cn(
                   "group flex items-center rounded-xl h-9 mx-auto transition-all",
-                  "bg-white/[0.05] hover:bg-white/[0.09] border border-white/5 text-slate-200 hover:text-white",
+                  "bg-white/[0.05] hover:bg-white/[0.09] border border-white/5 text-foreground hover:text-foreground",
                   isCollapsed ? "justify-center px-0" : "justify-between px-3"
                 )}
               >
                 <div className="flex items-center space-x-2 min-w-0">
-                  <svg className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-slate-400 group-hover:text-foreground transition-colors shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path d="M12 4v16m8-8H4" />
                   </svg>
                   <motion.span
@@ -229,8 +229,8 @@ function ChatShadowSidebarInner({
                           className={cn(
                             "relative w-full flex items-center space-x-2.5 rounded-lg px-2.5 py-2 text-left transition-colors duration-150 group overflow-hidden",
                             isActive
-                              ? "bg-white/[0.08] text-white font-medium"
-                              : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]"
+                              ? "bg-white/[0.08] text-foreground font-medium"
+                              : "text-slate-400 hover:text-foreground hover:bg-white/[0.04]"
                           )}
                         >
                           <MessageSquare
@@ -249,7 +249,7 @@ function ChatShadowSidebarInner({
                           >
                             <button
                               type="button"
-                              className="p-1 rounded-md hover:bg-white/10 text-slate-400 hover:text-slate-200 transition-colors"
+                              className="p-1 rounded-md hover:bg-white/10 text-slate-400 hover:text-foreground transition-colors"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 onArchive?.(conv.id);
@@ -281,7 +281,7 @@ function ChatShadowSidebarInner({
         </ScrollArea>
 
         {/* Bottom User Profile Card */}
-        <div className="p-3 shrink-0 border-t border-[#26262b] bg-[#171717] overflow-hidden">
+        <div className="p-3 shrink-0 border-t border-sidebar-border bg-sidebar-background overflow-hidden">
           <div
             className={cn(
               "w-full flex items-center justify-between text-left group",
@@ -302,7 +302,7 @@ function ChatShadowSidebarInner({
                     isCollapsed ? "px-0" : "flex-1 min-w-0"
                   )}
                 >
-                  <div className="w-8 h-8 shrink-0 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-600 flex items-center justify-center text-white font-medium text-xs shadow-sm">
+                  <div className="w-8 h-8 shrink-0 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-600 flex items-center justify-center text-foreground font-medium text-xs shadow-sm">
                     {userInitials || "U"}
                   </div>
                   <motion.div
@@ -313,7 +313,7 @@ function ChatShadowSidebarInner({
                     transition={{ duration: 0.18, ease: SIDEBAR_EASE }}
                     className="flex flex-col min-w-0 text-left whitespace-nowrap overflow-hidden"
                   >
-                    <span className="text-xs font-medium text-slate-200 group-hover:text-white truncate">{formattedName}</span>
+                    <span className="text-xs font-medium text-foreground group-hover:text-foreground truncate">{formattedName}</span>
                     <span className="text-[11px] text-slate-400 truncate">{planLabel}</span>
                   </motion.div>
                 </button>
@@ -331,7 +331,7 @@ function ChatShadowSidebarInner({
                       if (onOpenSettings) onOpenSettings();
                       else navigate("/settings");
                     }}
-                    className="p-1 shrink-0 text-slate-400 group-hover:text-slate-200 hover:text-white transition-colors rounded-lg"
+                    className="p-1 shrink-0 text-slate-400 group-hover:text-foreground hover:text-foreground transition-colors rounded-lg"
                     aria-label="Settings"
                   >
                     <Settings className="w-4 h-4" />

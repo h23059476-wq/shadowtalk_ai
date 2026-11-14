@@ -2782,7 +2782,7 @@ Structure and Content Guidelines:
 
 
   return (
-    <div className="shadowtalk-chat-shell chat-flat-shell settings-scroll-smooth flex h-full min-h-0 flex-col overflow-hidden bg-[#131314] text-slate-200">
+    <div className="shadowtalk-chat-shell chat-flat-shell settings-scroll-smooth flex h-full min-h-0 flex-col overflow-hidden bg-background text-foreground">
       <SEOHead meta={PAGE_SEO.chatbot} structuredData={[getChatbotFAQSchema(), getSpeakableSchema(["h1", "[data-speakable]"]), getWebSiteWithSearchSchema()]} />
       <motion.div
         className="shadowtalk-chat-main flex w-full min-h-0 flex-1 relative overflow-hidden"

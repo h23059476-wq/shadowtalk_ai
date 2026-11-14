@@ -389,7 +389,7 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
                   },
                   table({ children }) { 
                     return (
-                      <div className="overflow-x-auto my-6 rounded-2xl border border-border/10 shadow-md bg-[#1e1f20]/20">
+                      <div className="overflow-x-auto my-6 rounded-2xl border border-border/10 shadow-md bg-card/20">
                         <table className="min-w-full divide-y divide-border/10">{children}</table>
                       </div>
                     ); 

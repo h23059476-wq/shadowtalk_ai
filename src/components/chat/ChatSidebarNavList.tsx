@@ -38,7 +38,7 @@ function NavRow({
         collapsed ? "justify-center w-10 mx-auto px-0" : "space-x-2.5 px-2.5 w-full",
         active
           ? "bg-white/[0.08] text-white font-medium"
-          : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]",
+          : "text-slate-400 hover:text-foreground hover:bg-white/[0.04]",
       )}
       whileTap={{ scale: 0.97 }}
       transition={spring}
@@ -46,7 +46,7 @@ function NavRow({
       <Icon
         className={cn(
           "relative z-10 h-4 w-4 shrink-0",
-          active ? "text-sky-400" : "text-slate-400 group-hover:text-slate-300",
+          active ? "text-sky-400" : "text-slate-400 group-hover:text-foreground/80",
         )}
       />
       <motion.span
