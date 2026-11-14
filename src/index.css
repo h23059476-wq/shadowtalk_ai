@@ -895,7 +895,7 @@
   /* Clean chat shell — Gemini / ChatGPT–style flat dark workspace */
   .gemini-chat-shell,
   .chat-clean-shell {
-    background: hsl(0 0% 7%);
+    background: hsl(var(--background));
     position: relative;
   }
 
@@ -1220,7 +1220,7 @@
 
   /* Flat Gemini/ChatGPT-style canvas for the chat workspace (no ambient glow) */
   .chat-flat-shell {
-    background: #131314 !important;
+    background: hsl(var(--background)) !important;
   }
   .chat-flat-shell::before {
     display: none;
@@ -1231,7 +1231,7 @@
 
   /* Gradient greeting headline (sky → violet → pink) */
   .gemini-gradient {
-    background: linear-gradient(135deg, #7aa2f7 0%, #c084fc 45%, #f472b6 90%);
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 45%, hsl(var(--accent)) 90%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;

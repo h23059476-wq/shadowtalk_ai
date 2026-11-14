@@ -655,7 +655,7 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="st-live fixed inset-0 z-[100] flex flex-col overflow-hidden bg-[#050b18] text-[#e4e8f7] font-body antialiased select-none"
+          className="st-live fixed inset-0 z-[100] flex flex-col overflow-hidden bg-background text-foreground font-body antialiased select-none"
         >
           {/* Celestial Deep Cobalt & Nebula Indigo Ambient Background Lighting */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
@@ -703,7 +703,7 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="absolute right-0 top-full mt-2 w-72 overflow-hidden rounded-xl border border-blue-500/25 bg-[#070e20]/95 backdrop-blur-2xl shadow-[0_0_40px_rgba(31,107,242,0.25)] z-50"
+                    className="absolute right-0 top-full mt-2 w-72 overflow-hidden rounded-xl border border-blue-500/25 bg-card/95 backdrop-blur-2xl shadow-[0_0_40px_rgba(31,107,242,0.25)] z-50"
                   >
                     <div className="p-4 space-y-3">
                       <div>
@@ -752,7 +752,7 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
               >
                 <span className="material-symbols-outlined text-[20px]">forum</span>
                 {messages.length > 0 && (
-                  <span className="absolute top-2 right-2 w-2 h-2 bg-cyan-400 rounded-full ring-2 ring-[#050b18] shadow-[0_0_8px_rgba(61,209,250,0.9)]" />
+                  <span className="absolute top-2 right-2 w-2 h-2 bg-cyan-400 rounded-full ring-2 ring-background shadow-[0_0_8px_rgba(61,209,250,0.9)]" />
                 )}
               </button>
               <button
@@ -878,20 +878,20 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
                 <div className={cn(
                   "flex items-center gap-2 px-3.5 py-1 rounded-full backdrop-blur-md transition-all duration-300",
                   isMuted
-                    ? "bg-[#2a0a0e]/60 border border-[#ffb4ab]/30 shadow-[0_0_20px_rgba(255,180,171,0.2)]"
+                    ? "bg-destructive/20 border border-destructive-foreground/30 shadow-[0_0_20px_rgba(255,180,171,0.2)]"
                     : "bg-blue-950/60 border border-cyan-400/30 shadow-[0_0_20px_rgba(31,107,242,0.25)]",
                 )}>
                   <span className={cn(
                     "rounded-full",
                     isMuted
-                      ? "w-1.5 h-1.5 bg-[#ffb4ab]"
+                      ? "w-1.5 h-1.5 bg-destructive-foreground"
                       : isSpeaking
                         ? "w-2 h-2 bg-cyan-300 shadow-[0_0_12px_rgba(61,209,250,1)] animate-ping"
                         : "w-2 h-2 bg-cyan-400 shadow-[0_0_10px_rgba(56,189,248,0.8)] animate-pulse",
                   )} />
                   <span className={cn(
                     "font-mono text-xs uppercase tracking-widest font-medium",
-                    isMuted ? "text-[#ffb4ab]" : isSpeaking ? "text-cyan-300" : "text-cyan-200",
+                    isMuted ? "text-destructive-foreground" : isSpeaking ? "text-cyan-300" : "text-cyan-200",
                   )}>
                     {statusLabel}
                   </span>
@@ -903,7 +903,7 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
                   </div>
                 </div>
                 {error && (
-                  <p className="text-xs text-[#ffb4ab] font-mono tracking-wide">{error}</p>
+                  <p className="text-xs text-destructive-foreground font-mono tracking-wide">{error}</p>
                 )}
                 {/* Quiet Dynamic Caption / Active Thought */}
                 <p className="font-body text-base sm:text-lg text-blue-100/80 font-normal leading-relaxed transition-all duration-300 min-h-[3.2rem] flex items-center justify-center text-center">
@@ -942,7 +942,7 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
                   "relative flex items-center justify-center w-16 h-16 rounded-full text-white active:scale-95 transition-all duration-300",
                   isProcessing && !isSpeaking && "opacity-50 cursor-not-allowed",
                   isMuted
-                    ? "bg-[#93000a] shadow-[0_0_25px_rgba(255,180,171,0.4)] border border-[#ffb4ab]/30"
+                    ? "bg-destructive shadow-[0_0_25px_rgba(255,180,171,0.4)] border border-destructive-foreground/30"
                     : isListening
                       ? "bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 hover:brightness-110 shadow-[0_0_35px_rgba(31,107,242,0.65)] hover:shadow-[0_0_50px_rgba(61,209,250,0.8)] border border-cyan-200/40 ring-2 ring-cyan-400/30"
                       : isSpeaking
@@ -965,7 +965,7 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
                 </div>
                 <span className={cn(
                   "absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full border-2 border-slate-950",
-                  isMuted ? "bg-[#ffb4ab]" : "bg-cyan-300 shadow-[0_0_8px_rgba(61,209,250,0.9)]",
+                  isMuted ? "bg-destructive-foreground" : "bg-cyan-300 shadow-[0_0_8px_rgba(61,209,250,0.9)]",
                 )} />
               </button>
               {/* Audio Output / Speaker (tap to silence the AI) */}
@@ -983,7 +983,7 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
                 onClick={() => {
                   if (window.confirm("Disconnect live session?")) handleClose();
                 }}
-                className="group flex items-center justify-center w-12 h-12 rounded-full bg-[#93000a]/30 hover:bg-[#93000a] text-[#ffb4ab] hover:text-white transition-all border border-[#ffb4ab]/25 shadow-sm"
+                className="group flex items-center justify-center w-12 h-12 rounded-full bg-destructive/30 hover:bg-destructive text-destructive-foreground hover:text-white transition-all border border-destructive-foreground/25 shadow-sm"
                 title="End Live Session"
                 aria-label="End live session"
               >
@@ -995,7 +995,7 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
           {/* MINIMAL TRANSCRIPT DRAWER / SLIDE-OVER */}
           <aside
             className={cn(
-              "fixed inset-y-0 right-0 w-full sm:w-[420px] bg-[#070e20]/95 backdrop-blur-2xl border-l border-blue-500/20 shadow-[0_0_60px_rgba(2,5,15,0.9)] z-50 transform transition-transform duration-300 ease-in-out flex flex-col",
+              "fixed inset-y-0 right-0 w-full sm:w-[420px] bg-card/95 backdrop-blur-2xl border-l border-blue-500/20 shadow-[0_0_60px_rgba(2,5,15,0.9)] z-50 transform transition-transform duration-300 ease-in-out flex flex-col",
               showTranscript ? "translate-x-0" : "translate-x-full",
             )}
             aria-hidden={!showTranscript}

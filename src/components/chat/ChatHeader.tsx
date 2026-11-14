@@ -173,12 +173,12 @@ const ChatHeaderInner = ({
         </div>
 
         {/* Desktop top bar — model switcher left, minimal actions right */}
-        <div className="hidden md:flex h-14 px-5 items-center justify-between shrink-0 bg-[#131314]/90 backdrop-blur-md relative z-20">
+        <div className="hidden md:flex h-14 px-5 items-center justify-between shrink-0 bg-background/90 backdrop-blur-md relative z-20">
           <div className="flex items-center gap-1.5">
             <button
               type="button"
               onClick={onToggleSidebar}
-              className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] transition-colors"
+              className="p-2 rounded-lg text-slate-400 hover:text-foreground hover:bg-white/[0.06] transition-colors"
               aria-label="Toggle sidebar"
             >
               <PanelLeft className="w-4 h-4" />
@@ -189,17 +189,17 @@ const ChatHeaderInner = ({
               <DropdownMenuTrigger asChild>
                 <button
                   type="button"
-                  className="flex items-center space-x-2 px-3 py-1.5 rounded-xl hover:bg-white/[0.06] text-slate-200 hover:text-white transition-colors group"
+                  className="flex items-center space-x-2 px-3 py-1.5 rounded-xl hover:bg-white/[0.06] text-foreground hover:text-foreground transition-colors group"
                   aria-label="Select model"
                 >
-                  <span className="text-base font-semibold tracking-tight text-white">ShadowTalk 2.5 Ultra</span>
-                  <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-slate-300 transition-colors" />
+                  <span className="text-base font-semibold tracking-tight text-foreground">ShadowTalk 2.5 Ultra</span>
+                  <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-foreground/80 transition-colors" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-64 p-1.5 rounded-2xl bg-[#1e1e20]/95 backdrop-blur-2xl border border-white/10 shadow-2xl">
+              <DropdownMenuContent align="start" className="w-64 p-1.5 rounded-2xl bg-card/95 backdrop-blur-2xl border border-white/10 shadow-2xl">
                 <DropdownMenuItem className="gap-2.5 rounded-lg py-2.5" disabled>
                   <CircleCheck className="h-4 w-4 text-sky-400" />
-                  <span className="text-[13px] font-medium text-white">ShadowTalk 2.5 Ultra</span>
+                  <span className="text-[13px] font-medium text-foreground">ShadowTalk 2.5 Ultra</span>
                   <span className="ml-auto text-[10px] text-slate-500">House model</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-white/5 my-1" />
@@ -226,7 +226,7 @@ const ChatHeaderInner = ({
           </div>
 
           <div className="flex items-center gap-1.5 text-slate-400">
-            <ViralShareButton className="h-8 w-8 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/[0.06]" />
+            <ViralShareButton className="h-8 w-8 rounded-lg text-slate-400 hover:text-foreground hover:bg-white/[0.06]" />
 
             <TooltipProvider>
               <Tooltip>
@@ -234,7 +234,7 @@ const ChatHeaderInner = ({
                   <button
                     type="button"
                     onClick={() => navigate("/settings")}
-                    className="p-2 rounded-lg hover:bg-white/[0.06] hover:text-slate-200 transition-colors"
+                    className="p-2 rounded-lg hover:bg-white/[0.06] hover:text-foreground transition-colors"
                     aria-label="Settings"
                   >
                     <Settings className="w-4 h-4" />
@@ -251,13 +251,13 @@ const ChatHeaderInner = ({
                   {userInitials}
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-64 p-2 bg-[#1e1e20]/98 backdrop-blur-3xl border border-white/10 rounded-[24px] shadow-2xl">
+              <DropdownMenuContent align="end" className="w-64 p-2 bg-card/98 backdrop-blur-3xl border border-white/10 rounded-[24px] shadow-2xl">
                 <div className="px-4 py-4 mb-1 flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-600 flex items-center justify-center text-[14px] font-bold text-white">
                     {userInitials}
                   </div>
                   <div className="flex flex-col min-w-0">
-                    <span className="text-[14px] font-bold truncate text-white">{user?.email?.split('@')[0]}</span>
+                    <span className="text-[14px] font-bold truncate text-foreground">{user?.email?.split('@')[0]}</span>
                     <Badge className="w-fit mt-1 h-5 text-[9px] px-2 bg-sky-500/10 text-sky-400 border-sky-500/20 uppercase tracking-widest font-bold">
                       {userPlan}
                     </Badge>
@@ -309,7 +309,7 @@ const ChatHeaderInner = ({
           >
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className="rounded-2xl bg-[#1e1f20]/95 backdrop-blur-2xl border-white/10 shadow-2xl">
+          <SelectContent className="rounded-2xl bg-card/95 backdrop-blur-2xl border-white/10 shadow-2xl">
             {personalities.map(p => (
               <SelectItem key={p.value} value={p.value} className="rounded-xl py-2.5 cursor-pointer">
                 <div className="flex items-center gap-2.5">
@@ -328,12 +328,12 @@ const ChatHeaderInner = ({
           <DropdownMenuTrigger asChild>
             <button type="button" aria-label="Account and more actions" className="relative group cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background">
               <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-blue-500 to-violet-500 blur-sm opacity-0 group-hover:opacity-40 transition-all duration-500" />
-              <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-[#1e1f20] to-[#2b2c2d] border border-white/10 flex items-center justify-center text-[14px] font-bold text-white shadow-xl">
+              <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-card to-muted border border-white/10 flex items-center justify-center text-[14px] font-bold text-foreground shadow-xl">
                 {userInitials}
               </div>
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-64 p-2 bg-[#1e1f20]/98 backdrop-blur-3xl border border-white/10 rounded-[24px] shadow-2xl">
+          <DropdownMenuContent align="end" className="w-64 p-2 bg-card/98 backdrop-blur-3xl border border-white/10 rounded-[24px] shadow-2xl">
             <div className="px-4 py-4 mb-1 flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-violet-500 flex items-center justify-center text-[14px] font-bold text-white">
                 {userInitials}

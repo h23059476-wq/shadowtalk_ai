@@ -217,7 +217,7 @@ const ChatInputInner = ({
       <div className="relative w-full">
         {voiceBanner}
         <div className={isEmptyState ? "w-full" : "w-full px-0 py-0"}>
-          <div className="shadowtalk-composer group relative flex flex-col justify-between w-full rounded-3xl bg-[#1e1e20] border border-[#2b2c31] hover:border-[#383a42] focus-within:border-[#45474f] focus-within:ring-1 focus-within:ring-slate-600/30 shadow-xl transition-all duration-200">
+          <div className="shadowtalk-composer group relative flex flex-col justify-between w-full rounded-3xl bg-card border border-border hover:border-border focus-within:border-input focus-within:ring-1 focus-within:ring-slate-600/30 shadow-xl transition-all duration-200">
             <SlashCommandMenu
               query={message}
               open={slashMenuOpen}
@@ -283,7 +283,7 @@ const ChatInputInner = ({
                     "flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors disabled:opacity-50",
                     chatMode === "research"
                       ? "bg-sky-500/15 text-sky-300 ring-1 ring-sky-500/30"
-                      : "bg-white/[0.04] hover:bg-white/[0.08] text-slate-300"
+                      : "bg-white/[0.04] hover:bg-white/[0.08] text-foreground/80"
                   )}
                   aria-pressed={chatMode === "research"}
                 >
@@ -299,7 +299,7 @@ const ChatInputInner = ({
                     "flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors disabled:opacity-50",
                     chatMode === "reasoning"
                       ? "bg-purple-500/15 text-purple-300 ring-1 ring-purple-500/30"
-                      : "bg-white/[0.04] hover:bg-white/[0.08] text-slate-300"
+                      : "bg-white/[0.04] hover:bg-white/[0.08] text-foreground/80"
                   )}
                   aria-pressed={chatMode === "reasoning"}
                 >
@@ -438,8 +438,8 @@ const ChatInputInner = ({
               isShadowPulse
                 ? "ios-glass-input relative flex items-center gap-2 bg-transparent rounded-[18px] px-2 py-1"
                 : isComposer
-                  ? "ios-glass-input relative flex items-center gap-1 bg-[#2f2f2f] hover:bg-[#383838] focus-within:bg-[#383838] rounded-[26px] border border-[#404040] px-3 py-2 shadow-none transition-colors duration-200"
-                  : `ios-glass-input relative flex items-end gap-2 bg-[#1e1f20]/60 backdrop-blur-3xl rounded-[30px] border border-white/10 p-2.5 px-4 shadow-2xl transition-all duration-500 group-focus-within:bg-[#1e1f20]/80 group-focus-within:border-white/20 ring-1 ${message.trim() ? "ring-primary/50 shadow-primary/20" : "ring-white/5"}`
+                  ? "ios-glass-input relative flex items-center gap-1 bg-muted hover:bg-muted focus-within:bg-muted rounded-[26px] border border-ring px-3 py-2 shadow-none transition-colors duration-200"
+                  : `ios-glass-input relative flex items-end gap-2 bg-card/60 backdrop-blur-3xl rounded-[30px] border border-white/10 p-2.5 px-4 shadow-2xl transition-all duration-500 group-focus-within:bg-card/80 group-focus-within:border-white/20 ring-1 ${message.trim() ? "ring-primary/50 shadow-primary/20" : "ring-white/5"}`
             }
           >
             <div className={`flex items-center shrink-0 ${isComposer ? "" : "pb-1"}`}>
