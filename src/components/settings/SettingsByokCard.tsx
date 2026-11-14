@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { KeyRound, ShieldCheck, ShieldAlert, Loader2, ExternalLink, Copy } from "lucide-react";
+import { KeyRound, ShieldCheck, ShieldAlert, Loader2, ExternalLink, Copy, Image as ImageIcon } from "lucide-react";
+import { isImageCapableProvider } from "@/lib/cloudImage";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -104,7 +105,15 @@ export function SettingsByokCard() {
       <CardContent className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <Label>Provider</Label>
+            <Label>
+              Provider
+              {isImageCapableProvider(provider) && (
+                <span className="ml-2 inline-flex items-center gap-1 text-[10px] text-success font-normal" title="This key can also generate images in chat (e.g. “draw a …”)">
+                  <ImageIcon className="h-3 w-3" />
+                  Image generation supported
+                </span>
+              )}
+            </Label>
             <Select value={provider} onValueChange={handleProviderChange}>
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>

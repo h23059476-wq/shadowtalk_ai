@@ -78,6 +78,12 @@ describe("BYOK regression fixes (commit 9a3dba3)", () => {
       const { isCloudImageConfigured } = await import("@/lib/cloudImage");
       expect(isCloudImageConfigured()).toBe(true);
     });
+    it("returns true when Gemini key is configured", async () => {
+      localStorageMock.setItem("shadowtalk.byok.v2.test-uid-123",
+        JSON.stringify({ ...mockByokConfig, provider: "gemini" }));
+      const { isCloudImageConfigured } = await import("@/lib/cloudImage");
+      expect(isCloudImageConfigured()).toBe(true);
+    });
     it("returns false for providers that don't support image generation", async () => {
       localStorageMock.setItem("shadowtalk.byok.v2.test-uid-123",
         JSON.stringify({ ...mockByokConfig, provider: "groq" }));
@@ -109,7 +115,7 @@ describe("BYOK regression fixes (commit 9a3dba3)", () => {
   describe("generateCloudImage error handling", () => {
     it("throws clear error when no BYOK key is set", async () => {
       const { generateCloudImage } = await import("@/lib/cloudImage");
-      await expect(generateCloudImage("a cat")).rejects.toThrow(/Image generation requires a BYOK API key/);
+      await expect(generateCloudImage("a cat")).rejects.toThrow(/Image generation requires your own API key/);
     });
     it("throws clear error for empty prompt", async () => {
       localStorageMock.setItem("shadowtalk.byok.v2.test-uid-123", JSON.stringify(mockByokConfig));
