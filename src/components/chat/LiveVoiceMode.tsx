@@ -9,8 +9,8 @@
  *  2. Hands-free auto barge-in — the mic keeps metering while the AI speaks;
  *     sustained human speech (echo-cancelled) interrupts it, exactly like
  *     ChatGPT Advanced Voice / Gemini Live. Manual tap-to-interrupt still works.
- *  3. LiveAvatar — a living animated presence: breathing, blinking eyes,
- *     mic/TTS-amplitude-driven morphing, phase-colored aura, orbital motes.
+ *  3. LiveAvatar — "Obsidian Core": a perfect rim-lit ink sphere (Monolith
+ *     design language, ShadowTalk brand cyan). No eyes, no cartoon blob.
  *  4. Speech rhythm engine — punctuation-aware pauses, emoji/markdown
  *     stripped before TTS, natural cadence instead of a flat wall of text.
  *  5. Captions — the sentence being spoken appears live under the avatar.
@@ -21,7 +21,7 @@
  */
 import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mic, PhoneOff, Loader2, Sparkles, X, Settings2, Keyboard } from "lucide-react";
+import { Mic, PhoneOff, Loader2, X, Settings2, Keyboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -559,6 +559,21 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
     if ("speechSynthesis" in window) window.speechSynthesis.getVoices();
   }, []);
 
+  // Editorial status word center-stage (Monolith).
+  const phaseWord =
+    isSpeaking ? "Speaking." : isListening ? "Listening." : isProcessing ? "Thinking." : "ShadowTalk";
+
+  const statusHint = isSpeaking
+    ? "Just talk over me to interrupt"
+    : isListening
+      ? "Speak naturally — I am listening"
+      : isProcessing
+        ? "Gathering my thoughts"
+        : messages.length === 0
+          ? "Tap the mic and just start talking"
+          : "Tap to continue";
+
+  // Kept for assistive tech (announced politely, invisible on stage).
   const statusText =
     isSpeaking ? "Speaking — just talk to interrupt"
     : isListening ? "Listening…"
@@ -570,42 +585,54 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
     <AnimatePresence>
       {open && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, scale: 1.015 }}
+          animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex flex-col bg-[#05070d] text-slate-100 overflow-hidden"
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          className="fixed inset-0 z-[100] flex flex-col bg-[hsl(240_12%_3%)] text-slate-100 overflow-hidden"
         >
-          {/* Ambient field */}
+          {/* Monolith stage: one faint spotlight, vignette, film grain */}
           <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(76,29,149,0.16),transparent_60%)]" />
-            <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[120vw] h-[60vh] bg-[radial-gradient(ellipse_at_center,rgba(34,211,238,0.07),transparent_65%)]" />
+            <div className="absolute left-1/2 top-[40%] -translate-x-1/2 -translate-y-1/2 w-[150vmin] h-[150vmin] bg-[radial-gradient(circle,hsl(195_100%_55%/0.05),transparent_62%)]" />
+            <div className="absolute inset-0 [background:radial-gradient(ellipse_at_center,transparent_58%,rgba(0,0,0,0.55)_100%)]" />
+            <div
+              className="absolute inset-0 opacity-[0.045]"
+              style={{
+                backgroundImage:
+                  "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>\")",
+              }}
+            />
           </div>
+
+          <p className="sr-only" role="status">{statusText}</p>
 
           {/* Top bar */}
           <div className="relative flex items-center justify-between px-5 pt-[max(env(safe-area-inset-top),1rem)] pb-3">
-            <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1.5 text-[10px] font-mono font-bold tracking-widest text-cyan-300 bg-cyan-500/10 border border-cyan-500/25 rounded-full px-2.5 py-1">
-                <span className={cn("w-1.5 h-1.5 rounded-full bg-cyan-400", (isListening || isSpeaking) && "animate-pulse")} />
-                LIVE
+            <span className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.28em] text-white/55 border border-white/12 rounded-full px-3 py-1.5">
+              <span
+                className={cn(
+                  "w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_hsl(195_100%_55%/0.9)]",
+                  (isListening || isSpeaking) && "animate-pulse",
+                )}
+              />
+              Live
+            </span>
+            {hasEleven && (
+              <span className="hidden sm:inline text-[9px] font-mono uppercase tracking-[0.22em] text-white/35 border border-white/10 rounded-full px-2.5 py-1">
+                HD Voice
               </span>
-              <p className="text-sm text-slate-300 max-w-[52vw] sm:max-w-none truncate">{statusText}</p>
-            </div>
-            <div className="flex items-center gap-2">
-              {hasEleven && (
-                <span className="hidden sm:inline text-[9px] font-mono text-purple-300 bg-purple-500/10 px-1.5 py-0.5 rounded-full border border-purple-500/20">
-                  HD VOICE
-                </span>
-              )}
+            )}
+            <div className="flex items-center gap-1.5">
               <button
                 onClick={() => setShowSettings(!showSettings)}
-                className="w-9 h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                className="w-9 h-9 rounded-full flex items-center justify-center text-white/40 hover:text-white/85 border border-transparent hover:border-white/12 transition-colors"
                 aria-label="Voice settings"
               >
                 <Settings2 className="w-4 h-4" />
               </button>
               <button
                 onClick={handleClose}
-                className="w-9 h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                className="w-9 h-9 rounded-full flex items-center justify-center text-white/40 hover:text-white/85 border border-transparent hover:border-white/12 transition-colors"
                 aria-label="Close live mode"
               >
                 <X className="w-5 h-5" />
@@ -624,25 +651,25 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
               >
                 <div className="px-5 py-4 space-y-3 max-w-md mx-auto">
                   <div>
-                    <label className="text-[11px] text-slate-400 uppercase tracking-wider">ElevenLabs API Key (optional)</label>
+                    <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">ElevenLabs API Key (optional)</label>
                     <Input
                       type="password"
                       value={elevenLabsKeyInput}
                       onChange={(e) => setElevenLabsKeyInput(e.target.value)}
                       placeholder="sk_... (get free at elevenlabs.io)"
-                      className="mt-1 bg-black/30 border-white/10 text-sm text-white"
+                      className="mt-1.5 bg-white/[0.04] border-white/12 text-sm text-white"
                     />
-                    <p className="text-[10px] text-slate-500 mt-1">
+                    <p className="text-[10px] text-white/30 mt-1">
                       Premium HD voices. Without a key, browser TTS is used (lower quality).
                     </p>
                   </div>
                   {hasEleven && (
                     <div>
-                      <label className="text-[11px] text-slate-400 uppercase tracking-wider">Voice</label>
+                      <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">Voice</label>
                       <select
                         value={selectedVoice}
                         onChange={(e) => setSelectedVoice(e.target.value)}
-                        className="mt-1 w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-sm text-white"
+                        className="mt-1.5 w-full bg-white/[0.04] border border-white/12 rounded-lg px-3 py-2 text-sm text-white"
                       >
                         {VOICE_OPTIONS.map(v => (
                           <option key={v.id} value={v.id}>{v.name} — {v.description}</option>
@@ -650,7 +677,7 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
                       </select>
                     </div>
                   )}
-                  <Button onClick={handleSaveKey} size="sm" className="w-full ios-glass-button-accent text-white">
+                  <Button onClick={handleSaveKey} size="sm" variant="outline" className="w-full border-white/20 bg-white/[0.04] text-white/85 hover:bg-white/[0.08] hover:text-white">
                     Save Voice Settings
                   </Button>
                 </div>
@@ -658,52 +685,70 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
             )}
           </AnimatePresence>
 
-          {/* Stage: avatar + captions */}
-          <div className="relative flex-1 flex flex-col items-center justify-center gap-5 px-5 min-h-0">
+          {/* Stage: obsidian core + editorial status word + captions */}
+          <div className="relative flex-1 flex flex-col items-center justify-center gap-2 px-5 min-h-0">
             <div className="relative">
-              <LiveAvatar phase={phase} getLevel={getAvatarLevel} size={typeof window !== "undefined" && window.innerWidth < 420 ? 260 : 320} />
+              <LiveAvatar phase={phase} getLevel={getAvatarLevel} size={typeof window !== "undefined" && window.innerWidth < 420 ? 250 : 320} />
             </div>
 
-            {/* Captions */}
-            <div className="w-full max-w-lg min-h-[76px] flex flex-col items-center justify-center text-center">
-              {currentTranscript ? (
-                <motion.p key={currentTranscript.length} initial={{ opacity: 0.75 }} animate={{ opacity: 1 }}
-                  className="text-base text-slate-300 italic">
-                  “{currentTranscript}”
+            {/* Serif status word — the Monolith moment */}
+            <div className="h-16 flex items-start justify-center">
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={phaseWord}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.32, ease: "easeOut" }}
+                  className="font-serif italic text-2xl sm:text-3xl text-white/85 tracking-wide"
+                >
+                  {phaseWord}
                 </motion.p>
-              ) : liveCaption ? (
-                <motion.p key={liveCaption} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                  className="text-lg sm:text-xl font-medium leading-snug text-white/95">
-                  {liveCaption}
-                </motion.p>
-              ) : !isProcessing && messages.length === 0 ? (
-                <div className="flex flex-col items-center gap-1.5">
-                  <Sparkles className="w-6 h-6 text-purple-400/40" />
-                  <p className="text-sm text-slate-400">This is a live conversation.</p>
-                  <p className="text-xs text-slate-500">
-                    Just talk — and talk over me anytime to interrupt.
-                  </p>
-                </div>
-              ) : null}
+              </AnimatePresence>
+            </div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 text-center">
+              {statusHint}
+            </p>
+
+            {/* Captions between hairlines */}
+            <div className="w-full max-w-xl flex flex-col items-center gap-3 mt-3">
+              <div className="h-px w-14 bg-white/10" />
+              <div className="min-h-[58px] flex flex-col items-center justify-center text-center">
+                {currentTranscript ? (
+                  <motion.p key={currentTranscript.length} initial={{ opacity: 0.7 }} animate={{ opacity: 1 }}
+                    className="font-serif italic text-base sm:text-lg text-slate-400">
+                    “{currentTranscript}”
+                  </motion.p>
+                ) : liveCaption ? (
+                  <motion.p key={liveCaption} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                    className="text-lg sm:text-2xl font-light leading-snug text-white/90">
+                    {liveCaption}
+                  </motion.p>
+                ) : null}
+              </div>
+              <div className="h-px w-14 bg-white/10" />
             </div>
           </div>
 
-          {/* Recent transcript */}
+          {/* Recent transcript — editorial log, no bubbles */}
           {(messages.length > 0 || error) && (
-            <div ref={scrollRef} className="relative max-h-24 overflow-y-auto px-5 pb-2 space-y-1.5">
+            <div ref={scrollRef} className="relative max-h-28 overflow-y-auto px-6 pb-2 space-y-2.5">
               {error && (
-                <div className="px-3 py-1.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center">{error}</div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-red-300/90 text-center py-1">{error}</p>
               )}
               {messages.slice(-6).map((msg, idx) => (
-                <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                  <div className={cn(
-                    "max-w-[80%] px-3 py-1.5 rounded-2xl text-xs leading-relaxed",
-                    msg.role === "user"
-                      ? "ios-glass-bubble-user text-white/90"
-                      : "ios-glass-bubble-ai text-slate-300/90"
-                  )}>
+                <div key={idx} className="flex gap-3 items-baseline">
+                  <span
+                    className={cn(
+                      "font-mono text-[9px] uppercase tracking-[0.22em] w-16 shrink-0 text-right pt-0.5",
+                      msg.role === "user" ? "text-cyan-200/45" : "text-violet-200/35",
+                    )}
+                  >
+                    {msg.role === "user" ? "You" : "Shadow"}
+                  </span>
+                  <p className="text-[13px] leading-relaxed text-slate-300/80 min-w-0">
                     {msg.content}
-                  </div>
+                  </p>
                 </div>
               ))}
             </div>
@@ -727,9 +772,9 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
                       onChange={(e) => setTextDraft(e.target.value)}
                       onKeyDown={(e) => { if (e.key === "Enter") handleTextSubmit(); }}
                       placeholder="Type instead of talking…"
-                      className="bg-black/30 border-white/10 text-sm text-white rounded-full"
+                      className="bg-white/[0.04] border-white/12 text-sm text-white rounded-full"
                     />
-                    <Button size="sm" onClick={handleTextSubmit} className="rounded-full ios-glass-button-accent text-white px-4">
+                    <Button size="sm" onClick={handleTextSubmit} variant="outline" className="rounded-full border-white/20 bg-transparent text-white/80 hover:bg-white/[0.06] px-5">
                       Send
                     </Button>
                   </div>
@@ -737,61 +782,49 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
               )}
             </AnimatePresence>
 
-            <div className="flex items-center justify-center gap-6">
+            <div className="flex items-center justify-center gap-7">
               <button
                 onClick={() => setKeyboardOpen(!keyboardOpen)}
                 className={cn(
                   "w-12 h-12 rounded-full flex items-center justify-center border transition-colors",
                   keyboardOpen
-                    ? "bg-cyan-500/15 border-cyan-400/40 text-cyan-300"
-                    : "bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10"
+                    ? "bg-cyan-400/10 border-cyan-300/40 text-cyan-200"
+                    : "bg-white/[0.03] border-white/12 text-white/45 hover:text-white/85 hover:border-white/25"
                 )}
                 aria-label="Type a message"
               >
-                <Keyboard className="w-5 h-5" />
+                <Keyboard className="w-[18px] h-[18px]" />
               </button>
 
               <button
                 onClick={handleMicToggle}
                 disabled={isProcessing && !isSpeaking}
                 className={cn(
-                  "relative w-[76px] h-[76px] rounded-full flex items-center justify-center transition-all",
+                  "relative w-[72px] h-[72px] rounded-full flex items-center justify-center border transition-colors",
                   isListening
-                    ? "bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-[0_0_50px_rgba(99,102,241,0.55)]"
+                    ? "bg-cyan-400/10 border-cyan-300/60 text-cyan-100 shadow-[0_0_48px_hsl(195_100%_55%/0.30),inset_0_0_18px_hsl(195_100%_55%/0.12)]"
                     : isSpeaking
-                      ? "bg-gradient-to-br from-purple-500 to-pink-600 text-white shadow-[0_0_50px_rgba(168,85,247,0.55)]"
-                      : "bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10",
-                  isProcessing && !isSpeaking && "opacity-50 cursor-not-allowed"
+                      ? "bg-white/[0.06] border-white/25 text-white"
+                      : "bg-white/[0.03] border-white/15 text-white/60 hover:text-white/90 hover:border-white/30",
+                  isProcessing && !isSpeaking && "opacity-40 cursor-not-allowed"
                 )}
                 aria-label={isListening ? "Stop talking" : "Start talking"}
               >
                 {isProcessing && !isSpeaking ? (
-                  <Loader2 className="w-7 h-7 animate-spin" />
-                ) : isListening ? (
-                  <Mic className="w-7 h-7" />
-                ) : isSpeaking ? (
-                  <Mic className="w-7 h-7" />
+                  <Loader2 className="w-6 h-6 animate-spin" />
                 ) : (
-                  <Mic className="w-7 h-7" />
+                  <Mic className="w-6 h-6" strokeWidth={1.5} />
                 )}
               </button>
 
-              <Button
-                variant="outline"
-                size="icon"
+              <button
                 onClick={handleClose}
-                className="w-12 h-12 rounded-full border-red-500/20 bg-red-500/5 hover:bg-red-500/10 text-red-400"
+                className="w-12 h-12 rounded-full flex items-center justify-center border border-red-400/20 bg-red-500/[0.05] text-red-300/70 hover:text-red-300 hover:border-red-400/40 transition-colors"
                 aria-label="End conversation"
               >
-                <PhoneOff className="w-5 h-5" />
-              </Button>
+                <PhoneOff className="w-[18px] h-[18px]" strokeWidth={1.5} />
+              </button>
             </div>
-
-            <p className="mt-3 text-center text-[11px] text-slate-500">
-              {isSpeaking
-                ? "Interrupt me anytime — just start talking"
-                : "Speak naturally • sentences stream in as I think"}
-            </p>
           </div>
         </motion.div>
       )}
