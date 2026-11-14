@@ -1,0 +1,430 @@
+{
+ "slug": "ai-prompt-engineering",
+ "categorySlug": "ai",
+ "category": "AI & ShadowTalk",
+ "title": "Prompt Engineering",
+ "description": "Structure, examples, and constraints that lift output quality.",
+ "tags": [
+  "prompts",
+  "technique",
+  "quality"
+ ],
+ "prompts": [
+  {
+   "id": "ai-prompt-engineering#001",
+   "text": "Write a production-ready prompt for a template with slots for weekly reports."
+  },
+  {
+   "id": "ai-prompt-engineering#002",
+   "text": "Design an evaluation rubric for a system prompt for a support assistant. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-prompt-engineering#003",
+   "text": "Act as a teacher of AI literacy. Write the failure-mode checklist for a system prompt for a support assistant, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-prompt-engineering#004",
+   "text": "Draft a versioned changelog for a style-transfer prompt for my writing. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-prompt-engineering#005",
+   "text": "I’m working on a role-and-audience pair for explainers. Design an evaluation rubric for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-prompt-engineering#006",
+   "text": "Create a testing set of inputs for an output-schema with strict JSON for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-prompt-engineering#007",
+   "text": "Draft a versioned changelog for a system prompt for a support assistant. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-prompt-engineering#008",
+   "text": "Help me with an output-schema with strict JSON: produce a compact and verbose variant of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-prompt-engineering#009",
+   "text": "Produce a compact and verbose variant of chain-of-thought for multi-step math. Use a direct tone throughout."
+  },
+  {
+   "id": "ai-prompt-engineering#010",
+   "text": "You are a team-lead rolling out AI tools. Write a production-ready prompt for tone control across a whole document and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-prompt-engineering#011",
+   "text": "Add few-shot examples to a self-critique and revise loop. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-prompt-engineering#012",
+   "text": "Before I start on a rubric the model grades itself against, write guardrails and refusal lines for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-prompt-engineering#013",
+   "text": "Write the failure-mode checklist for a template with slots for weekly reports. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-prompt-engineering#014",
+   "text": "Produce a compact and verbose variant of a self-critique and revise loop. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-prompt-engineering#015",
+   "text": "As a teacher of AI literacy, I keep hitting the same wall with few-shot examples for a classification task. Produce a compact and verbose variant of it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-prompt-engineering#016",
+   "text": "Design an evaluation rubric for a rubric the model grades itself against. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-prompt-engineering#017",
+   "text": "Draft a versioned changelog for a rubric the model grades itself against."
+  },
+  {
+   "id": "ai-prompt-engineering#018",
+   "text": "Write guardrails and refusal lines for a role-and-audience pair for explainers. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-prompt-engineering#019",
+   "text": "Act as a teacher of AI literacy. Write the failure-mode checklist for a role-and-audience pair for explainers, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-prompt-engineering#020",
+   "text": "Write the failure-mode checklist for a style-transfer prompt for my writing. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-prompt-engineering#021",
+   "text": "I’m working on a constraint list that prevents rambling. Create a testing set of inputs for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-prompt-engineering#022",
+   "text": "Produce a compact and verbose variant of a role-and-audience pair for explainers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-prompt-engineering#023",
+   "text": "Create a testing set of inputs for tone control across a whole document. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-prompt-engineering#024",
+   "text": "Help me with a long-document map-and-summarize flow: draft a versioned changelog for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-prompt-engineering#025",
+   "text": "Write the failure-mode checklist for a long-document map-and-summarize flow. Use a formal tone throughout."
+  },
+  {
+   "id": "ai-prompt-engineering#026",
+   "text": "You are a content creator using AI. Draft a versioned changelog for an output-schema with strict JSON and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-prompt-engineering#027",
+   "text": "Draft a versioned changelog for a constraint list that prevents rambling. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-prompt-engineering#028",
+   "text": "Before I start on a self-critique and revise loop, create a testing set of inputs for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-prompt-engineering#029",
+   "text": "Write guardrails and refusal lines for a style-transfer prompt for my writing. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-prompt-engineering#030",
+   "text": "Write the failure-mode checklist for tone control across a whole document. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-prompt-engineering#031",
+   "text": "As a ShadowTalk power user, I keep hitting the same wall with a style-transfer prompt for my writing. Write a production-ready prompt for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-prompt-engineering#032",
+   "text": "Design an evaluation rubric for few-shot examples for a classification task. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-prompt-engineering#033",
+   "text": "Draft a versioned changelog for chain-of-thought for multi-step math."
+  },
+  {
+   "id": "ai-prompt-engineering#034",
+   "text": "Create a testing set of inputs for chain-of-thought for multi-step math. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-prompt-engineering#035",
+   "text": "Act as an indie developer. Add few-shot examples to a rubric the model grades itself against, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-prompt-engineering#036",
+   "text": "Add few-shot examples to tone control across a whole document. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-prompt-engineering#037",
+   "text": "I’m working on tone control across a whole document. Draft a versioned changelog for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-prompt-engineering#038",
+   "text": "Add few-shot examples to a long-document map-and-summarize flow for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-prompt-engineering#039",
+   "text": "Write a production-ready prompt for a long-document map-and-summarize flow. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-prompt-engineering#040",
+   "text": "Help me with a template with slots for weekly reports: produce a compact and verbose variant of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-prompt-engineering#041",
+   "text": "Create a testing set of inputs for a system prompt for a support assistant. Use a encouraging tone throughout."
+  },
+  {
+   "id": "ai-prompt-engineering#042",
+   "text": "You are a team-lead rolling out AI tools. Produce a compact and verbose variant of tone control across a whole document and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-prompt-engineering#043",
+   "text": "Design an evaluation rubric for an output-schema with strict JSON. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-prompt-engineering#044",
+   "text": "Before I start on few-shot examples for a classification task, write the failure-mode checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-prompt-engineering#045",
+   "text": "Write guardrails and refusal lines for a self-critique and revise loop. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-prompt-engineering#046",
+   "text": "Write a production-ready prompt for few-shot examples for a classification task. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-prompt-engineering#047",
+   "text": "As an indie developer, I keep hitting the same wall with tone control across a whole document. Design an evaluation rubric for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-prompt-engineering#048",
+   "text": "Design an evaluation rubric for chain-of-thought for multi-step math. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-prompt-engineering#049",
+   "text": "Add few-shot examples to a template with slots for weekly reports."
+  },
+  {
+   "id": "ai-prompt-engineering#050",
+   "text": "Write a production-ready prompt for a role-and-audience pair for explainers. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-prompt-engineering#051",
+   "text": "Act as an indie developer. Write guardrails and refusal lines for a constraint list that prevents rambling, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-prompt-engineering#052",
+   "text": "Add few-shot examples to a role-and-audience pair for explainers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-prompt-engineering#053",
+   "text": "I’m working on few-shot examples for a classification task. Draft a versioned changelog for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-prompt-engineering#054",
+   "text": "Produce a compact and verbose variant of a long-document map-and-summarize flow for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-prompt-engineering#055",
+   "text": "Design an evaluation rubric for a self-critique and revise loop. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-prompt-engineering#056",
+   "text": "Help me with chain-of-thought for multi-step math: write a production-ready prompt for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-prompt-engineering#057",
+   "text": "Write guardrails and refusal lines for a system prompt for a support assistant. Use a encouraging tone throughout."
+  },
+  {
+   "id": "ai-prompt-engineering#058",
+   "text": "You are a privacy-conscious technologist. Add few-shot examples to a constraint list that prevents rambling and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-prompt-engineering#059",
+   "text": "Write the failure-mode checklist for a constraint list that prevents rambling. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-prompt-engineering#060",
+   "text": "Before I start on a rubric the model grades itself against, write the failure-mode checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-prompt-engineering#061",
+   "text": "Design an evaluation rubric for a style-transfer prompt for my writing. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-prompt-engineering#062",
+   "text": "Draft a versioned changelog for a self-critique and revise loop. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-prompt-engineering#063",
+   "text": "As a prompt-engineering coach, I keep hitting the same wall with a self-critique and revise loop. Write a production-ready prompt for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-prompt-engineering#064",
+   "text": "Write a production-ready prompt for a system prompt for a support assistant. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-prompt-engineering#065",
+   "text": "Design an evaluation rubric for a template with slots for weekly reports."
+  },
+  {
+   "id": "ai-prompt-engineering#066",
+   "text": "Write the failure-mode checklist for a self-critique and revise loop. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-prompt-engineering#067",
+   "text": "Act as a teacher of AI literacy. Produce a compact and verbose variant of a system prompt for a support assistant, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-prompt-engineering#068",
+   "text": "Write guardrails and refusal lines for an output-schema with strict JSON. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-prompt-engineering#069",
+   "text": "I’m working on a style-transfer prompt for my writing. Create a testing set of inputs for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-prompt-engineering#070",
+   "text": "Write the failure-mode checklist for chain-of-thought for multi-step math for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-prompt-engineering#071",
+   "text": "Add few-shot examples to a style-transfer prompt for my writing. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-prompt-engineering#072",
+   "text": "Help me with a constraint list that prevents rambling: write a production-ready prompt for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-prompt-engineering#073",
+   "text": "Write guardrails and refusal lines for chain-of-thought for multi-step math. Use a direct tone throughout."
+  },
+  {
+   "id": "ai-prompt-engineering#074",
+   "text": "You are a team-lead rolling out AI tools. Write guardrails and refusal lines for tone control across a whole document and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-prompt-engineering#075",
+   "text": "Create a testing set of inputs for a long-document map-and-summarize flow. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-prompt-engineering#076",
+   "text": "Before I start on an output-schema with strict JSON, write the failure-mode checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-prompt-engineering#077",
+   "text": "Produce a compact and verbose variant of a rubric the model grades itself against. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-prompt-engineering#078",
+   "text": "Create a testing set of inputs for few-shot examples for a classification task. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-prompt-engineering#079",
+   "text": "As a teacher of AI literacy, I keep hitting the same wall with few-shot examples for a classification task. Write guardrails and refusal lines for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-prompt-engineering#080",
+   "text": "Produce a compact and verbose variant of a style-transfer prompt for my writing. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-prompt-engineering#081",
+   "text": "Create a testing set of inputs for a template with slots for weekly reports."
+  },
+  {
+   "id": "ai-prompt-engineering#082",
+   "text": "Design an evaluation rubric for a long-document map-and-summarize flow. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-prompt-engineering#083",
+   "text": "Act as an indie developer. Create a testing set of inputs for a rubric the model grades itself against, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-prompt-engineering#084",
+   "text": "Create a testing set of inputs for a role-and-audience pair for explainers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-prompt-engineering#085",
+   "text": "I’m working on few-shot examples for a classification task. Add few-shot examples to it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-prompt-engineering#086",
+   "text": "Add few-shot examples to an output-schema with strict JSON for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-prompt-engineering#087",
+   "text": "Draft a versioned changelog for a role-and-audience pair for explainers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-prompt-engineering#088",
+   "text": "Help me with chain-of-thought for multi-step math: add few-shot examples to it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-prompt-engineering#089",
+   "text": "Design an evaluation rubric for a constraint list that prevents rambling. Use a professional tone throughout."
+  },
+  {
+   "id": "ai-prompt-engineering#090",
+   "text": "You are a privacy-conscious technologist. Draft a versioned changelog for a template with slots for weekly reports and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-prompt-engineering#091",
+   "text": "Write guardrails and refusal lines for a template with slots for weekly reports. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-prompt-engineering#092",
+   "text": "Before I start on a system prompt for a support assistant, add few-shot examples to it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-prompt-engineering#093",
+   "text": "Write guardrails and refusal lines for a long-document map-and-summarize flow. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-prompt-engineering#094",
+   "text": "Write a production-ready prompt for an output-schema with strict JSON. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-prompt-engineering#095",
+   "text": "As an AI-workflow consultant, I keep hitting the same wall with a constraint list that prevents rambling. Produce a compact and verbose variant of it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-prompt-engineering#096",
+   "text": "Write a production-ready prompt for a rubric the model grades itself against. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-prompt-engineering#097",
+   "text": "Write a production-ready prompt for a template with slots for weekly reports. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-prompt-engineering#098",
+   "text": "Design an evaluation rubric for a system prompt for a support assistant. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-prompt-engineering#099",
+   "text": "Write the failure-mode checklist for a system prompt for a support assistant."
+  },
+  {
+   "id": "ai-prompt-engineering#100",
+   "text": "Draft a versioned changelog for a style-transfer prompt for my writing."
+  },
+  {
+   "id": "ai-prompt-engineering#101",
+   "text": "Design an evaluation rubric for a role-and-audience pair for explainers."
+  },
+  {
+   "id": "ai-prompt-engineering#102",
+   "text": "Create a testing set of inputs for an output-schema with strict JSON."
+  },
+  {
+   "id": "ai-prompt-engineering#103",
+   "text": "Draft a versioned changelog for a system prompt for a support assistant."
+  },
+  {
+   "id": "ai-prompt-engineering#104",
+   "text": "Produce a compact and verbose variant of an output-schema with strict JSON."
+  }
+ ]
+}

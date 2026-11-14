@@ -1,0 +1,430 @@
+{
+ "slug": "business-startup-fundraising",
+ "categorySlug": "business",
+ "category": "Business & Strategy",
+ "title": "Startup & Fundraising",
+ "description": "Narratives, decks, diligence, and investor updates.",
+ "tags": [
+  "startup",
+  "fundraising",
+  "pitch"
+ ],
+ "prompts": [
+  {
+   "id": "business-startup-fundraising#001",
+   "text": "Write the investor-update email for a bridge-round communication plan."
+  },
+  {
+   "id": "business-startup-fundraising#002",
+   "text": "Build the metrics slide skeleton for a market-sizing section for a niche product. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-startup-fundraising#003",
+   "text": "Act as a finance manager. Draft the narrative arc for a board-observer invitation decision, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-startup-fundraising#004",
+   "text": "Build the metrics slide skeleton for an investor update after a flat month. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-startup-fundraising#005",
+   "text": "I’m working on a pre-seed pitch narrative for a logistics tool. Create a data-room index for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-startup-fundraising#006",
+   "text": "Create a data-room index for a convertible-note terms comparison for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-startup-fundraising#007",
+   "text": "Draft a safe-harbor forward-looking statement section for a diligence data-room checklist. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-startup-fundraising#008",
+   "text": "Help me with a bridge-round communication plan: prep answers to the ten hardest questions about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-startup-fundraising#009",
+   "text": "Stress-test the valuation story for a diligence data-room checklist. Use a encouraging tone throughout."
+  },
+  {
+   "id": "business-startup-fundraising#010",
+   "text": "You are a finance manager. Stress-test the valuation story for a pre-seed pitch narrative for a logistics tool and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-startup-fundraising#011",
+   "text": "Prep answers to the ten hardest questions about a market-sizing section for a niche product. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-startup-fundraising#012",
+   "text": "Before I start on a pre-seed pitch narrative for a logistics tool, draft the narrative arc for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-startup-fundraising#013",
+   "text": "Prep answers to the ten hardest questions about a diligence data-room checklist. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-startup-fundraising#014",
+   "text": "Write a follow-up sequence after a partner meeting for a bridge-round communication plan. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-startup-fundraising#015",
+   "text": "As a procurement lead, I keep hitting the same wall with a board-observer invitation decision. Create a data-room index for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-startup-fundraising#016",
+   "text": "Stress-test the valuation story for a bridge-round communication plan. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-startup-fundraising#017",
+   "text": "Draft the narrative arc for an investor update after a flat month."
+  },
+  {
+   "id": "business-startup-fundraising#018",
+   "text": "Stress-test the valuation story for a founder-market-fit story. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-startup-fundraising#019",
+   "text": "Act as a seasoned operations director. Write the investor-update email for a seed-deck traction slide, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-startup-fundraising#020",
+   "text": "Create a data-room index for a use-of-funds breakdown. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-startup-fundraising#021",
+   "text": "I’m working on a convertible-note terms comparison. Draft a safe-harbor forward-looking statement section for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-startup-fundraising#022",
+   "text": "Prep answers to the ten hardest questions about a use-of-funds breakdown for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-startup-fundraising#023",
+   "text": "Write a follow-up sequence after a partner meeting for a pre-seed pitch narrative for a logistics tool. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-startup-fundraising#024",
+   "text": "Help me with a competitive-slide that avoids a feature war: write the investor-update email for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-startup-fundraising#025",
+   "text": "Draft a safe-harbor forward-looking statement section for a cold-investor outreach email. Use a formal tone throughout."
+  },
+  {
+   "id": "business-startup-fundraising#026",
+   "text": "You are a serial founder. Draft the narrative arc for a seed-deck traction slide and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-startup-fundraising#027",
+   "text": "Write a follow-up sequence after a partner meeting for a use-of-funds breakdown. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-startup-fundraising#028",
+   "text": "Before I start on a competitive-slide that avoids a feature war, prep answers to the ten hardest questions about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-startup-fundraising#029",
+   "text": "Write a follow-up sequence after a partner meeting for a cold-investor outreach email. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-startup-fundraising#030",
+   "text": "Draft the narrative arc for a market-sizing section for a niche product. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-startup-fundraising#031",
+   "text": "As a management consultant, I keep hitting the same wall with a founder-market-fit story. Prep answers to the ten hardest questions about it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-startup-fundraising#032",
+   "text": "Build the metrics slide skeleton for a seed-deck traction slide. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-startup-fundraising#033",
+   "text": "Stress-test the valuation story for an investor update after a flat month."
+  },
+  {
+   "id": "business-startup-fundraising#034",
+   "text": "Build the metrics slide skeleton for a convertible-note terms comparison. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-startup-fundraising#035",
+   "text": "Act as a startup advisor. Write a follow-up sequence after a partner meeting for a market-sizing section for a niche product, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-startup-fundraising#036",
+   "text": "Create a data-room index for a market-sizing section for a niche product. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-startup-fundraising#037",
+   "text": "I’m working on a convertible-note terms comparison. Write a follow-up sequence after a partner meeting for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-startup-fundraising#038",
+   "text": "Create a data-room index for a competitive-slide that avoids a feature war for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-startup-fundraising#039",
+   "text": "Draft a safe-harbor forward-looking statement section for a founder-market-fit story. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-startup-fundraising#040",
+   "text": "Help me with a cold-investor outreach email: create a data-room index for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-startup-fundraising#041",
+   "text": "Stress-test the valuation story for a cold-investor outreach email. Use a formal tone throughout."
+  },
+  {
+   "id": "business-startup-fundraising#042",
+   "text": "You are a serial founder. Write a follow-up sequence after a partner meeting for a seed-deck traction slide and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-startup-fundraising#043",
+   "text": "Write the investor-update email for an investor update after a flat month. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-startup-fundraising#044",
+   "text": "Before I start on an investor update after a flat month, draft a safe-harbor forward-looking statement section for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-startup-fundraising#045",
+   "text": "Build the metrics slide skeleton for a competitive-slide that avoids a feature war. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-startup-fundraising#046",
+   "text": "Write the investor-update email for a cold-investor outreach email. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-startup-fundraising#047",
+   "text": "As a management consultant, I keep hitting the same wall with a founder-market-fit story. Draft the narrative arc for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-startup-fundraising#048",
+   "text": "Prep answers to the ten hardest questions about a convertible-note terms comparison. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-startup-fundraising#049",
+   "text": "Stress-test the valuation story for a convertible-note terms comparison."
+  },
+  {
+   "id": "business-startup-fundraising#050",
+   "text": "Draft a safe-harbor forward-looking statement section for a pre-seed pitch narrative for a logistics tool. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-startup-fundraising#051",
+   "text": "Act as a seasoned operations director. Stress-test the valuation story for a seed-deck traction slide, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-startup-fundraising#052",
+   "text": "Draft the narrative arc for a diligence data-room checklist. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-startup-fundraising#053",
+   "text": "I’m working on a use-of-funds breakdown. Build the metrics slide skeleton for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-startup-fundraising#054",
+   "text": "Stress-test the valuation story for a market-sizing section for a niche product for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-startup-fundraising#055",
+   "text": "Stress-test the valuation story for a competitive-slide that avoids a feature war. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-startup-fundraising#056",
+   "text": "Help me with a market-sizing section for a niche product: draft a safe-harbor forward-looking statement section for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-startup-fundraising#057",
+   "text": "Write the investor-update email for a convertible-note terms comparison. Use a empathetic tone throughout."
+  },
+  {
+   "id": "business-startup-fundraising#058",
+   "text": "You are a customer success director. Draft a safe-harbor forward-looking statement section for a board-observer invitation decision and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-startup-fundraising#059",
+   "text": "Create a data-room index for an investor update after a flat month. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-startup-fundraising#060",
+   "text": "Before I start on a diligence data-room checklist, write a follow-up sequence after a partner meeting for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-startup-fundraising#061",
+   "text": "Draft the narrative arc for a use-of-funds breakdown. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-startup-fundraising#062",
+   "text": "Write the investor-update email for a market-sizing section for a niche product. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-startup-fundraising#063",
+   "text": "As a startup advisor, I keep hitting the same wall with a diligence data-room checklist. Create a data-room index for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-startup-fundraising#064",
+   "text": "Write the investor-update email for a pre-seed pitch narrative for a logistics tool. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-startup-fundraising#065",
+   "text": "Build the metrics slide skeleton for a cold-investor outreach email."
+  },
+  {
+   "id": "business-startup-fundraising#066",
+   "text": "Write the investor-update email for a use-of-funds breakdown. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-startup-fundraising#067",
+   "text": "Act as a HR business partner. Draft a safe-harbor forward-looking statement section for a competitive-slide that avoids a feature war, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-startup-fundraising#068",
+   "text": "Stress-test the valuation story for a use-of-funds breakdown. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-startup-fundraising#069",
+   "text": "I’m working on a board-observer invitation decision. Prep answers to the ten hardest questions about it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-startup-fundraising#070",
+   "text": "Prep answers to the ten hardest questions about an investor update after a flat month for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-startup-fundraising#071",
+   "text": "Prep answers to the ten hardest questions about a seed-deck traction slide. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-startup-fundraising#072",
+   "text": "Help me with a bridge-round communication plan: build the metrics slide skeleton for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-startup-fundraising#073",
+   "text": "Write a follow-up sequence after a partner meeting for a board-observer invitation decision. Use a direct tone throughout."
+  },
+  {
+   "id": "business-startup-fundraising#074",
+   "text": "You are a management consultant. Create a data-room index for a bridge-round communication plan and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-startup-fundraising#075",
+   "text": "Draft a safe-harbor forward-looking statement section for a use-of-funds breakdown. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-startup-fundraising#076",
+   "text": "Before I start on a founder-market-fit story, create a data-room index for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-startup-fundraising#077",
+   "text": "Build the metrics slide skeleton for a diligence data-room checklist. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-startup-fundraising#078",
+   "text": "Draft the narrative arc for a convertible-note terms comparison. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-startup-fundraising#079",
+   "text": "As a management consultant, I keep hitting the same wall with a founder-market-fit story. Write a follow-up sequence after a partner meeting for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-startup-fundraising#080",
+   "text": "Create a data-room index for a seed-deck traction slide. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-startup-fundraising#081",
+   "text": "Draft the narrative arc for a cold-investor outreach email."
+  },
+  {
+   "id": "business-startup-fundraising#082",
+   "text": "Write the investor-update email for a diligence data-room checklist. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-startup-fundraising#083",
+   "text": "Act as a serial founder. Build the metrics slide skeleton for a pre-seed pitch narrative for a logistics tool, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-startup-fundraising#084",
+   "text": "Write the investor-update email for a founder-market-fit story. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-startup-fundraising#085",
+   "text": "I’m working on a bridge-round communication plan. Draft a safe-harbor forward-looking statement section for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-startup-fundraising#086",
+   "text": "Stress-test the valuation story for a board-observer invitation decision for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-startup-fundraising#087",
+   "text": "Build the metrics slide skeleton for a founder-market-fit story. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-startup-fundraising#088",
+   "text": "Help me with a cold-investor outreach email: prep answers to the ten hardest questions about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-startup-fundraising#089",
+   "text": "Write a follow-up sequence after a partner meeting for a competitive-slide that avoids a feature war. Use a playful tone throughout."
+  },
+  {
+   "id": "business-startup-fundraising#090",
+   "text": "You are a seasoned operations director. Write a follow-up sequence after a partner meeting for an investor update after a flat month and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-startup-fundraising#091",
+   "text": "Draft the narrative arc for a bridge-round communication plan. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-startup-fundraising#092",
+   "text": "Before I start on a seed-deck traction slide, draft a safe-harbor forward-looking statement section for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-startup-fundraising#093",
+   "text": "Write the investor-update email for a board-observer invitation decision. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-startup-fundraising#094",
+   "text": "Prep answers to the ten hardest questions about a pre-seed pitch narrative for a logistics tool. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-startup-fundraising#095",
+   "text": "As a customer success director, I keep hitting the same wall with a competitive-slide that avoids a feature war. Draft the narrative arc for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-startup-fundraising#096",
+   "text": "Build the metrics slide skeleton for a board-observer invitation decision. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-startup-fundraising#097",
+   "text": "Write the investor-update email for a bridge-round communication plan. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-startup-fundraising#098",
+   "text": "Build the metrics slide skeleton for a market-sizing section for a niche product. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-startup-fundraising#099",
+   "text": "Draft the narrative arc for a board-observer invitation decision."
+  },
+  {
+   "id": "business-startup-fundraising#100",
+   "text": "Build the metrics slide skeleton for an investor update after a flat month."
+  },
+  {
+   "id": "business-startup-fundraising#101",
+   "text": "Create a data-room index for a pre-seed pitch narrative for a logistics tool."
+  },
+  {
+   "id": "business-startup-fundraising#102",
+   "text": "Create a data-room index for a convertible-note terms comparison."
+  },
+  {
+   "id": "business-startup-fundraising#103",
+   "text": "Draft a safe-harbor forward-looking statement section for a diligence data-room checklist."
+  },
+  {
+   "id": "business-startup-fundraising#104",
+   "text": "Prep answers to the ten hardest questions about a bridge-round communication plan."
+  }
+ ]
+}

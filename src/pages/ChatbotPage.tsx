@@ -82,6 +82,7 @@ import {
   setGuestArchivedIds,
 } from "@/lib/chatArchive";
 import { CHAT_COMMAND_MODAL_ACTIONS, CHAT_COMMAND_NAV_ROUTES } from "@/lib/chatCommandRoutes";
+import { consumePromptPrefill } from "@/lib/promptPrefill";
 import { consumePendingChatInsert } from "@/lib/pendingChatInsert";
 import { useChatSpeech } from "@/hooks/useChatSpeech";
 
@@ -390,6 +391,14 @@ const ChatbotPage = () => {
 
   useEffect(() => {
     recordChatbotView();
+  }, []);
+
+  // Prompt Library handoff: "Use in Chat" on /prompt-library stages the
+  // chosen prompt in localStorage and navigates here; prefill the composer
+  // with it once and clear the staging key.
+  useEffect(() => {
+    const staged = consumePromptPrefill();
+    if (staged) setMessage(staged);
   }, []);
 
   useEffect(() => {

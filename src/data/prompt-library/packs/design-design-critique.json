@@ -1,0 +1,430 @@
+{
+ "slug": "design-design-critique",
+ "categorySlug": "design",
+ "category": "Design & Visual",
+ "title": "Design Critique",
+ "description": "Structured, kind, actionable critique sessions.",
+ "tags": [
+  "critique",
+  "feedback",
+  "review"
+ ],
+ "prompts": [
+  {
+   "id": "design-design-critique#001",
+   "text": "Write the follow-up action list from a critique of a smartwatch watchface set."
+  },
+  {
+   "id": "design-design-critique#002",
+   "text": "Write the follow-up action list from a critique of a package design for hot sauce. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-design-critique#003",
+   "text": "Act as a creative director. Propose alternate directions for a poster for a charity 5K, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-design-critique#004",
+   "text": "Write the follow-up action list from a critique of a landing page redesign draft. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-design-critique#005",
+   "text": "I’m working on a portfolio homepage. Create a scoring rubric for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-design-critique#006",
+   "text": "Propose alternate directions for a portfolio homepage for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-design-critique#007",
+   "text": "Give kind but direct feedback on a poster for a charity 5K. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-design-critique#008",
+   "text": "Help me with an infographic on recycling rules: give kind but direct feedback on it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-design-critique#009",
+   "text": "Create a scoring rubric for a package design for hot sauce. Use a formal tone throughout."
+  },
+  {
+   "id": "design-design-critique#010",
+   "text": "You are a brand designer. Identify the assumptions to test in a wayfinding map for a campus and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-design-critique#011",
+   "text": "Identify the assumptions to test in a portfolio homepage. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-design-critique#012",
+   "text": "Before I start on a package design for hot sauce, propose alternate directions for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-design-critique#013",
+   "text": "Create a scoring rubric for a dashboard concept with sparklines. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-design-critique#014",
+   "text": "Write the follow-up action list from a critique of a poster for a charity 5K. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-design-critique#015",
+   "text": "As a design-systems maintainer, I keep hitting the same wall with a smartwatch watchface set. Role-play the designer-client conversation about it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-design-critique#016",
+   "text": "Identify the assumptions to test in an app icon in three variants. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-design-critique#017",
+   "text": "Write the follow-up action list from a critique of a portfolio homepage."
+  },
+  {
+   "id": "design-design-critique#018",
+   "text": "Identify the assumptions to test in a storefront sign concept. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-design-critique#019",
+   "text": "Act as a design-systems maintainer. Identify the assumptions to test in a package design for hot sauce, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-design-critique#020",
+   "text": "List three strengths and three fixes for a portfolio homepage. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-design-critique#021",
+   "text": "I’m working on an app icon in three variants. Role-play the designer-client conversation about it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-design-critique#022",
+   "text": "Write the follow-up action list from a critique of an infographic on recycling rules for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-design-critique#023",
+   "text": "Create a scoring rubric for a landing page redesign draft. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-design-critique#024",
+   "text": "Help me with an app icon in three variants: propose alternate directions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-design-critique#025",
+   "text": "Facilitate a structured critique of a marketing email template. Use a persuasive tone throughout."
+  },
+  {
+   "id": "design-design-critique#026",
+   "text": "You are a brand designer. List three strengths and three fixes for a wayfinding map for a campus and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-design-critique#027",
+   "text": "List three strengths and three fixes for a book cover for a memoir. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-design-critique#028",
+   "text": "Before I start on a dashboard concept with sparklines, give kind but direct feedback on it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-design-critique#029",
+   "text": "List three strengths and three fixes for an infographic on recycling rules. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-design-critique#030",
+   "text": "Facilitate a structured critique of an infographic on recycling rules. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-design-critique#031",
+   "text": "As a creative director, I keep hitting the same wall with a wayfinding map for a campus. Write the follow-up action list from a critique of it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-design-critique#032",
+   "text": "Propose alternate directions for a wayfinding map for a campus. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-design-critique#033",
+   "text": "Role-play the designer-client conversation about a storefront sign concept."
+  },
+  {
+   "id": "design-design-critique#034",
+   "text": "Give kind but direct feedback on a landing page redesign draft. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-design-critique#035",
+   "text": "Act as an art director. Give kind but direct feedback on a portfolio homepage, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-design-critique#036",
+   "text": "Facilitate a structured critique of a portfolio homepage. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-design-critique#037",
+   "text": "I’m working on a storefront sign concept. Give kind but direct feedback on it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-design-critique#038",
+   "text": "Create a scoring rubric for a poster for a charity 5K for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-design-critique#039",
+   "text": "Role-play the designer-client conversation about a marketing email template. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-design-critique#040",
+   "text": "Help me with a smartwatch watchface set: propose alternate directions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-design-critique#041",
+   "text": "Facilitate a structured critique of a package design for hot sauce. Use a formal tone throughout."
+  },
+  {
+   "id": "design-design-critique#042",
+   "text": "You are a product designer with systems experience. Role-play the designer-client conversation about a package design for hot sauce and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-design-critique#043",
+   "text": "List three strengths and three fixes for a storefront sign concept. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-design-critique#044",
+   "text": "Before I start on a smartwatch watchface set, give kind but direct feedback on it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-design-critique#045",
+   "text": "Give kind but direct feedback on a book cover for a memoir. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-design-critique#046",
+   "text": "Give kind but direct feedback on an app icon in three variants. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-design-critique#047",
+   "text": "As a motion designer, I keep hitting the same wall with an infographic on recycling rules. Identify the assumptions to test in it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-design-critique#048",
+   "text": "Identify the assumptions to test in a landing page redesign draft. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-design-critique#049",
+   "text": "Propose alternate directions for a marketing email template."
+  },
+  {
+   "id": "design-design-critique#050",
+   "text": "Facilitate a structured critique of a poster for a charity 5K. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-design-critique#051",
+   "text": "Act as a creative director. Role-play the designer-client conversation about a poster for a charity 5K, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-design-critique#052",
+   "text": "Write the follow-up action list from a critique of a book cover for a memoir. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-design-critique#053",
+   "text": "I’m working on a book cover for a memoir. Role-play the designer-client conversation about it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-design-critique#054",
+   "text": "Create a scoring rubric for an app icon in three variants for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-design-critique#055",
+   "text": "Role-play the designer-client conversation about a wayfinding map for a campus. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-design-critique#056",
+   "text": "Help me with a storefront sign concept: propose alternate directions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-design-critique#057",
+   "text": "Role-play the designer-client conversation about a landing page redesign draft. Use a playful tone throughout."
+  },
+  {
+   "id": "design-design-critique#058",
+   "text": "You are a creative director. Role-play the designer-client conversation about a portfolio homepage and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-design-critique#059",
+   "text": "Role-play the designer-client conversation about an infographic on recycling rules. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-design-critique#060",
+   "text": "Before I start on a smartwatch watchface set, facilitate a structured critique of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-design-critique#061",
+   "text": "Facilitate a structured critique of an app icon in three variants. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-design-critique#062",
+   "text": "Facilitate a structured critique of a dashboard concept with sparklines. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-design-critique#063",
+   "text": "As a creative director, I keep hitting the same wall with a landing page redesign draft. Facilitate a structured critique of it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-design-critique#064",
+   "text": "Propose alternate directions for a book cover for a memoir. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-design-critique#065",
+   "text": "Facilitate a structured critique of a storefront sign concept."
+  },
+  {
+   "id": "design-design-critique#066",
+   "text": "List three strengths and three fixes for a landing page redesign draft. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-design-critique#067",
+   "text": "Act as a motion designer. Write the follow-up action list from a critique of an app icon in three variants, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-design-critique#068",
+   "text": "Propose alternate directions for an infographic on recycling rules. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-design-critique#069",
+   "text": "I’m working on a book cover for a memoir. Create a scoring rubric for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-design-critique#070",
+   "text": "Write the follow-up action list from a critique of a dashboard concept with sparklines for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-design-critique#071",
+   "text": "Propose alternate directions for a landing page redesign draft. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-design-critique#072",
+   "text": "Help me with a wayfinding map for a campus: create a scoring rubric for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-design-critique#073",
+   "text": "Identify the assumptions to test in a marketing email template. Use a persuasive tone throughout."
+  },
+  {
+   "id": "design-design-critique#074",
+   "text": "You are a design-systems maintainer. Write the follow-up action list from a critique of a storefront sign concept and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-design-critique#075",
+   "text": "Give kind but direct feedback on a package design for hot sauce. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-design-critique#076",
+   "text": "Before I start on a book cover for a memoir, identify the assumptions to test in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-design-critique#077",
+   "text": "List three strengths and three fixes for a package design for hot sauce. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-design-critique#078",
+   "text": "Write the follow-up action list from a critique of a marketing email template. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-design-critique#079",
+   "text": "As a creative director, I keep hitting the same wall with a wayfinding map for a campus. Give kind but direct feedback on it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-design-critique#080",
+   "text": "Facilitate a structured critique of a book cover for a memoir. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-design-critique#081",
+   "text": "Identify the assumptions to test in a poster for a charity 5K."
+  },
+  {
+   "id": "design-design-critique#082",
+   "text": "Propose alternate directions for a dashboard concept with sparklines. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-design-critique#083",
+   "text": "Act as a creative director. List three strengths and three fixes for a poster for a charity 5K, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-design-critique#084",
+   "text": "Identify the assumptions to test in a dashboard concept with sparklines. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-design-critique#085",
+   "text": "I’m working on a marketing email template. List three strengths and three fixes for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-design-critique#086",
+   "text": "Create a scoring rubric for a storefront sign concept for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-design-critique#087",
+   "text": "Facilitate a structured critique of a wayfinding map for a campus. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-design-critique#088",
+   "text": "Help me with a marketing email template: create a scoring rubric for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-design-critique#089",
+   "text": "Give kind but direct feedback on a marketing email template. Use a persuasive tone throughout."
+  },
+  {
+   "id": "design-design-critique#090",
+   "text": "You are a presentation designer. Role-play the designer-client conversation about a dashboard concept with sparklines and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-design-critique#091",
+   "text": "List three strengths and three fixes for a smartwatch watchface set. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-design-critique#092",
+   "text": "Before I start on a smartwatch watchface set, identify the assumptions to test in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-design-critique#093",
+   "text": "List three strengths and three fixes for a dashboard concept with sparklines. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-design-critique#094",
+   "text": "Create a scoring rubric for an infographic on recycling rules. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-design-critique#095",
+   "text": "As a creative director, I keep hitting the same wall with an app icon in three variants. List three strengths and three fixes for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-design-critique#096",
+   "text": "Create a scoring rubric for a smartwatch watchface set. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-design-critique#097",
+   "text": "Write the follow-up action list from a critique of a smartwatch watchface set. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-design-critique#098",
+   "text": "Write the follow-up action list from a critique of a package design for hot sauce. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-design-critique#099",
+   "text": "Propose alternate directions for a poster for a charity 5K."
+  },
+  {
+   "id": "design-design-critique#100",
+   "text": "Write the follow-up action list from a critique of a landing page redesign draft."
+  },
+  {
+   "id": "design-design-critique#101",
+   "text": "Create a scoring rubric for a portfolio homepage."
+  },
+  {
+   "id": "design-design-critique#102",
+   "text": "Propose alternate directions for a portfolio homepage."
+  },
+  {
+   "id": "design-design-critique#103",
+   "text": "Give kind but direct feedback on a poster for a charity 5K."
+  },
+  {
+   "id": "design-design-critique#104",
+   "text": "Give kind but direct feedback on an infographic on recycling rules."
+  }
+ ]
+}

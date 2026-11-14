@@ -1,0 +1,430 @@
+{
+ "slug": "education-language-learning",
+ "categorySlug": "education",
+ "category": "Education & Learning",
+ "title": "Language Learning",
+ "description": "Drills, dialogues, and feedback for real conversations.",
+ "tags": [
+  "languages",
+  "practice",
+  "dialogue"
+ ],
+ "prompts": [
+  {
+   "id": "education-language-learning#001",
+   "text": "Explain the cultural do’s and don’ts around small talk at German networking events."
+  },
+  {
+   "id": "education-language-learning#002",
+   "text": "Design a shadowing exercise for small talk at German networking events. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "education-language-learning#003",
+   "text": "Act as a study-skills specialist. List the twenty highest-frequency phrases for writing polite emails in French, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "education-language-learning#004",
+   "text": "List the twenty highest-frequency phrases for small talk at German networking events. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "education-language-learning#005",
+   "text": "I’m working on navigating a pharmacy in Spanish. Create a drill set with answers for it and explain your reasoning as you go."
+  },
+  {
+   "id": "education-language-learning#006",
+   "text": "Role-play the scenario with corrections for small talk at German networking events for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "education-language-learning#007",
+   "text": "Create flashcard prompts with spaced review for ordering food confidently in Japanese. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-language-learning#008",
+   "text": "Help me with understanding fast Portuguese in Brazil: list the twenty highest-frequency phrases for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "education-language-learning#009",
+   "text": "Create flashcard prompts with spaced review for writing polite emails in French. Use a encouraging tone throughout."
+  },
+  {
+   "id": "education-language-learning#010",
+   "text": "You are an university tutor. Create a drill set with answers for understanding news headlines in Arabic and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "education-language-learning#011",
+   "text": "Create a drill set with answers for understanding fast Portuguese in Brazil. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "education-language-learning#012",
+   "text": "Before I start on negotiating at a market in Mandarin, design a shadowing exercise for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "education-language-learning#013",
+   "text": "Write a grammar micro-lesson on politeness for making friends in a new city in Dutch. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "education-language-learning#014",
+   "text": "Write a grammar micro-lesson on politeness for ordering food confidently in Japanese. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "education-language-learning#015",
+   "text": "As an exam-prep tutor, I keep hitting the same wall with ordering food confidently in Japanese. Role-play the scenario with corrections for it and show me what I’m probably missing."
+  },
+  {
+   "id": "education-language-learning#016",
+   "text": "Create flashcard prompts with spaced review for teaching basics to a partner in Swedish. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "education-language-learning#017",
+   "text": "Write a graded dialogue for practicing apologizing properly in Korean."
+  },
+  {
+   "id": "education-language-learning#018",
+   "text": "Design a shadowing exercise for job interviews in English as a second language. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "education-language-learning#019",
+   "text": "Act as a patient homeschooling parent. Create flashcard prompts with spaced review for apologizing properly in Korean, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "education-language-learning#020",
+   "text": "Write a graded dialogue for practicing job interviews in English as a second language. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "education-language-learning#021",
+   "text": "I’m working on apologizing properly in Korean. Design a shadowing exercise for it and explain your reasoning as you go."
+  },
+  {
+   "id": "education-language-learning#022",
+   "text": "Write a grammar micro-lesson on politeness for small talk at German networking events for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "education-language-learning#023",
+   "text": "Role-play the scenario with corrections for negotiating at a market in Mandarin. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-language-learning#024",
+   "text": "Help me with writing polite emails in French: write a grammar micro-lesson on politeness for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "education-language-learning#025",
+   "text": "Design a shadowing exercise for renting an apartment in Italian. Use a encouraging tone throughout."
+  },
+  {
+   "id": "education-language-learning#026",
+   "text": "You are an university tutor. Create flashcard prompts with spaced review for understanding news headlines in Arabic and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "education-language-learning#027",
+   "text": "Write a grammar micro-lesson on politeness for negotiating at a market in Mandarin. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "education-language-learning#028",
+   "text": "Before I start on making friends in a new city in Dutch, write a graded dialogue for practicing it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "education-language-learning#029",
+   "text": "Explain the cultural do’s and don’ts around making friends in a new city in Dutch. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "education-language-learning#030",
+   "text": "Create a drill set with answers for ordering food confidently in Japanese. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "education-language-learning#031",
+   "text": "As an instructional designer, I keep hitting the same wall with navigating a pharmacy in Spanish. Explain the cultural do’s and don’ts around it and show me what I’m probably missing."
+  },
+  {
+   "id": "education-language-learning#032",
+   "text": "List the twenty highest-frequency phrases for apologizing properly in Korean. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "education-language-learning#033",
+   "text": "Role-play the scenario with corrections for writing polite emails in French."
+  },
+  {
+   "id": "education-language-learning#034",
+   "text": "Create flashcard prompts with spaced review for renting an apartment in Italian. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "education-language-learning#035",
+   "text": "Act as a polyglot language coach. Design a shadowing exercise for making friends in a new city in Dutch, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "education-language-learning#036",
+   "text": "Role-play the scenario with corrections for renting an apartment in Italian. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "education-language-learning#037",
+   "text": "I’m working on ordering food confidently in Japanese. Write a graded dialogue for practicing it and explain your reasoning as you go."
+  },
+  {
+   "id": "education-language-learning#038",
+   "text": "Create a drill set with answers for renting an apartment in Italian for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "education-language-learning#039",
+   "text": "Write a graded dialogue for practicing navigating a pharmacy in Spanish. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-language-learning#040",
+   "text": "Help me with negotiating at a market in Mandarin: create a drill set with answers for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "education-language-learning#041",
+   "text": "Design a shadowing exercise for understanding news headlines in Arabic. Use a formal tone throughout."
+  },
+  {
+   "id": "education-language-learning#042",
+   "text": "You are an instructional designer. Write a graded dialogue for practicing renting an apartment in Italian and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "education-language-learning#043",
+   "text": "Write a graded dialogue for practicing understanding fast Portuguese in Brazil. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "education-language-learning#044",
+   "text": "Before I start on understanding fast Portuguese in Brazil, create flashcard prompts with spaced review for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "education-language-learning#045",
+   "text": "List the twenty highest-frequency phrases for negotiating at a market in Mandarin. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "education-language-learning#046",
+   "text": "Write a graded dialogue for practicing understanding news headlines in Arabic. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "education-language-learning#047",
+   "text": "As an experienced high-school teacher, I keep hitting the same wall with job interviews in English as a second language. Create a drill set with answers for it and show me what I’m probably missing."
+  },
+  {
+   "id": "education-language-learning#048",
+   "text": "Create flashcard prompts with spaced review for negotiating at a market in Mandarin. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "education-language-learning#049",
+   "text": "Create a drill set with answers for small talk at German networking events."
+  },
+  {
+   "id": "education-language-learning#050",
+   "text": "Create a drill set with answers for writing polite emails in French. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "education-language-learning#051",
+   "text": "Act as a study-skills specialist. Explain the cultural do’s and don’ts around renting an apartment in Italian, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "education-language-learning#052",
+   "text": "Create flashcard prompts with spaced review for making friends in a new city in Dutch. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "education-language-learning#053",
+   "text": "I’m working on teaching basics to a partner in Swedish. List the twenty highest-frequency phrases for it and explain your reasoning as you go."
+  },
+  {
+   "id": "education-language-learning#054",
+   "text": "Write a grammar micro-lesson on politeness for renting an apartment in Italian for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "education-language-learning#055",
+   "text": "Create flashcard prompts with spaced review for job interviews in English as a second language. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-language-learning#056",
+   "text": "Help me with negotiating at a market in Mandarin: write a graded dialogue for practicing it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "education-language-learning#057",
+   "text": "Write a grammar micro-lesson on politeness for job interviews in English as a second language. Use a formal tone throughout."
+  },
+  {
+   "id": "education-language-learning#058",
+   "text": "You are a polyglot language coach. Create flashcard prompts with spaced review for navigating a pharmacy in Spanish and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "education-language-learning#059",
+   "text": "Create a drill set with answers for apologizing properly in Korean. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "education-language-learning#060",
+   "text": "Before I start on renting an apartment in Italian, list the twenty highest-frequency phrases for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "education-language-learning#061",
+   "text": "Design a shadowing exercise for ordering food confidently in Japanese. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "education-language-learning#062",
+   "text": "List the twenty highest-frequency phrases for making friends in a new city in Dutch. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "education-language-learning#063",
+   "text": "As an university tutor, I keep hitting the same wall with understanding fast Portuguese in Brazil. Write a grammar micro-lesson on politeness for it and show me what I’m probably missing."
+  },
+  {
+   "id": "education-language-learning#064",
+   "text": "Write a graded dialogue for practicing writing polite emails in French. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "education-language-learning#065",
+   "text": "Design a shadowing exercise for understanding fast Portuguese in Brazil."
+  },
+  {
+   "id": "education-language-learning#066",
+   "text": "Explain the cultural do’s and don’ts around ordering food confidently in Japanese. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "education-language-learning#067",
+   "text": "Act as a study-skills specialist. Explain the cultural do’s and don’ts around writing polite emails in French, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "education-language-learning#068",
+   "text": "List the twenty highest-frequency phrases for navigating a pharmacy in Spanish. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "education-language-learning#069",
+   "text": "I’m working on teaching basics to a partner in Swedish. Write a grammar micro-lesson on politeness for it and explain your reasoning as you go."
+  },
+  {
+   "id": "education-language-learning#070",
+   "text": "Write a grammar micro-lesson on politeness for understanding news headlines in Arabic for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "education-language-learning#071",
+   "text": "Design a shadowing exercise for navigating a pharmacy in Spanish. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-language-learning#072",
+   "text": "Help me with teaching basics to a partner in Swedish: design a shadowing exercise for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "education-language-learning#073",
+   "text": "Design a shadowing exercise for writing polite emails in French. Use a encouraging tone throughout."
+  },
+  {
+   "id": "education-language-learning#074",
+   "text": "You are an university tutor. Explain the cultural do’s and don’ts around understanding news headlines in Arabic and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "education-language-learning#075",
+   "text": "Write a grammar micro-lesson on politeness for apologizing properly in Korean. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "education-language-learning#076",
+   "text": "Before I start on making friends in a new city in Dutch, create a drill set with answers for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "education-language-learning#077",
+   "text": "Write a graded dialogue for practicing teaching basics to a partner in Swedish. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "education-language-learning#078",
+   "text": "List the twenty highest-frequency phrases for job interviews in English as a second language. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "education-language-learning#079",
+   "text": "As an instructional designer, I keep hitting the same wall with navigating a pharmacy in Spanish. Write a grammar micro-lesson on politeness for it and show me what I’m probably missing."
+  },
+  {
+   "id": "education-language-learning#080",
+   "text": "Explain the cultural do’s and don’ts around teaching basics to a partner in Swedish. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "education-language-learning#081",
+   "text": "List the twenty highest-frequency phrases for ordering food confidently in Japanese."
+  },
+  {
+   "id": "education-language-learning#082",
+   "text": "Explain the cultural do’s and don’ts around apologizing properly in Korean. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "education-language-learning#083",
+   "text": "Act as a study-skills specialist. Explain the cultural do’s and don’ts around understanding fast Portuguese in Brazil, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "education-language-learning#084",
+   "text": "Role-play the scenario with corrections for apologizing properly in Korean. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "education-language-learning#085",
+   "text": "I’m working on understanding fast Portuguese in Brazil. Role-play the scenario with corrections for it and explain your reasoning as you go."
+  },
+  {
+   "id": "education-language-learning#086",
+   "text": "Create flashcard prompts with spaced review for small talk at German networking events for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "education-language-learning#087",
+   "text": "Explain the cultural do’s and don’ts around negotiating at a market in Mandarin. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-language-learning#088",
+   "text": "Help me with job interviews in English as a second language: role-play the scenario with corrections for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "education-language-learning#089",
+   "text": "Role-play the scenario with corrections for navigating a pharmacy in Spanish. Use a professional tone throughout."
+  },
+  {
+   "id": "education-language-learning#090",
+   "text": "You are an experienced high-school teacher. Role-play the scenario with corrections for making friends in a new city in Dutch and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "education-language-learning#091",
+   "text": "Write a graded dialogue for practicing small talk at German networking events. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "education-language-learning#092",
+   "text": "Before I start on understanding news headlines in Arabic, role-play the scenario with corrections for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "education-language-learning#093",
+   "text": "Explain the cultural do’s and don’ts around job interviews in English as a second language. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "education-language-learning#094",
+   "text": "List the twenty highest-frequency phrases for understanding news headlines in Arabic. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "education-language-learning#095",
+   "text": "As an university tutor, I keep hitting the same wall with teaching basics to a partner in Swedish. Create a drill set with answers for it and show me what I’m probably missing."
+  },
+  {
+   "id": "education-language-learning#096",
+   "text": "Role-play the scenario with corrections for teaching basics to a partner in Swedish. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "education-language-learning#097",
+   "text": "Explain the cultural do’s and don’ts around small talk at German networking events. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-language-learning#098",
+   "text": "Design a shadowing exercise for small talk at German networking events. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-language-learning#099",
+   "text": "List the twenty highest-frequency phrases for writing polite emails in French."
+  },
+  {
+   "id": "education-language-learning#100",
+   "text": "List the twenty highest-frequency phrases for small talk at German networking events."
+  },
+  {
+   "id": "education-language-learning#101",
+   "text": "Create a drill set with answers for navigating a pharmacy in Spanish."
+  },
+  {
+   "id": "education-language-learning#102",
+   "text": "Role-play the scenario with corrections for small talk at German networking events."
+  },
+  {
+   "id": "education-language-learning#103",
+   "text": "Create flashcard prompts with spaced review for ordering food confidently in Japanese."
+  },
+  {
+   "id": "education-language-learning#104",
+   "text": "List the twenty highest-frequency phrases for understanding fast Portuguese in Brazil."
+  }
+ ]
+}

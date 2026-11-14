@@ -1,0 +1,430 @@
+{
+ "slug": "data-dashboards-kpis",
+ "categorySlug": "data",
+ "category": "Data & Analytics",
+ "title": "Dashboards & KPIs",
+ "description": "Metrics that map to decisions, rendered readably.",
+ "tags": [
+  "kpi",
+  "dashboard",
+  "metrics"
+ ],
+ "prompts": [
+  {
+   "id": "data-dashboards-kpis#001",
+   "text": "List vanity metrics to avoid for an executive dashboard for a retail chain."
+  },
+  {
+   "id": "data-dashboards-kpis#002",
+   "text": "List vanity metrics to avoid for a nonprofit impact dashboard. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-dashboards-kpis#003",
+   "text": "Act as a data-quality steward. Write the metric definitions and formulas for an executive dashboard for a retail chain, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-dashboards-kpis#004",
+   "text": "Write the metric definitions and formulas for KPIs for a customer-support team. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-dashboards-kpis#005",
+   "text": "I’m working on an executive dashboard for a retail chain. Propose the layout and chart choices for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-dashboards-kpis#006",
+   "text": "Design alert thresholds for a finance monthly close dashboard for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-dashboards-kpis#007",
+   "text": "Propose the layout and chart choices for a supply-chain health dashboard. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-dashboards-kpis#008",
+   "text": "Help me with a finance monthly close dashboard: design the metric set for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-dashboards-kpis#009",
+   "text": "Write the metric definitions and formulas for a content-performance dashboard. Use a encouraging tone throughout."
+  },
+  {
+   "id": "data-dashboards-kpis#010",
+   "text": "You are a business-intelligence lead. Design alert thresholds for a content-performance dashboard and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-dashboards-kpis#011",
+   "text": "Design alert thresholds for an executive dashboard for a retail chain. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-dashboards-kpis#012",
+   "text": "Before I start on a finance monthly close dashboard, create a drill-down structure for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-dashboards-kpis#013",
+   "text": "Write a data-dictionary stub for KPIs for a customer-support team. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-dashboards-kpis#014",
+   "text": "List vanity metrics to avoid for a HR people-metrics board. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-dashboards-kpis#015",
+   "text": "As a business-intelligence lead, I keep hitting the same wall with KPIs for a customer-support team. Create a drill-down structure for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-dashboards-kpis#016",
+   "text": "Propose the layout and chart choices for a product-engagement scorecard. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-dashboards-kpis#017",
+   "text": "Write a data-dictionary stub for a finance monthly close dashboard."
+  },
+  {
+   "id": "data-dashboards-kpis#018",
+   "text": "Create a drill-down structure for a nonprofit impact dashboard. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-dashboards-kpis#019",
+   "text": "Act as an experimentation specialist. Draft a weekly-usage ritual for a product-engagement scorecard, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-dashboards-kpis#020",
+   "text": "Draft a weekly-usage ritual for a HR people-metrics board. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-dashboards-kpis#021",
+   "text": "I’m working on an ops dashboard for a delivery fleet. Design the metric set for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-dashboards-kpis#022",
+   "text": "Design alert thresholds for a quality-control dashboard for manufacturing for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-dashboards-kpis#023",
+   "text": "Design the metric set for KPIs for a customer-support team. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-dashboards-kpis#024",
+   "text": "Help me with KPIs for a customer-support team: propose the layout and chart choices for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-dashboards-kpis#025",
+   "text": "Design the metric set for an executive dashboard for a retail chain. Use a friendly tone throughout."
+  },
+  {
+   "id": "data-dashboards-kpis#026",
+   "text": "You are a data-quality steward. Write the metric definitions and formulas for a nonprofit impact dashboard and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-dashboards-kpis#027",
+   "text": "Draft a weekly-usage ritual for a nonprofit impact dashboard. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-dashboards-kpis#028",
+   "text": "Before I start on a marketing funnel dashboard, design alert thresholds for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-dashboards-kpis#029",
+   "text": "Propose the layout and chart choices for an ops dashboard for a delivery fleet. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-dashboards-kpis#030",
+   "text": "Design alert thresholds for KPIs for a customer-support team. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-dashboards-kpis#031",
+   "text": "As a data-quality steward, I keep hitting the same wall with a quality-control dashboard for manufacturing. Create a drill-down structure for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-dashboards-kpis#032",
+   "text": "Write a data-dictionary stub for a product-engagement scorecard. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-dashboards-kpis#033",
+   "text": "Propose the layout and chart choices for a content-performance dashboard."
+  },
+  {
+   "id": "data-dashboards-kpis#034",
+   "text": "Draft a weekly-usage ritual for a content-performance dashboard. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-dashboards-kpis#035",
+   "text": "Act as a statistics tutor. Design alert thresholds for an ops dashboard for a delivery fleet, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-dashboards-kpis#036",
+   "text": "Write the metric definitions and formulas for a supply-chain health dashboard. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-dashboards-kpis#037",
+   "text": "I’m working on a nonprofit impact dashboard. Propose the layout and chart choices for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-dashboards-kpis#038",
+   "text": "Design the metric set for a marketing funnel dashboard for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-dashboards-kpis#039",
+   "text": "Propose the layout and chart choices for a HR people-metrics board. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-dashboards-kpis#040",
+   "text": "Help me with a finance monthly close dashboard: write the metric definitions and formulas for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-dashboards-kpis#041",
+   "text": "Design the metric set for a SaaS revenue-metrics board. Use a direct tone throughout."
+  },
+  {
+   "id": "data-dashboards-kpis#042",
+   "text": "You are a senior data analyst. Design the metric set for a quality-control dashboard for manufacturing and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-dashboards-kpis#043",
+   "text": "List vanity metrics to avoid for a supply-chain health dashboard. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-dashboards-kpis#044",
+   "text": "Before I start on an ops dashboard for a delivery fleet, create a drill-down structure for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-dashboards-kpis#045",
+   "text": "Draft a weekly-usage ritual for a marketing funnel dashboard. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-dashboards-kpis#046",
+   "text": "Propose the layout and chart choices for a SaaS revenue-metrics board. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-dashboards-kpis#047",
+   "text": "As a data-quality steward, I keep hitting the same wall with an ops dashboard for a delivery fleet. Draft a weekly-usage ritual for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-dashboards-kpis#048",
+   "text": "Create a drill-down structure for an executive dashboard for a retail chain. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-dashboards-kpis#049",
+   "text": "List vanity metrics to avoid for a marketing funnel dashboard."
+  },
+  {
+   "id": "data-dashboards-kpis#050",
+   "text": "Create a drill-down structure for a supply-chain health dashboard. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-dashboards-kpis#051",
+   "text": "Act as a data storyteller. List vanity metrics to avoid for KPIs for a customer-support team, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-dashboards-kpis#052",
+   "text": "Create a drill-down structure for a product-engagement scorecard. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-dashboards-kpis#053",
+   "text": "I’m working on a content-performance dashboard. List vanity metrics to avoid for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-dashboards-kpis#054",
+   "text": "Write the metric definitions and formulas for a HR people-metrics board for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-dashboards-kpis#055",
+   "text": "Draft a weekly-usage ritual for an executive dashboard for a retail chain. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-dashboards-kpis#056",
+   "text": "Help me with a nonprofit impact dashboard: write a data-dictionary stub for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-dashboards-kpis#057",
+   "text": "Write the metric definitions and formulas for a SaaS revenue-metrics board. Use a direct tone throughout."
+  },
+  {
+   "id": "data-dashboards-kpis#058",
+   "text": "You are an experimentation specialist. List vanity metrics to avoid for a finance monthly close dashboard and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-dashboards-kpis#059",
+   "text": "Write a data-dictionary stub for a marketing funnel dashboard. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-dashboards-kpis#060",
+   "text": "Before I start on a finance monthly close dashboard, draft a weekly-usage ritual for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-dashboards-kpis#061",
+   "text": "Design alert thresholds for a product-engagement scorecard. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-dashboards-kpis#062",
+   "text": "Draft a weekly-usage ritual for KPIs for a customer-support team. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-dashboards-kpis#063",
+   "text": "As an analytics engineer, I keep hitting the same wall with a supply-chain health dashboard. Write a data-dictionary stub for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-dashboards-kpis#064",
+   "text": "Draft a weekly-usage ritual for a SaaS revenue-metrics board. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-dashboards-kpis#065",
+   "text": "Write the metric definitions and formulas for a marketing funnel dashboard."
+  },
+  {
+   "id": "data-dashboards-kpis#066",
+   "text": "List vanity metrics to avoid for a quality-control dashboard for manufacturing. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-dashboards-kpis#067",
+   "text": "Act as a data-quality steward. Design the metric set for a HR people-metrics board, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-dashboards-kpis#068",
+   "text": "Design the metric set for a nonprofit impact dashboard. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-dashboards-kpis#069",
+   "text": "I’m working on a SaaS revenue-metrics board. Create a drill-down structure for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-dashboards-kpis#070",
+   "text": "List vanity metrics to avoid for a SaaS revenue-metrics board for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-dashboards-kpis#071",
+   "text": "Write a data-dictionary stub for a HR people-metrics board. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-dashboards-kpis#072",
+   "text": "Help me with a HR people-metrics board: create a drill-down structure for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-dashboards-kpis#073",
+   "text": "Create a drill-down structure for a content-performance dashboard. Use a encouraging tone throughout."
+  },
+  {
+   "id": "data-dashboards-kpis#074",
+   "text": "You are a senior data analyst. Propose the layout and chart choices for a quality-control dashboard for manufacturing and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-dashboards-kpis#075",
+   "text": "List vanity metrics to avoid for a product-engagement scorecard. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-dashboards-kpis#076",
+   "text": "Before I start on a nonprofit impact dashboard, design alert thresholds for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-dashboards-kpis#077",
+   "text": "Propose the layout and chart choices for a finance monthly close dashboard. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-dashboards-kpis#078",
+   "text": "Write the metric definitions and formulas for an ops dashboard for a delivery fleet. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-dashboards-kpis#079",
+   "text": "As an analytics engineer, I keep hitting the same wall with a supply-chain health dashboard. Draft a weekly-usage ritual for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-dashboards-kpis#080",
+   "text": "Design alert thresholds for a SaaS revenue-metrics board. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-dashboards-kpis#081",
+   "text": "Draft a weekly-usage ritual for a quality-control dashboard for manufacturing."
+  },
+  {
+   "id": "data-dashboards-kpis#082",
+   "text": "Design the metric set for a product-engagement scorecard. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-dashboards-kpis#083",
+   "text": "Act as an experimentation specialist. Write the metric definitions and formulas for a product-engagement scorecard, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-dashboards-kpis#084",
+   "text": "Design the metric set for a content-performance dashboard. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-dashboards-kpis#085",
+   "text": "I’m working on an ops dashboard for a delivery fleet. List vanity metrics to avoid for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-dashboards-kpis#086",
+   "text": "Write the metric definitions and formulas for a quality-control dashboard for manufacturing for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-dashboards-kpis#087",
+   "text": "Write a data-dictionary stub for a quality-control dashboard for manufacturing. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-dashboards-kpis#088",
+   "text": "Help me with an executive dashboard for a retail chain: write a data-dictionary stub for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-dashboards-kpis#089",
+   "text": "Design alert thresholds for a supply-chain health dashboard. Use a encouraging tone throughout."
+  },
+  {
+   "id": "data-dashboards-kpis#090",
+   "text": "You are a data-quality steward. Create a drill-down structure for a marketing funnel dashboard and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-dashboards-kpis#091",
+   "text": "Propose the layout and chart choices for a marketing funnel dashboard. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-dashboards-kpis#092",
+   "text": "Before I start on a supply-chain health dashboard, design the metric set for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-dashboards-kpis#093",
+   "text": "Design alert thresholds for a HR people-metrics board. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-dashboards-kpis#094",
+   "text": "Write a data-dictionary stub for a SaaS revenue-metrics board. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-dashboards-kpis#095",
+   "text": "As a data-quality steward, I keep hitting the same wall with an ops dashboard for a delivery fleet. Write a data-dictionary stub for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-dashboards-kpis#096",
+   "text": "Write a data-dictionary stub for a content-performance dashboard. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-dashboards-kpis#097",
+   "text": "List vanity metrics to avoid for an executive dashboard for a retail chain. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-dashboards-kpis#098",
+   "text": "List vanity metrics to avoid for a nonprofit impact dashboard. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-dashboards-kpis#099",
+   "text": "Write the metric definitions and formulas for an executive dashboard for a retail chain."
+  },
+  {
+   "id": "data-dashboards-kpis#100",
+   "text": "Write the metric definitions and formulas for KPIs for a customer-support team."
+  },
+  {
+   "id": "data-dashboards-kpis#101",
+   "text": "Propose the layout and chart choices for an executive dashboard for a retail chain."
+  },
+  {
+   "id": "data-dashboards-kpis#102",
+   "text": "Design alert thresholds for a finance monthly close dashboard."
+  },
+  {
+   "id": "data-dashboards-kpis#103",
+   "text": "Propose the layout and chart choices for a supply-chain health dashboard."
+  },
+  {
+   "id": "data-dashboards-kpis#104",
+   "text": "Design the metric set for a finance monthly close dashboard."
+  }
+ ]
+}

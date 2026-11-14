@@ -1,0 +1,430 @@
+{
+ "slug": "education-exam-prep",
+ "categorySlug": "education",
+ "category": "Education & Learning",
+ "title": "Exam Prep",
+ "description": "Practice sets, timing strategy, and calm-day routines.",
+ "tags": [
+  "exams",
+  "practice",
+  "strategy"
+ ],
+ "prompts": [
+  {
+   "id": "education-exam-prep#001",
+   "text": "Write a timing strategy for a CPA audit section."
+  },
+  {
+   "id": "education-exam-prep#002",
+   "text": "Write two full practice essays with critiques for the bar exam’s evidence essays. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "education-exam-prep#003",
+   "text": "Act as a polyglot language coach. Write two full practice essays with critiques for a driving-theory multiple-choice test, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "education-exam-prep#004",
+   "text": "Explain how graders score a nursing pharmacology final. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "education-exam-prep#005",
+   "text": "I’m working on a coding interview loop. Write two full practice essays with critiques for it and explain your reasoning as you go."
+  },
+  {
+   "id": "education-exam-prep#006",
+   "text": "Create a ten-question practice set with answers for a coding interview loop for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "education-exam-prep#007",
+   "text": "Produce a calm-day morning routine for the JLPT N3 listening section. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-exam-prep#008",
+   "text": "Help me with a coding interview loop: produce a calm-day morning routine for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "education-exam-prep#009",
+   "text": "Create a ten-question practice set with answers for a PMP certification exam. Use a professional tone throughout."
+  },
+  {
+   "id": "education-exam-prep#010",
+   "text": "You are an exam-prep tutor. List the highest-frequency topics for GCSE physics paper 2 and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "education-exam-prep#011",
+   "text": "List the highest-frequency topics for the SAT math section. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "education-exam-prep#012",
+   "text": "Before I start on GCSE physics paper 2, create a ten-question practice set with answers for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "education-exam-prep#013",
+   "text": "Explain how graders score GCSE physics paper 2. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "education-exam-prep#014",
+   "text": "List the highest-frequency topics for the bar exam’s evidence essays. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "education-exam-prep#015",
+   "text": "As an instructional designer, I keep hitting the same wall with a PMP certification exam. List the highest-frequency topics for it and show me what I’m probably missing."
+  },
+  {
+   "id": "education-exam-prep#016",
+   "text": "List the highest-frequency topics for the IELTS writing task 2. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "education-exam-prep#017",
+   "text": "Create a final-week revision plan for the SAT math section."
+  },
+  {
+   "id": "education-exam-prep#018",
+   "text": "Write a timing strategy for GCSE physics paper 2. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "education-exam-prep#019",
+   "text": "Act as a polyglot language coach. Create a ten-question practice set with answers for a driving-theory multiple-choice test, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "education-exam-prep#020",
+   "text": "Write a timing strategy for a PMP certification exam. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "education-exam-prep#021",
+   "text": "I’m working on a nursing pharmacology final. Produce a calm-day morning routine for it and explain your reasoning as you go."
+  },
+  {
+   "id": "education-exam-prep#022",
+   "text": "Produce a calm-day morning routine for the US citizenship civics test for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "education-exam-prep#023",
+   "text": "Explain how graders score a driving-theory multiple-choice test. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-exam-prep#024",
+   "text": "Help me with a nursing pharmacology final: create a ten-question practice set with answers for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "education-exam-prep#025",
+   "text": "Create a final-week revision plan for a coding interview loop. Use a encouraging tone throughout."
+  },
+  {
+   "id": "education-exam-prep#026",
+   "text": "You are a study-skills specialist. Create a ten-question practice set with answers for the GRE analytical writing and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "education-exam-prep#027",
+   "text": "Create a final-week revision plan for a nursing pharmacology final. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "education-exam-prep#028",
+   "text": "Before I start on a CPA audit section, design a mistake-log template for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "education-exam-prep#029",
+   "text": "Create a final-week revision plan for the GRE analytical writing. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "education-exam-prep#030",
+   "text": "List the highest-frequency topics for a nursing pharmacology final. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "education-exam-prep#031",
+   "text": "As an university tutor, I keep hitting the same wall with a coding interview loop. Explain how graders score it and show me what I’m probably missing."
+  },
+  {
+   "id": "education-exam-prep#032",
+   "text": "Create a final-week revision plan for a CPA audit section. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "education-exam-prep#033",
+   "text": "List the highest-frequency topics for a coding interview loop."
+  },
+  {
+   "id": "education-exam-prep#034",
+   "text": "Write two full practice essays with critiques for the JLPT N3 listening section. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "education-exam-prep#035",
+   "text": "Act as a museum educator. Write two full practice essays with critiques for the IELTS writing task 2, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "education-exam-prep#036",
+   "text": "Produce a calm-day morning routine for a driving-theory multiple-choice test. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "education-exam-prep#037",
+   "text": "I’m working on the SAT math section. Write two full practice essays with critiques for it and explain your reasoning as you go."
+  },
+  {
+   "id": "education-exam-prep#038",
+   "text": "Produce a calm-day morning routine for the bar exam’s evidence essays for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "education-exam-prep#039",
+   "text": "Create a final-week revision plan for the IELTS writing task 2. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-exam-prep#040",
+   "text": "Help me with a CPA audit section: list the highest-frequency topics for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "education-exam-prep#041",
+   "text": "Produce a calm-day morning routine for the IELTS writing task 2. Use a professional tone throughout."
+  },
+  {
+   "id": "education-exam-prep#042",
+   "text": "You are a study-skills specialist. Write a timing strategy for the GRE analytical writing and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "education-exam-prep#043",
+   "text": "Design a mistake-log template for the bar exam’s evidence essays. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "education-exam-prep#044",
+   "text": "Before I start on a nursing pharmacology final, design a mistake-log template for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "education-exam-prep#045",
+   "text": "Design a mistake-log template for the JLPT N3 listening section. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "education-exam-prep#046",
+   "text": "Create a final-week revision plan for the JLPT N3 listening section. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "education-exam-prep#047",
+   "text": "As an instructional designer, I keep hitting the same wall with the IELTS writing task 2. Explain how graders score it and show me what I’m probably missing."
+  },
+  {
+   "id": "education-exam-prep#048",
+   "text": "Design a mistake-log template for the IELTS writing task 2. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "education-exam-prep#049",
+   "text": "Create a ten-question practice set with answers for the SAT math section."
+  },
+  {
+   "id": "education-exam-prep#050",
+   "text": "Create a ten-question practice set with answers for the bar exam’s evidence essays. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "education-exam-prep#051",
+   "text": "Act as an instructional designer. Explain how graders score the SAT math section, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "education-exam-prep#052",
+   "text": "Write a timing strategy for the US citizenship civics test. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "education-exam-prep#053",
+   "text": "I’m working on the US citizenship civics test. Explain how graders score it and explain your reasoning as you go."
+  },
+  {
+   "id": "education-exam-prep#054",
+   "text": "Create a final-week revision plan for a driving-theory multiple-choice test for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "education-exam-prep#055",
+   "text": "Produce a calm-day morning routine for a PMP certification exam. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-exam-prep#056",
+   "text": "Help me with the GRE analytical writing: list the highest-frequency topics for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "education-exam-prep#057",
+   "text": "Explain how graders score the bar exam’s evidence essays. Use a formal tone throughout."
+  },
+  {
+   "id": "education-exam-prep#058",
+   "text": "You are a museum educator. Create a ten-question practice set with answers for a CPA audit section and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "education-exam-prep#059",
+   "text": "Write two full practice essays with critiques for the US citizenship civics test. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "education-exam-prep#060",
+   "text": "Before I start on a PMP certification exam, explain how graders score it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "education-exam-prep#061",
+   "text": "Design a mistake-log template for the SAT math section. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "education-exam-prep#062",
+   "text": "Design a mistake-log template for the GRE analytical writing. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "education-exam-prep#063",
+   "text": "As an exam-prep tutor, I keep hitting the same wall with the JLPT N3 listening section. Explain how graders score it and show me what I’m probably missing."
+  },
+  {
+   "id": "education-exam-prep#064",
+   "text": "Write a timing strategy for the SAT math section. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "education-exam-prep#065",
+   "text": "List the highest-frequency topics for the JLPT N3 listening section."
+  },
+  {
+   "id": "education-exam-prep#066",
+   "text": "Produce a calm-day morning routine for a CPA audit section. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "education-exam-prep#067",
+   "text": "Act as an experienced high-school teacher. Write two full practice essays with critiques for the GRE analytical writing, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "education-exam-prep#068",
+   "text": "Create a ten-question practice set with answers for the IELTS writing task 2. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "education-exam-prep#069",
+   "text": "I’m working on the JLPT N3 listening section. Write a timing strategy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "education-exam-prep#070",
+   "text": "Write two full practice essays with critiques for a nursing pharmacology final for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "education-exam-prep#071",
+   "text": "Produce a calm-day morning routine for the SAT math section. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-exam-prep#072",
+   "text": "Help me with the bar exam’s evidence essays: create a final-week revision plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "education-exam-prep#073",
+   "text": "Design a mistake-log template for a coding interview loop. Use a encouraging tone throughout."
+  },
+  {
+   "id": "education-exam-prep#074",
+   "text": "You are a museum educator. Write two full practice essays with critiques for a CPA audit section and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "education-exam-prep#075",
+   "text": "Write a timing strategy for a coding interview loop. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "education-exam-prep#076",
+   "text": "Before I start on GCSE physics paper 2, write two full practice essays with critiques for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "education-exam-prep#077",
+   "text": "Produce a calm-day morning routine for the GRE analytical writing. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "education-exam-prep#078",
+   "text": "Design a mistake-log template for the US citizenship civics test. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "education-exam-prep#079",
+   "text": "As an experienced high-school teacher, I keep hitting the same wall with the US citizenship civics test. Create a final-week revision plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "education-exam-prep#080",
+   "text": "Produce a calm-day morning routine for GCSE physics paper 2. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "education-exam-prep#081",
+   "text": "Explain how graders score the GRE analytical writing."
+  },
+  {
+   "id": "education-exam-prep#082",
+   "text": "Design a mistake-log template for a PMP certification exam. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "education-exam-prep#083",
+   "text": "Act as an university tutor. Explain how graders score a CPA audit section, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "education-exam-prep#084",
+   "text": "Create a ten-question practice set with answers for the US citizenship civics test. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "education-exam-prep#085",
+   "text": "I’m working on the US citizenship civics test. List the highest-frequency topics for it and explain your reasoning as you go."
+  },
+  {
+   "id": "education-exam-prep#086",
+   "text": "Create a ten-question practice set with answers for the JLPT N3 listening section for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "education-exam-prep#087",
+   "text": "Write a timing strategy for a driving-theory multiple-choice test. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-exam-prep#088",
+   "text": "Help me with the bar exam’s evidence essays: write a timing strategy for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "education-exam-prep#089",
+   "text": "List the highest-frequency topics for a driving-theory multiple-choice test. Use a playful tone throughout."
+  },
+  {
+   "id": "education-exam-prep#090",
+   "text": "You are an experienced high-school teacher. Design a mistake-log template for a driving-theory multiple-choice test and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "education-exam-prep#091",
+   "text": "Create a final-week revision plan for a PMP certification exam. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "education-exam-prep#092",
+   "text": "Before I start on GCSE physics paper 2, create a final-week revision plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "education-exam-prep#093",
+   "text": "Write a timing strategy for the IELTS writing task 2. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "education-exam-prep#094",
+   "text": "Design a mistake-log template for GCSE physics paper 2. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "education-exam-prep#095",
+   "text": "As a museum educator, I keep hitting the same wall with a nursing pharmacology final. Write a timing strategy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "education-exam-prep#096",
+   "text": "Write two full practice essays with critiques for a PMP certification exam. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "education-exam-prep#097",
+   "text": "Write a timing strategy for a CPA audit section. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-exam-prep#098",
+   "text": "Write two full practice essays with critiques for the bar exam’s evidence essays. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "education-exam-prep#099",
+   "text": "Write two full practice essays with critiques for a driving-theory multiple-choice test."
+  },
+  {
+   "id": "education-exam-prep#100",
+   "text": "Explain how graders score a nursing pharmacology final."
+  },
+  {
+   "id": "education-exam-prep#101",
+   "text": "Write two full practice essays with critiques for a coding interview loop."
+  },
+  {
+   "id": "education-exam-prep#102",
+   "text": "Create a ten-question practice set with answers for a coding interview loop."
+  },
+  {
+   "id": "education-exam-prep#103",
+   "text": "Produce a calm-day morning routine for the JLPT N3 listening section."
+  },
+  {
+   "id": "education-exam-prep#104",
+   "text": "Produce a calm-day morning routine for a coding interview loop."
+  }
+ ]
+}

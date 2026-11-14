@@ -1,0 +1,430 @@
+{
+ "slug": "data-spreadsheets",
+ "categorySlug": "data",
+ "category": "Data & Analytics",
+ "title": "Spreadsheets",
+ "description": "Formulas, cleanup, and templates that stop breaking.",
+ "tags": [
+  "excel",
+  "sheets",
+  "formulas"
+ ],
+ "prompts": [
+  {
+   "id": "data-spreadsheets#001",
+   "text": "Create data-validation rules for a household budget with categories."
+  },
+  {
+   "id": "data-spreadsheets#002",
+   "text": "Add conditional-formatting rules for a wedding-planning checklist and budget. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-spreadsheets#003",
+   "text": "Act as an analytics engineer. Add conditional-formatting rules for a grade book with weighted averages, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-spreadsheets#004",
+   "text": "Build a summary-dashboard tab for a wedding-planning checklist and budget. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-spreadsheets#005",
+   "text": "I’m working on an expense-split sheet for a trip. Write instructions for a spreadsheet novice for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-spreadsheets#006",
+   "text": "Create data-validation rules for a freelance invoice register for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-spreadsheets#007",
+   "text": "Build a summary-dashboard tab for a habit tracker with monthly summaries. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-spreadsheets#008",
+   "text": "Help me with a wedding-planning checklist and budget: write the formulas with explanations for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-spreadsheets#009",
+   "text": "Produce a cleanup plan for messy data in a project tracker with dependencies. Use a empathetic tone throughout."
+  },
+  {
+   "id": "data-spreadsheets#010",
+   "text": "You are an analytics engineer. Write the formulas with explanations for a workout log with progression and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-spreadsheets#011",
+   "text": "Design the spreadsheet structure for an inventory tracker with reorder alerts. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-spreadsheets#012",
+   "text": "Before I start on an expense-split sheet for a trip, design a print-friendly layout for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-spreadsheets#013",
+   "text": "Write the formulas with explanations for a sales pipeline in a spreadsheet. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-spreadsheets#014",
+   "text": "Build a summary-dashboard tab for a workout log with progression. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-spreadsheets#015",
+   "text": "As a business-intelligence lead, I keep hitting the same wall with an inventory tracker with reorder alerts. Write the formulas with explanations for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-spreadsheets#016",
+   "text": "Write instructions for a spreadsheet novice for an inventory tracker with reorder alerts. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-spreadsheets#017",
+   "text": "Write the formulas with explanations for a donation tracker for a small nonprofit."
+  },
+  {
+   "id": "data-spreadsheets#018",
+   "text": "Create data-validation rules for a workout log with progression. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-spreadsheets#019",
+   "text": "Act as an analytics engineer. Write instructions for a spreadsheet novice for a grade book with weighted averages, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-spreadsheets#020",
+   "text": "Create data-validation rules for an inventory tracker with reorder alerts. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-spreadsheets#021",
+   "text": "I’m working on a habit tracker with monthly summaries. Write instructions for a spreadsheet novice for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-spreadsheets#022",
+   "text": "Write instructions for a spreadsheet novice for a content-calendar spreadsheet for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-spreadsheets#023",
+   "text": "Design a print-friendly layout for a grade book with weighted averages. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-spreadsheets#024",
+   "text": "Help me with a project tracker with dependencies: design the spreadsheet structure for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-spreadsheets#025",
+   "text": "Build a summary-dashboard tab for an expense-split sheet for a trip. Use a friendly tone throughout."
+  },
+  {
+   "id": "data-spreadsheets#026",
+   "text": "You are a statistics tutor. Create data-validation rules for a donation tracker for a small nonprofit and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-spreadsheets#027",
+   "text": "Create data-validation rules for a sales pipeline in a spreadsheet. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-spreadsheets#028",
+   "text": "Before I start on a content-calendar spreadsheet, write the formulas with explanations for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-spreadsheets#029",
+   "text": "Produce a cleanup plan for messy data in an expense-split sheet for a trip. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-spreadsheets#030",
+   "text": "Build a summary-dashboard tab for a content-calendar spreadsheet. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-spreadsheets#031",
+   "text": "As a statistics tutor, I keep hitting the same wall with a sales pipeline in a spreadsheet. Design a print-friendly layout for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-spreadsheets#032",
+   "text": "Produce a cleanup plan for messy data in an inventory tracker with reorder alerts. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-spreadsheets#033",
+   "text": "Add conditional-formatting rules for a project tracker with dependencies."
+  },
+  {
+   "id": "data-spreadsheets#034",
+   "text": "Write the formulas with explanations for a habit tracker with monthly summaries. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-spreadsheets#035",
+   "text": "Act as a data-quality steward. Produce a cleanup plan for messy data in a sales pipeline in a spreadsheet, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-spreadsheets#036",
+   "text": "Design a print-friendly layout for a household budget with categories. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-spreadsheets#037",
+   "text": "I’m working on a habit tracker with monthly summaries. Design the spreadsheet structure for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-spreadsheets#038",
+   "text": "Design a print-friendly layout for a freelance invoice register for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-spreadsheets#039",
+   "text": "Produce a cleanup plan for messy data in a habit tracker with monthly summaries. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-spreadsheets#040",
+   "text": "Help me with a grade book with weighted averages: write the formulas with explanations for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-spreadsheets#041",
+   "text": "Design the spreadsheet structure for a content-calendar spreadsheet. Use a formal tone throughout."
+  },
+  {
+   "id": "data-spreadsheets#042",
+   "text": "You are a business-intelligence lead. Produce a cleanup plan for messy data in a wedding-planning checklist and budget and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-spreadsheets#043",
+   "text": "Build a summary-dashboard tab for an inventory tracker with reorder alerts. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-spreadsheets#044",
+   "text": "Before I start on a sales pipeline in a spreadsheet, design the spreadsheet structure for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-spreadsheets#045",
+   "text": "Write instructions for a spreadsheet novice for a freelance invoice register. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-spreadsheets#046",
+   "text": "Build a summary-dashboard tab for a household budget with categories. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-spreadsheets#047",
+   "text": "As a business-intelligence lead, I keep hitting the same wall with a donation tracker for a small nonprofit. Write instructions for a spreadsheet novice for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-spreadsheets#048",
+   "text": "Write instructions for a spreadsheet novice for a sales pipeline in a spreadsheet. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-spreadsheets#049",
+   "text": "Build a summary-dashboard tab for a project tracker with dependencies."
+  },
+  {
+   "id": "data-spreadsheets#050",
+   "text": "Add conditional-formatting rules for a donation tracker for a small nonprofit. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-spreadsheets#051",
+   "text": "Act as a senior data analyst. Produce a cleanup plan for messy data in a household budget with categories, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-spreadsheets#052",
+   "text": "Design the spreadsheet structure for a household budget with categories. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-spreadsheets#053",
+   "text": "I’m working on a grade book with weighted averages. Build a summary-dashboard tab for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-spreadsheets#054",
+   "text": "Design a print-friendly layout for a donation tracker for a small nonprofit for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-spreadsheets#055",
+   "text": "Add conditional-formatting rules for a workout log with progression. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-spreadsheets#056",
+   "text": "Help me with an expense-split sheet for a trip: write the formulas with explanations for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-spreadsheets#057",
+   "text": "Write the formulas with explanations for a project tracker with dependencies. Use a empathetic tone throughout."
+  },
+  {
+   "id": "data-spreadsheets#058",
+   "text": "You are a data-quality steward. Produce a cleanup plan for messy data in a freelance invoice register and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-spreadsheets#059",
+   "text": "Design a print-friendly layout for a workout log with progression. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-spreadsheets#060",
+   "text": "Before I start on a project tracker with dependencies, create data-validation rules for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-spreadsheets#061",
+   "text": "Write the formulas with explanations for a freelance invoice register. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-spreadsheets#062",
+   "text": "Write instructions for a spreadsheet novice for a wedding-planning checklist and budget. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-spreadsheets#063",
+   "text": "As a business-intelligence lead, I keep hitting the same wall with an inventory tracker with reorder alerts. Add conditional-formatting rules for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-spreadsheets#064",
+   "text": "Design a print-friendly layout for a content-calendar spreadsheet. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-spreadsheets#065",
+   "text": "Design a print-friendly layout for a wedding-planning checklist and budget."
+  },
+  {
+   "id": "data-spreadsheets#066",
+   "text": "Add conditional-formatting rules for a household budget with categories. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-spreadsheets#067",
+   "text": "Act as an analytics engineer. Design the spreadsheet structure for a grade book with weighted averages, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-spreadsheets#068",
+   "text": "Design a print-friendly layout for a project tracker with dependencies. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-spreadsheets#069",
+   "text": "I’m working on a donation tracker for a small nonprofit. Produce a cleanup plan for messy data in it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-spreadsheets#070",
+   "text": "Design the spreadsheet structure for an expense-split sheet for a trip for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-spreadsheets#071",
+   "text": "Design a print-friendly layout for an inventory tracker with reorder alerts. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-spreadsheets#072",
+   "text": "Help me with a sales pipeline in a spreadsheet: build a summary-dashboard tab for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-spreadsheets#073",
+   "text": "Build a summary-dashboard tab for a donation tracker for a small nonprofit. Use a professional tone throughout."
+  },
+  {
+   "id": "data-spreadsheets#074",
+   "text": "You are a data-quality steward. Design the spreadsheet structure for a freelance invoice register and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-spreadsheets#075",
+   "text": "Build a summary-dashboard tab for a freelance invoice register. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-spreadsheets#076",
+   "text": "Before I start on a content-calendar spreadsheet, produce a cleanup plan for messy data in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-spreadsheets#077",
+   "text": "Write instructions for a spreadsheet novice for a household budget with categories. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-spreadsheets#078",
+   "text": "Add conditional-formatting rules for an expense-split sheet for a trip. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-spreadsheets#079",
+   "text": "As a finance-planning analyst, I keep hitting the same wall with a grade book with weighted averages. Create data-validation rules for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-spreadsheets#080",
+   "text": "Add conditional-formatting rules for a freelance invoice register. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-spreadsheets#081",
+   "text": "Design the spreadsheet structure for a wedding-planning checklist and budget."
+  },
+  {
+   "id": "data-spreadsheets#082",
+   "text": "Produce a cleanup plan for messy data in a workout log with progression. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-spreadsheets#083",
+   "text": "Act as a data storyteller. Design the spreadsheet structure for a donation tracker for a small nonprofit, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-spreadsheets#084",
+   "text": "Design the spreadsheet structure for a workout log with progression. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-spreadsheets#085",
+   "text": "I’m working on a workout log with progression. Write instructions for a spreadsheet novice for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-spreadsheets#086",
+   "text": "Produce a cleanup plan for messy data in a grade book with weighted averages for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-spreadsheets#087",
+   "text": "Create data-validation rules for a habit tracker with monthly summaries. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-spreadsheets#088",
+   "text": "Help me with a content-calendar spreadsheet: create data-validation rules for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-spreadsheets#089",
+   "text": "Add conditional-formatting rules for a habit tracker with monthly summaries. Use a formal tone throughout."
+  },
+  {
+   "id": "data-spreadsheets#090",
+   "text": "You are an analytics engineer. Add conditional-formatting rules for a content-calendar spreadsheet and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-spreadsheets#091",
+   "text": "Design a print-friendly layout for a habit tracker with monthly summaries. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-spreadsheets#092",
+   "text": "Before I start on a wedding-planning checklist and budget, create data-validation rules for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-spreadsheets#093",
+   "text": "Write instructions for a spreadsheet novice for a project tracker with dependencies. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-spreadsheets#094",
+   "text": "Write the formulas with explanations for a household budget with categories. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-spreadsheets#095",
+   "text": "As a statistics tutor, I keep hitting the same wall with a sales pipeline in a spreadsheet. Add conditional-formatting rules for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-spreadsheets#096",
+   "text": "Create data-validation rules for an expense-split sheet for a trip. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-spreadsheets#097",
+   "text": "Create data-validation rules for a household budget with categories. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-spreadsheets#098",
+   "text": "Add conditional-formatting rules for a wedding-planning checklist and budget. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-spreadsheets#099",
+   "text": "Add conditional-formatting rules for a grade book with weighted averages."
+  },
+  {
+   "id": "data-spreadsheets#100",
+   "text": "Build a summary-dashboard tab for a wedding-planning checklist and budget."
+  },
+  {
+   "id": "data-spreadsheets#101",
+   "text": "Write instructions for a spreadsheet novice for an expense-split sheet for a trip."
+  },
+  {
+   "id": "data-spreadsheets#102",
+   "text": "Create data-validation rules for a freelance invoice register."
+  },
+  {
+   "id": "data-spreadsheets#103",
+   "text": "Build a summary-dashboard tab for a habit tracker with monthly summaries."
+  },
+  {
+   "id": "data-spreadsheets#104",
+   "text": "Write the formulas with explanations for a wedding-planning checklist and budget."
+  }
+ ]
+}

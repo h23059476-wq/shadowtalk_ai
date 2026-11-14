@@ -9,6 +9,7 @@ import {
   Settings,
   CircleCheck,
   CircleDollarSign,
+  LibraryBig,
 } from "lucide-react";
 
 export interface ChatSidebarNavItem {
@@ -24,6 +25,7 @@ export interface ChatSidebarNavItem {
 export const CHAT_SIDEBAR_NAV: ChatSidebarNavItem[] = [
   // Workspace section
   { label: "Chatbot", icon: MessageSquare, to: "/chatbot", end: true, section: "workspace" },
+  { label: "Prompt Library", icon: LibraryBig, to: "/prompt-library", end: true, section: "workspace" },
   { label: "ProofLoop", shortLabel: "ProofLoop", icon: CircleCheck, to: "/proofloop", section: "workspace", badge: "VERIFIED" },
   { label: "Home", icon: Home, to: "/home", end: true, section: "workspace" },
 

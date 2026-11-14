@@ -1,0 +1,430 @@
+{
+ "slug": "growth-decision-making",
+ "categorySlug": "growth",
+ "category": "Personal Growth",
+ "title": "Decision Making",
+ "description": "Frameworks for choices with real trade-offs.",
+ "tags": [
+  "decisions",
+  "frameworks",
+  "trade-offs"
+ ],
+ "prompts": [
+  {
+   "id": "growth-decision-making#001",
+   "text": "Create a values-alignment check for selling the family home."
+  },
+  {
+   "id": "growth-decision-making#002",
+   "text": "Create a values-alignment check for putting a parent into assisted living. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-decision-making#003",
+   "text": "Act as a communication-skills coach. Prepare the questions to ask people who chose relocating for a partner’s opportunity, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-decision-making#004",
+   "text": "Create a values-alignment check for adopting a pet during a busy season. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-decision-making#005",
+   "text": "I’m working on choosing between two offers with different flavors. Design a time-boxed trial plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-decision-making#006",
+   "text": "List the reversible-test questions for buying versus renting equipment for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-decision-making#007",
+   "text": "List the reversible-test questions for putting a parent into assisted living. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-decision-making#008",
+   "text": "Help me with choosing between two offers with different flavors: draft a pros-cons-with-weights sheet for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-decision-making#009",
+   "text": "Create a values-alignment check for accepting a job in a new city. Use a playful tone throughout."
+  },
+  {
+   "id": "growth-decision-making#010",
+   "text": "You are a financial-literacy educator. Design a time-boxed trial plan for going back to school mid-career and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-decision-making#011",
+   "text": "Write a regret-minimization reflection for selling the family home. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-decision-making#012",
+   "text": "Before I start on choosing between two offers with different flavors, prepare the questions to ask people who chose it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-decision-making#013",
+   "text": "Run a pre-mortem on selling the family home. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-decision-making#014",
+   "text": "Build a decision matrix for relocating for a partner’s opportunity. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-decision-making#015",
+   "text": "As a communication-skills coach, I keep hitting the same wall with starting a business while employed. Run a pre-mortem on it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-decision-making#016",
+   "text": "Create a values-alignment check for choosing a specialty in a craft career. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-decision-making#017",
+   "text": "List the reversible-test questions for relocating for a partner’s opportunity."
+  },
+  {
+   "id": "growth-decision-making#018",
+   "text": "Build a decision matrix for going back to school mid-career. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-decision-making#019",
+   "text": "Act as a financial-literacy educator. Run a pre-mortem on ending a long-standing collaboration, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-decision-making#020",
+   "text": "Write a regret-minimization reflection for adopting a pet during a busy season. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-decision-making#021",
+   "text": "I’m working on choosing between two offers with different flavors. Write a regret-minimization reflection for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-decision-making#022",
+   "text": "Create a values-alignment check for relocating for a partner’s opportunity for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-decision-making#023",
+   "text": "Write a regret-minimization reflection for accepting a job in a new city. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-decision-making#024",
+   "text": "Help me with selling the family home: prepare the questions to ask people who chose it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-decision-making#025",
+   "text": "List the reversible-test questions for starting a business while employed. Use a persuasive tone throughout."
+  },
+  {
+   "id": "growth-decision-making#026",
+   "text": "You are a reflective journaling guide. Prepare the questions to ask people who chose accepting a job in a new city and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-decision-making#027",
+   "text": "Create a values-alignment check for taking a sabbatical. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-decision-making#028",
+   "text": "Before I start on buying versus renting equipment, design a time-boxed trial plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-decision-making#029",
+   "text": "Prepare the questions to ask people who chose going back to school mid-career. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-decision-making#030",
+   "text": "Draft a pros-cons-with-weights sheet for buying versus renting equipment. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-decision-making#031",
+   "text": "As a values-and-purpose mentor, I keep hitting the same wall with putting a parent into assisted living. Draft a pros-cons-with-weights sheet for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-decision-making#032",
+   "text": "Design a time-boxed trial plan for taking a sabbatical. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-decision-making#033",
+   "text": "Run a pre-mortem on going back to school mid-career."
+  },
+  {
+   "id": "growth-decision-making#034",
+   "text": "List the reversible-test questions for accepting a job in a new city. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-decision-making#035",
+   "text": "Act as a communication-skills coach. Design a time-boxed trial plan for relocating for a partner’s opportunity, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-decision-making#036",
+   "text": "Build a decision matrix for accepting a job in a new city. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-decision-making#037",
+   "text": "I’m working on ending a long-standing collaboration. Build a decision matrix for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-decision-making#038",
+   "text": "Build a decision matrix for starting a business while employed for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-decision-making#039",
+   "text": "Draft a pros-cons-with-weights sheet for accepting a job in a new city. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-decision-making#040",
+   "text": "Help me with putting a parent into assisted living: run a pre-mortem on it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-decision-making#041",
+   "text": "Write a regret-minimization reflection for relocating for a partner’s opportunity. Use a formal tone throughout."
+  },
+  {
+   "id": "growth-decision-making#042",
+   "text": "You are a resilience and stress educator. List the reversible-test questions for adopting a pet during a busy season and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-decision-making#043",
+   "text": "Design a time-boxed trial plan for adopting a pet during a busy season. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-decision-making#044",
+   "text": "Before I start on adopting a pet during a busy season, run a pre-mortem on it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-decision-making#045",
+   "text": "Build a decision matrix for selling the family home. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-decision-making#046",
+   "text": "Prepare the questions to ask people who chose choosing a specialty in a craft career. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-decision-making#047",
+   "text": "As a communication-skills coach, I keep hitting the same wall with choosing between two offers with different flavors. Run a pre-mortem on it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-decision-making#048",
+   "text": "Build a decision matrix for choosing a specialty in a craft career. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-decision-making#049",
+   "text": "Prepare the questions to ask people who chose buying versus renting equipment."
+  },
+  {
+   "id": "growth-decision-making#050",
+   "text": "Design a time-boxed trial plan for ending a long-standing collaboration. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-decision-making#051",
+   "text": "Act as a financial-literacy educator. Draft a pros-cons-with-weights sheet for ending a long-standing collaboration, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-decision-making#052",
+   "text": "Draft a pros-cons-with-weights sheet for starting a business while employed. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-decision-making#053",
+   "text": "I’m working on adopting a pet during a busy season. Build a decision matrix for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-decision-making#054",
+   "text": "Run a pre-mortem on buying versus renting equipment for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-decision-making#055",
+   "text": "Prepare the questions to ask people who chose starting a business while employed. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-decision-making#056",
+   "text": "Help me with buying versus renting equipment: create a values-alignment check for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-decision-making#057",
+   "text": "Build a decision matrix for putting a parent into assisted living. Use a playful tone throughout."
+  },
+  {
+   "id": "growth-decision-making#058",
+   "text": "You are a financial-literacy educator. Draft a pros-cons-with-weights sheet for going back to school mid-career and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-decision-making#059",
+   "text": "Write a regret-minimization reflection for choosing a specialty in a craft career. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-decision-making#060",
+   "text": "Before I start on putting a parent into assisted living, prepare the questions to ask people who chose it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-decision-making#061",
+   "text": "List the reversible-test questions for selling the family home. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-decision-making#062",
+   "text": "Draft a pros-cons-with-weights sheet for adopting a pet during a busy season. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-decision-making#063",
+   "text": "As a practical life coach, I keep hitting the same wall with going back to school mid-career. Create a values-alignment check for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-decision-making#064",
+   "text": "Run a pre-mortem on relocating for a partner’s opportunity. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-decision-making#065",
+   "text": "Draft a pros-cons-with-weights sheet for relocating for a partner’s opportunity."
+  },
+  {
+   "id": "growth-decision-making#066",
+   "text": "Write a regret-minimization reflection for going back to school mid-career. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-decision-making#067",
+   "text": "Act as a financial-literacy educator. Prepare the questions to ask people who chose ending a long-standing collaboration, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-decision-making#068",
+   "text": "Draft a pros-cons-with-weights sheet for selling the family home. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-decision-making#069",
+   "text": "I’m working on adopting a pet during a busy season. Prepare the questions to ask people who chose it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-decision-making#070",
+   "text": "Design a time-boxed trial plan for choosing a specialty in a craft career for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-decision-making#071",
+   "text": "Build a decision matrix for choosing between two offers with different flavors. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-decision-making#072",
+   "text": "Help me with choosing a specialty in a craft career: draft a pros-cons-with-weights sheet for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-decision-making#073",
+   "text": "Run a pre-mortem on accepting a job in a new city. Use a playful tone throughout."
+  },
+  {
+   "id": "growth-decision-making#074",
+   "text": "You are a reflective journaling guide. Write a regret-minimization reflection for putting a parent into assisted living and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-decision-making#075",
+   "text": "Run a pre-mortem on taking a sabbatical. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-decision-making#076",
+   "text": "Before I start on taking a sabbatical, build a decision matrix for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-decision-making#077",
+   "text": "Write a regret-minimization reflection for ending a long-standing collaboration. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-decision-making#078",
+   "text": "Create a values-alignment check for starting a business while employed. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-decision-making#079",
+   "text": "As a practical life coach, I keep hitting the same wall with buying versus renting equipment. Write a regret-minimization reflection for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-decision-making#080",
+   "text": "Build a decision matrix for buying versus renting equipment. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-decision-making#081",
+   "text": "Write a regret-minimization reflection for taking a sabbatical."
+  },
+  {
+   "id": "growth-decision-making#082",
+   "text": "Design a time-boxed trial plan for putting a parent into assisted living. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-decision-making#083",
+   "text": "Act as a mindful-movement teacher. Design a time-boxed trial plan for accepting a job in a new city, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-decision-making#084",
+   "text": "Design a time-boxed trial plan for starting a business while employed. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-decision-making#085",
+   "text": "I’m working on taking a sabbatical. Prepare the questions to ask people who chose it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-decision-making#086",
+   "text": "Draft a pros-cons-with-weights sheet for taking a sabbatical for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-decision-making#087",
+   "text": "List the reversible-test questions for choosing a specialty in a craft career. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-decision-making#088",
+   "text": "Help me with going back to school mid-career: list the reversible-test questions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-decision-making#089",
+   "text": "Create a values-alignment check for choosing between two offers with different flavors. Use a persuasive tone throughout."
+  },
+  {
+   "id": "growth-decision-making#090",
+   "text": "You are a decision-quality facilitator. Write a regret-minimization reflection for starting a business while employed and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-decision-making#091",
+   "text": "List the reversible-test questions for ending a long-standing collaboration. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-decision-making#092",
+   "text": "Before I start on taking a sabbatical, list the reversible-test questions for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-decision-making#093",
+   "text": "List the reversible-test questions for choosing between two offers with different flavors. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-decision-making#094",
+   "text": "Run a pre-mortem on choosing a specialty in a craft career. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-decision-making#095",
+   "text": "As a practical life coach, I keep hitting the same wall with selling the family home. Design a time-boxed trial plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-decision-making#096",
+   "text": "Create a values-alignment check for ending a long-standing collaboration. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-decision-making#097",
+   "text": "Create a values-alignment check for selling the family home. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-decision-making#098",
+   "text": "Create a values-alignment check for putting a parent into assisted living. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-decision-making#099",
+   "text": "Prepare the questions to ask people who chose relocating for a partner’s opportunity."
+  },
+  {
+   "id": "growth-decision-making#100",
+   "text": "Create a values-alignment check for adopting a pet during a busy season."
+  },
+  {
+   "id": "growth-decision-making#101",
+   "text": "Design a time-boxed trial plan for choosing between two offers with different flavors."
+  },
+  {
+   "id": "growth-decision-making#102",
+   "text": "List the reversible-test questions for buying versus renting equipment."
+  },
+  {
+   "id": "growth-decision-making#103",
+   "text": "List the reversible-test questions for putting a parent into assisted living."
+  },
+  {
+   "id": "growth-decision-making#104",
+   "text": "Draft a pros-cons-with-weights sheet for choosing between two offers with different flavors."
+  }
+ ]
+}

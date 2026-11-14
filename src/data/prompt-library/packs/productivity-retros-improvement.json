@@ -1,0 +1,430 @@
+{
+ "slug": "productivity-retros-improvement",
+ "categorySlug": "productivity",
+ "category": "Productivity & Habits",
+ "title": "Retros & Improvement",
+ "description": "Reviews that change behavior, not just collect notes.",
+ "tags": [
+  "retro",
+  "kaizen",
+  "improvement"
+ ],
+ "prompts": [
+  {
+   "id": "productivity-retros-improvement#001",
+   "text": "Design an insights-to-actions section for a support-ticket trend review."
+  },
+  {
+   "id": "productivity-retros-improvement#002",
+   "text": "Create a follow-through tracker for a hiring-process retro. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-retros-improvement#003",
+   "text": "Act as a behavior-design researcher. List the questions that surface root causes in a project postmortem that stays kind, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-retros-improvement#004",
+   "text": "Design an insights-to-actions section for a customer-loss review. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-retros-improvement#005",
+   "text": "I’m working on a meeting-culture audit. Write a facilitation script for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-retros-improvement#006",
+   "text": "Draft a summary others can learn from for a launch debrief with a vendor for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-retros-improvement#007",
+   "text": "Design a metrics-before-and-after section for a meeting-culture audit. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-retros-improvement#008",
+   "text": "Help me with a sprint retro that repeats the same complaints: design a metrics-before-and-after section for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-retros-improvement#009",
+   "text": "Write a blameless postmortem template for a sprint retro that repeats the same complaints. Use a encouraging tone throughout."
+  },
+  {
+   "id": "productivity-retros-improvement#010",
+   "text": "You are a minimalist systems tinkerer. Write a blameless postmortem template for a project postmortem that stays kind and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-retros-improvement#011",
+   "text": "Design a metrics-before-and-after section for a failed-experiment write-up. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-retros-improvement#012",
+   "text": "Before I start on a project postmortem that stays kind, design an insights-to-actions section for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-retros-improvement#013",
+   "text": "Facilitate a structured retro for a year of side-projects retrospective. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-retros-improvement#014",
+   "text": "Design a metrics-before-and-after section for a hiring-process retro. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-retros-improvement#015",
+   "text": "As a minimalist systems tinkerer, I keep hitting the same wall with a personal-weekly-review that goes deeper than to-dos. List the questions that surface root causes in it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-retros-improvement#016",
+   "text": "Facilitate a structured retro for a launch debrief with a vendor. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-retros-improvement#017",
+   "text": "Design a metrics-before-and-after section for a support-ticket trend review."
+  },
+  {
+   "id": "productivity-retros-improvement#018",
+   "text": "Facilitate a structured retro for a quarter-end learning review. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-retros-improvement#019",
+   "text": "Act as a remote-work veteran. Design a metrics-before-and-after section for a launch debrief with a vendor, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-retros-improvement#020",
+   "text": "Write a facilitation script for a year of side-projects retrospective. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-retros-improvement#021",
+   "text": "I’m working on a habit-streak breakdown analysis. Facilitate a structured retro for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-retros-improvement#022",
+   "text": "List the questions that surface root causes in a meeting-culture audit for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-retros-improvement#023",
+   "text": "Write a facilitation script for a habit-streak breakdown analysis. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-retros-improvement#024",
+   "text": "Help me with a support-ticket trend review: list the questions that surface root causes in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-retros-improvement#025",
+   "text": "Design a metrics-before-and-after section for a year of side-projects retrospective. Use a playful tone throughout."
+  },
+  {
+   "id": "productivity-retros-improvement#026",
+   "text": "You are a chief of staff. Write a facilitation script for a launch debrief with a vendor and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-retros-improvement#027",
+   "text": "Write a facilitation script for a quarter-end learning review. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-retros-improvement#028",
+   "text": "Before I start on a habit-streak breakdown analysis, create a follow-through tracker for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-retros-improvement#029",
+   "text": "Write a facilitation script for a support-ticket trend review. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-retros-improvement#030",
+   "text": "Create a follow-through tracker for a support-ticket trend review. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-retros-improvement#031",
+   "text": "As a minimalist systems tinkerer, I keep hitting the same wall with a personal-weekly-review that goes deeper than to-dos. Write a blameless postmortem template for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-retros-improvement#032",
+   "text": "List the questions that surface root causes in a sprint retro that repeats the same complaints. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-retros-improvement#033",
+   "text": "Create a follow-through tracker for a customer-loss review."
+  },
+  {
+   "id": "productivity-retros-improvement#034",
+   "text": "Write a facilitation script for a hiring-process retro. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-retros-improvement#035",
+   "text": "Act as a behavior-design researcher. Draft a summary others can learn from for a failed-experiment write-up, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-retros-improvement#036",
+   "text": "Write a facilitation script for a project postmortem that stays kind. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-retros-improvement#037",
+   "text": "I’m working on a failed-experiment write-up. Create a follow-through tracker for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-retros-improvement#038",
+   "text": "Facilitate a structured retro for a meeting-culture audit for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-retros-improvement#039",
+   "text": "Write a blameless postmortem template for a year of side-projects retrospective. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-retros-improvement#040",
+   "text": "Help me with a project postmortem that stays kind: design a metrics-before-and-after section for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-retros-improvement#041",
+   "text": "Design an insights-to-actions section for a failed-experiment write-up. Use a direct tone throughout."
+  },
+  {
+   "id": "productivity-retros-improvement#042",
+   "text": "You are a productivity coach. Draft a summary others can learn from for a year of side-projects retrospective and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-retros-improvement#043",
+   "text": "Design an insights-to-actions section for a quarter-end learning review. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-retros-improvement#044",
+   "text": "Before I start on a quarter-end learning review, draft a summary others can learn from for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-retros-improvement#045",
+   "text": "Write a facilitation script for a customer-loss review. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-retros-improvement#046",
+   "text": "Write a blameless postmortem template for a habit-streak breakdown analysis. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-retros-improvement#047",
+   "text": "As a librarian of tidy systems, I keep hitting the same wall with a habit-streak breakdown analysis. Design a metrics-before-and-after section for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-retros-improvement#048",
+   "text": "Create a follow-through tracker for a sprint retro that repeats the same complaints. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-retros-improvement#049",
+   "text": "Facilitate a structured retro for a sprint retro that repeats the same complaints."
+  },
+  {
+   "id": "productivity-retros-improvement#050",
+   "text": "Write a blameless postmortem template for a support-ticket trend review. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-retros-improvement#051",
+   "text": "Act as a project manager. Create a follow-through tracker for a meeting-culture audit, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-retros-improvement#052",
+   "text": "Write a facilitation script for a sprint retro that repeats the same complaints. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-retros-improvement#053",
+   "text": "I’m working on a meeting-culture audit. Design an insights-to-actions section for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-retros-improvement#054",
+   "text": "Draft a summary others can learn from for a customer-loss review for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-retros-improvement#055",
+   "text": "Draft a summary others can learn from for a project postmortem that stays kind. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-retros-improvement#056",
+   "text": "Help me with a support-ticket trend review: facilitate a structured retro for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-retros-improvement#057",
+   "text": "Create a follow-through tracker for a project postmortem that stays kind. Use a direct tone throughout."
+  },
+  {
+   "id": "productivity-retros-improvement#058",
+   "text": "You are a chief of staff. Write a blameless postmortem template for a launch debrief with a vendor and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-retros-improvement#059",
+   "text": "Design a metrics-before-and-after section for a personal-weekly-review that goes deeper than to-dos. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-retros-improvement#060",
+   "text": "Before I start on a meeting-culture audit, write a blameless postmortem template for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-retros-improvement#061",
+   "text": "List the questions that surface root causes in a launch debrief with a vendor. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-retros-improvement#062",
+   "text": "Create a follow-through tracker for a launch debrief with a vendor. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-retros-improvement#063",
+   "text": "As a productivity coach, I keep hitting the same wall with a customer-loss review. Design a metrics-before-and-after section for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-retros-improvement#064",
+   "text": "Draft a summary others can learn from for a hiring-process retro. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-retros-improvement#065",
+   "text": "List the questions that surface root causes in a quarter-end learning review."
+  },
+  {
+   "id": "productivity-retros-improvement#066",
+   "text": "Facilitate a structured retro for a hiring-process retro. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-retros-improvement#067",
+   "text": "Act as a librarian of tidy systems. List the questions that surface root causes in a year of side-projects retrospective, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-retros-improvement#068",
+   "text": "Design an insights-to-actions section for a habit-streak breakdown analysis. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-retros-improvement#069",
+   "text": "I’m working on a hiring-process retro. List the questions that surface root causes in it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-retros-improvement#070",
+   "text": "Draft a summary others can learn from for a meeting-culture audit for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-retros-improvement#071",
+   "text": "Draft a summary others can learn from for a habit-streak breakdown analysis. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-retros-improvement#072",
+   "text": "Help me with a quarter-end learning review: write a blameless postmortem template for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-retros-improvement#073",
+   "text": "Design an insights-to-actions section for a personal-weekly-review that goes deeper than to-dos. Use a playful tone throughout."
+  },
+  {
+   "id": "productivity-retros-improvement#074",
+   "text": "You are a productivity coach. Write a facilitation script for a personal-weekly-review that goes deeper than to-dos and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-retros-improvement#075",
+   "text": "List the questions that surface root causes in a customer-loss review. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-retros-improvement#076",
+   "text": "Before I start on a habit-streak breakdown analysis, list the questions that surface root causes in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-retros-improvement#077",
+   "text": "Draft a summary others can learn from for a support-ticket trend review. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-retros-improvement#078",
+   "text": "Write a blameless postmortem template for a hiring-process retro. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-retros-improvement#079",
+   "text": "As a productivity coach, I keep hitting the same wall with a customer-loss review. Write a blameless postmortem template for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-retros-improvement#080",
+   "text": "List the questions that surface root causes in a failed-experiment write-up. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-retros-improvement#081",
+   "text": "Facilitate a structured retro for a customer-loss review."
+  },
+  {
+   "id": "productivity-retros-improvement#082",
+   "text": "Write a facilitation script for a failed-experiment write-up. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-retros-improvement#083",
+   "text": "Act as a librarian of tidy systems. Create a follow-through tracker for a year of side-projects retrospective, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-retros-improvement#084",
+   "text": "Create a follow-through tracker for a quarter-end learning review. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-retros-improvement#085",
+   "text": "I’m working on a sprint retro that repeats the same complaints. Design an insights-to-actions section for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-retros-improvement#086",
+   "text": "Design an insights-to-actions section for a year of side-projects retrospective for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-retros-improvement#087",
+   "text": "Draft a summary others can learn from for a sprint retro that repeats the same complaints. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-retros-improvement#088",
+   "text": "Help me with a quarter-end learning review: design a metrics-before-and-after section for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-retros-improvement#089",
+   "text": "Design an insights-to-actions section for a launch debrief with a vendor. Use a formal tone throughout."
+  },
+  {
+   "id": "productivity-retros-improvement#090",
+   "text": "You are a chief of staff. Design an insights-to-actions section for a hiring-process retro and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-retros-improvement#091",
+   "text": "Write a blameless postmortem template for a failed-experiment write-up. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-retros-improvement#092",
+   "text": "Before I start on a project postmortem that stays kind, facilitate a structured retro for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-retros-improvement#093",
+   "text": "Facilitate a structured retro for a failed-experiment write-up. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-retros-improvement#094",
+   "text": "Draft a summary others can learn from for a personal-weekly-review that goes deeper than to-dos. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-retros-improvement#095",
+   "text": "As a minimalist systems tinkerer, I keep hitting the same wall with a personal-weekly-review that goes deeper than to-dos. Facilitate a structured retro for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-retros-improvement#096",
+   "text": "Create a follow-through tracker for a personal-weekly-review that goes deeper than to-dos. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-retros-improvement#097",
+   "text": "Design an insights-to-actions section for a support-ticket trend review. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-retros-improvement#098",
+   "text": "Create a follow-through tracker for a hiring-process retro. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-retros-improvement#099",
+   "text": "List the questions that surface root causes in a project postmortem that stays kind."
+  },
+  {
+   "id": "productivity-retros-improvement#100",
+   "text": "Design an insights-to-actions section for a customer-loss review."
+  },
+  {
+   "id": "productivity-retros-improvement#101",
+   "text": "Write a facilitation script for a meeting-culture audit."
+  },
+  {
+   "id": "productivity-retros-improvement#102",
+   "text": "Draft a summary others can learn from for a launch debrief with a vendor."
+  },
+  {
+   "id": "productivity-retros-improvement#103",
+   "text": "Design a metrics-before-and-after section for a meeting-culture audit."
+  },
+  {
+   "id": "productivity-retros-improvement#104",
+   "text": "Design a metrics-before-and-after section for a sprint retro that repeats the same complaints."
+  }
+ ]
+}

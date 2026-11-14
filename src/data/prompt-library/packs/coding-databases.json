@@ -1,0 +1,430 @@
+{
+ "slug": "coding-databases",
+ "categorySlug": "coding",
+ "category": "Coding & Development",
+ "title": "Databases",
+ "description": "Schema design, queries, migrations, and performance sanity.",
+ "tags": [
+  "sql",
+  "schema",
+  "performance"
+ ],
+ "prompts": [
+  {
+   "id": "coding-databases#001",
+   "text": "Draft a safe migration plan for a soft-delete pattern with unique constraints."
+  },
+  {
+   "id": "coding-databases#002",
+   "text": "Explain the consistency guarantees for an N+1 query in an ORM. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-databases#003",
+   "text": "Act as a code reviewer on a large codebase. Design the schema for a reporting query scanning 40M rows, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-databases#004",
+   "text": "Create a data-integrity checklist for a read-replica lag problem. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-databases#005",
+   "text": "I’m working on an N+1 query in an ORM. Diagnose the performance issue in it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-databases#006",
+   "text": "Create a data-integrity checklist for an archive-and-purge policy for old events for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-databases#007",
+   "text": "Write the data-modeling trade-off analysis for a read-replica lag problem. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-databases#008",
+   "text": "Help me with a pagination scheme past page 1000: write and explain the query for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-databases#009",
+   "text": "Create a data-integrity checklist for an index strategy for a feed query. Use a persuasive tone throughout."
+  },
+  {
+   "id": "coding-databases#010",
+   "text": "You are an open-source maintainer. Design the schema for an event-outbox table design and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-databases#011",
+   "text": "Propose the indexing plan for an index strategy for a feed query. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-databases#012",
+   "text": "Before I start on a schema for a multi-tenant notes app, write and explain the query for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-databases#013",
+   "text": "Explain the consistency guarantees for an archive-and-purge policy for old events. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-databases#014",
+   "text": "Draft a safe migration plan for a hierarchical categories model. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-databases#015",
+   "text": "As a tech lead of a small team, I keep hitting the same wall with an archive-and-purge policy for old events. Draft a safe migration plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-databases#016",
+   "text": "Draft a safe migration plan for a reporting query scanning 40M rows. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-databases#017",
+   "text": "Create a data-integrity checklist for a schema for a multi-tenant notes app."
+  },
+  {
+   "id": "coding-databases#018",
+   "text": "Draft a safe migration plan for a migration adding a not-null column. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-databases#019",
+   "text": "Act as a staff engineer. Diagnose the performance issue in an index strategy for a feed query, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-databases#020",
+   "text": "Create a data-integrity checklist for a JSON blob column that became a dependency. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-databases#021",
+   "text": "I’m working on an event-outbox table design. Write and explain the query for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-databases#022",
+   "text": "Write and explain the query for a reporting query scanning 40M rows for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-databases#023",
+   "text": "Write the data-modeling trade-off analysis for a migration adding a not-null column. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-databases#024",
+   "text": "Help me with a pagination scheme past page 1000: design the schema for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-databases#025",
+   "text": "Create a data-integrity checklist for a reporting query scanning 40M rows. Use a empathetic tone throughout."
+  },
+  {
+   "id": "coding-databases#026",
+   "text": "You are a developer-education author. Design the schema for a hierarchical categories model and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-databases#027",
+   "text": "Write and explain the query for an archive-and-purge policy for old events. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-databases#028",
+   "text": "Before I start on an archive-and-purge policy for old events, write the data-modeling trade-off analysis for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-databases#029",
+   "text": "Propose the indexing plan for a JSON blob column that became a dependency. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-databases#030",
+   "text": "Diagnose the performance issue in an archive-and-purge policy for old events. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-databases#031",
+   "text": "As an accessibility-minded frontend engineer, I keep hitting the same wall with a JSON blob column that became a dependency. Write the data-modeling trade-off analysis for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-databases#032",
+   "text": "Explain the consistency guarantees for an event-outbox table design. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-databases#033",
+   "text": "Diagnose the performance issue in a JSON blob column that became a dependency."
+  },
+  {
+   "id": "coding-databases#034",
+   "text": "Explain the consistency guarantees for a migration adding a not-null column. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-databases#035",
+   "text": "Act as a tech lead of a small team. Draft a safe migration plan for an N+1 query in an ORM, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-databases#036",
+   "text": "Design the schema for a migration adding a not-null column. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-databases#037",
+   "text": "I’m working on a soft-delete pattern with unique constraints. Explain the consistency guarantees for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-databases#038",
+   "text": "Explain the consistency guarantees for a reporting query scanning 40M rows for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-databases#039",
+   "text": "Create a data-integrity checklist for an event-outbox table design. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-databases#040",
+   "text": "Help me with a read-replica lag problem: diagnose the performance issue in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-databases#041",
+   "text": "Propose the indexing plan for a reporting query scanning 40M rows. Use a empathetic tone throughout."
+  },
+  {
+   "id": "coding-databases#042",
+   "text": "You are a code reviewer on a large codebase. Write the data-modeling trade-off analysis for an N+1 query in an ORM and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-databases#043",
+   "text": "Design the schema for an N+1 query in an ORM. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-databases#044",
+   "text": "Before I start on an archive-and-purge policy for old events, propose the indexing plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-databases#045",
+   "text": "Create a data-integrity checklist for a hierarchical categories model. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-databases#046",
+   "text": "Write the data-modeling trade-off analysis for a pagination scheme past page 1000. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-databases#047",
+   "text": "As an open-source maintainer, I keep hitting the same wall with a soft-delete pattern with unique constraints. Write and explain the query for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-databases#048",
+   "text": "Design the schema for an archive-and-purge policy for old events. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-databases#049",
+   "text": "Write the data-modeling trade-off analysis for a schema for a multi-tenant notes app."
+  },
+  {
+   "id": "coding-databases#050",
+   "text": "Explain the consistency guarantees for a pagination scheme past page 1000. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-databases#051",
+   "text": "Act as a staff engineer. Write the data-modeling trade-off analysis for an index strategy for a feed query, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-databases#052",
+   "text": "Diagnose the performance issue in a hierarchical categories model. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-databases#053",
+   "text": "I’m working on a hierarchical categories model. Write the data-modeling trade-off analysis for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-databases#054",
+   "text": "Create a data-integrity checklist for a pagination scheme past page 1000 for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-databases#055",
+   "text": "Explain the consistency guarantees for a JSON blob column that became a dependency. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-databases#056",
+   "text": "Help me with a JSON blob column that became a dependency: draft a safe migration plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-databases#057",
+   "text": "Diagnose the performance issue in a soft-delete pattern with unique constraints. Use a playful tone throughout."
+  },
+  {
+   "id": "coding-databases#058",
+   "text": "You are an open-source maintainer. Diagnose the performance issue in a migration adding a not-null column and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-databases#059",
+   "text": "Diagnose the performance issue in a reporting query scanning 40M rows. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-databases#060",
+   "text": "Before I start on an index strategy for a feed query, draft a safe migration plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-databases#061",
+   "text": "Propose the indexing plan for an N+1 query in an ORM. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-databases#062",
+   "text": "Write and explain the query for a migration adding a not-null column. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-databases#063",
+   "text": "As a tech lead of a small team, I keep hitting the same wall with a read-replica lag problem. Draft a safe migration plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-databases#064",
+   "text": "Design the schema for an index strategy for a feed query. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-databases#065",
+   "text": "Propose the indexing plan for a schema for a multi-tenant notes app."
+  },
+  {
+   "id": "coding-databases#066",
+   "text": "Create a data-integrity checklist for a soft-delete pattern with unique constraints. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-databases#067",
+   "text": "Act as a staff engineer. Write and explain the query for a read-replica lag problem, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-databases#068",
+   "text": "Draft a safe migration plan for a pagination scheme past page 1000. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-databases#069",
+   "text": "I’m working on a read-replica lag problem. Design the schema for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-databases#070",
+   "text": "Create a data-integrity checklist for a migration adding a not-null column for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-databases#071",
+   "text": "Design the schema for a soft-delete pattern with unique constraints. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-databases#072",
+   "text": "Help me with a hierarchical categories model: explain the consistency guarantees for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-databases#073",
+   "text": "Write and explain the query for an N+1 query in an ORM. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-databases#074",
+   "text": "You are an open-source maintainer. Draft a safe migration plan for an event-outbox table design and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-databases#075",
+   "text": "Propose the indexing plan for an event-outbox table design. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-databases#076",
+   "text": "Before I start on an index strategy for a feed query, explain the consistency guarantees for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-databases#077",
+   "text": "Design the schema for a JSON blob column that became a dependency. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-databases#078",
+   "text": "Create a data-integrity checklist for an N+1 query in an ORM. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-databases#079",
+   "text": "As a tech lead of a small team, I keep hitting the same wall with an index strategy for a feed query. Write and explain the query for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-databases#080",
+   "text": "Propose the indexing plan for a migration adding a not-null column. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-databases#081",
+   "text": "Diagnose the performance issue in an event-outbox table design."
+  },
+  {
+   "id": "coding-databases#082",
+   "text": "Write and explain the query for a hierarchical categories model. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-databases#083",
+   "text": "Act as a platform engineer. Propose the indexing plan for a soft-delete pattern with unique constraints, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-databases#084",
+   "text": "Explain the consistency guarantees for a read-replica lag problem. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-databases#085",
+   "text": "I’m working on an event-outbox table design. Write the data-modeling trade-off analysis for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-databases#086",
+   "text": "Write and explain the query for a JSON blob column that became a dependency for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-databases#087",
+   "text": "Propose the indexing plan for a pagination scheme past page 1000. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-databases#088",
+   "text": "Help me with a hierarchical categories model: propose the indexing plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-databases#089",
+   "text": "Design the schema for a schema for a multi-tenant notes app. Use a playful tone throughout."
+  },
+  {
+   "id": "coding-databases#090",
+   "text": "You are a staff engineer. Explain the consistency guarantees for a schema for a multi-tenant notes app and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-databases#091",
+   "text": "Diagnose the performance issue in a schema for a multi-tenant notes app. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-databases#092",
+   "text": "Before I start on a soft-delete pattern with unique constraints, write the data-modeling trade-off analysis for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-databases#093",
+   "text": "Write the data-modeling trade-off analysis for a reporting query scanning 40M rows. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-databases#094",
+   "text": "Diagnose the performance issue in a pagination scheme past page 1000. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-databases#095",
+   "text": "As a tech lead of a small team, I keep hitting the same wall with a read-replica lag problem. Propose the indexing plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-databases#096",
+   "text": "Draft a safe migration plan for a schema for a multi-tenant notes app. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-databases#097",
+   "text": "Draft a safe migration plan for a soft-delete pattern with unique constraints. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-databases#098",
+   "text": "Explain the consistency guarantees for an N+1 query in an ORM. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-databases#099",
+   "text": "Design the schema for a reporting query scanning 40M rows."
+  },
+  {
+   "id": "coding-databases#100",
+   "text": "Create a data-integrity checklist for a read-replica lag problem."
+  },
+  {
+   "id": "coding-databases#101",
+   "text": "Diagnose the performance issue in an N+1 query in an ORM."
+  },
+  {
+   "id": "coding-databases#102",
+   "text": "Create a data-integrity checklist for an archive-and-purge policy for old events."
+  },
+  {
+   "id": "coding-databases#103",
+   "text": "Write the data-modeling trade-off analysis for a read-replica lag problem."
+  },
+  {
+   "id": "coding-databases#104",
+   "text": "Write and explain the query for a pagination scheme past page 1000."
+  }
+ ]
+}

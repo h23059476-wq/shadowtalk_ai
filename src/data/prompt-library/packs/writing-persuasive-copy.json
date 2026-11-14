@@ -1,0 +1,430 @@
+{
+ "slug": "writing-persuasive-copy",
+ "categorySlug": "writing",
+ "category": "Writing & Editing",
+ "title": "Persuasive Copy",
+ "description": "Landing pages, product copy, and CTAs that move readers to act.",
+ "tags": [
+  "copywriting",
+  "conversion",
+  "brand"
+ ],
+ "prompts": [
+  {
+   "id": "writing-persuasive-copy#001",
+   "text": "Write copy that handles the top three objections to a limited-time holiday bundle offer."
+  },
+  {
+   "id": "writing-persuasive-copy#002",
+   "text": "Craft five headline options with different emotional hooks for a software pricing page. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-persuasive-copy#003",
+   "text": "Act as a brand journalist. Draft benefit-led bullet points for a software pricing page, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-persuasive-copy#004",
+   "text": "Draft benefit-led bullet points for a webinar registration page. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-persuasive-copy#005",
+   "text": "I’m working on a hotel’s off-season booking promo. Create a before-and-after rewrite of weak copy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-persuasive-copy#006",
+   "text": "Create a before-and-after rewrite of weak copy for a productivity app’s free trial page for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-persuasive-copy#007",
+   "text": "Craft five headline options with different emotional hooks for a nonprofit donation appeal. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-persuasive-copy#008",
+   "text": "Help me with a hotel’s off-season booking promo: write copy that handles the top three objections to it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-persuasive-copy#009",
+   "text": "Write a strong call-to-action button copy for a course sales page for new managers. Use a direct tone throughout."
+  },
+  {
+   "id": "writing-persuasive-copy#010",
+   "text": "You are a writing teacher. Draft benefit-led bullet points for a limited-time holiday bundle offer and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-persuasive-copy#011",
+   "text": "Draft benefit-led bullet points for a course sales page for new managers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-persuasive-copy#012",
+   "text": "Before I start on a productivity app’s free trial page, craft five headline options with different emotional hooks for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-persuasive-copy#013",
+   "text": "Write a strong call-to-action button copy for a waitlist landing page for a mystery product. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-persuasive-copy#014",
+   "text": "Write conversion-focused copy for a waitlist landing page for a mystery product. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-persuasive-copy#015",
+   "text": "As an executive assistant, I keep hitting the same wall with a referral program invitation. Write a strong call-to-action button copy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-persuasive-copy#016",
+   "text": "Write conversion-focused copy for a paywall upgrade banner. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-persuasive-copy#017",
+   "text": "Draft benefit-led bullet points for a SaaS changelog announcement."
+  },
+  {
+   "id": "writing-persuasive-copy#018",
+   "text": "Write conversion-focused copy for a webinar registration page. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-persuasive-copy#019",
+   "text": "Act as a career coach. Write copy that handles the top three objections to a boutique fitness studio’s homepage, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-persuasive-copy#020",
+   "text": "Write copy that handles the top three objections to a nonprofit donation appeal. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-persuasive-copy#021",
+   "text": "I’m working on a limited-time holiday bundle offer. Create a before-and-after rewrite of weak copy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-persuasive-copy#022",
+   "text": "Write a strong call-to-action button copy for a mobile app store listing description for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-persuasive-copy#023",
+   "text": "Create a before-and-after rewrite of weak copy for a software pricing page. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-persuasive-copy#024",
+   "text": "Help me with a webinar registration page: draft a 50-word elevator pitch version of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-persuasive-copy#025",
+   "text": "Write copy that handles the top three objections to a course sales page for new managers. Use a direct tone throughout."
+  },
+  {
+   "id": "writing-persuasive-copy#026",
+   "text": "You are a corporate communications lead. Craft five headline options with different emotional hooks for a mobile app store listing description and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-persuasive-copy#027",
+   "text": "Draft benefit-led bullet points for a waitlist landing page for a mystery product. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-persuasive-copy#028",
+   "text": "Before I start on a hotel’s off-season booking promo, write urgency-driven copy for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-persuasive-copy#029",
+   "text": "Draft benefit-led bullet points for a nonprofit donation appeal. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-persuasive-copy#030",
+   "text": "Craft five headline options with different emotional hooks for a limited-time holiday bundle offer. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-persuasive-copy#031",
+   "text": "As a brand journalist, I keep hitting the same wall with a premium newsletter upsell. Draft benefit-led bullet points for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-persuasive-copy#032",
+   "text": "Create a before-and-after rewrite of weak copy for a checkout abandonment recovery email. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-persuasive-copy#033",
+   "text": "Write a strong call-to-action button copy for a premium newsletter upsell."
+  },
+  {
+   "id": "writing-persuasive-copy#034",
+   "text": "Write copy that handles the top three objections to a paywall upgrade banner. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-persuasive-copy#035",
+   "text": "Act as a content marketing strategist. Draft benefit-led bullet points for a referral program invitation, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-persuasive-copy#036",
+   "text": "Craft five headline options with different emotional hooks for a hardware gadget’s Kickstarter pitch. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-persuasive-copy#037",
+   "text": "I’m working on a hotel’s off-season booking promo. Write a strong call-to-action button copy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-persuasive-copy#038",
+   "text": "Write conversion-focused copy for a referral program invitation for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-persuasive-copy#039",
+   "text": "Write copy that handles the top three objections to a hardware gadget’s Kickstarter pitch. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-persuasive-copy#040",
+   "text": "Help me with a referral program invitation: craft five headline options with different emotional hooks for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-persuasive-copy#041",
+   "text": "Write urgency-driven copy for a webinar registration page. Use a empathetic tone throughout."
+  },
+  {
+   "id": "writing-persuasive-copy#042",
+   "text": "You are a senior editor at a digital magazine. Craft five headline options with different emotional hooks for a SaaS changelog announcement and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-persuasive-copy#043",
+   "text": "Draft benefit-led bullet points for a hardware gadget’s Kickstarter pitch. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-persuasive-copy#044",
+   "text": "Before I start on a hotel’s off-season booking promo, craft five headline options with different emotional hooks for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-persuasive-copy#045",
+   "text": "Write copy that handles the top three objections to a checkout abandonment recovery email. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-persuasive-copy#046",
+   "text": "Draft a 50-word elevator pitch version of a paywall upgrade banner. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-persuasive-copy#047",
+   "text": "As an executive assistant, I keep hitting the same wall with a hardware gadget’s Kickstarter pitch. Write urgency-driven copy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-persuasive-copy#048",
+   "text": "Draft a 50-word elevator pitch version of a limited-time holiday bundle offer. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-persuasive-copy#049",
+   "text": "Draft a 50-word elevator pitch version of a SaaS changelog announcement."
+  },
+  {
+   "id": "writing-persuasive-copy#050",
+   "text": "Write conversion-focused copy for a mobile app store listing description. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-persuasive-copy#051",
+   "text": "Act as a career coach. Write conversion-focused copy for a course sales page for new managers, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-persuasive-copy#052",
+   "text": "Draft a 50-word elevator pitch version of a productivity app’s free trial page. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-persuasive-copy#053",
+   "text": "I’m working on a course sales page for new managers. Draft a 50-word elevator pitch version of it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-persuasive-copy#054",
+   "text": "Write a strong call-to-action button copy for a limited-time holiday bundle offer for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-persuasive-copy#055",
+   "text": "Write copy that handles the top three objections to a mobile app store listing description. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-persuasive-copy#056",
+   "text": "Help me with a productivity app’s free trial page: write copy that handles the top three objections to it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-persuasive-copy#057",
+   "text": "Write a strong call-to-action button copy for a paywall upgrade banner. Use a professional tone throughout."
+  },
+  {
+   "id": "writing-persuasive-copy#058",
+   "text": "You are a senior editor at a digital magazine. Write copy that handles the top three objections to a referral program invitation and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-persuasive-copy#059",
+   "text": "Write urgency-driven copy for a mobile app store listing description. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-persuasive-copy#060",
+   "text": "Before I start on a productivity app’s free trial page, write urgency-driven copy for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-persuasive-copy#061",
+   "text": "Write urgency-driven copy for a SaaS changelog announcement. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-persuasive-copy#062",
+   "text": "Draft a 50-word elevator pitch version of a premium newsletter upsell. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-persuasive-copy#063",
+   "text": "As a brand journalist, I keep hitting the same wall with a premium newsletter upsell. Write conversion-focused copy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-persuasive-copy#064",
+   "text": "Write urgency-driven copy for a premium newsletter upsell. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-persuasive-copy#065",
+   "text": "Write urgency-driven copy for a course sales page for new managers."
+  },
+  {
+   "id": "writing-persuasive-copy#066",
+   "text": "Write a strong call-to-action button copy for a boutique fitness studio’s homepage. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-persuasive-copy#067",
+   "text": "Act as a brand journalist. Write copy that handles the top three objections to a software pricing page, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-persuasive-copy#068",
+   "text": "Write conversion-focused copy for a nonprofit donation appeal. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-persuasive-copy#069",
+   "text": "I’m working on a waitlist landing page for a mystery product. Craft five headline options with different emotional hooks for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-persuasive-copy#070",
+   "text": "Create a before-and-after rewrite of weak copy for a referral program invitation for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-persuasive-copy#071",
+   "text": "Draft benefit-led bullet points for a paywall upgrade banner. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-persuasive-copy#072",
+   "text": "Help me with a software pricing page: write conversion-focused copy for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-persuasive-copy#073",
+   "text": "Craft five headline options with different emotional hooks for a premium newsletter upsell. Use a empathetic tone throughout."
+  },
+  {
+   "id": "writing-persuasive-copy#074",
+   "text": "You are a senior editor at a digital magazine. Create a before-and-after rewrite of weak copy for a waitlist landing page for a mystery product and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-persuasive-copy#075",
+   "text": "Draft a 50-word elevator pitch version of a mobile app store listing description. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-persuasive-copy#076",
+   "text": "Before I start on a software pricing page, write a strong call-to-action button copy for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-persuasive-copy#077",
+   "text": "Draft benefit-led bullet points for a boutique fitness studio’s homepage. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-persuasive-copy#078",
+   "text": "Draft a 50-word elevator pitch version of a hotel’s off-season booking promo. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-persuasive-copy#079",
+   "text": "As an executive assistant, I keep hitting the same wall with a waitlist landing page for a mystery product. Draft a 50-word elevator pitch version of it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-persuasive-copy#080",
+   "text": "Draft benefit-led bullet points for a productivity app’s free trial page. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-persuasive-copy#081",
+   "text": "Write conversion-focused copy for a checkout abandonment recovery email."
+  },
+  {
+   "id": "writing-persuasive-copy#082",
+   "text": "Write urgency-driven copy for a paywall upgrade banner. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-persuasive-copy#083",
+   "text": "Act as a writing teacher. Craft five headline options with different emotional hooks for a paywall upgrade banner, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-persuasive-copy#084",
+   "text": "Write conversion-focused copy for a hotel’s off-season booking promo. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-persuasive-copy#085",
+   "text": "I’m working on a premium newsletter upsell. Write copy that handles the top three objections to it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-persuasive-copy#086",
+   "text": "Create a before-and-after rewrite of weak copy for a nonprofit donation appeal for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-persuasive-copy#087",
+   "text": "Draft a 50-word elevator pitch version of a referral program invitation. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-persuasive-copy#088",
+   "text": "Help me with a checkout abandonment recovery email: draft a 50-word elevator pitch version of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-persuasive-copy#089",
+   "text": "Write urgency-driven copy for a nonprofit donation appeal. Use a empathetic tone throughout."
+  },
+  {
+   "id": "writing-persuasive-copy#090",
+   "text": "You are a senior editor at a digital magazine. Create a before-and-after rewrite of weak copy for a hardware gadget’s Kickstarter pitch and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-persuasive-copy#091",
+   "text": "Write conversion-focused copy for a SaaS changelog announcement. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-persuasive-copy#092",
+   "text": "Before I start on a nonprofit donation appeal, draft a 50-word elevator pitch version of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-persuasive-copy#093",
+   "text": "Write urgency-driven copy for a limited-time holiday bundle offer. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-persuasive-copy#094",
+   "text": "Write conversion-focused copy for a hardware gadget’s Kickstarter pitch. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-persuasive-copy#095",
+   "text": "As a freelance copywriter, I keep hitting the same wall with a hotel’s off-season booking promo. Draft benefit-led bullet points for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-persuasive-copy#096",
+   "text": "Write urgency-driven copy for a software pricing page. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-persuasive-copy#097",
+   "text": "Create a before-and-after rewrite of weak copy for a course sales page for new managers."
+  },
+  {
+   "id": "writing-persuasive-copy#098",
+   "text": "Write conversion-focused copy for a productivity app’s free trial page. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-persuasive-copy#099",
+   "text": "Act as a career coach. Draft a 50-word elevator pitch version of a boutique fitness studio’s homepage, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-persuasive-copy#100",
+   "text": "Write copy that handles the top three objections to a waitlist landing page for a mystery product. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-persuasive-copy#101",
+   "text": "I’m working on a SaaS changelog announcement. Create a before-and-after rewrite of weak copy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-persuasive-copy#102",
+   "text": "Create a before-and-after rewrite of weak copy for a mobile app store listing description for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-persuasive-copy#103",
+   "text": "Write conversion-focused copy for a boutique fitness studio’s homepage. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-persuasive-copy#104",
+   "text": "Help me with a course sales page for new managers: craft five headline options with different emotional hooks for it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

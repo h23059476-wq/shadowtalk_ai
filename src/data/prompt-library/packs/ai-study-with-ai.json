@@ -1,0 +1,430 @@
+{
+ "slug": "ai-study-with-ai",
+ "categorySlug": "ai",
+ "category": "AI & ShadowTalk",
+ "title": "Study With AI",
+ "description": "Turn ShadowTalk into a tutor that quizzes and coaches.",
+ "tags": [
+  "study",
+  "tutor",
+  "learning"
+ ],
+ "prompts": [
+  {
+   "id": "ai-study-with-ai#001",
+   "text": "Design a teaching-back exercise for a code-exercise tutor with hints."
+  },
+  {
+   "id": "ai-study-with-ai#002",
+   "text": "Write a tutor-session prompt for learning a chapter with active recall. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-study-with-ai#003",
+   "text": "Act as an indie developer. Write a misconception-probe prompt for a spaced-repetition session plan, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-study-with-ai#004",
+   "text": "Write a tutor-session prompt for summarizing a textbook chapter honestly. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-study-with-ai#005",
+   "text": "I’m working on a mock-oral-exam simulator. Produce a difficulty-escalation plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-study-with-ai#006",
+   "text": "Draft a session-recap template for preparing flashcards from a PDF for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-study-with-ai#007",
+   "text": "Create a hint-ladder instruction for explaining wrong answers on a practice test. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-study-with-ai#008",
+   "text": "Help me with a code-exercise tutor with hints: write a misconception-probe prompt for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-study-with-ai#009",
+   "text": "Produce a difficulty-escalation plan for preparing flashcards from a PDF. Use a encouraging tone throughout."
+  },
+  {
+   "id": "ai-study-with-ai#010",
+   "text": "You are a teacher of AI literacy. Produce a difficulty-escalation plan for turning lecture notes into quizzes and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-study-with-ai#011",
+   "text": "Produce a difficulty-escalation plan for a spaced-repetition session plan. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-study-with-ai#012",
+   "text": "Before I start on a code-exercise tutor with hints, write a tutor-session prompt for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-study-with-ai#013",
+   "text": "Design a teaching-back exercise for a mistakes-log review session. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-study-with-ai#014",
+   "text": "Write a tutor-session prompt for preparing flashcards from a PDF. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-study-with-ai#015",
+   "text": "As a teacher of AI literacy, I keep hitting the same wall with a language-partner session with corrections. Write a tutor-session prompt for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-study-with-ai#016",
+   "text": "Write a misconception-probe prompt for a mock-oral-exam simulator. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-study-with-ai#017",
+   "text": "Create a progress-check prompt for a Socratic tutor for philosophy readings."
+  },
+  {
+   "id": "ai-study-with-ai#018",
+   "text": "Create a hint-ladder instruction for a mistakes-log review session. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-study-with-ai#019",
+   "text": "Act as a privacy-conscious technologist. Create a progress-check prompt for a mistakes-log review session, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-study-with-ai#020",
+   "text": "Design a teaching-back exercise for a language-partner session with corrections. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-study-with-ai#021",
+   "text": "I’m working on a spaced-repetition session plan. Write a tutor-session prompt for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-study-with-ai#022",
+   "text": "Draft a session-recap template for a mistakes-log review session for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-study-with-ai#023",
+   "text": "Design a quiz-with-answer-key request for learning a chapter with active recall. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-study-with-ai#024",
+   "text": "Help me with a spaced-repetition session plan: design a teaching-back exercise for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-study-with-ai#025",
+   "text": "Create a progress-check prompt for summarizing a textbook chapter honestly. Use a encouraging tone throughout."
+  },
+  {
+   "id": "ai-study-with-ai#026",
+   "text": "You are an indie developer. Write a misconception-probe prompt for a language-partner session with corrections and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-study-with-ai#027",
+   "text": "Write a misconception-probe prompt for a mistakes-log review session. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-study-with-ai#028",
+   "text": "Before I start on a spaced-repetition session plan, design a quiz-with-answer-key request for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-study-with-ai#029",
+   "text": "Write a misconception-probe prompt for preparing flashcards from a PDF. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-study-with-ai#030",
+   "text": "Design a quiz-with-answer-key request for explaining wrong answers on a practice test. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-study-with-ai#031",
+   "text": "As a content creator using AI, I keep hitting the same wall with turning lecture notes into quizzes. Design a teaching-back exercise for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-study-with-ai#032",
+   "text": "Create a hint-ladder instruction for practice problems with escalating difficulty. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-study-with-ai#033",
+   "text": "Create a hint-ladder instruction for preparing flashcards from a PDF."
+  },
+  {
+   "id": "ai-study-with-ai#034",
+   "text": "Design a quiz-with-answer-key request for preparing flashcards from a PDF. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-study-with-ai#035",
+   "text": "Act as a privacy-conscious technologist. Produce a difficulty-escalation plan for a mistakes-log review session, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-study-with-ai#036",
+   "text": "Write a misconception-probe prompt for explaining wrong answers on a practice test. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-study-with-ai#037",
+   "text": "I’m working on a Socratic tutor for philosophy readings. Produce a difficulty-escalation plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-study-with-ai#038",
+   "text": "Create a hint-ladder instruction for turning lecture notes into quizzes for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-study-with-ai#039",
+   "text": "Create a progress-check prompt for explaining wrong answers on a practice test. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-study-with-ai#040",
+   "text": "Help me with a code-exercise tutor with hints: design a quiz-with-answer-key request for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-study-with-ai#041",
+   "text": "Write a tutor-session prompt for a mock-oral-exam simulator. Use a persuasive tone throughout."
+  },
+  {
+   "id": "ai-study-with-ai#042",
+   "text": "You are a ShadowTalk power user. Write a tutor-session prompt for a mistakes-log review session and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-study-with-ai#043",
+   "text": "Draft a session-recap template for learning a chapter with active recall. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-study-with-ai#044",
+   "text": "Before I start on learning a chapter with active recall, produce a difficulty-escalation plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-study-with-ai#045",
+   "text": "Design a quiz-with-answer-key request for practice problems with escalating difficulty. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-study-with-ai#046",
+   "text": "Draft a session-recap template for a language-partner session with corrections. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-study-with-ai#047",
+   "text": "As a teacher of AI literacy, I keep hitting the same wall with a language-partner session with corrections. Design a quiz-with-answer-key request for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-study-with-ai#048",
+   "text": "Create a hint-ladder instruction for a Socratic tutor for philosophy readings. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-study-with-ai#049",
+   "text": "Draft a session-recap template for turning lecture notes into quizzes."
+  },
+  {
+   "id": "ai-study-with-ai#050",
+   "text": "Write a tutor-session prompt for practice problems with escalating difficulty. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-study-with-ai#051",
+   "text": "Act as a ShadowTalk power user. Write a tutor-session prompt for turning lecture notes into quizzes, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-study-with-ai#052",
+   "text": "Design a teaching-back exercise for summarizing a textbook chapter honestly. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-study-with-ai#053",
+   "text": "I’m working on explaining wrong answers on a practice test. Produce a difficulty-escalation plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-study-with-ai#054",
+   "text": "Create a progress-check prompt for practice problems with escalating difficulty for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-study-with-ai#055",
+   "text": "Design a teaching-back exercise for practice problems with escalating difficulty. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-study-with-ai#056",
+   "text": "Help me with a code-exercise tutor with hints: create a progress-check prompt for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-study-with-ai#057",
+   "text": "Create a hint-ladder instruction for learning a chapter with active recall. Use a playful tone throughout."
+  },
+  {
+   "id": "ai-study-with-ai#058",
+   "text": "You are a teacher of AI literacy. Design a quiz-with-answer-key request for turning lecture notes into quizzes and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-study-with-ai#059",
+   "text": "Draft a session-recap template for a spaced-repetition session plan. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-study-with-ai#060",
+   "text": "Before I start on a language-partner session with corrections, produce a difficulty-escalation plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-study-with-ai#061",
+   "text": "Draft a session-recap template for summarizing a textbook chapter honestly. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-study-with-ai#062",
+   "text": "Produce a difficulty-escalation plan for practice problems with escalating difficulty. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-study-with-ai#063",
+   "text": "As an AI-workflow consultant, I keep hitting the same wall with a Socratic tutor for philosophy readings. Write a misconception-probe prompt for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-study-with-ai#064",
+   "text": "Design a teaching-back exercise for a mock-oral-exam simulator. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-study-with-ai#065",
+   "text": "Design a quiz-with-answer-key request for a Socratic tutor for philosophy readings."
+  },
+  {
+   "id": "ai-study-with-ai#066",
+   "text": "Create a hint-ladder instruction for a language-partner session with corrections. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-study-with-ai#067",
+   "text": "Act as an AI-workflow consultant. Write a misconception-probe prompt for practice problems with escalating difficulty, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-study-with-ai#068",
+   "text": "Draft a session-recap template for practice problems with escalating difficulty. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-study-with-ai#069",
+   "text": "I’m working on summarizing a textbook chapter honestly. Write a misconception-probe prompt for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-study-with-ai#070",
+   "text": "Draft a session-recap template for a mock-oral-exam simulator for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-study-with-ai#071",
+   "text": "Create a progress-check prompt for learning a chapter with active recall. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-study-with-ai#072",
+   "text": "Help me with a mistakes-log review session: design a quiz-with-answer-key request for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-study-with-ai#073",
+   "text": "Design a quiz-with-answer-key request for summarizing a textbook chapter honestly. Use a encouraging tone throughout."
+  },
+  {
+   "id": "ai-study-with-ai#074",
+   "text": "You are an indie developer. Design a teaching-back exercise for explaining wrong answers on a practice test and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-study-with-ai#075",
+   "text": "Create a progress-check prompt for turning lecture notes into quizzes. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-study-with-ai#076",
+   "text": "Before I start on a mock-oral-exam simulator, design a quiz-with-answer-key request for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-study-with-ai#077",
+   "text": "Create a hint-ladder instruction for a spaced-repetition session plan. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-study-with-ai#078",
+   "text": "Create a progress-check prompt for preparing flashcards from a PDF. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-study-with-ai#079",
+   "text": "As an AI-workflow consultant, I keep hitting the same wall with a code-exercise tutor with hints. Create a hint-ladder instruction for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-study-with-ai#080",
+   "text": "Create a progress-check prompt for a mock-oral-exam simulator. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-study-with-ai#081",
+   "text": "Write a misconception-probe prompt for turning lecture notes into quizzes."
+  },
+  {
+   "id": "ai-study-with-ai#082",
+   "text": "Produce a difficulty-escalation plan for summarizing a textbook chapter honestly. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-study-with-ai#083",
+   "text": "Act as a prompt-engineering coach. Create a progress-check prompt for a language-partner session with corrections, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-study-with-ai#084",
+   "text": "Draft a session-recap template for a code-exercise tutor with hints. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-study-with-ai#085",
+   "text": "I’m working on a Socratic tutor for philosophy readings. Design a teaching-back exercise for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-study-with-ai#086",
+   "text": "Write a tutor-session prompt for a Socratic tutor for philosophy readings for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-study-with-ai#087",
+   "text": "Design a teaching-back exercise for preparing flashcards from a PDF. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-study-with-ai#088",
+   "text": "Help me with a spaced-repetition session plan: create a progress-check prompt for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-study-with-ai#089",
+   "text": "Produce a difficulty-escalation plan for a code-exercise tutor with hints. Use a professional tone throughout."
+  },
+  {
+   "id": "ai-study-with-ai#090",
+   "text": "You are a teacher of AI literacy. Create a hint-ladder instruction for a mock-oral-exam simulator and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-study-with-ai#091",
+   "text": "Design a teaching-back exercise for learning a chapter with active recall. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-study-with-ai#092",
+   "text": "Before I start on explaining wrong answers on a practice test, write a tutor-session prompt for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-study-with-ai#093",
+   "text": "Draft a session-recap template for a Socratic tutor for philosophy readings. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-study-with-ai#094",
+   "text": "Create a hint-ladder instruction for summarizing a textbook chapter honestly. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-study-with-ai#095",
+   "text": "As a teacher of AI literacy, I keep hitting the same wall with explaining wrong answers on a practice test. Draft a session-recap template for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-study-with-ai#096",
+   "text": "Write a misconception-probe prompt for learning a chapter with active recall. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-study-with-ai#097",
+   "text": "Design a teaching-back exercise for a code-exercise tutor with hints. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-study-with-ai#098",
+   "text": "Write a tutor-session prompt for learning a chapter with active recall. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-study-with-ai#099",
+   "text": "Write a misconception-probe prompt for a spaced-repetition session plan."
+  },
+  {
+   "id": "ai-study-with-ai#100",
+   "text": "Write a tutor-session prompt for summarizing a textbook chapter honestly."
+  },
+  {
+   "id": "ai-study-with-ai#101",
+   "text": "Produce a difficulty-escalation plan for a mock-oral-exam simulator."
+  },
+  {
+   "id": "ai-study-with-ai#102",
+   "text": "Draft a session-recap template for preparing flashcards from a PDF."
+  },
+  {
+   "id": "ai-study-with-ai#103",
+   "text": "Create a hint-ladder instruction for explaining wrong answers on a practice test."
+  },
+  {
+   "id": "ai-study-with-ai#104",
+   "text": "Write a misconception-probe prompt for a code-exercise tutor with hints."
+  }
+ ]
+}

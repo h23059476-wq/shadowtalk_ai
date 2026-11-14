@@ -1,0 +1,430 @@
+{
+ "slug": "social-community",
+ "categorySlug": "social",
+ "category": "Social Media",
+ "title": "Community",
+ "description": "Rules, rituals, moderation, and events that keep groups alive.",
+ "tags": [
+  "community",
+  "moderation",
+  "events"
+ ],
+ "prompts": [
+  {
+   "id": "social-community#001",
+   "text": "Draft the community guidelines for an anniversary celebration plan."
+  },
+  {
+   "id": "social-community#002",
+   "text": "Write a re-engagement message for a lapsed-member re-engagement message. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-community#003",
+   "text": "Act as a creator-economy analyst. Design a recurring ritual for a bug-report channel triage flow, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-community#004",
+   "text": "Write the welcome message for a bug-report channel triage flow. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-community#005",
+   "text": "I’m working on a showcase Friday for maker groups. Write the welcome message for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-community#006",
+   "text": "Propose a recognition system for a welcome ritual for a new-members channel for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-community#007",
+   "text": "Create a moderator-playbook section for a weekly prompt for a writers' Discord. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-community#008",
+   "text": "Help me with a bug-report channel triage flow: write a re-engagement message for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-community#009",
+   "text": "Write the welcome message for a weekly prompt for a writers' Discord. Use a formal tone throughout."
+  },
+  {
+   "id": "social-community#010",
+   "text": "You are a customer-support voice. Plan a community event around a welcome ritual for a new-members channel and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-community#011",
+   "text": "Create a moderator-playbook section for an ask-me-anything with a founder. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-community#012",
+   "text": "Before I start on community guidelines for a trading server, design a recurring ritual for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-community#013",
+   "text": "Plan a community event around handling a heated political thread. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-community#014",
+   "text": "Plan a community event around a virtual-coffee pairing program. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-community#015",
+   "text": "As a creator-economy analyst, I keep hitting the same wall with a volunteer-moderator onboarding doc. Plan a community event around it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-community#016",
+   "text": "Plan a community event around community guidelines for a trading server. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-community#017",
+   "text": "Plan a community event around a lapsed-member re-engagement message."
+  },
+  {
+   "id": "social-community#018",
+   "text": "Draft the community guidelines for a virtual-coffee pairing program. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-community#019",
+   "text": "Act as a local-business owner. Draft the community guidelines for community guidelines for a trading server, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-community#020",
+   "text": "Draft the community guidelines for a monthly challenge for a fitness group. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-community#021",
+   "text": "I’m working on an ask-me-anything with a founder. Write a re-engagement message for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-community#022",
+   "text": "Script the de-escalation response for community guidelines for a trading server for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-community#023",
+   "text": "Create a moderator-playbook section for a showcase Friday for maker groups. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-community#024",
+   "text": "Help me with handling a heated political thread: write a re-engagement message for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-community#025",
+   "text": "Design a recurring ritual for a monthly challenge for a fitness group. Use a encouraging tone throughout."
+  },
+  {
+   "id": "social-community#026",
+   "text": "You are a social media manager. Propose a recognition system for a lapsed-member re-engagement message and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-community#027",
+   "text": "Write the welcome message for handling a heated political thread. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-community#028",
+   "text": "Before I start on a monthly challenge for a fitness group, propose a recognition system for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-community#029",
+   "text": "Script the de-escalation response for a bug-report channel triage flow. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-community#030",
+   "text": "Create a moderator-playbook section for a lapsed-member re-engagement message. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-community#031",
+   "text": "As a short-video strategist, I keep hitting the same wall with an ask-me-anything with a founder. Script the de-escalation response for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-community#032",
+   "text": "Write the welcome message for a lapsed-member re-engagement message. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-community#033",
+   "text": "Script the de-escalation response for a lapsed-member re-engagement message."
+  },
+  {
+   "id": "social-community#034",
+   "text": "Propose a recognition system for a weekly prompt for a writers' Discord. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-community#035",
+   "text": "Act as a creator-economy analyst. Design a recurring ritual for a virtual-coffee pairing program, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-community#036",
+   "text": "Create a moderator-playbook section for a monthly challenge for a fitness group. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-community#037",
+   "text": "I’m working on a weekly prompt for a writers' Discord. Plan a community event around it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-community#038",
+   "text": "Plan a community event around a showcase Friday for maker groups for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-community#039",
+   "text": "Create a moderator-playbook section for a virtual-coffee pairing program. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-community#040",
+   "text": "Help me with a weekly prompt for a writers' Discord: script the de-escalation response for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-community#041",
+   "text": "Design a recurring ritual for handling a heated political thread. Use a persuasive tone throughout."
+  },
+  {
+   "id": "social-community#042",
+   "text": "You are a customer-support voice. Script the de-escalation response for a welcome ritual for a new-members channel and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-community#043",
+   "text": "Design a recurring ritual for a showcase Friday for maker groups. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-community#044",
+   "text": "Before I start on a virtual-coffee pairing program, write the welcome message for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-community#045",
+   "text": "Propose a recognition system for a showcase Friday for maker groups. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-community#046",
+   "text": "Propose a recognition system for an ask-me-anything with a founder. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-community#047",
+   "text": "As a personal-branding coach, I keep hitting the same wall with a virtual-coffee pairing program. Script the de-escalation response for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-community#048",
+   "text": "Write the welcome message for an anniversary celebration plan. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-community#049",
+   "text": "Write a re-engagement message for a volunteer-moderator onboarding doc."
+  },
+  {
+   "id": "social-community#050",
+   "text": "Write a re-engagement message for a welcome ritual for a new-members channel. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-community#051",
+   "text": "Act as a customer-support voice. Propose a recognition system for an anniversary celebration plan, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-community#052",
+   "text": "Plan a community event around a bug-report channel triage flow. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-community#053",
+   "text": "I’m working on community guidelines for a trading server. Write the welcome message for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-community#054",
+   "text": "Draft the community guidelines for a lapsed-member re-engagement message for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-community#055",
+   "text": "Script the de-escalation response for a monthly challenge for a fitness group. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-community#056",
+   "text": "Help me with an anniversary celebration plan: script the de-escalation response for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-community#057",
+   "text": "Design a recurring ritual for an anniversary celebration plan. Use a encouraging tone throughout."
+  },
+  {
+   "id": "social-community#058",
+   "text": "You are a customer-support voice. Draft the community guidelines for a welcome ritual for a new-members channel and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-community#059",
+   "text": "Design a recurring ritual for a lapsed-member re-engagement message. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-community#060",
+   "text": "Before I start on a weekly prompt for a writers' Discord, write a re-engagement message for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-community#061",
+   "text": "Create a moderator-playbook section for handling a heated political thread. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-community#062",
+   "text": "Script the de-escalation response for handling a heated political thread. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-community#063",
+   "text": "As a personal-branding coach, I keep hitting the same wall with a bug-report channel triage flow. Propose a recognition system for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-community#064",
+   "text": "Write a re-engagement message for an anniversary celebration plan. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-community#065",
+   "text": "Draft the community guidelines for a bug-report channel triage flow."
+  },
+  {
+   "id": "social-community#066",
+   "text": "Design a recurring ritual for a welcome ritual for a new-members channel. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-community#067",
+   "text": "Act as a local-business owner. Create a moderator-playbook section for community guidelines for a trading server, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-community#068",
+   "text": "Create a moderator-playbook section for a bug-report channel triage flow. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-community#069",
+   "text": "I’m working on an ask-me-anything with a founder. Write the welcome message for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-community#070",
+   "text": "Write the welcome message for a welcome ritual for a new-members channel for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-community#071",
+   "text": "Propose a recognition system for handling a heated political thread. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-community#072",
+   "text": "Help me with a volunteer-moderator onboarding doc: script the de-escalation response for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-community#073",
+   "text": "Write a re-engagement message for a virtual-coffee pairing program. Use a professional tone throughout."
+  },
+  {
+   "id": "social-community#074",
+   "text": "You are a personal-branding coach. Write the welcome message for a monthly challenge for a fitness group and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-community#075",
+   "text": "Plan a community event around a monthly challenge for a fitness group. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-community#076",
+   "text": "Before I start on a weekly prompt for a writers' Discord, draft the community guidelines for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-community#077",
+   "text": "Propose a recognition system for a volunteer-moderator onboarding doc. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-community#078",
+   "text": "Write a re-engagement message for a monthly challenge for a fitness group. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-community#079",
+   "text": "As a short-video strategist, I keep hitting the same wall with an ask-me-anything with a founder. Plan a community event around it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-community#080",
+   "text": "Create a moderator-playbook section for a welcome ritual for a new-members channel. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-community#081",
+   "text": "Draft the community guidelines for a volunteer-moderator onboarding doc."
+  },
+  {
+   "id": "social-community#082",
+   "text": "Design a recurring ritual for a weekly prompt for a writers' Discord. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-community#083",
+   "text": "Act as a local-business owner. Propose a recognition system for community guidelines for a trading server, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-community#084",
+   "text": "Write a re-engagement message for a showcase Friday for maker groups. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-community#085",
+   "text": "I’m working on a volunteer-moderator onboarding doc. Create a moderator-playbook section for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-community#086",
+   "text": "Write the welcome message for a volunteer-moderator onboarding doc for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-community#087",
+   "text": "Design a recurring ritual for an ask-me-anything with a founder. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-community#088",
+   "text": "Help me with community guidelines for a trading server: write a re-engagement message for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-community#089",
+   "text": "Script the de-escalation response for a showcase Friday for maker groups. Use a persuasive tone throughout."
+  },
+  {
+   "id": "social-community#090",
+   "text": "You are a personal-branding coach. Create a moderator-playbook section for an anniversary celebration plan and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-community#091",
+   "text": "Draft the community guidelines for a showcase Friday for maker groups. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-community#092",
+   "text": "Before I start on an anniversary celebration plan, plan a community event around it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-community#093",
+   "text": "Draft the community guidelines for an ask-me-anything with a founder. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-community#094",
+   "text": "Draft the community guidelines for handling a heated political thread. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-community#095",
+   "text": "As a personal-branding coach, I keep hitting the same wall with a virtual-coffee pairing program. Propose a recognition system for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-community#096",
+   "text": "Design a recurring ritual for a volunteer-moderator onboarding doc. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-community#097",
+   "text": "Draft the community guidelines for an anniversary celebration plan. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-community#098",
+   "text": "Write a re-engagement message for a lapsed-member re-engagement message. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-community#099",
+   "text": "Design a recurring ritual for a bug-report channel triage flow."
+  },
+  {
+   "id": "social-community#100",
+   "text": "Write the welcome message for a bug-report channel triage flow."
+  },
+  {
+   "id": "social-community#101",
+   "text": "Write the welcome message for a showcase Friday for maker groups."
+  },
+  {
+   "id": "social-community#102",
+   "text": "Propose a recognition system for a welcome ritual for a new-members channel."
+  },
+  {
+   "id": "social-community#103",
+   "text": "Create a moderator-playbook section for a weekly prompt for a writers' Discord."
+  },
+  {
+   "id": "social-community#104",
+   "text": "Write a re-engagement message for a bug-report channel triage flow."
+  }
+ ]
+}

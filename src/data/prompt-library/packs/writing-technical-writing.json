@@ -1,0 +1,430 @@
+{
+ "slug": "writing-technical-writing",
+ "categorySlug": "writing",
+ "category": "Writing & Editing",
+ "title": "Technical Writing",
+ "description": "Docs, READMEs, and how-tos that developers actually finish.",
+ "tags": [
+  "documentation",
+  "how-to",
+  "developer"
+ ],
+ "prompts": [
+  {
+   "id": "writing-technical-writing#001",
+   "text": "Draft a README skeleton for webhook retry behavior explained plainly."
+  },
+  {
+   "id": "writing-technical-writing#002",
+   "text": "Draft a clear warning and prerequisites block for a rate-limiting explainer for API consumers. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-technical-writing#003",
+   "text": "Act as a brand journalist. Explain the trade-offs behind a changelog entry for a breaking change, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-technical-writing#004",
+   "text": "Write a step-by-step guide about versioning policy for a public library. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-technical-writing#005",
+   "text": "I’m working on error-code reference for a payments SDK. Produce a docs style checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-technical-writing#006",
+   "text": "Rewrite a dense paragraph about for a newcomer a changelog entry for a breaking change for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-technical-writing#007",
+   "text": "Create a troubleshooting decision tree for an incident postmortem template. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-technical-writing#008",
+   "text": "Help me with error-code reference for a payments SDK: create a troubleshooting decision tree for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-technical-writing#009",
+   "text": "Draft a clear warning and prerequisites block for a contribution guide for first-time open-source devs. Use a direct tone throughout."
+  },
+  {
+   "id": "writing-technical-writing#010",
+   "text": "You are a content marketing strategist. Produce a docs style checklist for a migration guide between config formats and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-technical-writing#011",
+   "text": "Create a troubleshooting decision tree for versioning policy for a public library. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-technical-writing#012",
+   "text": "Before I start on a setup guide for Windows, macOS, and Linux, create a troubleshooting decision tree for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-technical-writing#013",
+   "text": "Draft a clear warning and prerequisites block for webhook retry behavior explained plainly. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-technical-writing#014",
+   "text": "Rewrite a dense paragraph about for a newcomer a getting-started guide for a CLI tool. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-technical-writing#015",
+   "text": "As a brand journalist, I keep hitting the same wall with a rate-limiting explainer for API consumers. Explain the trade-offs behind it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-technical-writing#016",
+   "text": "Write a step-by-step guide about error-code reference for a payments SDK. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-technical-writing#017",
+   "text": "Rewrite a dense paragraph about for a newcomer a contribution guide for first-time open-source devs."
+  },
+  {
+   "id": "writing-technical-writing#018",
+   "text": "Rewrite a dense paragraph about for a newcomer a rate-limiting explainer for API consumers. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-technical-writing#019",
+   "text": "Act as a content marketing strategist. Create a troubleshooting decision tree for API authentication with rotating keys, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-technical-writing#020",
+   "text": "Produce a docs style checklist for a getting-started guide for a CLI tool. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-technical-writing#021",
+   "text": "I’m working on versioning policy for a public library. Produce a docs style checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-technical-writing#022",
+   "text": "Produce a docs style checklist for webhook retry behavior explained plainly for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-technical-writing#023",
+   "text": "Write a step-by-step guide about a rate-limiting explainer for API consumers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-technical-writing#024",
+   "text": "Help me with troubleshooting flaky local databases: draft a clear warning and prerequisites block for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-technical-writing#025",
+   "text": "Rewrite a dense paragraph about for a newcomer a data-retention FAQ for customers. Use a persuasive tone throughout."
+  },
+  {
+   "id": "writing-technical-writing#026",
+   "text": "You are a career coach. Write a step-by-step guide about an onboarding runbook for new engineers and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-technical-writing#027",
+   "text": "Draft a README skeleton for an incident postmortem template. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-technical-writing#028",
+   "text": "Before I start on a deprecation notice with a timeline, produce a docs style checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-technical-writing#029",
+   "text": "Write example-driven documentation for a getting-started guide for a CLI tool. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-technical-writing#030",
+   "text": "Write a step-by-step guide about a setup guide for Windows, macOS, and Linux. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-technical-writing#031",
+   "text": "As a corporate communications lead, I keep hitting the same wall with error-code reference for a payments SDK. Draft a clear warning and prerequisites block for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-technical-writing#032",
+   "text": "Write a step-by-step guide about a getting-started guide for a CLI tool. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-technical-writing#033",
+   "text": "Write a step-by-step guide about troubleshooting flaky local databases."
+  },
+  {
+   "id": "writing-technical-writing#034",
+   "text": "Produce a docs style checklist for a contribution guide for first-time open-source devs. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-technical-writing#035",
+   "text": "Act as a career coach. Write example-driven documentation for a contribution guide for first-time open-source devs, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-technical-writing#036",
+   "text": "Draft a README skeleton for a changelog entry for a breaking change. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-technical-writing#037",
+   "text": "I’m working on API authentication with rotating keys. Rewrite a dense paragraph about for a newcomer it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-technical-writing#038",
+   "text": "Write a step-by-step guide about a changelog entry for a breaking change for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-technical-writing#039",
+   "text": "Write a step-by-step guide about webhook retry behavior explained plainly. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-technical-writing#040",
+   "text": "Help me with a rate-limiting explainer for API consumers: draft a README skeleton for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-technical-writing#041",
+   "text": "Draft a clear warning and prerequisites block for a data-retention FAQ for customers. Use a persuasive tone throughout."
+  },
+  {
+   "id": "writing-technical-writing#042",
+   "text": "You are a content marketing strategist. Create a troubleshooting decision tree for a migration guide between config formats and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-technical-writing#043",
+   "text": "Write example-driven documentation for versioning policy for a public library. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-technical-writing#044",
+   "text": "Before I start on a security-headers checklist for web apps, rewrite a dense paragraph about for a newcomer it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-technical-writing#045",
+   "text": "Rewrite a dense paragraph about for a newcomer an onboarding runbook for new engineers. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-technical-writing#046",
+   "text": "Explain the trade-offs behind a migration guide between config formats. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-technical-writing#047",
+   "text": "As a writing teacher, I keep hitting the same wall with a deprecation notice with a timeline. Rewrite a dense paragraph about for a newcomer it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-technical-writing#048",
+   "text": "Write a step-by-step guide about API authentication with rotating keys. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-technical-writing#049",
+   "text": "Create a troubleshooting decision tree for webhook retry behavior explained plainly."
+  },
+  {
+   "id": "writing-technical-writing#050",
+   "text": "Write example-driven documentation for a deprecation notice with a timeline. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-technical-writing#051",
+   "text": "Act as a freelance copywriter. Explain the trade-offs behind a getting-started guide for a CLI tool, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-technical-writing#052",
+   "text": "Explain the trade-offs behind a data-retention FAQ for customers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-technical-writing#053",
+   "text": "I’m working on troubleshooting flaky local databases. Explain the trade-offs behind it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-technical-writing#054",
+   "text": "Draft a README skeleton for an onboarding runbook for new engineers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-technical-writing#055",
+   "text": "Explain the trade-offs behind a contribution guide for first-time open-source devs. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-technical-writing#056",
+   "text": "Help me with a security-headers checklist for web apps: explain the trade-offs behind it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-technical-writing#057",
+   "text": "Explain the trade-offs behind versioning policy for a public library. Use a formal tone throughout."
+  },
+  {
+   "id": "writing-technical-writing#058",
+   "text": "You are a freelance copywriter. Produce a docs style checklist for a security-headers checklist for web apps and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-technical-writing#059",
+   "text": "Draft a clear warning and prerequisites block for versioning policy for a public library. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-technical-writing#060",
+   "text": "Before I start on troubleshooting flaky local databases, draft a README skeleton for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-technical-writing#061",
+   "text": "Draft a clear warning and prerequisites block for a setup guide for Windows, macOS, and Linux. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-technical-writing#062",
+   "text": "Write a step-by-step guide about a security-headers checklist for web apps. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-technical-writing#063",
+   "text": "As a writing teacher, I keep hitting the same wall with a contribution guide for first-time open-source devs. Create a troubleshooting decision tree for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-technical-writing#064",
+   "text": "Produce a docs style checklist for a setup guide for Windows, macOS, and Linux. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-technical-writing#065",
+   "text": "Produce a docs style checklist for an incident postmortem template."
+  },
+  {
+   "id": "writing-technical-writing#066",
+   "text": "Draft a clear warning and prerequisites block for a changelog entry for a breaking change. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-technical-writing#067",
+   "text": "Act as a senior editor at a digital magazine. Produce a docs style checklist for a data-retention FAQ for customers, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-technical-writing#068",
+   "text": "Explain the trade-offs behind an onboarding runbook for new engineers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-technical-writing#069",
+   "text": "I’m working on troubleshooting flaky local databases. Create a troubleshooting decision tree for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-technical-writing#070",
+   "text": "Write example-driven documentation for a data-retention FAQ for customers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-technical-writing#071",
+   "text": "Write a step-by-step guide about a deprecation notice with a timeline. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-technical-writing#072",
+   "text": "Help me with an incident postmortem template: rewrite a dense paragraph about for a newcomer it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-technical-writing#073",
+   "text": "Explain the trade-offs behind error-code reference for a payments SDK. Use a encouraging tone throughout."
+  },
+  {
+   "id": "writing-technical-writing#074",
+   "text": "You are a content marketing strategist. Explain the trade-offs behind webhook retry behavior explained plainly and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-technical-writing#075",
+   "text": "Write a step-by-step guide about a data-retention FAQ for customers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-technical-writing#076",
+   "text": "Before I start on API authentication with rotating keys, write example-driven documentation for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-technical-writing#077",
+   "text": "Create a troubleshooting decision tree for a deprecation notice with a timeline. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-technical-writing#078",
+   "text": "Rewrite a dense paragraph about for a newcomer a migration guide between config formats. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-technical-writing#079",
+   "text": "As a corporate communications lead, I keep hitting the same wall with error-code reference for a payments SDK. Write example-driven documentation for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-technical-writing#080",
+   "text": "Draft a clear warning and prerequisites block for a security-headers checklist for web apps. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-technical-writing#081",
+   "text": "Draft a README skeleton for a setup guide for Windows, macOS, and Linux."
+  },
+  {
+   "id": "writing-technical-writing#082",
+   "text": "Draft a README skeleton for a data-retention FAQ for customers. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-technical-writing#083",
+   "text": "Act as a corporate communications lead. Rewrite a dense paragraph about for a newcomer a setup guide for Windows, macOS, and Linux, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-technical-writing#084",
+   "text": "Draft a README skeleton for a deprecation notice with a timeline. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-technical-writing#085",
+   "text": "I’m working on webhook retry behavior explained plainly. Rewrite a dense paragraph about for a newcomer it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-technical-writing#086",
+   "text": "Draft a README skeleton for a contribution guide for first-time open-source devs for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-technical-writing#087",
+   "text": "Draft a README skeleton for a migration guide between config formats. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-technical-writing#088",
+   "text": "Help me with API authentication with rotating keys: produce a docs style checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-technical-writing#089",
+   "text": "Draft a clear warning and prerequisites block for an onboarding runbook for new engineers. Use a encouraging tone throughout."
+  },
+  {
+   "id": "writing-technical-writing#090",
+   "text": "You are a writing teacher. Write example-driven documentation for a setup guide for Windows, macOS, and Linux and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-technical-writing#091",
+   "text": "Draft a clear warning and prerequisites block for an incident postmortem template. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-technical-writing#092",
+   "text": "Before I start on troubleshooting flaky local databases, rewrite a dense paragraph about for a newcomer it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-technical-writing#093",
+   "text": "Write example-driven documentation for a rate-limiting explainer for API consumers. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-technical-writing#094",
+   "text": "Produce a docs style checklist for troubleshooting flaky local databases. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-technical-writing#095",
+   "text": "As a corporate communications lead, I keep hitting the same wall with an onboarding runbook for new engineers. Create a troubleshooting decision tree for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-technical-writing#096",
+   "text": "Write a step-by-step guide about an incident postmortem template. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-technical-writing#097",
+   "text": "Rewrite a dense paragraph about for a newcomer error-code reference for a payments SDK."
+  },
+  {
+   "id": "writing-technical-writing#098",
+   "text": "Draft a clear warning and prerequisites block for a deprecation notice with a timeline. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-technical-writing#099",
+   "text": "Act as a corporate communications lead. Explain the trade-offs behind a setup guide for Windows, macOS, and Linux, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-technical-writing#100",
+   "text": "Create a troubleshooting decision tree for a security-headers checklist for web apps. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-technical-writing#101",
+   "text": "I’m working on a security-headers checklist for web apps. Draft a README skeleton for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-technical-writing#102",
+   "text": "Write a step-by-step guide about a contribution guide for first-time open-source devs for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-technical-writing#103",
+   "text": "Create a troubleshooting decision tree for a getting-started guide for a CLI tool. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-technical-writing#104",
+   "text": "Help me with an onboarding runbook for new engineers: produce a docs style checklist for it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

@@ -1,0 +1,430 @@
+{
+ "slug": "marketing-brand-positioning",
+ "categorySlug": "marketing",
+ "category": "Marketing & Growth",
+ "title": "Brand Positioning",
+ "description": "Find the wedge: positioning, messaging hierarchy, and naming.",
+ "tags": [
+  "branding",
+  "positioning",
+  "messaging"
+ ],
+ "prompts": [
+  {
+   "id": "marketing-brand-positioning#001",
+   "text": "Draft a brand voice guide with do-and-don’t examples for a natural deodorant startup."
+  },
+  {
+   "id": "marketing-brand-positioning#002",
+   "text": "Build a full messaging hierarchy for a mindfulness app for commuters. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-brand-positioning#003",
+   "text": "Act as a lifecycle marketing manager. Draft tagline options with rationale for a kids' clothing rental service, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-brand-positioning#004",
+   "text": "Generate ten memorable name candidates for a coworking chain in small towns. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-brand-positioning#005",
+   "text": "I’m working on a pet insurance brand for exotic pets. Generate ten memorable name candidates for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-brand-positioning#006",
+   "text": "Generate ten memorable name candidates for a B2B analytics tool for breweries for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-brand-positioning#007",
+   "text": "Write a one-line positioning statement for a kids' clothing rental service. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-brand-positioning#008",
+   "text": "Help me with a vintage furniture marketplace: map the competitive alternatives and our wedge for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-brand-positioning#009",
+   "text": "Draft tagline options with rationale for a coworking chain in small towns. Use a professional tone throughout."
+  },
+  {
+   "id": "marketing-brand-positioning#010",
+   "text": "You are a brand strategist. Draft tagline options with rationale for a mindfulness app for commuters and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-brand-positioning#011",
+   "text": "Draft a brand voice guide with do-and-don’t examples for a meal-kit brand for shift workers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-brand-positioning#012",
+   "text": "Before I start on a vintage furniture marketplace, generate ten memorable name candidates for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-brand-positioning#013",
+   "text": "List the sharpest differentiators for a mindfulness app for commuters. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-brand-positioning#014",
+   "text": "Write a one-line positioning statement for a natural deodorant startup. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-brand-positioning#015",
+   "text": "As a SEO specialist, I keep hitting the same wall with a budgeting app for freelancers. Generate ten memorable name candidates for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-brand-positioning#016",
+   "text": "Draft a brand voice guide with do-and-don’t examples for a kids' clothing rental service. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-brand-positioning#017",
+   "text": "Write a one-line positioning statement for a coworking chain in small towns."
+  },
+  {
+   "id": "marketing-brand-positioning#018",
+   "text": "Generate ten memorable name candidates for a language school for healthcare workers. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-brand-positioning#019",
+   "text": "Act as a lifecycle marketing manager. List the sharpest differentiators for a vintage furniture marketplace, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-brand-positioning#020",
+   "text": "Draft a brand voice guide with do-and-don’t examples for a coworking chain in small towns. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-brand-positioning#021",
+   "text": "I’m working on a note-taking app for nurses. Build a full messaging hierarchy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-brand-positioning#022",
+   "text": "Draft tagline options with rationale for an online school for home cooks for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-brand-positioning#023",
+   "text": "Write a 60-second brand story for a B2B analytics tool for breweries. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-brand-positioning#024",
+   "text": "Help me with a vintage furniture marketplace: write a one-line positioning statement for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-brand-positioning#025",
+   "text": "Write a one-line positioning statement for a language school for healthcare workers. Use a professional tone throughout."
+  },
+  {
+   "id": "marketing-brand-positioning#026",
+   "text": "You are a product marketing manager. Write a 60-second brand story for a natural deodorant startup and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-brand-positioning#027",
+   "text": "Write a 60-second brand story for a repair cafe franchise. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-brand-positioning#028",
+   "text": "Before I start on a mindfulness app for commuters, generate ten memorable name candidates for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-brand-positioning#029",
+   "text": "List the sharpest differentiators for a B2B analytics tool for breweries. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-brand-positioning#030",
+   "text": "Build a full messaging hierarchy for a meal-kit brand for shift workers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-brand-positioning#031",
+   "text": "As a brand strategist, I keep hitting the same wall with a language school for healthcare workers. Write a 60-second brand story for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-brand-positioning#032",
+   "text": "Map the competitive alternatives and our wedge for a pet insurance brand for exotic pets. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-brand-positioning#033",
+   "text": "Generate ten memorable name candidates for a kids' clothing rental service."
+  },
+  {
+   "id": "marketing-brand-positioning#034",
+   "text": "Draft a brand voice guide with do-and-don’t examples for a B2B analytics tool for breweries. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-brand-positioning#035",
+   "text": "Act as a lifecycle marketing manager. Map the competitive alternatives and our wedge for an online school for home cooks, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-brand-positioning#036",
+   "text": "Build a full messaging hierarchy for a natural deodorant startup. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-brand-positioning#037",
+   "text": "I’m working on a sleep-tracking wearable for athletes. Write a 60-second brand story for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-brand-positioning#038",
+   "text": "Generate ten memorable name candidates for a meal-kit brand for shift workers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-brand-positioning#039",
+   "text": "Write a 60-second brand story for a pet insurance brand for exotic pets. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-brand-positioning#040",
+   "text": "Help me with a coworking chain in small towns: build a full messaging hierarchy for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-brand-positioning#041",
+   "text": "Build a full messaging hierarchy for a kids' clothing rental service. Use a encouraging tone throughout."
+  },
+  {
+   "id": "marketing-brand-positioning#042",
+   "text": "You are a brand strategist. Map the competitive alternatives and our wedge for a budgeting app for freelancers and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-brand-positioning#043",
+   "text": "Draft a brand voice guide with do-and-don’t examples for a budgeting app for freelancers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-brand-positioning#044",
+   "text": "Before I start on a sleep-tracking wearable for athletes, write a one-line positioning statement for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-brand-positioning#045",
+   "text": "Draft tagline options with rationale for a meal-kit brand for shift workers. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-brand-positioning#046",
+   "text": "Map the competitive alternatives and our wedge for a cloud kitchen for regional dishes. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-brand-positioning#047",
+   "text": "As a growth marketing lead, I keep hitting the same wall with a sleep-tracking wearable for athletes. Map the competitive alternatives and our wedge for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-brand-positioning#048",
+   "text": "Draft tagline options with rationale for a natural deodorant startup. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-brand-positioning#049",
+   "text": "Write a one-line positioning statement for a B2B analytics tool for breweries."
+  },
+  {
+   "id": "marketing-brand-positioning#050",
+   "text": "Draft tagline options with rationale for a vintage furniture marketplace. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-brand-positioning#051",
+   "text": "Act as a customer insights analyst. Write a 60-second brand story for a solar panel subscription for renters, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-brand-positioning#052",
+   "text": "Map the competitive alternatives and our wedge for a repair cafe franchise. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-brand-positioning#053",
+   "text": "I’m working on a cloud kitchen for regional dishes. Build a full messaging hierarchy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-brand-positioning#054",
+   "text": "List the sharpest differentiators for a solar panel subscription for renters for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-brand-positioning#055",
+   "text": "Draft a brand voice guide with do-and-don’t examples for a note-taking app for nurses. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-brand-positioning#056",
+   "text": "Help me with a B2B analytics tool for breweries: map the competitive alternatives and our wedge for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-brand-positioning#057",
+   "text": "Generate ten memorable name candidates for a natural deodorant startup. Use a empathetic tone throughout."
+  },
+  {
+   "id": "marketing-brand-positioning#058",
+   "text": "You are a SEO specialist. List the sharpest differentiators for a sleep-tracking wearable for athletes and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-brand-positioning#059",
+   "text": "List the sharpest differentiators for a budgeting app for freelancers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-brand-positioning#060",
+   "text": "Before I start on a budgeting app for freelancers, write a 60-second brand story for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-brand-positioning#061",
+   "text": "List the sharpest differentiators for a coworking chain in small towns. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-brand-positioning#062",
+   "text": "Write a one-line positioning statement for a solar panel subscription for renters. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-brand-positioning#063",
+   "text": "As a growth marketing lead, I keep hitting the same wall with a solar panel subscription for renters. Draft tagline options with rationale for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-brand-positioning#064",
+   "text": "Draft a brand voice guide with do-and-don’t examples for a sleep-tracking wearable for athletes. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-brand-positioning#065",
+   "text": "Map the competitive alternatives and our wedge for a natural deodorant startup."
+  },
+  {
+   "id": "marketing-brand-positioning#066",
+   "text": "List the sharpest differentiators for a repair cafe franchise. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-brand-positioning#067",
+   "text": "Act as a product marketing manager. Write a 60-second brand story for a coworking chain in small towns, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-brand-positioning#068",
+   "text": "Draft a brand voice guide with do-and-don’t examples for a language school for healthcare workers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-brand-positioning#069",
+   "text": "I’m working on an online school for home cooks. List the sharpest differentiators for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-brand-positioning#070",
+   "text": "Draft tagline options with rationale for a cloud kitchen for regional dishes for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-brand-positioning#071",
+   "text": "Write a 60-second brand story for a meal-kit brand for shift workers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-brand-positioning#072",
+   "text": "Help me with a mindfulness app for commuters: map the competitive alternatives and our wedge for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-brand-positioning#073",
+   "text": "Write a one-line positioning statement for a pet insurance brand for exotic pets. Use a playful tone throughout."
+  },
+  {
+   "id": "marketing-brand-positioning#074",
+   "text": "You are a brand strategist. Generate ten memorable name candidates for a repair cafe franchise and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-brand-positioning#075",
+   "text": "Draft tagline options with rationale for a B2B analytics tool for breweries. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-brand-positioning#076",
+   "text": "Before I start on a note-taking app for nurses, generate ten memorable name candidates for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-brand-positioning#077",
+   "text": "Draft tagline options with rationale for a repair cafe franchise. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-brand-positioning#078",
+   "text": "Build a full messaging hierarchy for a vintage furniture marketplace. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-brand-positioning#079",
+   "text": "As a SEO specialist, I keep hitting the same wall with a mindfulness app for commuters. Write a one-line positioning statement for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-brand-positioning#080",
+   "text": "Write a 60-second brand story for a vintage furniture marketplace. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-brand-positioning#081",
+   "text": "Draft a brand voice guide with do-and-don’t examples for an online school for home cooks."
+  },
+  {
+   "id": "marketing-brand-positioning#082",
+   "text": "Write a one-line positioning statement for a note-taking app for nurses. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-brand-positioning#083",
+   "text": "Act as a lifecycle marketing manager. Write a one-line positioning statement for an online school for home cooks, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-brand-positioning#084",
+   "text": "Generate ten memorable name candidates for a solar panel subscription for renters. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-brand-positioning#085",
+   "text": "I’m working on a repair cafe franchise. Write a one-line positioning statement for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-brand-positioning#086",
+   "text": "Draft tagline options with rationale for a language school for healthcare workers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-brand-positioning#087",
+   "text": "Draft a brand voice guide with do-and-don’t examples for a solar panel subscription for renters. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-brand-positioning#088",
+   "text": "Help me with a mindfulness app for commuters: write a 60-second brand story for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-brand-positioning#089",
+   "text": "Map the competitive alternatives and our wedge for a kids' clothing rental service. Use a encouraging tone throughout."
+  },
+  {
+   "id": "marketing-brand-positioning#090",
+   "text": "You are a growth marketing lead. Draft a brand voice guide with do-and-don’t examples for a pet insurance brand for exotic pets and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-brand-positioning#091",
+   "text": "Build a full messaging hierarchy for a repair cafe franchise. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-brand-positioning#092",
+   "text": "Before I start on a language school for healthcare workers, build a full messaging hierarchy for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-brand-positioning#093",
+   "text": "Map the competitive alternatives and our wedge for a meal-kit brand for shift workers. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-brand-positioning#094",
+   "text": "Map the competitive alternatives and our wedge for a language school for healthcare workers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-brand-positioning#095",
+   "text": "As a SEO specialist, I keep hitting the same wall with an online school for home cooks. Build a full messaging hierarchy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-brand-positioning#096",
+   "text": "Write a 60-second brand story for a kids' clothing rental service. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-brand-positioning#097",
+   "text": "Draft tagline options with rationale for a note-taking app for nurses."
+  },
+  {
+   "id": "marketing-brand-positioning#098",
+   "text": "Write a 60-second brand story for an online school for home cooks. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-brand-positioning#099",
+   "text": "Act as a lifecycle marketing manager. Draft a brand voice guide with do-and-don’t examples for a repair cafe franchise, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-brand-positioning#100",
+   "text": "List the sharpest differentiators for a natural deodorant startup. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-brand-positioning#101",
+   "text": "I’m working on a cloud kitchen for regional dishes. Draft a brand voice guide with do-and-don’t examples for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-brand-positioning#102",
+   "text": "Write a 60-second brand story for a cloud kitchen for regional dishes for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-brand-positioning#103",
+   "text": "Write a 60-second brand story for a note-taking app for nurses. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-brand-positioning#104",
+   "text": "Help me with a budgeting app for freelancers: write a one-line positioning statement for it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

@@ -1,0 +1,430 @@
+{
+ "slug": "marketing-partnerships-creators",
+ "categorySlug": "marketing",
+ "category": "Marketing & Growth",
+ "title": "Partnerships & Creators",
+ "description": "Outreach, briefs, and co-marketing with creators and allies.",
+ "tags": [
+  "influencers",
+  "partnership",
+  "outreach"
+ ],
+ "prompts": [
+  {
+   "id": "marketing-partnerships-creators#001",
+   "text": "Create a content handoff checklist for a dev-influencer review of a CLI tool."
+  },
+  {
+   "id": "marketing-partnerships-creators#002",
+   "text": "Write a co-marketing agreement outline for a dev-influencer review of a CLI tool. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-partnerships-creators#003",
+   "text": "Act as a growth marketing lead. Create a content handoff checklist for a newsletter sponsorship placement, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-partnerships-creators#004",
+   "text": "Propose a fair compensation structure for a student-ambassador program for an app. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-partnerships-creators#005",
+   "text": "I’m working on a dev-influencer review of a CLI tool. Propose a fair compensation structure for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-partnerships-creators#006",
+   "text": "Draft a collaboration brief for a giveaway with a travel creator for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-partnerships-creators#007",
+   "text": "Propose a fair compensation structure for a co-branded webinar with an agency. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-partnerships-creators#008",
+   "text": "Help me with a newsletter sponsorship placement: draft a collaboration brief for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-partnerships-creators#009",
+   "text": "Draft a collaboration brief for a co-branded webinar with an agency. Use a empathetic tone throughout."
+  },
+  {
+   "id": "marketing-partnerships-creators#010",
+   "text": "You are a lifecycle marketing manager. Draft follow-up messaging after silence for a newsletter sponsorship placement and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-partnerships-creators#011",
+   "text": "Propose a fair compensation structure for a giveaway with a travel creator. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-partnerships-creators#012",
+   "text": "Before I start on a bookstore x podcast cross-promo, write a co-marketing agreement outline for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-partnerships-creators#013",
+   "text": "Write a co-marketing agreement outline for a case study with a design studio client. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-partnerships-creators#014",
+   "text": "Write a co-marketing agreement outline for a newsletter sponsorship placement. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-partnerships-creators#015",
+   "text": "As a performance marketer, I keep hitting the same wall with a bookstore x podcast cross-promo. Draft follow-up messaging after silence for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-partnerships-creators#016",
+   "text": "Write a co-marketing agreement outline for a photographer ambassador program. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-partnerships-creators#017",
+   "text": "Propose a fair compensation structure for a fitness creator collab for a protein brand."
+  },
+  {
+   "id": "marketing-partnerships-creators#018",
+   "text": "Prepare a creator FAQ for a bookstore x podcast cross-promo. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-partnerships-creators#019",
+   "text": "Act as a product marketing manager. Write a personalized outreach message for a case study with a design studio client, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-partnerships-creators#020",
+   "text": "Write a personalized outreach message for a local-business alliance for a market event. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-partnerships-creators#021",
+   "text": "I’m working on an affiliate program for a course. Create a content handoff checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-partnerships-creators#022",
+   "text": "Write a personalized outreach message for a newsletter sponsorship placement for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-partnerships-creators#023",
+   "text": "Create a content handoff checklist for a fitness creator collab for a protein brand. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-partnerships-creators#024",
+   "text": "Help me with a student-ambassador program for an app: create a content handoff checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-partnerships-creators#025",
+   "text": "Write a co-marketing agreement outline for an affiliate program for a course. Use a friendly tone throughout."
+  },
+  {
+   "id": "marketing-partnerships-creators#026",
+   "text": "You are a performance marketer. Write a personalized outreach message for a giveaway with a travel creator and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-partnerships-creators#027",
+   "text": "Draft follow-up messaging after silence for a student-ambassador program for an app. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-partnerships-creators#028",
+   "text": "Before I start on an affiliate program for a course, draft a collaboration brief for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-partnerships-creators#029",
+   "text": "Draft follow-up messaging after silence for a giveaway with a travel creator. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-partnerships-creators#030",
+   "text": "Prepare a creator FAQ for a case study with a design studio client. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-partnerships-creators#031",
+   "text": "As a brand strategist, I keep hitting the same wall with a case study with a design studio client. Design a measurement plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-partnerships-creators#032",
+   "text": "Propose a fair compensation structure for a local-business alliance for a market event. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-partnerships-creators#033",
+   "text": "Propose a fair compensation structure for a photographer ambassador program."
+  },
+  {
+   "id": "marketing-partnerships-creators#034",
+   "text": "Write a personalized outreach message for a fitness creator collab for a protein brand. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-partnerships-creators#035",
+   "text": "Act as a customer insights analyst. Design a measurement plan for a cooking creator integration for a kitchenware launch, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-partnerships-creators#036",
+   "text": "Create a content handoff checklist for a case study with a design studio client. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-partnerships-creators#037",
+   "text": "I’m working on an affiliate program for a course. Write a personalized outreach message for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-partnerships-creators#038",
+   "text": "Prepare a creator FAQ for a giveaway with a travel creator for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-partnerships-creators#039",
+   "text": "Draft a collaboration brief for a fitness creator collab for a protein brand. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-partnerships-creators#040",
+   "text": "Help me with a cooking creator integration for a kitchenware launch: create a content handoff checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-partnerships-creators#041",
+   "text": "Design a measurement plan for a giveaway with a travel creator. Use a professional tone throughout."
+  },
+  {
+   "id": "marketing-partnerships-creators#042",
+   "text": "You are a customer insights analyst. Propose a fair compensation structure for a bookstore x podcast cross-promo and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-partnerships-creators#043",
+   "text": "Write a personalized outreach message for a co-branded webinar with an agency. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-partnerships-creators#044",
+   "text": "Before I start on a cooking creator integration for a kitchenware launch, draft follow-up messaging after silence for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-partnerships-creators#045",
+   "text": "Prepare a creator FAQ for a student-ambassador program for an app. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-partnerships-creators#046",
+   "text": "Propose a fair compensation structure for a newsletter sponsorship placement. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-partnerships-creators#047",
+   "text": "As a growth marketing lead, I keep hitting the same wall with a cooking creator integration for a kitchenware launch. Prepare a creator FAQ for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-partnerships-creators#048",
+   "text": "Write a co-marketing agreement outline for a cooking creator integration for a kitchenware launch. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-partnerships-creators#049",
+   "text": "Design a measurement plan for a dev-influencer review of a CLI tool."
+  },
+  {
+   "id": "marketing-partnerships-creators#050",
+   "text": "Design a measurement plan for a photographer ambassador program. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-partnerships-creators#051",
+   "text": "Act as a product marketing manager. Propose a fair compensation structure for a case study with a design studio client, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-partnerships-creators#052",
+   "text": "Write a co-marketing agreement outline for a fitness creator collab for a protein brand. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-partnerships-creators#053",
+   "text": "I’m working on a bookstore x podcast cross-promo. Create a content handoff checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-partnerships-creators#054",
+   "text": "Draft follow-up messaging after silence for a case study with a design studio client for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-partnerships-creators#055",
+   "text": "Create a content handoff checklist for a local-business alliance for a market event. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-partnerships-creators#056",
+   "text": "Help me with a photographer ambassador program: draft follow-up messaging after silence for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-partnerships-creators#057",
+   "text": "Create a content handoff checklist for a co-branded webinar with an agency. Use a empathetic tone throughout."
+  },
+  {
+   "id": "marketing-partnerships-creators#058",
+   "text": "You are a lifecycle marketing manager. Design a measurement plan for a newsletter sponsorship placement and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-partnerships-creators#059",
+   "text": "Design a measurement plan for a fitness creator collab for a protein brand. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-partnerships-creators#060",
+   "text": "Before I start on a bookstore x podcast cross-promo, design a measurement plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-partnerships-creators#061",
+   "text": "Write a personalized outreach message for a bookstore x podcast cross-promo. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-partnerships-creators#062",
+   "text": "Propose a fair compensation structure for an affiliate program for a course. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-partnerships-creators#063",
+   "text": "As a product marketing manager, I keep hitting the same wall with a fitness creator collab for a protein brand. Prepare a creator FAQ for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-partnerships-creators#064",
+   "text": "Draft a collaboration brief for a dev-influencer review of a CLI tool. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-partnerships-creators#065",
+   "text": "Draft a collaboration brief for a cooking creator integration for a kitchenware launch."
+  },
+  {
+   "id": "marketing-partnerships-creators#066",
+   "text": "Prepare a creator FAQ for a photographer ambassador program. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-partnerships-creators#067",
+   "text": "Act as a performance marketer. Write a personalized outreach message for a dev-influencer review of a CLI tool, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-partnerships-creators#068",
+   "text": "Write a personalized outreach message for a student-ambassador program for an app. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-partnerships-creators#069",
+   "text": "I’m working on a bookstore x podcast cross-promo. Draft a collaboration brief for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-partnerships-creators#070",
+   "text": "Propose a fair compensation structure for a cooking creator integration for a kitchenware launch for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-partnerships-creators#071",
+   "text": "Prepare a creator FAQ for a co-branded webinar with an agency. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-partnerships-creators#072",
+   "text": "Help me with a photographer ambassador program: draft a collaboration brief for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-partnerships-creators#073",
+   "text": "Write a co-marketing agreement outline for a student-ambassador program for an app. Use a encouraging tone throughout."
+  },
+  {
+   "id": "marketing-partnerships-creators#074",
+   "text": "You are a community growth manager. Design a measurement plan for a local-business alliance for a market event and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-partnerships-creators#075",
+   "text": "Draft follow-up messaging after silence for an affiliate program for a course. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-partnerships-creators#076",
+   "text": "Before I start on a giveaway with a travel creator, create a content handoff checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-partnerships-creators#077",
+   "text": "Prepare a creator FAQ for a dev-influencer review of a CLI tool. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-partnerships-creators#078",
+   "text": "Write a personalized outreach message for a photographer ambassador program. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-partnerships-creators#079",
+   "text": "As a product marketing manager, I keep hitting the same wall with a local-business alliance for a market event. Write a co-marketing agreement outline for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-partnerships-creators#080",
+   "text": "Create a content handoff checklist for a photographer ambassador program. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-partnerships-creators#081",
+   "text": "Prepare a creator FAQ for a newsletter sponsorship placement."
+  },
+  {
+   "id": "marketing-partnerships-creators#082",
+   "text": "Draft a collaboration brief for a local-business alliance for a market event. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-partnerships-creators#083",
+   "text": "Act as a product marketing manager. Draft a collaboration brief for a case study with a design studio client, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-partnerships-creators#084",
+   "text": "Draft follow-up messaging after silence for a co-branded webinar with an agency. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-partnerships-creators#085",
+   "text": "I’m working on a cooking creator integration for a kitchenware launch. Write a personalized outreach message for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-partnerships-creators#086",
+   "text": "Draft follow-up messaging after silence for a dev-influencer review of a CLI tool for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-partnerships-creators#087",
+   "text": "Design a measurement plan for an affiliate program for a course. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-partnerships-creators#088",
+   "text": "Help me with a student-ambassador program for an app: draft a collaboration brief for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-partnerships-creators#089",
+   "text": "Draft follow-up messaging after silence for a fitness creator collab for a protein brand. Use a direct tone throughout."
+  },
+  {
+   "id": "marketing-partnerships-creators#090",
+   "text": "You are a product marketing manager. Write a co-marketing agreement outline for a co-branded webinar with an agency and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-partnerships-creators#091",
+   "text": "Write a co-marketing agreement outline for a giveaway with a travel creator. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-partnerships-creators#092",
+   "text": "Before I start on a student-ambassador program for an app, design a measurement plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-partnerships-creators#093",
+   "text": "Draft follow-up messaging after silence for a local-business alliance for a market event. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-partnerships-creators#094",
+   "text": "Prepare a creator FAQ for a local-business alliance for a market event. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-partnerships-creators#095",
+   "text": "As a performance marketer, I keep hitting the same wall with an affiliate program for a course. Prepare a creator FAQ for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-partnerships-creators#096",
+   "text": "Design a measurement plan for a co-branded webinar with an agency. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-partnerships-creators#097",
+   "text": "Create a content handoff checklist for a dev-influencer review of a CLI tool. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-partnerships-creators#098",
+   "text": "Write a co-marketing agreement outline for a dev-influencer review of a CLI tool. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-partnerships-creators#099",
+   "text": "Create a content handoff checklist for a newsletter sponsorship placement."
+  },
+  {
+   "id": "marketing-partnerships-creators#100",
+   "text": "Propose a fair compensation structure for a student-ambassador program for an app."
+  },
+  {
+   "id": "marketing-partnerships-creators#101",
+   "text": "Propose a fair compensation structure for a dev-influencer review of a CLI tool."
+  },
+  {
+   "id": "marketing-partnerships-creators#102",
+   "text": "Draft a collaboration brief for a giveaway with a travel creator."
+  },
+  {
+   "id": "marketing-partnerships-creators#103",
+   "text": "Propose a fair compensation structure for a co-branded webinar with an agency."
+  },
+  {
+   "id": "marketing-partnerships-creators#104",
+   "text": "Draft a collaboration brief for a newsletter sponsorship placement."
+  }
+ ]
+}

@@ -1,0 +1,430 @@
+{
+ "slug": "writing-editing-proofreading",
+ "categorySlug": "writing",
+ "category": "Writing & Editing",
+ "title": "Editing & Proofreading",
+ "description": "Turn rough drafts into clean, confident, mistake-free prose.",
+ "tags": [
+  "editing",
+  "grammar",
+  "revision"
+ ],
+ "prompts": [
+  {
+   "id": "writing-editing-proofreading#001",
+   "text": "Give a line-by-line critique with fixes for a draft about a blog draft with run-on sentences."
+  },
+  {
+   "id": "writing-editing-proofreading#002",
+   "text": "Rewrite a draft about to match an authoritative but kind tone meeting notes that miss the decisions. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-editing-proofreading#003",
+   "text": "Act as a brand journalist. Produce a style-consistency checklist for editing a newsletter draft with mixed audiences, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-editing-proofreading#004",
+   "text": "Proofread and correct grammar in a passage about a blog draft with run-on sentences. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-editing-proofreading#005",
+   "text": "I’m working on a persuasive essay with weak transitions. Create a pre-publish quality checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-editing-proofreading#006",
+   "text": "Rewrite for clarity and active voice a passage about a case study that reads like a feature list for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-editing-proofreading#007",
+   "text": "Create a pre-publish quality checklist for an about page written in third person. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-editing-proofreading#008",
+   "text": "Help me with a blog draft with run-on sentences: rewrite a draft about to match an authoritative but kind tone it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-editing-proofreading#009",
+   "text": "Flag jargon and suggest plain-language swaps in a case study that reads like a feature list. Use a empathetic tone throughout."
+  },
+  {
+   "id": "writing-editing-proofreading#010",
+   "text": "You are a career coach. Tighten and cut 30 percent of the words in a draft about a customer apology letter that sounds defensive and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-editing-proofreading#011",
+   "text": "Give a line-by-line critique with fixes for a draft about a resume summary that undersells the candidate. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-editing-proofreading#012",
+   "text": "Before I start on a persuasive essay with weak transitions, produce a style-consistency checklist for editing it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-editing-proofreading#013",
+   "text": "Flag jargon and suggest plain-language swaps in a news summary with biased phrasing. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-editing-proofreading#014",
+   "text": "Proofread and correct grammar in a passage about a technical README with inconsistent tone. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-editing-proofreading#015",
+   "text": "As a corporate communications lead, I keep hitting the same wall with a newsletter draft with mixed audiences. Give a line-by-line critique with fixes for a draft about it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-editing-proofreading#016",
+   "text": "Create a pre-publish quality checklist for meeting notes that miss the decisions. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-editing-proofreading#017",
+   "text": "Rewrite for clarity and active voice a passage about a cover letter full of buzzwords."
+  },
+  {
+   "id": "writing-editing-proofreading#018",
+   "text": "Give a line-by-line critique with fixes for a draft about meeting notes that miss the decisions. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-editing-proofreading#019",
+   "text": "Act as a senior editor at a digital magazine. Create a pre-publish quality checklist for a documentation page full of passive voice, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-editing-proofreading#020",
+   "text": "Rewrite a draft about to match an authoritative but kind tone a resume summary that undersells the candidate. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-editing-proofreading#021",
+   "text": "I’m working on a blog draft with run-on sentences. Rewrite for clarity and active voice a passage about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-editing-proofreading#022",
+   "text": "Tighten and cut 30 percent of the words in a draft about a case study that reads like a feature list for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-editing-proofreading#023",
+   "text": "Produce a style-consistency checklist for editing a long email that buries the request. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-editing-proofreading#024",
+   "text": "Help me with a resume summary that undersells the candidate: produce a style-consistency checklist for editing it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-editing-proofreading#025",
+   "text": "Rewrite for clarity and active voice a passage about a documentation page full of passive voice. Use a persuasive tone throughout."
+  },
+  {
+   "id": "writing-editing-proofreading#026",
+   "text": "You are a corporate communications lead. Produce a style-consistency checklist for editing a guest post pitch that sounds generic and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-editing-proofreading#027",
+   "text": "Proofread and correct grammar in a passage about a documentation page full of passive voice. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-editing-proofreading#028",
+   "text": "Before I start on a personal statement that rambles, proofread and correct grammar in a passage about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-editing-proofreading#029",
+   "text": "Create a pre-publish quality checklist for a newsletter draft with mixed audiences. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-editing-proofreading#030",
+   "text": "Produce a style-consistency checklist for editing a customer apology letter that sounds defensive. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-editing-proofreading#031",
+   "text": "As a career coach, I keep hitting the same wall with a persuasive essay with weak transitions. Tighten and cut 30 percent of the words in a draft about it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-editing-proofreading#032",
+   "text": "Rewrite for clarity and active voice a passage about meeting notes that miss the decisions. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-editing-proofreading#033",
+   "text": "Rewrite for clarity and active voice a passage about a guest post pitch that sounds generic."
+  },
+  {
+   "id": "writing-editing-proofreading#034",
+   "text": "Create a pre-publish quality checklist for a resume summary that undersells the candidate. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-editing-proofreading#035",
+   "text": "Act as a freelance copywriter. Tighten and cut 30 percent of the words in a draft about a guest post pitch that sounds generic, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-editing-proofreading#036",
+   "text": "Rewrite a draft about to match an authoritative but kind tone a news summary with biased phrasing. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-editing-proofreading#037",
+   "text": "I’m working on a resume summary that undersells the candidate. Rewrite for clarity and active voice a passage about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-editing-proofreading#038",
+   "text": "Flag jargon and suggest plain-language swaps in a customer apology letter that sounds defensive for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-editing-proofreading#039",
+   "text": "Rewrite for clarity and active voice a passage about a long email that buries the request. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-editing-proofreading#040",
+   "text": "Help me with a documentation page full of passive voice: tighten and cut 30 percent of the words in a draft about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-editing-proofreading#041",
+   "text": "Rewrite a draft about to match an authoritative but kind tone a documentation page full of passive voice. Use a persuasive tone throughout."
+  },
+  {
+   "id": "writing-editing-proofreading#042",
+   "text": "You are a freelance copywriter. Tighten and cut 30 percent of the words in a draft about a technical README with inconsistent tone and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-editing-proofreading#043",
+   "text": "Produce a style-consistency checklist for editing a technical README with inconsistent tone. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-editing-proofreading#044",
+   "text": "Before I start on an about page written in third person, rewrite for clarity and active voice a passage about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-editing-proofreading#045",
+   "text": "Produce a style-consistency checklist for editing a case study that reads like a feature list. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-editing-proofreading#046",
+   "text": "Give a line-by-line critique with fixes for a draft about a guest post pitch that sounds generic. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-editing-proofreading#047",
+   "text": "As a career coach, I keep hitting the same wall with a cover letter full of buzzwords. Produce a style-consistency checklist for editing it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-editing-proofreading#048",
+   "text": "Rewrite a draft about to match an authoritative but kind tone a guest post pitch that sounds generic. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-editing-proofreading#049",
+   "text": "Tighten and cut 30 percent of the words in a draft about a cover letter full of buzzwords."
+  },
+  {
+   "id": "writing-editing-proofreading#050",
+   "text": "Flag jargon and suggest plain-language swaps in a newsletter draft with mixed audiences. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-editing-proofreading#051",
+   "text": "Act as a writing teacher. Proofread and correct grammar in a passage about a cover letter full of buzzwords, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-editing-proofreading#052",
+   "text": "Rewrite for clarity and active voice a passage about a personal statement that rambles. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-editing-proofreading#053",
+   "text": "I’m working on a long email that buries the request. Flag jargon and suggest plain-language swaps in it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-editing-proofreading#054",
+   "text": "Produce a style-consistency checklist for editing meeting notes that miss the decisions for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-editing-proofreading#055",
+   "text": "Flag jargon and suggest plain-language swaps in a blog draft with run-on sentences. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-editing-proofreading#056",
+   "text": "Help me with a personal statement that rambles: tighten and cut 30 percent of the words in a draft about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-editing-proofreading#057",
+   "text": "Produce a style-consistency checklist for editing a news summary with biased phrasing. Use a empathetic tone throughout."
+  },
+  {
+   "id": "writing-editing-proofreading#058",
+   "text": "You are a corporate communications lead. Create a pre-publish quality checklist for a guest post pitch that sounds generic and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-editing-proofreading#059",
+   "text": "Proofread and correct grammar in a passage about a long email that buries the request. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-editing-proofreading#060",
+   "text": "Before I start on a news summary with biased phrasing, rewrite for clarity and active voice a passage about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-editing-proofreading#061",
+   "text": "Rewrite for clarity and active voice a passage about a technical README with inconsistent tone. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-editing-proofreading#062",
+   "text": "Create a pre-publish quality checklist for a news summary with biased phrasing. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-editing-proofreading#063",
+   "text": "As a corporate communications lead, I keep hitting the same wall with a newsletter draft with mixed audiences. Rewrite a draft about to match an authoritative but kind tone it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-editing-proofreading#064",
+   "text": "Tighten and cut 30 percent of the words in a draft about a product description with cliches. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-editing-proofreading#065",
+   "text": "Create a pre-publish quality checklist for a technical README with inconsistent tone."
+  },
+  {
+   "id": "writing-editing-proofreading#066",
+   "text": "Rewrite a draft about to match an authoritative but kind tone a customer apology letter that sounds defensive. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-editing-proofreading#067",
+   "text": "Act as an executive assistant. Flag jargon and suggest plain-language swaps in a personal statement that rambles, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-editing-proofreading#068",
+   "text": "Flag jargon and suggest plain-language swaps in a persuasive essay with weak transitions. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-editing-proofreading#069",
+   "text": "I’m working on a resume summary that undersells the candidate. Tighten and cut 30 percent of the words in a draft about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-editing-proofreading#070",
+   "text": "Create a pre-publish quality checklist for a long email that buries the request for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-editing-proofreading#071",
+   "text": "Rewrite for clarity and active voice a passage about a product description with cliches. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-editing-proofreading#072",
+   "text": "Help me with meeting notes that miss the decisions: tighten and cut 30 percent of the words in a draft about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-editing-proofreading#073",
+   "text": "Proofread and correct grammar in a passage about a resume summary that undersells the candidate. Use a formal tone throughout."
+  },
+  {
+   "id": "writing-editing-proofreading#074",
+   "text": "You are a content marketing strategist. Rewrite a draft about to match an authoritative but kind tone a persuasive essay with weak transitions and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-editing-proofreading#075",
+   "text": "Give a line-by-line critique with fixes for a draft about an about page written in third person. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-editing-proofreading#076",
+   "text": "Before I start on an about page written in third person, flag jargon and suggest plain-language swaps in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-editing-proofreading#077",
+   "text": "Give a line-by-line critique with fixes for a draft about a documentation page full of passive voice. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-editing-proofreading#078",
+   "text": "Create a pre-publish quality checklist for a blog draft with run-on sentences. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-editing-proofreading#079",
+   "text": "As a freelance copywriter, I keep hitting the same wall with a blog draft with run-on sentences. Produce a style-consistency checklist for editing it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-editing-proofreading#080",
+   "text": "Give a line-by-line critique with fixes for a draft about a product description with cliches. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-editing-proofreading#081",
+   "text": "Rewrite a draft about to match an authoritative but kind tone an about page written in third person."
+  },
+  {
+   "id": "writing-editing-proofreading#082",
+   "text": "Rewrite a draft about to match an authoritative but kind tone a case study that reads like a feature list. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-editing-proofreading#083",
+   "text": "Act as a corporate communications lead. Proofread and correct grammar in a passage about a case study that reads like a feature list, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-editing-proofreading#084",
+   "text": "Give a line-by-line critique with fixes for a draft about a technical README with inconsistent tone. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-editing-proofreading#085",
+   "text": "I’m working on a cover letter full of buzzwords. Create a pre-publish quality checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-editing-proofreading#086",
+   "text": "Produce a style-consistency checklist for editing an about page written in third person for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-editing-proofreading#087",
+   "text": "Proofread and correct grammar in a passage about meeting notes that miss the decisions. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-editing-proofreading#088",
+   "text": "Help me with an about page written in third person: proofread and correct grammar in a passage about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-editing-proofreading#089",
+   "text": "Tighten and cut 30 percent of the words in a draft about an about page written in third person. Use a playful tone throughout."
+  },
+  {
+   "id": "writing-editing-proofreading#090",
+   "text": "You are a brand journalist. Rewrite a draft about to match an authoritative but kind tone a product description with cliches and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-editing-proofreading#091",
+   "text": "Give a line-by-line critique with fixes for a draft about a personal statement that rambles. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-editing-proofreading#092",
+   "text": "Before I start on a guest post pitch that sounds generic, proofread and correct grammar in a passage about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-editing-proofreading#093",
+   "text": "Tighten and cut 30 percent of the words in a draft about a newsletter draft with mixed audiences. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-editing-proofreading#094",
+   "text": "Proofread and correct grammar in a passage about a news summary with biased phrasing. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-editing-proofreading#095",
+   "text": "As a career coach, I keep hitting the same wall with a persuasive essay with weak transitions. Proofread and correct grammar in a passage about it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-editing-proofreading#096",
+   "text": "Produce a style-consistency checklist for editing a documentation page full of passive voice. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-editing-proofreading#097",
+   "text": "Flag jargon and suggest plain-language swaps in a technical README with inconsistent tone."
+  },
+  {
+   "id": "writing-editing-proofreading#098",
+   "text": "Tighten and cut 30 percent of the words in a draft about a long email that buries the request. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-editing-proofreading#099",
+   "text": "Act as a corporate communications lead. Tighten and cut 30 percent of the words in a draft about a news summary with biased phrasing, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-editing-proofreading#100",
+   "text": "Flag jargon and suggest plain-language swaps in a cover letter full of buzzwords. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-editing-proofreading#101",
+   "text": "I’m working on a newsletter draft with mixed audiences. Rewrite for clarity and active voice a passage about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-editing-proofreading#102",
+   "text": "Give a line-by-line critique with fixes for a draft about a news summary with biased phrasing for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-editing-proofreading#103",
+   "text": "Create a pre-publish quality checklist for a personal statement that rambles. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-editing-proofreading#104",
+   "text": "Help me with a customer apology letter that sounds defensive: give a line-by-line critique with fixes for a draft about it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

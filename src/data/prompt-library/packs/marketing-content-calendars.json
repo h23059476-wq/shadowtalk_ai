@@ -1,0 +1,430 @@
+{
+ "slug": "marketing-content-calendars",
+ "categorySlug": "marketing",
+ "category": "Marketing & Growth",
+ "title": "Content Calendars",
+ "description": "Sustainable publishing rhythms across channels and formats.",
+ "tags": [
+  "planning",
+  "calendar",
+  "content"
+ ],
+ "prompts": [
+  {
+   "id": "marketing-content-calendars#001",
+   "text": "Write batch-production checklists for a solo bakery’s Instagram for a quarter."
+  },
+  {
+   "id": "marketing-content-calendars#002",
+   "text": "Design a seasonal campaign overlay for a city tourism board’s short-video plan. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-content-calendars#003",
+   "text": "Act as a performance marketer. Write batch-production checklists for an indie game studio’s devlog, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-content-calendars#004",
+   "text": "Propose formats matched to team capacity for a solo bakery’s Instagram for a quarter. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-content-calendars#005",
+   "text": "I’m working on an indie game studio’s devlog. Design a seasonal campaign overlay for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-content-calendars#006",
+   "text": "Draft a one-month calendar for a nonprofit’s awareness month for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-content-calendars#007",
+   "text": "Create a repurposing ladder turning one piece into five for an indie game studio’s devlog. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-content-calendars#008",
+   "text": "Help me with a nonprofit’s awareness month: propose formats matched to team capacity for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-content-calendars#009",
+   "text": "Write batch-production checklists for a plant shop’s seasonal promotions. Use a persuasive tone throughout."
+  },
+  {
+   "id": "marketing-content-calendars#010",
+   "text": "You are a lifecycle marketing manager. Draft a one-month calendar for a music school’s student showcases and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-content-calendars#011",
+   "text": "Propose formats matched to team capacity for a plant shop’s seasonal promotions. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-content-calendars#012",
+   "text": "Before I start on a fitness coach’s YouTube channel, create a repurposing ladder turning one piece into five for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-content-calendars#013",
+   "text": "Design a seasonal campaign overlay for a photographer’s portfolio refresh. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-content-calendars#014",
+   "text": "Write batch-production checklists for a photographer’s portfolio refresh. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-content-calendars#015",
+   "text": "As a community growth manager, I keep hitting the same wall with a nonprofit’s awareness month. Write batch-production checklists for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-content-calendars#016",
+   "text": "Draft a one-month calendar for a solo bakery’s Instagram for a quarter. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-content-calendars#017",
+   "text": "Propose formats matched to team capacity for a music school’s student showcases."
+  },
+  {
+   "id": "marketing-content-calendars#018",
+   "text": "Write batch-production checklists for a book club’s community posts. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-content-calendars#019",
+   "text": "Act as a growth marketing lead. Write batch-production checklists for a dev-tools company’s blog, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-content-calendars#020",
+   "text": "Create a repurposing ladder turning one piece into five for a solo bakery’s Instagram for a quarter. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-content-calendars#021",
+   "text": "I’m working on a dev-tools company’s blog. Design a seasonal campaign overlay for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-content-calendars#022",
+   "text": "Create a repurposing ladder turning one piece into five for a music school’s student showcases for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-content-calendars#023",
+   "text": "Map content to funnel stages for a dev-tools company’s blog. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-content-calendars#024",
+   "text": "Help me with a book club’s community posts: build a lightweight performance-review rubric for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-content-calendars#025",
+   "text": "Generate twenty evergreen content ideas for a SaaS product’s feature-release comms. Use a formal tone throughout."
+  },
+  {
+   "id": "marketing-content-calendars#026",
+   "text": "You are a lifecycle marketing manager. Draft a one-month calendar for a dev-tools company’s blog and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-content-calendars#027",
+   "text": "Build a lightweight performance-review rubric for an indie game studio’s devlog. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-content-calendars#028",
+   "text": "Before I start on a SaaS product’s feature-release comms, propose formats matched to team capacity for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-content-calendars#029",
+   "text": "Propose formats matched to team capacity for an indie game studio’s devlog. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-content-calendars#030",
+   "text": "Create a repurposing ladder turning one piece into five for a nonprofit’s awareness month. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-content-calendars#031",
+   "text": "As a customer insights analyst, I keep hitting the same wall with a music school’s student showcases. Build a lightweight performance-review rubric for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-content-calendars#032",
+   "text": "Generate twenty evergreen content ideas for a personal-finance newsletter. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-content-calendars#033",
+   "text": "Map content to funnel stages for a SaaS product’s feature-release comms."
+  },
+  {
+   "id": "marketing-content-calendars#034",
+   "text": "Map content to funnel stages for a music school’s student showcases. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-content-calendars#035",
+   "text": "Act as a growth marketing lead. Propose formats matched to team capacity for a photographer’s portfolio refresh, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-content-calendars#036",
+   "text": "Map content to funnel stages for an indie game studio’s devlog. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-content-calendars#037",
+   "text": "I’m working on a plant shop’s seasonal promotions. Map content to funnel stages for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-content-calendars#038",
+   "text": "Create a repurposing ladder turning one piece into five for a photographer’s portfolio refresh for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-content-calendars#039",
+   "text": "Design a seasonal campaign overlay for a plant shop’s seasonal promotions. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-content-calendars#040",
+   "text": "Help me with a personal-finance newsletter: propose formats matched to team capacity for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-content-calendars#041",
+   "text": "Design a seasonal campaign overlay for a fitness coach’s YouTube channel. Use a friendly tone throughout."
+  },
+  {
+   "id": "marketing-content-calendars#042",
+   "text": "You are a customer insights analyst. Propose formats matched to team capacity for a fitness coach’s YouTube channel and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-content-calendars#043",
+   "text": "Map content to funnel stages for a city tourism board’s short-video plan. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-content-calendars#044",
+   "text": "Before I start on an indie game studio’s devlog, draft a one-month calendar for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-content-calendars#045",
+   "text": "Generate twenty evergreen content ideas for a solo bakery’s Instagram for a quarter. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-content-calendars#046",
+   "text": "Design a seasonal campaign overlay for a nonprofit’s awareness month. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-content-calendars#047",
+   "text": "As a SEO specialist, I keep hitting the same wall with a city tourism board’s short-video plan. Generate twenty evergreen content ideas for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-content-calendars#048",
+   "text": "Generate twenty evergreen content ideas for a book club’s community posts. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-content-calendars#049",
+   "text": "Build a lightweight performance-review rubric for a SaaS product’s feature-release comms."
+  },
+  {
+   "id": "marketing-content-calendars#050",
+   "text": "Map content to funnel stages for a nonprofit’s awareness month. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-content-calendars#051",
+   "text": "Act as a community growth manager. Generate twenty evergreen content ideas for a fitness coach’s YouTube channel, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-content-calendars#052",
+   "text": "Build a lightweight performance-review rubric for a personal-finance newsletter. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-content-calendars#053",
+   "text": "I’m working on a photographer’s portfolio refresh. Generate twenty evergreen content ideas for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-content-calendars#054",
+   "text": "Draft a one-month calendar for a plant shop’s seasonal promotions for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-content-calendars#055",
+   "text": "Map content to funnel stages for a photographer’s portfolio refresh. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-content-calendars#056",
+   "text": "Help me with a city tourism board’s short-video plan: propose formats matched to team capacity for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-content-calendars#057",
+   "text": "Draft a one-month calendar for a city tourism board’s short-video plan. Use a encouraging tone throughout."
+  },
+  {
+   "id": "marketing-content-calendars#058",
+   "text": "You are a SEO specialist. Design a seasonal campaign overlay for a SaaS product’s feature-release comms and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-content-calendars#059",
+   "text": "Design a seasonal campaign overlay for a solo bakery’s Instagram for a quarter. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-content-calendars#060",
+   "text": "Before I start on a city tourism board’s short-video plan, create a repurposing ladder turning one piece into five for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-content-calendars#061",
+   "text": "Design a seasonal campaign overlay for a book club’s community posts. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-content-calendars#062",
+   "text": "Draft a one-month calendar for a fitness coach’s YouTube channel. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-content-calendars#063",
+   "text": "As a community growth manager, I keep hitting the same wall with a nonprofit’s awareness month. Build a lightweight performance-review rubric for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-content-calendars#064",
+   "text": "Design a seasonal campaign overlay for a music school’s student showcases. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-content-calendars#065",
+   "text": "Generate twenty evergreen content ideas for a nonprofit’s awareness month."
+  },
+  {
+   "id": "marketing-content-calendars#066",
+   "text": "Generate twenty evergreen content ideas for a dev-tools company’s blog. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-content-calendars#067",
+   "text": "Act as a growth marketing lead. Build a lightweight performance-review rubric for a dev-tools company’s blog, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-content-calendars#068",
+   "text": "Write batch-production checklists for a personal-finance newsletter. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-content-calendars#069",
+   "text": "I’m working on an indie game studio’s devlog. Generate twenty evergreen content ideas for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-content-calendars#070",
+   "text": "Build a lightweight performance-review rubric for a fitness coach’s YouTube channel for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-content-calendars#071",
+   "text": "Write batch-production checklists for a music school’s student showcases. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-content-calendars#072",
+   "text": "Help me with a fitness coach’s YouTube channel: map content to funnel stages for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-content-calendars#073",
+   "text": "Propose formats matched to team capacity for a dev-tools company’s blog. Use a persuasive tone throughout."
+  },
+  {
+   "id": "marketing-content-calendars#074",
+   "text": "You are a growth marketing lead. Draft a one-month calendar for a personal-finance newsletter and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-content-calendars#075",
+   "text": "Create a repurposing ladder turning one piece into five for a personal-finance newsletter. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-content-calendars#076",
+   "text": "Before I start on a city tourism board’s short-video plan, build a lightweight performance-review rubric for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-content-calendars#077",
+   "text": "Draft a one-month calendar for a SaaS product’s feature-release comms. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-content-calendars#078",
+   "text": "Create a repurposing ladder turning one piece into five for a book club’s community posts. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-content-calendars#079",
+   "text": "As a customer insights analyst, I keep hitting the same wall with a photographer’s portfolio refresh. Draft a one-month calendar for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-content-calendars#080",
+   "text": "Write batch-production checklists for a SaaS product’s feature-release comms. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-content-calendars#081",
+   "text": "Map content to funnel stages for a personal-finance newsletter."
+  },
+  {
+   "id": "marketing-content-calendars#082",
+   "text": "Design a seasonal campaign overlay for a personal-finance newsletter. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-content-calendars#083",
+   "text": "Act as a growth marketing lead. Build a lightweight performance-review rubric for a plant shop’s seasonal promotions, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-content-calendars#084",
+   "text": "Draft a one-month calendar for a book club’s community posts. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-content-calendars#085",
+   "text": "I’m working on a book club’s community posts. Propose formats matched to team capacity for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-content-calendars#086",
+   "text": "Write batch-production checklists for a city tourism board’s short-video plan for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-content-calendars#087",
+   "text": "Write batch-production checklists for a fitness coach’s YouTube channel. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-content-calendars#088",
+   "text": "Help me with a music school’s student showcases: generate twenty evergreen content ideas for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-content-calendars#089",
+   "text": "Map content to funnel stages for a book club’s community posts. Use a playful tone throughout."
+  },
+  {
+   "id": "marketing-content-calendars#090",
+   "text": "You are a lifecycle marketing manager. Create a repurposing ladder turning one piece into five for a dev-tools company’s blog and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-content-calendars#091",
+   "text": "Build a lightweight performance-review rubric for a solo bakery’s Instagram for a quarter. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-content-calendars#092",
+   "text": "Before I start on a plant shop’s seasonal promotions, generate twenty evergreen content ideas for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-content-calendars#093",
+   "text": "Create a repurposing ladder turning one piece into five for a plant shop’s seasonal promotions. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-content-calendars#094",
+   "text": "Create a repurposing ladder turning one piece into five for a SaaS product’s feature-release comms. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-content-calendars#095",
+   "text": "As a customer insights analyst, I keep hitting the same wall with a photographer’s portfolio refresh. Build a lightweight performance-review rubric for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-content-calendars#096",
+   "text": "Map content to funnel stages for a solo bakery’s Instagram for a quarter. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-content-calendars#097",
+   "text": "Write batch-production checklists for a solo bakery’s Instagram for a quarter. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-content-calendars#098",
+   "text": "Design a seasonal campaign overlay for a city tourism board’s short-video plan. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-content-calendars#099",
+   "text": "Write batch-production checklists for an indie game studio’s devlog."
+  },
+  {
+   "id": "marketing-content-calendars#100",
+   "text": "Propose formats matched to team capacity for a solo bakery’s Instagram for a quarter."
+  },
+  {
+   "id": "marketing-content-calendars#101",
+   "text": "Design a seasonal campaign overlay for an indie game studio’s devlog."
+  },
+  {
+   "id": "marketing-content-calendars#102",
+   "text": "Draft a one-month calendar for a nonprofit’s awareness month."
+  },
+  {
+   "id": "marketing-content-calendars#103",
+   "text": "Create a repurposing ladder turning one piece into five for an indie game studio’s devlog."
+  },
+  {
+   "id": "marketing-content-calendars#104",
+   "text": "Propose formats matched to team capacity for a nonprofit’s awareness month."
+  }
+ ]
+}

@@ -41,6 +41,7 @@ import { NetworkTransitionOverlay } from "@/components/chat/NetworkTransitionOve
  
 // Lazy loaded core pages
 const ChatbotPage = lazy(() => import("./pages/ChatbotPage"));
+const PromptLibraryPage = lazy(() => import("./pages/PromptLibraryPage"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
 const AuthDesignGalleryPage = lazy(() => import("./pages/AuthDesignGalleryPage"));
@@ -144,6 +145,7 @@ const AnimatedRoutes = () => {
           
           {/* Core App Routes */}
           <Route path="/chatbot" element={<Suspense fallback={<PageLoader />}><ChatbotPage /></Suspense>} />
+          <Route path="/prompt-library" element={<Suspense fallback={<PageLoader />}><PageTransition><PromptLibraryPage /></PageTransition></Suspense>} />
           <Route path="/themes" element={<Suspense fallback={<PageLoader />}><PageTransition><AppearanceStudioPage /></PageTransition></Suspense>} />
           <Route path="/profile" element={<PageTransition><ProfilePage /></PageTransition>} />
           <Route path="/settings" element={<PageTransition><SettingsPage /></PageTransition>} />

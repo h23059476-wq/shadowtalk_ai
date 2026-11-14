@@ -1,0 +1,430 @@
+{
+ "slug": "writing-resume-career",
+ "categorySlug": "writing",
+ "category": "Writing & Editing",
+ "title": "Resume & Career Docs",
+ "description": "Resumes, cover letters, and LinkedIn summaries that get responses.",
+ "tags": [
+  "resume",
+  "career",
+  "job search"
+ ],
+ "prompts": [
+  {
+   "id": "writing-resume-career#001",
+   "text": "Draft a recruiter-ready version of a cover letter that addresses a resume gap."
+  },
+  {
+   "id": "writing-resume-career#002",
+   "text": "Write three achievement bullets with metrics for a remote-work cover letter showing async skills. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-resume-career#003",
+   "text": "Act as a writing teacher. Draft a recruiter-ready version of a promotion case document for an internal review, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-resume-career#004",
+   "text": "Produce an ATS-friendly formatting checklist for an internship application with no experience. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-resume-career#005",
+   "text": "I’m working on a rejection follow-up that keeps the door open. Draft a recruiter-ready version of it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-resume-career#006",
+   "text": "Rewrite to remove cliches and filler from a portfolio intro for a motion designer for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-resume-career#007",
+   "text": "Write a networking outreach message for a promotion case document for an internal review. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-resume-career#008",
+   "text": "Help me with an experience section for a project manager: produce an ATS-friendly formatting checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-resume-career#009",
+   "text": "Write a networking outreach message for an out-of-office announcement while job hunting. Use a encouraging tone throughout."
+  },
+  {
+   "id": "writing-resume-career#010",
+   "text": "You are a corporate communications lead. Write a networking outreach message for a resume summary for a career switcher and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-resume-career#011",
+   "text": "Write three achievement bullets with metrics for an experience section for a project manager. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-resume-career#012",
+   "text": "Before I start on a resume summary for a career switcher, create a tailored cover letter for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-resume-career#013",
+   "text": "Draft a recruiter-ready version of a skills section for a self-taught developer. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-resume-career#014",
+   "text": "Rewrite to remove cliches and filler from a LinkedIn headline for freelance designers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-resume-career#015",
+   "text": "As a senior editor at a digital magazine, I keep hitting the same wall with a thank-you note after a final-round interview. Write three achievement bullets with metrics for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-resume-career#016",
+   "text": "Write a networking outreach message for a cover letter that addresses a resume gap. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-resume-career#017",
+   "text": "Draft a confident 100-word professional summary for a portfolio intro for a motion designer."
+  },
+  {
+   "id": "writing-resume-career#018",
+   "text": "Give a mock-recruiter critique of a cover letter for a first data analyst job. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-resume-career#019",
+   "text": "Act as a career coach. Create a tailored cover letter for an internship application with no experience, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-resume-career#020",
+   "text": "Draft a confident 100-word professional summary for a cover letter for a first data analyst job. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-resume-career#021",
+   "text": "I’m working on a rejection follow-up that keeps the door open. Draft a confident 100-word professional summary for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-resume-career#022",
+   "text": "Rewrite to remove cliches and filler from an out-of-office announcement while job hunting for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-resume-career#023",
+   "text": "Write a networking outreach message for a cover letter for a first data analyst job. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-resume-career#024",
+   "text": "Help me with a rejection follow-up that keeps the door open: give a mock-recruiter critique of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-resume-career#025",
+   "text": "Create a tailored cover letter for a bio for a conference speaker page. Use a empathetic tone throughout."
+  },
+  {
+   "id": "writing-resume-career#026",
+   "text": "You are a corporate communications lead. Produce an ATS-friendly formatting checklist for a thank-you note after a final-round interview and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-resume-career#027",
+   "text": "Draft a confident 100-word professional summary for an out-of-office announcement while job hunting. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-resume-career#028",
+   "text": "Before I start on a cover letter for a first data analyst job, write three achievement bullets with metrics for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-resume-career#029",
+   "text": "Give a mock-recruiter critique of an experience section for a project manager. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-resume-career#030",
+   "text": "Create a tailored cover letter for a LinkedIn headline for freelance designers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-resume-career#031",
+   "text": "As a senior editor at a digital magazine, I keep hitting the same wall with a resume summary for a career switcher. Give a mock-recruiter critique of it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-resume-career#032",
+   "text": "Create a tailored cover letter for an experience section for a project manager. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-resume-career#033",
+   "text": "Produce an ATS-friendly formatting checklist for a rejection follow-up that keeps the door open."
+  },
+  {
+   "id": "writing-resume-career#034",
+   "text": "Produce an ATS-friendly formatting checklist for an out-of-office announcement while job hunting. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-resume-career#035",
+   "text": "Act as a corporate communications lead. Rewrite to remove cliches and filler from an experience section for a project manager, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-resume-career#036",
+   "text": "Draft a recruiter-ready version of a thank-you note after a final-round interview. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-resume-career#037",
+   "text": "I’m working on quantifying achievements as a barista. Write three achievement bullets with metrics for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-resume-career#038",
+   "text": "Rewrite to remove cliches and filler from a remote-work cover letter showing async skills for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-resume-career#039",
+   "text": "Produce an ATS-friendly formatting checklist for a cover letter for a first data analyst job. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-resume-career#040",
+   "text": "Help me with a bio for a conference speaker page: write three achievement bullets with metrics for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-resume-career#041",
+   "text": "Give a mock-recruiter critique of a portfolio intro for a motion designer. Use a encouraging tone throughout."
+  },
+  {
+   "id": "writing-resume-career#042",
+   "text": "You are a content marketing strategist. Write three achievement bullets with metrics for a promotion case document for an internal review and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-resume-career#043",
+   "text": "Draft a recruiter-ready version of a bio for a conference speaker page. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-resume-career#044",
+   "text": "Before I start on a rejection follow-up that keeps the door open, write a networking outreach message for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-resume-career#045",
+   "text": "Draft a confident 100-word professional summary for a resume summary for a career switcher. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-resume-career#046",
+   "text": "Rewrite to remove cliches and filler from a skills section for a self-taught developer. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-resume-career#047",
+   "text": "As a senior editor at a digital magazine, I keep hitting the same wall with a referral request to a former manager. Produce an ATS-friendly formatting checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-resume-career#048",
+   "text": "Draft a confident 100-word professional summary for a bio for a conference speaker page. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-resume-career#049",
+   "text": "Draft a recruiter-ready version of an experience section for a project manager."
+  },
+  {
+   "id": "writing-resume-career#050",
+   "text": "Draft a confident 100-word professional summary for a thank-you note after a final-round interview. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-resume-career#051",
+   "text": "Act as a corporate communications lead. Draft a confident 100-word professional summary for an experience section for a project manager, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-resume-career#052",
+   "text": "Create a tailored cover letter for a referral request to a former manager. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-resume-career#053",
+   "text": "I’m working on a remote-work cover letter showing async skills. Draft a recruiter-ready version of it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-resume-career#054",
+   "text": "Produce an ATS-friendly formatting checklist for quantifying achievements as a barista for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-resume-career#055",
+   "text": "Write a networking outreach message for an experience section for a project manager. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-resume-career#056",
+   "text": "Help me with a cover letter that addresses a resume gap: produce an ATS-friendly formatting checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-resume-career#057",
+   "text": "Draft a recruiter-ready version of a cover letter for a first data analyst job. Use a empathetic tone throughout."
+  },
+  {
+   "id": "writing-resume-career#058",
+   "text": "You are a writing teacher. Write a networking outreach message for a LinkedIn headline for freelance designers and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-resume-career#059",
+   "text": "Write three achievement bullets with metrics for a skills section for a self-taught developer. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-resume-career#060",
+   "text": "Before I start on quantifying achievements as a barista, create a tailored cover letter for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-resume-career#061",
+   "text": "Rewrite to remove cliches and filler from a cover letter that addresses a resume gap. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-resume-career#062",
+   "text": "Create a tailored cover letter for a remote-work cover letter showing async skills. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-resume-career#063",
+   "text": "As a brand journalist, I keep hitting the same wall with a cover letter for a first data analyst job. Create a tailored cover letter for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-resume-career#064",
+   "text": "Draft a confident 100-word professional summary for a cover letter that addresses a resume gap. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-resume-career#065",
+   "text": "Write a networking outreach message for a referral request to a former manager."
+  },
+  {
+   "id": "writing-resume-career#066",
+   "text": "Rewrite to remove cliches and filler from a bio for a conference speaker page. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-resume-career#067",
+   "text": "Act as a career coach. Write a networking outreach message for a skills section for a self-taught developer, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-resume-career#068",
+   "text": "Write a networking outreach message for a remote-work cover letter showing async skills. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-resume-career#069",
+   "text": "I’m working on a bio for a conference speaker page. Produce an ATS-friendly formatting checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-resume-career#070",
+   "text": "Produce an ATS-friendly formatting checklist for a skills section for a self-taught developer for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-resume-career#071",
+   "text": "Draft a confident 100-word professional summary for a promotion case document for an internal review. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-resume-career#072",
+   "text": "Help me with quantifying achievements as a barista: write a networking outreach message for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-resume-career#073",
+   "text": "Rewrite to remove cliches and filler from quantifying achievements as a barista. Use a playful tone throughout."
+  },
+  {
+   "id": "writing-resume-career#074",
+   "text": "You are a career coach. Draft a recruiter-ready version of an out-of-office announcement while job hunting and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-resume-career#075",
+   "text": "Give a mock-recruiter critique of a cover letter that addresses a resume gap. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-resume-career#076",
+   "text": "Before I start on a remote-work cover letter showing async skills, produce an ATS-friendly formatting checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-resume-career#077",
+   "text": "Create a tailored cover letter for an out-of-office announcement while job hunting. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-resume-career#078",
+   "text": "Give a mock-recruiter critique of an internship application with no experience. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-resume-career#079",
+   "text": "As an executive assistant, I keep hitting the same wall with quantifying achievements as a barista. Draft a confident 100-word professional summary for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-resume-career#080",
+   "text": "Write three achievement bullets with metrics for a LinkedIn headline for freelance designers. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-resume-career#081",
+   "text": "Rewrite to remove cliches and filler from a cover letter for a first data analyst job."
+  },
+  {
+   "id": "writing-resume-career#082",
+   "text": "Draft a recruiter-ready version of a portfolio intro for a motion designer. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-resume-career#083",
+   "text": "Act as a freelance copywriter. Rewrite to remove cliches and filler from a rejection follow-up that keeps the door open, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-resume-career#084",
+   "text": "Write three achievement bullets with metrics for an out-of-office announcement while job hunting. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-resume-career#085",
+   "text": "I’m working on a bio for a conference speaker page. Give a mock-recruiter critique of it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-resume-career#086",
+   "text": "Create a tailored cover letter for a portfolio intro for a motion designer for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-resume-career#087",
+   "text": "Draft a confident 100-word professional summary for an internship application with no experience. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-resume-career#088",
+   "text": "Help me with a thank-you note after a final-round interview: create a tailored cover letter for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-resume-career#089",
+   "text": "Draft a confident 100-word professional summary for a LinkedIn headline for freelance designers. Use a empathetic tone throughout."
+  },
+  {
+   "id": "writing-resume-career#090",
+   "text": "You are an executive assistant. Give a mock-recruiter critique of a skills section for a self-taught developer and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-resume-career#091",
+   "text": "Produce an ATS-friendly formatting checklist for a portfolio intro for a motion designer. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-resume-career#092",
+   "text": "Before I start on a bio for a conference speaker page, write a networking outreach message for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-resume-career#093",
+   "text": "Give a mock-recruiter critique of a thank-you note after a final-round interview. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-resume-career#094",
+   "text": "Give a mock-recruiter critique of a remote-work cover letter showing async skills. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-resume-career#095",
+   "text": "As a brand journalist, I keep hitting the same wall with a LinkedIn headline for freelance designers. Give a mock-recruiter critique of it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-resume-career#096",
+   "text": "Write three achievement bullets with metrics for a rejection follow-up that keeps the door open. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-resume-career#097",
+   "text": "Write a networking outreach message for a portfolio intro for a motion designer."
+  },
+  {
+   "id": "writing-resume-career#098",
+   "text": "Draft a recruiter-ready version of a LinkedIn headline for freelance designers. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-resume-career#099",
+   "text": "Act as a career coach. Draft a confident 100-word professional summary for a skills section for a self-taught developer, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-resume-career#100",
+   "text": "Draft a recruiter-ready version of an internship application with no experience. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-resume-career#101",
+   "text": "I’m working on quantifying achievements as a barista. Draft a recruiter-ready version of it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-resume-career#102",
+   "text": "Rewrite to remove cliches and filler from an internship application with no experience for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-resume-career#103",
+   "text": "Draft a confident 100-word professional summary for a referral request to a former manager. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-resume-career#104",
+   "text": "Help me with a promotion case document for an internal review: create a tailored cover letter for it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

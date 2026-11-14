@@ -1,0 +1,430 @@
+{
+ "slug": "ai-chat-masterclass",
+ "categorySlug": "ai",
+ "category": "AI & ShadowTalk",
+ "title": "Chat Masterclass",
+ "description": "Technique prompts for sharper ShadowTalk conversations.",
+ "tags": [
+  "chat",
+  "technique",
+  "shadowtalk"
+ ],
+ "prompts": [
+  {
+   "id": "ai-chat-masterclass#001",
+   "text": "Write a persona instruction for brainstorming with constraints instead of open-ended."
+  },
+  {
+   "id": "ai-chat-masterclass#002",
+   "text": "Design a context-preamble checklist for comparing options in a tidy table. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-chat-masterclass#003",
+   "text": "Act as a team-lead rolling out AI tools. Write an output-format instruction for asking for three quality levels of detail, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-chat-masterclass#004",
+   "text": "Create a verification prompt that double-checks brainstorming with constraints instead of open-ended. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-chat-masterclass#005",
+   "text": "I’m working on getting step-by-step reasoning shown. Create a follow-up question ladder for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-chat-masterclass#006",
+   "text": "Write a persona instruction for turning my notes into an outline for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-chat-masterclass#007",
+   "text": "Write a prompt template for role-play to stress-test my plan. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-chat-masterclass#008",
+   "text": "Help me with comparing options in a tidy table: create a verification prompt that double-checks it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-chat-masterclass#009",
+   "text": "Produce a critique-first prompt for brainstorming with constraints instead of open-ended. Use a direct tone throughout."
+  },
+  {
+   "id": "ai-chat-masterclass#010",
+   "text": "You are a content creator using AI. Write a persona instruction for asking for three quality levels of detail and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-chat-masterclass#011",
+   "text": "Write a prompt template for brainstorming with constraints instead of open-ended. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-chat-masterclass#012",
+   "text": "Before I start on turning my notes into an outline, write an output-format instruction for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-chat-masterclass#013",
+   "text": "Write a prompt template for asking for uncertainty and caveats honestly. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-chat-masterclass#014",
+   "text": "Produce a critique-first prompt for comparing options in a tidy table. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-chat-masterclass#015",
+   "text": "As an AI-workflow consultant, I keep hitting the same wall with role-play to stress-test my plan. Create a verification prompt that double-checks it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-chat-masterclass#016",
+   "text": "Produce a critique-first prompt for extracting structured data from messy text. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-chat-masterclass#017",
+   "text": "Produce a critique-first prompt for asking for uncertainty and caveats honestly."
+  },
+  {
+   "id": "ai-chat-masterclass#018",
+   "text": "Design a context-preamble checklist for extracting structured data from messy text. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-chat-masterclass#019",
+   "text": "Act as an indie developer. Draft a multi-turn plan for role-play to stress-test my plan, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-chat-masterclass#020",
+   "text": "Draft a multi-turn plan for summarizing a long paste into decisions. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-chat-masterclass#021",
+   "text": "I’m working on critiquing my idea before my boss does. Draft a multi-turn plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-chat-masterclass#022",
+   "text": "Create a verification prompt that double-checks critiquing my idea before my boss does for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-chat-masterclass#023",
+   "text": "Create a follow-up question ladder for summarizing a long paste into decisions. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-chat-masterclass#024",
+   "text": "Help me with turning my notes into an outline: create a verification prompt that double-checks it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-chat-masterclass#025",
+   "text": "Produce a critique-first prompt for critiquing my idea before my boss does. Use a formal tone throughout."
+  },
+  {
+   "id": "ai-chat-masterclass#026",
+   "text": "You are a content creator using AI. Create a verification prompt that double-checks asking for three quality levels of detail and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-chat-masterclass#027",
+   "text": "Design a context-preamble checklist for brainstorming with constraints instead of open-ended. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-chat-masterclass#028",
+   "text": "Before I start on iterating on a draft without losing the thread, create a verification prompt that double-checks it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-chat-masterclass#029",
+   "text": "Write a persona instruction for summarizing a long paste into decisions. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-chat-masterclass#030",
+   "text": "Create a verification prompt that double-checks asking for uncertainty and caveats honestly. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-chat-masterclass#031",
+   "text": "As an indie developer, I keep hitting the same wall with getting step-by-step reasoning shown. Draft a multi-turn plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-chat-masterclass#032",
+   "text": "Write an output-format instruction for role-play to stress-test my plan. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-chat-masterclass#033",
+   "text": "Produce a critique-first prompt for role-play to stress-test my plan."
+  },
+  {
+   "id": "ai-chat-masterclass#034",
+   "text": "Write an output-format instruction for extracting structured data from messy text. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-chat-masterclass#035",
+   "text": "Act as a team-lead rolling out AI tools. Write an output-format instruction for comparing options in a tidy table, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-chat-masterclass#036",
+   "text": "Produce a critique-first prompt for turning my notes into an outline. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-chat-masterclass#037",
+   "text": "I’m working on critiquing my idea before my boss does. Design a context-preamble checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-chat-masterclass#038",
+   "text": "Create a follow-up question ladder for turning my notes into an outline for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-chat-masterclass#039",
+   "text": "Design a context-preamble checklist for role-play to stress-test my plan. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-chat-masterclass#040",
+   "text": "Help me with iterating on a draft without losing the thread: write a persona instruction for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-chat-masterclass#041",
+   "text": "Draft a multi-turn plan for asking for three quality levels of detail. Use a friendly tone throughout."
+  },
+  {
+   "id": "ai-chat-masterclass#042",
+   "text": "You are a team-lead rolling out AI tools. Create a verification prompt that double-checks getting step-by-step reasoning shown and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-chat-masterclass#043",
+   "text": "Draft a multi-turn plan for asking for uncertainty and caveats honestly. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-chat-masterclass#044",
+   "text": "Before I start on getting step-by-step reasoning shown, produce a critique-first prompt for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-chat-masterclass#045",
+   "text": "Write an output-format instruction for summarizing a long paste into decisions. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-chat-masterclass#046",
+   "text": "Create a follow-up question ladder for extracting structured data from messy text. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-chat-masterclass#047",
+   "text": "As an indie developer, I keep hitting the same wall with brainstorming with constraints instead of open-ended. Draft a multi-turn plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-chat-masterclass#048",
+   "text": "Write a prompt template for critiquing my idea before my boss does. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-chat-masterclass#049",
+   "text": "Write an output-format instruction for iterating on a draft without losing the thread."
+  },
+  {
+   "id": "ai-chat-masterclass#050",
+   "text": "Write an output-format instruction for asking for uncertainty and caveats honestly. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-chat-masterclass#051",
+   "text": "Act as a team-lead rolling out AI tools. Write a prompt template for asking for three quality levels of detail, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-chat-masterclass#052",
+   "text": "Create a follow-up question ladder for critiquing my idea before my boss does. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-chat-masterclass#053",
+   "text": "I’m working on iterating on a draft without losing the thread. Draft a multi-turn plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-chat-masterclass#054",
+   "text": "Design a context-preamble checklist for iterating on a draft without losing the thread for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-chat-masterclass#055",
+   "text": "Write a prompt template for summarizing a long paste into decisions. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-chat-masterclass#056",
+   "text": "Help me with role-play to stress-test my plan: create a follow-up question ladder for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-chat-masterclass#057",
+   "text": "Write an output-format instruction for brainstorming with constraints instead of open-ended. Use a direct tone throughout."
+  },
+  {
+   "id": "ai-chat-masterclass#058",
+   "text": "You are a prompt-engineering coach. Write a persona instruction for critiquing my idea before my boss does and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-chat-masterclass#059",
+   "text": "Design a context-preamble checklist for asking for uncertainty and caveats honestly. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-chat-masterclass#060",
+   "text": "Before I start on extracting structured data from messy text, write a persona instruction for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-chat-masterclass#061",
+   "text": "Write a persona instruction for role-play to stress-test my plan. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-chat-masterclass#062",
+   "text": "Create a follow-up question ladder for iterating on a draft without losing the thread. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-chat-masterclass#063",
+   "text": "As a teacher of AI literacy, I keep hitting the same wall with asking for uncertainty and caveats honestly. Create a follow-up question ladder for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-chat-masterclass#064",
+   "text": "Write a prompt template for getting answers instead of generic essays. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-chat-masterclass#065",
+   "text": "Design a context-preamble checklist for summarizing a long paste into decisions."
+  },
+  {
+   "id": "ai-chat-masterclass#066",
+   "text": "Design a context-preamble checklist for turning my notes into an outline. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-chat-masterclass#067",
+   "text": "Act as a teacher of AI literacy. Produce a critique-first prompt for summarizing a long paste into decisions, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-chat-masterclass#068",
+   "text": "Produce a critique-first prompt for asking for three quality levels of detail. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-chat-masterclass#069",
+   "text": "I’m working on summarizing a long paste into decisions. Create a verification prompt that double-checks it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-chat-masterclass#070",
+   "text": "Draft a multi-turn plan for turning my notes into an outline for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-chat-masterclass#071",
+   "text": "Write a persona instruction for getting step-by-step reasoning shown. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-chat-masterclass#072",
+   "text": "Help me with getting answers instead of generic essays: create a verification prompt that double-checks it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-chat-masterclass#073",
+   "text": "Draft a multi-turn plan for getting answers instead of generic essays. Use a friendly tone throughout."
+  },
+  {
+   "id": "ai-chat-masterclass#074",
+   "text": "You are a content creator using AI. Design a context-preamble checklist for getting answers instead of generic essays and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-chat-masterclass#075",
+   "text": "Write a prompt template for turning my notes into an outline. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-chat-masterclass#076",
+   "text": "Before I start on asking for uncertainty and caveats honestly, write a persona instruction for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-chat-masterclass#077",
+   "text": "Produce a critique-first prompt for iterating on a draft without losing the thread. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-chat-masterclass#078",
+   "text": "Write a prompt template for comparing options in a tidy table. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-chat-masterclass#079",
+   "text": "As a ShadowTalk power user, I keep hitting the same wall with critiquing my idea before my boss does. Write an output-format instruction for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-chat-masterclass#080",
+   "text": "Write a persona instruction for getting answers instead of generic essays. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-chat-masterclass#081",
+   "text": "Write a prompt template for getting step-by-step reasoning shown."
+  },
+  {
+   "id": "ai-chat-masterclass#082",
+   "text": "Write a prompt template for extracting structured data from messy text. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-chat-masterclass#083",
+   "text": "Act as an AI-workflow consultant. Write an output-format instruction for getting step-by-step reasoning shown, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-chat-masterclass#084",
+   "text": "Write a prompt template for iterating on a draft without losing the thread. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-chat-masterclass#085",
+   "text": "I’m working on asking for three quality levels of detail. Design a context-preamble checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-chat-masterclass#086",
+   "text": "Create a follow-up question ladder for comparing options in a tidy table for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-chat-masterclass#087",
+   "text": "Produce a critique-first prompt for getting answers instead of generic essays. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-chat-masterclass#088",
+   "text": "Help me with getting step-by-step reasoning shown: design a context-preamble checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-chat-masterclass#089",
+   "text": "Draft a multi-turn plan for extracting structured data from messy text. Use a persuasive tone throughout."
+  },
+  {
+   "id": "ai-chat-masterclass#090",
+   "text": "You are a content creator using AI. Write a persona instruction for comparing options in a tidy table and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-chat-masterclass#091",
+   "text": "Draft a multi-turn plan for comparing options in a tidy table. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-chat-masterclass#092",
+   "text": "Before I start on extracting structured data from messy text, create a verification prompt that double-checks it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-chat-masterclass#093",
+   "text": "Create a follow-up question ladder for asking for three quality levels of detail. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-chat-masterclass#094",
+   "text": "Write an output-format instruction for getting answers instead of generic essays. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-chat-masterclass#095",
+   "text": "As a privacy-conscious technologist, I keep hitting the same wall with getting answers instead of generic essays. Create a follow-up question ladder for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-chat-masterclass#096",
+   "text": "Create a follow-up question ladder for brainstorming with constraints instead of open-ended. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-chat-masterclass#097",
+   "text": "Write a persona instruction for brainstorming with constraints instead of open-ended. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-chat-masterclass#098",
+   "text": "Design a context-preamble checklist for comparing options in a tidy table. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-chat-masterclass#099",
+   "text": "Write an output-format instruction for asking for three quality levels of detail."
+  },
+  {
+   "id": "ai-chat-masterclass#100",
+   "text": "Create a verification prompt that double-checks brainstorming with constraints instead of open-ended."
+  },
+  {
+   "id": "ai-chat-masterclass#101",
+   "text": "Create a follow-up question ladder for getting step-by-step reasoning shown."
+  },
+  {
+   "id": "ai-chat-masterclass#102",
+   "text": "Write a persona instruction for turning my notes into an outline."
+  },
+  {
+   "id": "ai-chat-masterclass#103",
+   "text": "Write a prompt template for role-play to stress-test my plan."
+  },
+  {
+   "id": "ai-chat-masterclass#104",
+   "text": "Create a verification prompt that double-checks comparing options in a tidy table."
+  }
+ ]
+}

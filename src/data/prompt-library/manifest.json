@@ -1,0 +1,1404 @@
+{
+ "version": 1,
+ "generated": "2026-11-14",
+ "seed": 20261114,
+ "totals": {
+  "categories": 12,
+  "packs": 108,
+  "prompts": 11232
+ },
+ "categories": [
+  {
+   "slug": "writing",
+   "name": "Writing & Editing",
+   "icon": "pen",
+   "blurb": "Emails, blogs, copy, and edits that read like a pro wrote them.",
+   "packs": [
+    {
+     "slug": "writing-email-essentials",
+     "categorySlug": "writing",
+     "title": "Email Essentials",
+     "description": "Compose workplace email for awkward, delicate, and everyday situations.",
+     "tags": [
+      "email",
+      "workplace",
+      "communication"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "writing-blog-longform",
+     "categorySlug": "writing",
+     "title": "Blog & Long-Form",
+     "description": "Outline, draft, and sharpen long-form articles people finish reading.",
+     "tags": [
+      "blogging",
+      "articles",
+      "long-form"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "writing-persuasive-copy",
+     "categorySlug": "writing",
+     "title": "Persuasive Copy",
+     "description": "Landing pages, product copy, and CTAs that move readers to act.",
+     "tags": [
+      "copywriting",
+      "conversion",
+      "brand"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "writing-editing-proofreading",
+     "categorySlug": "writing",
+     "title": "Editing & Proofreading",
+     "description": "Turn rough drafts into clean, confident, mistake-free prose.",
+     "tags": [
+      "editing",
+      "grammar",
+      "revision"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "writing-storytelling-craft",
+     "categorySlug": "writing",
+     "title": "Storytelling Craft",
+     "description": "Openings, arcs, dialogue, and worlds for fiction and narrative nonfiction.",
+     "tags": [
+      "fiction",
+      "narrative",
+      "creative"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "writing-academic-writing",
+     "categorySlug": "writing",
+     "title": "Academic & Research Writing",
+     "description": "Abstracts, literature reviews, citations, and thesis-chapter discipline.",
+     "tags": [
+      "research",
+      "academic",
+      "thesis"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "writing-resume-career",
+     "categorySlug": "writing",
+     "title": "Resume & Career Docs",
+     "description": "Resumes, cover letters, and LinkedIn summaries that get responses.",
+     "tags": [
+      "resume",
+      "career",
+      "job search"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "writing-short-form-captions",
+     "categorySlug": "writing",
+     "title": "Captions & Short-Form",
+     "description": "Punchy captions, hooks, and microcopy for feeds and products.",
+     "tags": [
+      "captions",
+      "microcopy",
+      "short-form"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "writing-technical-writing",
+     "categorySlug": "writing",
+     "title": "Technical Writing",
+     "description": "Docs, READMEs, and how-tos that developers actually finish.",
+     "tags": [
+      "documentation",
+      "how-to",
+      "developer"
+     ],
+     "promptCount": 104
+    }
+   ]
+  },
+  {
+   "slug": "marketing",
+   "name": "Marketing & Growth",
+   "icon": "megaphone",
+   "blurb": "Campaigns, SEO, ads, and growth loops grounded in real customer language.",
+   "packs": [
+    {
+     "slug": "marketing-brand-positioning",
+     "categorySlug": "marketing",
+     "title": "Brand Positioning",
+     "description": "Find the wedge: positioning, messaging hierarchy, and naming.",
+     "tags": [
+      "branding",
+      "positioning",
+      "messaging"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "marketing-seo-content",
+     "categorySlug": "marketing",
+     "title": "SEO Content",
+     "description": "Search-intent research, outlines, and on-page optimization.",
+     "tags": [
+      "seo",
+      "keywords",
+      "content"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "marketing-email-marketing",
+     "categorySlug": "marketing",
+     "title": "Email Marketing",
+     "description": "Welcome flows, newsletters, and win-backs with real cadence.",
+     "tags": [
+      "email",
+      "lifecycle",
+      "newsletter"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "marketing-ad-copy",
+     "categorySlug": "marketing",
+     "title": "Ad Copy",
+     "description": "Search, social, and display ads tuned to each placement.",
+     "tags": [
+      "ads",
+      "paid",
+      "copywriting"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "marketing-launch-campaigns",
+     "categorySlug": "marketing",
+     "title": "Launch Campaigns",
+     "description": "Full launch arcs from teaser to post-launch retro.",
+     "tags": [
+      "launch",
+      "campaign",
+      "go-to-market"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "marketing-content-calendars",
+     "categorySlug": "marketing",
+     "title": "Content Calendars",
+     "description": "Sustainable publishing rhythms across channels and formats.",
+     "tags": [
+      "planning",
+      "calendar",
+      "content"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "marketing-growth-analytics",
+     "categorySlug": "marketing",
+     "title": "Growth & Reporting",
+     "description": "Experiment design, funnel reads, and exec-ready reporting.",
+     "tags": [
+      "analytics",
+      "experiments",
+      "reporting"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "marketing-customer-research",
+     "categorySlug": "marketing",
+     "title": "Customer Research",
+     "description": "Interview scripts, surveys, and insight synthesis that holds up.",
+     "tags": [
+      "research",
+      "interviews",
+      "insights"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "marketing-partnerships-creators",
+     "categorySlug": "marketing",
+     "title": "Partnerships & Creators",
+     "description": "Outreach, briefs, and co-marketing with creators and allies.",
+     "tags": [
+      "influencers",
+      "partnership",
+      "outreach"
+     ],
+     "promptCount": 104
+    }
+   ]
+  },
+  {
+   "slug": "business",
+   "name": "Business & Strategy",
+   "icon": "briefcase",
+   "blurb": "Plans, ops, finance, people, and negotiations for operators.",
+   "packs": [
+    {
+     "slug": "business-strategy-planning",
+     "categorySlug": "business",
+     "title": "Strategy & Planning",
+     "description": "Annual plans, moats, and bets with explicit trade-offs.",
+     "tags": [
+      "strategy",
+      "planning",
+      "decisions"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "business-operations",
+     "categorySlug": "business",
+     "title": "Operations",
+     "description": "Processes, SOPs, vendors, and quality that survive scale.",
+     "tags": [
+      "operations",
+      "process",
+      "sop"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "business-finance-fundamentals",
+     "categorySlug": "business",
+     "title": "Finance Fundamentals",
+     "description": "Budgets, pricing, cash flow, and unit economics demystified.",
+     "tags": [
+      "finance",
+      "pricing",
+      "cashflow"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "business-hiring-people",
+     "categorySlug": "business",
+     "title": "Hiring & People",
+     "description": "Role scoping, interview loops, onboarding, and feedback.",
+     "tags": [
+      "hiring",
+      "hr",
+      "onboarding"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "business-leadership-management",
+     "categorySlug": "business",
+     "title": "Leadership & Management",
+     "description": "One-on-ones, priorities, conflicts, and change that lands.",
+     "tags": [
+      "leadership",
+      "management",
+      "culture"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "business-negotiation",
+     "categorySlug": "business",
+     "title": "Negotiation",
+     "description": "Prep sheets, anchors, and trade-off menus for real deals.",
+     "tags": [
+      "negotiation",
+      "deals",
+      "contracts"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "business-startup-fundraising",
+     "categorySlug": "business",
+     "title": "Startup & Fundraising",
+     "description": "Narratives, decks, diligence, and investor updates.",
+     "tags": [
+      "startup",
+      "fundraising",
+      "pitch"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "business-legal-compliance-basics",
+     "categorySlug": "business",
+     "title": "Legal & Compliance Basics",
+     "description": "Policies, contracts, and notices in plain language (not legal advice).",
+     "tags": [
+      "legal",
+      "policy",
+      "compliance"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "business-customer-success",
+     "categorySlug": "business",
+     "title": "Customer Success",
+     "description": "Onboarding, QBRs, escalations, and renewals that stick.",
+     "tags": [
+      "customer success",
+      "retention",
+      "support"
+     ],
+     "promptCount": 104
+    }
+   ]
+  },
+  {
+   "slug": "coding",
+   "name": "Coding & Development",
+   "icon": "code",
+   "blurb": "Reviews, debugging, tests, and architecture help for working devs.",
+   "packs": [
+    {
+     "slug": "coding-code-review",
+     "categorySlug": "coding",
+     "title": "Code Review & Refactoring",
+     "description": "Get review checklists and cleaner refactors without breaking things.",
+     "tags": [
+      "review",
+      "refactoring",
+      "quality"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "coding-debugging",
+     "categorySlug": "coding",
+     "title": "Debugging",
+     "description": "Hypothesis-driven debugging plans for the bugs that won't reproduce.",
+     "tags": [
+      "debugging",
+      "root-cause",
+      "errors"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "coding-api-integration",
+     "categorySlug": "coding",
+     "title": "APIs & Integration",
+     "description": "Client wrappers, retries, auth, and versioning done right.",
+     "tags": [
+      "api",
+      "integration",
+      "webhooks"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "coding-testing",
+     "categorySlug": "coding",
+     "title": "Testing",
+     "description": "Pyramids, fixtures, and flaky-test triage for real suites.",
+     "tags": [
+      "testing",
+      "quality",
+      "ci"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "coding-devops-deployment",
+     "categorySlug": "coding",
+     "title": "DevOps & Deployment",
+     "description": "Pipelines, containers, and runbooks for calmer releases.",
+     "tags": [
+      "devops",
+      "ci/cd",
+      "infrastructure"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "coding-databases",
+     "categorySlug": "coding",
+     "title": "Databases",
+     "description": "Schema design, queries, migrations, and performance sanity.",
+     "tags": [
+      "sql",
+      "schema",
+      "performance"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "coding-frontend-ui",
+     "categorySlug": "coding",
+     "title": "Frontend & UI",
+     "description": "Components, state, accessibility, and design-system hygiene.",
+     "tags": [
+      "frontend",
+      "react",
+      "a11y"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "coding-performance",
+     "categorySlug": "coding",
+     "title": "Performance",
+     "description": "Find the real bottleneck, fix it, prove the win.",
+     "tags": [
+      "performance",
+      "optimization",
+      "profiling"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "coding-learning-docs",
+     "categorySlug": "coding",
+     "title": "Learning & Docs",
+     "description": "Learn a new stack or write the docs that teach it.",
+     "tags": [
+      "learning",
+      "docs",
+      "onboarding"
+     ],
+     "promptCount": 104
+    }
+   ]
+  },
+  {
+   "slug": "education",
+   "name": "Education & Learning",
+   "icon": "graduation",
+   "blurb": "Study plans, explainers, exam prep, and teaching design.",
+   "packs": [
+    {
+     "slug": "education-study-plans",
+     "categorySlug": "education",
+     "title": "Study Plans",
+     "description": "Realistic schedules and spaced practice that survive busy weeks.",
+     "tags": [
+      "study",
+      "planning",
+      "habits"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "education-explain-analogies",
+     "categorySlug": "education",
+     "title": "Explainers & Analogies",
+     "description": "Any concept, explained at the level you actually need.",
+     "tags": [
+      "explainer",
+      "analogies",
+      "concepts"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "education-language-learning",
+     "categorySlug": "education",
+     "title": "Language Learning",
+     "description": "Drills, dialogues, and feedback for real conversations.",
+     "tags": [
+      "languages",
+      "practice",
+      "dialogue"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "education-exam-prep",
+     "categorySlug": "education",
+     "title": "Exam Prep",
+     "description": "Practice sets, timing strategy, and calm-day routines.",
+     "tags": [
+      "exams",
+      "practice",
+      "strategy"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "education-teaching-design",
+     "categorySlug": "education",
+     "title": "Teaching & Lesson Design",
+     "description": "Lesson plans, rubrics, and classroom activities that engage.",
+     "tags": [
+      "teaching",
+      "lesson plan",
+      "rubric"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "education-skill-practice",
+     "categorySlug": "education",
+     "title": "Skill Practice",
+     "description": "Deliberate-practice drills for hands you want better at.",
+     "tags": [
+      "practice",
+      "drills",
+      "skills"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "education-notes-memory",
+     "categorySlug": "education",
+     "title": "Notes & Memory",
+     "description": "Capture, connect, and actually remember what you learn.",
+     "tags": [
+      "notes",
+      "memory",
+      "zettelkasten"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "education-kids-parents",
+     "categorySlug": "education",
+     "title": "Kids & Parents",
+     "description": "Age-appropriate learning, routines, and curious questions.",
+     "tags": [
+      "kids",
+      "parenting",
+      "activities"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "education-career-upskilling",
+     "categorySlug": "education",
+     "title": "Career Upskilling",
+     "description": "Pick the next skill, learn it fast, prove it at work.",
+     "tags": [
+      "upskilling",
+      "career",
+      "learning"
+     ],
+     "promptCount": 104
+    }
+   ]
+  },
+  {
+   "slug": "design",
+   "name": "Design & Visual",
+   "icon": "palette",
+   "blurb": "Brand, UI critique, image prompts, and decks that look intentional.",
+   "packs": [
+    {
+     "slug": "design-brand-identity",
+     "categorySlug": "design",
+     "title": "Brand Identity",
+     "description": "Logos, palettes, and identity systems from brief to guidelines.",
+     "tags": [
+      "brand",
+      "identity",
+      "logo"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "design-ui-ux-feedback",
+     "categorySlug": "design",
+     "title": "UI/UX Feedback",
+     "description": "Heuristic reviews and flows that remove friction honestly.",
+     "tags": [
+      "ux",
+      "usability",
+      "flows"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "design-image-generation",
+     "categorySlug": "design",
+     "title": "Image Generation Prompts",
+     "description": "Ready-to-send prompts for ShadowTalk's image generation.",
+     "tags": [
+      "image",
+      "art",
+      "visual"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "design-presentations",
+     "categorySlug": "design",
+     "title": "Presentations & Slides",
+     "description": "Deck structures and slide copy that respect the audience.",
+     "tags": [
+      "slides",
+      "deck",
+      "presentation"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "design-product-design",
+     "categorySlug": "design",
+     "title": "Product Design",
+     "description": "Feature specs, journeys, and prototypes worth building.",
+     "tags": [
+      "product",
+      "spec",
+      "journey"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "design-illustration-briefs",
+     "categorySlug": "design",
+     "title": "Illustration Briefs",
+     "description": "Briefs and asset lists that artists can quote accurately.",
+     "tags": [
+      "illustration",
+      "brief",
+      "art"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "design-color-typography",
+     "categorySlug": "design",
+     "title": "Color & Typography",
+     "description": "Contrast-safe palettes and type systems with reasons.",
+     "tags": [
+      "color",
+      "typography",
+      "systems"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "design-design-critique",
+     "categorySlug": "design",
+     "title": "Design Critique",
+     "description": "Structured, kind, actionable critique sessions.",
+     "tags": [
+      "critique",
+      "feedback",
+      "review"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "design-portfolio-case-studies",
+     "categorySlug": "design",
+     "title": "Portfolio & Case Studies",
+     "description": "Case studies that show thinking, not just pretty screens.",
+     "tags": [
+      "portfolio",
+      "case study",
+      "career"
+     ],
+     "promptCount": 104
+    }
+   ]
+  },
+  {
+   "slug": "social",
+   "name": "Social Media",
+   "icon": "share",
+   "blurb": "Platform-native posts, replies, and community moves that don't feel canned.",
+   "packs": [
+    {
+     "slug": "social-instagram",
+     "categorySlug": "social",
+     "title": "Instagram",
+     "description": "Reels, carousels, and captions tuned for saves and shares.",
+     "tags": [
+      "instagram",
+      "reels",
+      "carousel"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "social-linkedin",
+     "categorySlug": "social",
+     "title": "LinkedIn",
+     "description": "Posts, comments, and profiles that build professional trust.",
+     "tags": [
+      "linkedin",
+      "career",
+      "b2b"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "social-x-twitter",
+     "categorySlug": "social",
+     "title": "X / Twitter",
+     "description": "Threads, one-liners, and replies with native rhythm.",
+     "tags": [
+      "twitter",
+      "threads",
+      "growth"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "social-tiktok-shorts",
+     "categorySlug": "social",
+     "title": "TikTok & Shorts",
+     "description": "Vertical-video scripts with hooks that earn the second second.",
+     "tags": [
+      "tiktok",
+      "shorts",
+      "video"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "social-youtube",
+     "categorySlug": "social",
+     "title": "YouTube",
+     "description": "Titles, thumbnails, chapters, and scripts for watch time.",
+     "tags": [
+      "youtube",
+      "video",
+      "script"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "social-community",
+     "categorySlug": "social",
+     "title": "Community",
+     "description": "Rules, rituals, moderation, and events that keep groups alive.",
+     "tags": [
+      "community",
+      "moderation",
+      "events"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "social-personal-branding",
+     "categorySlug": "social",
+     "title": "Personal Branding",
+     "description": "Positioning, bios, and content pillars for individuals.",
+     "tags": [
+      "brand",
+      "bio",
+      "positioning"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "social-social-analytics",
+     "categorySlug": "social",
+     "title": "Social Analytics",
+     "description": "Read the numbers, change the plan, prove it worked.",
+     "tags": [
+      "analytics",
+      "metrics",
+      "reporting"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "social-crisis-etiquette",
+     "categorySlug": "social",
+     "title": "Crisis & Etiquette",
+     "description": "Say the hard thing online without making it worse.",
+     "tags": [
+      "crisis",
+      "etiquette",
+      "response"
+     ],
+     "promptCount": 104
+    }
+   ]
+  },
+  {
+   "slug": "productivity",
+   "name": "Productivity & Habits",
+   "icon": "clock",
+   "blurb": "Plans, focus systems, and habits that survive real life.",
+   "packs": [
+    {
+     "slug": "productivity-daily-planning",
+     "categorySlug": "productivity",
+     "title": "Daily Planning",
+     "description": "Morning setups, priorities, and shutdown rituals.",
+     "tags": [
+      "planning",
+      "routine",
+      "focus"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "productivity-focus-deep-work",
+     "categorySlug": "productivity",
+     "title": "Focus & Deep Work",
+     "description": "Protect attention in offices, homes, and open tabs.",
+     "tags": [
+      "focus",
+      "deep work",
+      "attention"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "productivity-habits-routines",
+     "categorySlug": "productivity",
+     "title": "Habits & Routines",
+     "description": "Start small, keep score, and bounce back from misses.",
+     "tags": [
+      "habits",
+      "routines",
+      "behavior"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "productivity-meetings-email",
+     "categorySlug": "productivity",
+     "title": "Meetings & Email",
+     "description": "Fewer, shorter, and decision-first communications.",
+     "tags": [
+      "meetings",
+      "email",
+      "async"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "productivity-goals-review",
+     "categorySlug": "productivity",
+     "title": "Goals & Reviews",
+     "description": "Set direction, measure honestly, adjust without drama.",
+     "tags": [
+      "goals",
+      "okr",
+      "review"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "productivity-tools-workflows",
+     "categorySlug": "productivity",
+     "title": "Tools & Workflows",
+     "description": "Pick fewer tools, wire them together, trust the system.",
+     "tags": [
+      "tools",
+      "automation",
+      "workflow"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "productivity-retros-improvement",
+     "categorySlug": "productivity",
+     "title": "Retros & Improvement",
+     "description": "Reviews that change behavior, not just collect notes.",
+     "tags": [
+      "retro",
+      "kaizen",
+      "improvement"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "productivity-energy-balance",
+     "categorySlug": "productivity",
+     "title": "Energy & Balance",
+     "description": "Manage energy, not just time; recover on purpose.",
+     "tags": [
+      "energy",
+      "balance",
+      "recovery"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "productivity-systems-minimalism",
+     "categorySlug": "productivity",
+     "title": "Systems & Minimalism",
+     "description": "Own less, decide less, keep what earns its place.",
+     "tags": [
+      "minimalism",
+      "declutter",
+      "systems"
+     ],
+     "promptCount": 104
+    }
+   ]
+  },
+  {
+   "slug": "sales",
+   "name": "Sales & Outreach",
+   "icon": "handshake",
+   "blurb": "Cold email, calls, objections, and proposals that respect the buyer.",
+   "packs": [
+    {
+     "slug": "sales-cold-email",
+     "categorySlug": "sales",
+     "title": "Cold Email",
+     "description": "Short, specific, human outreach that gets replies.",
+     "tags": [
+      "cold email",
+      "outreach",
+      "prospecting"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "sales-discovery-calls",
+     "categorySlug": "sales",
+     "title": "Discovery Calls",
+     "description": "Questions that surface pains, budgets, and real timelines.",
+     "tags": [
+      "discovery",
+      "calls",
+      "questions"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "sales-objection-handling",
+     "categorySlug": "sales",
+     "title": "Objection Handling",
+     "description": "Hear the fear under the objection; answer with proof.",
+     "tags": [
+      "objections",
+      "rebuttals",
+      "trust"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "sales-proposals-quotes",
+     "categorySlug": "sales",
+     "title": "Proposals & Quotes",
+     "description": "Scope, pricing, and terms that close without surprises.",
+     "tags": [
+      "proposal",
+      "pricing",
+      "scope"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "sales-follow-up-sequences",
+     "categorySlug": "sales",
+     "title": "Follow-Up Sequences",
+     "description": "Persistent without pestering; every touch adds value.",
+     "tags": [
+      "follow-up",
+      "cadence",
+      "pipeline"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "sales-pipeline-crm",
+     "categorySlug": "sales",
+     "title": "Pipeline & CRM",
+     "description": "Clean stages, honest forecasts, and hygiene that lasts.",
+     "tags": [
+      "pipeline",
+      "crm",
+      "forecast"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "sales-social-selling",
+     "categorySlug": "sales",
+     "title": "Social Selling",
+     "description": "Earn the right to DM by being useful in public first.",
+     "tags": [
+      "social selling",
+      "linkedin",
+      "trust"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "sales-closing-negotiation",
+     "categorySlug": "sales",
+     "title": "Closing & Negotiation",
+     "description": "From verbal yes to signature without losing value.",
+     "tags": [
+      "closing",
+      "negotiation",
+      "contracts"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "sales-account-growth",
+     "categorySlug": "sales",
+     "title": "Account Growth",
+     "description": "Expand accounts by earning the next problem, not upsell scripts.",
+     "tags": [
+      "expansion",
+      "upsell",
+      "accounts"
+     ],
+     "promptCount": 104
+    }
+   ]
+  },
+  {
+   "slug": "data",
+   "name": "Data & Analytics",
+   "icon": "chart",
+   "blurb": "Analyses, dashboards, SQL, and statistics without the mystique.",
+   "packs": [
+    {
+     "slug": "data-analysis-workflows",
+     "categorySlug": "data",
+     "title": "Analysis Workflows",
+     "description": "From vague question to defensible answer, step by step.",
+     "tags": [
+      "analysis",
+      "workflow",
+      "insights"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "data-dashboards-kpis",
+     "categorySlug": "data",
+     "title": "Dashboards & KPIs",
+     "description": "Metrics that map to decisions, rendered readably.",
+     "tags": [
+      "kpi",
+      "dashboard",
+      "metrics"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "data-sql-help",
+     "categorySlug": "data",
+     "title": "SQL Help",
+     "description": "Write, debug, and speed up the query you're stuck on.",
+     "tags": [
+      "sql",
+      "queries",
+      "databases"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "data-spreadsheets",
+     "categorySlug": "data",
+     "title": "Spreadsheets",
+     "description": "Formulas, cleanup, and templates that stop breaking.",
+     "tags": [
+      "excel",
+      "sheets",
+      "formulas"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "data-statistics-basics",
+     "categorySlug": "data",
+     "title": "Statistics Basics",
+     "description": "Distributions, tests, and confidence without the panic.",
+     "tags": [
+      "statistics",
+      "tests",
+      "significance"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "data-experimentation",
+     "categorySlug": "data",
+     "title": "Experimentation (A/B)",
+     "description": "Design tests you can trust and read them honestly.",
+     "tags": [
+      "ab testing",
+      "experiments",
+      "causality"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "data-data-storytelling",
+     "categorySlug": "data",
+     "title": "Data Storytelling",
+     "description": "Turn analysis into narratives that drive decisions.",
+     "tags": [
+      "storytelling",
+      "presentation",
+      "charts"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "data-data-cleaning",
+     "categorySlug": "data",
+     "title": "Data Cleaning",
+     "description": "Messy columns, duplicates, and dates tamed methodically.",
+     "tags": [
+      "cleaning",
+      "quality",
+      "wrangling"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "data-forecasting",
+     "categorySlug": "data",
+     "title": "Forecasting",
+     "description": "Projections with assumptions written where critics can see them.",
+     "tags": [
+      "forecast",
+      "planning",
+      "projections"
+     ],
+     "promptCount": 104
+    }
+   ]
+  },
+  {
+   "slug": "growth",
+   "name": "Personal Growth",
+   "icon": "sprout",
+   "blurb": "Reflection, resilience, money, health, and decisions you'll stand behind.",
+   "packs": [
+    {
+     "slug": "growth-journaling-reflection",
+     "categorySlug": "growth",
+     "title": "Journaling & Reflection",
+     "description": "Prompts and rituals that surface what actually matters.",
+     "tags": [
+      "journaling",
+      "reflection",
+      "prompts"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "growth-confidence-mindset",
+     "categorySlug": "growth",
+     "title": "Confidence & Mindset",
+     "description": "Self-talk, fear maps, and evidence logs that build real confidence.",
+     "tags": [
+      "confidence",
+      "mindset",
+      "self-talk"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "growth-relationships-communication",
+     "categorySlug": "growth",
+     "title": "Relationships & Communication",
+     "description": "Hard conversations, boundaries, and everyday warmth.",
+     "tags": [
+      "communication",
+      "boundaries",
+      "relationships"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "growth-health-fitness",
+     "categorySlug": "growth",
+     "title": "Health & Fitness",
+     "description": "Sustainable plans for movement, sleep, and eating.",
+     "tags": [
+      "health",
+      "fitness",
+      "sleep"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "growth-money-budgeting",
+     "categorySlug": "growth",
+     "title": "Money & Budgeting",
+     "description": "Budgets, debt plans, and saving goals without shame.",
+     "tags": [
+      "money",
+      "budget",
+      "saving"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "growth-creativity",
+     "categorySlug": "growth",
+     "title": "Creativity",
+     "description": "Start, keep going, and finish creative projects.",
+     "tags": [
+      "creativity",
+      "projects",
+      "practice"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "growth-decision-making",
+     "categorySlug": "growth",
+     "title": "Decision Making",
+     "description": "Frameworks for choices with real trade-offs.",
+     "tags": [
+      "decisions",
+      "frameworks",
+      "trade-offs"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "growth-resilience-stress",
+     "categorySlug": "growth",
+     "title": "Resilience & Stress",
+     "description": "Steady practices for pressure, setback, and busy seasons.",
+     "tags": [
+      "stress",
+      "resilience",
+      "calm"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "growth-purpose-values",
+     "categorySlug": "growth",
+     "title": "Purpose & Values",
+     "description": "Name what you stand for and steer by it.",
+     "tags": [
+      "purpose",
+      "values",
+      "direction"
+     ],
+     "promptCount": 104
+    }
+   ]
+  },
+  {
+   "slug": "ai",
+   "name": "AI & ShadowTalk",
+   "icon": "sparkles",
+   "blurb": "Get more out of ShadowTalk itself: chats, images, agents, and privacy.",
+   "packs": [
+    {
+     "slug": "ai-chat-masterclass",
+     "categorySlug": "ai",
+     "title": "Chat Masterclass",
+     "description": "Technique prompts for sharper ShadowTalk conversations.",
+     "tags": [
+      "chat",
+      "technique",
+      "shadowtalk"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "ai-image-generation-prompts",
+     "categorySlug": "ai",
+     "title": "Image Prompts Studio",
+     "description": "Craft image prompts that ShadowTalk renders beautifully.",
+     "tags": [
+      "image",
+      "generation",
+      "art"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "ai-agents-tools",
+     "categorySlug": "ai",
+     "title": "Agents & Tools",
+     "description": "Tool use, web research, and artifacts in ShadowTalk.",
+     "tags": [
+      "agents",
+      "tools",
+      "automation"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "ai-prompt-engineering",
+     "categorySlug": "ai",
+     "title": "Prompt Engineering",
+     "description": "Structure, examples, and constraints that lift output quality.",
+     "tags": [
+      "prompts",
+      "technique",
+      "quality"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "ai-voice-live-mode",
+     "categorySlug": "ai",
+     "title": "Voice & Live Mode",
+     "description": "Scripts and setups for talking with ShadowTalk out loud.",
+     "tags": [
+      "voice",
+      "live",
+      "conversation"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "ai-privacy-security",
+     "categorySlug": "ai",
+     "title": "Privacy & Security",
+     "description": "Use AI with clear eyes about data and secrets.",
+     "tags": [
+      "privacy",
+      "security",
+      "safety"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "ai-study-with-ai",
+     "categorySlug": "ai",
+     "title": "Study With AI",
+     "description": "Turn ShadowTalk into a tutor that quizzes and coaches.",
+     "tags": [
+      "study",
+      "tutor",
+      "learning"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "ai-writing-with-ai",
+     "categorySlug": "ai",
+     "title": "Writing With AI",
+     "description": "Draft with AI, keep your voice, edit like a human.",
+     "tags": [
+      "writing",
+      "editing",
+      "voice"
+     ],
+     "promptCount": 104
+    },
+    {
+     "slug": "ai-coding-with-ai",
+     "categorySlug": "ai",
+     "title": "Coding With AI",
+     "description": "Pair-program in chat: specs, reviews, and safe changes.",
+     "tags": [
+      "coding",
+      "pair programming",
+      "review"
+     ],
+     "promptCount": 104
+    }
+   ]
+  }
+ ]
+}

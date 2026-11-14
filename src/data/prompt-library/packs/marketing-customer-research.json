@@ -1,0 +1,430 @@
+{
+ "slug": "marketing-customer-research",
+ "categorySlug": "marketing",
+ "category": "Marketing & Growth",
+ "title": "Customer Research",
+ "description": "Interview scripts, surveys, and insight synthesis that holds up.",
+ "tags": [
+  "research",
+  "interviews",
+  "insights"
+ ],
+ "prompts": [
+  {
+   "id": "marketing-customer-research#001",
+   "text": "Plan a lightweight diary study for interviewing churned subscribers."
+  },
+  {
+   "id": "marketing-customer-research#002",
+   "text": "Write a non-leading interview guide for field observations at a pharmacy counter. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-customer-research#003",
+   "text": "Act as a customer insights analyst. List the traps and biases to avoid when studying a panel on remote-work tooling, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-customer-research#004",
+   "text": "Build a synthesis template for findings from field observations at a pharmacy counter. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-customer-research#005",
+   "text": "I’m working on interviewing churned subscribers. Draft a survey with unbiased question wording about it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-customer-research#006",
+   "text": "Turn raw verbatims into themes for a support-ticket theme analysis for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-customer-research#007",
+   "text": "Plan a lightweight diary study for a focus group on snack packaging. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-customer-research#008",
+   "text": "Help me with a support-ticket theme analysis: draft a survey with unbiased question wording about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-customer-research#009",
+   "text": "Turn raw verbatims into themes for a jobs-to-be-done study for planners. Use a direct tone throughout."
+  },
+  {
+   "id": "marketing-customer-research#010",
+   "text": "You are a product marketing manager. Build a synthesis template for findings from a survey on grocery-shopping habits and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-customer-research#011",
+   "text": "Write a non-leading interview guide for a survey on grocery-shopping habits. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-customer-research#012",
+   "text": "Before I start on field observations at a pharmacy counter, turn raw verbatims into themes for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-customer-research#013",
+   "text": "Build a synthesis template for findings from a support-ticket theme analysis. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-customer-research#014",
+   "text": "List the traps and biases to avoid when studying pricing sensitivity interviews. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-customer-research#015",
+   "text": "As a product marketing manager, I keep hitting the same wall with a competitor switching study. Build a synthesis template for findings from it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-customer-research#016",
+   "text": "Plan a lightweight diary study for a panel on remote-work tooling. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-customer-research#017",
+   "text": "List the traps and biases to avoid when studying an NPS verbatims deep-dive."
+  },
+  {
+   "id": "marketing-customer-research#018",
+   "text": "Build a synthesis template for findings from a panel on remote-work tooling. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-customer-research#019",
+   "text": "Act as a lifecycle marketing manager. Plan a lightweight diary study for a support-ticket theme analysis, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-customer-research#020",
+   "text": "Write a non-leading interview guide for interviewing churned subscribers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-customer-research#021",
+   "text": "I’m working on interviewing churned subscribers. Build a synthesis template for findings from it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-customer-research#022",
+   "text": "Draft a survey with unbiased question wording about a focus group on snack packaging for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-customer-research#023",
+   "text": "Create a recruiting screener for participants in a jobs-to-be-done study for planners. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-customer-research#024",
+   "text": "Help me with field observations at a pharmacy counter: create a recruiting screener for participants in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-customer-research#025",
+   "text": "List the traps and biases to avoid when studying a competitor switching study. Use a direct tone throughout."
+  },
+  {
+   "id": "marketing-customer-research#026",
+   "text": "You are a growth marketing lead. Write a non-leading interview guide for usability sessions for a booking flow and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-customer-research#027",
+   "text": "Plan a lightweight diary study for usability sessions for a booking flow. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-customer-research#028",
+   "text": "Before I start on a jobs-to-be-done study for planners, build a synthesis template for findings from it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-customer-research#029",
+   "text": "Create a recruiting screener for participants in a panel on remote-work tooling. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-customer-research#030",
+   "text": "Draft a survey with unbiased question wording about an NPS verbatims deep-dive. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-customer-research#031",
+   "text": "As a growth marketing lead, I keep hitting the same wall with pricing sensitivity interviews. Create a recruiting screener for participants in it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-customer-research#032",
+   "text": "Write a non-leading interview guide for a support-ticket theme analysis. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-customer-research#033",
+   "text": "Draft insight statements with evidence links for a support-ticket theme analysis."
+  },
+  {
+   "id": "marketing-customer-research#034",
+   "text": "Turn raw verbatims into themes for an onboarding feedback sweep. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-customer-research#035",
+   "text": "Act as a brand strategist. Write a non-leading interview guide for a jobs-to-be-done study for planners, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-customer-research#036",
+   "text": "List the traps and biases to avoid when studying usability sessions for a booking flow. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-customer-research#037",
+   "text": "I’m working on a focus group on snack packaging. Write a non-leading interview guide for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-customer-research#038",
+   "text": "Draft a survey with unbiased question wording about usability sessions for a booking flow for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-customer-research#039",
+   "text": "Draft insight statements with evidence links for an NPS verbatims deep-dive. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-customer-research#040",
+   "text": "Help me with field observations at a pharmacy counter: plan a lightweight diary study for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-customer-research#041",
+   "text": "Turn raw verbatims into themes for a focus group on snack packaging. Use a professional tone throughout."
+  },
+  {
+   "id": "marketing-customer-research#042",
+   "text": "You are a SEO specialist. Build a synthesis template for findings from pricing sensitivity interviews and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-customer-research#043",
+   "text": "Build a synthesis template for findings from an onboarding feedback sweep. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-customer-research#044",
+   "text": "Before I start on a survey on grocery-shopping habits, create a recruiting screener for participants in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-customer-research#045",
+   "text": "List the traps and biases to avoid when studying interviewing churned subscribers. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-customer-research#046",
+   "text": "Draft a survey with unbiased question wording about a jobs-to-be-done study for planners. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-customer-research#047",
+   "text": "As a SEO specialist, I keep hitting the same wall with a support-ticket theme analysis. Create a recruiting screener for participants in it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-customer-research#048",
+   "text": "Write a non-leading interview guide for a panel on remote-work tooling. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-customer-research#049",
+   "text": "Create a recruiting screener for participants in a competitor switching study."
+  },
+  {
+   "id": "marketing-customer-research#050",
+   "text": "Draft insight statements with evidence links for an onboarding feedback sweep. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-customer-research#051",
+   "text": "Act as a growth marketing lead. Build a synthesis template for findings from an NPS verbatims deep-dive, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-customer-research#052",
+   "text": "Write a non-leading interview guide for a competitor switching study. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-customer-research#053",
+   "text": "I’m working on usability sessions for a booking flow. Create a recruiting screener for participants in it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-customer-research#054",
+   "text": "Turn raw verbatims into themes for pricing sensitivity interviews for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-customer-research#055",
+   "text": "List the traps and biases to avoid when studying a focus group on snack packaging. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-customer-research#056",
+   "text": "Help me with usability sessions for a booking flow: build a synthesis template for findings from it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-customer-research#057",
+   "text": "Turn raw verbatims into themes for a survey on grocery-shopping habits. Use a empathetic tone throughout."
+  },
+  {
+   "id": "marketing-customer-research#058",
+   "text": "You are a product marketing manager. List the traps and biases to avoid when studying a survey on grocery-shopping habits and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-customer-research#059",
+   "text": "Create a recruiting screener for participants in an onboarding feedback sweep. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-customer-research#060",
+   "text": "Before I start on a competitor switching study, draft insight statements with evidence links for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-customer-research#061",
+   "text": "Draft insight statements with evidence links for interviewing churned subscribers. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-customer-research#062",
+   "text": "Draft a survey with unbiased question wording about a competitor switching study. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-customer-research#063",
+   "text": "As a growth marketing lead, I keep hitting the same wall with a panel on remote-work tooling. Draft a survey with unbiased question wording about it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-customer-research#064",
+   "text": "Draft insight statements with evidence links for usability sessions for a booking flow. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-customer-research#065",
+   "text": "List the traps and biases to avoid when studying a jobs-to-be-done study for planners."
+  },
+  {
+   "id": "marketing-customer-research#066",
+   "text": "List the traps and biases to avoid when studying an onboarding feedback sweep. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-customer-research#067",
+   "text": "Act as a SEO specialist. Draft a survey with unbiased question wording about a survey on grocery-shopping habits, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-customer-research#068",
+   "text": "Plan a lightweight diary study for pricing sensitivity interviews. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-customer-research#069",
+   "text": "I’m working on a competitor switching study. Turn raw verbatims into themes for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-customer-research#070",
+   "text": "Draft a survey with unbiased question wording about an onboarding feedback sweep for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-customer-research#071",
+   "text": "Draft insight statements with evidence links for pricing sensitivity interviews. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-customer-research#072",
+   "text": "Help me with pricing sensitivity interviews: write a non-leading interview guide for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-customer-research#073",
+   "text": "Write a non-leading interview guide for an onboarding feedback sweep. Use a direct tone throughout."
+  },
+  {
+   "id": "marketing-customer-research#074",
+   "text": "You are a product marketing manager. Plan a lightweight diary study for a survey on grocery-shopping habits and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-customer-research#075",
+   "text": "Draft a survey with unbiased question wording about pricing sensitivity interviews. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-customer-research#076",
+   "text": "Before I start on an NPS verbatims deep-dive, write a non-leading interview guide for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-customer-research#077",
+   "text": "Plan a lightweight diary study for a competitor switching study. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-customer-research#078",
+   "text": "Turn raw verbatims into themes for interviewing churned subscribers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-customer-research#079",
+   "text": "As a brand strategist, I keep hitting the same wall with field observations at a pharmacy counter. Draft a survey with unbiased question wording about it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-customer-research#080",
+   "text": "Plan a lightweight diary study for a jobs-to-be-done study for planners. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-customer-research#081",
+   "text": "Turn raw verbatims into themes for an NPS verbatims deep-dive."
+  },
+  {
+   "id": "marketing-customer-research#082",
+   "text": "List the traps and biases to avoid when studying a support-ticket theme analysis. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-customer-research#083",
+   "text": "Act as a growth marketing lead. Create a recruiting screener for participants in an NPS verbatims deep-dive, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-customer-research#084",
+   "text": "Turn raw verbatims into themes for usability sessions for a booking flow. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-customer-research#085",
+   "text": "I’m working on a focus group on snack packaging. Draft insight statements with evidence links for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-customer-research#086",
+   "text": "Draft insight statements with evidence links for a panel on remote-work tooling for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-customer-research#087",
+   "text": "Draft insight statements with evidence links for field observations at a pharmacy counter. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-customer-research#088",
+   "text": "Help me with a jobs-to-be-done study for planners: draft insight statements with evidence links for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-customer-research#089",
+   "text": "Draft insight statements with evidence links for a survey on grocery-shopping habits. Use a empathetic tone throughout."
+  },
+  {
+   "id": "marketing-customer-research#090",
+   "text": "You are a lifecycle marketing manager. Plan a lightweight diary study for an NPS verbatims deep-dive and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-customer-research#091",
+   "text": "List the traps and biases to avoid when studying field observations at a pharmacy counter. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-customer-research#092",
+   "text": "Before I start on an onboarding feedback sweep, plan a lightweight diary study for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-customer-research#093",
+   "text": "Create a recruiting screener for participants in a focus group on snack packaging. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-customer-research#094",
+   "text": "Build a synthesis template for findings from a focus group on snack packaging. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-customer-research#095",
+   "text": "As a brand strategist, I keep hitting the same wall with interviewing churned subscribers. Create a recruiting screener for participants in it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-customer-research#096",
+   "text": "Turn raw verbatims into themes for a panel on remote-work tooling. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-customer-research#097",
+   "text": "Plan a lightweight diary study for interviewing churned subscribers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-customer-research#098",
+   "text": "Write a non-leading interview guide for field observations at a pharmacy counter. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-customer-research#099",
+   "text": "List the traps and biases to avoid when studying a panel on remote-work tooling."
+  },
+  {
+   "id": "marketing-customer-research#100",
+   "text": "Build a synthesis template for findings from field observations at a pharmacy counter."
+  },
+  {
+   "id": "marketing-customer-research#101",
+   "text": "Draft a survey with unbiased question wording about interviewing churned subscribers."
+  },
+  {
+   "id": "marketing-customer-research#102",
+   "text": "Turn raw verbatims into themes for a support-ticket theme analysis."
+  },
+  {
+   "id": "marketing-customer-research#103",
+   "text": "Plan a lightweight diary study for a focus group on snack packaging."
+  },
+  {
+   "id": "marketing-customer-research#104",
+   "text": "Draft a survey with unbiased question wording about a support-ticket theme analysis."
+  }
+ ]
+}

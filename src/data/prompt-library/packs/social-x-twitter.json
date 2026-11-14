@@ -1,0 +1,430 @@
+{
+ "slug": "social-x-twitter",
+ "categorySlug": "social",
+ "category": "Social Media",
+ "title": "X / Twitter",
+ "description": "Threads, one-liners, and replies with native rhythm.",
+ "tags": [
+  "twitter",
+  "threads",
+  "growth"
+ ],
+ "prompts": [
+  {
+   "id": "social-x-twitter#001",
+   "text": "Write a launch-post with screenshot cues for a one-liner about version control lessons."
+  },
+  {
+   "id": "social-x-twitter#002",
+   "text": "Draft five one-liner variants about a reply that adds expertise to a design debate. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-x-twitter#003",
+   "text": "Act as a LinkedIn ghostwriter. Draft a quote-post with a fresh angle on a thread on learning to code in public, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-x-twitter#004",
+   "text": "Write a value-adding reply to a post about a build-log update for an indie app. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-x-twitter#005",
+   "text": "I’m working on a gratitude thread for open-source maintainers. Write a value-adding reply to a post about it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-x-twitter#006",
+   "text": "Write a launch-post with screenshot cues for a hot-take on meeting culture for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-x-twitter#007",
+   "text": "Write a thread outline with hooks for a thread debunking nutrition myths. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-x-twitter#008",
+   "text": "Help me with a one-liner about version control lessons: write a value-adding reply to a post about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-x-twitter#009",
+   "text": "Design a build-log template for a thread debunking nutrition myths. Use a persuasive tone throughout."
+  },
+  {
+   "id": "social-x-twitter#010",
+   "text": "You are a personal-branding coach. Create a poll with balanced options about a thread on writing well as an engineer and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-x-twitter#011",
+   "text": "Write a pinned-post bio for an account focused on a one-liner about version control lessons. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-x-twitter#012",
+   "text": "Before I start on a witty observation about airport Wi-Fi, create a poll with balanced options about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-x-twitter#013",
+   "text": "Write a value-adding reply to a post about a thread on learning to code in public. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-x-twitter#014",
+   "text": "Draft a quote-post with a fresh angle on a one-liner about version control lessons. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-x-twitter#015",
+   "text": "As a social media manager, I keep hitting the same wall with a gratitude thread for open-source maintainers. Create a poll with balanced options about it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-x-twitter#016",
+   "text": "Draft a quote-post with a fresh angle on a build-log update for an indie app. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-x-twitter#017",
+   "text": "Write a launch-post with screenshot cues for a mini-thread on pricing your work."
+  },
+  {
+   "id": "social-x-twitter#018",
+   "text": "Design a build-log template for a thread on writing well as an engineer. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-x-twitter#019",
+   "text": "Act as a LinkedIn ghostwriter. Write a thread outline with hooks for a reply that adds expertise to a design debate, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-x-twitter#020",
+   "text": "Design a build-log template for a reply that adds expertise to a design debate. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-x-twitter#021",
+   "text": "I’m working on a poll asking users about a feature. Write a value-adding reply to a post about it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-x-twitter#022",
+   "text": "Write a thread outline with hooks for a build-log update for an indie app for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-x-twitter#023",
+   "text": "Write a pinned-post bio for an account focused on a thread debunking nutrition myths. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-x-twitter#024",
+   "text": "Help me with a gratitude thread for open-source maintainers: write a launch-post with screenshot cues for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-x-twitter#025",
+   "text": "Write a pinned-post bio for an account focused on a gratitude thread for open-source maintainers. Use a formal tone throughout."
+  },
+  {
+   "id": "social-x-twitter#026",
+   "text": "You are a short-video strategist. Design a build-log template for a launch announcement for a side project and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-x-twitter#027",
+   "text": "Write a launch-post with screenshot cues for a reply that adds expertise to a design debate. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-x-twitter#028",
+   "text": "Before I start on a thread on writing well as an engineer, write a launch-post with screenshot cues for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-x-twitter#029",
+   "text": "Create a poll with balanced options about a reply that adds expertise to a design debate. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-x-twitter#030",
+   "text": "Design a build-log template for a witty observation about airport Wi-Fi. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-x-twitter#031",
+   "text": "As a local-business owner, I keep hitting the same wall with a hot-take on meeting culture. Draft five one-liner variants about it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-x-twitter#032",
+   "text": "Draft five one-liner variants about a one-liner about version control lessons. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-x-twitter#033",
+   "text": "Draft a quote-post with a fresh angle on a gratitude thread for open-source maintainers."
+  },
+  {
+   "id": "social-x-twitter#034",
+   "text": "Design a build-log template for a thread on learning to code in public. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-x-twitter#035",
+   "text": "Act as a short-video strategist. Write a thread outline with hooks for a hot-take on meeting culture, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-x-twitter#036",
+   "text": "Create a poll with balanced options about a poll asking users about a feature. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-x-twitter#037",
+   "text": "I’m working on a poll asking users about a feature. Design a build-log template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-x-twitter#038",
+   "text": "Draft five one-liner variants about a launch announcement for a side project for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-x-twitter#039",
+   "text": "Write a launch-post with screenshot cues for a poll asking users about a feature. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-x-twitter#040",
+   "text": "Help me with a reply that adds expertise to a design debate: write a value-adding reply to a post about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-x-twitter#041",
+   "text": "Write a pinned-post bio for an account focused on a launch announcement for a side project. Use a professional tone throughout."
+  },
+  {
+   "id": "social-x-twitter#042",
+   "text": "You are a community manager. Write a pinned-post bio for an account focused on a reply that adds expertise to a design debate and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-x-twitter#043",
+   "text": "Write a pinned-post bio for an account focused on a hot-take on meeting culture. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-x-twitter#044",
+   "text": "Before I start on a thread on writing well as an engineer, draft five one-liner variants about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-x-twitter#045",
+   "text": "Write a thread outline with hooks for a witty observation about airport Wi-Fi. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-x-twitter#046",
+   "text": "Design a build-log template for a gratitude thread for open-source maintainers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-x-twitter#047",
+   "text": "As a social media manager, I keep hitting the same wall with a thread on learning to code in public. Write a thread outline with hooks for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-x-twitter#048",
+   "text": "Design a build-log template for a hot-take on meeting culture. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-x-twitter#049",
+   "text": "Draft five one-liner variants about a thread on learning to code in public."
+  },
+  {
+   "id": "social-x-twitter#050",
+   "text": "Write a launch-post with screenshot cues for a launch announcement for a side project. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-x-twitter#051",
+   "text": "Act as a customer-support voice. Write a pinned-post bio for an account focused on a thread on writing well as an engineer, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-x-twitter#052",
+   "text": "Write a thread outline with hooks for a poll asking users about a feature. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-x-twitter#053",
+   "text": "I’m working on a gratitude thread for open-source maintainers. Draft five one-liner variants about it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-x-twitter#054",
+   "text": "Draft a quote-post with a fresh angle on a reply that adds expertise to a design debate for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-x-twitter#055",
+   "text": "Draft a quote-post with a fresh angle on a thread on writing well as an engineer. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-x-twitter#056",
+   "text": "Help me with a mini-thread on pricing your work: write a pinned-post bio for an account focused on it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-x-twitter#057",
+   "text": "Write a value-adding reply to a post about a thread on writing well as an engineer. Use a encouraging tone throughout."
+  },
+  {
+   "id": "social-x-twitter#058",
+   "text": "You are a short-video strategist. Draft a quote-post with a fresh angle on a launch announcement for a side project and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-x-twitter#059",
+   "text": "Write a pinned-post bio for an account focused on a witty observation about airport Wi-Fi. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-x-twitter#060",
+   "text": "Before I start on a build-log update for an indie app, create a poll with balanced options about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-x-twitter#061",
+   "text": "Design a build-log template for a mini-thread on pricing your work. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-x-twitter#062",
+   "text": "Draft a quote-post with a fresh angle on a thread debunking nutrition myths. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-x-twitter#063",
+   "text": "As a personal-branding coach, I keep hitting the same wall with a launch announcement for a side project. Write a thread outline with hooks for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-x-twitter#064",
+   "text": "Write a thread outline with hooks for a mini-thread on pricing your work. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-x-twitter#065",
+   "text": "Create a poll with balanced options about a launch announcement for a side project."
+  },
+  {
+   "id": "social-x-twitter#066",
+   "text": "Draft five one-liner variants about a mini-thread on pricing your work. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-x-twitter#067",
+   "text": "Act as a local-business owner. Create a poll with balanced options about a one-liner about version control lessons, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-x-twitter#068",
+   "text": "Write a value-adding reply to a post about a launch announcement for a side project. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-x-twitter#069",
+   "text": "I’m working on a thread on learning to code in public. Create a poll with balanced options about it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-x-twitter#070",
+   "text": "Write a value-adding reply to a post about a mini-thread on pricing your work for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-x-twitter#071",
+   "text": "Write a value-adding reply to a post about a thread debunking nutrition myths. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-x-twitter#072",
+   "text": "Help me with a hot-take on meeting culture: draft a quote-post with a fresh angle on it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-x-twitter#073",
+   "text": "Draft five one-liner variants about a witty observation about airport Wi-Fi. Use a encouraging tone throughout."
+  },
+  {
+   "id": "social-x-twitter#074",
+   "text": "You are a LinkedIn ghostwriter. Design a build-log template for a one-liner about version control lessons and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-x-twitter#075",
+   "text": "Design a build-log template for a build-log update for an indie app. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-x-twitter#076",
+   "text": "Before I start on a poll asking users about a feature, write a pinned-post bio for an account focused on it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-x-twitter#077",
+   "text": "Create a poll with balanced options about a thread debunking nutrition myths. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-x-twitter#078",
+   "text": "Create a poll with balanced options about a hot-take on meeting culture. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-x-twitter#079",
+   "text": "As a community manager, I keep hitting the same wall with a thread on writing well as an engineer. Write a thread outline with hooks for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-x-twitter#080",
+   "text": "Write a pinned-post bio for an account focused on a build-log update for an indie app. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-x-twitter#081",
+   "text": "Draft a quote-post with a fresh angle on a poll asking users about a feature."
+  },
+  {
+   "id": "social-x-twitter#082",
+   "text": "Write a launch-post with screenshot cues for a witty observation about airport Wi-Fi. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-x-twitter#083",
+   "text": "Act as a local-business owner. Write a thread outline with hooks for a one-liner about version control lessons, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-x-twitter#084",
+   "text": "Write a launch-post with screenshot cues for a thread on learning to code in public. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-x-twitter#085",
+   "text": "I’m working on a build-log update for an indie app. Write a launch-post with screenshot cues for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-x-twitter#086",
+   "text": "Draft five one-liner variants about a thread debunking nutrition myths for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-x-twitter#087",
+   "text": "Draft five one-liner variants about a build-log update for an indie app. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-x-twitter#088",
+   "text": "Help me with a thread on learning to code in public: write a pinned-post bio for an account focused on it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-x-twitter#089",
+   "text": "Create a poll with balanced options about a mini-thread on pricing your work. Use a persuasive tone throughout."
+  },
+  {
+   "id": "social-x-twitter#090",
+   "text": "You are a personal-branding coach. Write a value-adding reply to a post about a witty observation about airport Wi-Fi and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-x-twitter#091",
+   "text": "Write a launch-post with screenshot cues for a thread debunking nutrition myths. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-x-twitter#092",
+   "text": "Before I start on a gratitude thread for open-source maintainers, write a thread outline with hooks for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-x-twitter#093",
+   "text": "Draft a quote-post with a fresh angle on a mini-thread on pricing your work. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-x-twitter#094",
+   "text": "Write a value-adding reply to a post about a hot-take on meeting culture. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-x-twitter#095",
+   "text": "As a customer-support voice, I keep hitting the same wall with a poll asking users about a feature. Draft five one-liner variants about it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-x-twitter#096",
+   "text": "Draft a quote-post with a fresh angle on a witty observation about airport Wi-Fi. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-x-twitter#097",
+   "text": "Write a launch-post with screenshot cues for a one-liner about version control lessons. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-x-twitter#098",
+   "text": "Draft five one-liner variants about a reply that adds expertise to a design debate. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-x-twitter#099",
+   "text": "Draft a quote-post with a fresh angle on a thread on learning to code in public."
+  },
+  {
+   "id": "social-x-twitter#100",
+   "text": "Write a value-adding reply to a post about a build-log update for an indie app."
+  },
+  {
+   "id": "social-x-twitter#101",
+   "text": "Write a value-adding reply to a post about a gratitude thread for open-source maintainers."
+  },
+  {
+   "id": "social-x-twitter#102",
+   "text": "Write a launch-post with screenshot cues for a hot-take on meeting culture."
+  },
+  {
+   "id": "social-x-twitter#103",
+   "text": "Write a thread outline with hooks for a thread debunking nutrition myths."
+  },
+  {
+   "id": "social-x-twitter#104",
+   "text": "Write a value-adding reply to a post about a one-liner about version control lessons."
+  }
+ ]
+}

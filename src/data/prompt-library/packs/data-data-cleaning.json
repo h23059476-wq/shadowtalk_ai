@@ -1,0 +1,430 @@
+{
+ "slug": "data-data-cleaning",
+ "categorySlug": "data",
+ "category": "Data & Analytics",
+ "title": "Data Cleaning",
+ "description": "Messy columns, duplicates, and dates tamed methodically.",
+ "tags": [
+  "cleaning",
+  "quality",
+  "wrangling"
+ ],
+ "prompts": [
+  {
+   "id": "data-data-cleaning#001",
+   "text": "Write the parsing approach for survey responses with multi-select mush."
+  },
+  {
+   "id": "data-data-cleaning#002",
+   "text": "Design the validation report for customer names with inconsistent casing. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-data-cleaning#003",
+   "text": "Act as a finance-planning analyst. Write a cleaning checklist for survey responses with multi-select mush, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-data-cleaning#004",
+   "text": "Create the deduplication strategy for survey responses with multi-select mush. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-data-cleaning#005",
+   "text": "I’m working on customer names with inconsistent casing. Document the transformation steps for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-data-cleaning#006",
+   "text": "Write the parsing approach for timestamps in three time zones for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-data-cleaning#007",
+   "text": "Write a cleaning checklist for a category column with free-text chaos. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-cleaning#008",
+   "text": "Help me with customer names with inconsistent casing: write a cleaning checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-data-cleaning#009",
+   "text": "Create the deduplication strategy for product SKUs with stray spaces. Use a formal tone throughout."
+  },
+  {
+   "id": "data-data-cleaning#010",
+   "text": "You are an analytics engineer. Design the validation report for product SKUs with stray spaces and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-data-cleaning#011",
+   "text": "Create the deduplication strategy for addresses split across five columns. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-data-cleaning#012",
+   "text": "Before I start on join keys that never match cleanly, create the deduplication strategy for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-data-cleaning#013",
+   "text": "Propose the standardization rules for a category column with free-text chaos. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-data-cleaning#014",
+   "text": "Create the deduplication strategy for phone numbers in twelve formats. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-data-cleaning#015",
+   "text": "As a senior data analyst, I keep hitting the same wall with a category column with free-text chaos. Document the transformation steps for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-data-cleaning#016",
+   "text": "List the risks of silent data loss in timestamps in three time zones. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-data-cleaning#017",
+   "text": "Document the transformation steps for phone numbers in twelve formats."
+  },
+  {
+   "id": "data-data-cleaning#018",
+   "text": "Design the validation report for duplicate rows with tiny differences. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-data-cleaning#019",
+   "text": "Act as a statistics tutor. List the risks of silent data loss in a CSV with embedded commas and quotes, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-data-cleaning#020",
+   "text": "List the risks of silent data loss in product SKUs with stray spaces. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-data-cleaning#021",
+   "text": "I’m working on phone numbers in twelve formats. Write a cleaning checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-data-cleaning#022",
+   "text": "Document the transformation steps for join keys that never match cleanly for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-data-cleaning#023",
+   "text": "Create the deduplication strategy for a category column with free-text chaos. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-cleaning#024",
+   "text": "Help me with a category column with free-text chaos: list the risks of silent data loss in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-data-cleaning#025",
+   "text": "Propose the standardization rules for a CSV with embedded commas and quotes. Use a playful tone throughout."
+  },
+  {
+   "id": "data-data-cleaning#026",
+   "text": "You are a business-intelligence lead. Build a before-and-after QA sample for survey responses with multi-select mush and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-data-cleaning#027",
+   "text": "Document the transformation steps for survey responses with multi-select mush. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-data-cleaning#028",
+   "text": "Before I start on phone numbers in twelve formats, design the validation report for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-data-cleaning#029",
+   "text": "Write the parsing approach for customer names with inconsistent casing. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-data-cleaning#030",
+   "text": "List the risks of silent data loss in survey responses with multi-select mush. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-data-cleaning#031",
+   "text": "As an analytics engineer, I keep hitting the same wall with phone numbers in twelve formats. Propose the standardization rules for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-data-cleaning#032",
+   "text": "Build a before-and-after QA sample for dates mixing US and EU conventions. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-data-cleaning#033",
+   "text": "Write the parsing approach for a category column with free-text chaos."
+  },
+  {
+   "id": "data-data-cleaning#034",
+   "text": "List the risks of silent data loss in customer names with inconsistent casing. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-data-cleaning#035",
+   "text": "Act as a finance-planning analyst. Design the validation report for survey responses with multi-select mush, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-data-cleaning#036",
+   "text": "Propose the standardization rules for product SKUs with stray spaces. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-data-cleaning#037",
+   "text": "I’m working on addresses split across five columns. Write a cleaning checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-data-cleaning#038",
+   "text": "Write the parsing approach for product SKUs with stray spaces for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-data-cleaning#039",
+   "text": "Document the transformation steps for a CSV with embedded commas and quotes. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-cleaning#040",
+   "text": "Help me with dates mixing US and EU conventions: write the parsing approach for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-data-cleaning#041",
+   "text": "Build a before-and-after QA sample for addresses split across five columns. Use a empathetic tone throughout."
+  },
+  {
+   "id": "data-data-cleaning#042",
+   "text": "You are a business-intelligence lead. List the risks of silent data loss in phone numbers in twelve formats and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-data-cleaning#043",
+   "text": "Create the deduplication strategy for dates mixing US and EU conventions. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-data-cleaning#044",
+   "text": "Before I start on phone numbers in twelve formats, write the parsing approach for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-data-cleaning#045",
+   "text": "Build a before-and-after QA sample for a category column with free-text chaos. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-data-cleaning#046",
+   "text": "Document the transformation steps for addresses split across five columns. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-data-cleaning#047",
+   "text": "As a finance-planning analyst, I keep hitting the same wall with addresses split across five columns. Write the parsing approach for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-data-cleaning#048",
+   "text": "Document the transformation steps for timestamps in three time zones. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-data-cleaning#049",
+   "text": "Design the validation report for a CSV with embedded commas and quotes."
+  },
+  {
+   "id": "data-data-cleaning#050",
+   "text": "Build a before-and-after QA sample for phone numbers in twelve formats. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-data-cleaning#051",
+   "text": "Act as a senior data analyst. Write a cleaning checklist for currency amounts with text symbols, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-data-cleaning#052",
+   "text": "Build a before-and-after QA sample for duplicate rows with tiny differences. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-data-cleaning#053",
+   "text": "I’m working on a CSV with embedded commas and quotes. Create the deduplication strategy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-data-cleaning#054",
+   "text": "Design the validation report for addresses split across five columns for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-data-cleaning#055",
+   "text": "Document the transformation steps for currency amounts with text symbols. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-cleaning#056",
+   "text": "Help me with survey responses with multi-select mush: propose the standardization rules for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-data-cleaning#057",
+   "text": "Write the parsing approach for join keys that never match cleanly. Use a persuasive tone throughout."
+  },
+  {
+   "id": "data-data-cleaning#058",
+   "text": "You are a business-intelligence lead. Build a before-and-after QA sample for customer names with inconsistent casing and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-data-cleaning#059",
+   "text": "Build a before-and-after QA sample for a CSV with embedded commas and quotes. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-data-cleaning#060",
+   "text": "Before I start on duplicate rows with tiny differences, write the parsing approach for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-data-cleaning#061",
+   "text": "Create the deduplication strategy for currency amounts with text symbols. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-data-cleaning#062",
+   "text": "Propose the standardization rules for join keys that never match cleanly. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-data-cleaning#063",
+   "text": "As an experimentation specialist, I keep hitting the same wall with join keys that never match cleanly. Build a before-and-after QA sample for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-data-cleaning#064",
+   "text": "Design the validation report for join keys that never match cleanly. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-data-cleaning#065",
+   "text": "List the risks of silent data loss in currency amounts with text symbols."
+  },
+  {
+   "id": "data-data-cleaning#066",
+   "text": "List the risks of silent data loss in addresses split across five columns. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-data-cleaning#067",
+   "text": "Act as a senior data analyst. Propose the standardization rules for dates mixing US and EU conventions, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-data-cleaning#068",
+   "text": "Build a before-and-after QA sample for product SKUs with stray spaces. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-data-cleaning#069",
+   "text": "I’m working on duplicate rows with tiny differences. Document the transformation steps for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-data-cleaning#070",
+   "text": "Write a cleaning checklist for a CSV with embedded commas and quotes for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-data-cleaning#071",
+   "text": "Propose the standardization rules for customer names with inconsistent casing. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-cleaning#072",
+   "text": "Help me with duplicate rows with tiny differences: propose the standardization rules for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-data-cleaning#073",
+   "text": "Propose the standardization rules for addresses split across five columns. Use a empathetic tone throughout."
+  },
+  {
+   "id": "data-data-cleaning#074",
+   "text": "You are an analytics engineer. Build a before-and-after QA sample for timestamps in three time zones and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-data-cleaning#075",
+   "text": "Write a cleaning checklist for timestamps in three time zones. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-data-cleaning#076",
+   "text": "Before I start on customer names with inconsistent casing, create the deduplication strategy for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-data-cleaning#077",
+   "text": "Design the validation report for timestamps in three time zones. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-data-cleaning#078",
+   "text": "Write the parsing approach for currency amounts with text symbols. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-data-cleaning#079",
+   "text": "As a data-quality steward, I keep hitting the same wall with a CSV with embedded commas and quotes. Write the parsing approach for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-data-cleaning#080",
+   "text": "Propose the standardization rules for currency amounts with text symbols. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-data-cleaning#081",
+   "text": "Create the deduplication strategy for duplicate rows with tiny differences."
+  },
+  {
+   "id": "data-data-cleaning#082",
+   "text": "Design the validation report for a category column with free-text chaos. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-data-cleaning#083",
+   "text": "Act as a senior data analyst. Design the validation report for currency amounts with text symbols, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-data-cleaning#084",
+   "text": "List the risks of silent data loss in dates mixing US and EU conventions. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-data-cleaning#085",
+   "text": "I’m working on timestamps in three time zones. Propose the standardization rules for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-data-cleaning#086",
+   "text": "List the risks of silent data loss in join keys that never match cleanly for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-data-cleaning#087",
+   "text": "Design the validation report for dates mixing US and EU conventions. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-cleaning#088",
+   "text": "Help me with timestamps in three time zones: create the deduplication strategy for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-data-cleaning#089",
+   "text": "Write a cleaning checklist for product SKUs with stray spaces. Use a formal tone throughout."
+  },
+  {
+   "id": "data-data-cleaning#090",
+   "text": "You are a finance-planning analyst. Build a before-and-after QA sample for currency amounts with text symbols and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-data-cleaning#091",
+   "text": "Write a cleaning checklist for dates mixing US and EU conventions. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-data-cleaning#092",
+   "text": "Before I start on dates mixing US and EU conventions, document the transformation steps for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-data-cleaning#093",
+   "text": "Document the transformation steps for product SKUs with stray spaces. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-data-cleaning#094",
+   "text": "List the risks of silent data loss in duplicate rows with tiny differences. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-data-cleaning#095",
+   "text": "As a data storyteller, I keep hitting the same wall with duplicate rows with tiny differences. Write a cleaning checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-data-cleaning#096",
+   "text": "Write a cleaning checklist for join keys that never match cleanly. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-data-cleaning#097",
+   "text": "Write the parsing approach for survey responses with multi-select mush. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-cleaning#098",
+   "text": "Design the validation report for customer names with inconsistent casing. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-cleaning#099",
+   "text": "Write a cleaning checklist for survey responses with multi-select mush."
+  },
+  {
+   "id": "data-data-cleaning#100",
+   "text": "Create the deduplication strategy for survey responses with multi-select mush."
+  },
+  {
+   "id": "data-data-cleaning#101",
+   "text": "Document the transformation steps for customer names with inconsistent casing."
+  },
+  {
+   "id": "data-data-cleaning#102",
+   "text": "Write the parsing approach for timestamps in three time zones."
+  },
+  {
+   "id": "data-data-cleaning#103",
+   "text": "Write a cleaning checklist for a category column with free-text chaos."
+  },
+  {
+   "id": "data-data-cleaning#104",
+   "text": "Write a cleaning checklist for customer names with inconsistent casing."
+  }
+ ]
+}

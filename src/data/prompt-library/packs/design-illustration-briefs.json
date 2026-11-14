@@ -1,0 +1,430 @@
+{
+ "slug": "design-illustration-briefs",
+ "categorySlug": "design",
+ "category": "Design & Visual",
+ "title": "Illustration Briefs",
+ "description": "Briefs and asset lists that artists can quote accurately.",
+ "tags": [
+  "illustration",
+  "brief",
+  "art"
+ ],
+ "prompts": [
+  {
+   "id": "design-illustration-briefs#001",
+   "text": "Draft the revision-process terms for a comic-style explainer on recycling."
+  },
+  {
+   "id": "design-illustration-briefs#002",
+   "text": "Draft the revision-process terms for a mural concept for a library. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-illustration-briefs#003",
+   "text": "Act as a photographer and retoucher. List reference and style directions for infographic art on sleep cycles, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-illustration-briefs#004",
+   "text": "Create a shot or frame list for a children’s book about a shy dragon. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-illustration-briefs#005",
+   "text": "I’m working on a board-game box cover. Draft the revision-process terms for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-illustration-briefs#006",
+   "text": "Propose a consistent character sheet for a zine about city pigeons for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-illustration-briefs#007",
+   "text": "Define the deliverables and sizes for infographic art on sleep cycles. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-illustration-briefs#008",
+   "text": "Help me with editorial art for an article on burnout: list reference and style directions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-illustration-briefs#009",
+   "text": "List reference and style directions for album art for a folk EP. Use a encouraging tone throughout."
+  },
+  {
+   "id": "design-illustration-briefs#010",
+   "text": "You are a creative director. Write the alt-text and caption set for a children’s book about a shy dragon and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-illustration-briefs#011",
+   "text": "Propose a consistent character sheet for editorial art for an article on burnout. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-illustration-briefs#012",
+   "text": "Before I start on packaging art for herbal tea, propose a consistent character sheet for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-illustration-briefs#013",
+   "text": "List reference and style directions for icon set for a finance app. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-illustration-briefs#014",
+   "text": "Write a full illustration brief for infographic art on sleep cycles. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-illustration-briefs#015",
+   "text": "As a product designer with systems experience, I keep hitting the same wall with spot illustrations for a gardening blog. Propose a consistent character sheet for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-illustration-briefs#016",
+   "text": "Write prompt variants for AI-assisted drafts of a board-game box cover. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-illustration-briefs#017",
+   "text": "Write the alt-text and caption set for a board-game box cover."
+  },
+  {
+   "id": "design-illustration-briefs#018",
+   "text": "Draft the revision-process terms for packaging art for herbal tea. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-illustration-briefs#019",
+   "text": "Act as a presentation designer. Create a shot or frame list for sticker pack for a messaging app, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-illustration-briefs#020",
+   "text": "Create a shot or frame list for album art for a folk EP. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-illustration-briefs#021",
+   "text": "I’m working on infographic art on sleep cycles. Create a shot or frame list for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-illustration-briefs#022",
+   "text": "Draft the revision-process terms for album art for a folk EP for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-illustration-briefs#023",
+   "text": "Propose a consistent character sheet for icon set for a finance app. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-illustration-briefs#024",
+   "text": "Help me with editorial art for an article on burnout: write the alt-text and caption set for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-illustration-briefs#025",
+   "text": "Create a shot or frame list for a mural concept for a library. Use a playful tone throughout."
+  },
+  {
+   "id": "design-illustration-briefs#026",
+   "text": "You are an art director. Create a shot or frame list for spot illustrations for a gardening blog and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-illustration-briefs#027",
+   "text": "Write a full illustration brief for a mural concept for a library. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-illustration-briefs#028",
+   "text": "Before I start on a children’s book about a shy dragon, write prompt variants for AI-assisted drafts of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-illustration-briefs#029",
+   "text": "Draft the revision-process terms for icon set for a finance app. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-illustration-briefs#030",
+   "text": "Define the deliverables and sizes for a mural concept for a library. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-illustration-briefs#031",
+   "text": "As a product designer with systems experience, I keep hitting the same wall with editorial art for an article on burnout. Draft the revision-process terms for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-illustration-briefs#032",
+   "text": "Write prompt variants for AI-assisted drafts of a comic-style explainer on recycling. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-illustration-briefs#033",
+   "text": "Write prompt variants for AI-assisted drafts of editorial art for an article on burnout."
+  },
+  {
+   "id": "design-illustration-briefs#034",
+   "text": "List reference and style directions for a zine about city pigeons. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-illustration-briefs#035",
+   "text": "Act as an art director. Define the deliverables and sizes for a children’s book about a shy dragon, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-illustration-briefs#036",
+   "text": "Write prompt variants for AI-assisted drafts of infographic art on sleep cycles. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-illustration-briefs#037",
+   "text": "I’m working on packaging art for herbal tea. Write a full illustration brief for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-illustration-briefs#038",
+   "text": "Create a shot or frame list for editorial art for an article on burnout for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-illustration-briefs#039",
+   "text": "Write prompt variants for AI-assisted drafts of icon set for a finance app. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-illustration-briefs#040",
+   "text": "Help me with a zine about city pigeons: define the deliverables and sizes for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-illustration-briefs#041",
+   "text": "Write prompt variants for AI-assisted drafts of a zine about city pigeons. Use a friendly tone throughout."
+  },
+  {
+   "id": "design-illustration-briefs#042",
+   "text": "You are an art director. Define the deliverables and sizes for spot illustrations for a gardening blog and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-illustration-briefs#043",
+   "text": "Write the alt-text and caption set for packaging art for herbal tea. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-illustration-briefs#044",
+   "text": "Before I start on packaging art for herbal tea, list reference and style directions for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-illustration-briefs#045",
+   "text": "Define the deliverables and sizes for packaging art for herbal tea. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-illustration-briefs#046",
+   "text": "Propose a consistent character sheet for a board-game box cover. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-illustration-briefs#047",
+   "text": "As a product designer with systems experience, I keep hitting the same wall with album art for a folk EP. Define the deliverables and sizes for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-illustration-briefs#048",
+   "text": "List reference and style directions for a comic-style explainer on recycling. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-illustration-briefs#049",
+   "text": "Write a full illustration brief for a comic-style explainer on recycling."
+  },
+  {
+   "id": "design-illustration-briefs#050",
+   "text": "Write a full illustration brief for editorial art for an article on burnout. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-illustration-briefs#051",
+   "text": "Act as a brand designer. Write a full illustration brief for icon set for a finance app, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-illustration-briefs#052",
+   "text": "Propose a consistent character sheet for sticker pack for a messaging app. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-illustration-briefs#053",
+   "text": "I’m working on spot illustrations for a gardening blog. Draft the revision-process terms for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-illustration-briefs#054",
+   "text": "Write prompt variants for AI-assisted drafts of a mural concept for a library for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-illustration-briefs#055",
+   "text": "Define the deliverables and sizes for icon set for a finance app. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-illustration-briefs#056",
+   "text": "Help me with sticker pack for a messaging app: list reference and style directions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-illustration-briefs#057",
+   "text": "Write a full illustration brief for spot illustrations for a gardening blog. Use a encouraging tone throughout."
+  },
+  {
+   "id": "design-illustration-briefs#058",
+   "text": "You are a motion designer. Define the deliverables and sizes for sticker pack for a messaging app and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-illustration-briefs#059",
+   "text": "Create a shot or frame list for a board-game box cover. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-illustration-briefs#060",
+   "text": "Before I start on infographic art on sleep cycles, propose a consistent character sheet for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-illustration-briefs#061",
+   "text": "List reference and style directions for spot illustrations for a gardening blog. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-illustration-briefs#062",
+   "text": "Write the alt-text and caption set for spot illustrations for a gardening blog. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-illustration-briefs#063",
+   "text": "As a product designer with systems experience, I keep hitting the same wall with spot illustrations for a gardening blog. Write prompt variants for AI-assisted drafts of it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-illustration-briefs#064",
+   "text": "Write a full illustration brief for a zine about city pigeons. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-illustration-briefs#065",
+   "text": "Create a shot or frame list for a comic-style explainer on recycling."
+  },
+  {
+   "id": "design-illustration-briefs#066",
+   "text": "Create a shot or frame list for packaging art for herbal tea. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-illustration-briefs#067",
+   "text": "Act as a photographer and retoucher. Write a full illustration brief for album art for a folk EP, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-illustration-briefs#068",
+   "text": "Write the alt-text and caption set for sticker pack for a messaging app. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-illustration-briefs#069",
+   "text": "I’m working on icon set for a finance app. Write the alt-text and caption set for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-illustration-briefs#070",
+   "text": "Draft the revision-process terms for a children’s book about a shy dragon for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-illustration-briefs#071",
+   "text": "List reference and style directions for a board-game box cover. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-illustration-briefs#072",
+   "text": "Help me with album art for a folk EP: write the alt-text and caption set for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-illustration-briefs#073",
+   "text": "Write prompt variants for AI-assisted drafts of album art for a folk EP. Use a encouraging tone throughout."
+  },
+  {
+   "id": "design-illustration-briefs#074",
+   "text": "You are a creative director. Propose a consistent character sheet for a children’s book about a shy dragon and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-illustration-briefs#075",
+   "text": "Create a shot or frame list for a zine about city pigeons. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-illustration-briefs#076",
+   "text": "Before I start on a mural concept for a library, list reference and style directions for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-illustration-briefs#077",
+   "text": "Write a full illustration brief for a board-game box cover. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-illustration-briefs#078",
+   "text": "Create a shot or frame list for icon set for a finance app. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-illustration-briefs#079",
+   "text": "As a product designer with systems experience, I keep hitting the same wall with album art for a folk EP. Propose a consistent character sheet for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-illustration-briefs#080",
+   "text": "Draft the revision-process terms for a zine about city pigeons. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-illustration-briefs#081",
+   "text": "Define the deliverables and sizes for editorial art for an article on burnout."
+  },
+  {
+   "id": "design-illustration-briefs#082",
+   "text": "Propose a consistent character sheet for a comic-style explainer on recycling. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-illustration-briefs#083",
+   "text": "Act as an art director. Write prompt variants for AI-assisted drafts of packaging art for herbal tea, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-illustration-briefs#084",
+   "text": "Write prompt variants for AI-assisted drafts of sticker pack for a messaging app. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-illustration-briefs#085",
+   "text": "I’m working on infographic art on sleep cycles. Write the alt-text and caption set for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-illustration-briefs#086",
+   "text": "Define the deliverables and sizes for a comic-style explainer on recycling for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-illustration-briefs#087",
+   "text": "Draft the revision-process terms for sticker pack for a messaging app. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-illustration-briefs#088",
+   "text": "Help me with infographic art on sleep cycles: draft the revision-process terms for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-illustration-briefs#089",
+   "text": "List reference and style directions for a children’s book about a shy dragon. Use a direct tone throughout."
+  },
+  {
+   "id": "design-illustration-briefs#090",
+   "text": "You are a creative director. Write the alt-text and caption set for a comic-style explainer on recycling and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-illustration-briefs#091",
+   "text": "Write the alt-text and caption set for a mural concept for a library. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-illustration-briefs#092",
+   "text": "Before I start on a mural concept for a library, propose a consistent character sheet for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-illustration-briefs#093",
+   "text": "Write a full illustration brief for a children’s book about a shy dragon. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-illustration-briefs#094",
+   "text": "Write the alt-text and caption set for a zine about city pigeons. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-illustration-briefs#095",
+   "text": "As an art director, I keep hitting the same wall with sticker pack for a messaging app. Write a full illustration brief for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-illustration-briefs#096",
+   "text": "Define the deliverables and sizes for a board-game box cover. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-illustration-briefs#097",
+   "text": "Draft the revision-process terms for a comic-style explainer on recycling. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-illustration-briefs#098",
+   "text": "Draft the revision-process terms for a mural concept for a library. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-illustration-briefs#099",
+   "text": "List reference and style directions for infographic art on sleep cycles."
+  },
+  {
+   "id": "design-illustration-briefs#100",
+   "text": "Create a shot or frame list for a children’s book about a shy dragon."
+  },
+  {
+   "id": "design-illustration-briefs#101",
+   "text": "Draft the revision-process terms for a board-game box cover."
+  },
+  {
+   "id": "design-illustration-briefs#102",
+   "text": "Propose a consistent character sheet for a zine about city pigeons."
+  },
+  {
+   "id": "design-illustration-briefs#103",
+   "text": "Define the deliverables and sizes for infographic art on sleep cycles."
+  },
+  {
+   "id": "design-illustration-briefs#104",
+   "text": "List reference and style directions for editorial art for an article on burnout."
+  }
+ ]
+}

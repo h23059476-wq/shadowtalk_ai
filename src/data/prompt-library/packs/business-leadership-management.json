@@ -1,0 +1,430 @@
+{
+ "slug": "business-leadership-management",
+ "categorySlug": "business",
+ "category": "Business & Strategy",
+ "title": "Leadership & Management",
+ "description": "One-on-ones, priorities, conflicts, and change that lands.",
+ "tags": [
+  "leadership",
+  "management",
+  "culture"
+ ],
+ "prompts": [
+  {
+   "id": "business-leadership-management#001",
+   "text": "List the second-order effects to watch in a values statement people actually use."
+  },
+  {
+   "id": "business-leadership-management#002",
+   "text": "Prepare a one-on-one agenda for a values statement people actually use. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-leadership-management#003",
+   "text": "Act as a customer success director. List the second-order effects to watch in a cross-team conflict over shared metrics, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-leadership-management#004",
+   "text": "Prepare a one-on-one agenda for prioritizing two teams' competing asks. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-leadership-management#005",
+   "text": "I’m working on a values statement people actually use. Design a team ritual to address it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-leadership-management#006",
+   "text": "Design a team ritual to address a decision-rights map for a growing team for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-leadership-management#007",
+   "text": "Write the change-communication plan for an underperforming-but-loyal veteran. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-leadership-management#008",
+   "text": "Help me with a remote teammate going quiet: list the second-order effects to watch in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-leadership-management#009",
+   "text": "Create a listening-tour question set for a succession plan for a key operator. Use a direct tone throughout."
+  },
+  {
+   "id": "business-leadership-management#010",
+   "text": "You are a serial founder. Create a listening-tour question set for a chronic-missed-deadline teammate and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-leadership-management#011",
+   "text": "Create a listening-tour question set for prioritizing two teams' competing asks. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-leadership-management#012",
+   "text": "Before I start on running a blameless retro that changes things, draft the decision doc for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-leadership-management#013",
+   "text": "Write the change-communication plan for a cross-team conflict over shared metrics. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-leadership-management#014",
+   "text": "Prepare a one-on-one agenda for a decision-rights map for a growing team. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-leadership-management#015",
+   "text": "As a HR business partner, I keep hitting the same wall with a cross-team conflict over shared metrics. Design a team ritual to address it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-leadership-management#016",
+   "text": "Create a listening-tour question set for rebuilding trust after a missed commitment. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-leadership-management#017",
+   "text": "List the second-order effects to watch in a first 90 days as a new manager."
+  },
+  {
+   "id": "business-leadership-management#018",
+   "text": "Map stakeholders and concerns for a remote teammate going quiet. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-leadership-management#019",
+   "text": "Act as a customer success director. Prepare a one-on-one agenda for a cross-team conflict over shared metrics, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-leadership-management#020",
+   "text": "Prepare a one-on-one agenda for running a blameless retro that changes things. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-leadership-management#021",
+   "text": "I’m working on a succession plan for a key operator. Write the change-communication plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-leadership-management#022",
+   "text": "Write a candid but kind feedback script for an underperforming-but-loyal veteran for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-leadership-management#023",
+   "text": "Write the change-communication plan for running a blameless retro that changes things. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-leadership-management#024",
+   "text": "Help me with prioritizing two teams' competing asks: list the second-order effects to watch in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-leadership-management#025",
+   "text": "Create a listening-tour question set for a values statement people actually use. Use a formal tone throughout."
+  },
+  {
+   "id": "business-leadership-management#026",
+   "text": "You are a serial founder. Write the change-communication plan for a chronic-missed-deadline teammate and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-leadership-management#027",
+   "text": "Write a candid but kind feedback script for a chronic-missed-deadline teammate. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-leadership-management#028",
+   "text": "Before I start on rebuilding trust after a missed commitment, write a candid but kind feedback script for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-leadership-management#029",
+   "text": "Write the change-communication plan for a star performer with attitude risk. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-leadership-management#030",
+   "text": "Prepare a one-on-one agenda for a one-on-one format that isn’t status updates. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-leadership-management#031",
+   "text": "As a finance manager, I keep hitting the same wall with a first 90 days as a new manager. Write the change-communication plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-leadership-management#032",
+   "text": "Design a team ritual to address a first 90 days as a new manager. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-leadership-management#033",
+   "text": "Write a candid but kind feedback script for a decision-rights map for a growing team."
+  },
+  {
+   "id": "business-leadership-management#034",
+   "text": "List the second-order effects to watch in a star performer with attitude risk. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-leadership-management#035",
+   "text": "Act as a management consultant. Write a candid but kind feedback script for a values statement people actually use, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-leadership-management#036",
+   "text": "Create a listening-tour question set for a manager transition from peer to boss. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-leadership-management#037",
+   "text": "I’m working on a star performer with attitude risk. Prepare a one-on-one agenda for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-leadership-management#038",
+   "text": "Create a listening-tour question set for an underperforming-but-loyal veteran for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-leadership-management#039",
+   "text": "Map stakeholders and concerns for a chronic-missed-deadline teammate. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-leadership-management#040",
+   "text": "Help me with a one-on-one format that isn’t status updates: write a candid but kind feedback script for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-leadership-management#041",
+   "text": "List the second-order effects to watch in a succession plan for a key operator. Use a direct tone throughout."
+  },
+  {
+   "id": "business-leadership-management#042",
+   "text": "You are a startup advisor. Draft the decision doc for prioritizing two teams' competing asks and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-leadership-management#043",
+   "text": "Write a candid but kind feedback script for a star performer with attitude risk. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-leadership-management#044",
+   "text": "Before I start on rebuilding trust after a missed commitment, list the second-order effects to watch in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-leadership-management#045",
+   "text": "List the second-order effects to watch in running a blameless retro that changes things. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-leadership-management#046",
+   "text": "Write the change-communication plan for prioritizing two teams' competing asks. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-leadership-management#047",
+   "text": "As a seasoned operations director, I keep hitting the same wall with a values statement people actually use. Draft the decision doc for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-leadership-management#048",
+   "text": "Write the change-communication plan for a one-on-one format that isn’t status updates. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-leadership-management#049",
+   "text": "Prepare a one-on-one agenda for rebuilding trust after a missed commitment."
+  },
+  {
+   "id": "business-leadership-management#050",
+   "text": "Prepare a one-on-one agenda for a first 90 days as a new manager. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-leadership-management#051",
+   "text": "Act as a procurement lead. Map stakeholders and concerns for a first 90 days as a new manager, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-leadership-management#052",
+   "text": "Create a listening-tour question set for a first 90 days as a new manager. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-leadership-management#053",
+   "text": "I’m working on a remote teammate going quiet. Create a listening-tour question set for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-leadership-management#054",
+   "text": "Create a listening-tour question set for a star performer with attitude risk for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-leadership-management#055",
+   "text": "Write the change-communication plan for a values statement people actually use. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-leadership-management#056",
+   "text": "Help me with running a blameless retro that changes things: design a team ritual to address it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-leadership-management#057",
+   "text": "Prepare a one-on-one agenda for a manager transition from peer to boss. Use a formal tone throughout."
+  },
+  {
+   "id": "business-leadership-management#058",
+   "text": "You are a seasoned operations director. Map stakeholders and concerns for a one-on-one format that isn’t status updates and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-leadership-management#059",
+   "text": "Draft the decision doc for a decision-rights map for a growing team. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-leadership-management#060",
+   "text": "Before I start on a one-on-one format that isn’t status updates, design a team ritual to address it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-leadership-management#061",
+   "text": "Draft the decision doc for a manager transition from peer to boss. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-leadership-management#062",
+   "text": "Map stakeholders and concerns for a cross-team conflict over shared metrics. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-leadership-management#063",
+   "text": "As a seasoned operations director, I keep hitting the same wall with a manager transition from peer to boss. List the second-order effects to watch in it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-leadership-management#064",
+   "text": "Design a team ritual to address a chronic-missed-deadline teammate. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-leadership-management#065",
+   "text": "Draft the decision doc for a chronic-missed-deadline teammate."
+  },
+  {
+   "id": "business-leadership-management#066",
+   "text": "Draft the decision doc for rebuilding trust after a missed commitment. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-leadership-management#067",
+   "text": "Act as a startup advisor. Draft the decision doc for a star performer with attitude risk, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-leadership-management#068",
+   "text": "Map stakeholders and concerns for an underperforming-but-loyal veteran. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-leadership-management#069",
+   "text": "I’m working on a cross-team conflict over shared metrics. Write a candid but kind feedback script for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-leadership-management#070",
+   "text": "Create a listening-tour question set for a cross-team conflict over shared metrics for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-leadership-management#071",
+   "text": "List the second-order effects to watch in a decision-rights map for a growing team. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-leadership-management#072",
+   "text": "Help me with a cross-team conflict over shared metrics: draft the decision doc for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-leadership-management#073",
+   "text": "Draft the decision doc for a succession plan for a key operator. Use a direct tone throughout."
+  },
+  {
+   "id": "business-leadership-management#074",
+   "text": "You are a seasoned operations director. Write a candid but kind feedback script for running a blameless retro that changes things and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-leadership-management#075",
+   "text": "Design a team ritual to address a manager transition from peer to boss. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-leadership-management#076",
+   "text": "Before I start on a remote teammate going quiet, prepare a one-on-one agenda for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-leadership-management#077",
+   "text": "Draft the decision doc for a first 90 days as a new manager. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-leadership-management#078",
+   "text": "Write the change-communication plan for rebuilding trust after a missed commitment. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-leadership-management#079",
+   "text": "As a customer success director, I keep hitting the same wall with running a blameless retro that changes things. Create a listening-tour question set for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-leadership-management#080",
+   "text": "Write a candid but kind feedback script for a succession plan for a key operator. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-leadership-management#081",
+   "text": "Map stakeholders and concerns for a succession plan for a key operator."
+  },
+  {
+   "id": "business-leadership-management#082",
+   "text": "Design a team ritual to address an underperforming-but-loyal veteran. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-leadership-management#083",
+   "text": "Act as a procurement lead. Write a candid but kind feedback script for a first 90 days as a new manager, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-leadership-management#084",
+   "text": "List the second-order effects to watch in a one-on-one format that isn’t status updates. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-leadership-management#085",
+   "text": "I’m working on a star performer with attitude risk. Map stakeholders and concerns for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-leadership-management#086",
+   "text": "Map stakeholders and concerns for a manager transition from peer to boss for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-leadership-management#087",
+   "text": "List the second-order effects to watch in a chronic-missed-deadline teammate. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-leadership-management#088",
+   "text": "Help me with an underperforming-but-loyal veteran: list the second-order effects to watch in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-leadership-management#089",
+   "text": "Write a candid but kind feedback script for a remote teammate going quiet. Use a playful tone throughout."
+  },
+  {
+   "id": "business-leadership-management#090",
+   "text": "You are a customer success director. Draft the decision doc for an underperforming-but-loyal veteran and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-leadership-management#091",
+   "text": "Write the change-communication plan for a remote teammate going quiet. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-leadership-management#092",
+   "text": "Before I start on a one-on-one format that isn’t status updates, draft the decision doc for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-leadership-management#093",
+   "text": "Map stakeholders and concerns for a decision-rights map for a growing team. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-leadership-management#094",
+   "text": "Prepare a one-on-one agenda for an underperforming-but-loyal veteran. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-leadership-management#095",
+   "text": "As a seasoned operations director, I keep hitting the same wall with prioritizing two teams' competing asks. Map stakeholders and concerns for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-leadership-management#096",
+   "text": "Write the change-communication plan for a decision-rights map for a growing team. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-leadership-management#097",
+   "text": "Write the change-communication plan for a manager transition from peer to boss."
+  },
+  {
+   "id": "business-leadership-management#098",
+   "text": "Design a team ritual to address a succession plan for a key operator. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-leadership-management#099",
+   "text": "Act as a HR business partner. Create a listening-tour question set for a one-on-one format that isn’t status updates, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-leadership-management#100",
+   "text": "Map stakeholders and concerns for running a blameless retro that changes things. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-leadership-management#101",
+   "text": "I’m working on a manager transition from peer to boss. Write a candid but kind feedback script for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-leadership-management#102",
+   "text": "Write a candid but kind feedback script for prioritizing two teams' competing asks for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-leadership-management#103",
+   "text": "Map stakeholders and concerns for a values statement people actually use. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-leadership-management#104",
+   "text": "Help me with a remote teammate going quiet: draft the decision doc for it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

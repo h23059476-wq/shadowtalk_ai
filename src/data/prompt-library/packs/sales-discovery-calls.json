@@ -1,0 +1,430 @@
+{
+ "slug": "sales-discovery-calls",
+ "categorySlug": "sales",
+ "category": "Sales & Outreach",
+ "title": "Discovery Calls",
+ "description": "Questions that surface pains, budgets, and real timelines.",
+ "tags": [
+  "discovery",
+  "calls",
+  "questions"
+ ],
+ "prompts": [
+  {
+   "id": "sales-discovery-calls#001",
+   "text": "Write a question map for a discovery with a technically savvy buyer."
+  },
+  {
+   "id": "sales-discovery-calls#002",
+   "text": "Draft the recap-and-next-steps email for a multi-stakeholder kickoff call. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-discovery-calls#003",
+   "text": "Act as an enterprise account executive. Script the opening two minutes of a discovery with a technically savvy buyer, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-discovery-calls#004",
+   "text": "Write the talk-track for transitioning to demo in a small-deal fast-track call. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-discovery-calls#005",
+   "text": "I’m working on a small-deal fast-track call. Design a mutual-action-plan starter for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-discovery-calls#006",
+   "text": "Create a note-taking template for a call after a failed competitor rollout for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-discovery-calls#007",
+   "text": "Create a note-taking template for a discovery where the champion is junior. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-discovery-calls#008",
+   "text": "Help me with a discovery with a technically savvy buyer: prepare responses to likely objections in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-discovery-calls#009",
+   "text": "Design a mutual-action-plan starter for a call where the budget is unknown. Use a persuasive tone throughout."
+  },
+  {
+   "id": "sales-discovery-calls#010",
+   "text": "You are a revops analyst. Design a mutual-action-plan starter for a discovery with a technically savvy buyer and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-discovery-calls#011",
+   "text": "Create a note-taking template for a first call with a skeptical operations director. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-discovery-calls#012",
+   "text": "Before I start on a call after a failed competitor rollout, design a mutual-action-plan starter for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-discovery-calls#013",
+   "text": "Script the opening two minutes of a discovery with a founder who wants features fast. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-discovery-calls#014",
+   "text": "Script the opening two minutes of a renewal-risk conversation with a quiet account. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-discovery-calls#015",
+   "text": "As a solution consultant, I keep hitting the same wall with a discovery where the champion is junior. Script the opening two minutes of it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-discovery-calls#016",
+   "text": "List the disqualifying signals to watch in a second call after strong first interest. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-discovery-calls#017",
+   "text": "Draft the recap-and-next-steps email for a competitive displacement discovery."
+  },
+  {
+   "id": "sales-discovery-calls#018",
+   "text": "Create a note-taking template for a second call after strong first interest. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-discovery-calls#019",
+   "text": "Act as a founder selling to first customers. Design a mutual-action-plan starter for a first call with a skeptical operations director, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-discovery-calls#020",
+   "text": "Write a question map for a competitive displacement discovery. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-discovery-calls#021",
+   "text": "I’m working on a renewal-risk conversation with a quiet account. Create a note-taking template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-discovery-calls#022",
+   "text": "Prepare responses to likely objections in a discovery with a founder who wants features fast for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-discovery-calls#023",
+   "text": "Prepare responses to likely objections in a call after a failed competitor rollout. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-discovery-calls#024",
+   "text": "Help me with a multi-stakeholder kickoff call: script the opening two minutes of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-discovery-calls#025",
+   "text": "Write the talk-track for transitioning to demo in a call after a failed competitor rollout. Use a professional tone throughout."
+  },
+  {
+   "id": "sales-discovery-calls#026",
+   "text": "You are a channel-partnerships manager. Write the talk-track for transitioning to demo in a multi-stakeholder kickoff call and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-discovery-calls#027",
+   "text": "Write a question map for a call where the budget is unknown. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-discovery-calls#028",
+   "text": "Before I start on a call where the budget is unknown, write the talk-track for transitioning to demo in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-discovery-calls#029",
+   "text": "List the disqualifying signals to watch in a discovery with a family business. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-discovery-calls#030",
+   "text": "List the disqualifying signals to watch in a discovery with a founder who wants features fast. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-discovery-calls#031",
+   "text": "As a customer-renewals specialist, I keep hitting the same wall with a small-deal fast-track call. Script the opening two minutes of it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-discovery-calls#032",
+   "text": "Draft the recap-and-next-steps email for a renewal-risk conversation with a quiet account. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-discovery-calls#033",
+   "text": "List the disqualifying signals to watch in a renewal-risk conversation with a quiet account."
+  },
+  {
+   "id": "sales-discovery-calls#034",
+   "text": "List the disqualifying signals to watch in a first call with a skeptical operations director. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-discovery-calls#035",
+   "text": "Act as a customer-renewals specialist. Design a mutual-action-plan starter for a discovery where the champion is junior, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-discovery-calls#036",
+   "text": "Prepare responses to likely objections in a discovery where the champion is junior. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-discovery-calls#037",
+   "text": "I’m working on a competitive displacement discovery. List the disqualifying signals to watch in it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-discovery-calls#038",
+   "text": "Prepare responses to likely objections in a first call with a skeptical operations director for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-discovery-calls#039",
+   "text": "Write a question map for a discovery with a family business. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-discovery-calls#040",
+   "text": "Help me with a second call after strong first interest: write a question map for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-discovery-calls#041",
+   "text": "Create a note-taking template for a call where the budget is unknown. Use a persuasive tone throughout."
+  },
+  {
+   "id": "sales-discovery-calls#042",
+   "text": "You are a founder selling to first customers. Create a note-taking template for a small-deal fast-track call and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-discovery-calls#043",
+   "text": "Script the opening two minutes of a first call with a skeptical operations director. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-discovery-calls#044",
+   "text": "Before I start on a multi-stakeholder kickoff call, prepare responses to likely objections in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-discovery-calls#045",
+   "text": "Write the talk-track for transitioning to demo in a competitive displacement discovery. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-discovery-calls#046",
+   "text": "Draft the recap-and-next-steps email for a discovery with a technically savvy buyer. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-discovery-calls#047",
+   "text": "As a solution consultant, I keep hitting the same wall with a call after a failed competitor rollout. Script the opening two minutes of it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-discovery-calls#048",
+   "text": "Create a note-taking template for a multi-stakeholder kickoff call. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-discovery-calls#049",
+   "text": "Draft the recap-and-next-steps email for a small-deal fast-track call."
+  },
+  {
+   "id": "sales-discovery-calls#050",
+   "text": "Prepare responses to likely objections in a discovery with a family business. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-discovery-calls#051",
+   "text": "Act as an enterprise account executive. Write a question map for a discovery with a founder who wants features fast, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-discovery-calls#052",
+   "text": "Write the talk-track for transitioning to demo in a discovery with a founder who wants features fast. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-discovery-calls#053",
+   "text": "I’m working on a discovery with a family business. Write the talk-track for transitioning to demo in it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-discovery-calls#054",
+   "text": "Script the opening two minutes of a call where the budget is unknown for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-discovery-calls#055",
+   "text": "Write the talk-track for transitioning to demo in a discovery where the champion is junior. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-discovery-calls#056",
+   "text": "Help me with a call after a failed competitor rollout: draft the recap-and-next-steps email for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-discovery-calls#057",
+   "text": "Prepare responses to likely objections in a competitive displacement discovery. Use a direct tone throughout."
+  },
+  {
+   "id": "sales-discovery-calls#058",
+   "text": "You are a revops analyst. Write the talk-track for transitioning to demo in a discovery with a technically savvy buyer and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-discovery-calls#059",
+   "text": "Draft the recap-and-next-steps email for a second call after strong first interest. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-discovery-calls#060",
+   "text": "Before I start on a discovery with a family business, design a mutual-action-plan starter for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-discovery-calls#061",
+   "text": "Script the opening two minutes of a second call after strong first interest. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-discovery-calls#062",
+   "text": "Draft the recap-and-next-steps email for a call where the budget is unknown. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-discovery-calls#063",
+   "text": "As a channel-partnerships manager, I keep hitting the same wall with a first call with a skeptical operations director. Draft the recap-and-next-steps email for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-discovery-calls#064",
+   "text": "Script the opening two minutes of a discovery with a family business. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-discovery-calls#065",
+   "text": "Draft the recap-and-next-steps email for a discovery with a founder who wants features fast."
+  },
+  {
+   "id": "sales-discovery-calls#066",
+   "text": "Write the talk-track for transitioning to demo in a second call after strong first interest. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-discovery-calls#067",
+   "text": "Act as an enterprise account executive. Design a mutual-action-plan starter for a discovery with a founder who wants features fast, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-discovery-calls#068",
+   "text": "Create a note-taking template for a competitive displacement discovery. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-discovery-calls#069",
+   "text": "I’m working on a discovery where the champion is junior. Write a question map for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-discovery-calls#070",
+   "text": "List the disqualifying signals to watch in a discovery with a technically savvy buyer for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-discovery-calls#071",
+   "text": "Prepare responses to likely objections in a second call after strong first interest. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-discovery-calls#072",
+   "text": "Help me with a discovery where the champion is junior: list the disqualifying signals to watch in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-discovery-calls#073",
+   "text": "Write a question map for a first call with a skeptical operations director. Use a friendly tone throughout."
+  },
+  {
+   "id": "sales-discovery-calls#074",
+   "text": "You are a revops analyst. List the disqualifying signals to watch in a call where the budget is unknown and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-discovery-calls#075",
+   "text": "List the disqualifying signals to watch in a multi-stakeholder kickoff call. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-discovery-calls#076",
+   "text": "Before I start on a call after a failed competitor rollout, write a question map for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-discovery-calls#077",
+   "text": "Prepare responses to likely objections in a small-deal fast-track call. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-discovery-calls#078",
+   "text": "Create a note-taking template for a discovery with a family business. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-discovery-calls#079",
+   "text": "As a customer-renewals specialist, I keep hitting the same wall with a small-deal fast-track call. List the disqualifying signals to watch in it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-discovery-calls#080",
+   "text": "Script the opening two minutes of a competitive displacement discovery. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-discovery-calls#081",
+   "text": "List the disqualifying signals to watch in a call after a failed competitor rollout."
+  },
+  {
+   "id": "sales-discovery-calls#082",
+   "text": "Design a mutual-action-plan starter for a competitive displacement discovery. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-discovery-calls#083",
+   "text": "Act as a founder selling to first customers. Design a mutual-action-plan starter for a second call after strong first interest, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-discovery-calls#084",
+   "text": "Draft the recap-and-next-steps email for a discovery with a family business. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-discovery-calls#085",
+   "text": "I’m working on a discovery with a technically savvy buyer. Create a note-taking template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-discovery-calls#086",
+   "text": "Write the talk-track for transitioning to demo in a renewal-risk conversation with a quiet account for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-discovery-calls#087",
+   "text": "Design a mutual-action-plan starter for a renewal-risk conversation with a quiet account. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-discovery-calls#088",
+   "text": "Help me with a first call with a skeptical operations director: write the talk-track for transitioning to demo in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-discovery-calls#089",
+   "text": "Design a mutual-action-plan starter for a multi-stakeholder kickoff call. Use a professional tone throughout."
+  },
+  {
+   "id": "sales-discovery-calls#090",
+   "text": "You are a channel-partnerships manager. Draft the recap-and-next-steps email for a discovery where the champion is junior and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-discovery-calls#091",
+   "text": "Write a question map for a small-deal fast-track call. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-discovery-calls#092",
+   "text": "Before I start on a call where the budget is unknown, prepare responses to likely objections in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-discovery-calls#093",
+   "text": "Create a note-taking template for a discovery with a founder who wants features fast. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-discovery-calls#094",
+   "text": "Write a question map for a renewal-risk conversation with a quiet account. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-discovery-calls#095",
+   "text": "As a solution consultant, I keep hitting the same wall with a multi-stakeholder kickoff call. Write a question map for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-discovery-calls#096",
+   "text": "Prepare responses to likely objections in a renewal-risk conversation with a quiet account. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-discovery-calls#097",
+   "text": "Write a question map for a discovery with a technically savvy buyer. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-discovery-calls#098",
+   "text": "Draft the recap-and-next-steps email for a multi-stakeholder kickoff call. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-discovery-calls#099",
+   "text": "Script the opening two minutes of a discovery with a technically savvy buyer."
+  },
+  {
+   "id": "sales-discovery-calls#100",
+   "text": "Write the talk-track for transitioning to demo in a small-deal fast-track call."
+  },
+  {
+   "id": "sales-discovery-calls#101",
+   "text": "Design a mutual-action-plan starter for a small-deal fast-track call."
+  },
+  {
+   "id": "sales-discovery-calls#102",
+   "text": "Create a note-taking template for a call after a failed competitor rollout."
+  },
+  {
+   "id": "sales-discovery-calls#103",
+   "text": "Create a note-taking template for a discovery where the champion is junior."
+  },
+  {
+   "id": "sales-discovery-calls#104",
+   "text": "Prepare responses to likely objections in a discovery with a technically savvy buyer."
+  }
+ ]
+}

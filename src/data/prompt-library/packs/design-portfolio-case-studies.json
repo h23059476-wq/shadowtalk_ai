@@ -1,0 +1,430 @@
+{
+ "slug": "design-portfolio-case-studies",
+ "categorySlug": "design",
+ "category": "Design & Visual",
+ "title": "Portfolio & Case Studies",
+ "description": "Case studies that show thinking, not just pretty screens.",
+ "tags": [
+  "portfolio",
+  "case study",
+  "career"
+ ],
+ "prompts": [
+  {
+   "id": "design-portfolio-case-studies#001",
+   "text": "Create the visuals checklist for a design-system adoption story."
+  },
+  {
+   "id": "design-portfolio-case-studies#002",
+   "text": "Write the reflection-and-next-time section for a hackathon project turned product. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-portfolio-case-studies#003",
+   "text": "Act as a creative director. Tailor the case study to a job application about a game-ui concept project, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-portfolio-case-studies#004",
+   "text": "Write the outcomes-with-metrics section for a rebrand for a regional grocer. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-portfolio-case-studies#005",
+   "text": "I’m working on a rebrand for a regional grocer. Write the narrative structure for a case study about it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-portfolio-case-studies#006",
+   "text": "Write the reflection-and-next-time section for a motion-identity for a podcast for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-portfolio-case-studies#007",
+   "text": "Tailor the case study to a job application about a freelance identity for a photographer. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-portfolio-case-studies#008",
+   "text": "Help me with a packaging redesign for tea: write the reflection-and-next-time section for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-portfolio-case-studies#009",
+   "text": "Write the narrative structure for a case study about an accessibility remediation project. Use a direct tone throughout."
+  },
+  {
+   "id": "design-portfolio-case-studies#010",
+   "text": "You are an art director. Write the outcomes-with-metrics section for a motion-identity for a podcast and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-portfolio-case-studies#011",
+   "text": "Tailor the case study to a job application about a museum kiosk experience. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-portfolio-case-studies#012",
+   "text": "Before I start on a design-system adoption story, describe the process and pivots for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-portfolio-case-studies#013",
+   "text": "Describe the process and pivots for a data-viz dashboard for a nonprofit. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-portfolio-case-studies#014",
+   "text": "Describe the process and pivots for a game-ui concept project. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-portfolio-case-studies#015",
+   "text": "As a brand designer, I keep hitting the same wall with a design-system adoption story. Draft the problem-and-constraints section for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-portfolio-case-studies#016",
+   "text": "Write the outcomes-with-metrics section for a freelance identity for a photographer. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-portfolio-case-studies#017",
+   "text": "Write the outcomes-with-metrics section for an accessibility remediation project."
+  },
+  {
+   "id": "design-portfolio-case-studies#018",
+   "text": "Write the reflection-and-next-time section for a game-ui concept project. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-portfolio-case-studies#019",
+   "text": "Act as an art director. Create the visuals checklist for an accessibility remediation project, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-portfolio-case-studies#020",
+   "text": "Create the visuals checklist for a rebrand for a regional grocer. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-portfolio-case-studies#021",
+   "text": "I’m working on a rebrand for a regional grocer. Describe the process and pivots for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-portfolio-case-studies#022",
+   "text": "Write the narrative structure for a case study about a freelance identity for a photographer for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-portfolio-case-studies#023",
+   "text": "Draft the problem-and-constraints section for a motion-identity for a podcast. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-portfolio-case-studies#024",
+   "text": "Help me with a data-viz dashboard for a nonprofit: create the visuals checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-portfolio-case-studies#025",
+   "text": "Write the reflection-and-next-time section for a zero-to-one mobile app launch. Use a encouraging tone throughout."
+  },
+  {
+   "id": "design-portfolio-case-studies#026",
+   "text": "You are an art director. Draft the problem-and-constraints section for a zero-to-one mobile app launch and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-portfolio-case-studies#027",
+   "text": "Write the narrative structure for a case study about a game-ui concept project. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-portfolio-case-studies#028",
+   "text": "Before I start on a rebrand for a regional grocer, tailor the case study to a job application about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-portfolio-case-studies#029",
+   "text": "Create the visuals checklist for a freelance identity for a photographer. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-portfolio-case-studies#030",
+   "text": "Tailor the case study to a job application about an accessibility remediation project. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-portfolio-case-studies#031",
+   "text": "As a product designer with systems experience, I keep hitting the same wall with a freelance identity for a photographer. Write a humble but confident summary for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-portfolio-case-studies#032",
+   "text": "Write the narrative structure for a case study about a packaging redesign for tea. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-portfolio-case-studies#033",
+   "text": "Write a humble but confident summary for a checkout-redesign case study."
+  },
+  {
+   "id": "design-portfolio-case-studies#034",
+   "text": "Create the visuals checklist for a packaging redesign for tea. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-portfolio-case-studies#035",
+   "text": "Act as a photographer and retoucher. Tailor the case study to a job application about a motion-identity for a podcast, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-portfolio-case-studies#036",
+   "text": "Write the outcomes-with-metrics section for a museum kiosk experience. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-portfolio-case-studies#037",
+   "text": "I’m working on a hackathon project turned product. Draft the problem-and-constraints section for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-portfolio-case-studies#038",
+   "text": "Write the outcomes-with-metrics section for a zero-to-one mobile app launch for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-portfolio-case-studies#039",
+   "text": "Write the reflection-and-next-time section for an accessibility remediation project. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-portfolio-case-studies#040",
+   "text": "Help me with a packaging redesign for tea: draft the problem-and-constraints section for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-portfolio-case-studies#041",
+   "text": "Describe the process and pivots for a checkout-redesign case study. Use a formal tone throughout."
+  },
+  {
+   "id": "design-portfolio-case-studies#042",
+   "text": "You are a photographer and retoucher. Describe the process and pivots for a hackathon project turned product and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-portfolio-case-studies#043",
+   "text": "Write the outcomes-with-metrics section for a hackathon project turned product. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-portfolio-case-studies#044",
+   "text": "Before I start on a game-ui concept project, draft the problem-and-constraints section for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-portfolio-case-studies#045",
+   "text": "Tailor the case study to a job application about a design-system adoption story. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-portfolio-case-studies#046",
+   "text": "Draft the problem-and-constraints section for a museum kiosk experience. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-portfolio-case-studies#047",
+   "text": "As a motion designer, I keep hitting the same wall with a game-ui concept project. Write the outcomes-with-metrics section for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-portfolio-case-studies#048",
+   "text": "Describe the process and pivots for a zero-to-one mobile app launch. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-portfolio-case-studies#049",
+   "text": "Describe the process and pivots for a museum kiosk experience."
+  },
+  {
+   "id": "design-portfolio-case-studies#050",
+   "text": "Create the visuals checklist for a hackathon project turned product. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-portfolio-case-studies#051",
+   "text": "Act as a photographer and retoucher. Write the reflection-and-next-time section for a freelance identity for a photographer, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-portfolio-case-studies#052",
+   "text": "Tailor the case study to a job application about a zero-to-one mobile app launch. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-portfolio-case-studies#053",
+   "text": "I’m working on a design-system adoption story. Write the narrative structure for a case study about it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-portfolio-case-studies#054",
+   "text": "Write a humble but confident summary for a design-system adoption story for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-portfolio-case-studies#055",
+   "text": "Create the visuals checklist for a museum kiosk experience. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-portfolio-case-studies#056",
+   "text": "Help me with a packaging redesign for tea: describe the process and pivots for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-portfolio-case-studies#057",
+   "text": "Write the narrative structure for a case study about a zero-to-one mobile app launch. Use a encouraging tone throughout."
+  },
+  {
+   "id": "design-portfolio-case-studies#058",
+   "text": "You are a photographer and retoucher. Write a humble but confident summary for a hackathon project turned product and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-portfolio-case-studies#059",
+   "text": "Draft the problem-and-constraints section for a data-viz dashboard for a nonprofit. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-portfolio-case-studies#060",
+   "text": "Before I start on a packaging redesign for tea, write the outcomes-with-metrics section for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-portfolio-case-studies#061",
+   "text": "Tailor the case study to a job application about a packaging redesign for tea. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-portfolio-case-studies#062",
+   "text": "Describe the process and pivots for a freelance identity for a photographer. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-portfolio-case-studies#063",
+   "text": "As a motion designer, I keep hitting the same wall with a museum kiosk experience. Write the reflection-and-next-time section for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-portfolio-case-studies#064",
+   "text": "Tailor the case study to a job application about a checkout-redesign case study. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-portfolio-case-studies#065",
+   "text": "Write the outcomes-with-metrics section for a data-viz dashboard for a nonprofit."
+  },
+  {
+   "id": "design-portfolio-case-studies#066",
+   "text": "Write the reflection-and-next-time section for a rebrand for a regional grocer. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-portfolio-case-studies#067",
+   "text": "Act as an art director. Tailor the case study to a job application about a data-viz dashboard for a nonprofit, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-portfolio-case-studies#068",
+   "text": "Write the reflection-and-next-time section for a data-viz dashboard for a nonprofit. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-portfolio-case-studies#069",
+   "text": "I’m working on a rebrand for a regional grocer. Draft the problem-and-constraints section for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-portfolio-case-studies#070",
+   "text": "Describe the process and pivots for a motion-identity for a podcast for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-portfolio-case-studies#071",
+   "text": "Tailor the case study to a job application about a hackathon project turned product. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-portfolio-case-studies#072",
+   "text": "Help me with a game-ui concept project: create the visuals checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-portfolio-case-studies#073",
+   "text": "Write the outcomes-with-metrics section for a design-system adoption story. Use a formal tone throughout."
+  },
+  {
+   "id": "design-portfolio-case-studies#074",
+   "text": "You are a product designer with systems experience. Write the reflection-and-next-time section for a design-system adoption story and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-portfolio-case-studies#075",
+   "text": "Write a humble but confident summary for a zero-to-one mobile app launch. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-portfolio-case-studies#076",
+   "text": "Before I start on a hackathon project turned product, write the narrative structure for a case study about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-portfolio-case-studies#077",
+   "text": "Write a humble but confident summary for a packaging redesign for tea. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-portfolio-case-studies#078",
+   "text": "Draft the problem-and-constraints section for a freelance identity for a photographer. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-portfolio-case-studies#079",
+   "text": "As a motion designer, I keep hitting the same wall with a game-ui concept project. Write a humble but confident summary for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-portfolio-case-studies#080",
+   "text": "Create the visuals checklist for a zero-to-one mobile app launch. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-portfolio-case-studies#081",
+   "text": "Write the narrative structure for a case study about a checkout-redesign case study."
+  },
+  {
+   "id": "design-portfolio-case-studies#082",
+   "text": "Draft the problem-and-constraints section for an accessibility remediation project. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-portfolio-case-studies#083",
+   "text": "Act as a photographer and retoucher. Create the visuals checklist for a motion-identity for a podcast, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-portfolio-case-studies#084",
+   "text": "Write the outcomes-with-metrics section for a checkout-redesign case study. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-portfolio-case-studies#085",
+   "text": "I’m working on a museum kiosk experience. Write the narrative structure for a case study about it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-portfolio-case-studies#086",
+   "text": "Write the reflection-and-next-time section for a checkout-redesign case study for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-portfolio-case-studies#087",
+   "text": "Write a humble but confident summary for a rebrand for a regional grocer. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-portfolio-case-studies#088",
+   "text": "Help me with a checkout-redesign case study: create the visuals checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-portfolio-case-studies#089",
+   "text": "Write a humble but confident summary for an accessibility remediation project. Use a direct tone throughout."
+  },
+  {
+   "id": "design-portfolio-case-studies#090",
+   "text": "You are an art director. Write the narrative structure for a case study about a motion-identity for a podcast and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-portfolio-case-studies#091",
+   "text": "Write a humble but confident summary for a museum kiosk experience. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-portfolio-case-studies#092",
+   "text": "Before I start on a motion-identity for a podcast, write a humble but confident summary for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-portfolio-case-studies#093",
+   "text": "Draft the problem-and-constraints section for a checkout-redesign case study. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-portfolio-case-studies#094",
+   "text": "Describe the process and pivots for an accessibility remediation project. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-portfolio-case-studies#095",
+   "text": "As a presentation designer, I keep hitting the same wall with a data-viz dashboard for a nonprofit. Write a humble but confident summary for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-portfolio-case-studies#096",
+   "text": "Write the narrative structure for a case study about a data-viz dashboard for a nonprofit. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-portfolio-case-studies#097",
+   "text": "Create the visuals checklist for a design-system adoption story. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-portfolio-case-studies#098",
+   "text": "Write the reflection-and-next-time section for a hackathon project turned product. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-portfolio-case-studies#099",
+   "text": "Tailor the case study to a job application about a game-ui concept project."
+  },
+  {
+   "id": "design-portfolio-case-studies#100",
+   "text": "Write the outcomes-with-metrics section for a rebrand for a regional grocer."
+  },
+  {
+   "id": "design-portfolio-case-studies#101",
+   "text": "Write the narrative structure for a case study about a rebrand for a regional grocer."
+  },
+  {
+   "id": "design-portfolio-case-studies#102",
+   "text": "Write the reflection-and-next-time section for a motion-identity for a podcast."
+  },
+  {
+   "id": "design-portfolio-case-studies#103",
+   "text": "Tailor the case study to a job application about a freelance identity for a photographer."
+  },
+  {
+   "id": "design-portfolio-case-studies#104",
+   "text": "Write the reflection-and-next-time section for a packaging redesign for tea."
+  }
+ ]
+}

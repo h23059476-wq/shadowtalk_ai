@@ -1,0 +1,430 @@
+{
+ "slug": "coding-devops-deployment",
+ "categorySlug": "coding",
+ "category": "Coding & Development",
+ "title": "DevOps & Deployment",
+ "description": "Pipelines, containers, and runbooks for calmer releases.",
+ "tags": [
+  "devops",
+  "ci/cd",
+  "infrastructure"
+ ],
+ "prompts": [
+  {
+   "id": "coding-devops-deployment#001",
+   "text": "Draft an incident-drill scenario for a monorepo CI caching strategy."
+  },
+  {
+   "id": "coding-devops-deployment#002",
+   "text": "List the observability signals to add for a backup-restore rehearsal. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-devops-deployment#003",
+   "text": "Act as a tech lead of a small team. Explain the infrastructure choices for a monorepo CI caching strategy, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-devops-deployment#004",
+   "text": "Write the runbook for a Dockerfile that builds too slowly. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-devops-deployment#005",
+   "text": "I’m working on a backup-restore rehearsal. Write a cost-optimization plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-devops-deployment#006",
+   "text": "Write a cost-optimization plan for an environment-drift audit for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-devops-deployment#007",
+   "text": "Write a cost-optimization plan for a blue-green rollout behind a load balancer. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-devops-deployment#008",
+   "text": "Help me with a Dockerfile that builds too slowly: produce a rollback plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-devops-deployment#009",
+   "text": "Write a cost-optimization plan for a zero-downtime deploy for a monolith. Use a playful tone throughout."
+  },
+  {
+   "id": "coding-devops-deployment#010",
+   "text": "You are an open-source maintainer. List the observability signals to add for a cost spike in a Kubernetes cluster and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-devops-deployment#011",
+   "text": "Draft an incident-drill scenario for a blue-green rollout behind a load balancer. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-devops-deployment#012",
+   "text": "Before I start on a log-noise reduction effort, list the observability signals to add for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-devops-deployment#013",
+   "text": "Design the pipeline stages for a monorepo CI caching strategy. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-devops-deployment#014",
+   "text": "Write a cost-optimization plan for a monorepo CI caching strategy. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-devops-deployment#015",
+   "text": "As an open-source maintainer, I keep hitting the same wall with a cross-region failover drill. Explain the infrastructure choices for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-devops-deployment#016",
+   "text": "Create a pre-deploy checklist for a cost spike in a Kubernetes cluster. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-devops-deployment#017",
+   "text": "Explain the infrastructure choices for a database migration that locks tables."
+  },
+  {
+   "id": "coding-devops-deployment#018",
+   "text": "Create a pre-deploy checklist for a cross-region failover drill. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-devops-deployment#019",
+   "text": "Act as a developer-education author. Draft an incident-drill scenario for a log-noise reduction effort, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-devops-deployment#020",
+   "text": "List the observability signals to add for a database migration that locks tables. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-devops-deployment#021",
+   "text": "I’m working on a zero-downtime deploy for a monolith. Explain the infrastructure choices for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-devops-deployment#022",
+   "text": "Draft an incident-drill scenario for a backup-restore rehearsal for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-devops-deployment#023",
+   "text": "List the observability signals to add for a cross-region failover drill. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-devops-deployment#024",
+   "text": "Help me with a log-noise reduction effort: produce a rollback plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-devops-deployment#025",
+   "text": "Write the runbook for a monorepo CI caching strategy. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-devops-deployment#026",
+   "text": "You are an open-source maintainer. Draft an incident-drill scenario for a cost spike in a Kubernetes cluster and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-devops-deployment#027",
+   "text": "Explain the infrastructure choices for a canary deployment with auto-rollback. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-devops-deployment#028",
+   "text": "Before I start on a backup-restore rehearsal, design the pipeline stages for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-devops-deployment#029",
+   "text": "Draft an incident-drill scenario for a secrets-management cleanup. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-devops-deployment#030",
+   "text": "List the observability signals to add for a blue-green rollout behind a load balancer. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-devops-deployment#031",
+   "text": "As an open-source maintainer, I keep hitting the same wall with a zero-downtime deploy for a monolith. List the observability signals to add for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-devops-deployment#032",
+   "text": "Explain the infrastructure choices for a secrets-management cleanup. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-devops-deployment#033",
+   "text": "List the observability signals to add for a canary deployment with auto-rollback."
+  },
+  {
+   "id": "coding-devops-deployment#034",
+   "text": "Produce a rollback plan for a cross-region failover drill. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-devops-deployment#035",
+   "text": "Act as a developer-education author. Explain the infrastructure choices for a cost spike in a Kubernetes cluster, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-devops-deployment#036",
+   "text": "Explain the infrastructure choices for a log-noise reduction effort. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-devops-deployment#037",
+   "text": "I’m working on a Dockerfile that builds too slowly. List the observability signals to add for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-devops-deployment#038",
+   "text": "Produce a rollback plan for a secrets-management cleanup for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-devops-deployment#039",
+   "text": "Explain the infrastructure choices for an environment-drift audit. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-devops-deployment#040",
+   "text": "Help me with a cost spike in a Kubernetes cluster: produce a rollback plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-devops-deployment#041",
+   "text": "Write a cost-optimization plan for a cross-region failover drill. Use a playful tone throughout."
+  },
+  {
+   "id": "coding-devops-deployment#042",
+   "text": "You are a staff engineer. Create a pre-deploy checklist for a zero-downtime deploy for a monolith and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-devops-deployment#043",
+   "text": "Design the pipeline stages for a cross-region failover drill. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-devops-deployment#044",
+   "text": "Before I start on a backup-restore rehearsal, produce a rollback plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-devops-deployment#045",
+   "text": "Write the runbook for a cross-region failover drill. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-devops-deployment#046",
+   "text": "Explain the infrastructure choices for a Dockerfile that builds too slowly. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-devops-deployment#047",
+   "text": "As a tech lead of a small team, I keep hitting the same wall with an environment-drift audit. Produce a rollback plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-devops-deployment#048",
+   "text": "Design the pipeline stages for a database migration that locks tables. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-devops-deployment#049",
+   "text": "Create a pre-deploy checklist for a backup-restore rehearsal."
+  },
+  {
+   "id": "coding-devops-deployment#050",
+   "text": "Produce a rollback plan for a canary deployment with auto-rollback. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-devops-deployment#051",
+   "text": "Act as a developer-education author. Design the pipeline stages for a secrets-management cleanup, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-devops-deployment#052",
+   "text": "Create a pre-deploy checklist for an environment-drift audit. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-devops-deployment#053",
+   "text": "I’m working on a database migration that locks tables. Write the runbook for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-devops-deployment#054",
+   "text": "Write the runbook for a log-noise reduction effort for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-devops-deployment#055",
+   "text": "Draft an incident-drill scenario for a canary deployment with auto-rollback. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-devops-deployment#056",
+   "text": "Help me with a zero-downtime deploy for a monolith: draft an incident-drill scenario for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-devops-deployment#057",
+   "text": "Write a cost-optimization plan for a Dockerfile that builds too slowly. Use a empathetic tone throughout."
+  },
+  {
+   "id": "coding-devops-deployment#058",
+   "text": "You are an accessibility-minded frontend engineer. Write the runbook for a backup-restore rehearsal and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-devops-deployment#059",
+   "text": "Write a cost-optimization plan for a cost spike in a Kubernetes cluster. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-devops-deployment#060",
+   "text": "Before I start on a backup-restore rehearsal, explain the infrastructure choices for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-devops-deployment#061",
+   "text": "Write the runbook for a secrets-management cleanup. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-devops-deployment#062",
+   "text": "Design the pipeline stages for a blue-green rollout behind a load balancer. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-devops-deployment#063",
+   "text": "As a staff engineer, I keep hitting the same wall with a monorepo CI caching strategy. Create a pre-deploy checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-devops-deployment#064",
+   "text": "List the observability signals to add for an environment-drift audit. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-devops-deployment#065",
+   "text": "Produce a rollback plan for a zero-downtime deploy for a monolith."
+  },
+  {
+   "id": "coding-devops-deployment#066",
+   "text": "Produce a rollback plan for a monorepo CI caching strategy. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-devops-deployment#067",
+   "text": "Act as a tech lead of a small team. Create a pre-deploy checklist for a canary deployment with auto-rollback, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-devops-deployment#068",
+   "text": "Write a cost-optimization plan for a database migration that locks tables. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-devops-deployment#069",
+   "text": "I’m working on a secrets-management cleanup. Write a cost-optimization plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-devops-deployment#070",
+   "text": "Write a cost-optimization plan for a log-noise reduction effort for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-devops-deployment#071",
+   "text": "Write the runbook for a zero-downtime deploy for a monolith. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-devops-deployment#072",
+   "text": "Help me with a blue-green rollout behind a load balancer: produce a rollback plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-devops-deployment#073",
+   "text": "Create a pre-deploy checklist for a secrets-management cleanup. Use a direct tone throughout."
+  },
+  {
+   "id": "coding-devops-deployment#074",
+   "text": "You are an open-source maintainer. List the observability signals to add for a secrets-management cleanup and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-devops-deployment#075",
+   "text": "Write the runbook for an environment-drift audit. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-devops-deployment#076",
+   "text": "Before I start on a canary deployment with auto-rollback, write the runbook for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-devops-deployment#077",
+   "text": "Write the runbook for a blue-green rollout behind a load balancer. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-devops-deployment#078",
+   "text": "Draft an incident-drill scenario for an environment-drift audit. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-devops-deployment#079",
+   "text": "As a staff engineer, I keep hitting the same wall with a canary deployment with auto-rollback. Write a cost-optimization plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-devops-deployment#080",
+   "text": "Draft an incident-drill scenario for a database migration that locks tables. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-devops-deployment#081",
+   "text": "Draft an incident-drill scenario for a cross-region failover drill."
+  },
+  {
+   "id": "coding-devops-deployment#082",
+   "text": "Produce a rollback plan for a database migration that locks tables. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-devops-deployment#083",
+   "text": "Act as a developer-education author. Write the runbook for a cost spike in a Kubernetes cluster, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-devops-deployment#084",
+   "text": "Design the pipeline stages for a log-noise reduction effort. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-devops-deployment#085",
+   "text": "I’m working on a log-noise reduction effort. Create a pre-deploy checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-devops-deployment#086",
+   "text": "Draft an incident-drill scenario for a Dockerfile that builds too slowly for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-devops-deployment#087",
+   "text": "Design the pipeline stages for a canary deployment with auto-rollback. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-devops-deployment#088",
+   "text": "Help me with a Dockerfile that builds too slowly: create a pre-deploy checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-devops-deployment#089",
+   "text": "Create a pre-deploy checklist for a database migration that locks tables. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-devops-deployment#090",
+   "text": "You are a staff engineer. Design the pipeline stages for a zero-downtime deploy for a monolith and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-devops-deployment#091",
+   "text": "Design the pipeline stages for an environment-drift audit. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-devops-deployment#092",
+   "text": "Before I start on a blue-green rollout behind a load balancer, explain the infrastructure choices for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-devops-deployment#093",
+   "text": "Create a pre-deploy checklist for a blue-green rollout behind a load balancer. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-devops-deployment#094",
+   "text": "Design the pipeline stages for a cost spike in a Kubernetes cluster. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-devops-deployment#095",
+   "text": "As an accessibility-minded frontend engineer, I keep hitting the same wall with a Dockerfile that builds too slowly. Design the pipeline stages for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-devops-deployment#096",
+   "text": "List the observability signals to add for a monorepo CI caching strategy. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-devops-deployment#097",
+   "text": "Draft an incident-drill scenario for a monorepo CI caching strategy. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-devops-deployment#098",
+   "text": "List the observability signals to add for a backup-restore rehearsal. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-devops-deployment#099",
+   "text": "Explain the infrastructure choices for a monorepo CI caching strategy."
+  },
+  {
+   "id": "coding-devops-deployment#100",
+   "text": "Write the runbook for a Dockerfile that builds too slowly."
+  },
+  {
+   "id": "coding-devops-deployment#101",
+   "text": "Write a cost-optimization plan for a backup-restore rehearsal."
+  },
+  {
+   "id": "coding-devops-deployment#102",
+   "text": "Write a cost-optimization plan for an environment-drift audit."
+  },
+  {
+   "id": "coding-devops-deployment#103",
+   "text": "Write a cost-optimization plan for a blue-green rollout behind a load balancer."
+  },
+  {
+   "id": "coding-devops-deployment#104",
+   "text": "Produce a rollback plan for a Dockerfile that builds too slowly."
+  }
+ ]
+}

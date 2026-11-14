@@ -1,0 +1,430 @@
+{
+ "slug": "coding-learning-docs",
+ "categorySlug": "coding",
+ "category": "Coding & Development",
+ "title": "Learning & Docs",
+ "description": "Learn a new stack or write the docs that teach it.",
+ "tags": [
+  "learning",
+  "docs",
+  "onboarding"
+ ],
+ "prompts": [
+  {
+   "id": "coding-learning-docs#001",
+   "text": "Write a cheat-sheet for a mental model for async/await."
+  },
+  {
+   "id": "coding-learning-docs#002",
+   "text": "Write a cheat-sheet for understanding Kubernetes for a small team. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-learning-docs#003",
+   "text": "Act as a staff engineer. Map prerequisites and gaps for learning functional patterns in TypeScript, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-learning-docs#004",
+   "text": "List the common misconceptions about understanding git rebase workflows. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-learning-docs#005",
+   "text": "I’m working on a mental model for async/await. Create a practice-project ladder for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-learning-docs#006",
+   "text": "Create a practice-project ladder for learning regex without guessing for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-learning-docs#007",
+   "text": "Draft a teach-back exercise for learning functional patterns in TypeScript. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-learning-docs#008",
+   "text": "Help me with grokking event-driven architecture: write a cheat-sheet for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-learning-docs#009",
+   "text": "Map prerequisites and gaps for a mental model for async/await. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-learning-docs#010",
+   "text": "You are a platform engineer. Create a practice-project ladder for a study path for machine-learning basics and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-learning-docs#011",
+   "text": "Design spaced-repetition prompts for understanding cryptographic signing in practice. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-learning-docs#012",
+   "text": "Before I start on a first project plan for WebGL, map prerequisites and gaps for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-learning-docs#013",
+   "text": "Write a cheat-sheet for a study path for machine-learning basics. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-learning-docs#014",
+   "text": "Draft a teach-back exercise for understanding Kubernetes for a small team. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-learning-docs#015",
+   "text": "As a tech lead of a small team, I keep hitting the same wall with learning functional patterns in TypeScript. List the common misconceptions about it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-learning-docs#016",
+   "text": "Design spaced-repetition prompts for learning regex without guessing. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-learning-docs#017",
+   "text": "Write a cheat-sheet for learning functional patterns in TypeScript."
+  },
+  {
+   "id": "coding-learning-docs#018",
+   "text": "Build a four-week learning plan for learning Rust after a decade of Python. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-learning-docs#019",
+   "text": "Act as a staff engineer. Design spaced-repetition prompts for learning functional patterns in TypeScript, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-learning-docs#020",
+   "text": "Map prerequisites and gaps for understanding cryptographic signing in practice. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-learning-docs#021",
+   "text": "I’m working on reading an unfamiliar legacy codebase. Draft a teach-back exercise for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-learning-docs#022",
+   "text": "Design spaced-repetition prompts for learning Rust after a decade of Python for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-learning-docs#023",
+   "text": "Map prerequisites and gaps for a study path for machine-learning basics. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-learning-docs#024",
+   "text": "Help me with reading an unfamiliar legacy codebase: design spaced-repetition prompts for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-learning-docs#025",
+   "text": "Map prerequisites and gaps for understanding Kubernetes for a small team. Use a friendly tone throughout."
+  },
+  {
+   "id": "coding-learning-docs#026",
+   "text": "You are a site-reliability engineer. Design spaced-repetition prompts for understanding HTTP caching properly and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-learning-docs#027",
+   "text": "Map prerequisites and gaps for understanding HTTP caching properly. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-learning-docs#028",
+   "text": "Before I start on a mental model for async/await, build a four-week learning plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-learning-docs#029",
+   "text": "Build a four-week learning plan for grokking event-driven architecture. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-learning-docs#030",
+   "text": "Create a practice-project ladder for a first project plan for WebGL. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-learning-docs#031",
+   "text": "As a tech lead of a small team, I keep hitting the same wall with understanding git rebase workflows. Draft a teach-back exercise for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-learning-docs#032",
+   "text": "Design spaced-repetition prompts for a study path for machine-learning basics. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-learning-docs#033",
+   "text": "Create a practice-project ladder for grokking event-driven architecture."
+  },
+  {
+   "id": "coding-learning-docs#034",
+   "text": "Write a cheat-sheet for understanding cryptographic signing in practice. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-learning-docs#035",
+   "text": "Act as a platform engineer. Write a cheat-sheet for reading an unfamiliar legacy codebase, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-learning-docs#036",
+   "text": "Build a four-week learning plan for understanding Kubernetes for a small team. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-learning-docs#037",
+   "text": "I’m working on understanding git rebase workflows. Create a practice-project ladder for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-learning-docs#038",
+   "text": "Explain with a mental model and analogies a first project plan for WebGL for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-learning-docs#039",
+   "text": "Build a four-week learning plan for a first project plan for WebGL. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-learning-docs#040",
+   "text": "Help me with a mental model for async/await: design spaced-repetition prompts for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-learning-docs#041",
+   "text": "Explain with a mental model and analogies a study path for machine-learning basics. Use a professional tone throughout."
+  },
+  {
+   "id": "coding-learning-docs#042",
+   "text": "You are an accessibility-minded frontend engineer. Map prerequisites and gaps for understanding git rebase workflows and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-learning-docs#043",
+   "text": "List the common misconceptions about a first project plan for WebGL. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-learning-docs#044",
+   "text": "Before I start on a mental model for async/await, explain with a mental model and analogies it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-learning-docs#045",
+   "text": "Design spaced-repetition prompts for understanding git rebase workflows. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-learning-docs#046",
+   "text": "List the common misconceptions about learning regex without guessing. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-learning-docs#047",
+   "text": "As an accessibility-minded frontend engineer, I keep hitting the same wall with understanding HTTP caching properly. Explain with a mental model and analogies it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-learning-docs#048",
+   "text": "Create a practice-project ladder for understanding cryptographic signing in practice. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-learning-docs#049",
+   "text": "Create a practice-project ladder for learning functional patterns in TypeScript."
+  },
+  {
+   "id": "coding-learning-docs#050",
+   "text": "Design spaced-repetition prompts for understanding Kubernetes for a small team. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-learning-docs#051",
+   "text": "Act as an open-source maintainer. Create a practice-project ladder for understanding Kubernetes for a small team, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-learning-docs#052",
+   "text": "Explain with a mental model and analogies understanding cryptographic signing in practice. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-learning-docs#053",
+   "text": "I’m working on reading an unfamiliar legacy codebase. Build a four-week learning plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-learning-docs#054",
+   "text": "List the common misconceptions about a study path for machine-learning basics for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-learning-docs#055",
+   "text": "Design spaced-repetition prompts for a first project plan for WebGL. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-learning-docs#056",
+   "text": "Help me with grokking event-driven architecture: design spaced-repetition prompts for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-learning-docs#057",
+   "text": "Map prerequisites and gaps for learning Rust after a decade of Python. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-learning-docs#058",
+   "text": "You are a tech lead of a small team. List the common misconceptions about understanding Kubernetes for a small team and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-learning-docs#059",
+   "text": "List the common misconceptions about learning Rust after a decade of Python. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-learning-docs#060",
+   "text": "Before I start on understanding git rebase workflows, write a cheat-sheet for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-learning-docs#061",
+   "text": "Explain with a mental model and analogies understanding Kubernetes for a small team. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-learning-docs#062",
+   "text": "Draft a teach-back exercise for understanding HTTP caching properly. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-learning-docs#063",
+   "text": "As a tech lead of a small team, I keep hitting the same wall with grokking event-driven architecture. Map prerequisites and gaps for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-learning-docs#064",
+   "text": "Create a practice-project ladder for learning Rust after a decade of Python. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-learning-docs#065",
+   "text": "Draft a teach-back exercise for learning Rust after a decade of Python."
+  },
+  {
+   "id": "coding-learning-docs#066",
+   "text": "Map prerequisites and gaps for reading an unfamiliar legacy codebase. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-learning-docs#067",
+   "text": "Act as a staff engineer. Build a four-week learning plan for learning functional patterns in TypeScript, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-learning-docs#068",
+   "text": "List the common misconceptions about understanding cryptographic signing in practice. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-learning-docs#069",
+   "text": "I’m working on understanding HTTP caching properly. Create a practice-project ladder for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-learning-docs#070",
+   "text": "Write a cheat-sheet for learning Rust after a decade of Python for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-learning-docs#071",
+   "text": "Explain with a mental model and analogies learning Rust after a decade of Python. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-learning-docs#072",
+   "text": "Help me with a first project plan for WebGL: draft a teach-back exercise for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-learning-docs#073",
+   "text": "List the common misconceptions about grokking event-driven architecture. Use a persuasive tone throughout."
+  },
+  {
+   "id": "coding-learning-docs#074",
+   "text": "You are an accessibility-minded frontend engineer. Explain with a mental model and analogies understanding git rebase workflows and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-learning-docs#075",
+   "text": "Explain with a mental model and analogies learning functional patterns in TypeScript. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-learning-docs#076",
+   "text": "Before I start on understanding HTTP caching properly, list the common misconceptions about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-learning-docs#077",
+   "text": "Write a cheat-sheet for a first project plan for WebGL. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-learning-docs#078",
+   "text": "Explain with a mental model and analogies reading an unfamiliar legacy codebase. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-learning-docs#079",
+   "text": "As a code reviewer on a large codebase, I keep hitting the same wall with learning regex without guessing. Explain with a mental model and analogies it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-learning-docs#080",
+   "text": "Build a four-week learning plan for understanding git rebase workflows. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-learning-docs#081",
+   "text": "Draft a teach-back exercise for a study path for machine-learning basics."
+  },
+  {
+   "id": "coding-learning-docs#082",
+   "text": "Draft a teach-back exercise for grokking event-driven architecture. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-learning-docs#083",
+   "text": "Act as an accessibility-minded frontend engineer. Draft a teach-back exercise for understanding cryptographic signing in practice, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-learning-docs#084",
+   "text": "Draft a teach-back exercise for learning regex without guessing. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-learning-docs#085",
+   "text": "I’m working on a study path for machine-learning basics. Build a four-week learning plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-learning-docs#086",
+   "text": "Map prerequisites and gaps for learning regex without guessing for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-learning-docs#087",
+   "text": "Explain with a mental model and analogies grokking event-driven architecture. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-learning-docs#088",
+   "text": "Help me with learning regex without guessing: write a cheat-sheet for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-learning-docs#089",
+   "text": "Build a four-week learning plan for learning regex without guessing. Use a encouraging tone throughout."
+  },
+  {
+   "id": "coding-learning-docs#090",
+   "text": "You are a code reviewer on a large codebase. Draft a teach-back exercise for a mental model for async/await and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-learning-docs#091",
+   "text": "Build a four-week learning plan for understanding cryptographic signing in practice. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-learning-docs#092",
+   "text": "Before I start on understanding HTTP caching properly, build a four-week learning plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-learning-docs#093",
+   "text": "List the common misconceptions about a mental model for async/await. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-learning-docs#094",
+   "text": "Create a practice-project ladder for reading an unfamiliar legacy codebase. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-learning-docs#095",
+   "text": "As an open-source maintainer, I keep hitting the same wall with reading an unfamiliar legacy codebase. List the common misconceptions about it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-learning-docs#096",
+   "text": "Write a cheat-sheet for understanding HTTP caching properly. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-learning-docs#097",
+   "text": "Write a cheat-sheet for a mental model for async/await. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-learning-docs#098",
+   "text": "Write a cheat-sheet for understanding Kubernetes for a small team. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-learning-docs#099",
+   "text": "Map prerequisites and gaps for learning functional patterns in TypeScript."
+  },
+  {
+   "id": "coding-learning-docs#100",
+   "text": "List the common misconceptions about understanding git rebase workflows."
+  },
+  {
+   "id": "coding-learning-docs#101",
+   "text": "Create a practice-project ladder for a mental model for async/await."
+  },
+  {
+   "id": "coding-learning-docs#102",
+   "text": "Create a practice-project ladder for learning regex without guessing."
+  },
+  {
+   "id": "coding-learning-docs#103",
+   "text": "Draft a teach-back exercise for learning functional patterns in TypeScript."
+  },
+  {
+   "id": "coding-learning-docs#104",
+   "text": "Write a cheat-sheet for grokking event-driven architecture."
+  }
+ ]
+}

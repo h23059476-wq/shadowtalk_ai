@@ -1,0 +1,430 @@
+{
+ "slug": "social-crisis-etiquette",
+ "categorySlug": "social",
+ "category": "Social Media",
+ "title": "Crisis & Etiquette",
+ "description": "Say the hard thing online without making it worse.",
+ "tags": [
+  "crisis",
+  "etiquette",
+  "response"
+ ],
+ "prompts": [
+  {
+   "id": "social-crisis-etiquette#001",
+   "text": "Write the follow-up explanation post for a misinfo wave about your product."
+  },
+  {
+   "id": "social-crisis-etiquette#002",
+   "text": "Write the follow-up explanation post for an employee tweet that misspoke. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-crisis-etiquette#003",
+   "text": "Act as a short-video strategist. Write the follow-up explanation post for a product-recall announcement, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-crisis-etiquette#004",
+   "text": "Write the recovery-content plan after a buggy update on launch day. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-crisis-etiquette#005",
+   "text": "I’m working on an employee tweet that misspoke. Write the recovery-content plan after it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-crisis-etiquette#006",
+   "text": "Create the do-not-say list for a misinfo wave about your product for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-crisis-etiquette#007",
+   "text": "Design a monitoring-and-escalation plan for a partnership that ended badly going public. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-crisis-etiquette#008",
+   "text": "Help me with a wrong-order viral complaint: draft a customer-compensation note for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-crisis-etiquette#009",
+   "text": "Create the do-not-say list for a public feud with a competitor. Use a encouraging tone throughout."
+  },
+  {
+   "id": "social-crisis-etiquette#010",
+   "text": "You are a social media manager. Draft a customer-compensation note for a product-recall announcement and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-crisis-etiquette#011",
+   "text": "Write the follow-up explanation post for a data-breach first statement. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-crisis-etiquette#012",
+   "text": "Before I start on a wrong-order viral complaint, create the do-not-say list for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-crisis-etiquette#013",
+   "text": "Draft a customer-compensation note for a public feud with a competitor. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-crisis-etiquette#014",
+   "text": "Create the do-not-say list for a parody account confusing customers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-crisis-etiquette#015",
+   "text": "As a customer-support voice, I keep hitting the same wall with a partnership that ended badly going public. Write the recovery-content plan after it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-crisis-etiquette#016",
+   "text": "Role-play the hardest reply to a public feud with a competitor. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-crisis-etiquette#017",
+   "text": "Write the recovery-content plan after a misinfo wave about your product."
+  },
+  {
+   "id": "social-crisis-etiquette#018",
+   "text": "Draft a customer-compensation note for a delayed-refund pile-on. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-crisis-etiquette#019",
+   "text": "Act as a community manager. Draft a customer-compensation note for a review-bomb after a policy change, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-crisis-etiquette#020",
+   "text": "Script internal guidance for staff replies during a wrong-order viral complaint. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-crisis-etiquette#021",
+   "text": "I’m working on a wrong-order viral complaint. Write the recovery-content plan after it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-crisis-etiquette#022",
+   "text": "Draft a first-response holding statement for a buggy update on launch day for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-crisis-etiquette#023",
+   "text": "Draft a first-response holding statement for a partnership that ended badly going public. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-crisis-etiquette#024",
+   "text": "Help me with a public feud with a competitor: design a monitoring-and-escalation plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-crisis-etiquette#025",
+   "text": "Script internal guidance for staff replies during an insensitive scheduled post during a tragedy. Use a formal tone throughout."
+  },
+  {
+   "id": "social-crisis-etiquette#026",
+   "text": "You are a creator-economy analyst. Design a monitoring-and-escalation plan for a review-bomb after a policy change and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-crisis-etiquette#027",
+   "text": "Draft a first-response holding statement for an employee tweet that misspoke. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-crisis-etiquette#028",
+   "text": "Before I start on an employee tweet that misspoke, draft a customer-compensation note for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-crisis-etiquette#029",
+   "text": "Script internal guidance for staff replies during an employee tweet that misspoke. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-crisis-etiquette#030",
+   "text": "Write the follow-up explanation post for an insensitive scheduled post during a tragedy. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-crisis-etiquette#031",
+   "text": "As a community manager, I keep hitting the same wall with an employee tweet that misspoke. Design a monitoring-and-escalation plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-crisis-etiquette#032",
+   "text": "Script internal guidance for staff replies during a delayed-refund pile-on. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-crisis-etiquette#033",
+   "text": "Draft a first-response holding statement for an insensitive scheduled post during a tragedy."
+  },
+  {
+   "id": "social-crisis-etiquette#034",
+   "text": "Write the recovery-content plan after an insensitive scheduled post during a tragedy. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-crisis-etiquette#035",
+   "text": "Act as a local-business owner. Draft a first-response holding statement for a misinfo wave about your product, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-crisis-etiquette#036",
+   "text": "Role-play the hardest reply to a product-recall announcement. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-crisis-etiquette#037",
+   "text": "I’m working on a buggy update on launch day. Role-play the hardest reply to it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-crisis-etiquette#038",
+   "text": "Create the do-not-say list for a partnership that ended badly going public for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-crisis-etiquette#039",
+   "text": "Role-play the hardest reply to a data-breach first statement. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-crisis-etiquette#040",
+   "text": "Help me with an insensitive scheduled post during a tragedy: draft a customer-compensation note for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-crisis-etiquette#041",
+   "text": "Role-play the hardest reply to a wrong-order viral complaint. Use a playful tone throughout."
+  },
+  {
+   "id": "social-crisis-etiquette#042",
+   "text": "You are a local-business owner. Role-play the hardest reply to a parody account confusing customers and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-crisis-etiquette#043",
+   "text": "Draft a customer-compensation note for a data-breach first statement. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-crisis-etiquette#044",
+   "text": "Before I start on a review-bomb after a policy change, draft a first-response holding statement for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-crisis-etiquette#045",
+   "text": "Write the recovery-content plan after a delayed-refund pile-on. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-crisis-etiquette#046",
+   "text": "Script internal guidance for staff replies during a parody account confusing customers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-crisis-etiquette#047",
+   "text": "As a creator-economy analyst, I keep hitting the same wall with a parody account confusing customers. Draft a first-response holding statement for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-crisis-etiquette#048",
+   "text": "Script internal guidance for staff replies during a buggy update on launch day. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-crisis-etiquette#049",
+   "text": "Write the follow-up explanation post for a delayed-refund pile-on."
+  },
+  {
+   "id": "social-crisis-etiquette#050",
+   "text": "Design a monitoring-and-escalation plan for a delayed-refund pile-on. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-crisis-etiquette#051",
+   "text": "Act as a customer-support voice. Role-play the hardest reply to an employee tweet that misspoke, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-crisis-etiquette#052",
+   "text": "Create the do-not-say list for a review-bomb after a policy change. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-crisis-etiquette#053",
+   "text": "I’m working on a wrong-order viral complaint. Write the follow-up explanation post for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-crisis-etiquette#054",
+   "text": "Design a monitoring-and-escalation plan for a parody account confusing customers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-crisis-etiquette#055",
+   "text": "Script internal guidance for staff replies during a data-breach first statement. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-crisis-etiquette#056",
+   "text": "Help me with a data-breach first statement: create the do-not-say list for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-crisis-etiquette#057",
+   "text": "Design a monitoring-and-escalation plan for a data-breach first statement. Use a playful tone throughout."
+  },
+  {
+   "id": "social-crisis-etiquette#058",
+   "text": "You are a social media manager. Create the do-not-say list for a product-recall announcement and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-crisis-etiquette#059",
+   "text": "Draft a customer-compensation note for a buggy update on launch day. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-crisis-etiquette#060",
+   "text": "Before I start on an insensitive scheduled post during a tragedy, design a monitoring-and-escalation plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-crisis-etiquette#061",
+   "text": "Design a monitoring-and-escalation plan for a buggy update on launch day. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-crisis-etiquette#062",
+   "text": "Draft a customer-compensation note for a parody account confusing customers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-crisis-etiquette#063",
+   "text": "As a community manager, I keep hitting the same wall with an employee tweet that misspoke. Create the do-not-say list for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-crisis-etiquette#064",
+   "text": "Script internal guidance for staff replies during a public feud with a competitor. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-crisis-etiquette#065",
+   "text": "Draft a first-response holding statement for a public feud with a competitor."
+  },
+  {
+   "id": "social-crisis-etiquette#066",
+   "text": "Write the follow-up explanation post for a partnership that ended badly going public. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-crisis-etiquette#067",
+   "text": "Act as a short-video strategist. Draft a first-response holding statement for a product-recall announcement, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-crisis-etiquette#068",
+   "text": "Draft a first-response holding statement for a wrong-order viral complaint. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-crisis-etiquette#069",
+   "text": "I’m working on a parody account confusing customers. Write the follow-up explanation post for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-crisis-etiquette#070",
+   "text": "Create the do-not-say list for a buggy update on launch day for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-crisis-etiquette#071",
+   "text": "Write the recovery-content plan after a product-recall announcement. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-crisis-etiquette#072",
+   "text": "Help me with a misinfo wave about your product: draft a customer-compensation note for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-crisis-etiquette#073",
+   "text": "Draft a first-response holding statement for a delayed-refund pile-on. Use a professional tone throughout."
+  },
+  {
+   "id": "social-crisis-etiquette#074",
+   "text": "You are a community manager. Create the do-not-say list for an insensitive scheduled post during a tragedy and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-crisis-etiquette#075",
+   "text": "Role-play the hardest reply to a delayed-refund pile-on. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-crisis-etiquette#076",
+   "text": "Before I start on a partnership that ended badly going public, draft a customer-compensation note for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-crisis-etiquette#077",
+   "text": "Write the recovery-content plan after a review-bomb after a policy change. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-crisis-etiquette#078",
+   "text": "Role-play the hardest reply to a review-bomb after a policy change. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-crisis-etiquette#079",
+   "text": "As a local-business owner, I keep hitting the same wall with a data-breach first statement. Write the recovery-content plan after it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-crisis-etiquette#080",
+   "text": "Write the recovery-content plan after a parody account confusing customers. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-crisis-etiquette#081",
+   "text": "Write the follow-up explanation post for a review-bomb after a policy change."
+  },
+  {
+   "id": "social-crisis-etiquette#082",
+   "text": "Role-play the hardest reply to a misinfo wave about your product. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-crisis-etiquette#083",
+   "text": "Act as a short-video strategist. Script internal guidance for staff replies during a product-recall announcement, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-crisis-etiquette#084",
+   "text": "Write the follow-up explanation post for a buggy update on launch day. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-crisis-etiquette#085",
+   "text": "I’m working on a review-bomb after a policy change. Script internal guidance for staff replies during it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-crisis-etiquette#086",
+   "text": "Design a monitoring-and-escalation plan for a misinfo wave about your product for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-crisis-etiquette#087",
+   "text": "Role-play the hardest reply to an insensitive scheduled post during a tragedy. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-crisis-etiquette#088",
+   "text": "Help me with a misinfo wave about your product: script internal guidance for staff replies during it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-crisis-etiquette#089",
+   "text": "Design a monitoring-and-escalation plan for a wrong-order viral complaint. Use a playful tone throughout."
+  },
+  {
+   "id": "social-crisis-etiquette#090",
+   "text": "You are a personal-branding coach. Write the follow-up explanation post for a public feud with a competitor and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-crisis-etiquette#091",
+   "text": "Design a monitoring-and-escalation plan for a product-recall announcement. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-crisis-etiquette#092",
+   "text": "Before I start on a partnership that ended badly going public, script internal guidance for staff replies during it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-crisis-etiquette#093",
+   "text": "Create the do-not-say list for a delayed-refund pile-on. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-crisis-etiquette#094",
+   "text": "Role-play the hardest reply to a partnership that ended badly going public. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-crisis-etiquette#095",
+   "text": "As a local-business owner, I keep hitting the same wall with a data-breach first statement. Draft a first-response holding statement for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-crisis-etiquette#096",
+   "text": "Write the recovery-content plan after a public feud with a competitor. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-crisis-etiquette#097",
+   "text": "Write the follow-up explanation post for a misinfo wave about your product. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-crisis-etiquette#098",
+   "text": "Write the follow-up explanation post for an employee tweet that misspoke. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-crisis-etiquette#099",
+   "text": "Write the follow-up explanation post for a product-recall announcement."
+  },
+  {
+   "id": "social-crisis-etiquette#100",
+   "text": "Write the recovery-content plan after a buggy update on launch day."
+  },
+  {
+   "id": "social-crisis-etiquette#101",
+   "text": "Write the recovery-content plan after an employee tweet that misspoke."
+  },
+  {
+   "id": "social-crisis-etiquette#102",
+   "text": "Create the do-not-say list for a misinfo wave about your product."
+  },
+  {
+   "id": "social-crisis-etiquette#103",
+   "text": "Design a monitoring-and-escalation plan for a partnership that ended badly going public."
+  },
+  {
+   "id": "social-crisis-etiquette#104",
+   "text": "Draft a customer-compensation note for a wrong-order viral complaint."
+  }
+ ]
+}

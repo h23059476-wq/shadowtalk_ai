@@ -1,0 +1,430 @@
+{
+ "slug": "design-product-design",
+ "categorySlug": "design",
+ "category": "Design & Visual",
+ "title": "Product Design",
+ "description": "Feature specs, journeys, and prototypes worth building.",
+ "tags": [
+  "product",
+  "spec",
+  "journey"
+ ],
+ "prompts": [
+  {
+   "id": "design-product-design#001",
+   "text": "List edge cases and failure states for a sleep-tracking wind-down flow."
+  },
+  {
+   "id": "design-product-design#002",
+   "text": "Draft the experiment design for a family-shared shopping list. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-product-design#003",
+   "text": "Act as an art director. Write the accessibility requirements for a translation toggle in a travel app, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-product-design#004",
+   "text": "Define the success metrics for a saved-cards wallet for a checkout app. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-product-design#005",
+   "text": "I’m working on a ticket-swap feature for events. Design the first-run experience for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-product-design#006",
+   "text": "Write the accessibility requirements for a learning streak system for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-product-design#007",
+   "text": "Design the first-run experience for a collaborative playlist feature. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-product-design#008",
+   "text": "Help me with a ticket-swap feature for events: list edge cases and failure states for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-product-design#009",
+   "text": "Design the first-run experience for an offline mode for a note app. Use a formal tone throughout."
+  },
+  {
+   "id": "design-product-design#010",
+   "text": "You are a product designer with systems experience. Write a one-page product spec for a marketplace seller dashboard and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-product-design#011",
+   "text": "Propose a prototype plan for a sleep-tracking wind-down flow. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-product-design#012",
+   "text": "Before I start on a saved-cards wallet for a checkout app, write a one-page product spec for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-product-design#013",
+   "text": "Define the success metrics for a family-shared shopping list. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-product-design#014",
+   "text": "Map the end-to-end journey for an offline mode for a note app. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-product-design#015",
+   "text": "As a presentation designer, I keep hitting the same wall with a translation toggle in a travel app. Draft the experiment design for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-product-design#016",
+   "text": "Write the accessibility requirements for a marketplace seller dashboard. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-product-design#017",
+   "text": "Write the accessibility requirements for a scheduling assistant for clinics."
+  },
+  {
+   "id": "design-product-design#018",
+   "text": "List edge cases and failure states for a saved-cards wallet for a checkout app. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-product-design#019",
+   "text": "Act as a product designer with systems experience. List edge cases and failure states for a bill-splitting flow for roommates, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-product-design#020",
+   "text": "Design the first-run experience for a bill-splitting flow for roommates. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-product-design#021",
+   "text": "I’m working on a plant-care reminder app. Draft the experiment design for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-product-design#022",
+   "text": "List edge cases and failure states for a collaborative playlist feature for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-product-design#023",
+   "text": "Write a one-page product spec for a learning streak system. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-product-design#024",
+   "text": "Help me with a ticket-swap feature for events: write the accessibility requirements for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-product-design#025",
+   "text": "Map the end-to-end journey for a bill-splitting flow for roommates. Use a empathetic tone throughout."
+  },
+  {
+   "id": "design-product-design#026",
+   "text": "You are a product designer with systems experience. List edge cases and failure states for an offline mode for a note app and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-product-design#027",
+   "text": "Map the end-to-end journey for a ticket-swap feature for events. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-product-design#028",
+   "text": "Before I start on a saved-cards wallet for a checkout app, design the first-run experience for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-product-design#029",
+   "text": "Map the end-to-end journey for a collaborative playlist feature. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-product-design#030",
+   "text": "Propose a prototype plan for a learning streak system. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-product-design#031",
+   "text": "As a product designer with systems experience, I keep hitting the same wall with a saved-cards wallet for a checkout app. Propose a prototype plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-product-design#032",
+   "text": "Write the accessibility requirements for a collaborative playlist feature. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-product-design#033",
+   "text": "Propose a prototype plan for a marketplace seller dashboard."
+  },
+  {
+   "id": "design-product-design#034",
+   "text": "Write a one-page product spec for a collaborative playlist feature. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-product-design#035",
+   "text": "Act as a presentation designer. Propose a prototype plan for a ticket-swap feature for events, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-product-design#036",
+   "text": "Map the end-to-end journey for a translation toggle in a travel app. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-product-design#037",
+   "text": "I’m working on a scheduling assistant for clinics. Draft the experiment design for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-product-design#038",
+   "text": "Propose a prototype plan for an offline mode for a note app for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-product-design#039",
+   "text": "Define the success metrics for an offline mode for a note app. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-product-design#040",
+   "text": "Help me with a plant-care reminder app: write the accessibility requirements for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-product-design#041",
+   "text": "Define the success metrics for a scheduling assistant for clinics. Use a persuasive tone throughout."
+  },
+  {
+   "id": "design-product-design#042",
+   "text": "You are a product designer with systems experience. Define the success metrics for a marketplace seller dashboard and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-product-design#043",
+   "text": "Draft the experiment design for a saved-cards wallet for a checkout app. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-product-design#044",
+   "text": "Before I start on a plant-care reminder app, design the first-run experience for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-product-design#045",
+   "text": "Map the end-to-end journey for a family-shared shopping list. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-product-design#046",
+   "text": "Write the accessibility requirements for a sleep-tracking wind-down flow. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-product-design#047",
+   "text": "As a design-systems maintainer, I keep hitting the same wall with a scheduling assistant for clinics. Design the first-run experience for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-product-design#048",
+   "text": "Define the success metrics for a bill-splitting flow for roommates. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-product-design#049",
+   "text": "Define the success metrics for a learning streak system."
+  },
+  {
+   "id": "design-product-design#050",
+   "text": "Define the success metrics for a collaborative playlist feature. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-product-design#051",
+   "text": "Act as a product designer with systems experience. Draft the experiment design for a bill-splitting flow for roommates, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-product-design#052",
+   "text": "Map the end-to-end journey for a learning streak system. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-product-design#053",
+   "text": "I’m working on a sleep-tracking wind-down flow. Design the first-run experience for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-product-design#054",
+   "text": "Propose a prototype plan for a bill-splitting flow for roommates for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-product-design#055",
+   "text": "Draft the experiment design for a ticket-swap feature for events. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-product-design#056",
+   "text": "Help me with a saved-cards wallet for a checkout app: write the accessibility requirements for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-product-design#057",
+   "text": "Propose a prototype plan for a translation toggle in a travel app. Use a direct tone throughout."
+  },
+  {
+   "id": "design-product-design#058",
+   "text": "You are a design-systems maintainer. Propose a prototype plan for a plant-care reminder app and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-product-design#059",
+   "text": "Write a one-page product spec for an offline mode for a note app. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-product-design#060",
+   "text": "Before I start on a scheduling assistant for clinics, propose a prototype plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-product-design#061",
+   "text": "List edge cases and failure states for a scheduling assistant for clinics. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-product-design#062",
+   "text": "Map the end-to-end journey for a scheduling assistant for clinics. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-product-design#063",
+   "text": "As a creative director, I keep hitting the same wall with a family-shared shopping list. Design the first-run experience for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-product-design#064",
+   "text": "Propose a prototype plan for a family-shared shopping list. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-product-design#065",
+   "text": "Map the end-to-end journey for a saved-cards wallet for a checkout app."
+  },
+  {
+   "id": "design-product-design#066",
+   "text": "Map the end-to-end journey for a sleep-tracking wind-down flow. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-product-design#067",
+   "text": "Act as a presentation designer. List edge cases and failure states for a learning streak system, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-product-design#068",
+   "text": "Draft the experiment design for a collaborative playlist feature. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-product-design#069",
+   "text": "I’m working on a marketplace seller dashboard. Draft the experiment design for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-product-design#070",
+   "text": "Draft the experiment design for an offline mode for a note app for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-product-design#071",
+   "text": "List edge cases and failure states for a family-shared shopping list. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-product-design#072",
+   "text": "Help me with a ticket-swap feature for events: write a one-page product spec for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-product-design#073",
+   "text": "Write the accessibility requirements for a family-shared shopping list. Use a playful tone throughout."
+  },
+  {
+   "id": "design-product-design#074",
+   "text": "You are a motion designer. Define the success metrics for a ticket-swap feature for events and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-product-design#075",
+   "text": "Write a one-page product spec for a translation toggle in a travel app. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-product-design#076",
+   "text": "Before I start on a translation toggle in a travel app, list edge cases and failure states for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-product-design#077",
+   "text": "Write a one-page product spec for a scheduling assistant for clinics. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-product-design#078",
+   "text": "Design the first-run experience for a learning streak system. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-product-design#079",
+   "text": "As a brand designer, I keep hitting the same wall with a marketplace seller dashboard. List edge cases and failure states for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-product-design#080",
+   "text": "Write a one-page product spec for a family-shared shopping list. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-product-design#081",
+   "text": "Define the success metrics for a plant-care reminder app."
+  },
+  {
+   "id": "design-product-design#082",
+   "text": "Draft the experiment design for a learning streak system. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-product-design#083",
+   "text": "Act as a product designer with systems experience. Write the accessibility requirements for a bill-splitting flow for roommates, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-product-design#084",
+   "text": "Write a one-page product spec for a sleep-tracking wind-down flow. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-product-design#085",
+   "text": "I’m working on a translation toggle in a travel app. Design the first-run experience for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-product-design#086",
+   "text": "Map the end-to-end journey for a marketplace seller dashboard for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-product-design#087",
+   "text": "Define the success metrics for a translation toggle in a travel app. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-product-design#088",
+   "text": "Help me with a collaborative playlist feature: propose a prototype plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-product-design#089",
+   "text": "Design the first-run experience for a marketplace seller dashboard. Use a formal tone throughout."
+  },
+  {
+   "id": "design-product-design#090",
+   "text": "You are an art director. Define the success metrics for a sleep-tracking wind-down flow and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-product-design#091",
+   "text": "Write a one-page product spec for a bill-splitting flow for roommates. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-product-design#092",
+   "text": "Before I start on a plant-care reminder app, write a one-page product spec for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-product-design#093",
+   "text": "Map the end-to-end journey for a plant-care reminder app. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-product-design#094",
+   "text": "Write the accessibility requirements for an offline mode for a note app. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-product-design#095",
+   "text": "As a motion designer, I keep hitting the same wall with a plant-care reminder app. List edge cases and failure states for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-product-design#096",
+   "text": "Draft the experiment design for a sleep-tracking wind-down flow. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-product-design#097",
+   "text": "List edge cases and failure states for a sleep-tracking wind-down flow. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-product-design#098",
+   "text": "Draft the experiment design for a family-shared shopping list. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-product-design#099",
+   "text": "Write the accessibility requirements for a translation toggle in a travel app."
+  },
+  {
+   "id": "design-product-design#100",
+   "text": "Define the success metrics for a saved-cards wallet for a checkout app."
+  },
+  {
+   "id": "design-product-design#101",
+   "text": "Design the first-run experience for a ticket-swap feature for events."
+  },
+  {
+   "id": "design-product-design#102",
+   "text": "Write the accessibility requirements for a learning streak system."
+  },
+  {
+   "id": "design-product-design#103",
+   "text": "Design the first-run experience for a collaborative playlist feature."
+  },
+  {
+   "id": "design-product-design#104",
+   "text": "List edge cases and failure states for a ticket-swap feature for events."
+  }
+ ]
+}

@@ -1,0 +1,430 @@
+{
+ "slug": "sales-cold-email",
+ "categorySlug": "sales",
+ "category": "Sales & Outreach",
+ "title": "Cold Email",
+ "description": "Short, specific, human outreach that gets replies.",
+ "tags": [
+  "cold email",
+  "outreach",
+  "prospecting"
+ ],
+ "prompts": [
+  {
+   "id": "sales-cold-email#001",
+   "text": "Write a referral-ask version for a boutique hotel group without a CRM."
+  },
+  {
+   "id": "sales-cold-email#002",
+   "text": "Draft a breakup email for a restaurant group expanding locations. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-cold-email#003",
+   "text": "Act as a revops analyst. Write a five-sentence cold email for an e-commerce brand drowning in returns, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-cold-email#004",
+   "text": "Produce a rebuttal to the most common brush-off for a gym chain renegotiating equipment leases. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-cold-email#005",
+   "text": "I’m working on a university lab needing equipment service. Produce a rebuttal to the most common brush-off for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-cold-email#006",
+   "text": "Draft a breakup email for an e-commerce brand drowning in returns for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-cold-email#007",
+   "text": "Produce a rebuttal to the most common brush-off for a logistics manager at a mid-size retailer. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-cold-email#008",
+   "text": "Help me with a gym chain renegotiating equipment leases: draft a breakup email for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-cold-email#009",
+   "text": "Produce a rebuttal to the most common brush-off for a SaaS team evaluating a data vendor. Use a direct tone throughout."
+  },
+  {
+   "id": "sales-cold-email#010",
+   "text": "You are a revops analyst. Write a personalization-first opener for a gym chain renegotiating equipment leases and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-cold-email#011",
+   "text": "Draft three subject lines with reasoning for a law firm outsourcing transcription. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-cold-email#012",
+   "text": "Before I start on a university lab needing equipment service, draft a breakup email for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-cold-email#013",
+   "text": "Write a personalization-first opener for a law firm outsourcing transcription. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-cold-email#014",
+   "text": "Write a referral-ask version for a university lab needing equipment service. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-cold-email#015",
+   "text": "As an enterprise account executive, I keep hitting the same wall with a restaurant group expanding locations. Produce a rebuttal to the most common brush-off for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-cold-email#016",
+   "text": "Write a five-sentence cold email for a boutique hotel group without a CRM. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-cold-email#017",
+   "text": "Draft three subject lines with reasoning for a university lab needing equipment service."
+  },
+  {
+   "id": "sales-cold-email#018",
+   "text": "Design an A/B testing plan for a university lab needing equipment service. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-cold-email#019",
+   "text": "Act as a channel-partnerships manager. Draft a breakup email for a nonprofit handling donations by spreadsheet, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-cold-email#020",
+   "text": "Write a referral-ask version for a SaaS team evaluating a data vendor. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-cold-email#021",
+   "text": "I’m working on a logistics manager at a mid-size retailer. Create a follow-up sequence of three touches for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-cold-email#022",
+   "text": "Produce a rebuttal to the most common brush-off for an e-commerce brand drowning in returns for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-cold-email#023",
+   "text": "Write a referral-ask version for a law firm outsourcing transcription. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-cold-email#024",
+   "text": "Help me with a logistics manager at a mid-size retailer: write a five-sentence cold email for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-cold-email#025",
+   "text": "Create a follow-up sequence of three touches for a construction firm still quoting on paper. Use a persuasive tone throughout."
+  },
+  {
+   "id": "sales-cold-email#026",
+   "text": "You are a revops analyst. Produce a rebuttal to the most common brush-off for a construction firm still quoting on paper and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-cold-email#027",
+   "text": "Design an A/B testing plan for a gym chain renegotiating equipment leases. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-cold-email#028",
+   "text": "Before I start on a gym chain renegotiating equipment leases, draft three subject lines with reasoning for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-cold-email#029",
+   "text": "Draft three subject lines with reasoning for a dental-practice owner considering new software. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-cold-email#030",
+   "text": "Write a referral-ask version for a manufacturer with quality-complaint spikes. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-cold-email#031",
+   "text": "As a customer-renewals specialist, I keep hitting the same wall with a SaaS team evaluating a data vendor. Create a follow-up sequence of three touches for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-cold-email#032",
+   "text": "Draft a breakup email for a logistics manager at a mid-size retailer. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-cold-email#033",
+   "text": "Draft three subject lines with reasoning for a construction firm still quoting on paper."
+  },
+  {
+   "id": "sales-cold-email#034",
+   "text": "Design an A/B testing plan for a nonprofit handling donations by spreadsheet. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-cold-email#035",
+   "text": "Act as a customer-renewals specialist. Write a referral-ask version for a dental-practice owner considering new software, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-cold-email#036",
+   "text": "Write a five-sentence cold email for a restaurant group expanding locations. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-cold-email#037",
+   "text": "I’m working on a boutique hotel group without a CRM. Draft three subject lines with reasoning for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-cold-email#038",
+   "text": "Write a five-sentence cold email for a SaaS team evaluating a data vendor for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-cold-email#039",
+   "text": "Write a personalization-first opener for a SaaS team evaluating a data vendor. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-cold-email#040",
+   "text": "Help me with a SaaS team evaluating a data vendor: design an A/B testing plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-cold-email#041",
+   "text": "Write a personalization-first opener for a dental-practice owner considering new software. Use a professional tone throughout."
+  },
+  {
+   "id": "sales-cold-email#042",
+   "text": "You are a founder selling to first customers. Design an A/B testing plan for a manufacturer with quality-complaint spikes and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-cold-email#043",
+   "text": "Produce a rebuttal to the most common brush-off for a manufacturer with quality-complaint spikes. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-cold-email#044",
+   "text": "Before I start on a manufacturer with quality-complaint spikes, write a personalization-first opener for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-cold-email#045",
+   "text": "Design an A/B testing plan for an e-commerce brand drowning in returns. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-cold-email#046",
+   "text": "Create a follow-up sequence of three touches for a university lab needing equipment service. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-cold-email#047",
+   "text": "As a founder selling to first customers, I keep hitting the same wall with a nonprofit handling donations by spreadsheet. Write a five-sentence cold email for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-cold-email#048",
+   "text": "Create a follow-up sequence of three touches for a law firm outsourcing transcription. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-cold-email#049",
+   "text": "Draft three subject lines with reasoning for a nonprofit handling donations by spreadsheet."
+  },
+  {
+   "id": "sales-cold-email#050",
+   "text": "Write a five-sentence cold email for a law firm outsourcing transcription. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-cold-email#051",
+   "text": "Act as a freelance consultant selling retainers. Draft three subject lines with reasoning for a restaurant group expanding locations, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-cold-email#052",
+   "text": "Create a follow-up sequence of three touches for a boutique hotel group without a CRM. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-cold-email#053",
+   "text": "I’m working on a boutique hotel group without a CRM. Draft a breakup email for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-cold-email#054",
+   "text": "Write a personalization-first opener for a restaurant group expanding locations for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-cold-email#055",
+   "text": "Create a follow-up sequence of three touches for a manufacturer with quality-complaint spikes. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-cold-email#056",
+   "text": "Help me with a construction firm still quoting on paper: write a referral-ask version for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-cold-email#057",
+   "text": "Write a five-sentence cold email for a manufacturer with quality-complaint spikes. Use a direct tone throughout."
+  },
+  {
+   "id": "sales-cold-email#058",
+   "text": "You are a founder selling to first customers. Design an A/B testing plan for a law firm outsourcing transcription and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-cold-email#059",
+   "text": "Draft three subject lines with reasoning for an e-commerce brand drowning in returns. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-cold-email#060",
+   "text": "Before I start on a boutique hotel group without a CRM, design an A/B testing plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-cold-email#061",
+   "text": "Write a five-sentence cold email for a dental-practice owner considering new software. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-cold-email#062",
+   "text": "Design an A/B testing plan for a construction firm still quoting on paper. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-cold-email#063",
+   "text": "As a solution consultant, I keep hitting the same wall with a dental-practice owner considering new software. Draft a breakup email for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-cold-email#064",
+   "text": "Draft a breakup email for a manufacturer with quality-complaint spikes. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-cold-email#065",
+   "text": "Write a personalization-first opener for a logistics manager at a mid-size retailer."
+  },
+  {
+   "id": "sales-cold-email#066",
+   "text": "Write a referral-ask version for a restaurant group expanding locations. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-cold-email#067",
+   "text": "Act as a solution consultant. Produce a rebuttal to the most common brush-off for a law firm outsourcing transcription, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-cold-email#068",
+   "text": "Create a follow-up sequence of three touches for a dental-practice owner considering new software. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-cold-email#069",
+   "text": "I’m working on a nonprofit handling donations by spreadsheet. Create a follow-up sequence of three touches for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-cold-email#070",
+   "text": "Create a follow-up sequence of three touches for an e-commerce brand drowning in returns for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-cold-email#071",
+   "text": "Write a referral-ask version for a gym chain renegotiating equipment leases. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-cold-email#072",
+   "text": "Help me with a university lab needing equipment service: write a personalization-first opener for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-cold-email#073",
+   "text": "Design an A/B testing plan for a restaurant group expanding locations. Use a formal tone throughout."
+  },
+  {
+   "id": "sales-cold-email#074",
+   "text": "You are an enterprise account executive. Write a referral-ask version for a nonprofit handling donations by spreadsheet and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-cold-email#075",
+   "text": "Write a five-sentence cold email for a construction firm still quoting on paper. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-cold-email#076",
+   "text": "Before I start on a gym chain renegotiating equipment leases, create a follow-up sequence of three touches for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-cold-email#077",
+   "text": "Write a five-sentence cold email for a gym chain renegotiating equipment leases. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-cold-email#078",
+   "text": "Write a personalization-first opener for a boutique hotel group without a CRM. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-cold-email#079",
+   "text": "As a founder selling to first customers, I keep hitting the same wall with a nonprofit handling donations by spreadsheet. Write a personalization-first opener for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-cold-email#080",
+   "text": "Produce a rebuttal to the most common brush-off for a boutique hotel group without a CRM. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-cold-email#081",
+   "text": "Produce a rebuttal to the most common brush-off for a nonprofit handling donations by spreadsheet."
+  },
+  {
+   "id": "sales-cold-email#082",
+   "text": "Draft three subject lines with reasoning for a SaaS team evaluating a data vendor. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-cold-email#083",
+   "text": "Act as an enterprise account executive. Design an A/B testing plan for a logistics manager at a mid-size retailer, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-cold-email#084",
+   "text": "Design an A/B testing plan for a dental-practice owner considering new software. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-cold-email#085",
+   "text": "I’m working on a university lab needing equipment service. Write a five-sentence cold email for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-cold-email#086",
+   "text": "Draft three subject lines with reasoning for a logistics manager at a mid-size retailer for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-cold-email#087",
+   "text": "Draft a breakup email for a law firm outsourcing transcription. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-cold-email#088",
+   "text": "Help me with a logistics manager at a mid-size retailer: write a referral-ask version for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-cold-email#089",
+   "text": "Write a personalization-first opener for a construction firm still quoting on paper. Use a persuasive tone throughout."
+  },
+  {
+   "id": "sales-cold-email#090",
+   "text": "You are a SDR coach. Create a follow-up sequence of three touches for a restaurant group expanding locations and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-cold-email#091",
+   "text": "Draft a breakup email for a SaaS team evaluating a data vendor. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-cold-email#092",
+   "text": "Before I start on a manufacturer with quality-complaint spikes, draft three subject lines with reasoning for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-cold-email#093",
+   "text": "Write a personalization-first opener for an e-commerce brand drowning in returns. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-cold-email#094",
+   "text": "Draft a breakup email for a construction firm still quoting on paper. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-cold-email#095",
+   "text": "As a solution consultant, I keep hitting the same wall with a dental-practice owner considering new software. Produce a rebuttal to the most common brush-off for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-cold-email#096",
+   "text": "Write a referral-ask version for an e-commerce brand drowning in returns. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-cold-email#097",
+   "text": "Write a referral-ask version for a boutique hotel group without a CRM. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-cold-email#098",
+   "text": "Draft a breakup email for a restaurant group expanding locations. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-cold-email#099",
+   "text": "Write a five-sentence cold email for an e-commerce brand drowning in returns."
+  },
+  {
+   "id": "sales-cold-email#100",
+   "text": "Produce a rebuttal to the most common brush-off for a gym chain renegotiating equipment leases."
+  },
+  {
+   "id": "sales-cold-email#101",
+   "text": "Produce a rebuttal to the most common brush-off for a university lab needing equipment service."
+  },
+  {
+   "id": "sales-cold-email#102",
+   "text": "Draft a breakup email for an e-commerce brand drowning in returns."
+  },
+  {
+   "id": "sales-cold-email#103",
+   "text": "Produce a rebuttal to the most common brush-off for a logistics manager at a mid-size retailer."
+  },
+  {
+   "id": "sales-cold-email#104",
+   "text": "Draft a breakup email for a gym chain renegotiating equipment leases."
+  }
+ ]
+}

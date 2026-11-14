@@ -1,0 +1,430 @@
+{
+ "slug": "sales-proposals-quotes",
+ "categorySlug": "sales",
+ "category": "Sales & Outreach",
+ "title": "Proposals & Quotes",
+ "description": "Scope, pricing, and terms that close without surprises.",
+ "tags": [
+  "proposal",
+  "pricing",
+  "scope"
+ ],
+ "prompts": [
+  {
+   "id": "sales-proposals-quotes#001",
+   "text": "Write the scope-and-exclusions section for a catering contract for 200 guests."
+  },
+  {
+   "id": "sales-proposals-quotes#002",
+   "text": "Create a terms-and-revisions section for a custom firmware project for hardware. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-proposals-quotes#003",
+   "text": "Act as a SDR coach. Prepare a negotiation-ready discount ladder for a consulting engagement on pricing strategy, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-proposals-quotes#004",
+   "text": "Design a three-tier pricing option set for a consulting engagement on pricing strategy. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-proposals-quotes#005",
+   "text": "I’m working on a consulting engagement on pricing strategy. Write the case-for-value section for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-proposals-quotes#006",
+   "text": "Write the follow-up email after sending a catering contract for 200 guests for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-proposals-quotes#007",
+   "text": "Write the follow-up email after sending a consulting engagement on pricing strategy. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-proposals-quotes#008",
+   "text": "Help me with an interior-design project for an office: write the follow-up email after sending it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-proposals-quotes#009",
+   "text": "Prepare a negotiation-ready discount ladder for a catering contract for 200 guests. Use a persuasive tone throughout."
+  },
+  {
+   "id": "sales-proposals-quotes#010",
+   "text": "You are a solution consultant. Prepare a negotiation-ready discount ladder for a website redesign for a clinic and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-proposals-quotes#011",
+   "text": "Write the case-for-value section for a copywriting engagement for a launch. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-proposals-quotes#012",
+   "text": "Before I start on a custom firmware project for hardware, write the scope-and-exclusions section for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-proposals-quotes#013",
+   "text": "Draft a one-page proposal for a monthly marketing retainer. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-proposals-quotes#014",
+   "text": "Design a three-tier pricing option set for an ERP implementation for a warehouse. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-proposals-quotes#015",
+   "text": "As a founder selling to first customers, I keep hitting the same wall with a copywriting engagement for a launch. Draft the timeline-with-dependencies section for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-proposals-quotes#016",
+   "text": "Design a three-tier pricing option set for a copywriting engagement for a launch. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-proposals-quotes#017",
+   "text": "Write the case-for-value section for a website redesign for a clinic."
+  },
+  {
+   "id": "sales-proposals-quotes#018",
+   "text": "Create a terms-and-revisions section for a monthly marketing retainer. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-proposals-quotes#019",
+   "text": "Act as a freelance consultant selling retainers. Draft a one-page proposal for a custom firmware project for hardware, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-proposals-quotes#020",
+   "text": "Draft the timeline-with-dependencies section for a website redesign for a clinic. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-proposals-quotes#021",
+   "text": "I’m working on a bookkeeping service for a cafe. Write the case-for-value section for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-proposals-quotes#022",
+   "text": "Design a three-tier pricing option set for a catering contract for 200 guests for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-proposals-quotes#023",
+   "text": "Draft a one-page proposal for a consulting engagement on pricing strategy. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-proposals-quotes#024",
+   "text": "Help me with a photography package for a wedding: write the follow-up email after sending it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-proposals-quotes#025",
+   "text": "Prepare a negotiation-ready discount ladder for a bookkeeping service for a cafe. Use a professional tone throughout."
+  },
+  {
+   "id": "sales-proposals-quotes#026",
+   "text": "You are a customer-renewals specialist. Prepare a negotiation-ready discount ladder for a photography package for a wedding and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-proposals-quotes#027",
+   "text": "Write the scope-and-exclusions section for a consulting engagement on pricing strategy. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-proposals-quotes#028",
+   "text": "Before I start on an ERP implementation for a warehouse, write the case-for-value section for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-proposals-quotes#029",
+   "text": "Write the follow-up email after sending a training-program build for a sales team. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-proposals-quotes#030",
+   "text": "Write the follow-up email after sending a mobile-app MVP build. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-proposals-quotes#031",
+   "text": "As a solution consultant, I keep hitting the same wall with a bookkeeping service for a cafe. Write the follow-up email after sending it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-proposals-quotes#032",
+   "text": "Write the follow-up email after sending a monthly marketing retainer. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-proposals-quotes#033",
+   "text": "Design a three-tier pricing option set for a photography package for a wedding."
+  },
+  {
+   "id": "sales-proposals-quotes#034",
+   "text": "Write the follow-up email after sending a website redesign for a clinic. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-proposals-quotes#035",
+   "text": "Act as a founder selling to first customers. Create a terms-and-revisions section for a training-program build for a sales team, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-proposals-quotes#036",
+   "text": "Prepare a negotiation-ready discount ladder for an ERP implementation for a warehouse. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-proposals-quotes#037",
+   "text": "I’m working on a bookkeeping service for a cafe. Design a three-tier pricing option set for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-proposals-quotes#038",
+   "text": "Write the case-for-value section for a photography package for a wedding for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-proposals-quotes#039",
+   "text": "Draft a one-page proposal for a photography package for a wedding. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-proposals-quotes#040",
+   "text": "Help me with an ERP implementation for a warehouse: write the scope-and-exclusions section for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-proposals-quotes#041",
+   "text": "Write the case-for-value section for a custom firmware project for hardware. Use a formal tone throughout."
+  },
+  {
+   "id": "sales-proposals-quotes#042",
+   "text": "You are a SDR coach. Design a three-tier pricing option set for a mobile-app MVP build and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-proposals-quotes#043",
+   "text": "Draft a one-page proposal for a training-program build for a sales team. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-proposals-quotes#044",
+   "text": "Before I start on a training-program build for a sales team, write the scope-and-exclusions section for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-proposals-quotes#045",
+   "text": "Prepare a negotiation-ready discount ladder for a custom firmware project for hardware. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-proposals-quotes#046",
+   "text": "Write the case-for-value section for a training-program build for a sales team. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-proposals-quotes#047",
+   "text": "As a customer-renewals specialist, I keep hitting the same wall with a monthly marketing retainer. Prepare a negotiation-ready discount ladder for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-proposals-quotes#048",
+   "text": "Prepare a negotiation-ready discount ladder for a training-program build for a sales team. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-proposals-quotes#049",
+   "text": "Create a terms-and-revisions section for an ERP implementation for a warehouse."
+  },
+  {
+   "id": "sales-proposals-quotes#050",
+   "text": "Draft the timeline-with-dependencies section for a mobile-app MVP build. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-proposals-quotes#051",
+   "text": "Act as a channel-partnerships manager. Write the follow-up email after sending an ERP implementation for a warehouse, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-proposals-quotes#052",
+   "text": "Draft the timeline-with-dependencies section for a monthly marketing retainer. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-proposals-quotes#053",
+   "text": "I’m working on a catering contract for 200 guests. Draft a one-page proposal for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-proposals-quotes#054",
+   "text": "Write the case-for-value section for a catering contract for 200 guests for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-proposals-quotes#055",
+   "text": "Prepare a negotiation-ready discount ladder for a copywriting engagement for a launch. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-proposals-quotes#056",
+   "text": "Help me with a copywriting engagement for a launch: draft a one-page proposal for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-proposals-quotes#057",
+   "text": "Write the scope-and-exclusions section for a bookkeeping service for a cafe. Use a professional tone throughout."
+  },
+  {
+   "id": "sales-proposals-quotes#058",
+   "text": "You are a customer-renewals specialist. Draft the timeline-with-dependencies section for a photography package for a wedding and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-proposals-quotes#059",
+   "text": "Design a three-tier pricing option set for a training-program build for a sales team. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-proposals-quotes#060",
+   "text": "Before I start on an interior-design project for an office, write the scope-and-exclusions section for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-proposals-quotes#061",
+   "text": "Prepare a negotiation-ready discount ladder for an interior-design project for an office. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-proposals-quotes#062",
+   "text": "Design a three-tier pricing option set for a website redesign for a clinic. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-proposals-quotes#063",
+   "text": "As a revops analyst, I keep hitting the same wall with a photography package for a wedding. Write the scope-and-exclusions section for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-proposals-quotes#064",
+   "text": "Draft a one-page proposal for an interior-design project for an office. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-proposals-quotes#065",
+   "text": "Design a three-tier pricing option set for a monthly marketing retainer."
+  },
+  {
+   "id": "sales-proposals-quotes#066",
+   "text": "Create a terms-and-revisions section for a photography package for a wedding. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-proposals-quotes#067",
+   "text": "Act as a channel-partnerships manager. Write the scope-and-exclusions section for a copywriting engagement for a launch, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-proposals-quotes#068",
+   "text": "Draft a one-page proposal for an ERP implementation for a warehouse. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-proposals-quotes#069",
+   "text": "I’m working on an interior-design project for an office. Design a three-tier pricing option set for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-proposals-quotes#070",
+   "text": "Create a terms-and-revisions section for a consulting engagement on pricing strategy for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-proposals-quotes#071",
+   "text": "Draft a one-page proposal for a bookkeeping service for a cafe. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-proposals-quotes#072",
+   "text": "Help me with a copywriting engagement for a launch: create a terms-and-revisions section for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-proposals-quotes#073",
+   "text": "Write the case-for-value section for a mobile-app MVP build. Use a formal tone throughout."
+  },
+  {
+   "id": "sales-proposals-quotes#074",
+   "text": "You are a SDR coach. Draft a one-page proposal for a mobile-app MVP build and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-proposals-quotes#075",
+   "text": "Draft the timeline-with-dependencies section for an ERP implementation for a warehouse. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-proposals-quotes#076",
+   "text": "Before I start on a monthly marketing retainer, write the scope-and-exclusions section for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-proposals-quotes#077",
+   "text": "Draft the timeline-with-dependencies section for a consulting engagement on pricing strategy. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-proposals-quotes#078",
+   "text": "Write the case-for-value section for a monthly marketing retainer. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-proposals-quotes#079",
+   "text": "As a solution consultant, I keep hitting the same wall with a bookkeeping service for a cafe. Draft the timeline-with-dependencies section for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-proposals-quotes#080",
+   "text": "Write the follow-up email after sending a custom firmware project for hardware. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-proposals-quotes#081",
+   "text": "Create a terms-and-revisions section for a website redesign for a clinic."
+  },
+  {
+   "id": "sales-proposals-quotes#082",
+   "text": "Design a three-tier pricing option set for a custom firmware project for hardware. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-proposals-quotes#083",
+   "text": "Act as a customer-renewals specialist. Write the case-for-value section for an interior-design project for an office, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-proposals-quotes#084",
+   "text": "Create a terms-and-revisions section for a bookkeeping service for a cafe. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-proposals-quotes#085",
+   "text": "I’m working on a training-program build for a sales team. Draft the timeline-with-dependencies section for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-proposals-quotes#086",
+   "text": "Write the scope-and-exclusions section for a website redesign for a clinic for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-proposals-quotes#087",
+   "text": "Create a terms-and-revisions section for a catering contract for 200 guests. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-proposals-quotes#088",
+   "text": "Help me with an interior-design project for an office: draft the timeline-with-dependencies section for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-proposals-quotes#089",
+   "text": "Draft the timeline-with-dependencies section for a custom firmware project for hardware. Use a formal tone throughout."
+  },
+  {
+   "id": "sales-proposals-quotes#090",
+   "text": "You are a solution consultant. Draft a one-page proposal for a website redesign for a clinic and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-proposals-quotes#091",
+   "text": "Write the follow-up email after sending a copywriting engagement for a launch. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-proposals-quotes#092",
+   "text": "Before I start on an interior-design project for an office, create a terms-and-revisions section for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-proposals-quotes#093",
+   "text": "Draft the timeline-with-dependencies section for a catering contract for 200 guests. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-proposals-quotes#094",
+   "text": "Prepare a negotiation-ready discount ladder for a mobile-app MVP build. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-proposals-quotes#095",
+   "text": "As an enterprise account executive, I keep hitting the same wall with a mobile-app MVP build. Write the scope-and-exclusions section for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-proposals-quotes#096",
+   "text": "Create a terms-and-revisions section for a mobile-app MVP build. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-proposals-quotes#097",
+   "text": "Write the scope-and-exclusions section for a catering contract for 200 guests. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-proposals-quotes#098",
+   "text": "Create a terms-and-revisions section for a custom firmware project for hardware. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-proposals-quotes#099",
+   "text": "Prepare a negotiation-ready discount ladder for a consulting engagement on pricing strategy."
+  },
+  {
+   "id": "sales-proposals-quotes#100",
+   "text": "Design a three-tier pricing option set for a consulting engagement on pricing strategy."
+  },
+  {
+   "id": "sales-proposals-quotes#101",
+   "text": "Write the case-for-value section for a consulting engagement on pricing strategy."
+  },
+  {
+   "id": "sales-proposals-quotes#102",
+   "text": "Write the follow-up email after sending a catering contract for 200 guests."
+  },
+  {
+   "id": "sales-proposals-quotes#103",
+   "text": "Write the follow-up email after sending a consulting engagement on pricing strategy."
+  },
+  {
+   "id": "sales-proposals-quotes#104",
+   "text": "Write the follow-up email after sending an interior-design project for an office."
+  }
+ ]
+}

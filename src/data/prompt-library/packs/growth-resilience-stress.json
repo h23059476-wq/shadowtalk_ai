@@ -1,0 +1,430 @@
+{
+ "slug": "growth-resilience-stress",
+ "categorySlug": "growth",
+ "category": "Personal Growth",
+ "title": "Resilience & Stress",
+ "description": "Steady practices for pressure, setback, and busy seasons.",
+ "tags": [
+  "stress",
+  "resilience",
+  "calm"
+ ],
+ "prompts": [
+  {
+   "id": "growth-resilience-stress#001",
+   "text": "Write a self-check questions list for financial pressure month to month."
+  },
+  {
+   "id": "growth-resilience-stress#002",
+   "text": "Design a good-enough-day standard for conflict at work that follows you home. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-resilience-stress#003",
+   "text": "Act as a financial-literacy educator. Draft a boundaries-with-news plan for grief while maintaining daily duties, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-resilience-stress#004",
+   "text": "List the support options for information-overload from the news cycle. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-resilience-stress#005",
+   "text": "I’m working on financial pressure month to month. Create a worry-window exercise for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-resilience-stress#006",
+   "text": "Build a professional-help decision guide for grief while maintaining daily duties for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-resilience-stress#007",
+   "text": "Write a self-check questions list for burnout recovery while still working. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-resilience-stress#008",
+   "text": "Help me with public-speaking nerves before a big talk: design a weekly recovery plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-resilience-stress#009",
+   "text": "Draft a boundaries-with-news plan for a demanding quarter with long hours. Use a empathetic tone throughout."
+  },
+  {
+   "id": "growth-resilience-stress#010",
+   "text": "You are a communication-skills coach. Build a professional-help decision guide for financial pressure month to month and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-resilience-stress#011",
+   "text": "Write a same-day calming protocol for exam-season stress spirals. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-resilience-stress#012",
+   "text": "Before I start on job-search rejection cycles, build a professional-help decision guide for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-resilience-stress#013",
+   "text": "Write a self-check questions list for grief while maintaining daily duties. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-resilience-stress#014",
+   "text": "Write a same-day calming protocol for burnout recovery while still working. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-resilience-stress#015",
+   "text": "As a practical life coach, I keep hitting the same wall with family friction during holidays. Build a professional-help decision guide for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-resilience-stress#016",
+   "text": "Write a self-check questions list for conflict at work that follows you home. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-resilience-stress#017",
+   "text": "Create a worry-window exercise for job-search rejection cycles."
+  },
+  {
+   "id": "growth-resilience-stress#018",
+   "text": "Create a worry-window exercise for public-speaking nerves before a big talk. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-resilience-stress#019",
+   "text": "Act as a resilience and stress educator. Write a same-day calming protocol for information-overload from the news cycle, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-resilience-stress#020",
+   "text": "Draft a boundaries-with-news plan for moving to a city with no network. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-resilience-stress#021",
+   "text": "I’m working on a health scare waiting on results. Build a professional-help decision guide for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-resilience-stress#022",
+   "text": "Create a worry-window exercise for grief while maintaining daily duties for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-resilience-stress#023",
+   "text": "Build a professional-help decision guide for public-speaking nerves before a big talk. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-resilience-stress#024",
+   "text": "Help me with public-speaking nerves before a big talk: design a good-enough-day standard for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-resilience-stress#025",
+   "text": "List the support options for burnout recovery while still working. Use a direct tone throughout."
+  },
+  {
+   "id": "growth-resilience-stress#026",
+   "text": "You are a financial-literacy educator. Write a same-day calming protocol for family friction during holidays and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-resilience-stress#027",
+   "text": "List the support options for family friction during holidays. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-resilience-stress#028",
+   "text": "Before I start on burnout recovery while still working, draft a boundaries-with-news plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-resilience-stress#029",
+   "text": "Design a good-enough-day standard for grief while maintaining daily duties. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-resilience-stress#030",
+   "text": "List the support options for grief while maintaining daily duties. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-resilience-stress#031",
+   "text": "As a decision-quality facilitator, I keep hitting the same wall with job-search rejection cycles. Design a weekly recovery plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-resilience-stress#032",
+   "text": "Write a same-day calming protocol for grief while maintaining daily duties. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-resilience-stress#033",
+   "text": "Design a good-enough-day standard for exam-season stress spirals."
+  },
+  {
+   "id": "growth-resilience-stress#034",
+   "text": "List the support options for exam-season stress spirals. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-resilience-stress#035",
+   "text": "Act as a values-and-purpose mentor. Write a same-day calming protocol for financial pressure month to month, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-resilience-stress#036",
+   "text": "Create a worry-window exercise for conflict at work that follows you home. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-resilience-stress#037",
+   "text": "I’m working on information-overload from the news cycle. Build a professional-help decision guide for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-resilience-stress#038",
+   "text": "Draft a boundaries-with-news plan for conflict at work that follows you home for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-resilience-stress#039",
+   "text": "Design a weekly recovery plan for information-overload from the news cycle. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-resilience-stress#040",
+   "text": "Help me with burnout recovery while still working: design a good-enough-day standard for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-resilience-stress#041",
+   "text": "Design a weekly recovery plan for financial pressure month to month. Use a friendly tone throughout."
+  },
+  {
+   "id": "growth-resilience-stress#042",
+   "text": "You are a financial-literacy educator. Write a self-check questions list for family friction during holidays and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-resilience-stress#043",
+   "text": "Design a weekly recovery plan for burnout recovery while still working. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-resilience-stress#044",
+   "text": "Before I start on moving to a city with no network, write a same-day calming protocol for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-resilience-stress#045",
+   "text": "Design a weekly recovery plan for family friction during holidays. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-resilience-stress#046",
+   "text": "Build a professional-help decision guide for exam-season stress spirals. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-resilience-stress#047",
+   "text": "As a decision-quality facilitator, I keep hitting the same wall with a demanding quarter with long hours. Design a weekly recovery plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-resilience-stress#048",
+   "text": "Draft a boundaries-with-news plan for family friction during holidays. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-resilience-stress#049",
+   "text": "Design a weekly recovery plan for conflict at work that follows you home."
+  },
+  {
+   "id": "growth-resilience-stress#050",
+   "text": "Write a self-check questions list for exam-season stress spirals. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-resilience-stress#051",
+   "text": "Act as a resilience and stress educator. Design a weekly recovery plan for moving to a city with no network, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-resilience-stress#052",
+   "text": "Write a self-check questions list for information-overload from the news cycle. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-resilience-stress#053",
+   "text": "I’m working on financial pressure month to month. Draft a boundaries-with-news plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-resilience-stress#054",
+   "text": "Create a worry-window exercise for exam-season stress spirals for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-resilience-stress#055",
+   "text": "Write a same-day calming protocol for job-search rejection cycles. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-resilience-stress#056",
+   "text": "Help me with a health scare waiting on results: draft a boundaries-with-news plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-resilience-stress#057",
+   "text": "Design a good-enough-day standard for information-overload from the news cycle. Use a professional tone throughout."
+  },
+  {
+   "id": "growth-resilience-stress#058",
+   "text": "You are a mindful-movement teacher. Draft a boundaries-with-news plan for information-overload from the news cycle and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-resilience-stress#059",
+   "text": "List the support options for a health scare waiting on results. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-resilience-stress#060",
+   "text": "Before I start on a health scare waiting on results, design a weekly recovery plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-resilience-stress#061",
+   "text": "Draft a boundaries-with-news plan for public-speaking nerves before a big talk. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-resilience-stress#062",
+   "text": "Build a professional-help decision guide for conflict at work that follows you home. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-resilience-stress#063",
+   "text": "As a mindful-movement teacher, I keep hitting the same wall with financial pressure month to month. Design a good-enough-day standard for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-resilience-stress#064",
+   "text": "Draft a boundaries-with-news plan for job-search rejection cycles. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-resilience-stress#065",
+   "text": "List the support options for a demanding quarter with long hours."
+  },
+  {
+   "id": "growth-resilience-stress#066",
+   "text": "Design a good-enough-day standard for a health scare waiting on results. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-resilience-stress#067",
+   "text": "Act as a values-and-purpose mentor. Write a self-check questions list for a health scare waiting on results, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-resilience-stress#068",
+   "text": "Design a good-enough-day standard for moving to a city with no network. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-resilience-stress#069",
+   "text": "I’m working on job-search rejection cycles. Design a good-enough-day standard for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-resilience-stress#070",
+   "text": "Write a same-day calming protocol for a demanding quarter with long hours for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-resilience-stress#071",
+   "text": "Design a weekly recovery plan for exam-season stress spirals. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-resilience-stress#072",
+   "text": "Help me with information-overload from the news cycle: create a worry-window exercise for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-resilience-stress#073",
+   "text": "Draft a boundaries-with-news plan for exam-season stress spirals. Use a persuasive tone throughout."
+  },
+  {
+   "id": "growth-resilience-stress#074",
+   "text": "You are a values-and-purpose mentor. Build a professional-help decision guide for burnout recovery while still working and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-resilience-stress#075",
+   "text": "Write a same-day calming protocol for conflict at work that follows you home. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-resilience-stress#076",
+   "text": "Before I start on a health scare waiting on results, write a same-day calming protocol for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-resilience-stress#077",
+   "text": "Design a good-enough-day standard for a demanding quarter with long hours. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-resilience-stress#078",
+   "text": "List the support options for moving to a city with no network. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-resilience-stress#079",
+   "text": "As a resilience and stress educator, I keep hitting the same wall with burnout recovery while still working. Create a worry-window exercise for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-resilience-stress#080",
+   "text": "List the support options for public-speaking nerves before a big talk. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-resilience-stress#081",
+   "text": "Design a weekly recovery plan for grief while maintaining daily duties."
+  },
+  {
+   "id": "growth-resilience-stress#082",
+   "text": "List the support options for financial pressure month to month. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-resilience-stress#083",
+   "text": "Act as a resilience and stress educator. Build a professional-help decision guide for moving to a city with no network, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-resilience-stress#084",
+   "text": "Create a worry-window exercise for a health scare waiting on results. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-resilience-stress#085",
+   "text": "I’m working on a demanding quarter with long hours. Write a self-check questions list for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-resilience-stress#086",
+   "text": "Build a professional-help decision guide for a demanding quarter with long hours for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-resilience-stress#087",
+   "text": "Write a self-check questions list for moving to a city with no network. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-resilience-stress#088",
+   "text": "Help me with public-speaking nerves before a big talk: write a same-day calming protocol for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-resilience-stress#089",
+   "text": "List the support options for conflict at work that follows you home. Use a formal tone throughout."
+  },
+  {
+   "id": "growth-resilience-stress#090",
+   "text": "You are a resilience and stress educator. Write a self-check questions list for job-search rejection cycles and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-resilience-stress#091",
+   "text": "Design a good-enough-day standard for family friction during holidays. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-resilience-stress#092",
+   "text": "Before I start on public-speaking nerves before a big talk, write a self-check questions list for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-resilience-stress#093",
+   "text": "List the support options for job-search rejection cycles. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-resilience-stress#094",
+   "text": "Create a worry-window exercise for a demanding quarter with long hours. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-resilience-stress#095",
+   "text": "As a financial-literacy educator, I keep hitting the same wall with moving to a city with no network. Create a worry-window exercise for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-resilience-stress#096",
+   "text": "Create a worry-window exercise for family friction during holidays. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-resilience-stress#097",
+   "text": "Write a self-check questions list for financial pressure month to month. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-resilience-stress#098",
+   "text": "Design a good-enough-day standard for conflict at work that follows you home. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-resilience-stress#099",
+   "text": "Draft a boundaries-with-news plan for grief while maintaining daily duties."
+  },
+  {
+   "id": "growth-resilience-stress#100",
+   "text": "List the support options for information-overload from the news cycle."
+  },
+  {
+   "id": "growth-resilience-stress#101",
+   "text": "Create a worry-window exercise for financial pressure month to month."
+  },
+  {
+   "id": "growth-resilience-stress#102",
+   "text": "Build a professional-help decision guide for grief while maintaining daily duties."
+  },
+  {
+   "id": "growth-resilience-stress#103",
+   "text": "Write a self-check questions list for burnout recovery while still working."
+  },
+  {
+   "id": "growth-resilience-stress#104",
+   "text": "Design a weekly recovery plan for public-speaking nerves before a big talk."
+  }
+ ]
+}

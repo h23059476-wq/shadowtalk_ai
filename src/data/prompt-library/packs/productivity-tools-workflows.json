@@ -1,0 +1,430 @@
+{
+ "slug": "productivity-tools-workflows",
+ "categorySlug": "productivity",
+ "category": "Productivity & Habits",
+ "title": "Tools & Workflows",
+ "description": "Pick fewer tools, wire them together, trust the system.",
+ "tags": [
+  "tools",
+  "automation",
+  "workflow"
+ ],
+ "prompts": [
+  {
+   "id": "productivity-tools-workflows#001",
+   "text": "Draft a quick-capture protocol for recurring file-renaming chores."
+  },
+  {
+   "id": "productivity-tools-workflows#002",
+   "text": "Propose a minimal tool stack for a password system held in a browser. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-tools-workflows#003",
+   "text": "Act as a chief of staff. Design a backup-and-restore routine for a password system held in a browser, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-tools-workflows#004",
+   "text": "Write a migration plan off a bloated system for a to-do app graveyard on your phone. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-tools-workflows#005",
+   "text": "I’m working on a personal CRM lost in spreadsheets. Design a backup-and-restore routine for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-tools-workflows#006",
+   "text": "Compare two approaches to a household task board nobody updates for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-tools-workflows#007",
+   "text": "Write a migration plan off a bloated system for a calendar that double-books you. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-tools-workflows#008",
+   "text": "Help me with a to-do app graveyard on your phone: propose a minimal tool stack for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-tools-workflows#009",
+   "text": "Create a maintenance checklist for a backup routine you keep forgetting. Use a direct tone throughout."
+  },
+  {
+   "id": "productivity-tools-workflows#010",
+   "text": "You are a minimalist systems tinkerer. Design a backup-and-restore routine for a backup routine you keep forgetting and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-tools-workflows#011",
+   "text": "Create a maintenance checklist for recurring file-renaming chores. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-tools-workflows#012",
+   "text": "Before I start on notes scattered across four apps, propose a minimal tool stack for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-tools-workflows#013",
+   "text": "Compare two approaches to a calendar that double-books you. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-tools-workflows#014",
+   "text": "Explain how to evaluate a new tool before adopting an email-to-task bridge that leaks. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-tools-workflows#015",
+   "text": "As a project manager, I keep hitting the same wall with a password system held in a browser. Explain how to evaluate a new tool before adopting it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-tools-workflows#016",
+   "text": "Compare two approaches to notes scattered across four apps. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-tools-workflows#017",
+   "text": "Draft a quick-capture protocol for a calendar that double-books you."
+  },
+  {
+   "id": "productivity-tools-workflows#018",
+   "text": "Explain how to evaluate a new tool before adopting a calendar that double-books you. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-tools-workflows#019",
+   "text": "Act as a productivity coach. Compare two approaches to an email-to-task bridge that leaks, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-tools-workflows#020",
+   "text": "Create a maintenance checklist for a meeting-notes system spread over docs. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-tools-workflows#021",
+   "text": "I’m working on a research-clipping pile with no structure. Draft a quick-capture protocol for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-tools-workflows#022",
+   "text": "Write a migration plan off a bloated system for a meeting-notes system spread over docs for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-tools-workflows#023",
+   "text": "Draft a quick-capture protocol for a meeting-notes system spread over docs. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-tools-workflows#024",
+   "text": "Help me with notes scattered across four apps: explain how to evaluate a new tool before adopting it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-tools-workflows#025",
+   "text": "Create a maintenance checklist for a to-do app graveyard on your phone. Use a empathetic tone throughout."
+  },
+  {
+   "id": "productivity-tools-workflows#026",
+   "text": "You are a project manager. Propose a minimal tool stack for an email-to-task bridge that leaks and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-tools-workflows#027",
+   "text": "Explain how to evaluate a new tool before adopting a meeting-notes system spread over docs. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-tools-workflows#028",
+   "text": "Before I start on a backup routine you keep forgetting, propose a minimal tool stack for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-tools-workflows#029",
+   "text": "Compare two approaches to a password system held in a browser. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-tools-workflows#030",
+   "text": "Propose a minimal tool stack for a calendar that double-books you. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-tools-workflows#031",
+   "text": "As a remote-work veteran, I keep hitting the same wall with an email-to-task bridge that leaks. Create a maintenance checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-tools-workflows#032",
+   "text": "Design the automation steps for a password system held in a browser. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-tools-workflows#033",
+   "text": "Propose a minimal tool stack for recurring file-renaming chores."
+  },
+  {
+   "id": "productivity-tools-workflows#034",
+   "text": "Design a backup-and-restore routine for recurring file-renaming chores. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-tools-workflows#035",
+   "text": "Act as a remote-work veteran. Design the automation steps for recurring file-renaming chores, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-tools-workflows#036",
+   "text": "Write a migration plan off a bloated system for a household task board nobody updates. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-tools-workflows#037",
+   "text": "I’m working on an email-to-task bridge that leaks. Design the automation steps for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-tools-workflows#038",
+   "text": "Write a migration plan off a bloated system for an email-to-task bridge that leaks for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-tools-workflows#039",
+   "text": "Draft a quick-capture protocol for a personal CRM lost in spreadsheets. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-tools-workflows#040",
+   "text": "Help me with a manual weekly report you rebuild every time: write a migration plan off a bloated system for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-tools-workflows#041",
+   "text": "Design a backup-and-restore routine for a meeting-notes system spread over docs. Use a encouraging tone throughout."
+  },
+  {
+   "id": "productivity-tools-workflows#042",
+   "text": "You are a recovery-focused therapist-adjacent coach. Write a migration plan off a bloated system for a password system held in a browser and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-tools-workflows#043",
+   "text": "Propose a minimal tool stack for a meeting-notes system spread over docs. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-tools-workflows#044",
+   "text": "Before I start on an email-to-task bridge that leaks, design a backup-and-restore routine for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-tools-workflows#045",
+   "text": "Create a maintenance checklist for a password system held in a browser. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-tools-workflows#046",
+   "text": "Compare two approaches to a to-do app graveyard on your phone. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-tools-workflows#047",
+   "text": "As a minimalist systems tinkerer, I keep hitting the same wall with a household task board nobody updates. Design the automation steps for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-tools-workflows#048",
+   "text": "Draft a quick-capture protocol for a household task board nobody updates. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-tools-workflows#049",
+   "text": "Draft a quick-capture protocol for an email-to-task bridge that leaks."
+  },
+  {
+   "id": "productivity-tools-workflows#050",
+   "text": "Design the automation steps for a meeting-notes system spread over docs. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-tools-workflows#051",
+   "text": "Act as a librarian of tidy systems. Create a maintenance checklist for a household task board nobody updates, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-tools-workflows#052",
+   "text": "Explain how to evaluate a new tool before adopting recurring file-renaming chores. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-tools-workflows#053",
+   "text": "I’m working on a backup routine you keep forgetting. Compare two approaches to it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-tools-workflows#054",
+   "text": "Write a migration plan off a bloated system for a research-clipping pile with no structure for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-tools-workflows#055",
+   "text": "Write a migration plan off a bloated system for recurring file-renaming chores. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-tools-workflows#056",
+   "text": "Help me with a personal CRM lost in spreadsheets: compare two approaches to it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-tools-workflows#057",
+   "text": "Design the automation steps for a research-clipping pile with no structure. Use a persuasive tone throughout."
+  },
+  {
+   "id": "productivity-tools-workflows#058",
+   "text": "You are a productivity coach. Compare two approaches to a manual weekly report you rebuild every time and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-tools-workflows#059",
+   "text": "Design the automation steps for a to-do app graveyard on your phone. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-tools-workflows#060",
+   "text": "Before I start on a research-clipping pile with no structure, explain how to evaluate a new tool before adopting it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-tools-workflows#061",
+   "text": "Explain how to evaluate a new tool before adopting a household task board nobody updates. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-tools-workflows#062",
+   "text": "Design a backup-and-restore routine for notes scattered across four apps. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-tools-workflows#063",
+   "text": "As a project manager, I keep hitting the same wall with a to-do app graveyard on your phone. Explain how to evaluate a new tool before adopting it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-tools-workflows#064",
+   "text": "Design the automation steps for a backup routine you keep forgetting. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-tools-workflows#065",
+   "text": "Write a migration plan off a bloated system for a backup routine you keep forgetting."
+  },
+  {
+   "id": "productivity-tools-workflows#066",
+   "text": "Design a backup-and-restore routine for a research-clipping pile with no structure. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-tools-workflows#067",
+   "text": "Act as a recovery-focused therapist-adjacent coach. Design the automation steps for notes scattered across four apps, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-tools-workflows#068",
+   "text": "Propose a minimal tool stack for a personal CRM lost in spreadsheets. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-tools-workflows#069",
+   "text": "I’m working on notes scattered across four apps. Create a maintenance checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-tools-workflows#070",
+   "text": "Design a backup-and-restore routine for a household task board nobody updates for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-tools-workflows#071",
+   "text": "Explain how to evaluate a new tool before adopting a manual weekly report you rebuild every time. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-tools-workflows#072",
+   "text": "Help me with a calendar that double-books you: design a backup-and-restore routine for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-tools-workflows#073",
+   "text": "Create a maintenance checklist for a research-clipping pile with no structure. Use a persuasive tone throughout."
+  },
+  {
+   "id": "productivity-tools-workflows#074",
+   "text": "You are a project manager. Propose a minimal tool stack for a research-clipping pile with no structure and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-tools-workflows#075",
+   "text": "Design a backup-and-restore routine for a manual weekly report you rebuild every time. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-tools-workflows#076",
+   "text": "Before I start on a household task board nobody updates, propose a minimal tool stack for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-tools-workflows#077",
+   "text": "Draft a quick-capture protocol for notes scattered across four apps. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-tools-workflows#078",
+   "text": "Compare two approaches to recurring file-renaming chores. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-tools-workflows#079",
+   "text": "As a recovery-focused therapist-adjacent coach, I keep hitting the same wall with a backup routine you keep forgetting. Draft a quick-capture protocol for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-tools-workflows#080",
+   "text": "Write a migration plan off a bloated system for a personal CRM lost in spreadsheets. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-tools-workflows#081",
+   "text": "Draft a quick-capture protocol for a to-do app graveyard on your phone."
+  },
+  {
+   "id": "productivity-tools-workflows#082",
+   "text": "Draft a quick-capture protocol for a password system held in a browser. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-tools-workflows#083",
+   "text": "Act as a recovery-focused therapist-adjacent coach. Create a maintenance checklist for a calendar that double-books you, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-tools-workflows#084",
+   "text": "Draft a quick-capture protocol for a manual weekly report you rebuild every time. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-tools-workflows#085",
+   "text": "I’m working on a calendar that double-books you. Design the automation steps for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-tools-workflows#086",
+   "text": "Design a backup-and-restore routine for a to-do app graveyard on your phone for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-tools-workflows#087",
+   "text": "Compare two approaches to a research-clipping pile with no structure. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-tools-workflows#088",
+   "text": "Help me with notes scattered across four apps: write a migration plan off a bloated system for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-tools-workflows#089",
+   "text": "Design the automation steps for a manual weekly report you rebuild every time. Use a playful tone throughout."
+  },
+  {
+   "id": "productivity-tools-workflows#090",
+   "text": "You are a productivity coach. Propose a minimal tool stack for a manual weekly report you rebuild every time and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-tools-workflows#091",
+   "text": "Create a maintenance checklist for a manual weekly report you rebuild every time. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-tools-workflows#092",
+   "text": "Before I start on a personal CRM lost in spreadsheets, create a maintenance checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-tools-workflows#093",
+   "text": "Explain how to evaluate a new tool before adopting a backup routine you keep forgetting. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-tools-workflows#094",
+   "text": "Explain how to evaluate a new tool before adopting a personal CRM lost in spreadsheets. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-tools-workflows#095",
+   "text": "As a chief of staff, I keep hitting the same wall with a meeting-notes system spread over docs. Compare two approaches to it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-tools-workflows#096",
+   "text": "Design the automation steps for a personal CRM lost in spreadsheets. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-tools-workflows#097",
+   "text": "Draft a quick-capture protocol for recurring file-renaming chores. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-tools-workflows#098",
+   "text": "Propose a minimal tool stack for a password system held in a browser. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-tools-workflows#099",
+   "text": "Design a backup-and-restore routine for a password system held in a browser."
+  },
+  {
+   "id": "productivity-tools-workflows#100",
+   "text": "Write a migration plan off a bloated system for a to-do app graveyard on your phone."
+  },
+  {
+   "id": "productivity-tools-workflows#101",
+   "text": "Design a backup-and-restore routine for a personal CRM lost in spreadsheets."
+  },
+  {
+   "id": "productivity-tools-workflows#102",
+   "text": "Compare two approaches to a household task board nobody updates."
+  },
+  {
+   "id": "productivity-tools-workflows#103",
+   "text": "Write a migration plan off a bloated system for a calendar that double-books you."
+  },
+  {
+   "id": "productivity-tools-workflows#104",
+   "text": "Propose a minimal tool stack for a to-do app graveyard on your phone."
+  }
+ ]
+}

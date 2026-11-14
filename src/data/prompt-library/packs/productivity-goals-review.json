@@ -1,0 +1,430 @@
+{
+ "slug": "productivity-goals-review",
+ "categorySlug": "productivity",
+ "category": "Productivity & Habits",
+ "title": "Goals & Reviews",
+ "description": "Set direction, measure honestly, adjust without drama.",
+ "tags": [
+  "goals",
+  "okr",
+  "review"
+ ],
+ "prompts": [
+  {
+   "id": "productivity-goals-review#001",
+   "text": "Turn vague ambitions into SMART goals for a fitness goal derailed by travel."
+  },
+  {
+   "id": "productivity-goals-review#002",
+   "text": "Write a mid-course correction plan for an annual review that feels honest. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-goals-review#003",
+   "text": "Act as a behavior-design researcher. Write a year-end reflection guide for a savings goal with irregular income, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-goals-review#004",
+   "text": "List the trade-offs to accept for a savings goal with irregular income. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-goals-review#005",
+   "text": "I’m working on a business goal after a market shift. Design a monthly review ritual for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-goals-review#006",
+   "text": "Write a year-end reflection guide for a house-project goal stuck in planning for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-goals-review#007",
+   "text": "Build a milestone ladder for a savings goal with irregular income. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-goals-review#008",
+   "text": "Help me with a career-goal fork: manager or maker: turn vague ambitions into SMART goals for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-goals-review#009",
+   "text": "Turn vague ambitions into SMART goals for a side-project goal competing with a day job. Use a direct tone throughout."
+  },
+  {
+   "id": "productivity-goals-review#010",
+   "text": "You are a remote-work veteran. Write a year-end reflection guide for a fitness goal derailed by travel and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-goals-review#011",
+   "text": "Draft an accountability-partner format for a career-goal fork: manager or maker. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-goals-review#012",
+   "text": "Before I start on personal quarterly goals that slip by week six, write a year-end reflection guide for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-goals-review#013",
+   "text": "Design a monthly review ritual for a team OKR set nobody references. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-goals-review#014",
+   "text": "List the trade-offs to accept for a side-project goal competing with a day job. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-goals-review#015",
+   "text": "As a minimalist systems tinkerer, I keep hitting the same wall with a health-goal plateau. Turn vague ambitions into SMART goals for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-goals-review#016",
+   "text": "Write a mid-course correction plan for a reading goal that became homework. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-goals-review#017",
+   "text": "Design a monthly review ritual for a fitness goal derailed by travel."
+  },
+  {
+   "id": "productivity-goals-review#018",
+   "text": "Create a leading-indicator dashboard for a fitness goal derailed by travel. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-goals-review#019",
+   "text": "Act as a chief of staff. List the trade-offs to accept for a reading goal that became homework, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-goals-review#020",
+   "text": "Design a monthly review ritual for a savings goal with irregular income. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-goals-review#021",
+   "text": "I’m working on a savings goal with irregular income. Create a leading-indicator dashboard for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-goals-review#022",
+   "text": "Design a monthly review ritual for personal quarterly goals that slip by week six for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-goals-review#023",
+   "text": "Write a mid-course correction plan for a savings goal with irregular income. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-goals-review#024",
+   "text": "Help me with a house-project goal stuck in planning: design a monthly review ritual for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-goals-review#025",
+   "text": "List the trade-offs to accept for a business goal after a market shift. Use a direct tone throughout."
+  },
+  {
+   "id": "productivity-goals-review#026",
+   "text": "You are a minimalist systems tinkerer. Write a mid-course correction plan for a business goal after a market shift and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-goals-review#027",
+   "text": "Write a year-end reflection guide for a reading goal that became homework. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-goals-review#028",
+   "text": "Before I start on a learning goal with no deadline pressure, build a milestone ladder for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-goals-review#029",
+   "text": "Write a mid-course correction plan for a fitness goal derailed by travel. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-goals-review#030",
+   "text": "Create a leading-indicator dashboard for an annual review that feels honest. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-goals-review#031",
+   "text": "As a recovery-focused therapist-adjacent coach, I keep hitting the same wall with a side-project goal competing with a day job. Design a monthly review ritual for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-goals-review#032",
+   "text": "Draft an accountability-partner format for a fitness goal derailed by travel. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-goals-review#033",
+   "text": "Build a milestone ladder for a fitness goal derailed by travel."
+  },
+  {
+   "id": "productivity-goals-review#034",
+   "text": "Create a leading-indicator dashboard for a health-goal plateau. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-goals-review#035",
+   "text": "Act as a librarian of tidy systems. Design a monthly review ritual for a health-goal plateau, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-goals-review#036",
+   "text": "Create a leading-indicator dashboard for a side-project goal competing with a day job. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-goals-review#037",
+   "text": "I’m working on a learning goal with no deadline pressure. Design a monthly review ritual for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-goals-review#038",
+   "text": "Draft an accountability-partner format for a business goal after a market shift for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-goals-review#039",
+   "text": "Write a year-end reflection guide for a team OKR set nobody references. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-goals-review#040",
+   "text": "Help me with an annual review that feels honest: write a year-end reflection guide for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-goals-review#041",
+   "text": "Create a leading-indicator dashboard for a business goal after a market shift. Use a direct tone throughout."
+  },
+  {
+   "id": "productivity-goals-review#042",
+   "text": "You are a chief of staff. Create a leading-indicator dashboard for a house-project goal stuck in planning and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-goals-review#043",
+   "text": "Build a milestone ladder for a career-goal fork: manager or maker. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-goals-review#044",
+   "text": "Before I start on a learning goal with no deadline pressure, write a year-end reflection guide for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-goals-review#045",
+   "text": "Design a monthly review ritual for an annual review that feels honest. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-goals-review#046",
+   "text": "Write a mid-course correction plan for a side-project goal competing with a day job. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-goals-review#047",
+   "text": "As a librarian of tidy systems, I keep hitting the same wall with a learning goal with no deadline pressure. Turn vague ambitions into SMART goals for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-goals-review#048",
+   "text": "Build a milestone ladder for personal quarterly goals that slip by week six. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-goals-review#049",
+   "text": "Draft an accountability-partner format for a team OKR set nobody references."
+  },
+  {
+   "id": "productivity-goals-review#050",
+   "text": "Draft an accountability-partner format for an annual review that feels honest. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-goals-review#051",
+   "text": "Act as a librarian of tidy systems. Draft an accountability-partner format for a health-goal plateau, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-goals-review#052",
+   "text": "Draft an accountability-partner format for a savings goal with irregular income. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-goals-review#053",
+   "text": "I’m working on a career-goal fork: manager or maker. List the trade-offs to accept for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-goals-review#054",
+   "text": "Turn vague ambitions into SMART goals for a house-project goal stuck in planning for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-goals-review#055",
+   "text": "Create a leading-indicator dashboard for a career-goal fork: manager or maker. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-goals-review#056",
+   "text": "Help me with a career-goal fork: manager or maker: design a monthly review ritual for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-goals-review#057",
+   "text": "List the trade-offs to accept for a house-project goal stuck in planning. Use a formal tone throughout."
+  },
+  {
+   "id": "productivity-goals-review#058",
+   "text": "You are a librarian of tidy systems. List the trade-offs to accept for a team OKR set nobody references and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-goals-review#059",
+   "text": "Turn vague ambitions into SMART goals for personal quarterly goals that slip by week six. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-goals-review#060",
+   "text": "Before I start on a health-goal plateau, write a mid-course correction plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-goals-review#061",
+   "text": "Turn vague ambitions into SMART goals for an annual review that feels honest. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-goals-review#062",
+   "text": "Create a leading-indicator dashboard for a team OKR set nobody references. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-goals-review#063",
+   "text": "As a minimalist systems tinkerer, I keep hitting the same wall with a health-goal plateau. Build a milestone ladder for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-goals-review#064",
+   "text": "Draft an accountability-partner format for a house-project goal stuck in planning. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-goals-review#065",
+   "text": "Build a milestone ladder for a reading goal that became homework."
+  },
+  {
+   "id": "productivity-goals-review#066",
+   "text": "List the trade-offs to accept for a health-goal plateau. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-goals-review#067",
+   "text": "Act as a behavior-design researcher. Write a year-end reflection guide for a side-project goal competing with a day job, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-goals-review#068",
+   "text": "Build a milestone ladder for a side-project goal competing with a day job. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-goals-review#069",
+   "text": "I’m working on a learning goal with no deadline pressure. Write a mid-course correction plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-goals-review#070",
+   "text": "Turn vague ambitions into SMART goals for a business goal after a market shift for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-goals-review#071",
+   "text": "List the trade-offs to accept for an annual review that feels honest. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-goals-review#072",
+   "text": "Help me with a business goal after a market shift: write a year-end reflection guide for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-goals-review#073",
+   "text": "Build a milestone ladder for a business goal after a market shift. Use a direct tone throughout."
+  },
+  {
+   "id": "productivity-goals-review#074",
+   "text": "You are a minimalist systems tinkerer. Draft an accountability-partner format for a side-project goal competing with a day job and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-goals-review#075",
+   "text": "Create a leading-indicator dashboard for a learning goal with no deadline pressure. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-goals-review#076",
+   "text": "Before I start on a team OKR set nobody references, write a mid-course correction plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-goals-review#077",
+   "text": "Write a mid-course correction plan for a career-goal fork: manager or maker. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-goals-review#078",
+   "text": "Build a milestone ladder for an annual review that feels honest. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-goals-review#079",
+   "text": "As a productivity coach, I keep hitting the same wall with a house-project goal stuck in planning. Build a milestone ladder for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-goals-review#080",
+   "text": "Draft an accountability-partner format for personal quarterly goals that slip by week six. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-goals-review#081",
+   "text": "Turn vague ambitions into SMART goals for a reading goal that became homework."
+  },
+  {
+   "id": "productivity-goals-review#082",
+   "text": "Draft an accountability-partner format for a learning goal with no deadline pressure. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-goals-review#083",
+   "text": "Act as a minimalist systems tinkerer. List the trade-offs to accept for a learning goal with no deadline pressure, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-goals-review#084",
+   "text": "List the trade-offs to accept for personal quarterly goals that slip by week six. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-goals-review#085",
+   "text": "I’m working on a team OKR set nobody references. Build a milestone ladder for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-goals-review#086",
+   "text": "Write a year-end reflection guide for a career-goal fork: manager or maker for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-goals-review#087",
+   "text": "Create a leading-indicator dashboard for personal quarterly goals that slip by week six. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-goals-review#088",
+   "text": "Help me with a health-goal plateau: write a year-end reflection guide for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-goals-review#089",
+   "text": "Design a monthly review ritual for a reading goal that became homework. Use a empathetic tone throughout."
+  },
+  {
+   "id": "productivity-goals-review#090",
+   "text": "You are a recovery-focused therapist-adjacent coach. Create a leading-indicator dashboard for a reading goal that became homework and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-goals-review#091",
+   "text": "Turn vague ambitions into SMART goals for a team OKR set nobody references. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-goals-review#092",
+   "text": "Before I start on a savings goal with irregular income, turn vague ambitions into SMART goals for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-goals-review#093",
+   "text": "Write a mid-course correction plan for personal quarterly goals that slip by week six. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-goals-review#094",
+   "text": "List the trade-offs to accept for a fitness goal derailed by travel. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-goals-review#095",
+   "text": "As a project manager, I keep hitting the same wall with a reading goal that became homework. Draft an accountability-partner format for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-goals-review#096",
+   "text": "Write a mid-course correction plan for a house-project goal stuck in planning. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-goals-review#097",
+   "text": "Turn vague ambitions into SMART goals for a fitness goal derailed by travel. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-goals-review#098",
+   "text": "Write a mid-course correction plan for an annual review that feels honest. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-goals-review#099",
+   "text": "Write a year-end reflection guide for a savings goal with irregular income."
+  },
+  {
+   "id": "productivity-goals-review#100",
+   "text": "List the trade-offs to accept for a savings goal with irregular income."
+  },
+  {
+   "id": "productivity-goals-review#101",
+   "text": "Design a monthly review ritual for a business goal after a market shift."
+  },
+  {
+   "id": "productivity-goals-review#102",
+   "text": "Write a year-end reflection guide for a house-project goal stuck in planning."
+  },
+  {
+   "id": "productivity-goals-review#103",
+   "text": "Build a milestone ladder for a savings goal with irregular income."
+  },
+  {
+   "id": "productivity-goals-review#104",
+   "text": "Turn vague ambitions into SMART goals for a career-goal fork: manager or maker."
+  }
+ ]
+}

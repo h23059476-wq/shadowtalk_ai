@@ -23,6 +23,7 @@ const ROUTES_TO_PRERENDER = [
   '/about',
   '/pricing',
   '/chatbot',
+  '/prompt-library',
   '/themes',
   '/docs',
   '/faq',

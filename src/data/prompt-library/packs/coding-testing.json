@@ -1,0 +1,430 @@
+{
+ "slug": "coding-testing",
+ "categorySlug": "coding",
+ "category": "Coding & Development",
+ "title": "Testing",
+ "description": "Pyramids, fixtures, and flaky-test triage for real suites.",
+ "tags": [
+  "testing",
+  "quality",
+  "ci"
+ ],
+ "prompts": [
+  {
+   "id": "coding-testing#001",
+   "text": "Write assertions that fail with useful messages for a coverage number that hides risk."
+  },
+  {
+   "id": "coding-testing#002",
+   "text": "Write the first five high-value test cases for property-based tests for a parser. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-testing#003",
+   "text": "Act as an open-source maintainer. Write assertions that fail with useful messages for property-based tests for a parser, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-testing#004",
+   "text": "Build a CI time-reduction plan for a test-data builder pattern. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-testing#005",
+   "text": "I’m working on a checkout flow needing end-to-end tests. Create a fixture and factory setup for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-testing#006",
+   "text": "Produce a flaky-test triage process for contract tests between two teams' services for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-testing#007",
+   "text": "Produce a flaky-test triage process for unit tests for a pricing engine. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-testing#008",
+   "text": "Help me with contract tests between two teams' services: build a CI time-reduction plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-testing#009",
+   "text": "Design the test pyramid for load-testing a public endpoint. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-testing#010",
+   "text": "You are an accessibility-minded frontend engineer. Draft a testing-strategy memo for contract tests between two teams' services and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-testing#011",
+   "text": "Build a CI time-reduction plan for a11y tests for a design system. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-testing#012",
+   "text": "Before I start on a coverage number that hides risk, build a CI time-reduction plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-testing#013",
+   "text": "Create a fixture and factory setup for load-testing a public endpoint. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-testing#014",
+   "text": "Build a CI time-reduction plan for an integration test for a queue consumer. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-testing#015",
+   "text": "As a code reviewer on a large codebase, I keep hitting the same wall with unit tests for a pricing engine. Build a CI time-reduction plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-testing#016",
+   "text": "Design the test pyramid for a11y tests for a design system. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-testing#017",
+   "text": "Build a CI time-reduction plan for a flaky test suite failing on CI only."
+  },
+  {
+   "id": "coding-testing#018",
+   "text": "Produce a flaky-test triage process for property-based tests for a parser. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-testing#019",
+   "text": "Act as an open-source maintainer. Create a fixture and factory setup for property-based tests for a parser, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-testing#020",
+   "text": "Design the test pyramid for a test-data builder pattern. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-testing#021",
+   "text": "I’m working on load-testing a public endpoint. Write assertions that fail with useful messages for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-testing#022",
+   "text": "Create a fixture and factory setup for a coverage number that hides risk for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-testing#023",
+   "text": "Write assertions that fail with useful messages for contract tests between two teams' services. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-testing#024",
+   "text": "Help me with a coverage number that hides risk: produce a flaky-test triage process for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-testing#025",
+   "text": "Produce a flaky-test triage process for testing time-dependent logic. Use a direct tone throughout."
+  },
+  {
+   "id": "coding-testing#026",
+   "text": "You are an accessibility-minded frontend engineer. Create a fixture and factory setup for contract tests between two teams' services and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-testing#027",
+   "text": "Write the first five high-value test cases for load-testing a public endpoint. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-testing#028",
+   "text": "Before I start on a checkout flow needing end-to-end tests, produce a flaky-test triage process for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-testing#029",
+   "text": "Design the test pyramid for a checkout flow needing end-to-end tests. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-testing#030",
+   "text": "Draft a testing-strategy memo for testing time-dependent logic. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-testing#031",
+   "text": "As a tech lead of a small team, I keep hitting the same wall with contract tests between two teams' services. Write the first five high-value test cases for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-testing#032",
+   "text": "Write assertions that fail with useful messages for an integration test for a queue consumer. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-testing#033",
+   "text": "Create a fixture and factory setup for a11y tests for a design system."
+  },
+  {
+   "id": "coding-testing#034",
+   "text": "Write assertions that fail with useful messages for a11y tests for a design system. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-testing#035",
+   "text": "Act as a site-reliability engineer. Draft a testing-strategy memo for a checkout flow needing end-to-end tests, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-testing#036",
+   "text": "Build a CI time-reduction plan for testing time-dependent logic. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-testing#037",
+   "text": "I’m working on a test-data builder pattern. Create a fixture and factory setup for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-testing#038",
+   "text": "Explain what not to test for a flaky test suite failing on CI only for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-testing#039",
+   "text": "Write the first five high-value test cases for a coverage number that hides risk. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-testing#040",
+   "text": "Help me with snapshot tests that always diff: create a fixture and factory setup for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-testing#041",
+   "text": "Design the test pyramid for contract tests between two teams' services. Use a persuasive tone throughout."
+  },
+  {
+   "id": "coding-testing#042",
+   "text": "You are a code reviewer on a large codebase. Produce a flaky-test triage process for load-testing a public endpoint and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-testing#043",
+   "text": "Design the test pyramid for unit tests for a pricing engine. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-testing#044",
+   "text": "Before I start on a test-data builder pattern, explain what not to test for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-testing#045",
+   "text": "Produce a flaky-test triage process for a test-data builder pattern. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-testing#046",
+   "text": "Draft a testing-strategy memo for a coverage number that hides risk. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-testing#047",
+   "text": "As an accessibility-minded frontend engineer, I keep hitting the same wall with a test-data builder pattern. Write assertions that fail with useful messages for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-testing#048",
+   "text": "Draft a testing-strategy memo for an integration test for a queue consumer. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-testing#049",
+   "text": "Design the test pyramid for testing time-dependent logic."
+  },
+  {
+   "id": "coding-testing#050",
+   "text": "Write assertions that fail with useful messages for testing time-dependent logic. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-testing#051",
+   "text": "Act as an accessibility-minded frontend engineer. Design the test pyramid for snapshot tests that always diff, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-testing#052",
+   "text": "Draft a testing-strategy memo for snapshot tests that always diff. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-testing#053",
+   "text": "I’m working on a flaky test suite failing on CI only. Write assertions that fail with useful messages for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-testing#054",
+   "text": "Write assertions that fail with useful messages for snapshot tests that always diff for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-testing#055",
+   "text": "Design the test pyramid for property-based tests for a parser. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-testing#056",
+   "text": "Help me with a11y tests for a design system: write the first five high-value test cases for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-testing#057",
+   "text": "Write assertions that fail with useful messages for a checkout flow needing end-to-end tests. Use a professional tone throughout."
+  },
+  {
+   "id": "coding-testing#058",
+   "text": "You are a tech lead of a small team. Design the test pyramid for a coverage number that hides risk and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-testing#059",
+   "text": "Build a CI time-reduction plan for snapshot tests that always diff. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-testing#060",
+   "text": "Before I start on an integration test for a queue consumer, explain what not to test for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-testing#061",
+   "text": "Produce a flaky-test triage process for a flaky test suite failing on CI only. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-testing#062",
+   "text": "Produce a flaky-test triage process for snapshot tests that always diff. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-testing#063",
+   "text": "As a code reviewer on a large codebase, I keep hitting the same wall with snapshot tests that always diff. Explain what not to test for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-testing#064",
+   "text": "Explain what not to test for contract tests between two teams' services. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-testing#065",
+   "text": "Write the first five high-value test cases for snapshot tests that always diff."
+  },
+  {
+   "id": "coding-testing#066",
+   "text": "Create a fixture and factory setup for a flaky test suite failing on CI only. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-testing#067",
+   "text": "Act as a platform engineer. Draft a testing-strategy memo for a flaky test suite failing on CI only, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-testing#068",
+   "text": "Create a fixture and factory setup for an integration test for a queue consumer. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-testing#069",
+   "text": "I’m working on testing time-dependent logic. Explain what not to test for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-testing#070",
+   "text": "Explain what not to test for a coverage number that hides risk for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-testing#071",
+   "text": "Build a CI time-reduction plan for load-testing a public endpoint. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-testing#072",
+   "text": "Help me with an integration test for a queue consumer: design the test pyramid for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-testing#073",
+   "text": "Produce a flaky-test triage process for a11y tests for a design system. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-testing#074",
+   "text": "You are a developer-education author. Explain what not to test for unit tests for a pricing engine and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-testing#075",
+   "text": "Build a CI time-reduction plan for property-based tests for a parser. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-testing#076",
+   "text": "Before I start on unit tests for a pricing engine, create a fixture and factory setup for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-testing#077",
+   "text": "Write the first five high-value test cases for unit tests for a pricing engine. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-testing#078",
+   "text": "Build a CI time-reduction plan for a checkout flow needing end-to-end tests. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-testing#079",
+   "text": "As a platform engineer, I keep hitting the same wall with property-based tests for a parser. Explain what not to test for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-testing#080",
+   "text": "Write the first five high-value test cases for a test-data builder pattern. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-testing#081",
+   "text": "Create a fixture and factory setup for testing time-dependent logic."
+  },
+  {
+   "id": "coding-testing#082",
+   "text": "Explain what not to test for a11y tests for a design system. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-testing#083",
+   "text": "Act as a site-reliability engineer. Produce a flaky-test triage process for an integration test for a queue consumer, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-testing#084",
+   "text": "Explain what not to test for load-testing a public endpoint. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-testing#085",
+   "text": "I’m working on unit tests for a pricing engine. Draft a testing-strategy memo for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-testing#086",
+   "text": "Write the first five high-value test cases for testing time-dependent logic for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-testing#087",
+   "text": "Design the test pyramid for a flaky test suite failing on CI only. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-testing#088",
+   "text": "Help me with property-based tests for a parser: draft a testing-strategy memo for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-testing#089",
+   "text": "Draft a testing-strategy memo for a11y tests for a design system. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-testing#090",
+   "text": "You are a site-reliability engineer. Draft a testing-strategy memo for a test-data builder pattern and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-testing#091",
+   "text": "Write the first five high-value test cases for a flaky test suite failing on CI only. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-testing#092",
+   "text": "Before I start on an integration test for a queue consumer, write the first five high-value test cases for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-testing#093",
+   "text": "Write assertions that fail with useful messages for unit tests for a pricing engine. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-testing#094",
+   "text": "Write the first five high-value test cases for a checkout flow needing end-to-end tests. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-testing#095",
+   "text": "As a staff engineer, I keep hitting the same wall with load-testing a public endpoint. Draft a testing-strategy memo for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-testing#096",
+   "text": "Explain what not to test for a checkout flow needing end-to-end tests. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-testing#097",
+   "text": "Write assertions that fail with useful messages for a coverage number that hides risk. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-testing#098",
+   "text": "Write the first five high-value test cases for property-based tests for a parser. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-testing#099",
+   "text": "Write assertions that fail with useful messages for property-based tests for a parser."
+  },
+  {
+   "id": "coding-testing#100",
+   "text": "Build a CI time-reduction plan for a test-data builder pattern."
+  },
+  {
+   "id": "coding-testing#101",
+   "text": "Create a fixture and factory setup for a checkout flow needing end-to-end tests."
+  },
+  {
+   "id": "coding-testing#102",
+   "text": "Produce a flaky-test triage process for contract tests between two teams' services."
+  },
+  {
+   "id": "coding-testing#103",
+   "text": "Produce a flaky-test triage process for unit tests for a pricing engine."
+  },
+  {
+   "id": "coding-testing#104",
+   "text": "Build a CI time-reduction plan for contract tests between two teams' services."
+  }
+ ]
+}

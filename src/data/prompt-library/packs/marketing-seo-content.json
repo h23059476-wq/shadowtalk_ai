@@ -1,0 +1,430 @@
+{
+ "slug": "marketing-seo-content",
+ "categorySlug": "marketing",
+ "category": "Marketing & Growth",
+ "title": "SEO Content",
+ "description": "Search-intent research, outlines, and on-page optimization.",
+ "tags": [
+  "seo",
+  "keywords",
+  "content"
+ ],
+ "prompts": [
+  {
+   "id": "marketing-seo-content#001",
+   "text": "Draft an outline that answers the People-Also-Ask questions about how to start composting in an apartment."
+  },
+  {
+   "id": "marketing-seo-content#002",
+   "text": "Audit common reasons a page about fails to rank how to store fresh herbs. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-seo-content#003",
+   "text": "Act as a lifecycle marketing manager. Audit common reasons a page about fails to rank how to start composting in an apartment, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-seo-content#004",
+   "text": "Draft FAQ schema questions for planning a first two-city trip. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-seo-content#005",
+   "text": "I’m working on electric vs hybrid commuting costs. Produce an internal-linking plan for a hub about it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-seo-content#006",
+   "text": "Draft an outline that answers the People-Also-Ask questions about choosing a first telescope for kids for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-seo-content#007",
+   "text": "Write an SEO brief with target keywords for how to start composting in an apartment. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-seo-content#008",
+   "text": "Help me with first-time landlord checklist: cluster search intent around it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-seo-content#009",
+   "text": "Produce an internal-linking plan for a hub about meal planning for night shifts. Use a formal tone throughout."
+  },
+  {
+   "id": "marketing-seo-content#010",
+   "text": "You are a brand strategist. Produce an internal-linking plan for a hub about how to start composting in an apartment and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-seo-content#011",
+   "text": "Write a people-first draft that avoids keyword stuffing about meal planning for night shifts. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-seo-content#012",
+   "text": "Before I start on electric vs hybrid commuting costs, cluster search intent around it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-seo-content#013",
+   "text": "Write an SEO brief with target keywords for best budget standing desks. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-seo-content#014",
+   "text": "Draft FAQ schema questions for how to unclog a sink without chemicals. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-seo-content#015",
+   "text": "As a SEO specialist, I keep hitting the same wall with how to start composting in an apartment. Write meta title and description options for a page about it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-seo-content#016",
+   "text": "Write a people-first draft that avoids keyword stuffing about electric vs hybrid commuting costs. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-seo-content#017",
+   "text": "Cluster search intent around how to store fresh herbs."
+  },
+  {
+   "id": "marketing-seo-content#018",
+   "text": "Write a people-first draft that avoids keyword stuffing about choosing a first telescope for kids. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-seo-content#019",
+   "text": "Act as a product marketing manager. Draft an outline that answers the People-Also-Ask questions about fixing slow laptop startup times, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-seo-content#020",
+   "text": "Write an SEO brief with target keywords for how to unclog a sink without chemicals. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-seo-content#021",
+   "text": "I’m working on choosing a security camera for apartments. Write meta title and description options for a page about it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-seo-content#022",
+   "text": "Draft an outline that answers the People-Also-Ask questions about meal planning for night shifts for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-seo-content#023",
+   "text": "Write an SEO brief with target keywords for beginner yoga for back pain. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-seo-content#024",
+   "text": "Help me with meal planning for night shifts: draft FAQ schema questions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-seo-content#025",
+   "text": "Write a people-first draft that avoids keyword stuffing about first-time landlord checklist. Use a playful tone throughout."
+  },
+  {
+   "id": "marketing-seo-content#026",
+   "text": "You are a product marketing manager. Audit common reasons a page about fails to rank choosing a first telescope for kids and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-seo-content#027",
+   "text": "Audit common reasons a page about fails to rank electric vs hybrid commuting costs. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-seo-content#028",
+   "text": "Before I start on understanding widget vs gadget tax rules, draft FAQ schema questions for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-seo-content#029",
+   "text": "Write an SEO brief with target keywords for first-time landlord checklist. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-seo-content#030",
+   "text": "Write an SEO brief with target keywords for choosing a security camera for apartments. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-seo-content#031",
+   "text": "As a brand strategist, I keep hitting the same wall with how to store fresh herbs. Draft an outline that answers the People-Also-Ask questions about it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-seo-content#032",
+   "text": "Draft FAQ schema questions for beginner yoga for back pain. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-seo-content#033",
+   "text": "Write a people-first draft that avoids keyword stuffing about trail running shoes for wide feet."
+  },
+  {
+   "id": "marketing-seo-content#034",
+   "text": "Produce an internal-linking plan for a hub about best budget standing desks. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-seo-content#035",
+   "text": "Act as a community growth manager. Audit common reasons a page about fails to rank choosing a security camera for apartments, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-seo-content#036",
+   "text": "Cluster search intent around choosing a first telescope for kids. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-seo-content#037",
+   "text": "I’m working on first-time landlord checklist. Write meta title and description options for a page about it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-seo-content#038",
+   "text": "Draft an outline that answers the People-Also-Ask questions about planning a first two-city trip for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-seo-content#039",
+   "text": "Write a people-first draft that avoids keyword stuffing about best budget standing desks. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-seo-content#040",
+   "text": "Help me with understanding widget vs gadget tax rules: audit common reasons a page about fails to rank it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-seo-content#041",
+   "text": "Cluster search intent around how to start composting in an apartment. Use a encouraging tone throughout."
+  },
+  {
+   "id": "marketing-seo-content#042",
+   "text": "You are a growth marketing lead. Draft FAQ schema questions for first-time landlord checklist and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-seo-content#043",
+   "text": "Produce an internal-linking plan for a hub about fixing slow laptop startup times. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-seo-content#044",
+   "text": "Before I start on electric vs hybrid commuting costs, write an SEO brief with target keywords for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-seo-content#045",
+   "text": "Cluster search intent around how to unclog a sink without chemicals. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-seo-content#046",
+   "text": "Write a people-first draft that avoids keyword stuffing about planning a first two-city trip. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-seo-content#047",
+   "text": "As a brand strategist, I keep hitting the same wall with how to store fresh herbs. Write meta title and description options for a page about it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-seo-content#048",
+   "text": "Write meta title and description options for a page about planning a first two-city trip. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-seo-content#049",
+   "text": "Cluster search intent around best budget standing desks."
+  },
+  {
+   "id": "marketing-seo-content#050",
+   "text": "Audit common reasons a page about fails to rank fixing slow laptop startup times. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-seo-content#051",
+   "text": "Act as a community growth manager. Draft FAQ schema questions for trail running shoes for wide feet, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-seo-content#052",
+   "text": "Draft FAQ schema questions for how to start composting in an apartment. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-seo-content#053",
+   "text": "I’m working on understanding widget vs gadget tax rules. Cluster search intent around it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-seo-content#054",
+   "text": "Write meta title and description options for a page about meal planning for night shifts for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-seo-content#055",
+   "text": "Produce an internal-linking plan for a hub about choosing a first telescope for kids. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-seo-content#056",
+   "text": "Help me with meal planning for night shifts: write an SEO brief with target keywords for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-seo-content#057",
+   "text": "Cluster search intent around meal planning for night shifts. Use a formal tone throughout."
+  },
+  {
+   "id": "marketing-seo-content#058",
+   "text": "You are a customer insights analyst. Produce an internal-linking plan for a hub about choosing a security camera for apartments and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-seo-content#059",
+   "text": "Audit common reasons a page about fails to rank how to unclog a sink without chemicals. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-seo-content#060",
+   "text": "Before I start on how to unclog a sink without chemicals, produce an internal-linking plan for a hub about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-seo-content#061",
+   "text": "Write meta title and description options for a page about fixing slow laptop startup times. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-seo-content#062",
+   "text": "Audit common reasons a page about fails to rank planning a first two-city trip. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-seo-content#063",
+   "text": "As a brand strategist, I keep hitting the same wall with how to store fresh herbs. Draft FAQ schema questions for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-seo-content#064",
+   "text": "Write a people-first draft that avoids keyword stuffing about beginner yoga for back pain. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-seo-content#065",
+   "text": "Write a people-first draft that avoids keyword stuffing about fixing slow laptop startup times."
+  },
+  {
+   "id": "marketing-seo-content#066",
+   "text": "Audit common reasons a page about fails to rank meal planning for night shifts. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-seo-content#067",
+   "text": "Act as a customer insights analyst. Draft an outline that answers the People-Also-Ask questions about how to unclog a sink without chemicals, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-seo-content#068",
+   "text": "Draft FAQ schema questions for electric vs hybrid commuting costs. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-seo-content#069",
+   "text": "I’m working on electric vs hybrid commuting costs. Write meta title and description options for a page about it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-seo-content#070",
+   "text": "Draft FAQ schema questions for choosing a first telescope for kids for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-seo-content#071",
+   "text": "Draft an outline that answers the People-Also-Ask questions about choosing a security camera for apartments. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-seo-content#072",
+   "text": "Help me with how to unclog a sink without chemicals: write a people-first draft that avoids keyword stuffing about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-seo-content#073",
+   "text": "Write meta title and description options for a page about choosing a first telescope for kids. Use a empathetic tone throughout."
+  },
+  {
+   "id": "marketing-seo-content#074",
+   "text": "You are a SEO specialist. Cluster search intent around planning a first two-city trip and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-seo-content#075",
+   "text": "Draft an outline that answers the People-Also-Ask questions about understanding widget vs gadget tax rules. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-seo-content#076",
+   "text": "Before I start on best budget standing desks, draft an outline that answers the People-Also-Ask questions about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-seo-content#077",
+   "text": "Write an SEO brief with target keywords for choosing a first telescope for kids. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-seo-content#078",
+   "text": "Write a people-first draft that avoids keyword stuffing about how to store fresh herbs. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-seo-content#079",
+   "text": "As a lifecycle marketing manager, I keep hitting the same wall with beginner yoga for back pain. Cluster search intent around it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-seo-content#080",
+   "text": "Write an SEO brief with target keywords for trail running shoes for wide feet. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-seo-content#081",
+   "text": "Write an SEO brief with target keywords for understanding widget vs gadget tax rules."
+  },
+  {
+   "id": "marketing-seo-content#082",
+   "text": "Cluster search intent around fixing slow laptop startup times. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-seo-content#083",
+   "text": "Act as a growth marketing lead. Audit common reasons a page about fails to rank best budget standing desks, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-seo-content#084",
+   "text": "Write a people-first draft that avoids keyword stuffing about choosing a security camera for apartments. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-seo-content#085",
+   "text": "I’m working on trail running shoes for wide feet. Produce an internal-linking plan for a hub about it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-seo-content#086",
+   "text": "Write meta title and description options for a page about trail running shoes for wide feet for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-seo-content#087",
+   "text": "Produce an internal-linking plan for a hub about beginner yoga for back pain. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-seo-content#088",
+   "text": "Help me with first-time landlord checklist: draft an outline that answers the People-Also-Ask questions about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-seo-content#089",
+   "text": "Write meta title and description options for a page about beginner yoga for back pain. Use a empathetic tone throughout."
+  },
+  {
+   "id": "marketing-seo-content#090",
+   "text": "You are a customer insights analyst. Cluster search intent around choosing a security camera for apartments and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-seo-content#091",
+   "text": "Write meta title and description options for a page about how to unclog a sink without chemicals. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-seo-content#092",
+   "text": "Before I start on planning a first two-city trip, write an SEO brief with target keywords for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-seo-content#093",
+   "text": "Draft FAQ schema questions for best budget standing desks. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-seo-content#094",
+   "text": "Draft an outline that answers the People-Also-Ask questions about electric vs hybrid commuting costs. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-seo-content#095",
+   "text": "As a performance marketer, I keep hitting the same wall with trail running shoes for wide feet. Cluster search intent around it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-seo-content#096",
+   "text": "Draft FAQ schema questions for fixing slow laptop startup times. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-seo-content#097",
+   "text": "Produce an internal-linking plan for a hub about first-time landlord checklist."
+  },
+  {
+   "id": "marketing-seo-content#098",
+   "text": "Audit common reasons a page about fails to rank trail running shoes for wide feet. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-seo-content#099",
+   "text": "Act as a community growth manager. Draft an outline that answers the People-Also-Ask questions about trail running shoes for wide feet, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-seo-content#100",
+   "text": "Write an SEO brief with target keywords for how to store fresh herbs. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-seo-content#101",
+   "text": "I’m working on beginner yoga for back pain. Audit common reasons a page about fails to rank it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-seo-content#102",
+   "text": "Produce an internal-linking plan for a hub about understanding widget vs gadget tax rules for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-seo-content#103",
+   "text": "Produce an internal-linking plan for a hub about planning a first two-city trip. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-seo-content#104",
+   "text": "Help me with first-time landlord checklist: audit common reasons a page about fails to rank it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

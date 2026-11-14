@@ -1,0 +1,430 @@
+{
+ "slug": "growth-journaling-reflection",
+ "categorySlug": "growth",
+ "category": "Personal Growth",
+ "title": "Journaling & Reflection",
+ "description": "Prompts and rituals that surface what actually matters.",
+ "tags": [
+  "journaling",
+  "reflection",
+  "prompts"
+ ],
+ "prompts": [
+  {
+   "id": "growth-journaling-reflection#001",
+   "text": "Write a gentle-processing script for a Sunday evening weekly review."
+  },
+  {
+   "id": "growth-journaling-reflection#002",
+   "text": "Design a fifteen-minute reflection ritual for a gratitude practice that isn’t repetitive. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-journaling-reflection#003",
+   "text": "Act as a financial-literacy educator. Write a letter-to-future-self prompt for a mid-year goals pulse-check, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-journaling-reflection#004",
+   "text": "Create a pattern-spotting checklist for a Sunday evening weekly review. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-journaling-reflection#005",
+   "text": "I’m working on a friendship you want to repair. Write a gentle-processing script for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-journaling-reflection#006",
+   "text": "Write ten journaling prompts for a gratitude practice that isn’t repetitive for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-journaling-reflection#007",
+   "text": "Write a letter-to-future-self prompt for a friendship you want to repair. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-journaling-reflection#008",
+   "text": "Help me with a Sunday evening weekly review: design a fifteen-minute reflection ritual for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-journaling-reflection#009",
+   "text": "Design a fifteen-minute reflection ritual for a mid-year goals pulse-check. Use a direct tone throughout."
+  },
+  {
+   "id": "growth-journaling-reflection#010",
+   "text": "You are a resilience and stress educator. Write a gentle-processing script for processing a difficult conversation and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-journaling-reflection#011",
+   "text": "Write a gentle-processing script for a decision you keep postponing. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-journaling-reflection#012",
+   "text": "Before I start on a relationship-pattern inventory, create a follow-up action step after reflecting on it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-journaling-reflection#013",
+   "text": "Write ten journaling prompts for a friendship you want to repair. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-journaling-reflection#014",
+   "text": "Design a monthly themes review for a work fear you haven’t named. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-journaling-reflection#015",
+   "text": "As a decision-quality facilitator, I keep hitting the same wall with a creative-block excavation. Write a gentle-processing script for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-journaling-reflection#016",
+   "text": "Design a monthly themes review for a Sunday evening weekly review. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-journaling-reflection#017",
+   "text": "Create a pattern-spotting checklist for a year-end values audit."
+  },
+  {
+   "id": "growth-journaling-reflection#018",
+   "text": "Design a monthly themes review for a decision you keep postponing. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-journaling-reflection#019",
+   "text": "Act as a decision-quality facilitator. Draft a sentence-starter set for a year-end values audit, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-journaling-reflection#020",
+   "text": "Create a pattern-spotting checklist for a relationship-pattern inventory. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-journaling-reflection#021",
+   "text": "I’m working on a Sunday evening weekly review. Create a follow-up action step after reflecting on it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-journaling-reflection#022",
+   "text": "Design a monthly themes review for a gratitude practice that isn’t repetitive for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-journaling-reflection#023",
+   "text": "Design a monthly themes review for a travel-memory reflection ritual. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-journaling-reflection#024",
+   "text": "Help me with a decision you keep postponing: write a letter-to-future-self prompt for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-journaling-reflection#025",
+   "text": "Write ten journaling prompts for processing a difficult conversation. Use a empathetic tone throughout."
+  },
+  {
+   "id": "growth-journaling-reflection#026",
+   "text": "You are a communication-skills coach. Write a gentle-processing script for a travel-memory reflection ritual and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-journaling-reflection#027",
+   "text": "Design a monthly themes review for morning pages before a big day. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-journaling-reflection#028",
+   "text": "Before I start on a year-end values audit, create a follow-up action step after reflecting on it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-journaling-reflection#029",
+   "text": "Write a letter-to-future-self prompt for a creative-block excavation. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-journaling-reflection#030",
+   "text": "Design a monthly themes review for a creative-block excavation. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-journaling-reflection#031",
+   "text": "As a decision-quality facilitator, I keep hitting the same wall with processing a difficult conversation. Design a fifteen-minute reflection ritual for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-journaling-reflection#032",
+   "text": "Create a pattern-spotting checklist for a mid-year goals pulse-check. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-journaling-reflection#033",
+   "text": "Design a monthly themes review for processing a difficult conversation."
+  },
+  {
+   "id": "growth-journaling-reflection#034",
+   "text": "Write ten journaling prompts for a decision you keep postponing. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-journaling-reflection#035",
+   "text": "Act as a reflective journaling guide. Create a follow-up action step after reflecting on a gratitude practice that isn’t repetitive, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-journaling-reflection#036",
+   "text": "Draft a sentence-starter set for a friendship you want to repair. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-journaling-reflection#037",
+   "text": "I’m working on a gratitude practice that isn’t repetitive. Create a pattern-spotting checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-journaling-reflection#038",
+   "text": "Design a fifteen-minute reflection ritual for a year-end values audit for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-journaling-reflection#039",
+   "text": "Design a fifteen-minute reflection ritual for a decision you keep postponing. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-journaling-reflection#040",
+   "text": "Help me with a decision you keep postponing: draft a sentence-starter set for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-journaling-reflection#041",
+   "text": "Write a letter-to-future-self prompt for processing a difficult conversation. Use a empathetic tone throughout."
+  },
+  {
+   "id": "growth-journaling-reflection#042",
+   "text": "You are a communication-skills coach. Create a pattern-spotting checklist for a travel-memory reflection ritual and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-journaling-reflection#043",
+   "text": "Create a follow-up action step after reflecting on a decision you keep postponing. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-journaling-reflection#044",
+   "text": "Before I start on a relationship-pattern inventory, design a monthly themes review for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-journaling-reflection#045",
+   "text": "Write ten journaling prompts for a mid-year goals pulse-check. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-journaling-reflection#046",
+   "text": "Write ten journaling prompts for a travel-memory reflection ritual. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-journaling-reflection#047",
+   "text": "As a practical life coach, I keep hitting the same wall with a friendship you want to repair. Create a follow-up action step after reflecting on it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-journaling-reflection#048",
+   "text": "Design a monthly themes review for a mid-year goals pulse-check. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-journaling-reflection#049",
+   "text": "Write a letter-to-future-self prompt for a relationship-pattern inventory."
+  },
+  {
+   "id": "growth-journaling-reflection#050",
+   "text": "Create a pattern-spotting checklist for a decision you keep postponing. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-journaling-reflection#051",
+   "text": "Act as a reflective journaling guide. Write a gentle-processing script for a gratitude practice that isn’t repetitive, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-journaling-reflection#052",
+   "text": "Create a follow-up action step after reflecting on a mid-year goals pulse-check. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-journaling-reflection#053",
+   "text": "I’m working on a travel-memory reflection ritual. Write a letter-to-future-self prompt for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-journaling-reflection#054",
+   "text": "Write ten journaling prompts for a year-end values audit for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-journaling-reflection#055",
+   "text": "Draft a sentence-starter set for processing a difficult conversation. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-journaling-reflection#056",
+   "text": "Help me with a Sunday evening weekly review: draft a sentence-starter set for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-journaling-reflection#057",
+   "text": "Design a monthly themes review for a year-end values audit. Use a encouraging tone throughout."
+  },
+  {
+   "id": "growth-journaling-reflection#058",
+   "text": "You are a reflective journaling guide. Draft a sentence-starter set for a work fear you haven’t named and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-journaling-reflection#059",
+   "text": "Create a pattern-spotting checklist for morning pages before a big day. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-journaling-reflection#060",
+   "text": "Before I start on a year-end values audit, write a letter-to-future-self prompt for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-journaling-reflection#061",
+   "text": "Write a letter-to-future-self prompt for morning pages before a big day. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-journaling-reflection#062",
+   "text": "Design a fifteen-minute reflection ritual for morning pages before a big day. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-journaling-reflection#063",
+   "text": "As a reflective journaling guide, I keep hitting the same wall with morning pages before a big day. Write ten journaling prompts for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-journaling-reflection#064",
+   "text": "Write a gentle-processing script for a year-end values audit. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-journaling-reflection#065",
+   "text": "Write a gentle-processing script for a mid-year goals pulse-check."
+  },
+  {
+   "id": "growth-journaling-reflection#066",
+   "text": "Write ten journaling prompts for a Sunday evening weekly review. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-journaling-reflection#067",
+   "text": "Act as a decision-quality facilitator. Design a fifteen-minute reflection ritual for a friendship you want to repair, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-journaling-reflection#068",
+   "text": "Write a letter-to-future-self prompt for a Sunday evening weekly review. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-journaling-reflection#069",
+   "text": "I’m working on morning pages before a big day. Write a gentle-processing script for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-journaling-reflection#070",
+   "text": "Draft a sentence-starter set for a gratitude practice that isn’t repetitive for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-journaling-reflection#071",
+   "text": "Create a pattern-spotting checklist for a friendship you want to repair. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-journaling-reflection#072",
+   "text": "Help me with a travel-memory reflection ritual: draft a sentence-starter set for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-journaling-reflection#073",
+   "text": "Create a pattern-spotting checklist for processing a difficult conversation. Use a empathetic tone throughout."
+  },
+  {
+   "id": "growth-journaling-reflection#074",
+   "text": "You are a decision-quality facilitator. Write a letter-to-future-self prompt for a gratitude practice that isn’t repetitive and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-journaling-reflection#075",
+   "text": "Design a fifteen-minute reflection ritual for a creative-block excavation. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-journaling-reflection#076",
+   "text": "Before I start on a work fear you haven’t named, write ten journaling prompts for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-journaling-reflection#077",
+   "text": "Design a fifteen-minute reflection ritual for a relationship-pattern inventory. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-journaling-reflection#078",
+   "text": "Create a pattern-spotting checklist for a work fear you haven’t named. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-journaling-reflection#079",
+   "text": "As a financial-literacy educator, I keep hitting the same wall with a relationship-pattern inventory. Write ten journaling prompts for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-journaling-reflection#080",
+   "text": "Write a gentle-processing script for a work fear you haven’t named. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-journaling-reflection#081",
+   "text": "Draft a sentence-starter set for a creative-block excavation."
+  },
+  {
+   "id": "growth-journaling-reflection#082",
+   "text": "Design a fifteen-minute reflection ritual for a travel-memory reflection ritual. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-journaling-reflection#083",
+   "text": "Act as a practical life coach. Create a follow-up action step after reflecting on processing a difficult conversation, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-journaling-reflection#084",
+   "text": "Write ten journaling prompts for a creative-block excavation. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-journaling-reflection#085",
+   "text": "I’m working on a relationship-pattern inventory. Draft a sentence-starter set for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-journaling-reflection#086",
+   "text": "Create a follow-up action step after reflecting on morning pages before a big day for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-journaling-reflection#087",
+   "text": "Create a follow-up action step after reflecting on a creative-block excavation. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-journaling-reflection#088",
+   "text": "Help me with a friendship you want to repair: design a monthly themes review for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-journaling-reflection#089",
+   "text": "Create a pattern-spotting checklist for a creative-block excavation. Use a empathetic tone throughout."
+  },
+  {
+   "id": "growth-journaling-reflection#090",
+   "text": "You are a reflective journaling guide. Design a fifteen-minute reflection ritual for a work fear you haven’t named and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-journaling-reflection#091",
+   "text": "Create a follow-up action step after reflecting on a work fear you haven’t named. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-journaling-reflection#092",
+   "text": "Before I start on a travel-memory reflection ritual, create a follow-up action step after reflecting on it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-journaling-reflection#093",
+   "text": "Write a gentle-processing script for a relationship-pattern inventory. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-journaling-reflection#094",
+   "text": "Draft a sentence-starter set for morning pages before a big day. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-journaling-reflection#095",
+   "text": "As a resilience and stress educator, I keep hitting the same wall with a mid-year goals pulse-check. Draft a sentence-starter set for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-journaling-reflection#096",
+   "text": "Write a letter-to-future-self prompt for a work fear you haven’t named. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-journaling-reflection#097",
+   "text": "Write a gentle-processing script for a Sunday evening weekly review. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-journaling-reflection#098",
+   "text": "Design a fifteen-minute reflection ritual for a gratitude practice that isn’t repetitive. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-journaling-reflection#099",
+   "text": "Write a letter-to-future-self prompt for a mid-year goals pulse-check."
+  },
+  {
+   "id": "growth-journaling-reflection#100",
+   "text": "Create a pattern-spotting checklist for a Sunday evening weekly review."
+  },
+  {
+   "id": "growth-journaling-reflection#101",
+   "text": "Write a gentle-processing script for a friendship you want to repair."
+  },
+  {
+   "id": "growth-journaling-reflection#102",
+   "text": "Write ten journaling prompts for a gratitude practice that isn’t repetitive."
+  },
+  {
+   "id": "growth-journaling-reflection#103",
+   "text": "Write a letter-to-future-self prompt for a friendship you want to repair."
+  },
+  {
+   "id": "growth-journaling-reflection#104",
+   "text": "Design a fifteen-minute reflection ritual for a Sunday evening weekly review."
+  }
+ ]
+}

@@ -1,0 +1,430 @@
+{
+ "slug": "data-data-storytelling",
+ "categorySlug": "data",
+ "category": "Data & Analytics",
+ "title": "Data Storytelling",
+ "description": "Turn analysis into narratives that drive decisions.",
+ "tags": [
+  "storytelling",
+  "presentation",
+  "charts"
+ ],
+ "prompts": [
+  {
+   "id": "data-data-storytelling#001",
+   "text": "Write an alt-text and accessibility pass for an experiment read-out to skeptical engineers."
+  },
+  {
+   "id": "data-data-storytelling#002",
+   "text": "Simplify without misleading for an annual-report data section. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-data-storytelling#003",
+   "text": "Act as a statistics tutor. Write the narrative arc for presenting user research with numbers, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-data-storytelling#004",
+   "text": "Write the so-what slide for an ops-review for non-analysts. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-data-storytelling#005",
+   "text": "I’m working on an annual-report data section. Prepare the likely-question answers for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-data-storytelling#006",
+   "text": "Write an alt-text and accessibility pass for presenting user research with numbers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-data-storytelling#007",
+   "text": "Choose the right chart types for presenting user research with numbers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-storytelling#008",
+   "text": "Help me with a product-launch postmortem story: write the narrative arc for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-data-storytelling#009",
+   "text": "Draft the headline takeaways for an ops-review for non-analysts. Use a formal tone throughout."
+  },
+  {
+   "id": "data-data-storytelling#010",
+   "text": "You are a statistics tutor. Create an appendix strategy for a sales-year recap for the whole company and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-data-storytelling#011",
+   "text": "Draft the headline takeaways for a monthly metrics review for leadership. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-data-storytelling#012",
+   "text": "Before I start on a market-trends briefing for a sales team, prepare the likely-question answers for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-data-storytelling#013",
+   "text": "Choose the right chart types for an ops-review for non-analysts. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-data-storytelling#014",
+   "text": "Write the so-what slide for explaining a churn spike to the board. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-data-storytelling#015",
+   "text": "As a business-intelligence lead, I keep hitting the same wall with a sales-year recap for the whole company. Write the so-what slide for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-data-storytelling#016",
+   "text": "Draft the headline takeaways for a market-trends briefing for a sales team. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-data-storytelling#017",
+   "text": "Choose the right chart types for an annual-report data section."
+  },
+  {
+   "id": "data-data-storytelling#018",
+   "text": "Write the so-what slide for a public-health data explainer for a blog. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-data-storytelling#019",
+   "text": "Act as a statistics tutor. Create an appendix strategy for an experiment read-out to skeptical engineers, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-data-storytelling#020",
+   "text": "Write the so-what slide for a fundraising-report narrative for donors. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-data-storytelling#021",
+   "text": "I’m working on a product-launch postmortem story. Simplify without misleading for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-data-storytelling#022",
+   "text": "Prepare the likely-question answers for presenting user research with numbers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-data-storytelling#023",
+   "text": "Write the narrative arc for a fundraising-report narrative for donors. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-storytelling#024",
+   "text": "Help me with a sales-year recap for the whole company: write an alt-text and accessibility pass for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-data-storytelling#025",
+   "text": "Prepare the likely-question answers for an ops-review for non-analysts. Use a formal tone throughout."
+  },
+  {
+   "id": "data-data-storytelling#026",
+   "text": "You are an experimentation specialist. Choose the right chart types for a product-launch postmortem story and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-data-storytelling#027",
+   "text": "Write the narrative arc for a market-trends briefing for a sales team. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-data-storytelling#028",
+   "text": "Before I start on a product-launch postmortem story, write an alt-text and accessibility pass for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-data-storytelling#029",
+   "text": "Write the narrative arc for explaining a churn spike to the board. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-data-storytelling#030",
+   "text": "Write an alt-text and accessibility pass for an annual-report data section. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-data-storytelling#031",
+   "text": "As a business-intelligence lead, I keep hitting the same wall with a sales-year recap for the whole company. Write the narrative arc for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-data-storytelling#032",
+   "text": "Simplify without misleading for a market-trends briefing for a sales team. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-data-storytelling#033",
+   "text": "Write the narrative arc for an annual-report data section."
+  },
+  {
+   "id": "data-data-storytelling#034",
+   "text": "Prepare the likely-question answers for a cost-savings story for a CFO. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-data-storytelling#035",
+   "text": "Act as a statistics tutor. Create an appendix strategy for explaining a churn spike to the board, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-data-storytelling#036",
+   "text": "Create an appendix strategy for an ops-review for non-analysts. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-data-storytelling#037",
+   "text": "I’m working on an ops-review for non-analysts. Write the narrative arc for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-data-storytelling#038",
+   "text": "Create an appendix strategy for a market-trends briefing for a sales team for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-data-storytelling#039",
+   "text": "Draft the headline takeaways for an annual-report data section. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-storytelling#040",
+   "text": "Help me with a product-launch postmortem story: prepare the likely-question answers for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-data-storytelling#041",
+   "text": "Draft the headline takeaways for a public-health data explainer for a blog. Use a friendly tone throughout."
+  },
+  {
+   "id": "data-data-storytelling#042",
+   "text": "You are an experimentation specialist. Draft the headline takeaways for a fundraising-report narrative for donors and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-data-storytelling#043",
+   "text": "Simplify without misleading for explaining a churn spike to the board. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-data-storytelling#044",
+   "text": "Before I start on a monthly metrics review for leadership, simplify without misleading for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-data-storytelling#045",
+   "text": "Choose the right chart types for a cost-savings story for a CFO. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-data-storytelling#046",
+   "text": "Write an alt-text and accessibility pass for a market-trends briefing for a sales team. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-data-storytelling#047",
+   "text": "As an analytics engineer, I keep hitting the same wall with a monthly metrics review for leadership. Write the narrative arc for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-data-storytelling#048",
+   "text": "Write an alt-text and accessibility pass for an ops-review for non-analysts. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-data-storytelling#049",
+   "text": "Prepare the likely-question answers for a monthly metrics review for leadership."
+  },
+  {
+   "id": "data-data-storytelling#050",
+   "text": "Write an alt-text and accessibility pass for a monthly metrics review for leadership. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-data-storytelling#051",
+   "text": "Act as an experimentation specialist. Simplify without misleading for a cost-savings story for a CFO, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-data-storytelling#052",
+   "text": "Create an appendix strategy for a monthly metrics review for leadership. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-data-storytelling#053",
+   "text": "I’m working on an experiment read-out to skeptical engineers. Simplify without misleading for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-data-storytelling#054",
+   "text": "Create an appendix strategy for an annual-report data section for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-data-storytelling#055",
+   "text": "Write the so-what slide for an experiment read-out to skeptical engineers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-storytelling#056",
+   "text": "Help me with a sales-year recap for the whole company: choose the right chart types for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-data-storytelling#057",
+   "text": "Draft the headline takeaways for a cost-savings story for a CFO. Use a formal tone throughout."
+  },
+  {
+   "id": "data-data-storytelling#058",
+   "text": "You are an experimentation specialist. Create an appendix strategy for a product-launch postmortem story and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-data-storytelling#059",
+   "text": "Write the narrative arc for an experiment read-out to skeptical engineers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-data-storytelling#060",
+   "text": "Before I start on presenting user research with numbers, simplify without misleading for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-data-storytelling#061",
+   "text": "Choose the right chart types for a market-trends briefing for a sales team. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-data-storytelling#062",
+   "text": "Write an alt-text and accessibility pass for explaining a churn spike to the board. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-data-storytelling#063",
+   "text": "As a business-intelligence lead, I keep hitting the same wall with a sales-year recap for the whole company. Draft the headline takeaways for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-data-storytelling#064",
+   "text": "Draft the headline takeaways for a product-launch postmortem story. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-data-storytelling#065",
+   "text": "Choose the right chart types for a public-health data explainer for a blog."
+  },
+  {
+   "id": "data-data-storytelling#066",
+   "text": "Create an appendix strategy for a cost-savings story for a CFO. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-data-storytelling#067",
+   "text": "Act as a data-quality steward. Choose the right chart types for a fundraising-report narrative for donors, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-data-storytelling#068",
+   "text": "Prepare the likely-question answers for a fundraising-report narrative for donors. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-data-storytelling#069",
+   "text": "I’m working on a sales-year recap for the whole company. Simplify without misleading for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-data-storytelling#070",
+   "text": "Write the so-what slide for presenting user research with numbers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-data-storytelling#071",
+   "text": "Write the so-what slide for a cost-savings story for a CFO. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-storytelling#072",
+   "text": "Help me with a market-trends briefing for a sales team: write the so-what slide for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-data-storytelling#073",
+   "text": "Prepare the likely-question answers for explaining a churn spike to the board. Use a playful tone throughout."
+  },
+  {
+   "id": "data-data-storytelling#074",
+   "text": "You are an experimentation specialist. Write an alt-text and accessibility pass for a fundraising-report narrative for donors and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-data-storytelling#075",
+   "text": "Draft the headline takeaways for an experiment read-out to skeptical engineers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-data-storytelling#076",
+   "text": "Before I start on a monthly metrics review for leadership, write the so-what slide for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-data-storytelling#077",
+   "text": "Write the so-what slide for a product-launch postmortem story. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-data-storytelling#078",
+   "text": "Create an appendix strategy for presenting user research with numbers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-data-storytelling#079",
+   "text": "As a business-intelligence lead, I keep hitting the same wall with a sales-year recap for the whole company. Prepare the likely-question answers for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-data-storytelling#080",
+   "text": "Simplify without misleading for a public-health data explainer for a blog. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-data-storytelling#081",
+   "text": "Write an alt-text and accessibility pass for a cost-savings story for a CFO."
+  },
+  {
+   "id": "data-data-storytelling#082",
+   "text": "Choose the right chart types for a monthly metrics review for leadership. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-data-storytelling#083",
+   "text": "Act as an experimentation specialist. Simplify without misleading for an ops-review for non-analysts, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-data-storytelling#084",
+   "text": "Write the narrative arc for a public-health data explainer for a blog. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-data-storytelling#085",
+   "text": "I’m working on presenting user research with numbers. Draft the headline takeaways for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-data-storytelling#086",
+   "text": "Write an alt-text and accessibility pass for a public-health data explainer for a blog for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-data-storytelling#087",
+   "text": "Simplify without misleading for a fundraising-report narrative for donors. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-storytelling#088",
+   "text": "Help me with an annual-report data section: write the so-what slide for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-data-storytelling#089",
+   "text": "Choose the right chart types for explaining a churn spike to the board. Use a playful tone throughout."
+  },
+  {
+   "id": "data-data-storytelling#090",
+   "text": "You are a senior data analyst. Draft the headline takeaways for explaining a churn spike to the board and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-data-storytelling#091",
+   "text": "Create an appendix strategy for a fundraising-report narrative for donors. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-data-storytelling#092",
+   "text": "Before I start on a public-health data explainer for a blog, create an appendix strategy for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-data-storytelling#093",
+   "text": "Write the narrative arc for a cost-savings story for a CFO. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-data-storytelling#094",
+   "text": "Prepare the likely-question answers for a public-health data explainer for a blog. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-data-storytelling#095",
+   "text": "As a data-quality steward, I keep hitting the same wall with an experiment read-out to skeptical engineers. Prepare the likely-question answers for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-data-storytelling#096",
+   "text": "Choose the right chart types for an experiment read-out to skeptical engineers. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-data-storytelling#097",
+   "text": "Write an alt-text and accessibility pass for an experiment read-out to skeptical engineers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-storytelling#098",
+   "text": "Simplify without misleading for an annual-report data section. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-data-storytelling#099",
+   "text": "Write the narrative arc for presenting user research with numbers."
+  },
+  {
+   "id": "data-data-storytelling#100",
+   "text": "Write the so-what slide for an ops-review for non-analysts."
+  },
+  {
+   "id": "data-data-storytelling#101",
+   "text": "Prepare the likely-question answers for an annual-report data section."
+  },
+  {
+   "id": "data-data-storytelling#102",
+   "text": "Write an alt-text and accessibility pass for presenting user research with numbers."
+  },
+  {
+   "id": "data-data-storytelling#103",
+   "text": "Choose the right chart types for presenting user research with numbers."
+  },
+  {
+   "id": "data-data-storytelling#104",
+   "text": "Write the narrative arc for a product-launch postmortem story."
+  }
+ ]
+}

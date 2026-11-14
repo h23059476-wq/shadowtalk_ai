@@ -1,0 +1,430 @@
+{
+ "slug": "business-strategy-planning",
+ "categorySlug": "business",
+ "category": "Business & Strategy",
+ "title": "Strategy & Planning",
+ "description": "Annual plans, moats, and bets with explicit trade-offs.",
+ "tags": [
+  "strategy",
+  "planning",
+  "decisions"
+ ],
+ "prompts": [
+  {
+   "id": "business-strategy-planning#001",
+   "text": "Create a decision matrix with weighted criteria for a partner-channel strategy for a services firm."
+  },
+  {
+   "id": "business-strategy-planning#002",
+   "text": "Write a one-page strategy memo about a pricing restructure for a maturing SaaS. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-strategy-planning#003",
+   "text": "Act as a serial founder. Run a structured options analysis for a response to a free competitor, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-strategy-planning#004",
+   "text": "List the risks and mitigations for an M&A integration of a small studio. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-strategy-planning#005",
+   "text": "I’m working on a franchise playbook draft. Prep the board-update narrative for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-strategy-planning#006",
+   "text": "Write the two-pizza team charter for a hardware-to-subscription transition for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-strategy-planning#007",
+   "text": "Create a decision matrix with weighted criteria for expanding from one city to three. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-strategy-planning#008",
+   "text": "Help me with a partner-channel strategy for a services firm: draft a 90-day execution plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-strategy-planning#009",
+   "text": "List the risks and mitigations for a three-horizon investment split. Use a professional tone throughout."
+  },
+  {
+   "id": "business-strategy-planning#010",
+   "text": "You are a seasoned operations director. Run a structured options analysis for an annual plan for a 20-person agency and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-strategy-planning#011",
+   "text": "Run a structured options analysis for an M&A integration of a small studio. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-strategy-planning#012",
+   "text": "Before I start on a platform-vs-point-solution decision, run a structured options analysis for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-strategy-planning#013",
+   "text": "Write a one-page strategy memo about an annual plan for a 20-person agency. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-strategy-planning#014",
+   "text": "Identify the assumptions to test first for a franchise playbook draft. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-strategy-planning#015",
+   "text": "As a customer success director, I keep hitting the same wall with an annual plan for a 20-person agency. List the risks and mitigations for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-strategy-planning#016",
+   "text": "Write the two-pizza team charter for a response to a free competitor. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-strategy-planning#017",
+   "text": "Identify the assumptions to test first for a geographic prioritization for field services."
+  },
+  {
+   "id": "business-strategy-planning#018",
+   "text": "Prep the board-update narrative for sunsetting a beloved but unprofitable product. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-strategy-planning#019",
+   "text": "Act as a HR business partner. Draft a 90-day execution plan for a hardware-to-subscription transition, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-strategy-planning#020",
+   "text": "Create a decision matrix with weighted criteria for a pricing restructure for a maturing SaaS. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-strategy-planning#021",
+   "text": "I’m working on a hardware-to-subscription transition. List the risks and mitigations for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-strategy-planning#022",
+   "text": "Prep the board-update narrative for a pricing restructure for a maturing SaaS for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-strategy-planning#023",
+   "text": "List the risks and mitigations for a response to a free competitor. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-strategy-planning#024",
+   "text": "Help me with an M&A integration of a small studio: create a decision matrix with weighted criteria for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-strategy-planning#025",
+   "text": "Run a structured options analysis for a pricing restructure for a maturing SaaS. Use a friendly tone throughout."
+  },
+  {
+   "id": "business-strategy-planning#026",
+   "text": "You are a management consultant. Write the two-pizza team charter for a pricing restructure for a maturing SaaS and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-strategy-planning#027",
+   "text": "Write a one-page strategy memo about sunsetting a beloved but unprofitable product. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-strategy-planning#028",
+   "text": "Before I start on expanding from one city to three, run a structured options analysis for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-strategy-planning#029",
+   "text": "List the risks and mitigations for choosing between two customer segments. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-strategy-planning#030",
+   "text": "Identify the assumptions to test first for a hardware-to-subscription transition. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-strategy-planning#031",
+   "text": "As a finance manager, I keep hitting the same wall with expanding from one city to three. Write a one-page strategy memo about it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-strategy-planning#032",
+   "text": "Identify the assumptions to test first for a three-horizon investment split. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-strategy-planning#033",
+   "text": "Create a decision matrix with weighted criteria for entering the enterprise market as a SMB tool."
+  },
+  {
+   "id": "business-strategy-planning#034",
+   "text": "Identify the assumptions to test first for a platform-vs-point-solution decision. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-strategy-planning#035",
+   "text": "Act as a finance manager. Identify the assumptions to test first for an M&A integration of a small studio, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-strategy-planning#036",
+   "text": "Draft a 90-day execution plan for a franchise playbook draft. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-strategy-planning#037",
+   "text": "I’m working on a platform-vs-point-solution decision. Create a decision matrix with weighted criteria for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-strategy-planning#038",
+   "text": "Run a structured options analysis for a geographic prioritization for field services for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-strategy-planning#039",
+   "text": "Create a decision matrix with weighted criteria for a franchise playbook draft. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-strategy-planning#040",
+   "text": "Help me with an M&A integration of a small studio: write a one-page strategy memo about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-strategy-planning#041",
+   "text": "Run a structured options analysis for a partner-channel strategy for a services firm. Use a formal tone throughout."
+  },
+  {
+   "id": "business-strategy-planning#042",
+   "text": "You are a customer success director. Write the two-pizza team charter for entering the enterprise market as a SMB tool and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-strategy-planning#043",
+   "text": "Prep the board-update narrative for entering the enterprise market as a SMB tool. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-strategy-planning#044",
+   "text": "Before I start on a three-horizon investment split, run a structured options analysis for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-strategy-planning#045",
+   "text": "Prep the board-update narrative for a hardware-to-subscription transition. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-strategy-planning#046",
+   "text": "List the risks and mitigations for a franchise playbook draft. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-strategy-planning#047",
+   "text": "As a seasoned operations director, I keep hitting the same wall with a partner-channel strategy for a services firm. Identify the assumptions to test first for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-strategy-planning#048",
+   "text": "Draft a 90-day execution plan for a pricing restructure for a maturing SaaS. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-strategy-planning#049",
+   "text": "Write the two-pizza team charter for an M&A integration of a small studio."
+  },
+  {
+   "id": "business-strategy-planning#050",
+   "text": "List the risks and mitigations for entering the enterprise market as a SMB tool. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-strategy-planning#051",
+   "text": "Act as a HR business partner. Draft a 90-day execution plan for sunsetting a beloved but unprofitable product, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-strategy-planning#052",
+   "text": "Prep the board-update narrative for an M&A integration of a small studio. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-strategy-planning#053",
+   "text": "I’m working on entering the enterprise market as a SMB tool. Identify the assumptions to test first for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-strategy-planning#054",
+   "text": "Prep the board-update narrative for a platform-vs-point-solution decision for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-strategy-planning#055",
+   "text": "Prep the board-update narrative for a geographic prioritization for field services. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-strategy-planning#056",
+   "text": "Help me with a pricing restructure for a maturing SaaS: list the risks and mitigations for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-strategy-planning#057",
+   "text": "Write the two-pizza team charter for a geographic prioritization for field services. Use a formal tone throughout."
+  },
+  {
+   "id": "business-strategy-planning#058",
+   "text": "You are a seasoned operations director. Write the two-pizza team charter for an annual plan for a 20-person agency and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-strategy-planning#059",
+   "text": "Draft a 90-day execution plan for an M&A integration of a small studio. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-strategy-planning#060",
+   "text": "Before I start on a response to a free competitor, identify the assumptions to test first for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-strategy-planning#061",
+   "text": "Identify the assumptions to test first for an annual plan for a 20-person agency. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-strategy-planning#062",
+   "text": "List the risks and mitigations for a platform-vs-point-solution decision. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-strategy-planning#063",
+   "text": "As a seasoned operations director, I keep hitting the same wall with a partner-channel strategy for a services firm. Prep the board-update narrative for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-strategy-planning#064",
+   "text": "Draft a 90-day execution plan for a geographic prioritization for field services. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-strategy-planning#065",
+   "text": "Create a decision matrix with weighted criteria for sunsetting a beloved but unprofitable product."
+  },
+  {
+   "id": "business-strategy-planning#066",
+   "text": "Write the two-pizza team charter for a platform-vs-point-solution decision. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-strategy-planning#067",
+   "text": "Act as a HR business partner. Draft a 90-day execution plan for an annual plan for a 20-person agency, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-strategy-planning#068",
+   "text": "Write a one-page strategy memo about choosing between two customer segments. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-strategy-planning#069",
+   "text": "I’m working on sunsetting a beloved but unprofitable product. Run a structured options analysis for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-strategy-planning#070",
+   "text": "Write the two-pizza team charter for choosing between two customer segments for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-strategy-planning#071",
+   "text": "List the risks and mitigations for a partner-channel strategy for a services firm. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-strategy-planning#072",
+   "text": "Help me with entering the enterprise market as a SMB tool: draft a 90-day execution plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-strategy-planning#073",
+   "text": "List the risks and mitigations for expanding from one city to three. Use a professional tone throughout."
+  },
+  {
+   "id": "business-strategy-planning#074",
+   "text": "You are a HR business partner. Prep the board-update narrative for a three-horizon investment split and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-strategy-planning#075",
+   "text": "Draft a 90-day execution plan for a platform-vs-point-solution decision. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-strategy-planning#076",
+   "text": "Before I start on expanding from one city to three, write the two-pizza team charter for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-strategy-planning#077",
+   "text": "Draft a 90-day execution plan for expanding from one city to three. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-strategy-planning#078",
+   "text": "Create a decision matrix with weighted criteria for a response to a free competitor. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-strategy-planning#079",
+   "text": "As a HR business partner, I keep hitting the same wall with a pricing restructure for a maturing SaaS. Identify the assumptions to test first for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-strategy-planning#080",
+   "text": "Create a decision matrix with weighted criteria for a hardware-to-subscription transition. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-strategy-planning#081",
+   "text": "Run a structured options analysis for a hardware-to-subscription transition."
+  },
+  {
+   "id": "business-strategy-planning#082",
+   "text": "Draft a 90-day execution plan for a three-horizon investment split. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-strategy-planning#083",
+   "text": "Act as a procurement lead. Prep the board-update narrative for expanding from one city to three, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-strategy-planning#084",
+   "text": "Write a one-page strategy memo about a geographic prioritization for field services. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-strategy-planning#085",
+   "text": "I’m working on a three-horizon investment split. Write the two-pizza team charter for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-strategy-planning#086",
+   "text": "Run a structured options analysis for a franchise playbook draft for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-strategy-planning#087",
+   "text": "Write the two-pizza team charter for a partner-channel strategy for a services firm. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-strategy-planning#088",
+   "text": "Help me with sunsetting a beloved but unprofitable product: write the two-pizza team charter for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-strategy-planning#089",
+   "text": "Create a decision matrix with weighted criteria for a three-horizon investment split. Use a professional tone throughout."
+  },
+  {
+   "id": "business-strategy-planning#090",
+   "text": "You are a startup advisor. List the risks and mitigations for a geographic prioritization for field services and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-strategy-planning#091",
+   "text": "Run a structured options analysis for choosing between two customer segments. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-strategy-planning#092",
+   "text": "Before I start on choosing between two customer segments, create a decision matrix with weighted criteria for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-strategy-planning#093",
+   "text": "Draft a 90-day execution plan for a response to a free competitor. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-strategy-planning#094",
+   "text": "Draft a 90-day execution plan for choosing between two customer segments. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-strategy-planning#095",
+   "text": "As a procurement lead, I keep hitting the same wall with entering the enterprise market as a SMB tool. Write a one-page strategy memo about it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-strategy-planning#096",
+   "text": "Write the two-pizza team charter for a franchise playbook draft. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-strategy-planning#097",
+   "text": "Write a one-page strategy memo about a partner-channel strategy for a services firm."
+  },
+  {
+   "id": "business-strategy-planning#098",
+   "text": "List the risks and mitigations for sunsetting a beloved but unprofitable product. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-strategy-planning#099",
+   "text": "Act as a HR business partner. Identify the assumptions to test first for sunsetting a beloved but unprofitable product, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-strategy-planning#100",
+   "text": "Write a one-page strategy memo about a franchise playbook draft. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-strategy-planning#101",
+   "text": "I’m working on entering the enterprise market as a SMB tool. Run a structured options analysis for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-strategy-planning#102",
+   "text": "Prep the board-update narrative for choosing between two customer segments for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-strategy-planning#103",
+   "text": "Write a one-page strategy memo about a three-horizon investment split. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-strategy-planning#104",
+   "text": "Help me with choosing between two customer segments: identify the assumptions to test first for it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

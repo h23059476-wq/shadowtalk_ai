@@ -1,0 +1,430 @@
+{
+ "slug": "productivity-energy-balance",
+ "categorySlug": "productivity",
+ "category": "Productivity & Habits",
+ "title": "Energy & Balance",
+ "description": "Manage energy, not just time; recover on purpose.",
+ "tags": [
+  "energy",
+  "balance",
+  "recovery"
+ ],
+ "prompts": [
+  {
+   "id": "productivity-energy-balance#001",
+   "text": "Draft a conversation with a manager about exercise that keeps getting postponed."
+  },
+  {
+   "id": "productivity-energy-balance#002",
+   "text": "Draft a conversation with a manager about energy crashes mid-afternoon. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-energy-balance#003",
+   "text": "Act as a librarian of tidy systems. Propose a sustainable weekly rhythm for exercise that keeps getting postponed, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-energy-balance#004",
+   "text": "Write boundary scripts for a night-shift rotation wrecking rhythm. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-energy-balance#005",
+   "text": "I’m working on exercise that keeps getting postponed. List early-warning signs and responses for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-energy-balance#006",
+   "text": "Write boundary scripts for a big project ending with no wind-down for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-energy-balance#007",
+   "text": "Design an energy-audit for exercise that keeps getting postponed. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-energy-balance#008",
+   "text": "Help me with caring for a parent while working: propose a sustainable weekly rhythm for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-energy-balance#009",
+   "text": "Design a screen-curfew routine for a night-shift rotation wrecking rhythm. Use a formal tone throughout."
+  },
+  {
+   "id": "productivity-energy-balance#010",
+   "text": "You are a chief of staff. Build a support-network plan for burnout warning signs ignored too long and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-energy-balance#011",
+   "text": "Design an energy-audit for a night-shift rotation wrecking rhythm. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-energy-balance#012",
+   "text": "Before I start on a big project ending with no wind-down, draft a conversation with a manager about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-energy-balance#013",
+   "text": "Design an energy-audit for friendships slipping during busy seasons. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-energy-balance#014",
+   "text": "Build a support-network plan for exercise that keeps getting postponed. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-energy-balance#015",
+   "text": "As a librarian of tidy systems, I keep hitting the same wall with caring for a parent while working. Draft a conversation with a manager about it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-energy-balance#016",
+   "text": "Create a recovery-plan for exercise that keeps getting postponed. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-energy-balance#017",
+   "text": "Design a screen-curfew routine for caring for a parent while working."
+  },
+  {
+   "id": "productivity-energy-balance#018",
+   "text": "Write boundary scripts for burnout warning signs ignored too long. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-energy-balance#019",
+   "text": "Act as a recovery-focused therapist-adjacent coach. Build a support-network plan for vacation guilt while off, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-energy-balance#020",
+   "text": "Design an energy-audit for a side hustle eating weekends. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-energy-balance#021",
+   "text": "I’m working on exercise that keeps getting postponed. Write boundary scripts for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-energy-balance#022",
+   "text": "List early-warning signs and responses for friendships slipping during busy seasons for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-energy-balance#023",
+   "text": "Build a support-network plan for a night-shift rotation wrecking rhythm. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-energy-balance#024",
+   "text": "Help me with an always-on job with no off switch: propose a sustainable weekly rhythm for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-energy-balance#025",
+   "text": "Write boundary scripts for vacation guilt while off. Use a professional tone throughout."
+  },
+  {
+   "id": "productivity-energy-balance#026",
+   "text": "You are a remote-work veteran. Write boundary scripts for caring for a parent while working and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-energy-balance#027",
+   "text": "Create a recovery-plan for caring for a parent while working. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-energy-balance#028",
+   "text": "Before I start on an always-on job with no off switch, build a support-network plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-energy-balance#029",
+   "text": "Propose a sustainable weekly rhythm for vacation guilt while off. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-energy-balance#030",
+   "text": "Propose a sustainable weekly rhythm for burnout warning signs ignored too long. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-energy-balance#031",
+   "text": "As a behavior-design researcher, I keep hitting the same wall with vacation guilt while off. Design a screen-curfew routine for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-energy-balance#032",
+   "text": "Create a recovery-plan for energy crashes mid-afternoon. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-energy-balance#033",
+   "text": "List early-warning signs and responses for a big project ending with no wind-down."
+  },
+  {
+   "id": "productivity-energy-balance#034",
+   "text": "Design an energy-audit for a new baby reshaping all routines. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-energy-balance#035",
+   "text": "Act as a remote-work veteran. List early-warning signs and responses for burnout warning signs ignored too long, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-energy-balance#036",
+   "text": "Create a recovery-plan for burnout warning signs ignored too long. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-energy-balance#037",
+   "text": "I’m working on burnout warning signs ignored too long. Draft a conversation with a manager about it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-energy-balance#038",
+   "text": "Create a recovery-plan for a side hustle eating weekends for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-energy-balance#039",
+   "text": "Build a support-network plan for a big project ending with no wind-down. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-energy-balance#040",
+   "text": "Help me with screen-heavy evenings and bad sleep: design an energy-audit for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-energy-balance#041",
+   "text": "Create a recovery-plan for friendships slipping during busy seasons. Use a professional tone throughout."
+  },
+  {
+   "id": "productivity-energy-balance#042",
+   "text": "You are a recovery-focused therapist-adjacent coach. Design a screen-curfew routine for an always-on job with no off switch and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-energy-balance#043",
+   "text": "Write boundary scripts for screen-heavy evenings and bad sleep. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-energy-balance#044",
+   "text": "Before I start on burnout warning signs ignored too long, design an energy-audit for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-energy-balance#045",
+   "text": "Draft a conversation with a manager about vacation guilt while off. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-energy-balance#046",
+   "text": "Create a recovery-plan for a night-shift rotation wrecking rhythm. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-energy-balance#047",
+   "text": "As a behavior-design researcher, I keep hitting the same wall with friendships slipping during busy seasons. Propose a sustainable weekly rhythm for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-energy-balance#048",
+   "text": "List early-warning signs and responses for a new baby reshaping all routines. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-energy-balance#049",
+   "text": "Build a support-network plan for a new baby reshaping all routines."
+  },
+  {
+   "id": "productivity-energy-balance#050",
+   "text": "Propose a sustainable weekly rhythm for screen-heavy evenings and bad sleep. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-energy-balance#051",
+   "text": "Act as a librarian of tidy systems. Write boundary scripts for a side hustle eating weekends, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-energy-balance#052",
+   "text": "Design an energy-audit for a big project ending with no wind-down. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-energy-balance#053",
+   "text": "I’m working on a new baby reshaping all routines. Write boundary scripts for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-energy-balance#054",
+   "text": "List early-warning signs and responses for a night-shift rotation wrecking rhythm for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-energy-balance#055",
+   "text": "Design an energy-audit for vacation guilt while off. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-energy-balance#056",
+   "text": "Help me with energy crashes mid-afternoon: design a screen-curfew routine for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-energy-balance#057",
+   "text": "List early-warning signs and responses for caring for a parent while working. Use a friendly tone throughout."
+  },
+  {
+   "id": "productivity-energy-balance#058",
+   "text": "You are a chief of staff. Propose a sustainable weekly rhythm for a big project ending with no wind-down and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-energy-balance#059",
+   "text": "Design a screen-curfew routine for screen-heavy evenings and bad sleep. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-energy-balance#060",
+   "text": "Before I start on a new baby reshaping all routines, propose a sustainable weekly rhythm for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-energy-balance#061",
+   "text": "Draft a conversation with a manager about an always-on job with no off switch. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-energy-balance#062",
+   "text": "List early-warning signs and responses for an always-on job with no off switch. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-energy-balance#063",
+   "text": "As a productivity coach, I keep hitting the same wall with a night-shift rotation wrecking rhythm. Draft a conversation with a manager about it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-energy-balance#064",
+   "text": "Propose a sustainable weekly rhythm for a side hustle eating weekends. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-energy-balance#065",
+   "text": "Design a screen-curfew routine for burnout warning signs ignored too long."
+  },
+  {
+   "id": "productivity-energy-balance#066",
+   "text": "Create a recovery-plan for screen-heavy evenings and bad sleep. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-energy-balance#067",
+   "text": "Act as a behavior-design researcher. Build a support-network plan for energy crashes mid-afternoon, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-energy-balance#068",
+   "text": "Design a screen-curfew routine for friendships slipping during busy seasons. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-energy-balance#069",
+   "text": "I’m working on exercise that keeps getting postponed. Design a screen-curfew routine for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-energy-balance#070",
+   "text": "Draft a conversation with a manager about a new baby reshaping all routines for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-energy-balance#071",
+   "text": "Draft a conversation with a manager about screen-heavy evenings and bad sleep. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-energy-balance#072",
+   "text": "Help me with energy crashes mid-afternoon: write boundary scripts for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-energy-balance#073",
+   "text": "Draft a conversation with a manager about a side hustle eating weekends. Use a playful tone throughout."
+  },
+  {
+   "id": "productivity-energy-balance#074",
+   "text": "You are a recovery-focused therapist-adjacent coach. List early-warning signs and responses for screen-heavy evenings and bad sleep and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-energy-balance#075",
+   "text": "Design a screen-curfew routine for a side hustle eating weekends. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-energy-balance#076",
+   "text": "Before I start on screen-heavy evenings and bad sleep, build a support-network plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-energy-balance#077",
+   "text": "Create a recovery-plan for an always-on job with no off switch. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-energy-balance#078",
+   "text": "Build a support-network plan for a side hustle eating weekends. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-energy-balance#079",
+   "text": "As a librarian of tidy systems, I keep hitting the same wall with caring for a parent while working. Design an energy-audit for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-energy-balance#080",
+   "text": "Create a recovery-plan for a new baby reshaping all routines. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-energy-balance#081",
+   "text": "Design a screen-curfew routine for a new baby reshaping all routines."
+  },
+  {
+   "id": "productivity-energy-balance#082",
+   "text": "Design an energy-audit for energy crashes mid-afternoon. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-energy-balance#083",
+   "text": "Act as a recovery-focused therapist-adjacent coach. Write boundary scripts for friendships slipping during busy seasons, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-energy-balance#084",
+   "text": "Design a screen-curfew routine for a big project ending with no wind-down. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-energy-balance#085",
+   "text": "I’m working on energy crashes mid-afternoon. Propose a sustainable weekly rhythm for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-energy-balance#086",
+   "text": "Design an energy-audit for an always-on job with no off switch for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-energy-balance#087",
+   "text": "List early-warning signs and responses for vacation guilt while off. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-energy-balance#088",
+   "text": "Help me with friendships slipping during busy seasons: draft a conversation with a manager about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-energy-balance#089",
+   "text": "Create a recovery-plan for a big project ending with no wind-down. Use a formal tone throughout."
+  },
+  {
+   "id": "productivity-energy-balance#090",
+   "text": "You are a recovery-focused therapist-adjacent coach. Write boundary scripts for an always-on job with no off switch and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-energy-balance#091",
+   "text": "Build a support-network plan for caring for a parent while working. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-energy-balance#092",
+   "text": "Before I start on friendships slipping during busy seasons, build a support-network plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-energy-balance#093",
+   "text": "List early-warning signs and responses for a side hustle eating weekends. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-energy-balance#094",
+   "text": "List early-warning signs and responses for energy crashes mid-afternoon. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-energy-balance#095",
+   "text": "As a productivity coach, I keep hitting the same wall with a night-shift rotation wrecking rhythm. Propose a sustainable weekly rhythm for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-energy-balance#096",
+   "text": "Create a recovery-plan for vacation guilt while off. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-energy-balance#097",
+   "text": "Draft a conversation with a manager about exercise that keeps getting postponed. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-energy-balance#098",
+   "text": "Draft a conversation with a manager about energy crashes mid-afternoon. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-energy-balance#099",
+   "text": "Propose a sustainable weekly rhythm for exercise that keeps getting postponed."
+  },
+  {
+   "id": "productivity-energy-balance#100",
+   "text": "Write boundary scripts for a night-shift rotation wrecking rhythm."
+  },
+  {
+   "id": "productivity-energy-balance#101",
+   "text": "List early-warning signs and responses for exercise that keeps getting postponed."
+  },
+  {
+   "id": "productivity-energy-balance#102",
+   "text": "Write boundary scripts for a big project ending with no wind-down."
+  },
+  {
+   "id": "productivity-energy-balance#103",
+   "text": "Design an energy-audit for exercise that keeps getting postponed."
+  },
+  {
+   "id": "productivity-energy-balance#104",
+   "text": "Propose a sustainable weekly rhythm for caring for a parent while working."
+  }
+ ]
+}

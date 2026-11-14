@@ -1,0 +1,430 @@
+{
+ "slug": "design-presentations",
+ "categorySlug": "design",
+ "category": "Design & Visual",
+ "title": "Presentations & Slides",
+ "description": "Deck structures and slide copy that respect the audience.",
+ "tags": [
+  "slides",
+  "deck",
+  "presentation"
+ ],
+ "prompts": [
+  {
+   "id": "design-presentations#001",
+   "text": "Write the opening hook slide for a school project on renewable energy."
+  },
+  {
+   "id": "design-presentations#002",
+   "text": "Outline a ten-slide deck for a quarterly business review deck. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-presentations#003",
+   "text": "Act as a design-systems maintainer. Convert a dense paragraph into visual slide copy for a course-intro lecture on climate data, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-presentations#004",
+   "text": "Design the data-slide layout for a school project on renewable energy. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-presentations#005",
+   "text": "I’m working on a course-intro lecture on climate data. Outline a ten-slide deck for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-presentations#006",
+   "text": "Critique flow and redundancy in a course-intro lecture on climate data for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-presentations#007",
+   "text": "Create an audience-question anticipation list for a product-launch keynote. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-presentations#008",
+   "text": "Help me with a community town-hall deck: outline a ten-slide deck for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-presentations#009",
+   "text": "Convert a dense paragraph into visual slide copy for a client-proposal deck for a rebrand. Use a direct tone throughout."
+  },
+  {
+   "id": "design-presentations#010",
+   "text": "You are a motion designer. Write speaker notes with timing for a quarterly business review deck and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-presentations#011",
+   "text": "Write the opening hook slide for a training deck for new hires. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-presentations#012",
+   "text": "Before I start on a board strategy update, outline a ten-slide deck for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-presentations#013",
+   "text": "Write the opening hook slide for a community town-hall deck. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-presentations#014",
+   "text": "Outline a ten-slide deck for a research-defense presentation. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-presentations#015",
+   "text": "As a product designer with systems experience, I keep hitting the same wall with a seed-round pitch deck. Critique flow and redundancy in it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-presentations#016",
+   "text": "Write the opening hook slide for a conference talk on team rituals. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-presentations#017",
+   "text": "Design the data-slide layout for a course-intro lecture on climate data."
+  },
+  {
+   "id": "design-presentations#018",
+   "text": "Draft a one-page leave-behind summary of a seed-round pitch deck. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-presentations#019",
+   "text": "Act as an art director. Create an audience-question anticipation list for a school project on renewable energy, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-presentations#020",
+   "text": "Design the data-slide layout for a research-defense presentation. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-presentations#021",
+   "text": "I’m working on a community town-hall deck. Write speaker notes with timing for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-presentations#022",
+   "text": "Write the opening hook slide for a course-intro lecture on climate data for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-presentations#023",
+   "text": "Write speaker notes with timing for a board strategy update. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-presentations#024",
+   "text": "Help me with a product-launch keynote: draft a one-page leave-behind summary of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-presentations#025",
+   "text": "Critique flow and redundancy in a training deck for new hires. Use a playful tone throughout."
+  },
+  {
+   "id": "design-presentations#026",
+   "text": "You are a creative director. Design the data-slide layout for a client-proposal deck for a rebrand and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-presentations#027",
+   "text": "Critique flow and redundancy in a retrospective deck for a launch. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-presentations#028",
+   "text": "Before I start on a training deck for new hires, design the data-slide layout for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-presentations#029",
+   "text": "Draft a one-page leave-behind summary of a conference talk on team rituals. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-presentations#030",
+   "text": "Create an audience-question anticipation list for a community town-hall deck. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-presentations#031",
+   "text": "As a product designer with systems experience, I keep hitting the same wall with a seed-round pitch deck. Write speaker notes with timing for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-presentations#032",
+   "text": "Write the opening hook slide for a retrospective deck for a launch. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-presentations#033",
+   "text": "Draft a one-page leave-behind summary of a community town-hall deck."
+  },
+  {
+   "id": "design-presentations#034",
+   "text": "Outline a ten-slide deck for a product-launch keynote. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-presentations#035",
+   "text": "Act as a motion designer. Write speaker notes with timing for a training deck for new hires, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-presentations#036",
+   "text": "Write speaker notes with timing for a school project on renewable energy. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-presentations#037",
+   "text": "I’m working on a training deck for new hires. Draft a one-page leave-behind summary of it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-presentations#038",
+   "text": "Design the data-slide layout for a product-launch keynote for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-presentations#039",
+   "text": "Write speaker notes with timing for a client-proposal deck for a rebrand. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-presentations#040",
+   "text": "Help me with a retrospective deck for a launch: draft a one-page leave-behind summary of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-presentations#041",
+   "text": "Critique flow and redundancy in a client-proposal deck for a rebrand. Use a direct tone throughout."
+  },
+  {
+   "id": "design-presentations#042",
+   "text": "You are an art director. Design the data-slide layout for a board strategy update and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-presentations#043",
+   "text": "Create an audience-question anticipation list for a course-intro lecture on climate data. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-presentations#044",
+   "text": "Before I start on a quarterly business review deck, write the opening hook slide for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-presentations#045",
+   "text": "Write the opening hook slide for a research-defense presentation. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-presentations#046",
+   "text": "Convert a dense paragraph into visual slide copy for a training deck for new hires. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-presentations#047",
+   "text": "As a product designer with systems experience, I keep hitting the same wall with a research-defense presentation. Create an audience-question anticipation list for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-presentations#048",
+   "text": "Write the opening hook slide for a product-launch keynote. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-presentations#049",
+   "text": "Convert a dense paragraph into visual slide copy for a community town-hall deck."
+  },
+  {
+   "id": "design-presentations#050",
+   "text": "Create an audience-question anticipation list for a conference talk on team rituals. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-presentations#051",
+   "text": "Act as a creative director. Critique flow and redundancy in a conference talk on team rituals, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-presentations#052",
+   "text": "Convert a dense paragraph into visual slide copy for a research-defense presentation. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-presentations#053",
+   "text": "I’m working on a board strategy update. Convert a dense paragraph into visual slide copy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-presentations#054",
+   "text": "Convert a dense paragraph into visual slide copy for a quarterly business review deck for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-presentations#055",
+   "text": "Outline a ten-slide deck for a client-proposal deck for a rebrand. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-presentations#056",
+   "text": "Help me with a conference talk on team rituals: design the data-slide layout for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-presentations#057",
+   "text": "Outline a ten-slide deck for a school project on renewable energy. Use a direct tone throughout."
+  },
+  {
+   "id": "design-presentations#058",
+   "text": "You are an art director. Draft a one-page leave-behind summary of a research-defense presentation and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-presentations#059",
+   "text": "Write the opening hook slide for a board strategy update. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-presentations#060",
+   "text": "Before I start on a quarterly business review deck, create an audience-question anticipation list for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-presentations#061",
+   "text": "Convert a dense paragraph into visual slide copy for a conference talk on team rituals. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-presentations#062",
+   "text": "Convert a dense paragraph into visual slide copy for a seed-round pitch deck. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-presentations#063",
+   "text": "As a creative director, I keep hitting the same wall with a training deck for new hires. Create an audience-question anticipation list for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-presentations#064",
+   "text": "Write speaker notes with timing for a course-intro lecture on climate data. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-presentations#065",
+   "text": "Write speaker notes with timing for a product-launch keynote."
+  },
+  {
+   "id": "design-presentations#066",
+   "text": "Critique flow and redundancy in a board strategy update. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-presentations#067",
+   "text": "Act as a presentation designer. Draft a one-page leave-behind summary of a quarterly business review deck, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-presentations#068",
+   "text": "Create an audience-question anticipation list for a seed-round pitch deck. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-presentations#069",
+   "text": "I’m working on a quarterly business review deck. Critique flow and redundancy in it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-presentations#070",
+   "text": "Write speaker notes with timing for a research-defense presentation for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-presentations#071",
+   "text": "Outline a ten-slide deck for a training deck for new hires. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-presentations#072",
+   "text": "Help me with a product-launch keynote: convert a dense paragraph into visual slide copy for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-presentations#073",
+   "text": "Design the data-slide layout for a community town-hall deck. Use a persuasive tone throughout."
+  },
+  {
+   "id": "design-presentations#074",
+   "text": "You are a creative director. Draft a one-page leave-behind summary of a school project on renewable energy and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-presentations#075",
+   "text": "Outline a ten-slide deck for a retrospective deck for a launch. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-presentations#076",
+   "text": "Before I start on a conference talk on team rituals, write speaker notes with timing for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-presentations#077",
+   "text": "Critique flow and redundancy in a product-launch keynote. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-presentations#078",
+   "text": "Convert a dense paragraph into visual slide copy for a retrospective deck for a launch. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-presentations#079",
+   "text": "As a presentation designer, I keep hitting the same wall with a school project on renewable energy. Critique flow and redundancy in it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-presentations#080",
+   "text": "Write speaker notes with timing for a retrospective deck for a launch. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-presentations#081",
+   "text": "Critique flow and redundancy in a research-defense presentation."
+  },
+  {
+   "id": "design-presentations#082",
+   "text": "Convert a dense paragraph into visual slide copy for a school project on renewable energy. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-presentations#083",
+   "text": "Act as a photographer and retoucher. Outline a ten-slide deck for a seed-round pitch deck, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-presentations#084",
+   "text": "Create an audience-question anticipation list for a retrospective deck for a launch. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-presentations#085",
+   "text": "I’m working on a seed-round pitch deck. Write the opening hook slide for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-presentations#086",
+   "text": "Write the opening hook slide for a client-proposal deck for a rebrand for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-presentations#087",
+   "text": "Draft a one-page leave-behind summary of a board strategy update. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-presentations#088",
+   "text": "Help me with a seed-round pitch deck: design the data-slide layout for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-presentations#089",
+   "text": "Draft a one-page leave-behind summary of a course-intro lecture on climate data. Use a formal tone throughout."
+  },
+  {
+   "id": "design-presentations#090",
+   "text": "You are an art director. Create an audience-question anticipation list for a board strategy update and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-presentations#091",
+   "text": "Design the data-slide layout for a quarterly business review deck. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-presentations#092",
+   "text": "Before I start on a client-proposal deck for a rebrand, create an audience-question anticipation list for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-presentations#093",
+   "text": "Critique flow and redundancy in a community town-hall deck. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-presentations#094",
+   "text": "Outline a ten-slide deck for a conference talk on team rituals. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-presentations#095",
+   "text": "As a motion designer, I keep hitting the same wall with a retrospective deck for a launch. Design the data-slide layout for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-presentations#096",
+   "text": "Draft a one-page leave-behind summary of a client-proposal deck for a rebrand. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-presentations#097",
+   "text": "Write the opening hook slide for a school project on renewable energy. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-presentations#098",
+   "text": "Outline a ten-slide deck for a quarterly business review deck. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-presentations#099",
+   "text": "Convert a dense paragraph into visual slide copy for a course-intro lecture on climate data."
+  },
+  {
+   "id": "design-presentations#100",
+   "text": "Design the data-slide layout for a school project on renewable energy."
+  },
+  {
+   "id": "design-presentations#101",
+   "text": "Outline a ten-slide deck for a course-intro lecture on climate data."
+  },
+  {
+   "id": "design-presentations#102",
+   "text": "Critique flow and redundancy in a course-intro lecture on climate data."
+  },
+  {
+   "id": "design-presentations#103",
+   "text": "Create an audience-question anticipation list for a product-launch keynote."
+  },
+  {
+   "id": "design-presentations#104",
+   "text": "Outline a ten-slide deck for a community town-hall deck."
+  }
+ ]
+}

@@ -1,0 +1,430 @@
+{
+ "slug": "coding-code-review",
+ "categorySlug": "coding",
+ "category": "Coding & Development",
+ "title": "Code Review & Refactoring",
+ "description": "Get review checklists and cleaner refactors without breaking things.",
+ "tags": [
+  "review",
+  "refactoring",
+  "quality"
+ ],
+ "prompts": [
+  {
+   "id": "coding-code-review#001",
+   "text": "Write the characterization tests before changing a config file format migrating to typed schemas."
+  },
+  {
+   "id": "coding-code-review#002",
+   "text": "List the code smells and fixes for a config file format migrating to typed schemas. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-code-review#003",
+   "text": "Act as a tech lead of a small team. Propose a safe incremental refactor plan for a Ruby service object with 12 responsibilities, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-code-review#004",
+   "text": "Do a structured review of a Ruby service object with 12 responsibilities. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-code-review#005",
+   "text": "I’m working on a Ruby service object with 12 responsibilities. Design the interface extraction for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-code-review#006",
+   "text": "Write the characterization tests before changing a SQL query joining nine tables for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-code-review#007",
+   "text": "Design the interface extraction for a 400-line React component. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-code-review#008",
+   "text": "Help me with a nested-callback Node.js handler: explain the trade-offs of two designs for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-code-review#009",
+   "text": "Explain the trade-offs of two designs for a Python script with global state. Use a friendly tone throughout."
+  },
+  {
+   "id": "coding-code-review#010",
+   "text": "You are an open-source maintainer. Propose a safe incremental refactor plan for duplicated validation logic across endpoints and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-code-review#011",
+   "text": "Write the characterization tests before changing a feature flag forest in a checkout flow. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-code-review#012",
+   "text": "Before I start on a config file format migrating to typed schemas, design the interface extraction for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-code-review#013",
+   "text": "Design the interface extraction for a feature flag forest in a checkout flow. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-code-review#014",
+   "text": "Explain the trade-offs of two designs for a go function returning magic numbers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-code-review#015",
+   "text": "As a code reviewer on a large codebase, I keep hitting the same wall with a config file format migrating to typed schemas. Rewrite with clear naming and early returns it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-code-review#016",
+   "text": "Propose a safe incremental refactor plan for a 400-line React component. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-code-review#017",
+   "text": "Create a review checklist to prevent regressions in duplicated validation logic across endpoints."
+  },
+  {
+   "id": "coding-code-review#018",
+   "text": "Write the characterization tests before changing a 400-line React component. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-code-review#019",
+   "text": "Act as a platform engineer. Write the characterization tests before changing a god class in a Java service, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-code-review#020",
+   "text": "List the code smells and fixes for a state machine spread across booleans. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-code-review#021",
+   "text": "I’m working on a feature flag forest in a checkout flow. List the code smells and fixes for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-code-review#022",
+   "text": "Write the characterization tests before changing a Python script with global state for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-code-review#023",
+   "text": "Do a structured review of a state machine spread across booleans. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-code-review#024",
+   "text": "Help me with a state machine spread across booleans: create a review checklist to prevent regressions in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-code-review#025",
+   "text": "Create a review checklist to prevent regressions in a feature flag forest in a checkout flow. Use a professional tone throughout."
+  },
+  {
+   "id": "coding-code-review#026",
+   "text": "You are an open-source maintainer. Explain the trade-offs of two designs for duplicated validation logic across endpoints and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-code-review#027",
+   "text": "Explain the trade-offs of two designs for a config file format migrating to typed schemas. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-code-review#028",
+   "text": "Before I start on a god class in a Java service, propose a safe incremental refactor plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-code-review#029",
+   "text": "Do a structured review of a nested-callback Node.js handler. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-code-review#030",
+   "text": "Design the interface extraction for a god class in a Java service. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-code-review#031",
+   "text": "As an accessibility-minded frontend engineer, I keep hitting the same wall with a util module nobody dares to touch. List the code smells and fixes for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-code-review#032",
+   "text": "Propose a safe incremental refactor plan for a SQL query joining nine tables. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-code-review#033",
+   "text": "Write the characterization tests before changing a util module nobody dares to touch."
+  },
+  {
+   "id": "coding-code-review#034",
+   "text": "Rewrite with clear naming and early returns a Ruby service object with 12 responsibilities. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-code-review#035",
+   "text": "Act as a platform engineer. Write the characterization tests before changing a go function returning magic numbers, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-code-review#036",
+   "text": "Do a structured review of a go function returning magic numbers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-code-review#037",
+   "text": "I’m working on a nested-callback Node.js handler. Design the interface extraction for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-code-review#038",
+   "text": "Propose a safe incremental refactor plan for a Flutter widget tree that rebuilt too much for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-code-review#039",
+   "text": "Do a structured review of a SQL query joining nine tables. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-code-review#040",
+   "text": "Help me with a SQL query joining nine tables: explain the trade-offs of two designs for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-code-review#041",
+   "text": "Explain the trade-offs of two designs for a state machine spread across booleans. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-code-review#042",
+   "text": "You are a tech lead of a small team. Create a review checklist to prevent regressions in a Python script with global state and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-code-review#043",
+   "text": "Create a review checklist to prevent regressions in a Flutter widget tree that rebuilt too much. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-code-review#044",
+   "text": "Before I start on a Flutter widget tree that rebuilt too much, rewrite with clear naming and early returns it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-code-review#045",
+   "text": "Propose a safe incremental refactor plan for a go function returning magic numbers. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-code-review#046",
+   "text": "List the code smells and fixes for duplicated validation logic across endpoints. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-code-review#047",
+   "text": "As a code reviewer on a large codebase, I keep hitting the same wall with a SQL query joining nine tables. Rewrite with clear naming and early returns it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-code-review#048",
+   "text": "Do a structured review of a Flutter widget tree that rebuilt too much. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-code-review#049",
+   "text": "Create a review checklist to prevent regressions in a config file format migrating to typed schemas."
+  },
+  {
+   "id": "coding-code-review#050",
+   "text": "Propose a safe incremental refactor plan for a state machine spread across booleans. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-code-review#051",
+   "text": "Act as a code reviewer on a large codebase. Design the interface extraction for a util module nobody dares to touch, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-code-review#052",
+   "text": "Write the characterization tests before changing an async function that swallows errors. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-code-review#053",
+   "text": "I’m working on a nested-callback Node.js handler. Create a review checklist to prevent regressions in it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-code-review#054",
+   "text": "List the code smells and fixes for a Ruby service object with 12 responsibilities for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-code-review#055",
+   "text": "Explain the trade-offs of two designs for a 400-line React component. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-code-review#056",
+   "text": "Help me with a util module nobody dares to touch: propose a safe incremental refactor plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-code-review#057",
+   "text": "Do a structured review of a 400-line React component. Use a persuasive tone throughout."
+  },
+  {
+   "id": "coding-code-review#058",
+   "text": "You are a site-reliability engineer. Explain the trade-offs of two designs for a util module nobody dares to touch and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-code-review#059",
+   "text": "Design the interface extraction for a Flutter widget tree that rebuilt too much. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-code-review#060",
+   "text": "Before I start on a god class in a Java service, do a structured review of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-code-review#061",
+   "text": "Write the characterization tests before changing duplicated validation logic across endpoints. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-code-review#062",
+   "text": "Rewrite with clear naming and early returns duplicated validation logic across endpoints. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-code-review#063",
+   "text": "As an open-source maintainer, I keep hitting the same wall with a go function returning magic numbers. Create a review checklist to prevent regressions in it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-code-review#064",
+   "text": "Rewrite with clear naming and early returns a util module nobody dares to touch. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-code-review#065",
+   "text": "Design the interface extraction for duplicated validation logic across endpoints."
+  },
+  {
+   "id": "coding-code-review#066",
+   "text": "Rewrite with clear naming and early returns a go function returning magic numbers. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-code-review#067",
+   "text": "Act as a tech lead of a small team. Propose a safe incremental refactor plan for an async function that swallows errors, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-code-review#068",
+   "text": "Create a review checklist to prevent regressions in an async function that swallows errors. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-code-review#069",
+   "text": "I’m working on a nested-callback Node.js handler. Propose a safe incremental refactor plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-code-review#070",
+   "text": "List the code smells and fixes for a SQL query joining nine tables for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-code-review#071",
+   "text": "Design the interface extraction for a SQL query joining nine tables. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-code-review#072",
+   "text": "Help me with a Flutter widget tree that rebuilt too much: write the characterization tests before changing it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-code-review#073",
+   "text": "List the code smells and fixes for a god class in a Java service. Use a playful tone throughout."
+  },
+  {
+   "id": "coding-code-review#074",
+   "text": "You are a staff engineer. List the code smells and fixes for a go function returning magic numbers and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-code-review#075",
+   "text": "Design the interface extraction for a Python script with global state. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-code-review#076",
+   "text": "Before I start on a Flutter widget tree that rebuilt too much, list the code smells and fixes for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-code-review#077",
+   "text": "List the code smells and fixes for an async function that swallows errors. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-code-review#078",
+   "text": "Write the characterization tests before changing a Ruby service object with 12 responsibilities. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-code-review#079",
+   "text": "As a staff engineer, I keep hitting the same wall with a Ruby service object with 12 responsibilities. Explain the trade-offs of two designs for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-code-review#080",
+   "text": "Explain the trade-offs of two designs for a feature flag forest in a checkout flow. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-code-review#081",
+   "text": "Explain the trade-offs of two designs for a god class in a Java service."
+  },
+  {
+   "id": "coding-code-review#082",
+   "text": "Do a structured review of a Python script with global state. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-code-review#083",
+   "text": "Act as a site-reliability engineer. Propose a safe incremental refactor plan for a feature flag forest in a checkout flow, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-code-review#084",
+   "text": "Create a review checklist to prevent regressions in a util module nobody dares to touch. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-code-review#085",
+   "text": "I’m working on a config file format migrating to typed schemas. Do a structured review of it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-code-review#086",
+   "text": "Propose a safe incremental refactor plan for a config file format migrating to typed schemas for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-code-review#087",
+   "text": "Rewrite with clear naming and early returns a Python script with global state. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-code-review#088",
+   "text": "Help me with a nested-callback Node.js handler: rewrite with clear naming and early returns it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-code-review#089",
+   "text": "List the code smells and fixes for a Python script with global state. Use a friendly tone throughout."
+  },
+  {
+   "id": "coding-code-review#090",
+   "text": "You are an open-source maintainer. Do a structured review of duplicated validation logic across endpoints and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-code-review#091",
+   "text": "Create a review checklist to prevent regressions in a 400-line React component. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-code-review#092",
+   "text": "Before I start on a state machine spread across booleans, write the characterization tests before changing it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-code-review#093",
+   "text": "Rewrite with clear naming and early returns a state machine spread across booleans. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-code-review#094",
+   "text": "Rewrite with clear naming and early returns a 400-line React component. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-code-review#095",
+   "text": "As an accessibility-minded frontend engineer, I keep hitting the same wall with a util module nobody dares to touch. Do a structured review of it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-code-review#096",
+   "text": "Do a structured review of an async function that swallows errors. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-code-review#097",
+   "text": "List the code smells and fixes for a nested-callback Node.js handler."
+  },
+  {
+   "id": "coding-code-review#098",
+   "text": "List the code smells and fixes for a 400-line React component. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-code-review#099",
+   "text": "Act as a tech lead of a small team. Design the interface extraction for a state machine spread across booleans, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-code-review#100",
+   "text": "Do a structured review of a feature flag forest in a checkout flow. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-code-review#101",
+   "text": "I’m working on a SQL query joining nine tables. Create a review checklist to prevent regressions in it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-code-review#102",
+   "text": "Create a review checklist to prevent regressions in a Ruby service object with 12 responsibilities for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-code-review#103",
+   "text": "Design the interface extraction for a go function returning magic numbers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-code-review#104",
+   "text": "Help me with an async function that swallows errors: rewrite with clear naming and early returns it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

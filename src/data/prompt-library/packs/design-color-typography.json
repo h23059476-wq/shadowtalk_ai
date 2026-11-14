@@ -1,0 +1,430 @@
+{
+ "slug": "design-color-typography",
+ "categorySlug": "design",
+ "category": "Design & Visual",
+ "title": "Color & Typography",
+ "description": "Contrast-safe palettes and type systems with reasons.",
+ "tags": [
+  "color",
+  "typography",
+  "systems"
+ ],
+ "prompts": [
+  {
+   "id": "design-color-typography#001",
+   "text": "Review accessibility risks in warning-state colors beyond red-green."
+  },
+  {
+   "id": "design-color-typography#002",
+   "text": "Design a type scale with usage rules for hierarchy for a dense settings page. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-color-typography#003",
+   "text": "Act as a motion designer. Review accessibility risks in print-vs-screen color planning for a lookbook, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-color-typography#004",
+   "text": "Explain the emotional register of choices for type scale for a long-read blog. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-color-typography#005",
+   "text": "I’m working on print-vs-screen color planning for a lookbook. Design a type scale with usage rules for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-color-typography#006",
+   "text": "Produce a token naming scheme for an accessible palette for a banking app for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-color-typography#007",
+   "text": "Review accessibility risks in accent colors for a sports brand. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-color-typography#008",
+   "text": "Help me with font pairing for a wedding stationery brand: create do-and-don’t pairing examples for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-color-typography#009",
+   "text": "Suggest fallback stacks and loading strategy for type scale for a long-read blog. Use a encouraging tone throughout."
+  },
+  {
+   "id": "design-color-typography#010",
+   "text": "You are a brand designer. Explain the emotional register of choices for print-vs-screen color planning for a lookbook and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-color-typography#011",
+   "text": "Propose a palette with hex values and contrast checks for a readable UI font stack for elderly users. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-color-typography#012",
+   "text": "Before I start on data-viz colors for color-blind readers, explain the emotional register of choices for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-color-typography#013",
+   "text": "Design a type scale with usage rules for seasonal palette refresh for a bakery. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-color-typography#014",
+   "text": "Explain the emotional register of choices for warning-state colors beyond red-green. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-color-typography#015",
+   "text": "As a creative director, I keep hitting the same wall with seasonal palette refresh for a bakery. Suggest fallback stacks and loading strategy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-color-typography#016",
+   "text": "Design a type scale with usage rules for data-viz colors for color-blind readers. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-color-typography#017",
+   "text": "Review accessibility risks in an accessible palette for a banking app."
+  },
+  {
+   "id": "design-color-typography#018",
+   "text": "Produce a token naming scheme for type scale for a long-read blog. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-color-typography#019",
+   "text": "Act as a presentation designer. Explain the emotional register of choices for accent colors for a sports brand, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-color-typography#020",
+   "text": "Propose a palette with hex values and contrast checks for a monospace-forward dev-tool brand. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-color-typography#021",
+   "text": "I’m working on seasonal palette refresh for a bakery. Review accessibility risks in it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-color-typography#022",
+   "text": "Suggest fallback stacks and loading strategy for a monospace-forward dev-tool brand for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-color-typography#023",
+   "text": "Propose a palette with hex values and contrast checks for type scale for a long-read blog. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-color-typography#024",
+   "text": "Help me with a dark-mode palette that avoids mush: explain the emotional register of choices for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-color-typography#025",
+   "text": "Produce a token naming scheme for hierarchy for a dense settings page. Use a empathetic tone throughout."
+  },
+  {
+   "id": "design-color-typography#026",
+   "text": "You are an art director. Create do-and-don’t pairing examples for an accessible palette for a banking app and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-color-typography#027",
+   "text": "Suggest fallback stacks and loading strategy for warning-state colors beyond red-green. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-color-typography#028",
+   "text": "Before I start on accent colors for a sports brand, suggest fallback stacks and loading strategy for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-color-typography#029",
+   "text": "Create do-and-don’t pairing examples for a dark-mode palette that avoids mush. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-color-typography#030",
+   "text": "Produce a token naming scheme for a readable UI font stack for elderly users. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-color-typography#031",
+   "text": "As a creative director, I keep hitting the same wall with seasonal palette refresh for a bakery. Explain the emotional register of choices for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-color-typography#032",
+   "text": "Produce a token naming scheme for print-vs-screen color planning for a lookbook. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-color-typography#033",
+   "text": "Create do-and-don’t pairing examples for seasonal palette refresh for a bakery."
+  },
+  {
+   "id": "design-color-typography#034",
+   "text": "Produce a token naming scheme for data-viz colors for color-blind readers. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-color-typography#035",
+   "text": "Act as a brand designer. Review accessibility risks in a readable UI font stack for elderly users, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-color-typography#036",
+   "text": "Review accessibility risks in type scale for a long-read blog. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-color-typography#037",
+   "text": "I’m working on warning-state colors beyond red-green. Design a type scale with usage rules for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-color-typography#038",
+   "text": "Suggest fallback stacks and loading strategy for a readable UI font stack for elderly users for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-color-typography#039",
+   "text": "Explain the emotional register of choices for a monospace-forward dev-tool brand. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-color-typography#040",
+   "text": "Help me with seasonal palette refresh for a bakery: write a contrast-audit checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-color-typography#041",
+   "text": "Suggest fallback stacks and loading strategy for a dark-mode palette that avoids mush. Use a direct tone throughout."
+  },
+  {
+   "id": "design-color-typography#042",
+   "text": "You are a creative director. Design a type scale with usage rules for a dark-mode palette that avoids mush and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-color-typography#043",
+   "text": "Propose a palette with hex values and contrast checks for a dark-mode palette that avoids mush. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-color-typography#044",
+   "text": "Before I start on a dark-mode palette that avoids mush, write a contrast-audit checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-color-typography#045",
+   "text": "Create do-and-don’t pairing examples for a monospace-forward dev-tool brand. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-color-typography#046",
+   "text": "Suggest fallback stacks and loading strategy for print-vs-screen color planning for a lookbook. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-color-typography#047",
+   "text": "As a creative director, I keep hitting the same wall with warning-state colors beyond red-green. Produce a token naming scheme for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-color-typography#048",
+   "text": "Write a contrast-audit checklist for data-viz colors for color-blind readers. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-color-typography#049",
+   "text": "Explain the emotional register of choices for hierarchy for a dense settings page."
+  },
+  {
+   "id": "design-color-typography#050",
+   "text": "Review accessibility risks in font pairing for a wedding stationery brand. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-color-typography#051",
+   "text": "Act as a motion designer. Propose a palette with hex values and contrast checks for print-vs-screen color planning for a lookbook, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-color-typography#052",
+   "text": "Design a type scale with usage rules for accent colors for a sports brand. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-color-typography#053",
+   "text": "I’m working on data-viz colors for color-blind readers. Suggest fallback stacks and loading strategy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-color-typography#054",
+   "text": "Review accessibility risks in data-viz colors for color-blind readers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-color-typography#055",
+   "text": "Write a contrast-audit checklist for warning-state colors beyond red-green. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-color-typography#056",
+   "text": "Help me with hierarchy for a dense settings page: review accessibility risks in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-color-typography#057",
+   "text": "Create do-and-don’t pairing examples for accent colors for a sports brand. Use a professional tone throughout."
+  },
+  {
+   "id": "design-color-typography#058",
+   "text": "You are a presentation designer. Suggest fallback stacks and loading strategy for hierarchy for a dense settings page and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-color-typography#059",
+   "text": "Create do-and-don’t pairing examples for a readable UI font stack for elderly users. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-color-typography#060",
+   "text": "Before I start on an accessible palette for a banking app, propose a palette with hex values and contrast checks for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-color-typography#061",
+   "text": "Suggest fallback stacks and loading strategy for font pairing for a wedding stationery brand. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-color-typography#062",
+   "text": "Write a contrast-audit checklist for a readable UI font stack for elderly users. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-color-typography#063",
+   "text": "As an art director, I keep hitting the same wall with accent colors for a sports brand. Produce a token naming scheme for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-color-typography#064",
+   "text": "Write a contrast-audit checklist for an accessible palette for a banking app. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-color-typography#065",
+   "text": "Write a contrast-audit checklist for print-vs-screen color planning for a lookbook."
+  },
+  {
+   "id": "design-color-typography#066",
+   "text": "Write a contrast-audit checklist for accent colors for a sports brand. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-color-typography#067",
+   "text": "Act as a motion designer. Create do-and-don’t pairing examples for print-vs-screen color planning for a lookbook, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-color-typography#068",
+   "text": "Propose a palette with hex values and contrast checks for data-viz colors for color-blind readers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-color-typography#069",
+   "text": "I’m working on a dark-mode palette that avoids mush. Review accessibility risks in it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-color-typography#070",
+   "text": "Write a contrast-audit checklist for font pairing for a wedding stationery brand for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-color-typography#071",
+   "text": "Propose a palette with hex values and contrast checks for font pairing for a wedding stationery brand. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-color-typography#072",
+   "text": "Help me with a dark-mode palette that avoids mush: produce a token naming scheme for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-color-typography#073",
+   "text": "Create do-and-don’t pairing examples for warning-state colors beyond red-green. Use a playful tone throughout."
+  },
+  {
+   "id": "design-color-typography#074",
+   "text": "You are a motion designer. Propose a palette with hex values and contrast checks for accent colors for a sports brand and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-color-typography#075",
+   "text": "Review accessibility risks in a monospace-forward dev-tool brand. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-color-typography#076",
+   "text": "Before I start on seasonal palette refresh for a bakery, produce a token naming scheme for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-color-typography#077",
+   "text": "Design a type scale with usage rules for a monospace-forward dev-tool brand. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-color-typography#078",
+   "text": "Design a type scale with usage rules for an accessible palette for a banking app. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-color-typography#079",
+   "text": "As a design-systems maintainer, I keep hitting the same wall with a readable UI font stack for elderly users. Explain the emotional register of choices for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-color-typography#080",
+   "text": "Produce a token naming scheme for font pairing for a wedding stationery brand. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-color-typography#081",
+   "text": "Create do-and-don’t pairing examples for data-viz colors for color-blind readers."
+  },
+  {
+   "id": "design-color-typography#082",
+   "text": "Explain the emotional register of choices for font pairing for a wedding stationery brand. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-color-typography#083",
+   "text": "Act as a product designer with systems experience. Propose a palette with hex values and contrast checks for hierarchy for a dense settings page, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-color-typography#084",
+   "text": "Produce a token naming scheme for a monospace-forward dev-tool brand. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-color-typography#085",
+   "text": "I’m working on hierarchy for a dense settings page. Write a contrast-audit checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-color-typography#086",
+   "text": "Design a type scale with usage rules for a readable UI font stack for elderly users for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-color-typography#087",
+   "text": "Explain the emotional register of choices for an accessible palette for a banking app. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-color-typography#088",
+   "text": "Help me with type scale for a long-read blog: create do-and-don’t pairing examples for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-color-typography#089",
+   "text": "Propose a palette with hex values and contrast checks for warning-state colors beyond red-green. Use a playful tone throughout."
+  },
+  {
+   "id": "design-color-typography#090",
+   "text": "You are an art director. Write a contrast-audit checklist for type scale for a long-read blog and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-color-typography#091",
+   "text": "Design a type scale with usage rules for font pairing for a wedding stationery brand. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-color-typography#092",
+   "text": "Before I start on an accessible palette for a banking app, suggest fallback stacks and loading strategy for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-color-typography#093",
+   "text": "Design a type scale with usage rules for type scale for a long-read blog. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-color-typography#094",
+   "text": "Write a contrast-audit checklist for a monospace-forward dev-tool brand. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-color-typography#095",
+   "text": "As a photographer and retoucher, I keep hitting the same wall with hierarchy for a dense settings page. Create do-and-don’t pairing examples for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-color-typography#096",
+   "text": "Propose a palette with hex values and contrast checks for seasonal palette refresh for a bakery. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-color-typography#097",
+   "text": "Review accessibility risks in warning-state colors beyond red-green. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-color-typography#098",
+   "text": "Design a type scale with usage rules for hierarchy for a dense settings page. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-color-typography#099",
+   "text": "Review accessibility risks in print-vs-screen color planning for a lookbook."
+  },
+  {
+   "id": "design-color-typography#100",
+   "text": "Explain the emotional register of choices for type scale for a long-read blog."
+  },
+  {
+   "id": "design-color-typography#101",
+   "text": "Design a type scale with usage rules for print-vs-screen color planning for a lookbook."
+  },
+  {
+   "id": "design-color-typography#102",
+   "text": "Produce a token naming scheme for an accessible palette for a banking app."
+  },
+  {
+   "id": "design-color-typography#103",
+   "text": "Review accessibility risks in accent colors for a sports brand."
+  },
+  {
+   "id": "design-color-typography#104",
+   "text": "Create do-and-don’t pairing examples for font pairing for a wedding stationery brand."
+  }
+ ]
+}

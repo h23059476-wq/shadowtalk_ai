@@ -1,0 +1,430 @@
+{
+ "slug": "ai-writing-with-ai",
+ "categorySlug": "ai",
+ "category": "AI & ShadowTalk",
+ "title": "Writing With AI",
+ "description": "Draft with AI, keep your voice, edit like a human.",
+ "tags": [
+  "writing",
+  "editing",
+  "voice"
+ ],
+ "prompts": [
+  {
+   "id": "ai-writing-with-ai#001",
+   "text": "Create a tone-matching rewrite request for a documentation pass that stays clear."
+  },
+  {
+   "id": "ai-writing-with-ai#002",
+   "text": "Design a humanization checklist for a style-guide the AI can follow. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-writing-with-ai#003",
+   "text": "Act as an indie developer. Write a voice-sample ingestion prompt for a blog draft that keeps my voice, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-writing-with-ai#004",
+   "text": "Create an editing-pass instruction for emails that don’t sound machine-written. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-writing-with-ai#005",
+   "text": "I’m working on translating my notes into publishable prose. Create a tone-matching rewrite request for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-writing-with-ai#006",
+   "text": "Draft with explicit do-not-say rules for a cover letter that sounds like me for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-writing-with-ai#007",
+   "text": "Design a two-pass quality workflow for translating my notes into publishable prose. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-writing-with-ai#008",
+   "text": "Help me with a newsletter with a repeatable voice guide: write a first-draft-then-critique flow for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-writing-with-ai#009",
+   "text": "Design a two-pass quality workflow for a personal essay with honest tone. Use a friendly tone throughout."
+  },
+  {
+   "id": "ai-writing-with-ai#010",
+   "text": "You are a content creator using AI. Create a tone-matching rewrite request for a personal essay with honest tone and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-writing-with-ai#011",
+   "text": "Create a tone-matching rewrite request for product copy with consistent brand voice. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-writing-with-ai#012",
+   "text": "Before I start on a resume without generic buzzwords, produce a consistency-audit prompt for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-writing-with-ai#013",
+   "text": "Design a humanization checklist for a speech with rhythm and pauses. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-writing-with-ai#014",
+   "text": "Write a first-draft-then-critique flow for a style-guide the AI can follow. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-writing-with-ai#015",
+   "text": "As a content creator using AI, I keep hitting the same wall with a newsletter with a repeatable voice guide. Design a two-pass quality workflow for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-writing-with-ai#016",
+   "text": "Design a two-pass quality workflow for a cover letter that sounds like me. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-writing-with-ai#017",
+   "text": "Produce a consistency-audit prompt for a story draft with AI as a sparring partner."
+  },
+  {
+   "id": "ai-writing-with-ai#018",
+   "text": "Design a humanization checklist for a blog draft that keeps my voice. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-writing-with-ai#019",
+   "text": "Act as a ShadowTalk power user. Write a voice-sample ingestion prompt for a newsletter with a repeatable voice guide, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-writing-with-ai#020",
+   "text": "Design a two-pass quality workflow for a story draft with AI as a sparring partner. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-writing-with-ai#021",
+   "text": "I’m working on a documentation pass that stays clear. Produce a consistency-audit prompt for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-writing-with-ai#022",
+   "text": "Write a first-draft-then-critique flow for a resume without generic buzzwords for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-writing-with-ai#023",
+   "text": "Design a two-pass quality workflow for product copy with consistent brand voice. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-writing-with-ai#024",
+   "text": "Help me with emails that don’t sound machine-written: draft with explicit do-not-say rules for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-writing-with-ai#025",
+   "text": "Design a humanization checklist for a story draft with AI as a sparring partner. Use a empathetic tone throughout."
+  },
+  {
+   "id": "ai-writing-with-ai#026",
+   "text": "You are a privacy-conscious technologist. Design a two-pass quality workflow for a blog draft that keeps my voice and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-writing-with-ai#027",
+   "text": "Write a voice-sample ingestion prompt for a cover letter that sounds like me. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-writing-with-ai#028",
+   "text": "Before I start on product copy with consistent brand voice, produce a consistency-audit prompt for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-writing-with-ai#029",
+   "text": "Write a first-draft-then-critique flow for a story draft with AI as a sparring partner. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-writing-with-ai#030",
+   "text": "Create a tone-matching rewrite request for a story draft with AI as a sparring partner. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-writing-with-ai#031",
+   "text": "As a prompt-engineering coach, I keep hitting the same wall with a style-guide the AI can follow. Produce a consistency-audit prompt for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-writing-with-ai#032",
+   "text": "Write a first-draft-then-critique flow for emails that don’t sound machine-written. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-writing-with-ai#033",
+   "text": "Design a humanization checklist for a newsletter with a repeatable voice guide."
+  },
+  {
+   "id": "ai-writing-with-ai#034",
+   "text": "Write a first-draft-then-critique flow for a documentation pass that stays clear. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-writing-with-ai#035",
+   "text": "Act as a prompt-engineering coach. Create an editing-pass instruction for a story draft with AI as a sparring partner, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-writing-with-ai#036",
+   "text": "Create an editing-pass instruction for a personal essay with honest tone. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-writing-with-ai#037",
+   "text": "I’m working on translating my notes into publishable prose. Write a first-draft-then-critique flow for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-writing-with-ai#038",
+   "text": "Draft with explicit do-not-say rules for a blog draft that keeps my voice for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-writing-with-ai#039",
+   "text": "Draft with explicit do-not-say rules for a speech with rhythm and pauses. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-writing-with-ai#040",
+   "text": "Help me with a story draft with AI as a sparring partner: write a voice-sample ingestion prompt for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-writing-with-ai#041",
+   "text": "Create a tone-matching rewrite request for a blog draft that keeps my voice. Use a professional tone throughout."
+  },
+  {
+   "id": "ai-writing-with-ai#042",
+   "text": "You are an indie developer. Draft with explicit do-not-say rules for a story draft with AI as a sparring partner and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-writing-with-ai#043",
+   "text": "Design a humanization checklist for product copy with consistent brand voice. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-writing-with-ai#044",
+   "text": "Before I start on a resume without generic buzzwords, write a voice-sample ingestion prompt for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-writing-with-ai#045",
+   "text": "Write a voice-sample ingestion prompt for a speech with rhythm and pauses. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-writing-with-ai#046",
+   "text": "Design a two-pass quality workflow for a documentation pass that stays clear. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-writing-with-ai#047",
+   "text": "As a prompt-engineering coach, I keep hitting the same wall with a speech with rhythm and pauses. Produce a consistency-audit prompt for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-writing-with-ai#048",
+   "text": "Design a humanization checklist for a documentation pass that stays clear. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-writing-with-ai#049",
+   "text": "Produce a consistency-audit prompt for a blog draft that keeps my voice."
+  },
+  {
+   "id": "ai-writing-with-ai#050",
+   "text": "Produce a consistency-audit prompt for a newsletter with a repeatable voice guide. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-writing-with-ai#051",
+   "text": "Act as a teacher of AI literacy. Produce a consistency-audit prompt for emails that don’t sound machine-written, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-writing-with-ai#052",
+   "text": "Create a tone-matching rewrite request for a resume without generic buzzwords. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-writing-with-ai#053",
+   "text": "I’m working on a cover letter that sounds like me. Produce a consistency-audit prompt for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-writing-with-ai#054",
+   "text": "Write a voice-sample ingestion prompt for a documentation pass that stays clear for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-writing-with-ai#055",
+   "text": "Write a voice-sample ingestion prompt for translating my notes into publishable prose. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-writing-with-ai#056",
+   "text": "Help me with a style-guide the AI can follow: create a tone-matching rewrite request for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-writing-with-ai#057",
+   "text": "Draft with explicit do-not-say rules for product copy with consistent brand voice. Use a professional tone throughout."
+  },
+  {
+   "id": "ai-writing-with-ai#058",
+   "text": "You are a teacher of AI literacy. Create a tone-matching rewrite request for a newsletter with a repeatable voice guide and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-writing-with-ai#059",
+   "text": "Produce a consistency-audit prompt for a personal essay with honest tone. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-writing-with-ai#060",
+   "text": "Before I start on emails that don’t sound machine-written, write a voice-sample ingestion prompt for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-writing-with-ai#061",
+   "text": "Draft with explicit do-not-say rules for a resume without generic buzzwords. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-writing-with-ai#062",
+   "text": "Create an editing-pass instruction for a style-guide the AI can follow. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-writing-with-ai#063",
+   "text": "As a privacy-conscious technologist, I keep hitting the same wall with a personal essay with honest tone. Draft with explicit do-not-say rules for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-writing-with-ai#064",
+   "text": "Design a humanization checklist for a resume without generic buzzwords. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-writing-with-ai#065",
+   "text": "Draft with explicit do-not-say rules for a documentation pass that stays clear."
+  },
+  {
+   "id": "ai-writing-with-ai#066",
+   "text": "Draft with explicit do-not-say rules for translating my notes into publishable prose. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-writing-with-ai#067",
+   "text": "Act as a prompt-engineering coach. Design a humanization checklist for translating my notes into publishable prose, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-writing-with-ai#068",
+   "text": "Write a voice-sample ingestion prompt for a personal essay with honest tone. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-writing-with-ai#069",
+   "text": "I’m working on a cover letter that sounds like me. Create a tone-matching rewrite request for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-writing-with-ai#070",
+   "text": "Write a voice-sample ingestion prompt for a style-guide the AI can follow for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-writing-with-ai#071",
+   "text": "Create an editing-pass instruction for a cover letter that sounds like me. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-writing-with-ai#072",
+   "text": "Help me with a style-guide the AI can follow: design a two-pass quality workflow for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-writing-with-ai#073",
+   "text": "Design a humanization checklist for a cover letter that sounds like me. Use a persuasive tone throughout."
+  },
+  {
+   "id": "ai-writing-with-ai#074",
+   "text": "You are an AI-workflow consultant. Create an editing-pass instruction for a speech with rhythm and pauses and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-writing-with-ai#075",
+   "text": "Create an editing-pass instruction for a newsletter with a repeatable voice guide. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-writing-with-ai#076",
+   "text": "Before I start on emails that don’t sound machine-written, design a humanization checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-writing-with-ai#077",
+   "text": "Create an editing-pass instruction for a blog draft that keeps my voice. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-writing-with-ai#078",
+   "text": "Produce a consistency-audit prompt for translating my notes into publishable prose. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-writing-with-ai#079",
+   "text": "As a prompt-engineering coach, I keep hitting the same wall with emails that don’t sound machine-written. Create a tone-matching rewrite request for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-writing-with-ai#080",
+   "text": "Create an editing-pass instruction for a documentation pass that stays clear. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-writing-with-ai#081",
+   "text": "Create an editing-pass instruction for translating my notes into publishable prose."
+  },
+  {
+   "id": "ai-writing-with-ai#082",
+   "text": "Draft with explicit do-not-say rules for a newsletter with a repeatable voice guide. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-writing-with-ai#083",
+   "text": "Act as a team-lead rolling out AI tools. Design a humanization checklist for a personal essay with honest tone, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-writing-with-ai#084",
+   "text": "Design a two-pass quality workflow for a speech with rhythm and pauses. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-writing-with-ai#085",
+   "text": "I’m working on product copy with consistent brand voice. Write a first-draft-then-critique flow for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-writing-with-ai#086",
+   "text": "Design a two-pass quality workflow for emails that don’t sound machine-written for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-writing-with-ai#087",
+   "text": "Draft with explicit do-not-say rules for a style-guide the AI can follow. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-writing-with-ai#088",
+   "text": "Help me with a blog draft that keeps my voice: write a first-draft-then-critique flow for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-writing-with-ai#089",
+   "text": "Create a tone-matching rewrite request for a speech with rhythm and pauses. Use a encouraging tone throughout."
+  },
+  {
+   "id": "ai-writing-with-ai#090",
+   "text": "You are a teacher of AI literacy. Design a two-pass quality workflow for a resume without generic buzzwords and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-writing-with-ai#091",
+   "text": "Write a first-draft-then-critique flow for a speech with rhythm and pauses. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-writing-with-ai#092",
+   "text": "Before I start on a resume without generic buzzwords, create an editing-pass instruction for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-writing-with-ai#093",
+   "text": "Create an editing-pass instruction for product copy with consistent brand voice. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-writing-with-ai#094",
+   "text": "Write a first-draft-then-critique flow for a personal essay with honest tone. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-writing-with-ai#095",
+   "text": "As an AI-workflow consultant, I keep hitting the same wall with product copy with consistent brand voice. Write a voice-sample ingestion prompt for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-writing-with-ai#096",
+   "text": "Write a first-draft-then-critique flow for a cover letter that sounds like me. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-writing-with-ai#097",
+   "text": "Create a tone-matching rewrite request for a documentation pass that stays clear. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-writing-with-ai#098",
+   "text": "Design a humanization checklist for a style-guide the AI can follow. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-writing-with-ai#099",
+   "text": "Write a voice-sample ingestion prompt for a blog draft that keeps my voice."
+  },
+  {
+   "id": "ai-writing-with-ai#100",
+   "text": "Create an editing-pass instruction for emails that don’t sound machine-written."
+  },
+  {
+   "id": "ai-writing-with-ai#101",
+   "text": "Create a tone-matching rewrite request for translating my notes into publishable prose."
+  },
+  {
+   "id": "ai-writing-with-ai#102",
+   "text": "Draft with explicit do-not-say rules for a cover letter that sounds like me."
+  },
+  {
+   "id": "ai-writing-with-ai#103",
+   "text": "Design a two-pass quality workflow for translating my notes into publishable prose."
+  },
+  {
+   "id": "ai-writing-with-ai#104",
+   "text": "Write a first-draft-then-critique flow for a newsletter with a repeatable voice guide."
+  }
+ ]
+}

@@ -1,0 +1,430 @@
+{
+ "slug": "writing-email-essentials",
+ "categorySlug": "writing",
+ "category": "Writing & Editing",
+ "title": "Email Essentials",
+ "description": "Compose workplace email for awkward, delicate, and everyday situations.",
+ "tags": [
+  "email",
+  "workplace",
+  "communication"
+ ],
+ "prompts": [
+  {
+   "id": "writing-email-essentials#001",
+   "text": "Write a concise two-paragraph version of a message about apologizing to a client for a delay."
+  },
+  {
+   "id": "writing-email-essentials#002",
+   "text": "Prepare three subject-line options for introducing yourself to a new team. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-email-essentials#003",
+   "text": "Act as a corporate communications lead. Prepare three subject-line options for negotiating a salary offer by email, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-email-essentials#004",
+   "text": "Build a reusable template for announcing a team reorganization. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-email-essentials#005",
+   "text": "I’m working on congratulating a coworker on a promotion. Draft a warm opener for a message about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-email-essentials#006",
+   "text": "Build a reusable template for requesting a deadline extension for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-email-essentials#007",
+   "text": "Write a beginner-friendly breakdown of how to approach escalating a blocked project to leadership. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-email-essentials#008",
+   "text": "Help me with requesting a deadline extension: draft a warm opener for a message about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-email-essentials#009",
+   "text": "Outline the key points to hit in a message about requesting a deadline extension. Use a encouraging tone throughout."
+  },
+  {
+   "id": "writing-email-essentials#010",
+   "text": "You are a brand journalist. Draft a warm opener for a message about rescheduling a client call at short notice and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-email-essentials#011",
+   "text": "Write a concise two-paragraph version of a message about requesting a deadline extension. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-email-essentials#012",
+   "text": "Before I start on asking a colleague for help without imposing, outline the key points to hit in a message about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-email-essentials#013",
+   "text": "Draft a polished, full-length email about escalating a blocked project to leadership. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-email-essentials#014",
+   "text": "Prepare three subject-line options for asking a colleague for help without imposing. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-email-essentials#015",
+   "text": "As a corporate communications lead, I keep hitting the same wall with onboarding a brand-new teammate. Draft a polished, full-length email about it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-email-essentials#016",
+   "text": "Write a concise two-paragraph version of a message about declining a meeting invite politely. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-email-essentials#017",
+   "text": "Outline the key points to hit in a message about declining a meeting invite politely."
+  },
+  {
+   "id": "writing-email-essentials#018",
+   "text": "Draft a polished, full-length email about requesting a deadline extension. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-email-essentials#019",
+   "text": "Act as a senior editor at a digital magazine. Write a beginner-friendly breakdown of how to approach rescheduling a client call at short notice, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-email-essentials#020",
+   "text": "Build a reusable template for asking a colleague for help without imposing. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-email-essentials#021",
+   "text": "I’m working on thanking a mentor for their guidance. Write a concise two-paragraph version of a message about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-email-essentials#022",
+   "text": "Outline the key points to hit in a message about escalating a blocked project to leadership for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-email-essentials#023",
+   "text": "Outline the key points to hit in a message about thanking a mentor for their guidance. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-email-essentials#024",
+   "text": "Help me with congratulating a coworker on a promotion: prepare three subject-line options for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-email-essentials#025",
+   "text": "Create a respectful follow-up for requesting a deadline extension. Use a encouraging tone throughout."
+  },
+  {
+   "id": "writing-email-essentials#026",
+   "text": "You are a writing teacher. Draft a polished, full-length email about declining a meeting invite politely and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-email-essentials#027",
+   "text": "Outline the key points to hit in a message about requesting feedback on a draft. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-email-essentials#028",
+   "text": "Before I start on negotiating a salary offer by email, outline the key points to hit in a message about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-email-essentials#029",
+   "text": "Build a reusable template for negotiating a salary offer by email. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-email-essentials#030",
+   "text": "Create a respectful follow-up for negotiating a salary offer by email. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-email-essentials#031",
+   "text": "As a writing teacher, I keep hitting the same wall with asking a colleague for help without imposing. Draft a polished, full-length email about it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-email-essentials#032",
+   "text": "Draft a warm opener for a message about apologizing to a client for a delay. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-email-essentials#033",
+   "text": "Prepare three subject-line options for replying to a recruiter outreach."
+  },
+  {
+   "id": "writing-email-essentials#034",
+   "text": "Write a beginner-friendly breakdown of how to approach requesting a deadline extension. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-email-essentials#035",
+   "text": "Act as a senior editor at a digital magazine. Draft a warm opener for a message about escalating a blocked project to leadership, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-email-essentials#036",
+   "text": "Outline the key points to hit in a message about following up after a job interview. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-email-essentials#037",
+   "text": "I’m working on announcing a team reorganization. Write a beginner-friendly breakdown of how to approach it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-email-essentials#038",
+   "text": "Outline the key points to hit in a message about announcing a team reorganization for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-email-essentials#039",
+   "text": "Write a beginner-friendly breakdown of how to approach apologizing to a client for a delay. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-email-essentials#040",
+   "text": "Help me with declining a meeting invite politely: draft a warm opener for a message about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-email-essentials#041",
+   "text": "Build a reusable template for introducing yourself to a new team. Use a persuasive tone throughout."
+  },
+  {
+   "id": "writing-email-essentials#042",
+   "text": "You are an executive assistant. Build a reusable template for thanking a mentor for their guidance and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-email-essentials#043",
+   "text": "Create a respectful follow-up for escalating a blocked project to leadership. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-email-essentials#044",
+   "text": "Before I start on replying to a recruiter outreach, build a reusable template for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-email-essentials#045",
+   "text": "Write a beginner-friendly breakdown of how to approach introducing yourself to a new team. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-email-essentials#046",
+   "text": "Draft a warm opener for a message about following up after a job interview. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-email-essentials#047",
+   "text": "As a career coach, I keep hitting the same wall with replying to a recruiter outreach. Create a respectful follow-up for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-email-essentials#048",
+   "text": "Create a respectful follow-up for introducing yourself to a new team. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-email-essentials#049",
+   "text": "Build a reusable template for apologizing to a client for a delay."
+  },
+  {
+   "id": "writing-email-essentials#050",
+   "text": "Build a reusable template for congratulating a coworker on a promotion. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-email-essentials#051",
+   "text": "Act as a career coach. Draft a warm opener for a message about thanking a mentor for their guidance, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-email-essentials#052",
+   "text": "Draft a polished, full-length email about introducing yourself to a new team. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-email-essentials#053",
+   "text": "I’m working on rescheduling a client call at short notice. Draft a polished, full-length email about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-email-essentials#054",
+   "text": "Write a concise two-paragraph version of a message about requesting feedback on a draft for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-email-essentials#055",
+   "text": "Build a reusable template for saying no to extra work without burning bridges. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-email-essentials#056",
+   "text": "Help me with saying no to extra work without burning bridges: draft a warm opener for a message about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-email-essentials#057",
+   "text": "Prepare three subject-line options for declining a meeting invite politely. Use a empathetic tone throughout."
+  },
+  {
+   "id": "writing-email-essentials#058",
+   "text": "You are a corporate communications lead. Draft a warm opener for a message about requesting feedback on a draft and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-email-essentials#059",
+   "text": "Outline the key points to hit in a message about congratulating a coworker on a promotion. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-email-essentials#060",
+   "text": "Before I start on replying to a recruiter outreach, outline the key points to hit in a message about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-email-essentials#061",
+   "text": "Write a beginner-friendly breakdown of how to approach onboarding a brand-new teammate. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-email-essentials#062",
+   "text": "Prepare three subject-line options for rescheduling a client call at short notice. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-email-essentials#063",
+   "text": "As a senior editor at a digital magazine, I keep hitting the same wall with requesting feedback on a draft. Draft a polished, full-length email about it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-email-essentials#064",
+   "text": "Write a beginner-friendly breakdown of how to approach saying no to extra work without burning bridges. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-email-essentials#065",
+   "text": "Create a respectful follow-up for rescheduling a client call at short notice."
+  },
+  {
+   "id": "writing-email-essentials#066",
+   "text": "Outline the key points to hit in a message about introducing yourself to a new team. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-email-essentials#067",
+   "text": "Act as a brand journalist. Outline the key points to hit in a message about onboarding a brand-new teammate, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-email-essentials#068",
+   "text": "Build a reusable template for following up after a job interview. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-email-essentials#069",
+   "text": "I’m working on asking a colleague for help without imposing. Write a concise two-paragraph version of a message about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-email-essentials#070",
+   "text": "Write a beginner-friendly breakdown of how to approach thanking a mentor for their guidance for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-email-essentials#071",
+   "text": "Prepare three subject-line options for announcing a team reorganization. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-email-essentials#072",
+   "text": "Help me with asking a colleague for help without imposing: create a respectful follow-up for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-email-essentials#073",
+   "text": "Create a respectful follow-up for declining a meeting invite politely. Use a empathetic tone throughout."
+  },
+  {
+   "id": "writing-email-essentials#074",
+   "text": "You are a brand journalist. Write a concise two-paragraph version of a message about escalating a blocked project to leadership and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-email-essentials#075",
+   "text": "Draft a polished, full-length email about congratulating a coworker on a promotion. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-email-essentials#076",
+   "text": "Before I start on declining a meeting invite politely, build a reusable template for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-email-essentials#077",
+   "text": "Write a concise two-paragraph version of a message about following up after a job interview. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-email-essentials#078",
+   "text": "Prepare three subject-line options for saying no to extra work without burning bridges. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-email-essentials#079",
+   "text": "As a senior editor at a digital magazine, I keep hitting the same wall with requesting feedback on a draft. Write a beginner-friendly breakdown of how to approach it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-email-essentials#080",
+   "text": "Create a respectful follow-up for following up after a job interview. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-email-essentials#081",
+   "text": "Draft a warm opener for a message about asking a colleague for help without imposing."
+  },
+  {
+   "id": "writing-email-essentials#082",
+   "text": "Prepare three subject-line options for requesting feedback on a draft. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-email-essentials#083",
+   "text": "Act as a senior editor at a digital magazine. Write a beginner-friendly breakdown of how to approach following up after a job interview, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-email-essentials#084",
+   "text": "Build a reusable template for escalating a blocked project to leadership. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-email-essentials#085",
+   "text": "I’m working on declining a meeting invite politely. Write a beginner-friendly breakdown of how to approach it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-email-essentials#086",
+   "text": "Draft a warm opener for a message about introducing yourself to a new team for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-email-essentials#087",
+   "text": "Write a concise two-paragraph version of a message about congratulating a coworker on a promotion. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-email-essentials#088",
+   "text": "Help me with onboarding a brand-new teammate: prepare three subject-line options for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-email-essentials#089",
+   "text": "Draft a polished, full-length email about apologizing to a client for a delay. Use a empathetic tone throughout."
+  },
+  {
+   "id": "writing-email-essentials#090",
+   "text": "You are an executive assistant. Write a beginner-friendly breakdown of how to approach asking a colleague for help without imposing and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-email-essentials#091",
+   "text": "Prepare three subject-line options for apologizing to a client for a delay. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-email-essentials#092",
+   "text": "Before I start on thanking a mentor for their guidance, draft a polished, full-length email about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-email-essentials#093",
+   "text": "Write a concise two-paragraph version of a message about announcing a team reorganization. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-email-essentials#094",
+   "text": "Draft a polished, full-length email about saying no to extra work without burning bridges. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-email-essentials#095",
+   "text": "As a corporate communications lead, I keep hitting the same wall with saying no to extra work without burning bridges. Create a respectful follow-up for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-email-essentials#096",
+   "text": "Write a concise two-paragraph version of a message about negotiating a salary offer by email. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-email-essentials#097",
+   "text": "Build a reusable template for onboarding a brand-new teammate."
+  },
+  {
+   "id": "writing-email-essentials#098",
+   "text": "Outline the key points to hit in a message about apologizing to a client for a delay. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-email-essentials#099",
+   "text": "Act as a senior editor at a digital magazine. Write a concise two-paragraph version of a message about introducing yourself to a new team, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-email-essentials#100",
+   "text": "Build a reusable template for requesting feedback on a draft. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-email-essentials#101",
+   "text": "I’m working on replying to a recruiter outreach. Write a concise two-paragraph version of a message about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-email-essentials#102",
+   "text": "Draft a polished, full-length email about replying to a recruiter outreach for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-email-essentials#103",
+   "text": "Draft a warm opener for a message about announcing a team reorganization. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-email-essentials#104",
+   "text": "Help me with rescheduling a client call at short notice: write a concise two-paragraph version of a message about it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}
