@@ -34,26 +34,19 @@ function NavRow({
   const inner = (
     <motion.span
       className={cn(
-        "group relative flex items-center rounded-xl text-[13px] font-normal transition-colors duration-150 h-10 overflow-hidden",
-        !active && "hover:bg-white/[0.05]",
-        collapsed ? "justify-center w-10 mx-auto px-0" : "gap-3 px-3.5 w-full",
-        active ? "text-cyan-200 font-medium" : "text-slate-400 hover:text-slate-100",
+        "group relative flex items-center rounded-lg text-[13px] transition-colors duration-150 py-2 overflow-hidden",
+        collapsed ? "justify-center w-10 mx-auto px-0" : "space-x-2.5 px-2.5 w-full",
+        active
+          ? "bg-white/[0.08] text-white font-medium"
+          : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]",
       )}
-      whileHover={{ x: collapsed ? 0 : 3 }}
       whileTap={{ scale: 0.97 }}
       transition={spring}
     >
-      {active && (
-        <motion.span
-          layoutId="chat-sidebar-nav-active"
-          className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/15 via-indigo-500/10 to-transparent border border-cyan-500/25 shadow-[0_0_14px_rgba(6,182,212,0.12)]"
-          transition={{ type: "spring", stiffness: 380, damping: 30 }}
-        />
-      )}
       <Icon
         className={cn(
-          "relative z-10 h-4 w-4 shrink-0 transition-transform duration-200 group-hover:scale-110",
-          active ? "text-cyan-400" : "text-slate-400 group-hover:text-cyan-300"
+          "relative z-10 h-4 w-4 shrink-0",
+          active ? "text-sky-400" : "text-slate-400 group-hover:text-slate-300",
         )}
       />
       <motion.span
@@ -66,18 +59,20 @@ function NavRow({
       >
         {label}
       </motion.span>
-      {item.badge && (
-        <motion.span
-          animate={{
-            opacity: collapsed ? 0 : 1,
-            scale: collapsed ? 0.6 : 1,
-            width: collapsed ? 0 : "auto",
-          }}
-          transition={{ duration: 0.18, ease: [0.2, 0.8, 0.2, 1] }}
-          className="relative z-10 text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 overflow-hidden whitespace-nowrap"
+      {item.badge && !collapsed && (
+        <span
+          className={cn(
+            "relative z-10 text-[9px] font-semibold px-1 py-0.5 rounded border overflow-hidden whitespace-nowrap",
+            item.badge === "VERIFIED"
+              ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+              : "bg-purple-500/10 text-purple-400 border-purple-500/20",
+          )}
         >
           {item.badge}
-        </motion.span>
+        </span>
+      )}
+      {active && !item.badge && (
+        <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-sky-400 shadow-sm shrink-0" />
       )}
     </motion.span>
   );
@@ -135,7 +130,7 @@ export function ChatSidebarNavList({ collapsed, onItemClick }: ChatSidebarNavLis
   const renderSection = (title: string, items: ChatSidebarNavItem[]) => (
     <div className={cn("space-y-0.5", collapsed && "space-y-1")}>
       {!collapsed && (
-        <p className="px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-400/50 select-none">
+        <p className="px-2.5 text-[10px] font-semibold text-slate-400 tracking-wider uppercase select-none">
           {title}
         </p>
       )}
@@ -159,7 +154,7 @@ export function ChatSidebarNavList({ collapsed, onItemClick }: ChatSidebarNavLis
           variants={staggerList}
           initial="hidden"
           animate="visible"
-          className="flex-1 px-1 py-1 space-y-3.5 overflow-y-auto min-h-0 scrollbar-none"
+          className="flex-1 px-1 py-1 space-y-4 overflow-y-auto min-h-0 scrollbar-none"
         >
           {renderSection("Workspace", workspace)}
           {renderSection("Explore & Studios", explore)}

@@ -1201,15 +1201,12 @@
   }
 
   .shadowtalk-composer__send {
-    @apply h-8 w-8 shrink-0 rounded-full border-0 text-primary-foreground transition-all duration-200 cursor-pointer flex items-center justify-center;
-    background: var(--gradient-primary);
-    box-shadow: var(--shadow-button);
+    @apply h-8 w-8 shrink-0 rounded-full border-0 bg-white text-black transition-all duration-200 cursor-pointer flex items-center justify-center shadow-sm;
   }
 
   .shadowtalk-composer__send:hover:not(:disabled) {
-    filter: brightness(1.12);
-    transform: scale(1.05);
-    box-shadow: var(--shadow-glow);
+    @apply bg-slate-200;
+    transform: scale(1.02);
   }
 
   .shadowtalk-composer__send:active:not(:disabled) {
@@ -1217,9 +1214,28 @@
   }
 
   .shadowtalk-composer__send:disabled {
-    @apply opacity-25 cursor-not-allowed;
+    @apply opacity-25 cursor-not-allowed bg-white/10 text-white/30;
     box-shadow: none;
-    background: hsl(var(--muted));
+  }
+
+  /* Flat Gemini/ChatGPT-style canvas for the chat workspace (no ambient glow) */
+  .chat-flat-shell {
+    background: #131314 !important;
+  }
+  .chat-flat-shell::before {
+    display: none;
+  }
+  .chat-flat-shell .shadowtalk-chat-ambient {
+    display: none;
+  }
+
+  /* Gradient greeting headline (sky → violet → pink) */
+  .gemini-gradient {
+    background: linear-gradient(135deg, #7aa2f7 0%, #c084fc 45%, #f472b6 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 
   .shadowtalk-composer__mic {

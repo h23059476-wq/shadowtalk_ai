@@ -1,14 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { motion, LayoutGroup } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  Menu,
-  Plus,
   MessageSquare,
   Trash2,
   Archive,
   Settings,
-  Sparkles,
-  Command,
+  PanelLeft,
 } from "lucide-react";
 import React, { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
@@ -84,26 +81,8 @@ function ChatShadowSidebarInner({
 
   const formattedName = useMemo(() => cleanProfileName(userDisplayName), [userDisplayName]);
   const activeConversations = conversations.filter((c) => !isArchived(c));
-
-  // Grouping logic
-  const grouped = activeConversations.reduce((acc, conv) => {
-    const date = new Date(conv.created_at);
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-    let group = "Earlier";
-    if (days === 0) group = "Today";
-    else if (days === 1) group = "Yesterday";
-    else if (days < 7) group = "Previous 7 Days";
-    else if (days < 30) group = "Previous 30 Days";
-
-    if (!acc[group]) acc[group] = [];
-    acc[group].push(conv);
-    return acc;
-  }, {} as Record<string, Conversation[]>);
-
-  const groupOrder = ["Today", "Yesterday", "Previous 7 Days", "Previous 30 Days", "Earlier"];
+  const planLabel =
+    userPlan === "free" ? "Free Plan" : `${userPlan.charAt(0).toUpperCase()}${userPlan.slice(1)} Plan Active`;
 
   return (
     <TooltipProvider delayDuration={250}>
@@ -112,14 +91,34 @@ function ChatShadowSidebarInner({
         animate={{ width }}
         transition={{ duration: 0.28, ease: SIDEBAR_EASE }}
         className={cn(
-          "ios-glass-sidebar shrink-0 flex flex-col relative z-30 overflow-hidden select-none will-change-[width]",
+          "shrink-0 flex flex-col relative z-30 overflow-hidden select-none will-change-[width] bg-[#171717] text-slate-200",
           mobileDrawer
-            ? "flex h-full min-h-0 bg-sidebar"
-            : "hidden md:flex h-full min-h-0 bg-sidebar/95 border-r border-sidebar-border backdrop-blur-2xl shadow-lg"
+            ? "flex h-full min-h-0"
+            : "hidden md:flex h-full min-h-0 border-r border-[#26262b]"
         )}
       >
-        {/* Top Header: Hamburger, Brand Title & Pro Badge */}
-        <div className="flex h-[60px] shrink-0 items-center px-3.5 gap-2.5 border-b border-sidebar-border overflow-hidden">
+        {/* Top Header: Brand & Collapse */}
+        <div className="px-4 pt-3.5 pb-2 flex items-center justify-between shrink-0 overflow-hidden">
+          <motion.div
+            animate={{
+              opacity: isCollapsed ? 0 : 1,
+              x: isCollapsed ? -8 : 0,
+            }}
+            transition={{ duration: 0.2, ease: SIDEBAR_EASE }}
+            className={cn(
+              "flex items-center space-x-2 overflow-hidden whitespace-nowrap min-w-0",
+              isCollapsed && "pointer-events-none"
+            )}
+          >
+            <div className="w-6 h-6 shrink-0 rounded-lg bg-gradient-to-tr from-sky-400 to-indigo-600 flex items-center justify-center text-white font-semibold text-xs shadow-sm">
+              S
+            </div>
+            <span className="font-semibold text-sm tracking-tight text-white">ShadowTalk</span>
+            <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">
+              PRO
+            </span>
+          </motion.div>
+
           {onToggleCollapse && !mobileDrawer && (
             <Tooltip>
               <TooltipTrigger asChild>
@@ -129,41 +128,19 @@ function ChatShadowSidebarInner({
                     settingsHapticTick();
                     onToggleCollapse();
                   }}
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-muted-foreground hover:text-sidebar-primary hover:bg-sidebar-accent active:scale-95 transition-all"
+                  className="p-1.5 shrink-0 text-slate-400 hover:text-white rounded-lg hover:bg-white/[0.06] transition-colors"
                   aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
                 >
-                  <Menu className="h-4.5 w-4.5" />
+                  <PanelLeft className="w-4 h-4" />
                 </button>
               </TooltipTrigger>
               <TooltipContent side="right">{isCollapsed ? "Expand sidebar" : "Collapse sidebar"}</TooltipContent>
             </Tooltip>
           )}
-
-          <motion.div
-            animate={{
-              opacity: isCollapsed ? 0 : 1,
-              x: isCollapsed ? -8 : 0,
-            }}
-            transition={{ duration: 0.2, ease: SIDEBAR_EASE }}
-            className={cn(
-              "flex items-center gap-2 overflow-hidden flex-1 whitespace-nowrap min-w-0",
-              isCollapsed && "pointer-events-none"
-            )}
-          >
-            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-primary/10 border border-primary/30">
-              <Sparkles className="h-3.5 w-3.5 text-primary" />
-            </div>
-            <span className="text-[16px] font-bold gradient-text tracking-tight">
-              ShadowTalk
-            </span>
-            <span className="ml-auto text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-              Pro
-            </span>
-          </motion.div>
         </div>
 
-        {/* Action: New Chat Button */}
-        <div className="px-3 pt-3 pb-2 shrink-0 overflow-hidden">
+        {/* New Chat Pill Button */}
+        <div className="px-3 py-1.5 shrink-0 overflow-hidden">
           <Tooltip>
             <TooltipTrigger asChild>
               <motion.button
@@ -173,37 +150,34 @@ function ChatShadowSidebarInner({
                   onNewChat();
                 }}
                 animate={{
-                  width: isCollapsed ? 42 : "100%",
+                  width: isCollapsed ? 40 : "100%",
                 }}
                 transition={{ duration: 0.25, ease: SIDEBAR_EASE }}
-                whileHover={{
-                  scale: 1.02,
-                  boxShadow: "var(--shadow-button)",
-                  borderColor: "hsl(var(--primary) / 0.4)",
-                }}
                 whileTap={{ scale: 0.98 }}
                 className={cn(
-                  "group relative flex items-center rounded-xl overflow-hidden h-10 mx-auto",
-                  "bg-primary/10 border border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground",
-                  isCollapsed ? "justify-center px-0" : "px-3.5 justify-between"
+                  "group flex items-center rounded-xl h-9 mx-auto transition-all",
+                  "bg-white/[0.05] hover:bg-white/[0.09] border border-white/5 text-slate-200 hover:text-white",
+                  isCollapsed ? "justify-center px-0" : "justify-between px-3"
                 )}
               >
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <Plus className="h-4 w-4 shrink-0 text-primary group-hover:rotate-90 transition-transform duration-200" />
+                <div className="flex items-center space-x-2 min-w-0">
+                  <svg className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M12 4v16m8-8H4" />
+                  </svg>
                   <motion.span
                     animate={{
                       opacity: isCollapsed ? 0 : 1,
                       width: isCollapsed ? 0 : "auto",
                     }}
                     transition={{ duration: 0.18, ease: SIDEBAR_EASE }}
-                    className="font-semibold text-[13px] whitespace-nowrap overflow-hidden text-left"
+                    className="text-xs font-medium tracking-wide whitespace-nowrap overflow-hidden text-left"
                   >
                     New chat
                   </motion.span>
                 </div>
                 {!isCollapsed && (
-                  <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-muted/60 border border-border text-[10px] text-primary/70 font-mono">
-                    <Command className="h-2.5 w-2.5" />K
+                  <kbd className="hidden sm:inline-block text-[10px] text-slate-400 font-mono px-1.5 py-0.5 rounded bg-black/30 border border-white/5">
+                    ⌘K
                   </kbd>
                 )}
               </motion.button>
@@ -212,29 +186,15 @@ function ChatShadowSidebarInner({
           </Tooltip>
         </div>
 
-        {/* Scrollable Navigation & Recents List */}
-        <ScrollArea className="flex-1 px-1.5 custom-scrollbar">
-          <div className="pb-4 space-y-3">
-            {/* Installed Agents Panel: smoothly collapses height & opacity */}
-            <motion.div
-              initial={false}
-              animate={{
-                opacity: isCollapsed ? 0 : 1,
-                height: isCollapsed ? 0 : "auto",
-              }}
-              transition={{ duration: 0.22, ease: SIDEBAR_EASE }}
-              className="overflow-hidden px-1.5 shrink-0"
-              style={{ pointerEvents: isCollapsed ? "none" : "auto" }}
-            >
-
-            </motion.div>
-
+        {/* Scrollable Navigation & Recents */}
+        <ScrollArea className="flex-1 px-3 py-2 custom-scrollbar">
+          <div className="pb-4 space-y-4">
             {/* Primary Real-Feature Navigation — ALWAYS single mounted instance */}
-            <div className="py-1">
+            <div className="text-xs font-normal -mx-1">
               <ChatSidebarNavList collapsed={isCollapsed} onItemClick={onNavigate} />
             </div>
 
-            {/* Recent Chats Section: smoothly collapses height & opacity */}
+            {/* Recent Chats */}
             {activeConversations.length > 0 && (
               <motion.div
                 initial={false}
@@ -243,165 +203,144 @@ function ChatShadowSidebarInner({
                   height: isCollapsed ? 0 : "auto",
                 }}
                 transition={{ duration: 0.22, ease: SIDEBAR_EASE }}
-                className="overflow-hidden space-y-2 pt-1"
+                className="overflow-hidden space-y-0.5 text-xs font-normal"
                 style={{ pointerEvents: isCollapsed ? "none" : "auto" }}
               >
-                <div className="px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-sidebar-primary/60 whitespace-nowrap">
-                  Recent Conversations
-                </div>
-
-                <LayoutGroup id="sidebar-history">
-                  {groupOrder.map((group) => {
-                    const items = grouped[group];
-                    if (!items?.length) return null;
+                <span className="block px-2.5 text-[10px] font-semibold text-slate-400 tracking-wider uppercase">
+                  Recent
+                </span>
+                <div className="mt-1 space-y-0.5">
+                  {activeConversations.map((conv) => {
+                    const isActive = currentConversationId === conv.id;
+                    const isHovered = hoveredId === conv.id;
                     return (
-                      <div key={group} className="space-y-0.5">
-                        <div className="px-3 py-1 text-[10px] font-semibold text-muted-foreground/70 whitespace-nowrap">{group}</div>
-                        {items.map((conv) => {
-                          const isActive = currentConversationId === conv.id;
-                          const isHovered = hoveredId === conv.id;
-                          return (
-                            <div
-                              key={conv.id}
-                              onMouseEnter={() => setHoveredId(conv.id)}
-                              onMouseLeave={() => setHoveredId(null)}
-                              className="relative px-1"
-                            >
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  settingsHapticTick();
-                                  onSelect?.(conv.id);
-                                }}
-                                className={cn(
-                                  "relative w-full flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-left transition-colors duration-150 group overflow-hidden",
-                                  isActive
-                                    ? "ios-glass-card bg-sidebar-accent text-sidebar-primary border border-sidebar-border font-medium"
-                                    : "text-muted-foreground hover:text-foreground hover:bg-sidebar-accent"
-                                )}
-                              >
-                                <MessageSquare
-                                  className={cn(
-                                    "h-3.5 w-3.5 shrink-0 transition-colors",
-                                    isActive ? "text-sidebar-primary" : "text-muted-foreground group-hover:text-sidebar-primary"
-                                  )}
-                                />
-                                <span className="flex-1 text-[12.5px] truncate pr-4 whitespace-nowrap">{conv.title || "Untitled chat"}</span>
+                      <div
+                        key={conv.id}
+                        onMouseEnter={() => setHoveredId(conv.id)}
+                        onMouseLeave={() => setHoveredId(null)}
+                        className="relative"
+                      >
+                        <button
+                          type="button"
+                          onClick={() => {
+                            settingsHapticTick();
+                            onSelect?.(conv.id);
+                          }}
+                          className={cn(
+                            "relative w-full flex items-center space-x-2.5 rounded-lg px-2.5 py-2 text-left transition-colors duration-150 group overflow-hidden",
+                            isActive
+                              ? "bg-white/[0.08] text-white font-medium"
+                              : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]"
+                          )}
+                        >
+                          <MessageSquare
+                            className={cn(
+                              "w-3.5 h-3.5 shrink-0 transition-colors",
+                              isActive ? "text-sky-400" : "text-slate-400"
+                            )}
+                          />
+                          <span className="flex-1 text-[13px] truncate pr-4 whitespace-nowrap">{conv.title || "Untitled chat"}</span>
 
-                                <div
-                                  className={cn(
-                                    "absolute right-2 flex items-center gap-1 opacity-0 transition-opacity",
-                                    (isHovered || isActive) && "opacity-100"
-                                  )}
-                                >
-                                  <button
-                                    type="button"
-                                    className="p-1 rounded-md hover:bg-primary/15 text-muted-foreground hover:text-primary transition-colors"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      onArchive?.(conv.id);
-                                    }}
-                                    title="Archive"
-                                  >
-                                    <Archive className="h-3 w-3" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="p-1 rounded-md hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-colors"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      onDelete?.(conv.id);
-                                    }}
-                                    title="Delete"
-                                  >
-                                    <Trash2 className="h-3 w-3" />
-                                  </button>
-                                </div>
-                              </button>
-                            </div>
-                          );
-                        })}
+                          <div
+                            className={cn(
+                              "absolute right-2 flex items-center gap-1 opacity-0 transition-opacity",
+                              (isHovered || isActive) && "opacity-100"
+                            )}
+                          >
+                            <button
+                              type="button"
+                              className="p-1 rounded-md hover:bg-white/10 text-slate-400 hover:text-slate-200 transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onArchive?.(conv.id);
+                              }}
+                              title="Archive"
+                            >
+                              <Archive className="h-3 w-3" />
+                            </button>
+                            <button
+                              type="button"
+                              className="p-1 rounded-md hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onDelete?.(conv.id);
+                              }}
+                              title="Delete"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </button>
+                          </div>
+                        </button>
                       </div>
                     );
                   })}
-                </LayoutGroup>
+                </div>
               </motion.div>
             )}
           </div>
         </ScrollArea>
 
-        {/* Bottom Profile & Settings Bar */}
-        <div className="ios-glass-card shrink-0 p-2.5 flex flex-col gap-1 border-t border-sidebar-border bg-sidebar/95 backdrop-blur-md overflow-hidden">
-          {/* Settings Button */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                onClick={() => {
-                  settingsHapticTick();
-                  if (onOpenSettings) {
-                    onOpenSettings();
-                  } else {
-                    navigate("/settings");
-                  }
-                }}
-                className={cn(
-                   "flex items-center rounded-xl text-muted-foreground hover:text-sidebar-primary hover:bg-sidebar-accent active:scale-98 transition-colors h-10 overflow-hidden",
-                  isCollapsed ? "w-10 justify-center mx-auto px-0" : "w-full px-2.5 gap-2.5"
-                )}
-              >
-                <Settings className="h-4 w-4 shrink-0" />
-                <motion.span
-                  animate={{
-                    opacity: isCollapsed ? 0 : 1,
-                    width: isCollapsed ? 0 : "auto",
+        {/* Bottom User Profile Card */}
+        <div className="p-3 shrink-0 border-t border-[#26262b] bg-[#171717] overflow-hidden">
+          <div
+            className={cn(
+              "w-full flex items-center justify-between text-left group",
+              isCollapsed && "justify-center"
+            )}
+          >
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={() => {
+                    settingsHapticTick();
+                    navigate("/profile");
+                    onNavigate?.();
                   }}
-                  transition={{ duration: 0.18, ease: SIDEBAR_EASE }}
-                  className="text-[13px] font-medium whitespace-nowrap overflow-hidden text-left"
+                  className={cn(
+                    "flex items-center space-x-2.5 p-2 rounded-xl hover:bg-white/[0.05] transition-colors overflow-hidden",
+                    isCollapsed ? "px-0" : "flex-1 min-w-0"
+                  )}
                 >
-                  Settings
-                </motion.span>
-              </button>
-            </TooltipTrigger>
-            {isCollapsed && <TooltipContent side="right">Settings</TooltipContent>}
-          </Tooltip>
-
-          {/* User Profile Card */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                onClick={() => {
-                  settingsHapticTick();
-                  navigate("/profile");
-                  onNavigate?.();
-                }}
-                className={cn(
-                  "flex items-center rounded-xl hover:bg-sidebar-accent active:scale-98 transition-colors h-10 overflow-hidden",
-                  isCollapsed ? "w-10 justify-center mx-auto px-0" : "w-full px-2 gap-2.5"
-                )}
-              >
-                <div className="relative shrink-0">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground shadow-sm ring-1 ring-border">
+                  <div className="w-8 h-8 shrink-0 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-600 flex items-center justify-center text-white font-medium text-xs shadow-sm">
                     {userInitials || "U"}
                   </div>
-                  <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-success ring-2 ring-sidebar" />
-                </div>
-                <motion.div
-                  animate={{
-                    opacity: isCollapsed ? 0 : 1,
-                    width: isCollapsed ? 0 : "auto",
-                  }}
-                  transition={{ duration: 0.18, ease: SIDEBAR_EASE }}
-                  className="min-w-0 flex-1 text-left whitespace-nowrap overflow-hidden"
-                >
-                  <p className="text-[13px] font-medium text-sidebar-foreground truncate">{formattedName}</p>
-                  <p className="text-[10px] text-sidebar-primary/70 truncate font-mono">{userPlan === "free" ? "Free Plan" : `${userPlan.charAt(0).toUpperCase()}${userPlan.slice(1)} Plan Active`}</p>
-                </motion.div>
-              </button>
-            </TooltipTrigger>
-            {isCollapsed && <TooltipContent side="right">{userDisplayName || "Profile & Account"}</TooltipContent>}
-          </Tooltip>
+                  <motion.div
+                    animate={{
+                      opacity: isCollapsed ? 0 : 1,
+                      width: isCollapsed ? 0 : "auto",
+                    }}
+                    transition={{ duration: 0.18, ease: SIDEBAR_EASE }}
+                    className="flex flex-col min-w-0 text-left whitespace-nowrap overflow-hidden"
+                  >
+                    <span className="text-xs font-medium text-slate-200 group-hover:text-white truncate">{formattedName}</span>
+                    <span className="text-[11px] text-slate-400 truncate">{planLabel}</span>
+                  </motion.div>
+                </button>
+              </TooltipTrigger>
+              {isCollapsed && <TooltipContent side="right">{userDisplayName || "Profile & Account"}</TooltipContent>}
+            </Tooltip>
+
+            {!isCollapsed && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      settingsHapticTick();
+                      if (onOpenSettings) onOpenSettings();
+                      else navigate("/settings");
+                    }}
+                    className="p-1 shrink-0 text-slate-400 group-hover:text-slate-200 hover:text-white transition-colors rounded-lg"
+                    aria-label="Settings"
+                  >
+                    <Settings className="w-4 h-4" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="top">Settings</TooltipContent>
+              </Tooltip>
+            )}
+          </div>
         </div>
       </motion.aside>
     </TooltipProvider>
