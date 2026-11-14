@@ -1,0 +1,430 @@
+{
+ "slug": "writing-academic-writing",
+ "categorySlug": "writing",
+ "category": "Writing & Editing",
+ "title": "Academic & Research Writing",
+ "description": "Abstracts, literature reviews, citations, and thesis-chapter discipline.",
+ "tags": [
+  "research",
+  "academic",
+  "thesis"
+ ],
+ "prompts": [
+  {
+   "id": "writing-academic-writing#001",
+   "text": "Write a plain-language summary of a literature review on urban heat islands."
+  },
+  {
+   "id": "writing-academic-writing#002",
+   "text": "Create a citation and source-evaluation checklist for a methodology section for a survey on sleep habits. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-academic-writing#003",
+   "text": "Act as a content marketing strategist. Critique the logical gaps in an argument about a capstone proposal on school lunch nutrition, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-academic-writing#004",
+   "text": "Outline a rigorous methodology section for a replication-study rationale for a memory experiment. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-academic-writing#005",
+   "text": "I’m working on a hypothesis for a reading-comprehension experiment. Draft a limitations and future-work section for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-academic-writing#006",
+   "text": "Critique the logical gaps in an argument about a research question for studying gig-work burnout for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-academic-writing#007",
+   "text": "Outline a rigorous methodology section for a citation plan for a paper on remote learning. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-academic-writing#008",
+   "text": "Help me with a literature review on urban heat islands: draft a precise 200-word abstract for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-academic-writing#009",
+   "text": "Draft a precise 200-word abstract for an ethics statement for interview-based research. Use a professional tone throughout."
+  },
+  {
+   "id": "writing-academic-writing#010",
+   "text": "You are a career coach. Create a citation and source-evaluation checklist for a conference poster summary on traffic modeling and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-academic-writing#011",
+   "text": "Write a structured literature-review section about an annotated bibliography entry on vaccine hesitancy. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-academic-writing#012",
+   "text": "Before I start on an ethics statement for interview-based research, write a plain-language summary of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-academic-writing#013",
+   "text": "Outline a rigorous methodology section for a capstone proposal on school lunch nutrition. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-academic-writing#014",
+   "text": "Write a structured literature-review section about a conference poster summary on traffic modeling. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-academic-writing#015",
+   "text": "As a freelance copywriter, I keep hitting the same wall with a methodology section for a survey on sleep habits. Formulate three research questions for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-academic-writing#016",
+   "text": "Create a citation and source-evaluation checklist for a discussion section interpreting survey bias. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-academic-writing#017",
+   "text": "Outline a rigorous methodology section for a thesis abstract on microplastic filtration."
+  },
+  {
+   "id": "writing-academic-writing#018",
+   "text": "Draft a limitations and future-work section for a thesis abstract on microplastic filtration. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-academic-writing#019",
+   "text": "Act as a content marketing strategist. Write a structured literature-review section about a capstone proposal on school lunch nutrition, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-academic-writing#020",
+   "text": "Draft a precise 200-word abstract for a research question for studying gig-work burnout. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-academic-writing#021",
+   "text": "I’m working on a replication-study rationale for a memory experiment. Write a structured literature-review section about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-academic-writing#022",
+   "text": "Create a citation and source-evaluation checklist for a definitions section for a paper on digital addiction for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-academic-writing#023",
+   "text": "Write a structured literature-review section about a thesis abstract on microplastic filtration. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-academic-writing#024",
+   "text": "Help me with a methodology section for a survey on sleep habits: write a structured literature-review section about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-academic-writing#025",
+   "text": "Outline a rigorous methodology section for a limitation section for a small-sample study. Use a playful tone throughout."
+  },
+  {
+   "id": "writing-academic-writing#026",
+   "text": "You are a senior editor at a digital magazine. Draft a precise 200-word abstract for a replication-study rationale for a memory experiment and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-academic-writing#027",
+   "text": "Outline a rigorous methodology section for a literature review on urban heat islands. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-academic-writing#028",
+   "text": "Before I start on a hypothesis for a reading-comprehension experiment, draft a precise 200-word abstract for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-academic-writing#029",
+   "text": "Write a structured literature-review section about a literature review on urban heat islands. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-academic-writing#030",
+   "text": "Formulate three research questions for an ethics statement for interview-based research. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-academic-writing#031",
+   "text": "As an executive assistant, I keep hitting the same wall with a limitation section for a small-sample study. Create a citation and source-evaluation checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-academic-writing#032",
+   "text": "Draft a precise 200-word abstract for a peer-review response letter. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-academic-writing#033",
+   "text": "Formulate three research questions for a discussion section interpreting survey bias."
+  },
+  {
+   "id": "writing-academic-writing#034",
+   "text": "Critique the logical gaps in an argument about a definitions section for a paper on digital addiction. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-academic-writing#035",
+   "text": "Act as a corporate communications lead. Critique the logical gaps in an argument about a grant proposal summary on drought-resistant crops, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-academic-writing#036",
+   "text": "Draft a precise 200-word abstract for a definitions section for a paper on digital addiction. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-academic-writing#037",
+   "text": "I’m working on a conference poster summary on traffic modeling. Outline a rigorous methodology section for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-academic-writing#038",
+   "text": "Draft a limitations and future-work section for a peer-review response letter for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-academic-writing#039",
+   "text": "Create a citation and source-evaluation checklist for an ethics statement for interview-based research. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-academic-writing#040",
+   "text": "Help me with a methodology section for a survey on sleep habits: outline a rigorous methodology section for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-academic-writing#041",
+   "text": "Create a citation and source-evaluation checklist for a capstone proposal on school lunch nutrition. Use a playful tone throughout."
+  },
+  {
+   "id": "writing-academic-writing#042",
+   "text": "You are a senior editor at a digital magazine. Outline a rigorous methodology section for a peer-review response letter and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-academic-writing#043",
+   "text": "Write a plain-language summary of a conference poster summary on traffic modeling. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-academic-writing#044",
+   "text": "Before I start on an annotated bibliography entry on vaccine hesitancy, draft a limitations and future-work section for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-academic-writing#045",
+   "text": "Draft a precise 200-word abstract for a discussion section interpreting survey bias. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-academic-writing#046",
+   "text": "Formulate three research questions for an annotated bibliography entry on vaccine hesitancy. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-academic-writing#047",
+   "text": "As a writing teacher, I keep hitting the same wall with a thesis abstract on microplastic filtration. Draft a precise 200-word abstract for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-academic-writing#048",
+   "text": "Create a citation and source-evaluation checklist for a hypothesis for a reading-comprehension experiment. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-academic-writing#049",
+   "text": "Write a structured literature-review section about an ethics statement for interview-based research."
+  },
+  {
+   "id": "writing-academic-writing#050",
+   "text": "Formulate three research questions for a hypothesis for a reading-comprehension experiment. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-academic-writing#051",
+   "text": "Act as a content marketing strategist. Critique the logical gaps in an argument about a replication-study rationale for a memory experiment, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-academic-writing#052",
+   "text": "Critique the logical gaps in an argument about a literature review on urban heat islands. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-academic-writing#053",
+   "text": "I’m working on an annotated bibliography entry on vaccine hesitancy. Create a citation and source-evaluation checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-academic-writing#054",
+   "text": "Critique the logical gaps in an argument about a peer-review response letter for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-academic-writing#055",
+   "text": "Write a structured literature-review section about a grant proposal summary on drought-resistant crops. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-academic-writing#056",
+   "text": "Help me with a peer-review response letter: write a plain-language summary of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-academic-writing#057",
+   "text": "Critique the logical gaps in an argument about an ethics statement for interview-based research. Use a professional tone throughout."
+  },
+  {
+   "id": "writing-academic-writing#058",
+   "text": "You are a senior editor at a digital magazine. Critique the logical gaps in an argument about a discussion section interpreting survey bias and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-academic-writing#059",
+   "text": "Draft a limitations and future-work section for a conference poster summary on traffic modeling. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-academic-writing#060",
+   "text": "Before I start on a methodology section for a survey on sleep habits, critique the logical gaps in an argument about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-academic-writing#061",
+   "text": "Formulate three research questions for a grant proposal summary on drought-resistant crops. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-academic-writing#062",
+   "text": "Create a citation and source-evaluation checklist for a research question for studying gig-work burnout. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-academic-writing#063",
+   "text": "As a content marketing strategist, I keep hitting the same wall with a research question for studying gig-work burnout. Outline a rigorous methodology section for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-academic-writing#064",
+   "text": "Write a structured literature-review section about a citation plan for a paper on remote learning. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-academic-writing#065",
+   "text": "Create a citation and source-evaluation checklist for a citation plan for a paper on remote learning."
+  },
+  {
+   "id": "writing-academic-writing#066",
+   "text": "Formulate three research questions for a conference poster summary on traffic modeling. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-academic-writing#067",
+   "text": "Act as a writing teacher. Draft a limitations and future-work section for an ethics statement for interview-based research, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-academic-writing#068",
+   "text": "Write a plain-language summary of a capstone proposal on school lunch nutrition. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-academic-writing#069",
+   "text": "I’m working on a conference poster summary on traffic modeling. Critique the logical gaps in an argument about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-academic-writing#070",
+   "text": "Draft a limitations and future-work section for a grant proposal summary on drought-resistant crops for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-academic-writing#071",
+   "text": "Draft a precise 200-word abstract for a capstone proposal on school lunch nutrition. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-academic-writing#072",
+   "text": "Help me with a citation plan for a paper on remote learning: formulate three research questions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-academic-writing#073",
+   "text": "Write a plain-language summary of a methodology section for a survey on sleep habits. Use a persuasive tone throughout."
+  },
+  {
+   "id": "writing-academic-writing#074",
+   "text": "You are a senior editor at a digital magazine. Write a structured literature-review section about a discussion section interpreting survey bias and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-academic-writing#075",
+   "text": "Create a citation and source-evaluation checklist for a peer-review response letter. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-academic-writing#076",
+   "text": "Before I start on an annotated bibliography entry on vaccine hesitancy, critique the logical gaps in an argument about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-academic-writing#077",
+   "text": "Critique the logical gaps in an argument about a thesis abstract on microplastic filtration. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-academic-writing#078",
+   "text": "Outline a rigorous methodology section for a hypothesis for a reading-comprehension experiment. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-academic-writing#079",
+   "text": "As a career coach, I keep hitting the same wall with an ethics statement for interview-based research. Outline a rigorous methodology section for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-academic-writing#080",
+   "text": "Write a structured literature-review section about a definitions section for a paper on digital addiction. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-academic-writing#081",
+   "text": "Draft a limitations and future-work section for a research question for studying gig-work burnout."
+  },
+  {
+   "id": "writing-academic-writing#082",
+   "text": "Draft a limitations and future-work section for a limitation section for a small-sample study. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-academic-writing#083",
+   "text": "Act as a content marketing strategist. Write a structured literature-review section about a limitation section for a small-sample study, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-academic-writing#084",
+   "text": "Draft a precise 200-word abstract for a limitation section for a small-sample study. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-academic-writing#085",
+   "text": "I’m working on a replication-study rationale for a memory experiment. Formulate three research questions for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-academic-writing#086",
+   "text": "Draft a limitations and future-work section for a methodology section for a survey on sleep habits for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-academic-writing#087",
+   "text": "Outline a rigorous methodology section for a definitions section for a paper on digital addiction. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-academic-writing#088",
+   "text": "Help me with a peer-review response letter: formulate three research questions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-academic-writing#089",
+   "text": "Write a structured literature-review section about a hypothesis for a reading-comprehension experiment. Use a empathetic tone throughout."
+  },
+  {
+   "id": "writing-academic-writing#090",
+   "text": "You are a freelance copywriter. Formulate three research questions for a literature review on urban heat islands and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-academic-writing#091",
+   "text": "Formulate three research questions for a thesis abstract on microplastic filtration. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-academic-writing#092",
+   "text": "Before I start on a citation plan for a paper on remote learning, critique the logical gaps in an argument about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-academic-writing#093",
+   "text": "Write a plain-language summary of a citation plan for a paper on remote learning. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-academic-writing#094",
+   "text": "Outline a rigorous methodology section for an annotated bibliography entry on vaccine hesitancy. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-academic-writing#095",
+   "text": "As a senior editor at a digital magazine, I keep hitting the same wall with a definitions section for a paper on digital addiction. Formulate three research questions for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-academic-writing#096",
+   "text": "Write a plain-language summary of a limitation section for a small-sample study. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-academic-writing#097",
+   "text": "Write a plain-language summary of a research question for studying gig-work burnout."
+  },
+  {
+   "id": "writing-academic-writing#098",
+   "text": "Formulate three research questions for a limitation section for a small-sample study. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-academic-writing#099",
+   "text": "Act as a corporate communications lead. Write a plain-language summary of a grant proposal summary on drought-resistant crops, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-academic-writing#100",
+   "text": "Write a plain-language summary of a thesis abstract on microplastic filtration. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-academic-writing#101",
+   "text": "I’m working on a replication-study rationale for a memory experiment. Write a plain-language summary of it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-academic-writing#102",
+   "text": "Draft a precise 200-word abstract for an annotated bibliography entry on vaccine hesitancy for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-academic-writing#103",
+   "text": "Formulate three research questions for a capstone proposal on school lunch nutrition. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-academic-writing#104",
+   "text": "Help me with an annotated bibliography entry on vaccine hesitancy: write a plain-language summary of it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

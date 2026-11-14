@@ -1,0 +1,430 @@
+{
+ "slug": "business-finance-fundamentals",
+ "categorySlug": "business",
+ "category": "Business & Strategy",
+ "title": "Finance Fundamentals",
+ "description": "Budgets, pricing, cash flow, and unit economics demystified.",
+ "tags": [
+  "finance",
+  "pricing",
+  "cashflow"
+ ],
+ "prompts": [
+  {
+   "id": "business-finance-fundamentals#001",
+   "text": "List the numbers to gather before deciding on a break-even analysis for a food truck."
+  },
+  {
+   "id": "business-finance-fundamentals#002",
+   "text": "Draft a one-page proposal justifying a currency-exposure plan for importers. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-finance-fundamentals#003",
+   "text": "Act as a serial founder. Write a client-safe explanation of a tax-calendar setup for a small studio, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-finance-fundamentals#004",
+   "text": "Stress-test the assumptions behind a grant application budget section. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-finance-fundamentals#005",
+   "text": "I’m working on a first annual budget for a cafe. Flag the common expensive mistakes in it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-finance-fundamentals#006",
+   "text": "List the numbers to gather before deciding on a currency-exposure plan for importers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-finance-fundamentals#007",
+   "text": "Flag the common expensive mistakes in cash-flow forecasting for seasonal sales. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-finance-fundamentals#008",
+   "text": "Help me with a capital purchase request memo: build a simple spreadsheet model for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-finance-fundamentals#009",
+   "text": "Stress-test the assumptions behind a wedding-venue deposit policy. Use a formal tone throughout."
+  },
+  {
+   "id": "business-finance-fundamentals#010",
+   "text": "You are a customer success director. Write a client-safe explanation of a cost-reduction sweep that protects quality and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-finance-fundamentals#011",
+   "text": "Build a simple spreadsheet model for a first annual budget for a cafe. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-finance-fundamentals#012",
+   "text": "Before I start on setting prices for a handmade goods shop, build a simple spreadsheet model for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-finance-fundamentals#013",
+   "text": "Draft a one-page proposal justifying a first annual budget for a cafe. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-finance-fundamentals#014",
+   "text": "Explain in plain language how to approach cash-flow forecasting for seasonal sales. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-finance-fundamentals#015",
+   "text": "As a procurement lead, I keep hitting the same wall with a cost-reduction sweep that protects quality. Flag the common expensive mistakes in it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-finance-fundamentals#016",
+   "text": "List the numbers to gather before deciding on a subscription revenue-recognition explainer. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-finance-fundamentals#017",
+   "text": "Draft a one-page proposal justifying a break-even analysis for a food truck."
+  },
+  {
+   "id": "business-finance-fundamentals#018",
+   "text": "Write a client-safe explanation of setting prices for a handmade goods shop. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-finance-fundamentals#019",
+   "text": "Act as a finance manager. Flag the common expensive mistakes in a rent-vs-buy analysis for equipment, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-finance-fundamentals#020",
+   "text": "Flag the common expensive mistakes in setting prices for a handmade goods shop. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-finance-fundamentals#021",
+   "text": "I’m working on a first annual budget for a cafe. Write a client-safe explanation of it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-finance-fundamentals#022",
+   "text": "Draft a one-page proposal justifying cash-flow forecasting for seasonal sales for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-finance-fundamentals#023",
+   "text": "List the numbers to gather before deciding on a cost-reduction sweep that protects quality. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-finance-fundamentals#024",
+   "text": "Help me with a wedding-venue deposit policy: explain in plain language how to approach it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-finance-fundamentals#025",
+   "text": "Stress-test the assumptions behind a tax-calendar setup for a small studio. Use a encouraging tone throughout."
+  },
+  {
+   "id": "business-finance-fundamentals#026",
+   "text": "You are a HR business partner. Write a client-safe explanation of cash-flow forecasting for seasonal sales and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-finance-fundamentals#027",
+   "text": "Flag the common expensive mistakes in a currency-exposure plan for importers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-finance-fundamentals#028",
+   "text": "Before I start on a capital purchase request memo, list the numbers to gather before deciding on it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-finance-fundamentals#029",
+   "text": "Build a simple spreadsheet model for a currency-exposure plan for importers. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-finance-fundamentals#030",
+   "text": "Flag the common expensive mistakes in an invoice-chasing sequence that stays friendly. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-finance-fundamentals#031",
+   "text": "As a finance manager, I keep hitting the same wall with cash-flow forecasting for seasonal sales. Stress-test the assumptions behind it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-finance-fundamentals#032",
+   "text": "Flag the common expensive mistakes in a tax-calendar setup for a small studio. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-finance-fundamentals#033",
+   "text": "Stress-test the assumptions behind a break-even analysis for a food truck."
+  },
+  {
+   "id": "business-finance-fundamentals#034",
+   "text": "Create a monthly review checklist for setting prices for a handmade goods shop. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-finance-fundamentals#035",
+   "text": "Act as a finance manager. Create a monthly review checklist for a cost-reduction sweep that protects quality, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-finance-fundamentals#036",
+   "text": "Create a monthly review checklist for a currency-exposure plan for importers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-finance-fundamentals#037",
+   "text": "I’m working on a wedding-venue deposit policy. List the numbers to gather before deciding on it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-finance-fundamentals#038",
+   "text": "Build a simple spreadsheet model for a cost-reduction sweep that protects quality for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-finance-fundamentals#039",
+   "text": "Draft a one-page proposal justifying an invoice-chasing sequence that stays friendly. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-finance-fundamentals#040",
+   "text": "Help me with an invoice-chasing sequence that stays friendly: explain in plain language how to approach it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-finance-fundamentals#041",
+   "text": "Draft a one-page proposal justifying a tax-calendar setup for a small studio. Use a encouraging tone throughout."
+  },
+  {
+   "id": "business-finance-fundamentals#042",
+   "text": "You are a startup advisor. Build a simple spreadsheet model for a wedding-venue deposit policy and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-finance-fundamentals#043",
+   "text": "Stress-test the assumptions behind a cost-reduction sweep that protects quality. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-finance-fundamentals#044",
+   "text": "Before I start on unit economics for a delivery service, draft a one-page proposal justifying it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-finance-fundamentals#045",
+   "text": "Explain in plain language how to approach a tax-calendar setup for a small studio. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-finance-fundamentals#046",
+   "text": "List the numbers to gather before deciding on a grant application budget section. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-finance-fundamentals#047",
+   "text": "As a seasoned operations director, I keep hitting the same wall with a wedding-venue deposit policy. Create a monthly review checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-finance-fundamentals#048",
+   "text": "Stress-test the assumptions behind a rent-vs-buy analysis for equipment. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-finance-fundamentals#049",
+   "text": "Write a client-safe explanation of a subscription revenue-recognition explainer."
+  },
+  {
+   "id": "business-finance-fundamentals#050",
+   "text": "List the numbers to gather before deciding on a rent-vs-buy analysis for equipment. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-finance-fundamentals#051",
+   "text": "Act as a seasoned operations director. Explain in plain language how to approach a grant application budget section, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-finance-fundamentals#052",
+   "text": "Draft a one-page proposal justifying a grant application budget section. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-finance-fundamentals#053",
+   "text": "I’m working on a cost-reduction sweep that protects quality. Draft a one-page proposal justifying it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-finance-fundamentals#054",
+   "text": "Build a simple spreadsheet model for unit economics for a delivery service for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-finance-fundamentals#055",
+   "text": "Write a client-safe explanation of a grant application budget section. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-finance-fundamentals#056",
+   "text": "Help me with an invoice-chasing sequence that stays friendly: build a simple spreadsheet model for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-finance-fundamentals#057",
+   "text": "Stress-test the assumptions behind setting prices for a handmade goods shop. Use a professional tone throughout."
+  },
+  {
+   "id": "business-finance-fundamentals#058",
+   "text": "You are a startup advisor. Build a simple spreadsheet model for a break-even analysis for a food truck and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-finance-fundamentals#059",
+   "text": "Create a monthly review checklist for a tax-calendar setup for a small studio. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-finance-fundamentals#060",
+   "text": "Before I start on unit economics for a delivery service, stress-test the assumptions behind it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-finance-fundamentals#061",
+   "text": "Draft a one-page proposal justifying setting prices for a handmade goods shop. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-finance-fundamentals#062",
+   "text": "Create a monthly review checklist for a rent-vs-buy analysis for equipment. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-finance-fundamentals#063",
+   "text": "As a finance manager, I keep hitting the same wall with a first annual budget for a cafe. Stress-test the assumptions behind it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-finance-fundamentals#064",
+   "text": "Build a simple spreadsheet model for a subscription revenue-recognition explainer. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-finance-fundamentals#065",
+   "text": "List the numbers to gather before deciding on cash-flow forecasting for seasonal sales."
+  },
+  {
+   "id": "business-finance-fundamentals#066",
+   "text": "Create a monthly review checklist for unit economics for a delivery service. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-finance-fundamentals#067",
+   "text": "Act as a HR business partner. Explain in plain language how to approach unit economics for a delivery service, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-finance-fundamentals#068",
+   "text": "List the numbers to gather before deciding on a tax-calendar setup for a small studio. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-finance-fundamentals#069",
+   "text": "I’m working on a rent-vs-buy analysis for equipment. Explain in plain language how to approach it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-finance-fundamentals#070",
+   "text": "Flag the common expensive mistakes in a grant application budget section for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-finance-fundamentals#071",
+   "text": "Explain in plain language how to approach setting prices for a handmade goods shop. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-finance-fundamentals#072",
+   "text": "Help me with a subscription revenue-recognition explainer: create a monthly review checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-finance-fundamentals#073",
+   "text": "Flag the common expensive mistakes in unit economics for a delivery service. Use a playful tone throughout."
+  },
+  {
+   "id": "business-finance-fundamentals#074",
+   "text": "You are a startup advisor. Flag the common expensive mistakes in a break-even analysis for a food truck and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-finance-fundamentals#075",
+   "text": "Explain in plain language how to approach a capital purchase request memo. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-finance-fundamentals#076",
+   "text": "Before I start on a capital purchase request memo, draft a one-page proposal justifying it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-finance-fundamentals#077",
+   "text": "Draft a one-page proposal justifying a subscription revenue-recognition explainer. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-finance-fundamentals#078",
+   "text": "Write a client-safe explanation of unit economics for a delivery service. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-finance-fundamentals#079",
+   "text": "As a seasoned operations director, I keep hitting the same wall with a wedding-venue deposit policy. Write a client-safe explanation of it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-finance-fundamentals#080",
+   "text": "Flag the common expensive mistakes in a capital purchase request memo. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-finance-fundamentals#081",
+   "text": "Draft a one-page proposal justifying a wedding-venue deposit policy."
+  },
+  {
+   "id": "business-finance-fundamentals#082",
+   "text": "Create a monthly review checklist for an invoice-chasing sequence that stays friendly. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-finance-fundamentals#083",
+   "text": "Act as a management consultant. Write a client-safe explanation of a break-even analysis for a food truck, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-finance-fundamentals#084",
+   "text": "Create a monthly review checklist for a grant application budget section. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-finance-fundamentals#085",
+   "text": "I’m working on an invoice-chasing sequence that stays friendly. Write a client-safe explanation of it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-finance-fundamentals#086",
+   "text": "Write a client-safe explanation of a capital purchase request memo for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-finance-fundamentals#087",
+   "text": "List the numbers to gather before deciding on setting prices for a handmade goods shop. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-finance-fundamentals#088",
+   "text": "Help me with a cost-reduction sweep that protects quality: explain in plain language how to approach it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-finance-fundamentals#089",
+   "text": "List the numbers to gather before deciding on an invoice-chasing sequence that stays friendly. Use a encouraging tone throughout."
+  },
+  {
+   "id": "business-finance-fundamentals#090",
+   "text": "You are a startup advisor. Explain in plain language how to approach a currency-exposure plan for importers and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-finance-fundamentals#091",
+   "text": "Build a simple spreadsheet model for a rent-vs-buy analysis for equipment. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-finance-fundamentals#092",
+   "text": "Before I start on unit economics for a delivery service, list the numbers to gather before deciding on it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-finance-fundamentals#093",
+   "text": "Stress-test the assumptions behind an invoice-chasing sequence that stays friendly. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-finance-fundamentals#094",
+   "text": "Stress-test the assumptions behind a capital purchase request memo. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-finance-fundamentals#095",
+   "text": "As a management consultant, I keep hitting the same wall with a grant application budget section. Build a simple spreadsheet model for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-finance-fundamentals#096",
+   "text": "Explain in plain language how to approach a first annual budget for a cafe. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-finance-fundamentals#097",
+   "text": "Flag the common expensive mistakes in a wedding-venue deposit policy."
+  },
+  {
+   "id": "business-finance-fundamentals#098",
+   "text": "Build a simple spreadsheet model for a tax-calendar setup for a small studio. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-finance-fundamentals#099",
+   "text": "Act as a finance manager. Flag the common expensive mistakes in a subscription revenue-recognition explainer, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-finance-fundamentals#100",
+   "text": "Create a monthly review checklist for a capital purchase request memo. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-finance-fundamentals#101",
+   "text": "I’m working on a subscription revenue-recognition explainer. Stress-test the assumptions behind it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-finance-fundamentals#102",
+   "text": "List the numbers to gather before deciding on a first annual budget for a cafe for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-finance-fundamentals#103",
+   "text": "Create a monthly review checklist for a first annual budget for a cafe. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-finance-fundamentals#104",
+   "text": "Help me with cash-flow forecasting for seasonal sales: build a simple spreadsheet model for it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

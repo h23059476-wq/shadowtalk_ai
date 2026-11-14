@@ -1,0 +1,430 @@
+{
+ "slug": "writing-blog-longform",
+ "categorySlug": "writing",
+ "category": "Writing & Editing",
+ "title": "Blog & Long-Form",
+ "description": "Outline, draft, and sharpen long-form articles people finish reading.",
+ "tags": [
+  "blogging",
+  "articles",
+  "long-form"
+ ],
+ "prompts": [
+  {
+   "id": "writing-blog-longform#001",
+   "text": "Build a research checklist for writing credibly about a first-timer’s guide to donating blood."
+  },
+  {
+   "id": "writing-blog-longform#002",
+   "text": "Rewrite a rambling draft about to be tighter and more vivid a beginner’s guide to meal prepping. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-blog-longform#003",
+   "text": "Act as a freelance copywriter. Create a detailed outline for an article about why remote teams drift apart and how to fix it, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-blog-longform#004",
+   "text": "List the FAQs a strong article about should answer a beginner’s guide to meal prepping. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-blog-longform#005",
+   "text": "I’m working on a no-nonsense guide to travel insurance. Create a detailed outline for an article about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-blog-longform#006",
+   "text": "Draft a punchy conclusion with a call to action for an article about how side projects level up your career for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-blog-longform#007",
+   "text": "Create a detailed outline for an article about how to choose your first credit card. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-blog-longform#008",
+   "text": "Help me with a practical history of the weekend: write a full first draft of a 900-word article about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-blog-longform#009",
+   "text": "List the FAQs a strong article about should answer what makes a podcast intro stick. Use a professional tone throughout."
+  },
+  {
+   "id": "writing-blog-longform#010",
+   "text": "You are a career coach. Write a full first draft of a 900-word article about a first-timer’s guide to donating blood and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-blog-longform#011",
+   "text": "Draft a punchy conclusion with a call to action for an article about how to choose your first credit card. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-blog-longform#012",
+   "text": "Before I start on a week of walking meetings: an experiment, create a detailed outline for an article about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-blog-longform#013",
+   "text": "Rewrite a rambling draft about to be tighter and more vivid the psychology of subscription creep. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-blog-longform#014",
+   "text": "Propose ten headline variations for an article about a field guide to houseplants that survive neglect. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-blog-longform#015",
+   "text": "As a career coach, I keep hitting the same wall with what makes a podcast intro stick. Draft a punchy conclusion with a call to action for an article about it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-blog-longform#016",
+   "text": "Rewrite a rambling draft about to be tighter and more vivid what makes a podcast intro stick. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-blog-longform#017",
+   "text": "Build a research checklist for writing credibly about the psychology of subscription creep."
+  },
+  {
+   "id": "writing-blog-longform#018",
+   "text": "Propose ten headline variations for an article about why every team needs a decision log. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-blog-longform#019",
+   "text": "Act as a career coach. List the FAQs a strong article about should answer how to choose your first credit card, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-blog-longform#020",
+   "text": "Propose ten headline variations for an article about a first-timer’s guide to donating blood. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-blog-longform#021",
+   "text": "I’m working on why remote teams drift apart and how to fix it. List the FAQs a strong article about should answer it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-blog-longform#022",
+   "text": "Draft a punchy conclusion with a call to action for an article about a first-timer’s guide to donating blood for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-blog-longform#023",
+   "text": "Propose ten headline variations for an article about how side projects level up your career. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-blog-longform#024",
+   "text": "Help me with how to choose your first credit card: build a research checklist for writing credibly about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-blog-longform#025",
+   "text": "Rewrite a rambling draft about to be tighter and more vivid how side projects level up your career. Use a formal tone throughout."
+  },
+  {
+   "id": "writing-blog-longform#026",
+   "text": "You are a freelance copywriter. List the FAQs a strong article about should answer a field guide to houseplants that survive neglect and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-blog-longform#027",
+   "text": "List the FAQs a strong article about should answer a practical history of the weekend. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-blog-longform#028",
+   "text": "Before I start on urban gardening on a small balcony, create a detailed outline for an article about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-blog-longform#029",
+   "text": "Write a full first draft of a 900-word article about a no-nonsense guide to travel insurance. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-blog-longform#030",
+   "text": "Draft a punchy conclusion with a call to action for an article about the psychology of subscription creep. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-blog-longform#031",
+   "text": "As a content marketing strategist, I keep hitting the same wall with a field guide to houseplants that survive neglect. Draft a punchy conclusion with a call to action for an article about it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-blog-longform#032",
+   "text": "Create a detailed outline for an article about the real cost of owning a home gym. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-blog-longform#033",
+   "text": "Propose ten headline variations for an article about urban gardening on a small balcony."
+  },
+  {
+   "id": "writing-blog-longform#034",
+   "text": "Propose ten headline variations for an article about a no-nonsense guide to travel insurance. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-blog-longform#035",
+   "text": "Act as a writing teacher. Draft an attention-grabbing intro paragraph for what makes a podcast intro stick, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-blog-longform#036",
+   "text": "Propose ten headline variations for an article about a practical history of the weekend. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-blog-longform#037",
+   "text": "I’m working on why every team needs a decision log. Draft a punchy conclusion with a call to action for an article about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-blog-longform#038",
+   "text": "Create a detailed outline for an article about how to read a wine label without snobbery for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-blog-longform#039",
+   "text": "Build a research checklist for writing credibly about a practical history of the weekend. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-blog-longform#040",
+   "text": "Help me with a week of walking meetings: an experiment: draft a punchy conclusion with a call to action for an article about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-blog-longform#041",
+   "text": "List the FAQs a strong article about should answer how side projects level up your career. Use a formal tone throughout."
+  },
+  {
+   "id": "writing-blog-longform#042",
+   "text": "You are a corporate communications lead. Write a full first draft of a 900-word article about why remote teams drift apart and how to fix it and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-blog-longform#043",
+   "text": "Create a detailed outline for an article about how side projects level up your career. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-blog-longform#044",
+   "text": "Before I start on a field guide to houseplants that survive neglect, write a full first draft of a 900-word article about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-blog-longform#045",
+   "text": "Draft an attention-grabbing intro paragraph for the real cost of owning a home gym. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-blog-longform#046",
+   "text": "Propose ten headline variations for an article about how to choose your first credit card. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-blog-longform#047",
+   "text": "As a content marketing strategist, I keep hitting the same wall with a deep dive on electric vehicle batteries. Draft an attention-grabbing intro paragraph for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-blog-longform#048",
+   "text": "Propose ten headline variations for an article about what makes a podcast intro stick. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-blog-longform#049",
+   "text": "Write a full first draft of a 900-word article about a beginner’s guide to meal prepping."
+  },
+  {
+   "id": "writing-blog-longform#050",
+   "text": "Propose ten headline variations for an article about a deep dive on electric vehicle batteries. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-blog-longform#051",
+   "text": "Act as a senior editor at a digital magazine. Rewrite a rambling draft about to be tighter and more vivid urban gardening on a small balcony, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-blog-longform#052",
+   "text": "Draft a punchy conclusion with a call to action for an article about how to read a wine label without snobbery. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-blog-longform#053",
+   "text": "I’m working on the real cost of owning a home gym. List the FAQs a strong article about should answer it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-blog-longform#054",
+   "text": "Build a research checklist for writing credibly about a no-nonsense guide to travel insurance for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-blog-longform#055",
+   "text": "Create a detailed outline for an article about a field guide to houseplants that survive neglect. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-blog-longform#056",
+   "text": "Help me with a beginner’s guide to meal prepping: draft an attention-grabbing intro paragraph for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-blog-longform#057",
+   "text": "Draft an attention-grabbing intro paragraph for why every team needs a decision log. Use a empathetic tone throughout."
+  },
+  {
+   "id": "writing-blog-longform#058",
+   "text": "You are a content marketing strategist. Write a full first draft of a 900-word article about what makes a podcast intro stick and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-blog-longform#059",
+   "text": "List the FAQs a strong article about should answer urban gardening on a small balcony. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-blog-longform#060",
+   "text": "Before I start on a no-nonsense guide to travel insurance, draft a punchy conclusion with a call to action for an article about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-blog-longform#061",
+   "text": "List the FAQs a strong article about should answer a first-timer’s guide to donating blood. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-blog-longform#062",
+   "text": "Create a detailed outline for an article about a deep dive on electric vehicle batteries. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-blog-longform#063",
+   "text": "As a writing teacher, I keep hitting the same wall with the psychology of subscription creep. Draft an attention-grabbing intro paragraph for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-blog-longform#064",
+   "text": "Build a research checklist for writing credibly about a deep dive on electric vehicle batteries. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-blog-longform#065",
+   "text": "Create a detailed outline for an article about what makes a podcast intro stick."
+  },
+  {
+   "id": "writing-blog-longform#066",
+   "text": "Rewrite a rambling draft about to be tighter and more vivid why every team needs a decision log. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-blog-longform#067",
+   "text": "Act as an executive assistant. Rewrite a rambling draft about to be tighter and more vivid a deep dive on electric vehicle batteries, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-blog-longform#068",
+   "text": "List the FAQs a strong article about should answer a deep dive on electric vehicle batteries. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-blog-longform#069",
+   "text": "I’m working on a no-nonsense guide to travel insurance. List the FAQs a strong article about should answer it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-blog-longform#070",
+   "text": "Propose ten headline variations for an article about how to read a wine label without snobbery for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-blog-longform#071",
+   "text": "Write a full first draft of a 900-word article about why every team needs a decision log. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-blog-longform#072",
+   "text": "Help me with a beginner’s guide to meal prepping: create a detailed outline for an article about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-blog-longform#073",
+   "text": "Create a detailed outline for an article about a first-timer’s guide to donating blood. Use a encouraging tone throughout."
+  },
+  {
+   "id": "writing-blog-longform#074",
+   "text": "You are a brand journalist. Rewrite a rambling draft about to be tighter and more vivid the real cost of owning a home gym and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-blog-longform#075",
+   "text": "Write a full first draft of a 900-word article about how to read a wine label without snobbery. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-blog-longform#076",
+   "text": "Before I start on a field guide to houseplants that survive neglect, build a research checklist for writing credibly about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-blog-longform#077",
+   "text": "Propose ten headline variations for an article about the psychology of subscription creep. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-blog-longform#078",
+   "text": "Propose ten headline variations for an article about a week of walking meetings: an experiment. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-blog-longform#079",
+   "text": "As a writing teacher, I keep hitting the same wall with how to choose your first credit card. Draft an attention-grabbing intro paragraph for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-blog-longform#080",
+   "text": "Rewrite a rambling draft about to be tighter and more vivid a first-timer’s guide to donating blood. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-blog-longform#081",
+   "text": "Propose ten headline variations for an article about why remote teams drift apart and how to fix it."
+  },
+  {
+   "id": "writing-blog-longform#082",
+   "text": "Draft an attention-grabbing intro paragraph for a no-nonsense guide to travel insurance. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-blog-longform#083",
+   "text": "Act as a freelance copywriter. Build a research checklist for writing credibly about how side projects level up your career, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-blog-longform#084",
+   "text": "List the FAQs a strong article about should answer a week of walking meetings: an experiment. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-blog-longform#085",
+   "text": "I’m working on a practical history of the weekend. Draft a punchy conclusion with a call to action for an article about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-blog-longform#086",
+   "text": "Create a detailed outline for an article about the psychology of subscription creep for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-blog-longform#087",
+   "text": "Build a research checklist for writing credibly about the real cost of owning a home gym. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-blog-longform#088",
+   "text": "Help me with urban gardening on a small balcony: draft an attention-grabbing intro paragraph for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-blog-longform#089",
+   "text": "Rewrite a rambling draft about to be tighter and more vivid a practical history of the weekend. Use a persuasive tone throughout."
+  },
+  {
+   "id": "writing-blog-longform#090",
+   "text": "You are a freelance copywriter. Write a full first draft of a 900-word article about a week of walking meetings: an experiment and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-blog-longform#091",
+   "text": "Draft a punchy conclusion with a call to action for an article about a beginner’s guide to meal prepping. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-blog-longform#092",
+   "text": "Before I start on urban gardening on a small balcony, write a full first draft of a 900-word article about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-blog-longform#093",
+   "text": "Build a research checklist for writing credibly about how to read a wine label without snobbery. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-blog-longform#094",
+   "text": "List the FAQs a strong article about should answer the psychology of subscription creep. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-blog-longform#095",
+   "text": "As a content marketing strategist, I keep hitting the same wall with a week of walking meetings: an experiment. Rewrite a rambling draft about to be tighter and more vivid it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-blog-longform#096",
+   "text": "Build a research checklist for writing credibly about why every team needs a decision log. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-blog-longform#097",
+   "text": "Draft an attention-grabbing intro paragraph for a field guide to houseplants that survive neglect."
+  },
+  {
+   "id": "writing-blog-longform#098",
+   "text": "Draft an attention-grabbing intro paragraph for a first-timer’s guide to donating blood. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-blog-longform#099",
+   "text": "Act as a freelance copywriter. Draft a punchy conclusion with a call to action for an article about why remote teams drift apart and how to fix it, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-blog-longform#100",
+   "text": "Rewrite a rambling draft about to be tighter and more vivid a field guide to houseplants that survive neglect. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-blog-longform#101",
+   "text": "I’m working on the real cost of owning a home gym. Draft a punchy conclusion with a call to action for an article about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-blog-longform#102",
+   "text": "Propose ten headline variations for an article about a beginner’s guide to meal prepping for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-blog-longform#103",
+   "text": "Build a research checklist for writing credibly about a beginner’s guide to meal prepping. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-blog-longform#104",
+   "text": "Help me with the psychology of subscription creep: write a full first draft of a 900-word article about it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

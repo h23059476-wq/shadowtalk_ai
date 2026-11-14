@@ -1,0 +1,430 @@
+{
+ "slug": "business-legal-compliance-basics",
+ "categorySlug": "business",
+ "category": "Business & Strategy",
+ "title": "Legal & Compliance Basics",
+ "description": "Policies, contracts, and notices in plain language (not legal advice).",
+ "tags": [
+  "legal",
+  "policy",
+  "compliance"
+ ],
+ "prompts": [
+  {
+   "id": "business-legal-compliance-basics#001",
+   "text": "Create a review checklist before signing terms of service for a marketplace."
+  },
+  {
+   "id": "business-legal-compliance-basics#002",
+   "text": "Draft a plain-language outline for a disclaimer for a fitness-content site. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-legal-compliance-basics#003",
+   "text": "Act as a HR business partner. Write a version comparison: ours vs a competitor’s a freelance contract template, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-legal-compliance-basics#004",
+   "text": "Flag the jurisdiction-sensitive parts of a social-media policy for staff. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-legal-compliance-basics#005",
+   "text": "I’m working on an employee handbook code-of-conduct section. Prepare questions to ask a lawyer about it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-legal-compliance-basics#006",
+   "text": "Draft the internal training talking points for a refund policy that reduces chargebacks for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-legal-compliance-basics#007",
+   "text": "Draft a plain-language outline for a cookie-consent notice. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-legal-compliance-basics#008",
+   "text": "Help me with an accessibility commitment statement: create a review checklist before signing it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-legal-compliance-basics#009",
+   "text": "Create a review checklist before signing an employee handbook code-of-conduct section. Use a direct tone throughout."
+  },
+  {
+   "id": "business-legal-compliance-basics#010",
+   "text": "You are a finance manager. Create a review checklist before signing a social-media policy for staff and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-legal-compliance-basics#011",
+   "text": "Draft a plain-language outline for an NDA for product explorations. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-legal-compliance-basics#012",
+   "text": "Before I start on a freelance contract template, create a review checklist before signing it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-legal-compliance-basics#013",
+   "text": "Write the customer-friendly summary of a data-processing agreement summary for vendors. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-legal-compliance-basics#014",
+   "text": "Write the customer-friendly summary of an accessibility commitment statement. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-legal-compliance-basics#015",
+   "text": "As a finance manager, I keep hitting the same wall with a record-retention schedule for a clinic. Draft the internal training talking points for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-legal-compliance-basics#016",
+   "text": "Prepare questions to ask a lawyer about a data-processing agreement summary for vendors. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-legal-compliance-basics#017",
+   "text": "Write a version comparison: ours vs a competitor’s a cookie-consent notice."
+  },
+  {
+   "id": "business-legal-compliance-basics#018",
+   "text": "Flag the jurisdiction-sensitive parts of an employee handbook code-of-conduct section. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-legal-compliance-basics#019",
+   "text": "Act as a serial founder. Write the customer-friendly summary of a cookie-consent notice, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-legal-compliance-basics#020",
+   "text": "Draft a plain-language outline for an employee handbook code-of-conduct section. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-legal-compliance-basics#021",
+   "text": "I’m working on a disclaimer for a fitness-content site. Prepare questions to ask a lawyer about it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-legal-compliance-basics#022",
+   "text": "Write the customer-friendly summary of a privacy-policy rewrite for a consumer app for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-legal-compliance-basics#023",
+   "text": "Draft the internal training talking points for a cookie-consent notice. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-legal-compliance-basics#024",
+   "text": "Help me with a freelance contract template: draft the internal training talking points for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-legal-compliance-basics#025",
+   "text": "Create a review checklist before signing a record-retention schedule for a clinic. Use a professional tone throughout."
+  },
+  {
+   "id": "business-legal-compliance-basics#026",
+   "text": "You are a finance manager. List the clauses most often disputed in a social-media policy for staff and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-legal-compliance-basics#027",
+   "text": "List the clauses most often disputed in a privacy-policy rewrite for a consumer app. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-legal-compliance-basics#028",
+   "text": "Before I start on a data-processing agreement summary for vendors, draft a plain-language outline for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-legal-compliance-basics#029",
+   "text": "Draft a plain-language outline for terms of service for a marketplace. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-legal-compliance-basics#030",
+   "text": "Prepare questions to ask a lawyer about an accessibility commitment statement. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-legal-compliance-basics#031",
+   "text": "As a startup advisor, I keep hitting the same wall with an NDA for product explorations. Write the customer-friendly summary of it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-legal-compliance-basics#032",
+   "text": "Create a review checklist before signing a data-processing agreement summary for vendors. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-legal-compliance-basics#033",
+   "text": "Create a review checklist before signing a privacy-policy rewrite for a consumer app."
+  },
+  {
+   "id": "business-legal-compliance-basics#034",
+   "text": "Draft a plain-language outline for a refund policy that reduces chargebacks. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-legal-compliance-basics#035",
+   "text": "Act as a finance manager. Write a version comparison: ours vs a competitor’s an employee handbook code-of-conduct section, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-legal-compliance-basics#036",
+   "text": "List the clauses most often disputed in a disclaimer for a fitness-content site. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-legal-compliance-basics#037",
+   "text": "I’m working on a freelance contract template. Draft a plain-language outline for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-legal-compliance-basics#038",
+   "text": "Prepare questions to ask a lawyer about a refund policy that reduces chargebacks for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-legal-compliance-basics#039",
+   "text": "Draft the internal training talking points for a disclaimer for a fitness-content site. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-legal-compliance-basics#040",
+   "text": "Help me with a privacy-policy rewrite for a consumer app: flag the jurisdiction-sensitive parts of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-legal-compliance-basics#041",
+   "text": "Draft a plain-language outline for an accessibility commitment statement. Use a playful tone throughout."
+  },
+  {
+   "id": "business-legal-compliance-basics#042",
+   "text": "You are a procurement lead. Draft a plain-language outline for a privacy-policy rewrite for a consumer app and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-legal-compliance-basics#043",
+   "text": "Create a review checklist before signing a disclaimer for a fitness-content site. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-legal-compliance-basics#044",
+   "text": "Before I start on an accessibility commitment statement, list the clauses most often disputed in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-legal-compliance-basics#045",
+   "text": "Prepare questions to ask a lawyer about a cookie-consent notice. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-legal-compliance-basics#046",
+   "text": "Write the customer-friendly summary of an employee handbook code-of-conduct section. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-legal-compliance-basics#047",
+   "text": "As a startup advisor, I keep hitting the same wall with an NDA for product explorations. Create a review checklist before signing it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-legal-compliance-basics#048",
+   "text": "Write a version comparison: ours vs a competitor’s a data-processing agreement summary for vendors. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-legal-compliance-basics#049",
+   "text": "Create a review checklist before signing a refund policy that reduces chargebacks."
+  },
+  {
+   "id": "business-legal-compliance-basics#050",
+   "text": "Write the customer-friendly summary of a record-retention schedule for a clinic. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-legal-compliance-basics#051",
+   "text": "Act as a startup advisor. Write a version comparison: ours vs a competitor’s a privacy-policy rewrite for a consumer app, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-legal-compliance-basics#052",
+   "text": "Flag the jurisdiction-sensitive parts of a refund policy that reduces chargebacks. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-legal-compliance-basics#053",
+   "text": "I’m working on a cookie-consent notice. Create a review checklist before signing it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-legal-compliance-basics#054",
+   "text": "List the clauses most often disputed in an NDA for product explorations for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-legal-compliance-basics#055",
+   "text": "Flag the jurisdiction-sensitive parts of a record-retention schedule for a clinic. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-legal-compliance-basics#056",
+   "text": "Help me with terms of service for a marketplace: draft the internal training talking points for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-legal-compliance-basics#057",
+   "text": "List the clauses most often disputed in a cookie-consent notice. Use a encouraging tone throughout."
+  },
+  {
+   "id": "business-legal-compliance-basics#058",
+   "text": "You are a seasoned operations director. Write a version comparison: ours vs a competitor’s an accessibility commitment statement and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-legal-compliance-basics#059",
+   "text": "Write the customer-friendly summary of a freelance contract template. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-legal-compliance-basics#060",
+   "text": "Before I start on a refund policy that reduces chargebacks, write a version comparison: ours vs a competitor’s it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-legal-compliance-basics#061",
+   "text": "Flag the jurisdiction-sensitive parts of a freelance contract template. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-legal-compliance-basics#062",
+   "text": "Write the customer-friendly summary of terms of service for a marketplace. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-legal-compliance-basics#063",
+   "text": "As a startup advisor, I keep hitting the same wall with a data-processing agreement summary for vendors. Flag the jurisdiction-sensitive parts of it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-legal-compliance-basics#064",
+   "text": "Draft a plain-language outline for a social-media policy for staff. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-legal-compliance-basics#065",
+   "text": "Flag the jurisdiction-sensitive parts of an accessibility commitment statement."
+  },
+  {
+   "id": "business-legal-compliance-basics#066",
+   "text": "List the clauses most often disputed in a refund policy that reduces chargebacks. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-legal-compliance-basics#067",
+   "text": "Act as a procurement lead. List the clauses most often disputed in a record-retention schedule for a clinic, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-legal-compliance-basics#068",
+   "text": "Flag the jurisdiction-sensitive parts of terms of service for a marketplace. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-legal-compliance-basics#069",
+   "text": "I’m working on an accessibility commitment statement. Draft the internal training talking points for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-legal-compliance-basics#070",
+   "text": "List the clauses most often disputed in a data-processing agreement summary for vendors for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-legal-compliance-basics#071",
+   "text": "Prepare questions to ask a lawyer about terms of service for a marketplace. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-legal-compliance-basics#072",
+   "text": "Help me with a disclaimer for a fitness-content site: write the customer-friendly summary of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-legal-compliance-basics#073",
+   "text": "Write a version comparison: ours vs a competitor’s a disclaimer for a fitness-content site. Use a encouraging tone throughout."
+  },
+  {
+   "id": "business-legal-compliance-basics#074",
+   "text": "You are a HR business partner. Write the customer-friendly summary of a refund policy that reduces chargebacks and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-legal-compliance-basics#075",
+   "text": "Draft a plain-language outline for a record-retention schedule for a clinic. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-legal-compliance-basics#076",
+   "text": "Before I start on a social-media policy for staff, prepare questions to ask a lawyer about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-legal-compliance-basics#077",
+   "text": "List the clauses most often disputed in an employee handbook code-of-conduct section. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-legal-compliance-basics#078",
+   "text": "Write a version comparison: ours vs a competitor’s an NDA for product explorations. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-legal-compliance-basics#079",
+   "text": "As a customer success director, I keep hitting the same wall with a freelance contract template. List the clauses most often disputed in it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-legal-compliance-basics#080",
+   "text": "Draft the internal training talking points for an NDA for product explorations. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-legal-compliance-basics#081",
+   "text": "Flag the jurisdiction-sensitive parts of a cookie-consent notice."
+  },
+  {
+   "id": "business-legal-compliance-basics#082",
+   "text": "List the clauses most often disputed in terms of service for a marketplace. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-legal-compliance-basics#083",
+   "text": "Act as a startup advisor. Draft the internal training talking points for a privacy-policy rewrite for a consumer app, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-legal-compliance-basics#084",
+   "text": "Write a version comparison: ours vs a competitor’s terms of service for a marketplace. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-legal-compliance-basics#085",
+   "text": "I’m working on a privacy-policy rewrite for a consumer app. Prepare questions to ask a lawyer about it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-legal-compliance-basics#086",
+   "text": "Prepare questions to ask a lawyer about a record-retention schedule for a clinic for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-legal-compliance-basics#087",
+   "text": "Write a version comparison: ours vs a competitor’s a record-retention schedule for a clinic. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-legal-compliance-basics#088",
+   "text": "Help me with a social-media policy for staff: write the customer-friendly summary of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-legal-compliance-basics#089",
+   "text": "Write a version comparison: ours vs a competitor’s a social-media policy for staff. Use a encouraging tone throughout."
+  },
+  {
+   "id": "business-legal-compliance-basics#090",
+   "text": "You are a finance manager. Flag the jurisdiction-sensitive parts of a disclaimer for a fitness-content site and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-legal-compliance-basics#091",
+   "text": "Prepare questions to ask a lawyer about a freelance contract template. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-legal-compliance-basics#092",
+   "text": "Before I start on an employee handbook code-of-conduct section, draft the internal training talking points for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-legal-compliance-basics#093",
+   "text": "Draft the internal training talking points for a data-processing agreement summary for vendors. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-legal-compliance-basics#094",
+   "text": "Flag the jurisdiction-sensitive parts of an NDA for product explorations. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-legal-compliance-basics#095",
+   "text": "As a startup advisor, I keep hitting the same wall with an NDA for product explorations. Prepare questions to ask a lawyer about it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-legal-compliance-basics#096",
+   "text": "Draft the internal training talking points for a social-media policy for staff. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-legal-compliance-basics#097",
+   "text": "Create a review checklist before signing terms of service for a marketplace. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-legal-compliance-basics#098",
+   "text": "Draft a plain-language outline for a disclaimer for a fitness-content site. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-legal-compliance-basics#099",
+   "text": "Write a version comparison: ours vs a competitor’s a freelance contract template."
+  },
+  {
+   "id": "business-legal-compliance-basics#100",
+   "text": "Flag the jurisdiction-sensitive parts of a social-media policy for staff."
+  },
+  {
+   "id": "business-legal-compliance-basics#101",
+   "text": "Prepare questions to ask a lawyer about an employee handbook code-of-conduct section."
+  },
+  {
+   "id": "business-legal-compliance-basics#102",
+   "text": "Draft the internal training talking points for a refund policy that reduces chargebacks."
+  },
+  {
+   "id": "business-legal-compliance-basics#103",
+   "text": "Draft a plain-language outline for a cookie-consent notice."
+  },
+  {
+   "id": "business-legal-compliance-basics#104",
+   "text": "Create a review checklist before signing an accessibility commitment statement."
+  }
+ ]
+}

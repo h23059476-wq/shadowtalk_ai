@@ -1,0 +1,430 @@
+{
+ "slug": "social-youtube",
+ "categorySlug": "social",
+ "category": "Social Media",
+ "title": "YouTube",
+ "description": "Titles, thumbnails, chapters, and scripts for watch time.",
+ "tags": [
+  "youtube",
+  "video",
+  "script"
+ ],
+ "prompts": [
+  {
+   "id": "social-youtube#001",
+   "text": "Draft a community-post tease for a deep-dive on why cities feel lonely."
+  },
+  {
+   "id": "social-youtube#002",
+   "text": "Outline the full video with chapters for a repair-and-restore video of an old radio. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-youtube#003",
+   "text": "Act as a LinkedIn ghostwriter. Create a retention-risk checklist for a creator-economy news roundup, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-youtube#004",
+   "text": "Write the description with timestamps for a book-summary channel episode. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-youtube#005",
+   "text": "I’m working on a documentary-style video on forgotten sports. Write ten title options with thumbnail text for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-youtube#006",
+   "text": "Draft a community-post tease for a repair-and-restore video of an old radio for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-youtube#007",
+   "text": "Design a series-playlist structure for a coding-tutorial on building a to-do app. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-youtube#008",
+   "text": "Help me with an explainer on personal encryption: draft a community-post tease for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-youtube#009",
+   "text": "Write a sponsorship-read script for an explainer on personal encryption. Use a empathetic tone throughout."
+  },
+  {
+   "id": "social-youtube#010",
+   "text": "You are a LinkedIn ghostwriter. Draft a community-post tease for a study-with-me long-form session and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-youtube#011",
+   "text": "Write a sponsorship-read script for a creator-economy news roundup. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-youtube#012",
+   "text": "Before I start on a travel vlog through the Scottish Highlands, outline the full video with chapters for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-youtube#013",
+   "text": "Write the description with timestamps for a ten-minute budget-home-studio build. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-youtube#014",
+   "text": "Outline the full video with chapters for a gear-review of three budget mics. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-youtube#015",
+   "text": "As a local-business owner, I keep hitting the same wall with a ten-minute budget-home-studio build. Write ten title options with thumbnail text for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-youtube#016",
+   "text": "Create a retention-risk checklist for a deep-dive on why cities feel lonely. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-youtube#017",
+   "text": "Design a series-playlist structure for a creator-economy news roundup."
+  },
+  {
+   "id": "social-youtube#018",
+   "text": "Write a sponsorship-read script for a deep-dive on why cities feel lonely. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-youtube#019",
+   "text": "Act as a short-video strategist. Design a series-playlist structure for a ten-minute budget-home-studio build, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-youtube#020",
+   "text": "Draft a community-post tease for a documentary-style video on forgotten sports. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-youtube#021",
+   "text": "I’m working on a study-with-me long-form session. Script the first thirty seconds for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-youtube#022",
+   "text": "Write the description with timestamps for a study-with-me long-form session for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-youtube#023",
+   "text": "Outline the full video with chapters for a creator-economy news roundup. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-youtube#024",
+   "text": "Help me with a cooking series on five-ingredient dinners: create a retention-risk checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-youtube#025",
+   "text": "Create a retention-risk checklist for a documentary-style video on forgotten sports. Use a playful tone throughout."
+  },
+  {
+   "id": "social-youtube#026",
+   "text": "You are a local-business owner. Write the description with timestamps for a travel vlog through the Scottish Highlands and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-youtube#027",
+   "text": "Write a sponsorship-read script for a documentary-style video on forgotten sports. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-youtube#028",
+   "text": "Before I start on a coding-tutorial on building a to-do app, write ten title options with thumbnail text for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-youtube#029",
+   "text": "Outline the full video with chapters for a book-summary channel episode. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-youtube#030",
+   "text": "Draft a community-post tease for a book-summary channel episode. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-youtube#031",
+   "text": "As a social media manager, I keep hitting the same wall with a book-summary channel episode. Write a sponsorship-read script for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-youtube#032",
+   "text": "Write a sponsorship-read script for a cooking series on five-ingredient dinners. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-youtube#033",
+   "text": "Design a series-playlist structure for a travel vlog through the Scottish Highlands."
+  },
+  {
+   "id": "social-youtube#034",
+   "text": "Write the description with timestamps for a documentary-style video on forgotten sports. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-youtube#035",
+   "text": "Act as a short-video strategist. Design a series-playlist structure for a documentary-style video on forgotten sports, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-youtube#036",
+   "text": "Write the description with timestamps for a repair-and-restore video of an old radio. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-youtube#037",
+   "text": "I’m working on a gear-review of three budget mics. Write the description with timestamps for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-youtube#038",
+   "text": "Script the first thirty seconds for a gear-review of three budget mics for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-youtube#039",
+   "text": "Write a sponsorship-read script for a travel vlog through the Scottish Highlands. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-youtube#040",
+   "text": "Help me with a coding-tutorial on building a to-do app: write the description with timestamps for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-youtube#041",
+   "text": "Write the description with timestamps for a creator-economy news roundup. Use a formal tone throughout."
+  },
+  {
+   "id": "social-youtube#042",
+   "text": "You are a customer-support voice. Design a series-playlist structure for a repair-and-restore video of an old radio and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-youtube#043",
+   "text": "Design a series-playlist structure for an explainer on personal encryption. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-youtube#044",
+   "text": "Before I start on an explainer on personal encryption, write the description with timestamps for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-youtube#045",
+   "text": "Write ten title options with thumbnail text for a repair-and-restore video of an old radio. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-youtube#046",
+   "text": "Design a series-playlist structure for a gear-review of three budget mics. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-youtube#047",
+   "text": "As a local-business owner, I keep hitting the same wall with a documentary-style video on forgotten sports. Script the first thirty seconds for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-youtube#048",
+   "text": "Write the description with timestamps for a cooking series on five-ingredient dinners. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-youtube#049",
+   "text": "Write a sponsorship-read script for a study-with-me long-form session."
+  },
+  {
+   "id": "social-youtube#050",
+   "text": "Script the first thirty seconds for a deep-dive on why cities feel lonely. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-youtube#051",
+   "text": "Act as a community manager. Script the first thirty seconds for a cooking series on five-ingredient dinners, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-youtube#052",
+   "text": "Write a sponsorship-read script for a gear-review of three budget mics. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-youtube#053",
+   "text": "I’m working on a ten-minute budget-home-studio build. Create a retention-risk checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-youtube#054",
+   "text": "Create a retention-risk checklist for a coding-tutorial on building a to-do app for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-youtube#055",
+   "text": "Create a retention-risk checklist for a repair-and-restore video of an old radio. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-youtube#056",
+   "text": "Help me with a gear-review of three budget mics: create a retention-risk checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-youtube#057",
+   "text": "Design a series-playlist structure for a cooking series on five-ingredient dinners. Use a empathetic tone throughout."
+  },
+  {
+   "id": "social-youtube#058",
+   "text": "You are a LinkedIn ghostwriter. Script the first thirty seconds for a coding-tutorial on building a to-do app and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-youtube#059",
+   "text": "Write ten title options with thumbnail text for a gear-review of three budget mics. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-youtube#060",
+   "text": "Before I start on a book-summary channel episode, script the first thirty seconds for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-youtube#061",
+   "text": "Script the first thirty seconds for an explainer on personal encryption. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-youtube#062",
+   "text": "Script the first thirty seconds for a repair-and-restore video of an old radio. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-youtube#063",
+   "text": "As a customer-support voice, I keep hitting the same wall with a cooking series on five-ingredient dinners. Draft a community-post tease for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-youtube#064",
+   "text": "Outline the full video with chapters for a coding-tutorial on building a to-do app. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-youtube#065",
+   "text": "Design a series-playlist structure for a study-with-me long-form session."
+  },
+  {
+   "id": "social-youtube#066",
+   "text": "Write ten title options with thumbnail text for a cooking series on five-ingredient dinners. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-youtube#067",
+   "text": "Act as a LinkedIn ghostwriter. Create a retention-risk checklist for a book-summary channel episode, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-youtube#068",
+   "text": "Write ten title options with thumbnail text for a travel vlog through the Scottish Highlands. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-youtube#069",
+   "text": "I’m working on a study-with-me long-form session. Create a retention-risk checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-youtube#070",
+   "text": "Design a series-playlist structure for a deep-dive on why cities feel lonely for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-youtube#071",
+   "text": "Draft a community-post tease for a coding-tutorial on building a to-do app. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-youtube#072",
+   "text": "Help me with a creator-economy news roundup: script the first thirty seconds for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-youtube#073",
+   "text": "Write the description with timestamps for a deep-dive on why cities feel lonely. Use a playful tone throughout."
+  },
+  {
+   "id": "social-youtube#074",
+   "text": "You are a creator-economy analyst. Outline the full video with chapters for a cooking series on five-ingredient dinners and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-youtube#075",
+   "text": "Outline the full video with chapters for an explainer on personal encryption. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-youtube#076",
+   "text": "Before I start on a deep-dive on why cities feel lonely, outline the full video with chapters for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-youtube#077",
+   "text": "Draft a community-post tease for a gear-review of three budget mics. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-youtube#078",
+   "text": "Draft a community-post tease for a travel vlog through the Scottish Highlands. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-youtube#079",
+   "text": "As a social media manager, I keep hitting the same wall with a creator-economy news roundup. Write ten title options with thumbnail text for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-youtube#080",
+   "text": "Write ten title options with thumbnail text for a deep-dive on why cities feel lonely. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-youtube#081",
+   "text": "Write a sponsorship-read script for a ten-minute budget-home-studio build."
+  },
+  {
+   "id": "social-youtube#082",
+   "text": "Create a retention-risk checklist for an explainer on personal encryption. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-youtube#083",
+   "text": "Act as a LinkedIn ghostwriter. Write ten title options with thumbnail text for a book-summary channel episode, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-youtube#084",
+   "text": "Write ten title options with thumbnail text for an explainer on personal encryption. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-youtube#085",
+   "text": "I’m working on a repair-and-restore video of an old radio. Write a sponsorship-read script for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-youtube#086",
+   "text": "Outline the full video with chapters for a documentary-style video on forgotten sports for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-youtube#087",
+   "text": "Write ten title options with thumbnail text for a study-with-me long-form session. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-youtube#088",
+   "text": "Help me with a creator-economy news roundup: draft a community-post tease for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-youtube#089",
+   "text": "Script the first thirty seconds for a ten-minute budget-home-studio build. Use a playful tone throughout."
+  },
+  {
+   "id": "social-youtube#090",
+   "text": "You are a LinkedIn ghostwriter. Write a sponsorship-read script for a coding-tutorial on building a to-do app and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-youtube#091",
+   "text": "Create a retention-risk checklist for a travel vlog through the Scottish Highlands. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-youtube#092",
+   "text": "Before I start on a ten-minute budget-home-studio build, draft a community-post tease for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-youtube#093",
+   "text": "Design a series-playlist structure for a book-summary channel episode. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-youtube#094",
+   "text": "Script the first thirty seconds for a travel vlog through the Scottish Highlands. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-youtube#095",
+   "text": "As a short-video strategist, I keep hitting the same wall with a study-with-me long-form session. Outline the full video with chapters for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-youtube#096",
+   "text": "Outline the full video with chapters for a ten-minute budget-home-studio build. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-youtube#097",
+   "text": "Draft a community-post tease for a deep-dive on why cities feel lonely. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-youtube#098",
+   "text": "Outline the full video with chapters for a repair-and-restore video of an old radio. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-youtube#099",
+   "text": "Create a retention-risk checklist for a creator-economy news roundup."
+  },
+  {
+   "id": "social-youtube#100",
+   "text": "Write the description with timestamps for a book-summary channel episode."
+  },
+  {
+   "id": "social-youtube#101",
+   "text": "Write ten title options with thumbnail text for a documentary-style video on forgotten sports."
+  },
+  {
+   "id": "social-youtube#102",
+   "text": "Draft a community-post tease for a repair-and-restore video of an old radio."
+  },
+  {
+   "id": "social-youtube#103",
+   "text": "Design a series-playlist structure for a coding-tutorial on building a to-do app."
+  },
+  {
+   "id": "social-youtube#104",
+   "text": "Draft a community-post tease for an explainer on personal encryption."
+  }
+ ]
+}

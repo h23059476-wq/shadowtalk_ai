@@ -1,0 +1,430 @@
+{
+ "slug": "business-hiring-people",
+ "categorySlug": "business",
+ "category": "Business & Strategy",
+ "title": "Hiring & People",
+ "description": "Role scoping, interview loops, onboarding, and feedback.",
+ "tags": [
+  "hiring",
+  "hr",
+  "onboarding"
+ ],
+ "prompts": [
+  {
+   "id": "business-hiring-people#001",
+   "text": "Draft the role scorecard for an intern program with real ownership."
+  },
+  {
+   "id": "business-hiring-people#002",
+   "text": "Draft the role scorecard for a layoff-adjacent reorg communication. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-hiring-people#003",
+   "text": "Act as a finance manager. Build a fair-process checklist for a delegation plan for an overwhelmed founder, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-hiring-people#004",
+   "text": "Write the interview questions and rubric for an intern program with real ownership. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-hiring-people#005",
+   "text": "I’m working on a team-offsite agenda with outcomes. Write the offer-message draft for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-hiring-people#006",
+   "text": "Prepare talking points for a difficult conversation about a job post for a first support hire for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-hiring-people#007",
+   "text": "Prepare talking points for a difficult conversation about an onboarding plan for a remote engineer. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-hiring-people#008",
+   "text": "Help me with an onboarding plan for a remote engineer: write the interview questions and rubric for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-hiring-people#009",
+   "text": "Design the evaluation exercise for a structured interview loop for designers. Use a friendly tone throughout."
+  },
+  {
+   "id": "business-hiring-people#010",
+   "text": "You are a procurement lead. Create a 30-60-90 onboarding plan for a job post for a first support hire and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-hiring-people#011",
+   "text": "Draft the role scorecard for a performance-improvement conversation. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-hiring-people#012",
+   "text": "Before I start on a stay-interview guide for key staff, write the interview questions and rubric for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-hiring-people#013",
+   "text": "Write the interview questions and rubric for a peer-feedback rollout. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-hiring-people#014",
+   "text": "Draft the announcement copy for a peer-feedback rollout. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-hiring-people#015",
+   "text": "As a finance manager, I keep hitting the same wall with an onboarding plan for a remote engineer. Draft the announcement copy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-hiring-people#016",
+   "text": "Create a 30-60-90 onboarding plan for a peer-feedback rollout. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-hiring-people#017",
+   "text": "Draft the announcement copy for a candidate-rejection email that preserves goodwill."
+  },
+  {
+   "id": "business-hiring-people#018",
+   "text": "Create a 30-60-90 onboarding plan for a candidate-rejection email that preserves goodwill. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-hiring-people#019",
+   "text": "Act as a customer success director. Prepare talking points for a difficult conversation about a structured interview loop for designers, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-hiring-people#020",
+   "text": "Write the interview questions and rubric for a layoff-adjacent reorg communication. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-hiring-people#021",
+   "text": "I’m working on a salary-band framework for a 15-person team. Design the evaluation exercise for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-hiring-people#022",
+   "text": "Design the evaluation exercise for a reference-call script for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-hiring-people#023",
+   "text": "Write the offer-message draft for a delegation plan for an overwhelmed founder. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-hiring-people#024",
+   "text": "Help me with a job post for a first support hire: draft the role scorecard for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-hiring-people#025",
+   "text": "Create a 30-60-90 onboarding plan for an onboarding plan for a remote engineer. Use a professional tone throughout."
+  },
+  {
+   "id": "business-hiring-people#026",
+   "text": "You are a procurement lead. Prepare talking points for a difficult conversation about a team-offsite agenda with outcomes and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-hiring-people#027",
+   "text": "Draft the role scorecard for a contractor-to-full-time conversion decision. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-hiring-people#028",
+   "text": "Before I start on a salary-band framework for a 15-person team, create a 30-60-90 onboarding plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-hiring-people#029",
+   "text": "Prepare talking points for a difficult conversation about a stay-interview guide for key staff. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-hiring-people#030",
+   "text": "Write the interview questions and rubric for a job post for a first support hire. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-hiring-people#031",
+   "text": "As a HR business partner, I keep hitting the same wall with a structured interview loop for designers. Build a fair-process checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-hiring-people#032",
+   "text": "Write the offer-message draft for a layoff-adjacent reorg communication. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-hiring-people#033",
+   "text": "Write the offer-message draft for a peer-feedback rollout."
+  },
+  {
+   "id": "business-hiring-people#034",
+   "text": "Draft the announcement copy for a reference-call script. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-hiring-people#035",
+   "text": "Act as a serial founder. Build a fair-process checklist for a reference-call script, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-hiring-people#036",
+   "text": "Build a fair-process checklist for a layoff-adjacent reorg communication. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-hiring-people#037",
+   "text": "I’m working on a team-offsite agenda with outcomes. Build a fair-process checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-hiring-people#038",
+   "text": "Write the offer-message draft for a candidate-rejection email that preserves goodwill for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-hiring-people#039",
+   "text": "Draft the role scorecard for an onboarding plan for a remote engineer. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-hiring-people#040",
+   "text": "Help me with an intern program with real ownership: design the evaluation exercise for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-hiring-people#041",
+   "text": "Draft the announcement copy for a team-offsite agenda with outcomes. Use a empathetic tone throughout."
+  },
+  {
+   "id": "business-hiring-people#042",
+   "text": "You are a customer success director. Draft the role scorecard for a salary-band framework for a 15-person team and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-hiring-people#043",
+   "text": "Write the interview questions and rubric for a candidate-rejection email that preserves goodwill. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-hiring-people#044",
+   "text": "Before I start on a contractor-to-full-time conversion decision, create a 30-60-90 onboarding plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-hiring-people#045",
+   "text": "Draft the role scorecard for a candidate-rejection email that preserves goodwill. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-hiring-people#046",
+   "text": "Write the interview questions and rubric for a salary-band framework for a 15-person team. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-hiring-people#047",
+   "text": "As a customer success director, I keep hitting the same wall with an intern program with real ownership. Prepare talking points for a difficult conversation about it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-hiring-people#048",
+   "text": "Design the evaluation exercise for a candidate-rejection email that preserves goodwill. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-hiring-people#049",
+   "text": "Design the evaluation exercise for an onboarding plan for a remote engineer."
+  },
+  {
+   "id": "business-hiring-people#050",
+   "text": "Write the offer-message draft for an intern program with real ownership. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-hiring-people#051",
+   "text": "Act as a HR business partner. Prepare talking points for a difficult conversation about a layoff-adjacent reorg communication, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-hiring-people#052",
+   "text": "Draft the announcement copy for a delegation plan for an overwhelmed founder. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-hiring-people#053",
+   "text": "I’m working on a structured interview loop for designers. Draft the role scorecard for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-hiring-people#054",
+   "text": "Build a fair-process checklist for a job post for a first support hire for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-hiring-people#055",
+   "text": "Build a fair-process checklist for an intern program with real ownership. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-hiring-people#056",
+   "text": "Help me with a layoff-adjacent reorg communication: draft the announcement copy for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-hiring-people#057",
+   "text": "Design the evaluation exercise for a performance-improvement conversation. Use a formal tone throughout."
+  },
+  {
+   "id": "business-hiring-people#058",
+   "text": "You are a HR business partner. Write the offer-message draft for an onboarding plan for a remote engineer and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-hiring-people#059",
+   "text": "Build a fair-process checklist for a performance-improvement conversation. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-hiring-people#060",
+   "text": "Before I start on a stay-interview guide for key staff, design the evaluation exercise for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-hiring-people#061",
+   "text": "Write the offer-message draft for a salary-band framework for a 15-person team. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-hiring-people#062",
+   "text": "Draft the role scorecard for a reference-call script. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-hiring-people#063",
+   "text": "As a serial founder, I keep hitting the same wall with a team-offsite agenda with outcomes. Create a 30-60-90 onboarding plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-hiring-people#064",
+   "text": "Draft the announcement copy for a job post for a first support hire. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-hiring-people#065",
+   "text": "Write the interview questions and rubric for a structured interview loop for designers."
+  },
+  {
+   "id": "business-hiring-people#066",
+   "text": "Write the interview questions and rubric for a contractor-to-full-time conversion decision. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-hiring-people#067",
+   "text": "Act as a serial founder. Prepare talking points for a difficult conversation about a peer-feedback rollout, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-hiring-people#068",
+   "text": "Create a 30-60-90 onboarding plan for a stay-interview guide for key staff. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-hiring-people#069",
+   "text": "I’m working on a peer-feedback rollout. Draft the role scorecard for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-hiring-people#070",
+   "text": "Design the evaluation exercise for a job post for a first support hire for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-hiring-people#071",
+   "text": "Draft the announcement copy for a structured interview loop for designers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-hiring-people#072",
+   "text": "Help me with a contractor-to-full-time conversion decision: design the evaluation exercise for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-hiring-people#073",
+   "text": "Build a fair-process checklist for a peer-feedback rollout. Use a encouraging tone throughout."
+  },
+  {
+   "id": "business-hiring-people#074",
+   "text": "You are a customer success director. Design the evaluation exercise for a delegation plan for an overwhelmed founder and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-hiring-people#075",
+   "text": "Write the offer-message draft for a structured interview loop for designers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-hiring-people#076",
+   "text": "Before I start on a delegation plan for an overwhelmed founder, prepare talking points for a difficult conversation about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-hiring-people#077",
+   "text": "Draft the announcement copy for a salary-band framework for a 15-person team. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-hiring-people#078",
+   "text": "Create a 30-60-90 onboarding plan for a delegation plan for an overwhelmed founder. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-hiring-people#079",
+   "text": "As a serial founder, I keep hitting the same wall with a job post for a first support hire. Write the offer-message draft for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-hiring-people#080",
+   "text": "Prepare talking points for a difficult conversation about a performance-improvement conversation. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-hiring-people#081",
+   "text": "Write the interview questions and rubric for a performance-improvement conversation."
+  },
+  {
+   "id": "business-hiring-people#082",
+   "text": "Design the evaluation exercise for a layoff-adjacent reorg communication. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-hiring-people#083",
+   "text": "Act as a serial founder. Design the evaluation exercise for a peer-feedback rollout, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-hiring-people#084",
+   "text": "Build a fair-process checklist for a salary-band framework for a 15-person team. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-hiring-people#085",
+   "text": "I’m working on a performance-improvement conversation. Draft the announcement copy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-hiring-people#086",
+   "text": "Build a fair-process checklist for a candidate-rejection email that preserves goodwill for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-hiring-people#087",
+   "text": "Create a 30-60-90 onboarding plan for a performance-improvement conversation. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-hiring-people#088",
+   "text": "Help me with a reference-call script: write the interview questions and rubric for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-hiring-people#089",
+   "text": "Create a 30-60-90 onboarding plan for a structured interview loop for designers. Use a friendly tone throughout."
+  },
+  {
+   "id": "business-hiring-people#090",
+   "text": "You are a finance manager. Create a 30-60-90 onboarding plan for a reference-call script and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-hiring-people#091",
+   "text": "Prepare talking points for a difficult conversation about a salary-band framework for a 15-person team. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-hiring-people#092",
+   "text": "Before I start on a contractor-to-full-time conversion decision, prepare talking points for a difficult conversation about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-hiring-people#093",
+   "text": "Design the evaluation exercise for a team-offsite agenda with outcomes. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-hiring-people#094",
+   "text": "Draft the role scorecard for a delegation plan for an overwhelmed founder. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-hiring-people#095",
+   "text": "As a customer success director, I keep hitting the same wall with a layoff-adjacent reorg communication. Create a 30-60-90 onboarding plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-hiring-people#096",
+   "text": "Draft the role scorecard for a team-offsite agenda with outcomes. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-hiring-people#097",
+   "text": "Write the offer-message draft for a reference-call script."
+  },
+  {
+   "id": "business-hiring-people#098",
+   "text": "Prepare talking points for a difficult conversation about a reference-call script. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-hiring-people#099",
+   "text": "Act as a HR business partner. Build a fair-process checklist for a contractor-to-full-time conversion decision, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-hiring-people#100",
+   "text": "Create a 30-60-90 onboarding plan for an intern program with real ownership. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-hiring-people#101",
+   "text": "I’m working on a candidate-rejection email that preserves goodwill. Prepare talking points for a difficult conversation about it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-hiring-people#102",
+   "text": "Write the interview questions and rubric for a delegation plan for an overwhelmed founder for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-hiring-people#103",
+   "text": "Draft the announcement copy for a stay-interview guide for key staff. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-hiring-people#104",
+   "text": "Help me with a contractor-to-full-time conversion decision: draft the announcement copy for it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

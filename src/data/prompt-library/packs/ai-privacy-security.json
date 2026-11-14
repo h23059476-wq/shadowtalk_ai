@@ -1,0 +1,430 @@
+{
+ "slug": "ai-privacy-security",
+ "categorySlug": "ai",
+ "category": "AI & ShadowTalk",
+ "title": "Privacy & Security",
+ "description": "Use AI with clear eyes about data and secrets.",
+ "tags": [
+  "privacy",
+  "security",
+  "safety"
+ ],
+ "prompts": [
+  {
+   "id": "ai-privacy-security#001",
+   "text": "Write an incident-response checklist for reviewing third-party model providers."
+  },
+  {
+   "id": "ai-privacy-security#002",
+   "text": "Write a personal do-not-share list for checking an app’s data-retention claims. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-privacy-security#003",
+   "text": "Act as a teacher of AI literacy. Draft a team-guidelines one-pager for checking an app’s data-retention claims, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-privacy-security#004",
+   "text": "Design a review-before-send habit for reviewing third-party model providers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-privacy-security#005",
+   "text": "I’m working on verifying outputs before publishing. Create a sanitization checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-privacy-security#006",
+   "text": "Write an incident-response checklist for safe use of AI for medical questions for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-privacy-security#007",
+   "text": "Write an incident-response checklist for understanding BYOK keys and storage. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-privacy-security#008",
+   "text": "Help me with sanitizing a client document before sharing: write a personal do-not-share list for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-privacy-security#009",
+   "text": "Explain the risk model of understanding BYOK keys and storage. Use a empathetic tone throughout."
+  },
+  {
+   "id": "ai-privacy-security#010",
+   "text": "You are an indie developer. Design a review-before-send habit for spotting prompt-injection in pasted content and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-privacy-security#011",
+   "text": "Create an audit-question list for a personal data-inventory exercise. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-privacy-security#012",
+   "text": "Before I start on spotting prompt-injection in pasted content, write an incident-response checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-privacy-security#013",
+   "text": "Write an incident-response checklist for checking an app’s data-retention claims. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-privacy-security#014",
+   "text": "Create an audit-question list for understanding BYOK keys and storage. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-privacy-security#015",
+   "text": "As an indie developer, I keep hitting the same wall with safe use of AI for medical questions. Explain the risk model of it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-privacy-security#016",
+   "text": "Create an audit-question list for handling secrets in code questions. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-privacy-security#017",
+   "text": "Create a sanitization checklist for reviewing third-party model providers."
+  },
+  {
+   "id": "ai-privacy-security#018",
+   "text": "Produce a plain-language explainer on safe use of AI for medical questions. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-privacy-security#019",
+   "text": "Act as an AI-workflow consultant. Design a review-before-send habit for safe use of AI for medical questions, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-privacy-security#020",
+   "text": "Create a sanitization checklist for deciding what not to paste into a chat. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-privacy-security#021",
+   "text": "I’m working on a personal data-inventory exercise. Create a sanitization checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-privacy-security#022",
+   "text": "Explain the risk model of an incident plan for leaked content for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-privacy-security#023",
+   "text": "Draft a team-guidelines one-pager for sanitizing a client document before sharing. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-privacy-security#024",
+   "text": "Help me with an incident plan for leaked content: design a review-before-send habit for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-privacy-security#025",
+   "text": "Produce a plain-language explainer on reviewing third-party model providers. Use a playful tone throughout."
+  },
+  {
+   "id": "ai-privacy-security#026",
+   "text": "You are an indie developer. Explain the risk model of verifying outputs before publishing and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-privacy-security#027",
+   "text": "Create a sanitization checklist for sanitizing a client document before sharing. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-privacy-security#028",
+   "text": "Before I start on handling secrets in code questions, write a personal do-not-share list for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-privacy-security#029",
+   "text": "Draft a team-guidelines one-pager for deciding what not to paste into a chat. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-privacy-security#030",
+   "text": "Write a personal do-not-share list for deciding what not to paste into a chat. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-privacy-security#031",
+   "text": "As a teacher of AI literacy, I keep hitting the same wall with verifying outputs before publishing. Create an audit-question list for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-privacy-security#032",
+   "text": "Produce a plain-language explainer on understanding BYOK keys and storage. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-privacy-security#033",
+   "text": "Explain the risk model of handling secrets in code questions."
+  },
+  {
+   "id": "ai-privacy-security#034",
+   "text": "Draft a team-guidelines one-pager for spotting prompt-injection in pasted content. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-privacy-security#035",
+   "text": "Act as a prompt-engineering coach. Create a sanitization checklist for understanding BYOK keys and storage, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-privacy-security#036",
+   "text": "Write an incident-response checklist for a personal data-inventory exercise. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-privacy-security#037",
+   "text": "I’m working on handling secrets in code questions. Write an incident-response checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-privacy-security#038",
+   "text": "Produce a plain-language explainer on a personal data-inventory exercise for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-privacy-security#039",
+   "text": "Create an audit-question list for deciding what not to paste into a chat. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-privacy-security#040",
+   "text": "Help me with understanding BYOK keys and storage: design a review-before-send habit for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-privacy-security#041",
+   "text": "Create an audit-question list for a team policy for AI-tool usage. Use a encouraging tone throughout."
+  },
+  {
+   "id": "ai-privacy-security#042",
+   "text": "You are an AI-workflow consultant. Design a review-before-send habit for checking an app’s data-retention claims and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-privacy-security#043",
+   "text": "Create an audit-question list for spotting prompt-injection in pasted content. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-privacy-security#044",
+   "text": "Before I start on an incident plan for leaked content, create a sanitization checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-privacy-security#045",
+   "text": "Draft a team-guidelines one-pager for understanding BYOK keys and storage. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-privacy-security#046",
+   "text": "Create an audit-question list for reviewing third-party model providers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-privacy-security#047",
+   "text": "As a teacher of AI literacy, I keep hitting the same wall with verifying outputs before publishing. Design a review-before-send habit for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-privacy-security#048",
+   "text": "Write a personal do-not-share list for verifying outputs before publishing. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-privacy-security#049",
+   "text": "Produce a plain-language explainer on checking an app’s data-retention claims."
+  },
+  {
+   "id": "ai-privacy-security#050",
+   "text": "Design a review-before-send habit for a team policy for AI-tool usage. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-privacy-security#051",
+   "text": "Act as a ShadowTalk power user. Draft a team-guidelines one-pager for a personal data-inventory exercise, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-privacy-security#052",
+   "text": "Design a review-before-send habit for sanitizing a client document before sharing. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-privacy-security#053",
+   "text": "I’m working on deciding what not to paste into a chat. Explain the risk model of it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-privacy-security#054",
+   "text": "Write an incident-response checklist for an incident plan for leaked content for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-privacy-security#055",
+   "text": "Produce a plain-language explainer on handling secrets in code questions. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-privacy-security#056",
+   "text": "Help me with verifying outputs before publishing: draft a team-guidelines one-pager for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-privacy-security#057",
+   "text": "Write an incident-response checklist for deciding what not to paste into a chat. Use a formal tone throughout."
+  },
+  {
+   "id": "ai-privacy-security#058",
+   "text": "You are a teacher of AI literacy. Draft a team-guidelines one-pager for handling secrets in code questions and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-privacy-security#059",
+   "text": "Produce a plain-language explainer on a team policy for AI-tool usage. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-privacy-security#060",
+   "text": "Before I start on handling secrets in code questions, design a review-before-send habit for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-privacy-security#061",
+   "text": "Write a personal do-not-share list for an incident plan for leaked content. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-privacy-security#062",
+   "text": "Create a sanitization checklist for a team policy for AI-tool usage. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-privacy-security#063",
+   "text": "As an indie developer, I keep hitting the same wall with safe use of AI for medical questions. Create an audit-question list for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-privacy-security#064",
+   "text": "Create a sanitization checklist for handling secrets in code questions. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-privacy-security#065",
+   "text": "Write a personal do-not-share list for spotting prompt-injection in pasted content."
+  },
+  {
+   "id": "ai-privacy-security#066",
+   "text": "Explain the risk model of checking an app’s data-retention claims. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-privacy-security#067",
+   "text": "Act as an AI-workflow consultant. Draft a team-guidelines one-pager for safe use of AI for medical questions, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-privacy-security#068",
+   "text": "Explain the risk model of a personal data-inventory exercise. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-privacy-security#069",
+   "text": "I’m working on understanding BYOK keys and storage. Write a personal do-not-share list for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-privacy-security#070",
+   "text": "Produce a plain-language explainer on spotting prompt-injection in pasted content for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-privacy-security#071",
+   "text": "Write a personal do-not-share list for a team policy for AI-tool usage. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-privacy-security#072",
+   "text": "Help me with a team policy for AI-tool usage: explain the risk model of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-privacy-security#073",
+   "text": "Create an audit-question list for sanitizing a client document before sharing. Use a empathetic tone throughout."
+  },
+  {
+   "id": "ai-privacy-security#074",
+   "text": "You are a prompt-engineering coach. Produce a plain-language explainer on deciding what not to paste into a chat and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-privacy-security#075",
+   "text": "Design a review-before-send habit for deciding what not to paste into a chat. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-privacy-security#076",
+   "text": "Before I start on spotting prompt-injection in pasted content, explain the risk model of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-privacy-security#077",
+   "text": "Produce a plain-language explainer on verifying outputs before publishing. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-privacy-security#078",
+   "text": "Produce a plain-language explainer on sanitizing a client document before sharing. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-privacy-security#079",
+   "text": "As an indie developer, I keep hitting the same wall with safe use of AI for medical questions. Create a sanitization checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-privacy-security#080",
+   "text": "Create an audit-question list for checking an app’s data-retention claims. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-privacy-security#081",
+   "text": "Design a review-before-send habit for a personal data-inventory exercise."
+  },
+  {
+   "id": "ai-privacy-security#082",
+   "text": "Write an incident-response checklist for a team policy for AI-tool usage. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-privacy-security#083",
+   "text": "Act as a teacher of AI literacy. Draft a team-guidelines one-pager for a team policy for AI-tool usage, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-privacy-security#084",
+   "text": "Write a personal do-not-share list for reviewing third-party model providers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-privacy-security#085",
+   "text": "I’m working on reviewing third-party model providers. Draft a team-guidelines one-pager for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-privacy-security#086",
+   "text": "Explain the risk model of sanitizing a client document before sharing for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-privacy-security#087",
+   "text": "Produce a plain-language explainer on an incident plan for leaked content. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-privacy-security#088",
+   "text": "Help me with checking an app’s data-retention claims: create a sanitization checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-privacy-security#089",
+   "text": "Create an audit-question list for an incident plan for leaked content. Use a empathetic tone throughout."
+  },
+  {
+   "id": "ai-privacy-security#090",
+   "text": "You are an indie developer. Create a sanitization checklist for spotting prompt-injection in pasted content and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-privacy-security#091",
+   "text": "Write an incident-response checklist for verifying outputs before publishing. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-privacy-security#092",
+   "text": "Before I start on reviewing third-party model providers, explain the risk model of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-privacy-security#093",
+   "text": "Draft a team-guidelines one-pager for an incident plan for leaked content. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-privacy-security#094",
+   "text": "Write a personal do-not-share list for safe use of AI for medical questions. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-privacy-security#095",
+   "text": "As a teacher of AI literacy, I keep hitting the same wall with sanitizing a client document before sharing. Write an incident-response checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-privacy-security#096",
+   "text": "Write a personal do-not-share list for a personal data-inventory exercise. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-privacy-security#097",
+   "text": "Write an incident-response checklist for reviewing third-party model providers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-privacy-security#098",
+   "text": "Write a personal do-not-share list for checking an app’s data-retention claims. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-privacy-security#099",
+   "text": "Draft a team-guidelines one-pager for checking an app’s data-retention claims."
+  },
+  {
+   "id": "ai-privacy-security#100",
+   "text": "Design a review-before-send habit for reviewing third-party model providers."
+  },
+  {
+   "id": "ai-privacy-security#101",
+   "text": "Create a sanitization checklist for verifying outputs before publishing."
+  },
+  {
+   "id": "ai-privacy-security#102",
+   "text": "Write an incident-response checklist for safe use of AI for medical questions."
+  },
+  {
+   "id": "ai-privacy-security#103",
+   "text": "Write an incident-response checklist for understanding BYOK keys and storage."
+  },
+  {
+   "id": "ai-privacy-security#104",
+   "text": "Write a personal do-not-share list for sanitizing a client document before sharing."
+  }
+ ]
+}

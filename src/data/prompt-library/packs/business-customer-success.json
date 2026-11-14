@@ -1,0 +1,430 @@
+{
+ "slug": "business-customer-success",
+ "categorySlug": "business",
+ "category": "Business & Strategy",
+ "title": "Customer Success",
+ "description": "Onboarding, QBRs, escalations, and renewals that stick.",
+ "tags": [
+  "customer success",
+  "retention",
+  "support"
+ ],
+ "prompts": [
+  {
+   "id": "business-customer-success#001",
+   "text": "Create the save-plan with milestones for a vocal-detractor response plan."
+  },
+  {
+   "id": "business-customer-success#002",
+   "text": "Build the health-score rubric for a vocal-detractor response plan. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-customer-success#003",
+   "text": "Act as a customer success director. Create the save-plan with milestones for an escalation after a data glitch, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-customer-success#004",
+   "text": "Draft the agenda and deck outline for a vocal-detractor response plan. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-customer-success#005",
+   "text": "I’m working on an expansion conversation with a growing account. Write the outreach email for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-customer-success#006",
+   "text": "Document the playbook steps for an escalation after a data glitch for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-customer-success#007",
+   "text": "Draft the agenda and deck outline for a feature-adoption nudge program. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-customer-success#008",
+   "text": "Help me with a vocal-detractor response plan: write the apology-and-fix note for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-customer-success#009",
+   "text": "Build the health-score rubric for an expansion conversation with a growing account. Use a professional tone throughout."
+  },
+  {
+   "id": "business-customer-success#010",
+   "text": "You are a management consultant. Build the health-score rubric for a churn-interview debrief and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-customer-success#011",
+   "text": "Design the onboarding checklist for a vocal-detractor response plan. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-customer-success#012",
+   "text": "Before I start on a first-value onboarding for a CRM, design the onboarding checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-customer-success#013",
+   "text": "Write the apology-and-fix note for a feature-adoption nudge program. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-customer-success#014",
+   "text": "Draft the agenda and deck outline for an escalation after a data glitch. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-customer-success#015",
+   "text": "As a finance manager, I keep hitting the same wall with a feature-adoption nudge program. Prepare the expansion talking points for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-customer-success#016",
+   "text": "Prepare the expansion talking points for a churn-interview debrief. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-customer-success#017",
+   "text": "Document the playbook steps for a first-value onboarding for a CRM."
+  },
+  {
+   "id": "business-customer-success#018",
+   "text": "Design the onboarding checklist for a long-tail account automation layer. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-customer-success#019",
+   "text": "Act as a serial founder. Build the health-score rubric for a support-macro library refresh, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-customer-success#020",
+   "text": "Draft the agenda and deck outline for a churn-interview debrief. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-customer-success#021",
+   "text": "I’m working on a quarterly business review for a logistics client. Document the playbook steps for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-customer-success#022",
+   "text": "Write the outreach email for a first-value onboarding for a CRM for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-customer-success#023",
+   "text": "Document the playbook steps for a customer-health score design. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-customer-success#024",
+   "text": "Help me with a support-macro library refresh: draft the agenda and deck outline for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-customer-success#025",
+   "text": "Create the save-plan with milestones for a support-macro library refresh. Use a encouraging tone throughout."
+  },
+  {
+   "id": "business-customer-success#026",
+   "text": "You are a startup advisor. Write the outreach email for a customer-health score design and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-customer-success#027",
+   "text": "Build the health-score rubric for a quarterly business review for a logistics client. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-customer-success#028",
+   "text": "Before I start on an expansion conversation with a growing account, document the playbook steps for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-customer-success#029",
+   "text": "Design the onboarding checklist for a churn-interview debrief. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-customer-success#030",
+   "text": "Draft the agenda and deck outline for a quarterly business review for a logistics client. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-customer-success#031",
+   "text": "As a finance manager, I keep hitting the same wall with a renewal-risk save plan. Write the apology-and-fix note for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-customer-success#032",
+   "text": "Create the save-plan with milestones for a churn-interview debrief. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-customer-success#033",
+   "text": "Write the apology-and-fix note for a customer-health score design."
+  },
+  {
+   "id": "business-customer-success#034",
+   "text": "Write the outreach email for an escalation after a data glitch. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-customer-success#035",
+   "text": "Act as a HR business partner. Write the outreach email for a knowledge-base gap analysis, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-customer-success#036",
+   "text": "Write the apology-and-fix note for a knowledge-base gap analysis. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-customer-success#037",
+   "text": "I’m working on an escalation after a data glitch. Design the onboarding checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-customer-success#038",
+   "text": "Write the apology-and-fix note for a support-macro library refresh for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-customer-success#039",
+   "text": "Document the playbook steps for a support-macro library refresh. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-customer-success#040",
+   "text": "Help me with a renewal-risk save plan: build the health-score rubric for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-customer-success#041",
+   "text": "Build the health-score rubric for a feature-adoption nudge program. Use a professional tone throughout."
+  },
+  {
+   "id": "business-customer-success#042",
+   "text": "You are a management consultant. Prepare the expansion talking points for an escalation after a data glitch and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-customer-success#043",
+   "text": "Prepare the expansion talking points for a first-value onboarding for a CRM. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-customer-success#044",
+   "text": "Before I start on a churn-interview debrief, document the playbook steps for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-customer-success#045",
+   "text": "Document the playbook steps for a renewal-risk save plan. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-customer-success#046",
+   "text": "Write the outreach email for a support-macro library refresh. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-customer-success#047",
+   "text": "As a finance manager, I keep hitting the same wall with a renewal-risk save plan. Create the save-plan with milestones for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-customer-success#048",
+   "text": "Design the onboarding checklist for a customer-health score design. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-customer-success#049",
+   "text": "Create the save-plan with milestones for a feature-adoption nudge program."
+  },
+  {
+   "id": "business-customer-success#050",
+   "text": "Draft the agenda and deck outline for a long-tail account automation layer. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-customer-success#051",
+   "text": "Act as a HR business partner. Draft the agenda and deck outline for a knowledge-base gap analysis, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-customer-success#052",
+   "text": "Prepare the expansion talking points for a customer-health score design. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-customer-success#053",
+   "text": "I’m working on a churn-interview debrief. Write the outreach email for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-customer-success#054",
+   "text": "Prepare the expansion talking points for an expansion conversation with a growing account for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-customer-success#055",
+   "text": "Prepare the expansion talking points for a knowledge-base gap analysis. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-customer-success#056",
+   "text": "Help me with an expansion conversation with a growing account: write the apology-and-fix note for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-customer-success#057",
+   "text": "Create the save-plan with milestones for a long-tail account automation layer. Use a direct tone throughout."
+  },
+  {
+   "id": "business-customer-success#058",
+   "text": "You are a HR business partner. Design the onboarding checklist for a feature-adoption nudge program and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-customer-success#059",
+   "text": "Create the save-plan with milestones for an expansion conversation with a growing account. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-customer-success#060",
+   "text": "Before I start on a knowledge-base gap analysis, build the health-score rubric for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-customer-success#061",
+   "text": "Document the playbook steps for a long-tail account automation layer. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-customer-success#062",
+   "text": "Create the save-plan with milestones for a first-value onboarding for a CRM. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-customer-success#063",
+   "text": "As a finance manager, I keep hitting the same wall with an expansion conversation with a growing account. Design the onboarding checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-customer-success#064",
+   "text": "Prepare the expansion talking points for a support-macro library refresh. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-customer-success#065",
+   "text": "Write the apology-and-fix note for a first-value onboarding for a CRM."
+  },
+  {
+   "id": "business-customer-success#066",
+   "text": "Prepare the expansion talking points for a renewal-risk save plan. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-customer-success#067",
+   "text": "Act as a HR business partner. Document the playbook steps for a knowledge-base gap analysis, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-customer-success#068",
+   "text": "Write the outreach email for a feature-adoption nudge program. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-customer-success#069",
+   "text": "I’m working on an expansion conversation with a growing account. Draft the agenda and deck outline for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-customer-success#070",
+   "text": "Prepare the expansion talking points for a vocal-detractor response plan for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-customer-success#071",
+   "text": "Draft the agenda and deck outline for a renewal-risk save plan. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-customer-success#072",
+   "text": "Help me with a feature-adoption nudge program: document the playbook steps for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-customer-success#073",
+   "text": "Document the playbook steps for a vocal-detractor response plan. Use a encouraging tone throughout."
+  },
+  {
+   "id": "business-customer-success#074",
+   "text": "You are a serial founder. Write the apology-and-fix note for a quarterly business review for a logistics client and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-customer-success#075",
+   "text": "Build the health-score rubric for a long-tail account automation layer. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-customer-success#076",
+   "text": "Before I start on a quarterly business review for a logistics client, write the outreach email for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-customer-success#077",
+   "text": "Design the onboarding checklist for a quarterly business review for a logistics client. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-customer-success#078",
+   "text": "Write the apology-and-fix note for an escalation after a data glitch. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-customer-success#079",
+   "text": "As a management consultant, I keep hitting the same wall with a quarterly business review for a logistics client. Create the save-plan with milestones for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-customer-success#080",
+   "text": "Draft the agenda and deck outline for a customer-health score design. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-customer-success#081",
+   "text": "Write the apology-and-fix note for a churn-interview debrief."
+  },
+  {
+   "id": "business-customer-success#082",
+   "text": "Draft the agenda and deck outline for a first-value onboarding for a CRM. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "business-customer-success#083",
+   "text": "Act as a finance manager. Write the apology-and-fix note for a long-tail account automation layer, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "business-customer-success#084",
+   "text": "Design the onboarding checklist for a renewal-risk save plan. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "business-customer-success#085",
+   "text": "I’m working on a knowledge-base gap analysis. Create the save-plan with milestones for it and explain your reasoning as you go."
+  },
+  {
+   "id": "business-customer-success#086",
+   "text": "Prepare the expansion talking points for a quarterly business review for a logistics client for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "business-customer-success#087",
+   "text": "Design the onboarding checklist for a knowledge-base gap analysis. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-customer-success#088",
+   "text": "Help me with a vocal-detractor response plan: write the outreach email for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "business-customer-success#089",
+   "text": "Build the health-score rubric for an escalation after a data glitch. Use a friendly tone throughout."
+  },
+  {
+   "id": "business-customer-success#090",
+   "text": "You are a HR business partner. Write the outreach email for a renewal-risk save plan and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "business-customer-success#091",
+   "text": "Design the onboarding checklist for a support-macro library refresh. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "business-customer-success#092",
+   "text": "Before I start on a long-tail account automation layer, prepare the expansion talking points for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "business-customer-success#093",
+   "text": "Build the health-score rubric for a customer-health score design. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "business-customer-success#094",
+   "text": "Build the health-score rubric for a first-value onboarding for a CRM. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "business-customer-success#095",
+   "text": "As a procurement lead, I keep hitting the same wall with a long-tail account automation layer. Write the outreach email for it and show me what I’m probably missing."
+  },
+  {
+   "id": "business-customer-success#096",
+   "text": "Create the save-plan with milestones for a customer-health score design. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "business-customer-success#097",
+   "text": "Create the save-plan with milestones for a vocal-detractor response plan. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-customer-success#098",
+   "text": "Build the health-score rubric for a vocal-detractor response plan. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "business-customer-success#099",
+   "text": "Create the save-plan with milestones for an escalation after a data glitch."
+  },
+  {
+   "id": "business-customer-success#100",
+   "text": "Draft the agenda and deck outline for a vocal-detractor response plan."
+  },
+  {
+   "id": "business-customer-success#101",
+   "text": "Write the outreach email for an expansion conversation with a growing account."
+  },
+  {
+   "id": "business-customer-success#102",
+   "text": "Document the playbook steps for an escalation after a data glitch."
+  },
+  {
+   "id": "business-customer-success#103",
+   "text": "Draft the agenda and deck outline for a feature-adoption nudge program."
+  },
+  {
+   "id": "business-customer-success#104",
+   "text": "Write the apology-and-fix note for a vocal-detractor response plan."
+  }
+ ]
+}

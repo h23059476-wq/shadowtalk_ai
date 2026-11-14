@@ -1,0 +1,430 @@
+{
+ "slug": "social-tiktok-shorts",
+ "categorySlug": "social",
+ "category": "Social Media",
+ "title": "TikTok & Shorts",
+ "description": "Vertical-video scripts with hooks that earn the second second.",
+ "tags": [
+  "tiktok",
+  "shorts",
+  "video"
+ ],
+ "prompts": [
+  {
+   "id": "social-tiktok-shorts#001",
+   "text": "Plan the b-roll shot list for a gym-form correction clip."
+  },
+  {
+   "id": "social-tiktok-shorts#002",
+   "text": "Write a full video script with hook for a day-in-the-life of a night-shift nurse. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-tiktok-shorts#003",
+   "text": "Act as a customer-support voice. Write a full video script with hook for a cleaning-motivation speed-run, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-tiktok-shorts#004",
+   "text": "Plan the b-roll shot list for a day-in-the-life of a night-shift nurse. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-tiktok-shorts#005",
+   "text": "I’m working on a hack for folding fitted sheets. Design a three-second hook options list for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-tiktok-shorts#006",
+   "text": "Draft a trend-adaptation concept for a thirty-second recipe with three ingredients for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-tiktok-shorts#007",
+   "text": "Draft a trend-adaptation concept for a day-in-the-life of a night-shift nurse. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-tiktok-shorts#008",
+   "text": "Help me with a pet-training tip reel: plan the b-roll shot list for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-tiktok-shorts#009",
+   "text": "Draft a trend-adaptation concept for a hack for folding fitted sheets. Use a professional tone throughout."
+  },
+  {
+   "id": "social-tiktok-shorts#010",
+   "text": "You are a short-video strategist. Create a series plan with three episodes about a hack for folding fitted sheets and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-tiktok-shorts#011",
+   "text": "Create a series plan with three episodes about a cleaning-motivation speed-run. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-tiktok-shorts#012",
+   "text": "Before I start on a thrift-flip transformation video, draft a trend-adaptation concept for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-tiktok-shorts#013",
+   "text": "Write a comment-pinned CTA for a POV skit about customer support. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-tiktok-shorts#014",
+   "text": "Create a series plan with three episodes about a thirty-second recipe with three ingredients. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-tiktok-shorts#015",
+   "text": "As a community manager, I keep hitting the same wall with a language-learning mini-lesson. Script a duet-response video for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-tiktok-shorts#016",
+   "text": "Draft a trend-adaptation concept for a POV skit about customer support. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-tiktok-shorts#017",
+   "text": "Script a duet-response video for a thirty-second recipe with three ingredients."
+  },
+  {
+   "id": "social-tiktok-shorts#018",
+   "text": "Write on-screen text and captions for a minute-long history of a mundane object. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-tiktok-shorts#019",
+   "text": "Act as a community manager. Plan the b-roll shot list for a product-review of a budget gadget, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-tiktok-shorts#020",
+   "text": "Create a series plan with three episodes about a day-in-the-life of a night-shift nurse. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-tiktok-shorts#021",
+   "text": "I’m working on a language-learning mini-lesson. Write on-screen text and captions for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-tiktok-shorts#022",
+   "text": "Write a comment-pinned CTA for a pet-training tip reel for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-tiktok-shorts#023",
+   "text": "Create a series plan with three episodes about a gym-form correction clip. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-tiktok-shorts#024",
+   "text": "Help me with a POV skit about customer support: script a duet-response video for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-tiktok-shorts#025",
+   "text": "Write a comment-pinned CTA for an explainer on why bread goes stale. Use a direct tone throughout."
+  },
+  {
+   "id": "social-tiktok-shorts#026",
+   "text": "You are a short-video strategist. Plan the b-roll shot list for a hack for folding fitted sheets and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-tiktok-shorts#027",
+   "text": "Write on-screen text and captions for a thirty-second recipe with three ingredients. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-tiktok-shorts#028",
+   "text": "Before I start on a product-review of a budget gadget, script a duet-response video for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-tiktok-shorts#029",
+   "text": "Write a full video script with hook for a hack for folding fitted sheets. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-tiktok-shorts#030",
+   "text": "Write a full video script with hook for a pet-training tip reel. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-tiktok-shorts#031",
+   "text": "As a LinkedIn ghostwriter, I keep hitting the same wall with a gym-form correction clip. Design a three-second hook options list for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-tiktok-shorts#032",
+   "text": "Create a series plan with three episodes about a minute-long history of a mundane object. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-tiktok-shorts#033",
+   "text": "Draft a trend-adaptation concept for a pet-training tip reel."
+  },
+  {
+   "id": "social-tiktok-shorts#034",
+   "text": "Script a duet-response video for a minute-long history of a mundane object. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-tiktok-shorts#035",
+   "text": "Act as a customer-support voice. Design a three-second hook options list for a pet-training tip reel, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-tiktok-shorts#036",
+   "text": "Write on-screen text and captions for a product-review of a budget gadget. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-tiktok-shorts#037",
+   "text": "I’m working on a hack for folding fitted sheets. Write a comment-pinned CTA for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-tiktok-shorts#038",
+   "text": "Write on-screen text and captions for a pet-training tip reel for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-tiktok-shorts#039",
+   "text": "Write a comment-pinned CTA for a thrift-flip transformation video. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-tiktok-shorts#040",
+   "text": "Help me with a hack for folding fitted sheets: write on-screen text and captions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-tiktok-shorts#041",
+   "text": "Design a three-second hook options list for a thrift-flip transformation video. Use a persuasive tone throughout."
+  },
+  {
+   "id": "social-tiktok-shorts#042",
+   "text": "You are a creator-economy analyst. Design a three-second hook options list for a product-review of a budget gadget and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-tiktok-shorts#043",
+   "text": "Plan the b-roll shot list for a POV skit about customer support. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-tiktok-shorts#044",
+   "text": "Before I start on a gym-form correction clip, draft a trend-adaptation concept for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-tiktok-shorts#045",
+   "text": "Write on-screen text and captions for a thrift-flip transformation video. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-tiktok-shorts#046",
+   "text": "Write a comment-pinned CTA for a language-learning mini-lesson. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-tiktok-shorts#047",
+   "text": "As a LinkedIn ghostwriter, I keep hitting the same wall with a gym-form correction clip. Write a full video script with hook for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-tiktok-shorts#048",
+   "text": "Create a series plan with three episodes about a POV skit about customer support. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-tiktok-shorts#049",
+   "text": "Design a three-second hook options list for a POV skit about customer support."
+  },
+  {
+   "id": "social-tiktok-shorts#050",
+   "text": "Draft a trend-adaptation concept for a product-review of a budget gadget. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-tiktok-shorts#051",
+   "text": "Act as a social media manager. Script a duet-response video for a thrift-flip transformation video, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-tiktok-shorts#052",
+   "text": "Plan the b-roll shot list for a language-learning mini-lesson. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-tiktok-shorts#053",
+   "text": "I’m working on a cleaning-motivation speed-run. Write a comment-pinned CTA for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-tiktok-shorts#054",
+   "text": "Write a comment-pinned CTA for a product-review of a budget gadget for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-tiktok-shorts#055",
+   "text": "Draft a trend-adaptation concept for a minute-long history of a mundane object. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-tiktok-shorts#056",
+   "text": "Help me with a day-in-the-life of a night-shift nurse: write on-screen text and captions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-tiktok-shorts#057",
+   "text": "Plan the b-roll shot list for a thrift-flip transformation video. Use a persuasive tone throughout."
+  },
+  {
+   "id": "social-tiktok-shorts#058",
+   "text": "You are a local-business owner. Script a duet-response video for an explainer on why bread goes stale and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-tiktok-shorts#059",
+   "text": "Write a comment-pinned CTA for a day-in-the-life of a night-shift nurse. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-tiktok-shorts#060",
+   "text": "Before I start on a language-learning mini-lesson, draft a trend-adaptation concept for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-tiktok-shorts#061",
+   "text": "Create a series plan with three episodes about a product-review of a budget gadget. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-tiktok-shorts#062",
+   "text": "Script a duet-response video for a gym-form correction clip. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-tiktok-shorts#063",
+   "text": "As a creator-economy analyst, I keep hitting the same wall with an explainer on why bread goes stale. Design a three-second hook options list for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-tiktok-shorts#064",
+   "text": "Script a duet-response video for a day-in-the-life of a night-shift nurse. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-tiktok-shorts#065",
+   "text": "Design a three-second hook options list for a cleaning-motivation speed-run."
+  },
+  {
+   "id": "social-tiktok-shorts#066",
+   "text": "Create a series plan with three episodes about a thrift-flip transformation video. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-tiktok-shorts#067",
+   "text": "Act as a customer-support voice. Write on-screen text and captions for a cleaning-motivation speed-run, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-tiktok-shorts#068",
+   "text": "Design a three-second hook options list for a day-in-the-life of a night-shift nurse. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-tiktok-shorts#069",
+   "text": "I’m working on a language-learning mini-lesson. Write a full video script with hook for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-tiktok-shorts#070",
+   "text": "Write on-screen text and captions for a POV skit about customer support for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-tiktok-shorts#071",
+   "text": "Write a comment-pinned CTA for a thirty-second recipe with three ingredients. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-tiktok-shorts#072",
+   "text": "Help me with a minute-long history of a mundane object: write a full video script with hook for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-tiktok-shorts#073",
+   "text": "Script a duet-response video for a cleaning-motivation speed-run. Use a encouraging tone throughout."
+  },
+  {
+   "id": "social-tiktok-shorts#074",
+   "text": "You are a social media manager. Plan the b-roll shot list for a thirty-second recipe with three ingredients and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-tiktok-shorts#075",
+   "text": "Script a duet-response video for a pet-training tip reel. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-tiktok-shorts#076",
+   "text": "Before I start on a pet-training tip reel, create a series plan with three episodes about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-tiktok-shorts#077",
+   "text": "Create a series plan with three episodes about an explainer on why bread goes stale. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-tiktok-shorts#078",
+   "text": "Draft a trend-adaptation concept for a cleaning-motivation speed-run. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-tiktok-shorts#079",
+   "text": "As a LinkedIn ghostwriter, I keep hitting the same wall with a thrift-flip transformation video. Write a full video script with hook for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-tiktok-shorts#080",
+   "text": "Draft a trend-adaptation concept for an explainer on why bread goes stale. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-tiktok-shorts#081",
+   "text": "Write a full video script with hook for an explainer on why bread goes stale."
+  },
+  {
+   "id": "social-tiktok-shorts#082",
+   "text": "Write on-screen text and captions for an explainer on why bread goes stale. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-tiktok-shorts#083",
+   "text": "Act as a community manager. Write a full video script with hook for a product-review of a budget gadget, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-tiktok-shorts#084",
+   "text": "Create a series plan with three episodes about a language-learning mini-lesson. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-tiktok-shorts#085",
+   "text": "I’m working on a gym-form correction clip. Write a comment-pinned CTA for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-tiktok-shorts#086",
+   "text": "Plan the b-roll shot list for a minute-long history of a mundane object for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-tiktok-shorts#087",
+   "text": "Plan the b-roll shot list for an explainer on why bread goes stale. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-tiktok-shorts#088",
+   "text": "Help me with a gym-form correction clip: write on-screen text and captions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-tiktok-shorts#089",
+   "text": "Write a comment-pinned CTA for a minute-long history of a mundane object. Use a friendly tone throughout."
+  },
+  {
+   "id": "social-tiktok-shorts#090",
+   "text": "You are a LinkedIn ghostwriter. Write a full video script with hook for a POV skit about customer support and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-tiktok-shorts#091",
+   "text": "Write a full video script with hook for a thirty-second recipe with three ingredients. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-tiktok-shorts#092",
+   "text": "Before I start on a thirty-second recipe with three ingredients, design a three-second hook options list for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-tiktok-shorts#093",
+   "text": "Design a three-second hook options list for a language-learning mini-lesson. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-tiktok-shorts#094",
+   "text": "Plan the b-roll shot list for a cleaning-motivation speed-run. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-tiktok-shorts#095",
+   "text": "As a personal-branding coach, I keep hitting the same wall with a hack for folding fitted sheets. Script a duet-response video for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-tiktok-shorts#096",
+   "text": "Design a three-second hook options list for a minute-long history of a mundane object. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-tiktok-shorts#097",
+   "text": "Plan the b-roll shot list for a gym-form correction clip. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-tiktok-shorts#098",
+   "text": "Write a full video script with hook for a day-in-the-life of a night-shift nurse. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-tiktok-shorts#099",
+   "text": "Write a full video script with hook for a cleaning-motivation speed-run."
+  },
+  {
+   "id": "social-tiktok-shorts#100",
+   "text": "Plan the b-roll shot list for a day-in-the-life of a night-shift nurse."
+  },
+  {
+   "id": "social-tiktok-shorts#101",
+   "text": "Design a three-second hook options list for a hack for folding fitted sheets."
+  },
+  {
+   "id": "social-tiktok-shorts#102",
+   "text": "Draft a trend-adaptation concept for a thirty-second recipe with three ingredients."
+  },
+  {
+   "id": "social-tiktok-shorts#103",
+   "text": "Draft a trend-adaptation concept for a day-in-the-life of a night-shift nurse."
+  },
+  {
+   "id": "social-tiktok-shorts#104",
+   "text": "Plan the b-roll shot list for a pet-training tip reel."
+  }
+ ]
+}

@@ -1,0 +1,430 @@
+{
+ "slug": "productivity-habits-routines",
+ "categorySlug": "productivity",
+ "category": "Productivity & Habits",
+ "title": "Habits & Routines",
+ "description": "Start small, keep score, and bounce back from misses.",
+ "tags": [
+  "habits",
+  "routines",
+  "behavior"
+ ],
+ "prompts": [
+  {
+   "id": "productivity-habits-routines#001",
+   "text": "Design a reward system that doesn’t backfire for a budget-check ritual each payday."
+  },
+  {
+   "id": "productivity-habits-routines#002",
+   "text": "Explain the psychology of sticking with stretch breaks during desk work. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-habits-routines#003",
+   "text": "Act as a productivity coach. Design a reward system that doesn’t backfire for a reading habit before bed, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-habits-routines#004",
+   "text": "Create a tracking system for a journaling habit that sticks. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-habits-routines#005",
+   "text": "I’m working on morning sunlight and movement. Draft a weekly check-in ritual for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-habits-routines#006",
+   "text": "Explain the psychology of sticking with a budget-check ritual each payday for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-habits-routines#007",
+   "text": "Write a never-miss-twice recovery plan for morning sunlight and movement. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-habits-routines#008",
+   "text": "Help me with a bedtime wind-down routine: design a reward system that doesn’t backfire for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-habits-routines#009",
+   "text": "List the environment tweaks that support weekly meal prep on Sundays. Use a empathetic tone throughout."
+  },
+  {
+   "id": "productivity-habits-routines#010",
+   "text": "You are a librarian of tidy systems. Create a tracking system for drinking more water without reminders everywhere and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-habits-routines#011",
+   "text": "List the environment tweaks that support drinking more water without reminders everywhere. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-habits-routines#012",
+   "text": "Before I start on a daily ten-minute tidy, design a two-minute starter version of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-habits-routines#013",
+   "text": "Design a two-minute starter version of morning sunlight and movement. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-habits-routines#014",
+   "text": "Write a never-miss-twice recovery plan for drinking more water without reminders everywhere. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-habits-routines#015",
+   "text": "As a remote-work veteran, I keep hitting the same wall with flossing after years of forgetting. Build a habit-stacking plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-habits-routines#016",
+   "text": "Design a reward system that doesn’t backfire for flossing after years of forgetting. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-habits-routines#017",
+   "text": "Write a never-miss-twice recovery plan for a journaling habit that sticks."
+  },
+  {
+   "id": "productivity-habits-routines#018",
+   "text": "Create a tracking system for a bedtime wind-down routine. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-habits-routines#019",
+   "text": "Act as a librarian of tidy systems. List the environment tweaks that support morning sunlight and movement, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-habits-routines#020",
+   "text": "Explain the psychology of sticking with a daily ten-minute tidy. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-habits-routines#021",
+   "text": "I’m working on a journaling habit that sticks. Build a habit-stacking plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-habits-routines#022",
+   "text": "Draft a weekly check-in ritual for a reading habit before bed for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-habits-routines#023",
+   "text": "List the environment tweaks that support a bedtime wind-down routine. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-habits-routines#024",
+   "text": "Help me with morning sunlight and movement: build a habit-stacking plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-habits-routines#025",
+   "text": "Write a never-miss-twice recovery plan for a language-practice streak. Use a persuasive tone throughout."
+  },
+  {
+   "id": "productivity-habits-routines#026",
+   "text": "You are a behavior-design researcher. Design a reward system that doesn’t backfire for stretch breaks during desk work and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-habits-routines#027",
+   "text": "List the environment tweaks that support a reading habit before bed. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-habits-routines#028",
+   "text": "Before I start on a weekly call to grandparents, write a never-miss-twice recovery plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-habits-routines#029",
+   "text": "Build a habit-stacking plan for a reading habit before bed. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-habits-routines#030",
+   "text": "Write a never-miss-twice recovery plan for stretch breaks during desk work. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-habits-routines#031",
+   "text": "As a project manager, I keep hitting the same wall with a bedtime wind-down routine. Draft a weekly check-in ritual for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-habits-routines#032",
+   "text": "List the environment tweaks that support a budget-check ritual each payday. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-habits-routines#033",
+   "text": "Draft a weekly check-in ritual for weekly meal prep on Sundays."
+  },
+  {
+   "id": "productivity-habits-routines#034",
+   "text": "Build a habit-stacking plan for a bedtime wind-down routine. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-habits-routines#035",
+   "text": "Act as a productivity coach. Design a two-minute starter version of a language-practice streak, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-habits-routines#036",
+   "text": "List the environment tweaks that support flossing after years of forgetting. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-habits-routines#037",
+   "text": "I’m working on a daily ten-minute tidy. Write a never-miss-twice recovery plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-habits-routines#038",
+   "text": "List the environment tweaks that support a weekly call to grandparents for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-habits-routines#039",
+   "text": "Draft a weekly check-in ritual for stretch breaks during desk work. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-habits-routines#040",
+   "text": "Help me with drinking more water without reminders everywhere: explain the psychology of sticking with it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-habits-routines#041",
+   "text": "Design a two-minute starter version of flossing after years of forgetting. Use a persuasive tone throughout."
+  },
+  {
+   "id": "productivity-habits-routines#042",
+   "text": "You are a behavior-design researcher. Create a tracking system for a daily ten-minute tidy and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-habits-routines#043",
+   "text": "Explain the psychology of sticking with morning sunlight and movement. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-habits-routines#044",
+   "text": "Before I start on stretch breaks during desk work, create a tracking system for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-habits-routines#045",
+   "text": "Build a habit-stacking plan for a weekly call to grandparents. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-habits-routines#046",
+   "text": "Draft a weekly check-in ritual for a journaling habit that sticks. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-habits-routines#047",
+   "text": "As a minimalist systems tinkerer, I keep hitting the same wall with a weekly call to grandparents. Create a tracking system for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-habits-routines#048",
+   "text": "Design a reward system that doesn’t backfire for morning sunlight and movement. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-habits-routines#049",
+   "text": "Draft a weekly check-in ritual for a budget-check ritual each payday."
+  },
+  {
+   "id": "productivity-habits-routines#050",
+   "text": "List the environment tweaks that support a daily ten-minute tidy. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-habits-routines#051",
+   "text": "Act as a chief of staff. Design a reward system that doesn’t backfire for weekly meal prep on Sundays, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-habits-routines#052",
+   "text": "Design a reward system that doesn’t backfire for a language-practice streak. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-habits-routines#053",
+   "text": "I’m working on a language-practice streak. Explain the psychology of sticking with it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-habits-routines#054",
+   "text": "Build a habit-stacking plan for weekly meal prep on Sundays for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-habits-routines#055",
+   "text": "Design a reward system that doesn’t backfire for a weekly call to grandparents. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-habits-routines#056",
+   "text": "Help me with flossing after years of forgetting: create a tracking system for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-habits-routines#057",
+   "text": "Write a never-miss-twice recovery plan for a budget-check ritual each payday. Use a friendly tone throughout."
+  },
+  {
+   "id": "productivity-habits-routines#058",
+   "text": "You are a project manager. Write a never-miss-twice recovery plan for flossing after years of forgetting and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-habits-routines#059",
+   "text": "Build a habit-stacking plan for a budget-check ritual each payday. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-habits-routines#060",
+   "text": "Before I start on a budget-check ritual each payday, create a tracking system for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-habits-routines#061",
+   "text": "Explain the psychology of sticking with a weekly call to grandparents. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-habits-routines#062",
+   "text": "Design a reward system that doesn’t backfire for drinking more water without reminders everywhere. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-habits-routines#063",
+   "text": "As a remote-work veteran, I keep hitting the same wall with a reading habit before bed. Explain the psychology of sticking with it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-habits-routines#064",
+   "text": "Build a habit-stacking plan for a language-practice streak. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-habits-routines#065",
+   "text": "Build a habit-stacking plan for drinking more water without reminders everywhere."
+  },
+  {
+   "id": "productivity-habits-routines#066",
+   "text": "Design a two-minute starter version of a reading habit before bed. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-habits-routines#067",
+   "text": "Act as a project manager. Design a two-minute starter version of stretch breaks during desk work, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-habits-routines#068",
+   "text": "Build a habit-stacking plan for stretch breaks during desk work. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-habits-routines#069",
+   "text": "I’m working on a language-practice streak. Draft a weekly check-in ritual for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-habits-routines#070",
+   "text": "Build a habit-stacking plan for a daily ten-minute tidy for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-habits-routines#071",
+   "text": "Design a two-minute starter version of a budget-check ritual each payday. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-habits-routines#072",
+   "text": "Help me with weekly meal prep on Sundays: create a tracking system for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-habits-routines#073",
+   "text": "Write a never-miss-twice recovery plan for weekly meal prep on Sundays. Use a empathetic tone throughout."
+  },
+  {
+   "id": "productivity-habits-routines#074",
+   "text": "You are a recovery-focused therapist-adjacent coach. Explain the psychology of sticking with weekly meal prep on Sundays and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-habits-routines#075",
+   "text": "Design a two-minute starter version of weekly meal prep on Sundays. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-habits-routines#076",
+   "text": "Before I start on drinking more water without reminders everywhere, draft a weekly check-in ritual for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-habits-routines#077",
+   "text": "Write a never-miss-twice recovery plan for a bedtime wind-down routine. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-habits-routines#078",
+   "text": "Explain the psychology of sticking with flossing after years of forgetting. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-habits-routines#079",
+   "text": "As a chief of staff, I keep hitting the same wall with a daily ten-minute tidy. Draft a weekly check-in ritual for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-habits-routines#080",
+   "text": "List the environment tweaks that support a journaling habit that sticks. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-habits-routines#081",
+   "text": "Draft a weekly check-in ritual for a weekly call to grandparents."
+  },
+  {
+   "id": "productivity-habits-routines#082",
+   "text": "Design a two-minute starter version of a journaling habit that sticks. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-habits-routines#083",
+   "text": "Act as a productivity coach. List the environment tweaks that support a language-practice streak, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-habits-routines#084",
+   "text": "Create a tracking system for a reading habit before bed. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-habits-routines#085",
+   "text": "I’m working on a journaling habit that sticks. Explain the psychology of sticking with it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-habits-routines#086",
+   "text": "Design a reward system that doesn’t backfire for a daily ten-minute tidy for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-habits-routines#087",
+   "text": "Design a two-minute starter version of a weekly call to grandparents. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-habits-routines#088",
+   "text": "Help me with drinking more water without reminders everywhere: design a two-minute starter version of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-habits-routines#089",
+   "text": "Write a never-miss-twice recovery plan for a reading habit before bed. Use a persuasive tone throughout."
+  },
+  {
+   "id": "productivity-habits-routines#090",
+   "text": "You are a chief of staff. Design a reward system that doesn’t backfire for a journaling habit that sticks and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-habits-routines#091",
+   "text": "Draft a weekly check-in ritual for flossing after years of forgetting. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-habits-routines#092",
+   "text": "Before I start on a language-practice streak, create a tracking system for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-habits-routines#093",
+   "text": "Explain the psychology of sticking with a bedtime wind-down routine. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-habits-routines#094",
+   "text": "Create a tracking system for morning sunlight and movement. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-habits-routines#095",
+   "text": "As a project manager, I keep hitting the same wall with a bedtime wind-down routine. Design a two-minute starter version of it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-habits-routines#096",
+   "text": "List the environment tweaks that support stretch breaks during desk work. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-habits-routines#097",
+   "text": "Design a reward system that doesn’t backfire for a budget-check ritual each payday. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-habits-routines#098",
+   "text": "Explain the psychology of sticking with stretch breaks during desk work. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-habits-routines#099",
+   "text": "Design a reward system that doesn’t backfire for a reading habit before bed."
+  },
+  {
+   "id": "productivity-habits-routines#100",
+   "text": "Create a tracking system for a journaling habit that sticks."
+  },
+  {
+   "id": "productivity-habits-routines#101",
+   "text": "Draft a weekly check-in ritual for morning sunlight and movement."
+  },
+  {
+   "id": "productivity-habits-routines#102",
+   "text": "Explain the psychology of sticking with a budget-check ritual each payday."
+  },
+  {
+   "id": "productivity-habits-routines#103",
+   "text": "Write a never-miss-twice recovery plan for morning sunlight and movement."
+  },
+  {
+   "id": "productivity-habits-routines#104",
+   "text": "Design a reward system that doesn’t backfire for a bedtime wind-down routine."
+  }
+ ]
+}

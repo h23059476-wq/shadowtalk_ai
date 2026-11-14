@@ -1,0 +1,430 @@
+{
+ "slug": "sales-follow-up-sequences",
+ "categorySlug": "sales",
+ "category": "Sales & Outreach",
+ "title": "Follow-Up Sequences",
+ "description": "Persistent without pestering; every touch adds value.",
+ "tags": [
+  "follow-up",
+  "cadence",
+  "pipeline"
+ ],
+ "prompts": [
+  {
+   "id": "sales-follow-up-sequences#001",
+   "text": "Create a three-touch sequence over two weeks for a warm referral that hasn’t replied."
+  },
+  {
+   "id": "sales-follow-up-sequences#002",
+   "text": "Write a value-add follow-up for a renewal sixty days out. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-follow-up-sequences#003",
+   "text": "Act as a founder selling to first customers. Draft a case-study share email for a stalled deal after legal review, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-follow-up-sequences#004",
+   "text": "Prepare a timing-based re-engage plan for a trial user who went inactive. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-follow-up-sequences#005",
+   "text": "I’m working on a pilot that ended without a decision. Write an executive-alignments request for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-follow-up-sequences#006",
+   "text": "Write an executive-alignments request for a renewal sixty days out for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-follow-up-sequences#007",
+   "text": "Write the mutual-action-plan nudge for a pricing question left unanswered. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-follow-up-sequences#008",
+   "text": "Help me with a demo that ended with 'let us digest': design a win-back sequence for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-follow-up-sequences#009",
+   "text": "Draft a case-study share email for a verbal yes awaiting the contract. Use a persuasive tone throughout."
+  },
+  {
+   "id": "sales-follow-up-sequences#010",
+   "text": "You are a solution consultant. Create a three-touch sequence over two weeks for an RFP submitted with no update and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-follow-up-sequences#011",
+   "text": "Draft the close-the-loop email for a demo that ended with 'let us digest'. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-follow-up-sequences#012",
+   "text": "Before I start on a warm referral that hasn’t replied, draft the close-the-loop email for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-follow-up-sequences#013",
+   "text": "Draft the close-the-loop email for a proposal sent ten days ago with silence. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-follow-up-sequences#014",
+   "text": "Draft the close-the-loop email for a pilot that ended without a decision. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-follow-up-sequences#015",
+   "text": "As a channel-partnerships manager, I keep hitting the same wall with a conference lead from last month. Write a value-add follow-up for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-follow-up-sequences#016",
+   "text": "Prepare a timing-based re-engage plan for a pricing question left unanswered. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-follow-up-sequences#017",
+   "text": "Create a three-touch sequence over two weeks for a proposal sent ten days ago with silence."
+  },
+  {
+   "id": "sales-follow-up-sequences#018",
+   "text": "Draft the close-the-loop email for a champion who changed jobs. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-follow-up-sequences#019",
+   "text": "Act as a revops analyst. Design a win-back sequence for an RFP submitted with no update, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-follow-up-sequences#020",
+   "text": "Draft a case-study share email for a renewal sixty days out. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-follow-up-sequences#021",
+   "text": "I’m working on a pricing question left unanswered. Design a win-back sequence for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-follow-up-sequences#022",
+   "text": "Create a three-touch sequence over two weeks for a verbal yes awaiting the contract for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-follow-up-sequences#023",
+   "text": "Write a value-add follow-up for an RFP submitted with no update. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-follow-up-sequences#024",
+   "text": "Help me with a champion who changed jobs: write a value-add follow-up for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-follow-up-sequences#025",
+   "text": "Draft the close-the-loop email for a conference lead from last month. Use a friendly tone throughout."
+  },
+  {
+   "id": "sales-follow-up-sequences#026",
+   "text": "You are a SDR coach. Draft the close-the-loop email for a trial user who went inactive and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-follow-up-sequences#027",
+   "text": "Write the mutual-action-plan nudge for a trial user who went inactive. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-follow-up-sequences#028",
+   "text": "Before I start on a pilot that ended without a decision, create a three-touch sequence over two weeks for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-follow-up-sequences#029",
+   "text": "Write the mutual-action-plan nudge for a champion who changed jobs. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-follow-up-sequences#030",
+   "text": "Create a three-touch sequence over two weeks for a renewal sixty days out. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-follow-up-sequences#031",
+   "text": "As a founder selling to first customers, I keep hitting the same wall with a pilot that ended without a decision. Design a win-back sequence for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-follow-up-sequences#032",
+   "text": "Draft a case-study share email for a pilot that ended without a decision. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-follow-up-sequences#033",
+   "text": "Create a three-touch sequence over two weeks for a pricing question left unanswered."
+  },
+  {
+   "id": "sales-follow-up-sequences#034",
+   "text": "Write the mutual-action-plan nudge for a warm referral that hasn’t replied. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-follow-up-sequences#035",
+   "text": "Act as a revops analyst. Draft a case-study share email for an RFP submitted with no update, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-follow-up-sequences#036",
+   "text": "Write an executive-alignments request for a pricing question left unanswered. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-follow-up-sequences#037",
+   "text": "I’m working on a stalled deal after legal review. Draft the close-the-loop email for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-follow-up-sequences#038",
+   "text": "Prepare a timing-based re-engage plan for a proposal sent ten days ago with silence for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-follow-up-sequences#039",
+   "text": "Write an executive-alignments request for a champion who changed jobs. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-follow-up-sequences#040",
+   "text": "Help me with a pilot that ended without a decision: write a value-add follow-up for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-follow-up-sequences#041",
+   "text": "Write a value-add follow-up for a pricing question left unanswered. Use a persuasive tone throughout."
+  },
+  {
+   "id": "sales-follow-up-sequences#042",
+   "text": "You are a SDR coach. Create a three-touch sequence over two weeks for a demo that ended with 'let us digest' and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-follow-up-sequences#043",
+   "text": "Write the mutual-action-plan nudge for a stalled deal after legal review. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-follow-up-sequences#044",
+   "text": "Before I start on a stalled deal after legal review, prepare a timing-based re-engage plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-follow-up-sequences#045",
+   "text": "Draft a case-study share email for a demo that ended with 'let us digest'. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-follow-up-sequences#046",
+   "text": "Write a value-add follow-up for a proposal sent ten days ago with silence. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-follow-up-sequences#047",
+   "text": "As a freelance consultant selling retainers, I keep hitting the same wall with a verbal yes awaiting the contract. Write the mutual-action-plan nudge for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-follow-up-sequences#048",
+   "text": "Design a win-back sequence for a warm referral that hasn’t replied. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-follow-up-sequences#049",
+   "text": "Create a three-touch sequence over two weeks for a champion who changed jobs."
+  },
+  {
+   "id": "sales-follow-up-sequences#050",
+   "text": "Draft the close-the-loop email for a verbal yes awaiting the contract. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-follow-up-sequences#051",
+   "text": "Act as a freelance consultant selling retainers. Prepare a timing-based re-engage plan for a demo that ended with 'let us digest', then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-follow-up-sequences#052",
+   "text": "Design a win-back sequence for a trial user who went inactive. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-follow-up-sequences#053",
+   "text": "I’m working on a verbal yes awaiting the contract. Design a win-back sequence for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-follow-up-sequences#054",
+   "text": "Design a win-back sequence for a renewal sixty days out for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-follow-up-sequences#055",
+   "text": "Prepare a timing-based re-engage plan for a verbal yes awaiting the contract. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-follow-up-sequences#056",
+   "text": "Help me with an RFP submitted with no update: write an executive-alignments request for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-follow-up-sequences#057",
+   "text": "Write an executive-alignments request for a demo that ended with 'let us digest'. Use a formal tone throughout."
+  },
+  {
+   "id": "sales-follow-up-sequences#058",
+   "text": "You are a revops analyst. Draft the close-the-loop email for a pricing question left unanswered and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-follow-up-sequences#059",
+   "text": "Draft a case-study share email for a conference lead from last month. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-follow-up-sequences#060",
+   "text": "Before I start on a champion who changed jobs, design a win-back sequence for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-follow-up-sequences#061",
+   "text": "Prepare a timing-based re-engage plan for a champion who changed jobs. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-follow-up-sequences#062",
+   "text": "Write an executive-alignments request for a warm referral that hasn’t replied. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-follow-up-sequences#063",
+   "text": "As a SDR coach, I keep hitting the same wall with an RFP submitted with no update. Write the mutual-action-plan nudge for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-follow-up-sequences#064",
+   "text": "Write a value-add follow-up for a warm referral that hasn’t replied. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-follow-up-sequences#065",
+   "text": "Write an executive-alignments request for a trial user who went inactive."
+  },
+  {
+   "id": "sales-follow-up-sequences#066",
+   "text": "Prepare a timing-based re-engage plan for a renewal sixty days out. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-follow-up-sequences#067",
+   "text": "Act as a customer-renewals specialist. Write the mutual-action-plan nudge for a renewal sixty days out, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-follow-up-sequences#068",
+   "text": "Draft a case-study share email for a warm referral that hasn’t replied. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-follow-up-sequences#069",
+   "text": "I’m working on an RFP submitted with no update. Prepare a timing-based re-engage plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-follow-up-sequences#070",
+   "text": "Create a three-touch sequence over two weeks for a stalled deal after legal review for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-follow-up-sequences#071",
+   "text": "Design a win-back sequence for a proposal sent ten days ago with silence. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-follow-up-sequences#072",
+   "text": "Help me with a trial user who went inactive: write a value-add follow-up for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-follow-up-sequences#073",
+   "text": "Create a three-touch sequence over two weeks for a conference lead from last month. Use a friendly tone throughout."
+  },
+  {
+   "id": "sales-follow-up-sequences#074",
+   "text": "You are a freelance consultant selling retainers. Design a win-back sequence for a conference lead from last month and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-follow-up-sequences#075",
+   "text": "Draft a case-study share email for a pricing question left unanswered. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-follow-up-sequences#076",
+   "text": "Before I start on a proposal sent ten days ago with silence, write the mutual-action-plan nudge for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-follow-up-sequences#077",
+   "text": "Prepare a timing-based re-engage plan for a pilot that ended without a decision. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-follow-up-sequences#078",
+   "text": "Write a value-add follow-up for a stalled deal after legal review. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-follow-up-sequences#079",
+   "text": "As a channel-partnerships manager, I keep hitting the same wall with a proposal sent ten days ago with silence. Write an executive-alignments request for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-follow-up-sequences#080",
+   "text": "Design a win-back sequence for a stalled deal after legal review. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-follow-up-sequences#081",
+   "text": "Write the mutual-action-plan nudge for a pilot that ended without a decision."
+  },
+  {
+   "id": "sales-follow-up-sequences#082",
+   "text": "Write the mutual-action-plan nudge for a conference lead from last month. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-follow-up-sequences#083",
+   "text": "Act as a founder selling to first customers. Write an executive-alignments request for a conference lead from last month, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-follow-up-sequences#084",
+   "text": "Prepare a timing-based re-engage plan for a conference lead from last month. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-follow-up-sequences#085",
+   "text": "I’m working on a verbal yes awaiting the contract. Write a value-add follow-up for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-follow-up-sequences#086",
+   "text": "Write the mutual-action-plan nudge for a demo that ended with 'let us digest' for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-follow-up-sequences#087",
+   "text": "Write an executive-alignments request for a stalled deal after legal review. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-follow-up-sequences#088",
+   "text": "Help me with a trial user who went inactive: create a three-touch sequence over two weeks for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-follow-up-sequences#089",
+   "text": "Write a value-add follow-up for a demo that ended with 'let us digest'. Use a formal tone throughout."
+  },
+  {
+   "id": "sales-follow-up-sequences#090",
+   "text": "You are a SDR coach. Draft a case-study share email for a trial user who went inactive and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-follow-up-sequences#091",
+   "text": "Draft a case-study share email for a proposal sent ten days ago with silence. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-follow-up-sequences#092",
+   "text": "Before I start on a champion who changed jobs, draft a case-study share email for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-follow-up-sequences#093",
+   "text": "Prepare a timing-based re-engage plan for a warm referral that hasn’t replied. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-follow-up-sequences#094",
+   "text": "Write an executive-alignments request for a verbal yes awaiting the contract. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-follow-up-sequences#095",
+   "text": "As a solution consultant, I keep hitting the same wall with a renewal sixty days out. Draft the close-the-loop email for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-follow-up-sequences#096",
+   "text": "Draft the close-the-loop email for an RFP submitted with no update. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-follow-up-sequences#097",
+   "text": "Create a three-touch sequence over two weeks for a warm referral that hasn’t replied. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-follow-up-sequences#098",
+   "text": "Write a value-add follow-up for a renewal sixty days out. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-follow-up-sequences#099",
+   "text": "Draft a case-study share email for a stalled deal after legal review."
+  },
+  {
+   "id": "sales-follow-up-sequences#100",
+   "text": "Prepare a timing-based re-engage plan for a trial user who went inactive."
+  },
+  {
+   "id": "sales-follow-up-sequences#101",
+   "text": "Write an executive-alignments request for a pilot that ended without a decision."
+  },
+  {
+   "id": "sales-follow-up-sequences#102",
+   "text": "Write an executive-alignments request for a renewal sixty days out."
+  },
+  {
+   "id": "sales-follow-up-sequences#103",
+   "text": "Write the mutual-action-plan nudge for a pricing question left unanswered."
+  },
+  {
+   "id": "sales-follow-up-sequences#104",
+   "text": "Design a win-back sequence for a demo that ended with 'let us digest'."
+  }
+ ]
+}

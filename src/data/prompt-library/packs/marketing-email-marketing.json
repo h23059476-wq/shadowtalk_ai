@@ -1,0 +1,430 @@
+{
+ "slug": "marketing-email-marketing",
+ "categorySlug": "marketing",
+ "category": "Marketing & Growth",
+ "title": "Email Marketing",
+ "description": "Welcome flows, newsletters, and win-backs with real cadence.",
+ "tags": [
+  "email",
+  "lifecycle",
+  "newsletter"
+ ],
+ "prompts": [
+  {
+   "id": "marketing-email-marketing#001",
+   "text": "Write the unsubscribe-saving PS for a five-email welcome sequence for a bookstore."
+  },
+  {
+   "id": "marketing-email-marketing#002",
+   "text": "Draft a metrics review checklist for a cart-abandonment series for homeware. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-email-marketing#003",
+   "text": "Act as a lifecycle marketing manager. Design the cadence and send-day logic for an onboarding drip for a budgeting tool, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-email-marketing#004",
+   "text": "Draft A/B variants for the first email in a webinar invitation with three reminders. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-email-marketing#005",
+   "text": "I’m working on a shipping-delay apology email. Create segmentation rules for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-email-marketing#006",
+   "text": "Draft A/B variants for the first email in a win-back flow for lapsed gym members for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-email-marketing#007",
+   "text": "Draft the full sequence for a win-back flow for lapsed gym members. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-email-marketing#008",
+   "text": "Help me with a five-email welcome sequence for a bookstore: write subject lines and preview text for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-email-marketing#009",
+   "text": "Write subject lines and preview text for a product-launch announcement for earbuds. Use a friendly tone throughout."
+  },
+  {
+   "id": "marketing-email-marketing#010",
+   "text": "You are a brand strategist. Draft a metrics review checklist for a re-engagement series for a dating app and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-email-marketing#011",
+   "text": "Draft a metrics review checklist for a product-launch announcement for earbuds. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-email-marketing#012",
+   "text": "Before I start on a monthly newsletter for urban cyclists, draft the full sequence for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-email-marketing#013",
+   "text": "Write subject lines and preview text for a monthly newsletter for urban cyclists. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-email-marketing#014",
+   "text": "Design the cadence and send-day logic for a product-launch announcement for earbuds. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-email-marketing#015",
+   "text": "As a growth marketing lead, I keep hitting the same wall with a post-purchase review request. Write subject lines and preview text for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-email-marketing#016",
+   "text": "Create segmentation rules for a survey invitation with an incentive. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-email-marketing#017",
+   "text": "Draft A/B variants for the first email in a pre-order confirmation with expectations set."
+  },
+  {
+   "id": "marketing-email-marketing#018",
+   "text": "Draft the full sequence for a referral-invite email for a photo app. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-email-marketing#019",
+   "text": "Act as a growth marketing lead. Design the cadence and send-day logic for a birthday reward email for a cafe, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-email-marketing#020",
+   "text": "Write subject lines and preview text for a survey invitation with an incentive. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-email-marketing#021",
+   "text": "I’m working on a holiday gift-guide email. Create segmentation rules for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-email-marketing#022",
+   "text": "Draft the full sequence for a pre-order confirmation with expectations set for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-email-marketing#023",
+   "text": "Design the cadence and send-day logic for a webinar invitation with three reminders. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-email-marketing#024",
+   "text": "Help me with a webinar invitation with three reminders: write subject lines and preview text for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-email-marketing#025",
+   "text": "Draft the full sequence for an onboarding drip for a budgeting tool. Use a encouraging tone throughout."
+  },
+  {
+   "id": "marketing-email-marketing#026",
+   "text": "You are a brand strategist. Write the unsubscribe-saving PS for an onboarding drip for a budgeting tool and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-email-marketing#027",
+   "text": "Draft A/B variants for the first email in a monthly newsletter for urban cyclists. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-email-marketing#028",
+   "text": "Before I start on a five-email welcome sequence for a bookstore, design the cadence and send-day logic for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-email-marketing#029",
+   "text": "Design the cadence and send-day logic for a win-back flow for lapsed gym members. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-email-marketing#030",
+   "text": "Write the unsubscribe-saving PS for a win-back flow for lapsed gym members. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-email-marketing#031",
+   "text": "As a customer insights analyst, I keep hitting the same wall with a holiday gift-guide email. Design the cadence and send-day logic for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-email-marketing#032",
+   "text": "Write a plain-text-feeling version of a holiday gift-guide email. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-email-marketing#033",
+   "text": "Write a plain-text-feeling version of a win-back flow for lapsed gym members."
+  },
+  {
+   "id": "marketing-email-marketing#034",
+   "text": "Draft A/B variants for the first email in a survey invitation with an incentive. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-email-marketing#035",
+   "text": "Act as a brand strategist. Write a plain-text-feeling version of a community-digest for indie hackers, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-email-marketing#036",
+   "text": "Draft A/B variants for the first email in a referral-invite email for a photo app. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-email-marketing#037",
+   "text": "I’m working on a cart-abandonment series for homeware. Draft A/B variants for the first email in it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-email-marketing#038",
+   "text": "Draft a metrics review checklist for a win-back flow for lapsed gym members for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-email-marketing#039",
+   "text": "Draft a metrics review checklist for a holiday gift-guide email. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-email-marketing#040",
+   "text": "Help me with a pre-order confirmation with expectations set: design the cadence and send-day logic for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-email-marketing#041",
+   "text": "Write a plain-text-feeling version of a birthday reward email for a cafe. Use a persuasive tone throughout."
+  },
+  {
+   "id": "marketing-email-marketing#042",
+   "text": "You are a SEO specialist. Write subject lines and preview text for a pre-order confirmation with expectations set and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-email-marketing#043",
+   "text": "Draft a metrics review checklist for a community-digest for indie hackers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-email-marketing#044",
+   "text": "Before I start on an onboarding drip for a budgeting tool, draft a metrics review checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-email-marketing#045",
+   "text": "Draft A/B variants for the first email in a holiday gift-guide email. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-email-marketing#046",
+   "text": "Create segmentation rules for a re-engagement series for a dating app. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-email-marketing#047",
+   "text": "As a customer insights analyst, I keep hitting the same wall with a birthday reward email for a cafe. Draft a metrics review checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-email-marketing#048",
+   "text": "Draft the full sequence for a product-launch announcement for earbuds. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-email-marketing#049",
+   "text": "Write the unsubscribe-saving PS for a monthly newsletter for urban cyclists."
+  },
+  {
+   "id": "marketing-email-marketing#050",
+   "text": "Draft the full sequence for a cart-abandonment series for homeware. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-email-marketing#051",
+   "text": "Act as a community growth manager. Write the unsubscribe-saving PS for a product-launch announcement for earbuds, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-email-marketing#052",
+   "text": "Draft a metrics review checklist for a webinar invitation with three reminders. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-email-marketing#053",
+   "text": "I’m working on a monthly newsletter for urban cyclists. Draft a metrics review checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-email-marketing#054",
+   "text": "Write the unsubscribe-saving PS for a referral-invite email for a photo app for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-email-marketing#055",
+   "text": "Create segmentation rules for a monthly newsletter for urban cyclists. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-email-marketing#056",
+   "text": "Help me with a referral-invite email for a photo app: write subject lines and preview text for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-email-marketing#057",
+   "text": "Create segmentation rules for a five-email welcome sequence for a bookstore. Use a playful tone throughout."
+  },
+  {
+   "id": "marketing-email-marketing#058",
+   "text": "You are a growth marketing lead. Draft the full sequence for a five-email welcome sequence for a bookstore and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-email-marketing#059",
+   "text": "Write a plain-text-feeling version of a referral-invite email for a photo app. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-email-marketing#060",
+   "text": "Before I start on a product-launch announcement for earbuds, write a plain-text-feeling version of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-email-marketing#061",
+   "text": "Write the unsubscribe-saving PS for a re-engagement series for a dating app. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-email-marketing#062",
+   "text": "Write the unsubscribe-saving PS for a holiday gift-guide email. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-email-marketing#063",
+   "text": "As a community growth manager, I keep hitting the same wall with a survey invitation with an incentive. Write a plain-text-feeling version of it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-email-marketing#064",
+   "text": "Draft A/B variants for the first email in a shipping-delay apology email. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-email-marketing#065",
+   "text": "Write subject lines and preview text for a re-engagement series for a dating app."
+  },
+  {
+   "id": "marketing-email-marketing#066",
+   "text": "Design the cadence and send-day logic for a community-digest for indie hackers. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-email-marketing#067",
+   "text": "Act as a lifecycle marketing manager. Write subject lines and preview text for an onboarding drip for a budgeting tool, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-email-marketing#068",
+   "text": "Draft a metrics review checklist for a five-email welcome sequence for a bookstore. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-email-marketing#069",
+   "text": "I’m working on a shipping-delay apology email. Write the unsubscribe-saving PS for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-email-marketing#070",
+   "text": "Write the unsubscribe-saving PS for a birthday reward email for a cafe for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-email-marketing#071",
+   "text": "Create segmentation rules for a cart-abandonment series for homeware. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-email-marketing#072",
+   "text": "Help me with a re-engagement series for a dating app: draft the full sequence for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-email-marketing#073",
+   "text": "Draft a metrics review checklist for a shipping-delay apology email. Use a formal tone throughout."
+  },
+  {
+   "id": "marketing-email-marketing#074",
+   "text": "You are a brand strategist. Create segmentation rules for an onboarding drip for a budgeting tool and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-email-marketing#075",
+   "text": "Write a plain-text-feeling version of a monthly newsletter for urban cyclists. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-email-marketing#076",
+   "text": "Before I start on a shipping-delay apology email, write subject lines and preview text for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-email-marketing#077",
+   "text": "Draft a metrics review checklist for a survey invitation with an incentive. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-email-marketing#078",
+   "text": "Draft a metrics review checklist for a pre-order confirmation with expectations set. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-email-marketing#079",
+   "text": "As a SEO specialist, I keep hitting the same wall with a monthly newsletter for urban cyclists. Design the cadence and send-day logic for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-email-marketing#080",
+   "text": "Draft the full sequence for a birthday reward email for a cafe. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-email-marketing#081",
+   "text": "Design the cadence and send-day logic for a referral-invite email for a photo app."
+  },
+  {
+   "id": "marketing-email-marketing#082",
+   "text": "Draft A/B variants for the first email in a post-purchase review request. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-email-marketing#083",
+   "text": "Act as a lifecycle marketing manager. Design the cadence and send-day logic for a re-engagement series for a dating app, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-email-marketing#084",
+   "text": "Write subject lines and preview text for a cart-abandonment series for homeware. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-email-marketing#085",
+   "text": "I’m working on a birthday reward email for a cafe. Draft A/B variants for the first email in it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-email-marketing#086",
+   "text": "Create segmentation rules for a community-digest for indie hackers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-email-marketing#087",
+   "text": "Draft the full sequence for a survey invitation with an incentive. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-email-marketing#088",
+   "text": "Help me with a win-back flow for lapsed gym members: create segmentation rules for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-email-marketing#089",
+   "text": "Write the unsubscribe-saving PS for a survey invitation with an incentive. Use a playful tone throughout."
+  },
+  {
+   "id": "marketing-email-marketing#090",
+   "text": "You are a lifecycle marketing manager. Draft the full sequence for a holiday gift-guide email and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-email-marketing#091",
+   "text": "Draft a metrics review checklist for a referral-invite email for a photo app. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-email-marketing#092",
+   "text": "Before I start on a win-back flow for lapsed gym members, write subject lines and preview text for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-email-marketing#093",
+   "text": "Design the cadence and send-day logic for a shipping-delay apology email. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-email-marketing#094",
+   "text": "Write a plain-text-feeling version of a shipping-delay apology email. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-email-marketing#095",
+   "text": "As a growth marketing lead, I keep hitting the same wall with a pre-order confirmation with expectations set. Write a plain-text-feeling version of it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-email-marketing#096",
+   "text": "Write the unsubscribe-saving PS for a community-digest for indie hackers. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-email-marketing#097",
+   "text": "Create segmentation rules for a webinar invitation with three reminders."
+  },
+  {
+   "id": "marketing-email-marketing#098",
+   "text": "Create segmentation rules for a pre-order confirmation with expectations set. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-email-marketing#099",
+   "text": "Act as a growth marketing lead. Write subject lines and preview text for a birthday reward email for a cafe, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-email-marketing#100",
+   "text": "Write a plain-text-feeling version of a webinar invitation with three reminders. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-email-marketing#101",
+   "text": "I’m working on a survey invitation with an incentive. Design the cadence and send-day logic for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-email-marketing#102",
+   "text": "Write subject lines and preview text for a community-digest for indie hackers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-email-marketing#103",
+   "text": "Write a plain-text-feeling version of a cart-abandonment series for homeware. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-email-marketing#104",
+   "text": "Help me with a community-digest for indie hackers: draft the full sequence for it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

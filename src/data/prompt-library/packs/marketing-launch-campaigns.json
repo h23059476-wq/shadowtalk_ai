@@ -1,0 +1,430 @@
+{
+ "slug": "marketing-launch-campaigns",
+ "categorySlug": "marketing",
+ "category": "Marketing & Growth",
+ "title": "Launch Campaigns",
+ "description": "Full launch arcs from teaser to post-launch retro.",
+ "tags": [
+  "launch",
+  "campaign",
+  "go-to-market"
+ ],
+ "prompts": [
+  {
+   "id": "marketing-launch-campaigns#001",
+   "text": "Write the announcement-day assets for a developer tool’s 1.0 release."
+  },
+  {
+   "id": "marketing-launch-campaigns#002",
+   "text": "Draft teaser content ideas for a local restaurant’s reopening. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-launch-campaigns#003",
+   "text": "Act as a customer insights analyst. Draft teaser content ideas for a design conference’s early-bird phase, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-launch-campaigns#004",
+   "text": "Plan a partner and creator seeding list for a B2B integration marketplace launch. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-launch-campaigns#005",
+   "text": "I’m working on a mobile puzzle game’s global launch. Draft teaser content ideas for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-launch-campaigns#006",
+   "text": "Build a four-week launch timeline for a developer tool’s 1.0 release for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-launch-campaigns#007",
+   "text": "Plan a partner and creator seeding list for a design conference’s early-bird phase. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-launch-campaigns#008",
+   "text": "Help me with a developer tool’s 1.0 release: create a press-kit outline and boilerplate for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-launch-campaigns#009",
+   "text": "Plan a partner and creator seeding list for a local restaurant’s reopening. Use a formal tone throughout."
+  },
+  {
+   "id": "marketing-launch-campaigns#010",
+   "text": "You are a performance marketer. Build a four-week launch timeline for a podcast network’s debut season and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-launch-campaigns#011",
+   "text": "Write launch-day email and in-app copy for a fashion capsule collection drop. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-launch-campaigns#012",
+   "text": "Before I start on a fashion capsule collection drop, design a launch-week metrics dashboard outline for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-launch-campaigns#013",
+   "text": "Create a press-kit outline and boilerplate for a mobile puzzle game’s global launch. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-launch-campaigns#014",
+   "text": "Create a press-kit outline and boilerplate for a board game’s Kickstarter finale. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-launch-campaigns#015",
+   "text": "As a SEO specialist, I keep hitting the same wall with a subscription box brand’s first holiday season. Design a launch-week metrics dashboard outline for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-launch-campaigns#016",
+   "text": "Create a press-kit outline and boilerplate for a local restaurant’s reopening. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-launch-campaigns#017",
+   "text": "Plan a partner and creator seeding list for a fintech app’s beta rollout."
+  },
+  {
+   "id": "marketing-launch-campaigns#018",
+   "text": "Write launch-day email and in-app copy for a developer tool’s 1.0 release. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-launch-campaigns#019",
+   "text": "Act as a community growth manager. Build a four-week launch timeline for a board game’s Kickstarter finale, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-launch-campaigns#020",
+   "text": "Create a press-kit outline and boilerplate for a design conference’s early-bird phase. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-launch-campaigns#021",
+   "text": "I’m working on a hardware beta program invitation. Draft teaser content ideas for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-launch-campaigns#022",
+   "text": "Plan a partner and creator seeding list for a podcast network’s debut season for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-launch-campaigns#023",
+   "text": "Build a four-week launch timeline for a streaming series premiere week. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-launch-campaigns#024",
+   "text": "Help me with an online course cohort open-enrollment: draft teaser content ideas for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-launch-campaigns#025",
+   "text": "Create a press-kit outline and boilerplate for a hardware beta program invitation. Use a persuasive tone throughout."
+  },
+  {
+   "id": "marketing-launch-campaigns#026",
+   "text": "You are a community growth manager. Design a launch-week metrics dashboard outline for a mobile puzzle game’s global launch and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-launch-campaigns#027",
+   "text": "Draft a post-launch retro template for a B2B integration marketplace launch. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-launch-campaigns#028",
+   "text": "Before I start on an online course cohort open-enrollment, plan a partner and creator seeding list for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-launch-campaigns#029",
+   "text": "Build a four-week launch timeline for a mobile puzzle game’s global launch. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-launch-campaigns#030",
+   "text": "Plan a partner and creator seeding list for a smart water bottle crowdfunding campaign. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-launch-campaigns#031",
+   "text": "As a growth marketing lead, I keep hitting the same wall with a local restaurant’s reopening. Build a four-week launch timeline for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-launch-campaigns#032",
+   "text": "Draft teaser content ideas for a developer tool’s 1.0 release. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-launch-campaigns#033",
+   "text": "Build a four-week launch timeline for a subscription box brand’s first holiday season."
+  },
+  {
+   "id": "marketing-launch-campaigns#034",
+   "text": "Draft a post-launch retro template for an online course cohort open-enrollment. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-launch-campaigns#035",
+   "text": "Act as a growth marketing lead. Design a launch-week metrics dashboard outline for a hardware beta program invitation, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-launch-campaigns#036",
+   "text": "Write the announcement-day assets for a subscription box brand’s first holiday season. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-launch-campaigns#037",
+   "text": "I’m working on a developer tool’s 1.0 release. Draft a post-launch retro template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-launch-campaigns#038",
+   "text": "Design a launch-week metrics dashboard outline for a design conference’s early-bird phase for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-launch-campaigns#039",
+   "text": "Write the announcement-day assets for a fintech app’s beta rollout. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-launch-campaigns#040",
+   "text": "Help me with a fintech app’s beta rollout: draft a post-launch retro template for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-launch-campaigns#041",
+   "text": "Write the announcement-day assets for a fashion capsule collection drop. Use a friendly tone throughout."
+  },
+  {
+   "id": "marketing-launch-campaigns#042",
+   "text": "You are a lifecycle marketing manager. Write the announcement-day assets for a smart water bottle crowdfunding campaign and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-launch-campaigns#043",
+   "text": "Build a four-week launch timeline for a B2B integration marketplace launch. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-launch-campaigns#044",
+   "text": "Before I start on a smart water bottle crowdfunding campaign, design a launch-week metrics dashboard outline for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-launch-campaigns#045",
+   "text": "Draft teaser content ideas for a subscription box brand’s first holiday season. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-launch-campaigns#046",
+   "text": "Draft a post-launch retro template for a subscription box brand’s first holiday season. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-launch-campaigns#047",
+   "text": "As a brand strategist, I keep hitting the same wall with a podcast network’s debut season. Write the announcement-day assets for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-launch-campaigns#048",
+   "text": "Write launch-day email and in-app copy for a design conference’s early-bird phase. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-launch-campaigns#049",
+   "text": "Write launch-day email and in-app copy for a B2B integration marketplace launch."
+  },
+  {
+   "id": "marketing-launch-campaigns#050",
+   "text": "Draft teaser content ideas for a fashion capsule collection drop. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-launch-campaigns#051",
+   "text": "Act as a lifecycle marketing manager. Build a four-week launch timeline for an online course cohort open-enrollment, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-launch-campaigns#052",
+   "text": "Draft teaser content ideas for a smart water bottle crowdfunding campaign. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-launch-campaigns#053",
+   "text": "I’m working on a subscription box brand’s first holiday season. Write launch-day email and in-app copy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-launch-campaigns#054",
+   "text": "Write launch-day email and in-app copy for an online course cohort open-enrollment for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-launch-campaigns#055",
+   "text": "Design a launch-week metrics dashboard outline for a fintech app’s beta rollout. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-launch-campaigns#056",
+   "text": "Help me with a board game’s Kickstarter finale: plan a partner and creator seeding list for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-launch-campaigns#057",
+   "text": "Design a launch-week metrics dashboard outline for an online course cohort open-enrollment. Use a encouraging tone throughout."
+  },
+  {
+   "id": "marketing-launch-campaigns#058",
+   "text": "You are a customer insights analyst. Draft a post-launch retro template for a board game’s Kickstarter finale and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-launch-campaigns#059",
+   "text": "Draft teaser content ideas for a streaming series premiere week. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-launch-campaigns#060",
+   "text": "Before I start on a podcast network’s debut season, design a launch-week metrics dashboard outline for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-launch-campaigns#061",
+   "text": "Write the announcement-day assets for a mobile puzzle game’s global launch. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-launch-campaigns#062",
+   "text": "Plan a partner and creator seeding list for a subscription box brand’s first holiday season. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-launch-campaigns#063",
+   "text": "As a product marketing manager, I keep hitting the same wall with a fintech app’s beta rollout. Build a four-week launch timeline for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-launch-campaigns#064",
+   "text": "Plan a partner and creator seeding list for a hardware beta program invitation. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-launch-campaigns#065",
+   "text": "Design a launch-week metrics dashboard outline for a developer tool’s 1.0 release."
+  },
+  {
+   "id": "marketing-launch-campaigns#066",
+   "text": "Draft a post-launch retro template for a smart water bottle crowdfunding campaign. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-launch-campaigns#067",
+   "text": "Act as a growth marketing lead. Write launch-day email and in-app copy for a smart water bottle crowdfunding campaign, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-launch-campaigns#068",
+   "text": "Design a launch-week metrics dashboard outline for a streaming series premiere week. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-launch-campaigns#069",
+   "text": "I’m working on a streaming series premiere week. Draft a post-launch retro template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-launch-campaigns#070",
+   "text": "Create a press-kit outline and boilerplate for a fashion capsule collection drop for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-launch-campaigns#071",
+   "text": "Write the announcement-day assets for a local restaurant’s reopening. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-launch-campaigns#072",
+   "text": "Help me with a streaming series premiere week: create a press-kit outline and boilerplate for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-launch-campaigns#073",
+   "text": "Write launch-day email and in-app copy for a podcast network’s debut season. Use a professional tone throughout."
+  },
+  {
+   "id": "marketing-launch-campaigns#074",
+   "text": "You are a performance marketer. Create a press-kit outline and boilerplate for a podcast network’s debut season and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-launch-campaigns#075",
+   "text": "Build a four-week launch timeline for a fashion capsule collection drop. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-launch-campaigns#076",
+   "text": "Before I start on a developer tool’s 1.0 release, plan a partner and creator seeding list for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-launch-campaigns#077",
+   "text": "Draft a post-launch retro template for a podcast network’s debut season. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-launch-campaigns#078",
+   "text": "Draft teaser content ideas for a fintech app’s beta rollout. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-launch-campaigns#079",
+   "text": "As a product marketing manager, I keep hitting the same wall with a fintech app’s beta rollout. Create a press-kit outline and boilerplate for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-launch-campaigns#080",
+   "text": "Design a launch-week metrics dashboard outline for a local restaurant’s reopening. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-launch-campaigns#081",
+   "text": "Write launch-day email and in-app copy for a local restaurant’s reopening."
+  },
+  {
+   "id": "marketing-launch-campaigns#082",
+   "text": "Design a launch-week metrics dashboard outline for a B2B integration marketplace launch. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-launch-campaigns#083",
+   "text": "Act as a brand strategist. Create a press-kit outline and boilerplate for a B2B integration marketplace launch, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-launch-campaigns#084",
+   "text": "Draft a post-launch retro template for a design conference’s early-bird phase. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-launch-campaigns#085",
+   "text": "I’m working on a board game’s Kickstarter finale. Draft teaser content ideas for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-launch-campaigns#086",
+   "text": "Draft a post-launch retro template for a local restaurant’s reopening for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-launch-campaigns#087",
+   "text": "Write launch-day email and in-app copy for a board game’s Kickstarter finale. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-launch-campaigns#088",
+   "text": "Help me with an online course cohort open-enrollment: write the announcement-day assets for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-launch-campaigns#089",
+   "text": "Plan a partner and creator seeding list for a fashion capsule collection drop. Use a friendly tone throughout."
+  },
+  {
+   "id": "marketing-launch-campaigns#090",
+   "text": "You are a SEO specialist. Write the announcement-day assets for a design conference’s early-bird phase and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-launch-campaigns#091",
+   "text": "Plan a partner and creator seeding list for a mobile puzzle game’s global launch. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-launch-campaigns#092",
+   "text": "Before I start on a subscription box brand’s first holiday season, create a press-kit outline and boilerplate for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-launch-campaigns#093",
+   "text": "Write launch-day email and in-app copy for a mobile puzzle game’s global launch. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-launch-campaigns#094",
+   "text": "Write the announcement-day assets for a streaming series premiere week. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-launch-campaigns#095",
+   "text": "As a customer insights analyst, I keep hitting the same wall with a hardware beta program invitation. Write launch-day email and in-app copy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-launch-campaigns#096",
+   "text": "Design a launch-week metrics dashboard outline for a board game’s Kickstarter finale. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-launch-campaigns#097",
+   "text": "Build a four-week launch timeline for a design conference’s early-bird phase."
+  },
+  {
+   "id": "marketing-launch-campaigns#098",
+   "text": "Create a press-kit outline and boilerplate for a smart water bottle crowdfunding campaign. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-launch-campaigns#099",
+   "text": "Act as a brand strategist. Write the announcement-day assets for a B2B integration marketplace launch, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-launch-campaigns#100",
+   "text": "Plan a partner and creator seeding list for a streaming series premiere week. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-launch-campaigns#101",
+   "text": "I’m working on a board game’s Kickstarter finale. Write the announcement-day assets for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-launch-campaigns#102",
+   "text": "Draft a post-launch retro template for a mobile puzzle game’s global launch for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-launch-campaigns#103",
+   "text": "Draft teaser content ideas for a B2B integration marketplace launch. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-launch-campaigns#104",
+   "text": "Help me with a hardware beta program invitation: write the announcement-day assets for it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

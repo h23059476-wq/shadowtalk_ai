@@ -1,0 +1,430 @@
+{
+ "slug": "sales-pipeline-crm",
+ "categorySlug": "sales",
+ "category": "Sales & Outreach",
+ "title": "Pipeline & CRM",
+ "description": "Clean stages, honest forecasts, and hygiene that lasts.",
+ "tags": [
+  "pipeline",
+  "crm",
+  "forecast"
+ ],
+ "prompts": [
+  {
+   "id": "sales-pipeline-crm#001",
+   "text": "Create a deal-review agenda for a CRM adoption slump after month two."
+  },
+  {
+   "id": "sales-pipeline-crm#002",
+   "text": "Draft a CRM-hygiene routine for a channel-partner pipeline gap. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-pipeline-crm#003",
+   "text": "Act as a solution consultant. Design a coverage-model template for an activity metric driving bad calls, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-pipeline-crm#004",
+   "text": "Create a deal-review agenda for a channel-partner pipeline gap. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-pipeline-crm#005",
+   "text": "I’m working on a channel-partner pipeline gap. Design a coverage-model template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-pipeline-crm#006",
+   "text": "Write a forecast-accuracy checklist for a pipeline full of stalled 'verbal yes' deals for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-pipeline-crm#007",
+   "text": "Write a forecast-accuracy checklist for stage definitions nobody trusts. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-pipeline-crm#008",
+   "text": "Help me with a territory rebalance plan: create a deal-review agenda for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-pipeline-crm#009",
+   "text": "Create a deal-review agenda for a forecast missed two quarters running. Use a formal tone throughout."
+  },
+  {
+   "id": "sales-pipeline-crm#010",
+   "text": "You are a SDR coach. Propose a lead-routing rule set for a forecast missed two quarters running and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-pipeline-crm#011",
+   "text": "Write a data-cleanup plan for an aging-deal cleanup. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-pipeline-crm#012",
+   "text": "Before I start on a renewal-coverage dashboard, write a data-cleanup plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-pipeline-crm#013",
+   "text": "Draft a CRM-hygiene routine for a forecast missed two quarters running. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-pipeline-crm#014",
+   "text": "Design stage-exit criteria for a forecast missed two quarters running. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-pipeline-crm#015",
+   "text": "As a SDR coach, I keep hitting the same wall with a lead-routing rule set. Design stage-exit criteria for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-pipeline-crm#016",
+   "text": "Create a deal-review agenda for a lead-routing rule set. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-pipeline-crm#017",
+   "text": "Write a forecast-accuracy checklist for a territory rebalance plan."
+  },
+  {
+   "id": "sales-pipeline-crm#018",
+   "text": "Create a deal-review agenda for a renewal-coverage dashboard. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-pipeline-crm#019",
+   "text": "Act as a solution consultant. Draft a CRM-hygiene routine for a renewal-coverage dashboard, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-pipeline-crm#020",
+   "text": "Draft a CRM-hygiene routine for a CRM adoption slump after month two. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-pipeline-crm#021",
+   "text": "I’m working on a deal-review meeting that helps reps. Design a coverage-model template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-pipeline-crm#022",
+   "text": "Write a data-cleanup plan for a pipeline full of stalled 'verbal yes' deals for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-pipeline-crm#023",
+   "text": "Write a data-cleanup plan for a territory rebalance plan. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-pipeline-crm#024",
+   "text": "Help me with duplicate accounts confusing coverage: propose a lead-routing rule set for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-pipeline-crm#025",
+   "text": "Propose a lead-routing rule set for a renewal-coverage dashboard. Use a direct tone throughout."
+  },
+  {
+   "id": "sales-pipeline-crm#026",
+   "text": "You are an enterprise account executive. Create a deal-review agenda for duplicate accounts confusing coverage and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-pipeline-crm#027",
+   "text": "Draft a CRM-hygiene routine for a lead-routing rule set. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-pipeline-crm#028",
+   "text": "Before I start on a territory rebalance plan, propose a lead-routing rule set for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-pipeline-crm#029",
+   "text": "Propose a lead-routing rule set for stage definitions nobody trusts. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-pipeline-crm#030",
+   "text": "Design stage-exit criteria for a CRM adoption slump after month two. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-pipeline-crm#031",
+   "text": "As a SDR coach, I keep hitting the same wall with stage definitions nobody trusts. Design a coverage-model template for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-pipeline-crm#032",
+   "text": "Design stage-exit criteria for a pipeline full of stalled 'verbal yes' deals. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-pipeline-crm#033",
+   "text": "Draft a CRM-hygiene routine for duplicate accounts confusing coverage."
+  },
+  {
+   "id": "sales-pipeline-crm#034",
+   "text": "Explain the metric definitions for a deal-review meeting that helps reps. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-pipeline-crm#035",
+   "text": "Act as a channel-partnerships manager. Explain the metric definitions for an aging-deal cleanup, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-pipeline-crm#036",
+   "text": "Propose a lead-routing rule set for a channel-partner pipeline gap. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-pipeline-crm#037",
+   "text": "I’m working on a deal-review meeting that helps reps. Create a deal-review agenda for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-pipeline-crm#038",
+   "text": "Propose a lead-routing rule set for a pipeline full of stalled 'verbal yes' deals for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-pipeline-crm#039",
+   "text": "Explain the metric definitions for a lead-routing rule set. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-pipeline-crm#040",
+   "text": "Help me with a renewal-coverage dashboard: design a coverage-model template for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-pipeline-crm#041",
+   "text": "Write a forecast-accuracy checklist for an aging-deal cleanup. Use a playful tone throughout."
+  },
+  {
+   "id": "sales-pipeline-crm#042",
+   "text": "You are a founder selling to first customers. Propose a lead-routing rule set for an activity metric driving bad calls and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-pipeline-crm#043",
+   "text": "Design stage-exit criteria for a channel-partner pipeline gap. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-pipeline-crm#044",
+   "text": "Before I start on a channel-partner pipeline gap, write a data-cleanup plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-pipeline-crm#045",
+   "text": "Create a deal-review agenda for an activity metric driving bad calls. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-pipeline-crm#046",
+   "text": "Draft a CRM-hygiene routine for an aging-deal cleanup. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-pipeline-crm#047",
+   "text": "As a customer-renewals specialist, I keep hitting the same wall with an activity metric driving bad calls. Write a data-cleanup plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-pipeline-crm#048",
+   "text": "Design a coverage-model template for a pipeline full of stalled 'verbal yes' deals. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-pipeline-crm#049",
+   "text": "Draft a CRM-hygiene routine for stage definitions nobody trusts."
+  },
+  {
+   "id": "sales-pipeline-crm#050",
+   "text": "Write a data-cleanup plan for a lead-routing rule set. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-pipeline-crm#051",
+   "text": "Act as a freelance consultant selling retainers. Write a data-cleanup plan for a forecast missed two quarters running, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-pipeline-crm#052",
+   "text": "Design a coverage-model template for duplicate accounts confusing coverage. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-pipeline-crm#053",
+   "text": "I’m working on a CRM adoption slump after month two. Propose a lead-routing rule set for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-pipeline-crm#054",
+   "text": "Design a coverage-model template for a forecast missed two quarters running for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-pipeline-crm#055",
+   "text": "Design a coverage-model template for a lead-routing rule set. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-pipeline-crm#056",
+   "text": "Help me with a deal-review meeting that helps reps: write a forecast-accuracy checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-pipeline-crm#057",
+   "text": "Explain the metric definitions for a channel-partner pipeline gap. Use a formal tone throughout."
+  },
+  {
+   "id": "sales-pipeline-crm#058",
+   "text": "You are a founder selling to first customers. Write a data-cleanup plan for a CRM adoption slump after month two and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-pipeline-crm#059",
+   "text": "Explain the metric definitions for stage definitions nobody trusts. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-pipeline-crm#060",
+   "text": "Before I start on a deal-review meeting that helps reps, draft a CRM-hygiene routine for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-pipeline-crm#061",
+   "text": "Explain the metric definitions for an activity metric driving bad calls. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-pipeline-crm#062",
+   "text": "Explain the metric definitions for a pipeline full of stalled 'verbal yes' deals. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-pipeline-crm#063",
+   "text": "As a founder selling to first customers, I keep hitting the same wall with a deal-review meeting that helps reps. Design stage-exit criteria for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-pipeline-crm#064",
+   "text": "Propose a lead-routing rule set for a lead-routing rule set. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-pipeline-crm#065",
+   "text": "Explain the metric definitions for a CRM adoption slump after month two."
+  },
+  {
+   "id": "sales-pipeline-crm#066",
+   "text": "Design a coverage-model template for a territory rebalance plan. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-pipeline-crm#067",
+   "text": "Act as a revops analyst. Design stage-exit criteria for stage definitions nobody trusts, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-pipeline-crm#068",
+   "text": "Design a coverage-model template for a CRM adoption slump after month two. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-pipeline-crm#069",
+   "text": "I’m working on a pipeline full of stalled 'verbal yes' deals. Draft a CRM-hygiene routine for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-pipeline-crm#070",
+   "text": "Create a deal-review agenda for stage definitions nobody trusts for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-pipeline-crm#071",
+   "text": "Write a forecast-accuracy checklist for a renewal-coverage dashboard. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-pipeline-crm#072",
+   "text": "Help me with a renewal-coverage dashboard: explain the metric definitions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-pipeline-crm#073",
+   "text": "Explain the metric definitions for duplicate accounts confusing coverage. Use a playful tone throughout."
+  },
+  {
+   "id": "sales-pipeline-crm#074",
+   "text": "You are a revops analyst. Draft a CRM-hygiene routine for a territory rebalance plan and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-pipeline-crm#075",
+   "text": "Design stage-exit criteria for an activity metric driving bad calls. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-pipeline-crm#076",
+   "text": "Before I start on an aging-deal cleanup, create a deal-review agenda for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-pipeline-crm#077",
+   "text": "Propose a lead-routing rule set for an aging-deal cleanup. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-pipeline-crm#078",
+   "text": "Write a data-cleanup plan for duplicate accounts confusing coverage. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-pipeline-crm#079",
+   "text": "As a founder selling to first customers, I keep hitting the same wall with a deal-review meeting that helps reps. Write a data-cleanup plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-pipeline-crm#080",
+   "text": "Create a deal-review agenda for a pipeline full of stalled 'verbal yes' deals. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-pipeline-crm#081",
+   "text": "Explain the metric definitions for a forecast missed two quarters running."
+  },
+  {
+   "id": "sales-pipeline-crm#082",
+   "text": "Design stage-exit criteria for a renewal-coverage dashboard. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-pipeline-crm#083",
+   "text": "Act as a channel-partnerships manager. Design a coverage-model template for an aging-deal cleanup, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-pipeline-crm#084",
+   "text": "Write a forecast-accuracy checklist for a lead-routing rule set. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-pipeline-crm#085",
+   "text": "I’m working on duplicate accounts confusing coverage. Design stage-exit criteria for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-pipeline-crm#086",
+   "text": "Draft a CRM-hygiene routine for an activity metric driving bad calls for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-pipeline-crm#087",
+   "text": "Write a data-cleanup plan for stage definitions nobody trusts. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-pipeline-crm#088",
+   "text": "Help me with an aging-deal cleanup: design stage-exit criteria for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-pipeline-crm#089",
+   "text": "Write a forecast-accuracy checklist for an activity metric driving bad calls. Use a direct tone throughout."
+  },
+  {
+   "id": "sales-pipeline-crm#090",
+   "text": "You are an enterprise account executive. Propose a lead-routing rule set for a deal-review meeting that helps reps and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-pipeline-crm#091",
+   "text": "Write a forecast-accuracy checklist for duplicate accounts confusing coverage. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-pipeline-crm#092",
+   "text": "Before I start on a territory rebalance plan, design stage-exit criteria for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-pipeline-crm#093",
+   "text": "Write a forecast-accuracy checklist for a CRM adoption slump after month two. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-pipeline-crm#094",
+   "text": "Explain the metric definitions for a territory rebalance plan. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-pipeline-crm#095",
+   "text": "As an enterprise account executive, I keep hitting the same wall with a channel-partner pipeline gap. Write a forecast-accuracy checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-pipeline-crm#096",
+   "text": "Write a forecast-accuracy checklist for a forecast missed two quarters running. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-pipeline-crm#097",
+   "text": "Create a deal-review agenda for a CRM adoption slump after month two. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-pipeline-crm#098",
+   "text": "Draft a CRM-hygiene routine for a channel-partner pipeline gap. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-pipeline-crm#099",
+   "text": "Design a coverage-model template for an activity metric driving bad calls."
+  },
+  {
+   "id": "sales-pipeline-crm#100",
+   "text": "Create a deal-review agenda for a channel-partner pipeline gap."
+  },
+  {
+   "id": "sales-pipeline-crm#101",
+   "text": "Design a coverage-model template for a channel-partner pipeline gap."
+  },
+  {
+   "id": "sales-pipeline-crm#102",
+   "text": "Write a forecast-accuracy checklist for a pipeline full of stalled 'verbal yes' deals."
+  },
+  {
+   "id": "sales-pipeline-crm#103",
+   "text": "Write a forecast-accuracy checklist for stage definitions nobody trusts."
+  },
+  {
+   "id": "sales-pipeline-crm#104",
+   "text": "Create a deal-review agenda for a territory rebalance plan."
+  }
+ ]
+}

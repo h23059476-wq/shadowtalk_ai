@@ -1,0 +1,430 @@
+{
+ "slug": "marketing-ad-copy",
+ "categorySlug": "marketing",
+ "category": "Marketing & Growth",
+ "title": "Ad Copy",
+ "description": "Search, social, and display ads tuned to each placement.",
+ "tags": [
+  "ads",
+  "paid",
+  "copywriting"
+ ],
+ "prompts": [
+  {
+   "id": "marketing-ad-copy#001",
+   "text": "Draft copy for a retargeting audience of a storage service to movers."
+  },
+  {
+   "id": "marketing-ad-copy#002",
+   "text": "Write objection-handling ad copy for a skincare line to dermatomy-phobic beginners. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-ad-copy#003",
+   "text": "Act as a lifecycle marketing manager. Draft primary text in three emotional registers for a tax-filing service in January, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-ad-copy#004",
+   "text": "Draft copy for a retargeting audience of a sneaker drop to sneakerheads. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-ad-copy#005",
+   "text": "I’m working on a project-management tool to agencies. Draft copy for a retargeting audience of it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-ad-copy#006",
+   "text": "Write a landing-page match for the promise in ads about a mattress-in-a-box on search for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-ad-copy#007",
+   "text": "Draft copy for a retargeting audience of a resume builder to laid-off workers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-ad-copy#008",
+   "text": "Help me with a property app to first-time buyers: draft primary text in three emotional registers for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-ad-copy#009",
+   "text": "Draft copy for a retargeting audience of a mattress-in-a-box on search. Use a playful tone throughout."
+  },
+  {
+   "id": "marketing-ad-copy#010",
+   "text": "You are a product marketing manager. Write ten ad headlines with different hooks for a storage service to movers and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-ad-copy#011",
+   "text": "Design a creative-testing matrix for a sneaker drop to sneakerheads. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-ad-copy#012",
+   "text": "Before I start on a mattress-in-a-box on search, draft primary text in three emotional registers for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-ad-copy#013",
+   "text": "Write objection-handling ad copy for a resume builder to laid-off workers. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-ad-copy#014",
+   "text": "Write a landing-page match for the promise in ads about a skincare line to dermatomy-phobic beginners. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-ad-copy#015",
+   "text": "As a product marketing manager, I keep hitting the same wall with a budget airline to weekend trippers. Design a creative-testing matrix for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-ad-copy#016",
+   "text": "List compliance and claim-safety edits for ads about a skincare line to dermatomy-phobic beginners. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-ad-copy#017",
+   "text": "Create search-ad variants respecting character limits for a property app to first-time buyers."
+  },
+  {
+   "id": "marketing-ad-copy#018",
+   "text": "Draft copy for a retargeting audience of a course to career switchers. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-ad-copy#019",
+   "text": "Act as a SEO specialist. Draft primary text in three emotional registers for a storage service to movers, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-ad-copy#020",
+   "text": "Draft copy for a retargeting audience of a dog-training course to new puppy owners. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-ad-copy#021",
+   "text": "I’m working on a meal-kit to busy parents. Design a creative-testing matrix for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-ad-copy#022",
+   "text": "Write a landing-page match for the promise in ads about a project-management tool to agencies for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-ad-copy#023",
+   "text": "Draft primary text in three emotional registers for a language-learning app on social. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-ad-copy#024",
+   "text": "Help me with a tax-filing service in January: create search-ad variants respecting character limits for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-ad-copy#025",
+   "text": "List compliance and claim-safety edits for ads about a VPN to frequent travelers. Use a empathetic tone throughout."
+  },
+  {
+   "id": "marketing-ad-copy#026",
+   "text": "You are a SEO specialist. Write a landing-page match for the promise in ads about a sneaker drop to sneakerheads and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-ad-copy#027",
+   "text": "Create search-ad variants respecting character limits for a resume builder to laid-off workers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-ad-copy#028",
+   "text": "Before I start on a language-learning app on social, design a creative-testing matrix for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-ad-copy#029",
+   "text": "Write ten ad headlines with different hooks for a language-learning app on social. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-ad-copy#030",
+   "text": "Write ten ad headlines with different hooks for a property app to first-time buyers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-ad-copy#031",
+   "text": "As a performance marketer, I keep hitting the same wall with a dog-training course to new puppy owners. Write objection-handling ad copy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-ad-copy#032",
+   "text": "Write ten ad headlines with different hooks for a dog-training course to new puppy owners. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-ad-copy#033",
+   "text": "Draft copy for a retargeting audience of a skincare line to dermatomy-phobic beginners."
+  },
+  {
+   "id": "marketing-ad-copy#034",
+   "text": "Write ten ad headlines with different hooks for a meal-kit to busy parents. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-ad-copy#035",
+   "text": "Act as a community growth manager. Design a creative-testing matrix for a dog-training course to new puppy owners, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-ad-copy#036",
+   "text": "Write objection-handling ad copy for a sneaker drop to sneakerheads. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-ad-copy#037",
+   "text": "I’m working on a course to career switchers. Draft primary text in three emotional registers for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-ad-copy#038",
+   "text": "List compliance and claim-safety edits for ads about a mattress-in-a-box on search for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-ad-copy#039",
+   "text": "Draft copy for a retargeting audience of a VPN to frequent travelers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-ad-copy#040",
+   "text": "Help me with a tax-filing service in January: draft copy for a retargeting audience of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-ad-copy#041",
+   "text": "Design a creative-testing matrix for a VPN to frequent travelers. Use a empathetic tone throughout."
+  },
+  {
+   "id": "marketing-ad-copy#042",
+   "text": "You are a community growth manager. Write objection-handling ad copy for a budget airline to weekend trippers and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-ad-copy#043",
+   "text": "Write a landing-page match for the promise in ads about a tax-filing service in January. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-ad-copy#044",
+   "text": "Before I start on a tax-filing service in January, list compliance and claim-safety edits for ads about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-ad-copy#045",
+   "text": "Design a creative-testing matrix for a resume builder to laid-off workers. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-ad-copy#046",
+   "text": "Design a creative-testing matrix for a project-management tool to agencies. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-ad-copy#047",
+   "text": "As a growth marketing lead, I keep hitting the same wall with a sneaker drop to sneakerheads. Create search-ad variants respecting character limits for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-ad-copy#048",
+   "text": "Design a creative-testing matrix for a storage service to movers. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-ad-copy#049",
+   "text": "Create search-ad variants respecting character limits for a budget airline to weekend trippers."
+  },
+  {
+   "id": "marketing-ad-copy#050",
+   "text": "Create search-ad variants respecting character limits for a skincare line to dermatomy-phobic beginners. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-ad-copy#051",
+   "text": "Act as a community growth manager. Create search-ad variants respecting character limits for a dog-training course to new puppy owners, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-ad-copy#052",
+   "text": "Create search-ad variants respecting character limits for a storage service to movers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-ad-copy#053",
+   "text": "I’m working on a meal-kit to busy parents. Write objection-handling ad copy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-ad-copy#054",
+   "text": "Draft primary text in three emotional registers for a VPN to frequent travelers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-ad-copy#055",
+   "text": "Write a landing-page match for the promise in ads about a storage service to movers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-ad-copy#056",
+   "text": "Help me with a meal-kit to busy parents: write a landing-page match for the promise in ads about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-ad-copy#057",
+   "text": "Design a creative-testing matrix for a course to career switchers. Use a direct tone throughout."
+  },
+  {
+   "id": "marketing-ad-copy#058",
+   "text": "You are a brand strategist. Write objection-handling ad copy for a tax-filing service in January and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-ad-copy#059",
+   "text": "Draft primary text in three emotional registers for a meal-kit to busy parents. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-ad-copy#060",
+   "text": "Before I start on a dog-training course to new puppy owners, draft primary text in three emotional registers for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-ad-copy#061",
+   "text": "Draft primary text in three emotional registers for a sneaker drop to sneakerheads. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-ad-copy#062",
+   "text": "List compliance and claim-safety edits for ads about a meal-kit to busy parents. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-ad-copy#063",
+   "text": "As a community growth manager, I keep hitting the same wall with a mattress-in-a-box on search. Write ten ad headlines with different hooks for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-ad-copy#064",
+   "text": "Write ten ad headlines with different hooks for a course to career switchers. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-ad-copy#065",
+   "text": "List compliance and claim-safety edits for ads about a project-management tool to agencies."
+  },
+  {
+   "id": "marketing-ad-copy#066",
+   "text": "Draft primary text in three emotional registers for a project-management tool to agencies. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-ad-copy#067",
+   "text": "Act as a brand strategist. List compliance and claim-safety edits for ads about a course to career switchers, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-ad-copy#068",
+   "text": "Draft copy for a retargeting audience of a language-learning app on social. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-ad-copy#069",
+   "text": "I’m working on a course to career switchers. Create search-ad variants respecting character limits for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-ad-copy#070",
+   "text": "Draft primary text in three emotional registers for a budget airline to weekend trippers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-ad-copy#071",
+   "text": "Write a landing-page match for the promise in ads about a budget airline to weekend trippers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-ad-copy#072",
+   "text": "Help me with a resume builder to laid-off workers: write ten ad headlines with different hooks for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-ad-copy#073",
+   "text": "Write a landing-page match for the promise in ads about a dog-training course to new puppy owners. Use a friendly tone throughout."
+  },
+  {
+   "id": "marketing-ad-copy#074",
+   "text": "You are a product marketing manager. Write a landing-page match for the promise in ads about a VPN to frequent travelers and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-ad-copy#075",
+   "text": "Write a landing-page match for the promise in ads about a resume builder to laid-off workers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-ad-copy#076",
+   "text": "Before I start on a project-management tool to agencies, write ten ad headlines with different hooks for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-ad-copy#077",
+   "text": "Write objection-handling ad copy for a project-management tool to agencies. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-ad-copy#078",
+   "text": "Write objection-handling ad copy for a mattress-in-a-box on search. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-ad-copy#079",
+   "text": "As a performance marketer, I keep hitting the same wall with a language-learning app on social. Create search-ad variants respecting character limits for it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-ad-copy#080",
+   "text": "Design a creative-testing matrix for a property app to first-time buyers. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-ad-copy#081",
+   "text": "Write a landing-page match for the promise in ads about a course to career switchers."
+  },
+  {
+   "id": "marketing-ad-copy#082",
+   "text": "List compliance and claim-safety edits for ads about a language-learning app on social. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-ad-copy#083",
+   "text": "Act as a community growth manager. List compliance and claim-safety edits for ads about a dog-training course to new puppy owners, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-ad-copy#084",
+   "text": "Create search-ad variants respecting character limits for a mattress-in-a-box on search. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-ad-copy#085",
+   "text": "I’m working on a tax-filing service in January. Write ten ad headlines with different hooks for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-ad-copy#086",
+   "text": "Write ten ad headlines with different hooks for a VPN to frequent travelers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-ad-copy#087",
+   "text": "List compliance and claim-safety edits for ads about a storage service to movers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-ad-copy#088",
+   "text": "Help me with a VPN to frequent travelers: write objection-handling ad copy for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "marketing-ad-copy#089",
+   "text": "Draft copy for a retargeting audience of a property app to first-time buyers. Use a empathetic tone throughout."
+  },
+  {
+   "id": "marketing-ad-copy#090",
+   "text": "You are a brand strategist. Design a creative-testing matrix for a tax-filing service in January and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "marketing-ad-copy#091",
+   "text": "Design a creative-testing matrix for a skincare line to dermatomy-phobic beginners. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "marketing-ad-copy#092",
+   "text": "Before I start on a resume builder to laid-off workers, draft primary text in three emotional registers for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "marketing-ad-copy#093",
+   "text": "Draft copy for a retargeting audience of a budget airline to weekend trippers. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "marketing-ad-copy#094",
+   "text": "List compliance and claim-safety edits for ads about a resume builder to laid-off workers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "marketing-ad-copy#095",
+   "text": "As a performance marketer, I keep hitting the same wall with a language-learning app on social. Write a landing-page match for the promise in ads about it and show me what I’m probably missing."
+  },
+  {
+   "id": "marketing-ad-copy#096",
+   "text": "Write ten ad headlines with different hooks for a skincare line to dermatomy-phobic beginners. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "marketing-ad-copy#097",
+   "text": "List compliance and claim-safety edits for ads about a sneaker drop to sneakerheads."
+  },
+  {
+   "id": "marketing-ad-copy#098",
+   "text": "List compliance and claim-safety edits for ads about a property app to first-time buyers. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "marketing-ad-copy#099",
+   "text": "Act as a SEO specialist. Write objection-handling ad copy for a storage service to movers, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "marketing-ad-copy#100",
+   "text": "Write objection-handling ad copy for a property app to first-time buyers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "marketing-ad-copy#101",
+   "text": "I’m working on a sneaker drop to sneakerheads. Write ten ad headlines with different hooks for it and explain your reasoning as you go."
+  },
+  {
+   "id": "marketing-ad-copy#102",
+   "text": "Create search-ad variants respecting character limits for a meal-kit to busy parents for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "marketing-ad-copy#103",
+   "text": "Write objection-handling ad copy for a language-learning app on social. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "marketing-ad-copy#104",
+   "text": "Help me with a budget airline to weekend trippers: write ten ad headlines with different hooks for it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

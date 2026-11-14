@@ -1,0 +1,430 @@
+{
+ "slug": "sales-social-selling",
+ "categorySlug": "sales",
+ "category": "Sales & Outreach",
+ "title": "Social Selling",
+ "description": "Earn the right to DM by being useful in public first.",
+ "tags": [
+  "social selling",
+  "linkedin",
+  "trust"
+ ],
+ "prompts": [
+  {
+   "id": "sales-social-selling#001",
+   "text": "Design a weekly content rhythm for a thought-leadership cadence for an AE."
+  },
+  {
+   "id": "sales-social-selling#002",
+   "text": "Draft a profile-upgrade checklist for a LinkedIn profile that supports selling. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-social-selling#003",
+   "text": "Act as a customer-renewals specialist. Design a weekly content rhythm for commenting into a target account’s posts, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-social-selling#004",
+   "text": "Draft a value-first comment set for sharing customer-wins without leaking details. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-social-selling#005",
+   "text": "I’m working on a content-to-conversation pipeline. Design a weekly content rhythm for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-social-selling#006",
+   "text": "Design a weekly content rhythm for sharing customer-wins without leaking details for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-social-selling#007",
+   "text": "Write a dormant-connection re-entry message for connecting with operations leaders as a vendor. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-social-selling#008",
+   "text": "Help me with a content-to-conversation pipeline: draft a profile-upgrade checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-social-selling#009",
+   "text": "Write a dormant-connection re-entry message for turning a conference handshake into a thread. Use a direct tone throughout."
+  },
+  {
+   "id": "sales-social-selling#010",
+   "text": "You are a channel-partnerships manager. Write the soft-DM transition for commenting into a target account’s posts and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-social-selling#011",
+   "text": "Write a no-pitch connection note for connecting with operations leaders as a vendor. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-social-selling#012",
+   "text": "Before I start on a first DM after weeks of useful comments, create a webinar-invitation sequence for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-social-selling#013",
+   "text": "Design a weekly content rhythm for a webinar-invite to a cold audience. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-social-selling#014",
+   "text": "Design a weekly content rhythm for a LinkedIn profile that supports selling. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-social-selling#015",
+   "text": "As a solution consultant, I keep hitting the same wall with commenting into a target account’s posts. Write a dormant-connection re-entry message for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-social-selling#016",
+   "text": "Write the soft-DM transition for turning a conference handshake into a thread. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-social-selling#017",
+   "text": "Write a no-pitch connection note for reconnecting with dormant connections."
+  },
+  {
+   "id": "sales-social-selling#018",
+   "text": "Write a no-pitch connection note for a thought-leadership cadence for an AE. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-social-selling#019",
+   "text": "Act as a founder selling to first customers. Write a dormant-connection re-entry message for a first DM after weeks of useful comments, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-social-selling#020",
+   "text": "Draft a profile-upgrade checklist for reconnecting with dormant connections. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-social-selling#021",
+   "text": "I’m working on commenting into a target account’s posts. Draft a value-first comment set for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-social-selling#022",
+   "text": "Plan a conference-follow-up cadence for a first DM after weeks of useful comments for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-social-selling#023",
+   "text": "Create a webinar-invitation sequence for sharing customer-wins without leaking details. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-social-selling#024",
+   "text": "Help me with reconnecting with dormant connections: create a webinar-invitation sequence for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-social-selling#025",
+   "text": "Draft a profile-upgrade checklist for sharing customer-wins without leaking details. Use a playful tone throughout."
+  },
+  {
+   "id": "sales-social-selling#026",
+   "text": "You are a founder selling to first customers. Write a no-pitch connection note for turning a conference handshake into a thread and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-social-selling#027",
+   "text": "Design a weekly content rhythm for a founder-led visibility push. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-social-selling#028",
+   "text": "Before I start on a thought-leadership cadence for an AE, write a dormant-connection re-entry message for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-social-selling#029",
+   "text": "Write the soft-DM transition for a thought-leadership cadence for an AE. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-social-selling#030",
+   "text": "Create a webinar-invitation sequence for a webinar-invite to a cold audience. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-social-selling#031",
+   "text": "As a customer-renewals specialist, I keep hitting the same wall with turning a conference handshake into a thread. Draft a value-first comment set for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-social-selling#032",
+   "text": "Write a dormant-connection re-entry message for sharing customer-wins without leaking details. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-social-selling#033",
+   "text": "Draft a profile-upgrade checklist for a group-community presence strategy."
+  },
+  {
+   "id": "sales-social-selling#034",
+   "text": "Draft a value-first comment set for a group-community presence strategy. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-social-selling#035",
+   "text": "Act as a channel-partnerships manager. Write the soft-DM transition for a founder-led visibility push, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-social-selling#036",
+   "text": "Draft a value-first comment set for reconnecting with dormant connections. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-social-selling#037",
+   "text": "I’m working on a group-community presence strategy. Write a dormant-connection re-entry message for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-social-selling#038",
+   "text": "Write the soft-DM transition for a LinkedIn profile that supports selling for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-social-selling#039",
+   "text": "Draft a value-first comment set for connecting with operations leaders as a vendor. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-social-selling#040",
+   "text": "Help me with a LinkedIn profile that supports selling: write a dormant-connection re-entry message for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-social-selling#041",
+   "text": "Write the soft-DM transition for a first DM after weeks of useful comments. Use a friendly tone throughout."
+  },
+  {
+   "id": "sales-social-selling#042",
+   "text": "You are a revops analyst. Write the soft-DM transition for a content-to-conversation pipeline and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-social-selling#043",
+   "text": "Create a webinar-invitation sequence for a group-community presence strategy. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-social-selling#044",
+   "text": "Before I start on sharing customer-wins without leaking details, plan a conference-follow-up cadence for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-social-selling#045",
+   "text": "Design a weekly content rhythm for reconnecting with dormant connections. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-social-selling#046",
+   "text": "Plan a conference-follow-up cadence for a founder-led visibility push. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-social-selling#047",
+   "text": "As a founder selling to first customers, I keep hitting the same wall with reconnecting with dormant connections. Plan a conference-follow-up cadence for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-social-selling#048",
+   "text": "Create a webinar-invitation sequence for commenting into a target account’s posts. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-social-selling#049",
+   "text": "Write a no-pitch connection note for a webinar-invite to a cold audience."
+  },
+  {
+   "id": "sales-social-selling#050",
+   "text": "Plan a conference-follow-up cadence for a thought-leadership cadence for an AE. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-social-selling#051",
+   "text": "Act as a founder selling to first customers. Design a weekly content rhythm for a first DM after weeks of useful comments, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-social-selling#052",
+   "text": "Create a webinar-invitation sequence for a content-to-conversation pipeline. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-social-selling#053",
+   "text": "I’m working on a founder-led visibility push. Create a webinar-invitation sequence for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-social-selling#054",
+   "text": "Write a no-pitch connection note for a LinkedIn profile that supports selling for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-social-selling#055",
+   "text": "Draft a value-first comment set for a thought-leadership cadence for an AE. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-social-selling#056",
+   "text": "Help me with a group-community presence strategy: design a weekly content rhythm for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-social-selling#057",
+   "text": "Draft a profile-upgrade checklist for a founder-led visibility push. Use a playful tone throughout."
+  },
+  {
+   "id": "sales-social-selling#058",
+   "text": "You are a channel-partnerships manager. Draft a profile-upgrade checklist for commenting into a target account’s posts and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-social-selling#059",
+   "text": "Draft a value-first comment set for a first DM after weeks of useful comments. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-social-selling#060",
+   "text": "Before I start on commenting into a target account’s posts, plan a conference-follow-up cadence for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-social-selling#061",
+   "text": "Design a weekly content rhythm for turning a conference handshake into a thread. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-social-selling#062",
+   "text": "Write a no-pitch connection note for a first DM after weeks of useful comments. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-social-selling#063",
+   "text": "As an enterprise account executive, I keep hitting the same wall with connecting with operations leaders as a vendor. Create a webinar-invitation sequence for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-social-selling#064",
+   "text": "Write the soft-DM transition for a webinar-invite to a cold audience. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-social-selling#065",
+   "text": "Draft a value-first comment set for a content-to-conversation pipeline."
+  },
+  {
+   "id": "sales-social-selling#066",
+   "text": "Draft a profile-upgrade checklist for turning a conference handshake into a thread. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-social-selling#067",
+   "text": "Act as an enterprise account executive. Write a dormant-connection re-entry message for a content-to-conversation pipeline, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-social-selling#068",
+   "text": "Plan a conference-follow-up cadence for a content-to-conversation pipeline. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-social-selling#069",
+   "text": "I’m working on connecting with operations leaders as a vendor. Write the soft-DM transition for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-social-selling#070",
+   "text": "Write the soft-DM transition for reconnecting with dormant connections for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-social-selling#071",
+   "text": "Draft a value-first comment set for a LinkedIn profile that supports selling. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-social-selling#072",
+   "text": "Help me with turning a conference handshake into a thread: create a webinar-invitation sequence for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-social-selling#073",
+   "text": "Draft a profile-upgrade checklist for a thought-leadership cadence for an AE. Use a formal tone throughout."
+  },
+  {
+   "id": "sales-social-selling#074",
+   "text": "You are a freelance consultant selling retainers. Draft a profile-upgrade checklist for a first DM after weeks of useful comments and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-social-selling#075",
+   "text": "Draft a profile-upgrade checklist for a webinar-invite to a cold audience. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-social-selling#076",
+   "text": "Before I start on turning a conference handshake into a thread, plan a conference-follow-up cadence for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-social-selling#077",
+   "text": "Design a weekly content rhythm for connecting with operations leaders as a vendor. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-social-selling#078",
+   "text": "Write a no-pitch connection note for a content-to-conversation pipeline. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-social-selling#079",
+   "text": "As a founder selling to first customers, I keep hitting the same wall with sharing customer-wins without leaking details. Write the soft-DM transition for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-social-selling#080",
+   "text": "Write a dormant-connection re-entry message for a founder-led visibility push. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-social-selling#081",
+   "text": "Write a no-pitch connection note for sharing customer-wins without leaking details."
+  },
+  {
+   "id": "sales-social-selling#082",
+   "text": "Draft a value-first comment set for a founder-led visibility push. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-social-selling#083",
+   "text": "Act as a channel-partnerships manager. Write a no-pitch connection note for a founder-led visibility push, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-social-selling#084",
+   "text": "Draft a profile-upgrade checklist for connecting with operations leaders as a vendor. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-social-selling#085",
+   "text": "I’m working on a thought-leadership cadence for an AE. Create a webinar-invitation sequence for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-social-selling#086",
+   "text": "Write a dormant-connection re-entry message for a webinar-invite to a cold audience for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-social-selling#087",
+   "text": "Plan a conference-follow-up cadence for a webinar-invite to a cold audience. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-social-selling#088",
+   "text": "Help me with a group-community presence strategy: write the soft-DM transition for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-social-selling#089",
+   "text": "Create a webinar-invitation sequence for a LinkedIn profile that supports selling. Use a professional tone throughout."
+  },
+  {
+   "id": "sales-social-selling#090",
+   "text": "You are an enterprise account executive. Write a dormant-connection re-entry message for reconnecting with dormant connections and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-social-selling#091",
+   "text": "Plan a conference-follow-up cadence for connecting with operations leaders as a vendor. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-social-selling#092",
+   "text": "Before I start on a LinkedIn profile that supports selling, plan a conference-follow-up cadence for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-social-selling#093",
+   "text": "Plan a conference-follow-up cadence for a group-community presence strategy. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-social-selling#094",
+   "text": "Write a no-pitch connection note for a group-community presence strategy. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-social-selling#095",
+   "text": "As a revops analyst, I keep hitting the same wall with a webinar-invite to a cold audience. Draft a value-first comment set for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-social-selling#096",
+   "text": "Write a no-pitch connection note for commenting into a target account’s posts. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-social-selling#097",
+   "text": "Design a weekly content rhythm for a thought-leadership cadence for an AE. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-social-selling#098",
+   "text": "Draft a profile-upgrade checklist for a LinkedIn profile that supports selling. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-social-selling#099",
+   "text": "Design a weekly content rhythm for commenting into a target account’s posts."
+  },
+  {
+   "id": "sales-social-selling#100",
+   "text": "Draft a value-first comment set for sharing customer-wins without leaking details."
+  },
+  {
+   "id": "sales-social-selling#101",
+   "text": "Design a weekly content rhythm for a content-to-conversation pipeline."
+  },
+  {
+   "id": "sales-social-selling#102",
+   "text": "Design a weekly content rhythm for sharing customer-wins without leaking details."
+  },
+  {
+   "id": "sales-social-selling#103",
+   "text": "Write a dormant-connection re-entry message for connecting with operations leaders as a vendor."
+  },
+  {
+   "id": "sales-social-selling#104",
+   "text": "Draft a profile-upgrade checklist for a content-to-conversation pipeline."
+  }
+ ]
+}

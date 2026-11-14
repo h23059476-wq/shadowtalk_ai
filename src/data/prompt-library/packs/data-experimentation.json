@@ -1,0 +1,430 @@
+{
+ "slug": "data-experimentation",
+ "categorySlug": "data",
+ "category": "Data & Analytics",
+ "title": "Experimentation (A/B)",
+ "description": "Design tests you can trust and read them honestly.",
+ "tags": [
+  "ab testing",
+  "experiments",
+  "causality"
+ ],
+ "prompts": [
+  {
+   "id": "data-experimentation#001",
+   "text": "Design the experiment plan for a recommendation-model offline/online mismatch."
+  },
+  {
+   "id": "data-experimentation#002",
+   "text": "Draft the read-out template for an experiment where the metric moved but revenue didn’t. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-experimentation#003",
+   "text": "Act as a statistics tutor. Explain how to avoid peeking in a badge-on-listing experiment, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-experimentation#004",
+   "text": "Write the guardrail metrics for a badge-on-listing experiment. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-experimentation#005",
+   "text": "I’m working on a badge-on-listing experiment. Create the decision rules before launch for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-experimentation#006",
+   "text": "Write the results narrative for a feature rollout with holdback groups for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-experimentation#007",
+   "text": "Explain how to avoid peeking in a feature rollout with holdback groups. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-experimentation#008",
+   "text": "Help me with a badge-on-listing experiment: calculate the sample-size considerations for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-experimentation#009",
+   "text": "Design the experiment plan for a feature rollout with holdback groups. Use a formal tone throughout."
+  },
+  {
+   "id": "data-experimentation#010",
+   "text": "You are a finance-planning analyst. Write the guardrail metrics for a test on logged-out visitors only and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-experimentation#011",
+   "text": "Calculate the sample-size considerations for a recommendation-model offline/online mismatch. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-experimentation#012",
+   "text": "Before I start on a test contaminated by a holiday spike, create the decision rules before launch for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-experimentation#013",
+   "text": "Create the decision rules before launch for a feature rollout with holdback groups. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-experimentation#014",
+   "text": "List the validity threats to an email subject-line test. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-experimentation#015",
+   "text": "As a senior data analyst, I keep hitting the same wall with a test with traffic too small for significance. Create the decision rules before launch for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-experimentation#016",
+   "text": "Create the decision rules before launch for a recommendation-model offline/online mismatch. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-experimentation#017",
+   "text": "Write the results narrative for an experiment where the metric moved but revenue didn’t."
+  },
+  {
+   "id": "data-experimentation#018",
+   "text": "Calculate the sample-size considerations for an A/B test on checkout button copy. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-experimentation#019",
+   "text": "Act as a senior data analyst. Create the decision rules before launch for a test on logged-out visitors only, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-experimentation#020",
+   "text": "Explain how to avoid peeking in a test contaminated by a holiday spike. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-experimentation#021",
+   "text": "I’m working on an app onboarding test with seasonality. Draft the read-out template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-experimentation#022",
+   "text": "Calculate the sample-size considerations for an experiment where the metric moved but revenue didn’t for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-experimentation#023",
+   "text": "Write the guardrail metrics for an experiment where the metric moved but revenue didn’t. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-experimentation#024",
+   "text": "Help me with an A/B test on checkout button copy: write the guardrail metrics for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-experimentation#025",
+   "text": "Explain how to avoid peeking in an email subject-line test. Use a persuasive tone throughout."
+  },
+  {
+   "id": "data-experimentation#026",
+   "text": "You are a senior data analyst. Create the decision rules before launch for a pricing-page test with peeking risk and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-experimentation#027",
+   "text": "Design the experiment plan for a test contaminated by a holiday spike. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-experimentation#028",
+   "text": "Before I start on a pricing-page test with peeking risk, calculate the sample-size considerations for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-experimentation#029",
+   "text": "Explain how to avoid peeking in a navigation-redesign test with long cycles. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-experimentation#030",
+   "text": "Explain how to avoid peeking in a pricing-page test with peeking risk. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-experimentation#031",
+   "text": "As a data-quality steward, I keep hitting the same wall with a badge-on-listing experiment. List the validity threats to it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-experimentation#032",
+   "text": "Calculate the sample-size considerations for a test contaminated by a holiday spike. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-experimentation#033",
+   "text": "Explain how to avoid peeking in a test with traffic too small for significance."
+  },
+  {
+   "id": "data-experimentation#034",
+   "text": "List the validity threats to an experiment where the metric moved but revenue didn’t. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-experimentation#035",
+   "text": "Act as a senior data analyst. Write the results narrative for a test on logged-out visitors only, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-experimentation#036",
+   "text": "Create the decision rules before launch for an app onboarding test with seasonality. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-experimentation#037",
+   "text": "I’m working on a test contaminated by a holiday spike. Draft the read-out template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-experimentation#038",
+   "text": "Design the experiment plan for an A/B test on checkout button copy for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-experimentation#039",
+   "text": "Write the results narrative for an A/B test on checkout button copy. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-experimentation#040",
+   "text": "Help me with a pricing-page test with peeking risk: write the results narrative for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-experimentation#041",
+   "text": "Design the experiment plan for an experiment where the metric moved but revenue didn’t. Use a encouraging tone throughout."
+  },
+  {
+   "id": "data-experimentation#042",
+   "text": "You are a finance-planning analyst. Calculate the sample-size considerations for a test on logged-out visitors only and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-experimentation#043",
+   "text": "Calculate the sample-size considerations for a feature rollout with holdback groups. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-experimentation#044",
+   "text": "Before I start on an email subject-line test, calculate the sample-size considerations for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-experimentation#045",
+   "text": "Create the decision rules before launch for an email subject-line test. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-experimentation#046",
+   "text": "Calculate the sample-size considerations for an app onboarding test with seasonality. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-experimentation#047",
+   "text": "As a senior data analyst, I keep hitting the same wall with a test with traffic too small for significance. Write the results narrative for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-experimentation#048",
+   "text": "Design the experiment plan for a test on logged-out visitors only. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-experimentation#049",
+   "text": "Write the guardrail metrics for an app onboarding test with seasonality."
+  },
+  {
+   "id": "data-experimentation#050",
+   "text": "Write the results narrative for an app onboarding test with seasonality. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-experimentation#051",
+   "text": "Act as an analytics engineer. Write the results narrative for a navigation-redesign test with long cycles, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-experimentation#052",
+   "text": "Calculate the sample-size considerations for a navigation-redesign test with long cycles. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-experimentation#053",
+   "text": "I’m working on a test contaminated by a holiday spike. List the validity threats to it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-experimentation#054",
+   "text": "Draft the read-out template for a navigation-redesign test with long cycles for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-experimentation#055",
+   "text": "Explain how to avoid peeking in an app onboarding test with seasonality. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-experimentation#056",
+   "text": "Help me with a pricing-page test with peeking risk: draft the read-out template for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-experimentation#057",
+   "text": "Explain how to avoid peeking in an A/B test on checkout button copy. Use a empathetic tone throughout."
+  },
+  {
+   "id": "data-experimentation#058",
+   "text": "You are an analytics engineer. Explain how to avoid peeking in a recommendation-model offline/online mismatch and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-experimentation#059",
+   "text": "Draft the read-out template for an A/B test on checkout button copy. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-experimentation#060",
+   "text": "Before I start on an app onboarding test with seasonality, design the experiment plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-experimentation#061",
+   "text": "Draft the read-out template for an email subject-line test. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-experimentation#062",
+   "text": "Draft the read-out template for a test on logged-out visitors only. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-experimentation#063",
+   "text": "As a finance-planning analyst, I keep hitting the same wall with an A/B test on checkout button copy. Create the decision rules before launch for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-experimentation#064",
+   "text": "Calculate the sample-size considerations for a test with traffic too small for significance. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-experimentation#065",
+   "text": "Write the results narrative for an email subject-line test."
+  },
+  {
+   "id": "data-experimentation#066",
+   "text": "Draft the read-out template for a feature rollout with holdback groups. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-experimentation#067",
+   "text": "Act as a statistics tutor. List the validity threats to a pricing-page test with peeking risk, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-experimentation#068",
+   "text": "Design the experiment plan for an email subject-line test. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-experimentation#069",
+   "text": "I’m working on a badge-on-listing experiment. Draft the read-out template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-experimentation#070",
+   "text": "Write the guardrail metrics for a feature rollout with holdback groups for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-experimentation#071",
+   "text": "Explain how to avoid peeking in a test on logged-out visitors only. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-experimentation#072",
+   "text": "Help me with a test contaminated by a holiday spike: write the results narrative for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-experimentation#073",
+   "text": "Design the experiment plan for a test with traffic too small for significance. Use a formal tone throughout."
+  },
+  {
+   "id": "data-experimentation#074",
+   "text": "You are a business-intelligence lead. Create the decision rules before launch for an experiment where the metric moved but revenue didn’t and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-experimentation#075",
+   "text": "Explain how to avoid peeking in an experiment where the metric moved but revenue didn’t. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-experimentation#076",
+   "text": "Before I start on a navigation-redesign test with long cycles, design the experiment plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-experimentation#077",
+   "text": "Draft the read-out template for a test with traffic too small for significance. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-experimentation#078",
+   "text": "Write the guardrail metrics for a pricing-page test with peeking risk. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-experimentation#079",
+   "text": "As a senior data analyst, I keep hitting the same wall with a feature rollout with holdback groups. List the validity threats to it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-experimentation#080",
+   "text": "List the validity threats to a test on logged-out visitors only. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-experimentation#081",
+   "text": "Write the results narrative for a badge-on-listing experiment."
+  },
+  {
+   "id": "data-experimentation#082",
+   "text": "Design the experiment plan for a badge-on-listing experiment. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-experimentation#083",
+   "text": "Act as a senior data analyst. Write the guardrail metrics for an email subject-line test, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-experimentation#084",
+   "text": "Draft the read-out template for a recommendation-model offline/online mismatch. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-experimentation#085",
+   "text": "I’m working on an A/B test on checkout button copy. List the validity threats to it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-experimentation#086",
+   "text": "List the validity threats to a test with traffic too small for significance for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-experimentation#087",
+   "text": "Write the guardrail metrics for a test contaminated by a holiday spike. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-experimentation#088",
+   "text": "Help me with a pricing-page test with peeking risk: design the experiment plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-experimentation#089",
+   "text": "List the validity threats to an app onboarding test with seasonality. Use a encouraging tone throughout."
+  },
+  {
+   "id": "data-experimentation#090",
+   "text": "You are an analytics engineer. Write the guardrail metrics for a test with traffic too small for significance and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-experimentation#091",
+   "text": "Create the decision rules before launch for a navigation-redesign test with long cycles. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-experimentation#092",
+   "text": "Before I start on a recommendation-model offline/online mismatch, write the guardrail metrics for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-experimentation#093",
+   "text": "List the validity threats to a recommendation-model offline/online mismatch. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-experimentation#094",
+   "text": "Write the results narrative for a recommendation-model offline/online mismatch. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-experimentation#095",
+   "text": "As a finance-planning analyst, I keep hitting the same wall with a navigation-redesign test with long cycles. List the validity threats to it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-experimentation#096",
+   "text": "Write the guardrail metrics for a navigation-redesign test with long cycles. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-experimentation#097",
+   "text": "Design the experiment plan for a recommendation-model offline/online mismatch. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-experimentation#098",
+   "text": "Draft the read-out template for an experiment where the metric moved but revenue didn’t. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-experimentation#099",
+   "text": "Explain how to avoid peeking in a badge-on-listing experiment."
+  },
+  {
+   "id": "data-experimentation#100",
+   "text": "Write the guardrail metrics for a badge-on-listing experiment."
+  },
+  {
+   "id": "data-experimentation#101",
+   "text": "Create the decision rules before launch for a badge-on-listing experiment."
+  },
+  {
+   "id": "data-experimentation#102",
+   "text": "Write the results narrative for a feature rollout with holdback groups."
+  },
+  {
+   "id": "data-experimentation#103",
+   "text": "Explain how to avoid peeking in a feature rollout with holdback groups."
+  },
+  {
+   "id": "data-experimentation#104",
+   "text": "Calculate the sample-size considerations for a badge-on-listing experiment."
+  }
+ ]
+}

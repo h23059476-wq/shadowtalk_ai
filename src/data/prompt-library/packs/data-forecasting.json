@@ -1,0 +1,430 @@
+{
+ "slug": "data-forecasting",
+ "categorySlug": "data",
+ "category": "Data & Analytics",
+ "title": "Forecasting",
+ "description": "Projections with assumptions written where critics can see them.",
+ "tags": [
+  "forecast",
+  "planning",
+  "projections"
+ ],
+ "prompts": [
+  {
+   "id": "data-forecasting#001",
+   "text": "Create scenario ranges (low, base, high) for event-budget scenario planning."
+  },
+  {
+   "id": "data-forecasting#002",
+   "text": "List the assumptions to write down for ad-spend pacing across a quarter. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-forecasting#003",
+   "text": "Act as a data-quality steward. Explain the method choice for staffing needs for a support team, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-forecasting#004",
+   "text": "Build a simple forecasting model for a new product’s first-year sales. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-forecasting#005",
+   "text": "I’m working on workshop attendance by season. Build a simple forecasting model for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-forecasting#006",
+   "text": "Explain the method choice for utility costs for a small factory for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-forecasting#007",
+   "text": "List the assumptions to write down for event-budget scenario planning. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-forecasting#008",
+   "text": "Help me with staffing needs for a support team: write the limitations of the forecast for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-forecasting#009",
+   "text": "Write the limitations of the forecast for membership renewals for a gym. Use a playful tone throughout."
+  },
+  {
+   "id": "data-forecasting#010",
+   "text": "You are a statistics tutor. Produce a planning-calendar integration for ad-spend pacing across a quarter and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-forecasting#011",
+   "text": "Stress-test the forecast against holiday-season inventory demand. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-forecasting#012",
+   "text": "Before I start on utility costs for a small factory, design the tracking-vs-forecast review for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-forecasting#013",
+   "text": "Write the limitations of the forecast for delivery-volume growth for a fleet. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-forecasting#014",
+   "text": "Build a simple forecasting model for delivery-volume growth for a fleet. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-forecasting#015",
+   "text": "As a data storyteller, I keep hitting the same wall with year-end revenue for a services firm. Produce a planning-calendar integration for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-forecasting#016",
+   "text": "List the assumptions to write down for holiday-season inventory demand. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-forecasting#017",
+   "text": "Build a simple forecasting model for membership renewals for a gym."
+  },
+  {
+   "id": "data-forecasting#018",
+   "text": "Write the limitations of the forecast for a subscription-churn forecast. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-forecasting#019",
+   "text": "Act as a data storyteller. Stress-test the forecast against a new product’s first-year sales, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-forecasting#020",
+   "text": "Design the tracking-vs-forecast review for membership renewals for a gym. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-forecasting#021",
+   "text": "I’m working on staffing needs for a support team. Design the tracking-vs-forecast review for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-forecasting#022",
+   "text": "Explain the method choice for membership renewals for a gym for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-forecasting#023",
+   "text": "Produce a planning-calendar integration for staffing needs for a support team. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-forecasting#024",
+   "text": "Help me with event-budget scenario planning: explain the method choice for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-forecasting#025",
+   "text": "Produce a planning-calendar integration for a subscription-churn forecast. Use a playful tone throughout."
+  },
+  {
+   "id": "data-forecasting#026",
+   "text": "You are a data storyteller. List the assumptions to write down for next quarter’s cash flow for a cafe and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-forecasting#027",
+   "text": "Write the limitations of the forecast for year-end revenue for a services firm. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-forecasting#028",
+   "text": "Before I start on utility costs for a small factory, write the limitations of the forecast for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-forecasting#029",
+   "text": "Stress-test the forecast against event-budget scenario planning. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-forecasting#030",
+   "text": "Produce a planning-calendar integration for a new product’s first-year sales. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-forecasting#031",
+   "text": "As a statistics tutor, I keep hitting the same wall with utility costs for a small factory. Produce a planning-calendar integration for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-forecasting#032",
+   "text": "Design the tracking-vs-forecast review for delivery-volume growth for a fleet. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-forecasting#033",
+   "text": "Create scenario ranges (low, base, high) for a new product’s first-year sales."
+  },
+  {
+   "id": "data-forecasting#034",
+   "text": "Build a simple forecasting model for ad-spend pacing across a quarter. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-forecasting#035",
+   "text": "Act as a data-quality steward. Build a simple forecasting model for utility costs for a small factory, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-forecasting#036",
+   "text": "Create scenario ranges (low, base, high) for delivery-volume growth for a fleet. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-forecasting#037",
+   "text": "I’m working on next quarter’s cash flow for a cafe. Produce a planning-calendar integration for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-forecasting#038",
+   "text": "Stress-test the forecast against staffing needs for a support team for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-forecasting#039",
+   "text": "Build a simple forecasting model for year-end revenue for a services firm. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-forecasting#040",
+   "text": "Help me with staffing needs for a support team: build a simple forecasting model for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-forecasting#041",
+   "text": "Write the limitations of the forecast for a new product’s first-year sales. Use a professional tone throughout."
+  },
+  {
+   "id": "data-forecasting#042",
+   "text": "You are a finance-planning analyst. Explain the method choice for delivery-volume growth for a fleet and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-forecasting#043",
+   "text": "Create scenario ranges (low, base, high) for year-end revenue for a services firm. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-forecasting#044",
+   "text": "Before I start on holiday-season inventory demand, build a simple forecasting model for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-forecasting#045",
+   "text": "Explain the method choice for ad-spend pacing across a quarter. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-forecasting#046",
+   "text": "Write the limitations of the forecast for ad-spend pacing across a quarter. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-forecasting#047",
+   "text": "As a statistics tutor, I keep hitting the same wall with staffing needs for a support team. List the assumptions to write down for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-forecasting#048",
+   "text": "Design the tracking-vs-forecast review for a subscription-churn forecast. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-forecasting#049",
+   "text": "Explain the method choice for next quarter’s cash flow for a cafe."
+  },
+  {
+   "id": "data-forecasting#050",
+   "text": "Explain the method choice for a subscription-churn forecast. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-forecasting#051",
+   "text": "Act as a statistics tutor. Explain the method choice for workshop attendance by season, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-forecasting#052",
+   "text": "Write the limitations of the forecast for holiday-season inventory demand. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-forecasting#053",
+   "text": "I’m working on a subscription-churn forecast. Create scenario ranges (low, base, high) for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-forecasting#054",
+   "text": "Explain the method choice for year-end revenue for a services firm for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-forecasting#055",
+   "text": "List the assumptions to write down for workshop attendance by season. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-forecasting#056",
+   "text": "Help me with staffing needs for a support team: create scenario ranges (low, base, high) for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-forecasting#057",
+   "text": "Build a simple forecasting model for event-budget scenario planning. Use a formal tone throughout."
+  },
+  {
+   "id": "data-forecasting#058",
+   "text": "You are an analytics engineer. Produce a planning-calendar integration for event-budget scenario planning and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-forecasting#059",
+   "text": "Stress-test the forecast against workshop attendance by season. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-forecasting#060",
+   "text": "Before I start on a new product’s first-year sales, explain the method choice for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-forecasting#061",
+   "text": "Create scenario ranges (low, base, high) for utility costs for a small factory. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-forecasting#062",
+   "text": "Stress-test the forecast against utility costs for a small factory. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-forecasting#063",
+   "text": "As a data-quality steward, I keep hitting the same wall with workshop attendance by season. Write the limitations of the forecast for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-forecasting#064",
+   "text": "Create scenario ranges (low, base, high) for holiday-season inventory demand. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-forecasting#065",
+   "text": "Stress-test the forecast against year-end revenue for a services firm."
+  },
+  {
+   "id": "data-forecasting#066",
+   "text": "Write the limitations of the forecast for event-budget scenario planning. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-forecasting#067",
+   "text": "Act as an analytics engineer. Create scenario ranges (low, base, high) for next quarter’s cash flow for a cafe, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-forecasting#068",
+   "text": "List the assumptions to write down for a subscription-churn forecast. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-forecasting#069",
+   "text": "I’m working on next quarter’s cash flow for a cafe. Build a simple forecasting model for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-forecasting#070",
+   "text": "Build a simple forecasting model for a subscription-churn forecast for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-forecasting#071",
+   "text": "Design the tracking-vs-forecast review for workshop attendance by season. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-forecasting#072",
+   "text": "Help me with ad-spend pacing across a quarter: create scenario ranges (low, base, high) for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-forecasting#073",
+   "text": "Produce a planning-calendar integration for workshop attendance by season. Use a playful tone throughout."
+  },
+  {
+   "id": "data-forecasting#074",
+   "text": "You are a statistics tutor. List the assumptions to write down for a new product’s first-year sales and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-forecasting#075",
+   "text": "List the assumptions to write down for year-end revenue for a services firm. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-forecasting#076",
+   "text": "Before I start on a subscription-churn forecast, stress-test the forecast against it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-forecasting#077",
+   "text": "Design the tracking-vs-forecast review for a new product’s first-year sales. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-forecasting#078",
+   "text": "Produce a planning-calendar integration for delivery-volume growth for a fleet. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-forecasting#079",
+   "text": "As a finance-planning analyst, I keep hitting the same wall with next quarter’s cash flow for a cafe. Write the limitations of the forecast for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-forecasting#080",
+   "text": "List the assumptions to write down for delivery-volume growth for a fleet. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-forecasting#081",
+   "text": "List the assumptions to write down for utility costs for a small factory."
+  },
+  {
+   "id": "data-forecasting#082",
+   "text": "Design the tracking-vs-forecast review for event-budget scenario planning. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-forecasting#083",
+   "text": "Act as a finance-planning analyst. Explain the method choice for holiday-season inventory demand, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-forecasting#084",
+   "text": "Create scenario ranges (low, base, high) for workshop attendance by season. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-forecasting#085",
+   "text": "I’m working on ad-spend pacing across a quarter. Stress-test the forecast against it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-forecasting#086",
+   "text": "List the assumptions to write down for membership renewals for a gym for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-forecasting#087",
+   "text": "Produce a planning-calendar integration for membership renewals for a gym. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-forecasting#088",
+   "text": "Help me with next quarter’s cash flow for a cafe: stress-test the forecast against it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-forecasting#089",
+   "text": "Produce a planning-calendar integration for holiday-season inventory demand. Use a encouraging tone throughout."
+  },
+  {
+   "id": "data-forecasting#090",
+   "text": "You are a senior data analyst. Create scenario ranges (low, base, high) for membership renewals for a gym and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-forecasting#091",
+   "text": "Design the tracking-vs-forecast review for ad-spend pacing across a quarter. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-forecasting#092",
+   "text": "Before I start on delivery-volume growth for a fleet, stress-test the forecast against it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-forecasting#093",
+   "text": "Design the tracking-vs-forecast review for year-end revenue for a services firm. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-forecasting#094",
+   "text": "Design the tracking-vs-forecast review for holiday-season inventory demand. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-forecasting#095",
+   "text": "As a data-quality steward, I keep hitting the same wall with membership renewals for a gym. Stress-test the forecast against it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-forecasting#096",
+   "text": "Design the tracking-vs-forecast review for next quarter’s cash flow for a cafe. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-forecasting#097",
+   "text": "Create scenario ranges (low, base, high) for event-budget scenario planning. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-forecasting#098",
+   "text": "List the assumptions to write down for ad-spend pacing across a quarter. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-forecasting#099",
+   "text": "Explain the method choice for staffing needs for a support team."
+  },
+  {
+   "id": "data-forecasting#100",
+   "text": "Build a simple forecasting model for a new product’s first-year sales."
+  },
+  {
+   "id": "data-forecasting#101",
+   "text": "Build a simple forecasting model for workshop attendance by season."
+  },
+  {
+   "id": "data-forecasting#102",
+   "text": "Explain the method choice for utility costs for a small factory."
+  },
+  {
+   "id": "data-forecasting#103",
+   "text": "List the assumptions to write down for event-budget scenario planning."
+  },
+  {
+   "id": "data-forecasting#104",
+   "text": "Write the limitations of the forecast for staffing needs for a support team."
+  }
+ ]
+}

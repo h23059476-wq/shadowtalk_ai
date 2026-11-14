@@ -1,0 +1,430 @@
+{
+ "slug": "design-ui-ux-feedback",
+ "categorySlug": "design",
+ "category": "Design & Visual",
+ "title": "UI/UX Feedback",
+ "description": "Heuristic reviews and flows that remove friction honestly.",
+ "tags": [
+  "ux",
+  "usability",
+  "flows"
+ ],
+ "prompts": [
+  {
+   "id": "design-ui-ux-feedback#001",
+   "text": "Design an empty and error state for a four-step checkout with a surprise fee."
+  },
+  {
+   "id": "design-ui-ux-feedback#002",
+   "text": "Suggest a progressive-disclosure redesign for a booking flow that loses selections on back. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-ui-ux-feedback#003",
+   "text": "Act as an art director. Run a heuristic evaluation of a booking flow that loses selections on back, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-ui-ux-feedback#004",
+   "text": "Map the drop-off risks in an error message that blames the user. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-ui-ux-feedback#005",
+   "text": "I’m working on a dashboard burying the primary metric. Propose a simplified flow for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-ui-ux-feedback#006",
+   "text": "Design an empty and error state for an error message that blames the user for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-ui-ux-feedback#007",
+   "text": "Create a usability-test script for a dashboard burying the primary metric. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-ui-ux-feedback#008",
+   "text": "Help me with a file manager with unclear icons: map the drop-off risks in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-ui-ux-feedback#009",
+   "text": "Run a heuristic evaluation of an error message that blames the user. Use a playful tone throughout."
+  },
+  {
+   "id": "design-ui-ux-feedback#010",
+   "text": "You are a photographer and retoucher. Run a heuristic evaluation of a pricing toggle that hides annual savings and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-ui-ux-feedback#011",
+   "text": "Run a heuristic evaluation of a file manager with unclear icons. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-ui-ux-feedback#012",
+   "text": "Before I start on a pricing toggle that hides annual savings, create a usability-test script for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-ui-ux-feedback#013",
+   "text": "List the cognitive-load offenders in an error message that blames the user. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-ui-ux-feedback#014",
+   "text": "Propose a simplified flow for an empty state that confuses new users. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-ui-ux-feedback#015",
+   "text": "As a creative director, I keep hitting the same wall with an error message that blames the user. Propose a simplified flow for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-ui-ux-feedback#016",
+   "text": "Propose a simplified flow for a settings page with 60 unsorted options. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-ui-ux-feedback#017",
+   "text": "Create a usability-test script for a booking flow that loses selections on back."
+  },
+  {
+   "id": "design-ui-ux-feedback#018",
+   "text": "List the cognitive-load offenders in an empty state that confuses new users. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-ui-ux-feedback#019",
+   "text": "Act as a presentation designer. Create a usability-test script for a four-step checkout with a surprise fee, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-ui-ux-feedback#020",
+   "text": "Design an empty and error state for a pricing toggle that hides annual savings. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-ui-ux-feedback#021",
+   "text": "I’m working on an empty state that confuses new users. Write better microcopy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-ui-ux-feedback#022",
+   "text": "Design an empty and error state for a search that ignores typos for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-ui-ux-feedback#023",
+   "text": "Create a usability-test script for an empty state that confuses new users. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-ui-ux-feedback#024",
+   "text": "Help me with a four-step checkout with a surprise fee: run a heuristic evaluation of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-ui-ux-feedback#025",
+   "text": "Design an empty and error state for a mobile nav with hidden key actions. Use a direct tone throughout."
+  },
+  {
+   "id": "design-ui-ux-feedback#026",
+   "text": "You are a brand designer. Create a usability-test script for an error message that blames the user and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-ui-ux-feedback#027",
+   "text": "Write better microcopy for an onboarding tour users skip. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-ui-ux-feedback#028",
+   "text": "Before I start on an onboarding tour users skip, design an empty and error state for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-ui-ux-feedback#029",
+   "text": "Propose a simplified flow for a mobile nav with hidden key actions. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-ui-ux-feedback#030",
+   "text": "Propose a simplified flow for an onboarding tour users skip. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-ui-ux-feedback#031",
+   "text": "As a motion designer, I keep hitting the same wall with a file manager with unclear icons. Write better microcopy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-ui-ux-feedback#032",
+   "text": "Run a heuristic evaluation of a search that ignores typos. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-ui-ux-feedback#033",
+   "text": "Create a usability-test script for a file manager with unclear icons."
+  },
+  {
+   "id": "design-ui-ux-feedback#034",
+   "text": "Write better microcopy for a mobile nav with hidden key actions. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-ui-ux-feedback#035",
+   "text": "Act as a presentation designer. Suggest a progressive-disclosure redesign for a four-step checkout with a surprise fee, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-ui-ux-feedback#036",
+   "text": "Design an empty and error state for a booking flow that loses selections on back. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-ui-ux-feedback#037",
+   "text": "I’m working on a pricing toggle that hides annual savings. Map the drop-off risks in it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-ui-ux-feedback#038",
+   "text": "Map the drop-off risks in an onboarding tour users skip for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-ui-ux-feedback#039",
+   "text": "Propose a simplified flow for a search that ignores typos. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-ui-ux-feedback#040",
+   "text": "Help me with a signup form asking for everything up front: map the drop-off risks in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-ui-ux-feedback#041",
+   "text": "Propose a simplified flow for a booking flow that loses selections on back. Use a direct tone throughout."
+  },
+  {
+   "id": "design-ui-ux-feedback#042",
+   "text": "You are a motion designer. Write better microcopy for a settings page with 60 unsorted options and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-ui-ux-feedback#043",
+   "text": "Write better microcopy for a search that ignores typos. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-ui-ux-feedback#044",
+   "text": "Before I start on an onboarding tour users skip, list the cognitive-load offenders in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-ui-ux-feedback#045",
+   "text": "Run a heuristic evaluation of a dashboard burying the primary metric. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-ui-ux-feedback#046",
+   "text": "Suggest a progressive-disclosure redesign for an onboarding tour users skip. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-ui-ux-feedback#047",
+   "text": "As a design-systems maintainer, I keep hitting the same wall with a pricing toggle that hides annual savings. List the cognitive-load offenders in it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-ui-ux-feedback#048",
+   "text": "Map the drop-off risks in an empty state that confuses new users. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-ui-ux-feedback#049",
+   "text": "List the cognitive-load offenders in a settings page with 60 unsorted options."
+  },
+  {
+   "id": "design-ui-ux-feedback#050",
+   "text": "Map the drop-off risks in a dashboard burying the primary metric. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-ui-ux-feedback#051",
+   "text": "Act as a presentation designer. Design an empty and error state for a settings page with 60 unsorted options, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-ui-ux-feedback#052",
+   "text": "Suggest a progressive-disclosure redesign for a dashboard burying the primary metric. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-ui-ux-feedback#053",
+   "text": "I’m working on a four-step checkout with a surprise fee. Propose a simplified flow for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-ui-ux-feedback#054",
+   "text": "Suggest a progressive-disclosure redesign for a signup form asking for everything up front for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-ui-ux-feedback#055",
+   "text": "Create a usability-test script for a mobile nav with hidden key actions. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-ui-ux-feedback#056",
+   "text": "Help me with an empty state that confuses new users: design an empty and error state for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-ui-ux-feedback#057",
+   "text": "List the cognitive-load offenders in a booking flow that loses selections on back. Use a direct tone throughout."
+  },
+  {
+   "id": "design-ui-ux-feedback#058",
+   "text": "You are a motion designer. List the cognitive-load offenders in a four-step checkout with a surprise fee and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-ui-ux-feedback#059",
+   "text": "Design an empty and error state for a dashboard burying the primary metric. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-ui-ux-feedback#060",
+   "text": "Before I start on a mobile nav with hidden key actions, suggest a progressive-disclosure redesign for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-ui-ux-feedback#061",
+   "text": "Create a usability-test script for a signup form asking for everything up front. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-ui-ux-feedback#062",
+   "text": "List the cognitive-load offenders in a mobile nav with hidden key actions. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-ui-ux-feedback#063",
+   "text": "As a photographer and retoucher, I keep hitting the same wall with a search that ignores typos. Suggest a progressive-disclosure redesign for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-ui-ux-feedback#064",
+   "text": "Run a heuristic evaluation of an empty state that confuses new users. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-ui-ux-feedback#065",
+   "text": "List the cognitive-load offenders in a signup form asking for everything up front."
+  },
+  {
+   "id": "design-ui-ux-feedback#066",
+   "text": "Map the drop-off risks in a four-step checkout with a surprise fee. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-ui-ux-feedback#067",
+   "text": "Act as a motion designer. Run a heuristic evaluation of an onboarding tour users skip, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-ui-ux-feedback#068",
+   "text": "Design an empty and error state for a signup form asking for everything up front. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-ui-ux-feedback#069",
+   "text": "I’m working on a dashboard burying the primary metric. Write better microcopy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-ui-ux-feedback#070",
+   "text": "Write better microcopy for a booking flow that loses selections on back for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-ui-ux-feedback#071",
+   "text": "Write better microcopy for a pricing toggle that hides annual savings. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-ui-ux-feedback#072",
+   "text": "Help me with a mobile nav with hidden key actions: run a heuristic evaluation of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-ui-ux-feedback#073",
+   "text": "Map the drop-off risks in a search that ignores typos. Use a empathetic tone throughout."
+  },
+  {
+   "id": "design-ui-ux-feedback#074",
+   "text": "You are a design-systems maintainer. Propose a simplified flow for a file manager with unclear icons and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-ui-ux-feedback#075",
+   "text": "Suggest a progressive-disclosure redesign for an error message that blames the user. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-ui-ux-feedback#076",
+   "text": "Before I start on a search that ignores typos, create a usability-test script for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-ui-ux-feedback#077",
+   "text": "Suggest a progressive-disclosure redesign for a file manager with unclear icons. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-ui-ux-feedback#078",
+   "text": "Design an empty and error state for a file manager with unclear icons. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-ui-ux-feedback#079",
+   "text": "As a design-systems maintainer, I keep hitting the same wall with a pricing toggle that hides annual savings. Suggest a progressive-disclosure redesign for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-ui-ux-feedback#080",
+   "text": "Write better microcopy for a four-step checkout with a surprise fee. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-ui-ux-feedback#081",
+   "text": "Suggest a progressive-disclosure redesign for a settings page with 60 unsorted options."
+  },
+  {
+   "id": "design-ui-ux-feedback#082",
+   "text": "List the cognitive-load offenders in a file manager with unclear icons. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-ui-ux-feedback#083",
+   "text": "Act as a presentation designer. Map the drop-off risks in a settings page with 60 unsorted options, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-ui-ux-feedback#084",
+   "text": "Run a heuristic evaluation of a settings page with 60 unsorted options. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-ui-ux-feedback#085",
+   "text": "I’m working on a search that ignores typos. List the cognitive-load offenders in it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-ui-ux-feedback#086",
+   "text": "Propose a simplified flow for a pricing toggle that hides annual savings for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-ui-ux-feedback#087",
+   "text": "Suggest a progressive-disclosure redesign for an empty state that confuses new users. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-ui-ux-feedback#088",
+   "text": "Help me with a mobile nav with hidden key actions: map the drop-off risks in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-ui-ux-feedback#089",
+   "text": "Map the drop-off risks in a booking flow that loses selections on back. Use a direct tone throughout."
+  },
+  {
+   "id": "design-ui-ux-feedback#090",
+   "text": "You are a product designer with systems experience. List the cognitive-load offenders in a dashboard burying the primary metric and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-ui-ux-feedback#091",
+   "text": "Create a usability-test script for a settings page with 60 unsorted options. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-ui-ux-feedback#092",
+   "text": "Before I start on an onboarding tour users skip, create a usability-test script for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-ui-ux-feedback#093",
+   "text": "Propose a simplified flow for a signup form asking for everything up front. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-ui-ux-feedback#094",
+   "text": "Write better microcopy for a signup form asking for everything up front. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-ui-ux-feedback#095",
+   "text": "As a creative director, I keep hitting the same wall with an error message that blames the user. Write better microcopy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-ui-ux-feedback#096",
+   "text": "Run a heuristic evaluation of a signup form asking for everything up front. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-ui-ux-feedback#097",
+   "text": "Design an empty and error state for a four-step checkout with a surprise fee. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-ui-ux-feedback#098",
+   "text": "Suggest a progressive-disclosure redesign for a booking flow that loses selections on back. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-ui-ux-feedback#099",
+   "text": "Run a heuristic evaluation of a booking flow that loses selections on back."
+  },
+  {
+   "id": "design-ui-ux-feedback#100",
+   "text": "Map the drop-off risks in an error message that blames the user."
+  },
+  {
+   "id": "design-ui-ux-feedback#101",
+   "text": "Propose a simplified flow for a dashboard burying the primary metric."
+  },
+  {
+   "id": "design-ui-ux-feedback#102",
+   "text": "Design an empty and error state for an error message that blames the user."
+  },
+  {
+   "id": "design-ui-ux-feedback#103",
+   "text": "Create a usability-test script for a dashboard burying the primary metric."
+  },
+  {
+   "id": "design-ui-ux-feedback#104",
+   "text": "Map the drop-off risks in a file manager with unclear icons."
+  }
+ ]
+}

@@ -1,0 +1,430 @@
+{
+ "slug": "growth-purpose-values",
+ "categorySlug": "growth",
+ "category": "Personal Growth",
+ "title": "Purpose & Values",
+ "description": "Name what you stand for and steer by it.",
+ "tags": [
+  "purpose",
+  "values",
+  "direction"
+ ],
+ "prompts": [
+  {
+   "id": "growth-purpose-values#001",
+   "text": "Write a values-clarification exercise for aligning a career with what energizes you."
+  },
+  {
+   "id": "growth-purpose-values#002",
+   "text": "Design a quarterly alignment check for a legacy project worth starting. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-purpose-values#003",
+   "text": "Act as a values-and-purpose mentor. Design a quarterly alignment check for choosing a community to invest in, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-purpose-values#004",
+   "text": "Build a contribution-calendar idea list for finding volunteer work that fits. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-purpose-values#005",
+   "text": "I’m working on defining success on your own terms. Design a quarterly alignment check for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-purpose-values#006",
+   "text": "Write a values-clarification exercise for crafting a ninety-day purpose experiment for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-purpose-values#007",
+   "text": "Write a values-clarification exercise for a giving plan with real impact. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-purpose-values#008",
+   "text": "Help me with a personal values list that guides choices: design a quarterly alignment check for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-purpose-values#009",
+   "text": "List the reflection questions for a giving plan with real impact. Use a formal tone throughout."
+  },
+  {
+   "id": "growth-purpose-values#010",
+   "text": "You are a mindful-movement teacher. Draft a purpose-statement template for crafting a ninety-day purpose experiment and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-purpose-values#011",
+   "text": "Design a life-sections audit for finding volunteer work that fits. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-purpose-values#012",
+   "text": "Before I start on a family mission statement, write a conversation-starter set with a mentor about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-purpose-values#013",
+   "text": "Write a values-clarification exercise for defining success on your own terms. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-purpose-values#014",
+   "text": "Design a quarterly alignment check for a giving plan with real impact. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-purpose-values#015",
+   "text": "As a financial-literacy educator, I keep hitting the same wall with mentorship as a way to give back. Design a quarterly alignment check for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-purpose-values#016",
+   "text": "Design a life-sections audit for a work-to-life philosophy draft. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-purpose-values#017",
+   "text": "List the reflection questions for choosing a community to invest in."
+  },
+  {
+   "id": "growth-purpose-values#018",
+   "text": "Draft a purpose-statement template for aligning a career with what energizes you. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-purpose-values#019",
+   "text": "Act as a values-and-purpose mentor. Write a conversation-starter set with a mentor about choosing a community to invest in, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-purpose-values#020",
+   "text": "Create a small-experiment plan for choosing a community to invest in. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-purpose-values#021",
+   "text": "I’m working on crafting a ninety-day purpose experiment. Create a small-experiment plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-purpose-values#022",
+   "text": "Build a contribution-calendar idea list for defining success on your own terms for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-purpose-values#023",
+   "text": "Design a quarterly alignment check for a work-to-life philosophy draft. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-purpose-values#024",
+   "text": "Help me with a family mission statement: draft a purpose-statement template for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-purpose-values#025",
+   "text": "Design a quarterly alignment check for a family mission statement. Use a persuasive tone throughout."
+  },
+  {
+   "id": "growth-purpose-values#026",
+   "text": "You are a communication-skills coach. Build a contribution-calendar idea list for choosing a community to invest in and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-purpose-values#027",
+   "text": "List the reflection questions for mentorship as a way to give back. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-purpose-values#028",
+   "text": "Before I start on mentorship as a way to give back, build a contribution-calendar idea list for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-purpose-values#029",
+   "text": "Write a conversation-starter set with a mentor about mentorship as a way to give back. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-purpose-values#030",
+   "text": "Draft a purpose-statement template for a work-to-life philosophy draft. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-purpose-values#031",
+   "text": "As a mindful-movement teacher, I keep hitting the same wall with aligning a career with what energizes you. Write a conversation-starter set with a mentor about it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-purpose-values#032",
+   "text": "Write a conversation-starter set with a mentor about a giving plan with real impact. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-purpose-values#033",
+   "text": "List the reflection questions for a legacy project worth starting."
+  },
+  {
+   "id": "growth-purpose-values#034",
+   "text": "Write a conversation-starter set with a mentor about a work-to-life philosophy draft. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-purpose-values#035",
+   "text": "Act as a communication-skills coach. Create a small-experiment plan for a giving plan with real impact, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-purpose-values#036",
+   "text": "Write a values-clarification exercise for a work-to-life philosophy draft. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-purpose-values#037",
+   "text": "I’m working on deciding what enough looks like. List the reflection questions for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-purpose-values#038",
+   "text": "Write a conversation-starter set with a mentor about crafting a ninety-day purpose experiment for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-purpose-values#039",
+   "text": "Write a conversation-starter set with a mentor about deciding what enough looks like. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-purpose-values#040",
+   "text": "Help me with deciding what enough looks like: write a values-clarification exercise for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-purpose-values#041",
+   "text": "Build a contribution-calendar idea list for a work-to-life philosophy draft. Use a encouraging tone throughout."
+  },
+  {
+   "id": "growth-purpose-values#042",
+   "text": "You are a decision-quality facilitator. Write a values-clarification exercise for a personal values list that guides choices and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-purpose-values#043",
+   "text": "Design a life-sections audit for aligning a career with what energizes you. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-purpose-values#044",
+   "text": "Before I start on finding volunteer work that fits, write a values-clarification exercise for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-purpose-values#045",
+   "text": "Write a values-clarification exercise for choosing a community to invest in. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-purpose-values#046",
+   "text": "List the reflection questions for a personal values list that guides choices. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-purpose-values#047",
+   "text": "As a communication-skills coach, I keep hitting the same wall with a family mission statement. List the reflection questions for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-purpose-values#048",
+   "text": "Design a quarterly alignment check for finding volunteer work that fits. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-purpose-values#049",
+   "text": "Build a contribution-calendar idea list for deciding what enough looks like."
+  },
+  {
+   "id": "growth-purpose-values#050",
+   "text": "Create a small-experiment plan for a work-to-life philosophy draft. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-purpose-values#051",
+   "text": "Act as a decision-quality facilitator. Design a quarterly alignment check for deciding what enough looks like, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-purpose-values#052",
+   "text": "Create a small-experiment plan for a family mission statement. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-purpose-values#053",
+   "text": "I’m working on mentorship as a way to give back. Draft a purpose-statement template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-purpose-values#054",
+   "text": "Create a small-experiment plan for finding volunteer work that fits for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-purpose-values#055",
+   "text": "Build a contribution-calendar idea list for a legacy project worth starting. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-purpose-values#056",
+   "text": "Help me with defining success on your own terms: create a small-experiment plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-purpose-values#057",
+   "text": "Write a values-clarification exercise for a family mission statement. Use a persuasive tone throughout."
+  },
+  {
+   "id": "growth-purpose-values#058",
+   "text": "You are a communication-skills coach. List the reflection questions for aligning a career with what energizes you and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-purpose-values#059",
+   "text": "List the reflection questions for crafting a ninety-day purpose experiment. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-purpose-values#060",
+   "text": "Before I start on mentorship as a way to give back, write a values-clarification exercise for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-purpose-values#061",
+   "text": "Design a life-sections audit for crafting a ninety-day purpose experiment. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-purpose-values#062",
+   "text": "Create a small-experiment plan for a personal values list that guides choices. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-purpose-values#063",
+   "text": "As a practical life coach, I keep hitting the same wall with deciding what enough looks like. Draft a purpose-statement template for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-purpose-values#064",
+   "text": "Design a life-sections audit for a personal values list that guides choices. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-purpose-values#065",
+   "text": "Write a conversation-starter set with a mentor about finding volunteer work that fits."
+  },
+  {
+   "id": "growth-purpose-values#066",
+   "text": "Draft a purpose-statement template for a personal values list that guides choices. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-purpose-values#067",
+   "text": "Act as a decision-quality facilitator. Write a conversation-starter set with a mentor about a legacy project worth starting, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-purpose-values#068",
+   "text": "Create a small-experiment plan for deciding what enough looks like. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-purpose-values#069",
+   "text": "I’m working on defining success on your own terms. List the reflection questions for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-purpose-values#070",
+   "text": "Create a small-experiment plan for mentorship as a way to give back for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-purpose-values#071",
+   "text": "Design a life-sections audit for deciding what enough looks like. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-purpose-values#072",
+   "text": "Help me with choosing a community to invest in: design a life-sections audit for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-purpose-values#073",
+   "text": "Create a small-experiment plan for a legacy project worth starting. Use a encouraging tone throughout."
+  },
+  {
+   "id": "growth-purpose-values#074",
+   "text": "You are a decision-quality facilitator. Build a contribution-calendar idea list for a personal values list that guides choices and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-purpose-values#075",
+   "text": "Write a values-clarification exercise for a legacy project worth starting. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-purpose-values#076",
+   "text": "Before I start on choosing a community to invest in, draft a purpose-statement template for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-purpose-values#077",
+   "text": "Draft a purpose-statement template for a giving plan with real impact. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-purpose-values#078",
+   "text": "Build a contribution-calendar idea list for a giving plan with real impact. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-purpose-values#079",
+   "text": "As a financial-literacy educator, I keep hitting the same wall with finding volunteer work that fits. Draft a purpose-statement template for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-purpose-values#080",
+   "text": "Design a life-sections audit for mentorship as a way to give back. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-purpose-values#081",
+   "text": "Write a conversation-starter set with a mentor about defining success on your own terms."
+  },
+  {
+   "id": "growth-purpose-values#082",
+   "text": "List the reflection questions for finding volunteer work that fits. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-purpose-values#083",
+   "text": "Act as a reflective journaling guide. Write a conversation-starter set with a mentor about a personal values list that guides choices, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-purpose-values#084",
+   "text": "Design a life-sections audit for defining success on your own terms. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-purpose-values#085",
+   "text": "I’m working on crafting a ninety-day purpose experiment. Build a contribution-calendar idea list for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-purpose-values#086",
+   "text": "Build a contribution-calendar idea list for a family mission statement for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-purpose-values#087",
+   "text": "List the reflection questions for a work-to-life philosophy draft. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-purpose-values#088",
+   "text": "Help me with a family mission statement: design a life-sections audit for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-purpose-values#089",
+   "text": "Build a contribution-calendar idea list for aligning a career with what energizes you. Use a friendly tone throughout."
+  },
+  {
+   "id": "growth-purpose-values#090",
+   "text": "You are a financial-literacy educator. Draft a purpose-statement template for a legacy project worth starting and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-purpose-values#091",
+   "text": "Design a quarterly alignment check for aligning a career with what energizes you. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-purpose-values#092",
+   "text": "Before I start on a legacy project worth starting, design a life-sections audit for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-purpose-values#093",
+   "text": "Design a life-sections audit for a giving plan with real impact. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-purpose-values#094",
+   "text": "Design a quarterly alignment check for crafting a ninety-day purpose experiment. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-purpose-values#095",
+   "text": "As a mindful-movement teacher, I keep hitting the same wall with aligning a career with what energizes you. Create a small-experiment plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-purpose-values#096",
+   "text": "Draft a purpose-statement template for defining success on your own terms. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-purpose-values#097",
+   "text": "Write a values-clarification exercise for aligning a career with what energizes you. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-purpose-values#098",
+   "text": "Design a quarterly alignment check for a legacy project worth starting. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-purpose-values#099",
+   "text": "Design a quarterly alignment check for choosing a community to invest in."
+  },
+  {
+   "id": "growth-purpose-values#100",
+   "text": "Build a contribution-calendar idea list for finding volunteer work that fits."
+  },
+  {
+   "id": "growth-purpose-values#101",
+   "text": "Design a quarterly alignment check for defining success on your own terms."
+  },
+  {
+   "id": "growth-purpose-values#102",
+   "text": "Write a values-clarification exercise for crafting a ninety-day purpose experiment."
+  },
+  {
+   "id": "growth-purpose-values#103",
+   "text": "Write a values-clarification exercise for a giving plan with real impact."
+  },
+  {
+   "id": "growth-purpose-values#104",
+   "text": "Design a quarterly alignment check for a personal values list that guides choices."
+  }
+ ]
+}

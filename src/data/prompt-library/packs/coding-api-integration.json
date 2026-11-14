@@ -1,0 +1,430 @@
+{
+ "slug": "coding-api-integration",
+ "categorySlug": "coding",
+ "category": "Coding & Development",
+ "title": "APIs & Integration",
+ "description": "Client wrappers, retries, auth, and versioning done right.",
+ "tags": [
+  "api",
+  "integration",
+  "webhooks"
+ ],
+ "prompts": [
+  {
+   "id": "coding-api-integration#001",
+   "text": "Create contract tests against a mock of a third-party payments API client."
+  },
+  {
+   "id": "coding-api-integration#002",
+   "text": "Design the client-wrapper interface for a webhook replay-and-dedupe queue. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-api-integration#003",
+   "text": "Act as a tech lead of a small team. Produce a latency-budget checklist for webhook signature verification, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-api-integration#004",
+   "text": "Document the failure modes of OAuth device flow for a TV app. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-api-integration#005",
+   "text": "I’m working on a GraphQL resolver caching layer. Write the retry and backoff policy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-api-integration#006",
+   "text": "Produce a latency-budget checklist for a GraphQL resolver caching layer for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-api-integration#007",
+   "text": "Produce a latency-budget checklist for a file-upload resumable protocol. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-api-integration#008",
+   "text": "Help me with an idempotency-key strategy for orders: write the retry and backoff policy for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-api-integration#009",
+   "text": "Write the migration plan for a breaking change in paginating a large catalog endpoint. Use a empathetic tone throughout."
+  },
+  {
+   "id": "coding-api-integration#010",
+   "text": "You are a platform engineer. Design the client-wrapper interface for a file-upload resumable protocol and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-api-integration#011",
+   "text": "Write the migration plan for a breaking change in a legacy SOAP bridge to REST. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-api-integration#012",
+   "text": "Before I start on a multi-tenant API key rotation, create contract tests against a mock of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-api-integration#013",
+   "text": "Document the failure modes of a multi-tenant API key rotation. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-api-integration#014",
+   "text": "Create contract tests against a mock of webhook signature verification. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-api-integration#015",
+   "text": "As a platform engineer, I keep hitting the same wall with a third-party payments API client. Write the retry and backoff policy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-api-integration#016",
+   "text": "Document the failure modes of a GraphQL resolver caching layer. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-api-integration#017",
+   "text": "Write the retry and backoff policy for a webhook replay-and-dedupe queue."
+  },
+  {
+   "id": "coding-api-integration#018",
+   "text": "Write the migration plan for a breaking change in a third-party payments API client. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-api-integration#019",
+   "text": "Act as a site-reliability engineer. Explain the auth flow for a file-upload resumable protocol, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-api-integration#020",
+   "text": "Produce a latency-budget checklist for paginating a large catalog endpoint. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-api-integration#021",
+   "text": "I’m working on a legacy SOAP bridge to REST. Write the retry and backoff policy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-api-integration#022",
+   "text": "Document the failure modes of an idempotency-key strategy for orders for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-api-integration#023",
+   "text": "Explain the auth flow for a webhook replay-and-dedupe queue. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-api-integration#024",
+   "text": "Help me with a GraphQL resolver caching layer: create contract tests against a mock of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-api-integration#025",
+   "text": "Explain the auth flow for a GraphQL resolver caching layer. Use a professional tone throughout."
+  },
+  {
+   "id": "coding-api-integration#026",
+   "text": "You are a code reviewer on a large codebase. Design the client-wrapper interface for an idempotency-key strategy for orders and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-api-integration#027",
+   "text": "Write the migration plan for a breaking change in an API gateway timeout budget. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-api-integration#028",
+   "text": "Before I start on rate-limit backoff for a search API, write the migration plan for a breaking change in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-api-integration#029",
+   "text": "Write the retry and backoff policy for a file-upload resumable protocol. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-api-integration#030",
+   "text": "Explain the auth flow for an API gateway timeout budget. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-api-integration#031",
+   "text": "As an open-source maintainer, I keep hitting the same wall with an API gateway timeout budget. Write the retry and backoff policy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-api-integration#032",
+   "text": "Create contract tests against a mock of rate-limit backoff for a search API. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-api-integration#033",
+   "text": "Draft the error-handling contract for rate-limit backoff for a search API."
+  },
+  {
+   "id": "coding-api-integration#034",
+   "text": "Design the client-wrapper interface for a multi-tenant API key rotation. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-api-integration#035",
+   "text": "Act as an accessibility-minded frontend engineer. Write the migration plan for a breaking change in a multi-tenant API key rotation, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-api-integration#036",
+   "text": "Design the client-wrapper interface for rate-limit backoff for a search API. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-api-integration#037",
+   "text": "I’m working on rate-limit backoff for a search API. Document the failure modes of it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-api-integration#038",
+   "text": "Document the failure modes of paginating a large catalog endpoint for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-api-integration#039",
+   "text": "Create contract tests against a mock of a webhook replay-and-dedupe queue. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-api-integration#040",
+   "text": "Help me with rate-limit backoff for a search API: explain the auth flow for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-api-integration#041",
+   "text": "Produce a latency-budget checklist for an API gateway timeout budget. Use a playful tone throughout."
+  },
+  {
+   "id": "coding-api-integration#042",
+   "text": "You are a code reviewer on a large codebase. Explain the auth flow for an idempotency-key strategy for orders and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-api-integration#043",
+   "text": "Create contract tests against a mock of an idempotency-key strategy for orders. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-api-integration#044",
+   "text": "Before I start on a third-party payments API client, explain the auth flow for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-api-integration#045",
+   "text": "Write the migration plan for a breaking change in a file-upload resumable protocol. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-api-integration#046",
+   "text": "Write the retry and backoff policy for paginating a large catalog endpoint. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-api-integration#047",
+   "text": "As an accessibility-minded frontend engineer, I keep hitting the same wall with rate-limit backoff for a search API. Produce a latency-budget checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-api-integration#048",
+   "text": "Create contract tests against a mock of a legacy SOAP bridge to REST. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-api-integration#049",
+   "text": "Explain the auth flow for OAuth device flow for a TV app."
+  },
+  {
+   "id": "coding-api-integration#050",
+   "text": "Draft the error-handling contract for paginating a large catalog endpoint. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-api-integration#051",
+   "text": "Act as a code reviewer on a large codebase. Write the retry and backoff policy for rate-limit backoff for a search API, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-api-integration#052",
+   "text": "Write the retry and backoff policy for webhook signature verification. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-api-integration#053",
+   "text": "I’m working on OAuth device flow for a TV app. Design the client-wrapper interface for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-api-integration#054",
+   "text": "Draft the error-handling contract for an idempotency-key strategy for orders for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-api-integration#055",
+   "text": "Draft the error-handling contract for a multi-tenant API key rotation. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-api-integration#056",
+   "text": "Help me with OAuth device flow for a TV app: produce a latency-budget checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-api-integration#057",
+   "text": "Create contract tests against a mock of OAuth device flow for a TV app. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-api-integration#058",
+   "text": "You are an open-source maintainer. Explain the auth flow for a legacy SOAP bridge to REST and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-api-integration#059",
+   "text": "Write the migration plan for a breaking change in a GraphQL resolver caching layer. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-api-integration#060",
+   "text": "Before I start on OAuth device flow for a TV app, write the migration plan for a breaking change in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-api-integration#061",
+   "text": "Explain the auth flow for a multi-tenant API key rotation. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-api-integration#062",
+   "text": "Document the failure modes of a file-upload resumable protocol. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-api-integration#063",
+   "text": "As a site-reliability engineer, I keep hitting the same wall with a legacy SOAP bridge to REST. Produce a latency-budget checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-api-integration#064",
+   "text": "Design the client-wrapper interface for webhook signature verification. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-api-integration#065",
+   "text": "Document the failure modes of a webhook replay-and-dedupe queue."
+  },
+  {
+   "id": "coding-api-integration#066",
+   "text": "Draft the error-handling contract for an API gateway timeout budget. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-api-integration#067",
+   "text": "Act as an open-source maintainer. Document the failure modes of a third-party payments API client, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-api-integration#068",
+   "text": "Write the migration plan for a breaking change in webhook signature verification. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-api-integration#069",
+   "text": "I’m working on paginating a large catalog endpoint. Design the client-wrapper interface for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-api-integration#070",
+   "text": "Create contract tests against a mock of a file-upload resumable protocol for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-api-integration#071",
+   "text": "Draft the error-handling contract for a third-party payments API client. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-api-integration#072",
+   "text": "Help me with paginating a large catalog endpoint: create contract tests against a mock of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-api-integration#073",
+   "text": "Draft the error-handling contract for a legacy SOAP bridge to REST. Use a direct tone throughout."
+  },
+  {
+   "id": "coding-api-integration#074",
+   "text": "You are a site-reliability engineer. Explain the auth flow for paginating a large catalog endpoint and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-api-integration#075",
+   "text": "Draft the error-handling contract for a GraphQL resolver caching layer. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-api-integration#076",
+   "text": "Before I start on a webhook replay-and-dedupe queue, write the migration plan for a breaking change in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-api-integration#077",
+   "text": "Document the failure modes of an API gateway timeout budget. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-api-integration#078",
+   "text": "Document the failure modes of webhook signature verification. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-api-integration#079",
+   "text": "As a platform engineer, I keep hitting the same wall with a webhook replay-and-dedupe queue. Produce a latency-budget checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-api-integration#080",
+   "text": "Explain the auth flow for webhook signature verification. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-api-integration#081",
+   "text": "Draft the error-handling contract for a file-upload resumable protocol."
+  },
+  {
+   "id": "coding-api-integration#082",
+   "text": "Write the retry and backoff policy for OAuth device flow for a TV app. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-api-integration#083",
+   "text": "Act as an open-source maintainer. Design the client-wrapper interface for a third-party payments API client, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-api-integration#084",
+   "text": "Document the failure modes of a legacy SOAP bridge to REST. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-api-integration#085",
+   "text": "I’m working on a webhook replay-and-dedupe queue. Draft the error-handling contract for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-api-integration#086",
+   "text": "Design the client-wrapper interface for a GraphQL resolver caching layer for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-api-integration#087",
+   "text": "Draft the error-handling contract for OAuth device flow for a TV app. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-api-integration#088",
+   "text": "Help me with webhook signature verification: draft the error-handling contract for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-api-integration#089",
+   "text": "Design the client-wrapper interface for a legacy SOAP bridge to REST. Use a direct tone throughout."
+  },
+  {
+   "id": "coding-api-integration#090",
+   "text": "You are a code reviewer on a large codebase. Write the migration plan for a breaking change in an idempotency-key strategy for orders and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-api-integration#091",
+   "text": "Produce a latency-budget checklist for a multi-tenant API key rotation. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-api-integration#092",
+   "text": "Before I start on an idempotency-key strategy for orders, produce a latency-budget checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-api-integration#093",
+   "text": "Write the retry and backoff policy for a multi-tenant API key rotation. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-api-integration#094",
+   "text": "Design the client-wrapper interface for an API gateway timeout budget. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-api-integration#095",
+   "text": "As an open-source maintainer, I keep hitting the same wall with an API gateway timeout budget. Create contract tests against a mock of it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-api-integration#096",
+   "text": "Produce a latency-budget checklist for a third-party payments API client. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-api-integration#097",
+   "text": "Create contract tests against a mock of a third-party payments API client. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-api-integration#098",
+   "text": "Design the client-wrapper interface for a webhook replay-and-dedupe queue. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-api-integration#099",
+   "text": "Produce a latency-budget checklist for webhook signature verification."
+  },
+  {
+   "id": "coding-api-integration#100",
+   "text": "Document the failure modes of OAuth device flow for a TV app."
+  },
+  {
+   "id": "coding-api-integration#101",
+   "text": "Write the retry and backoff policy for a GraphQL resolver caching layer."
+  },
+  {
+   "id": "coding-api-integration#102",
+   "text": "Produce a latency-budget checklist for a GraphQL resolver caching layer."
+  },
+  {
+   "id": "coding-api-integration#103",
+   "text": "Produce a latency-budget checklist for a file-upload resumable protocol."
+  },
+  {
+   "id": "coding-api-integration#104",
+   "text": "Write the retry and backoff policy for an idempotency-key strategy for orders."
+  }
+ ]
+}

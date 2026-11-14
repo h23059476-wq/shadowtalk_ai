@@ -1,0 +1,430 @@
+{
+ "slug": "coding-frontend-ui",
+ "categorySlug": "coding",
+ "category": "Coding & Development",
+ "title": "Frontend & UI",
+ "description": "Components, state, accessibility, and design-system hygiene.",
+ "tags": [
+  "frontend",
+  "react",
+  "a11y"
+ ],
+ "prompts": [
+  {
+   "id": "coding-frontend-ui#001",
+   "text": "Write a progressive-enhancement plan for a file-dropzone with progress."
+  },
+  {
+   "id": "coding-frontend-ui#002",
+   "text": "Explain the rendering behavior of a dark-mode token strategy. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-frontend-ui#003",
+   "text": "Act as a tech lead of a small team. Produce an accessibility checklist for a multi-step form with resumable state, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-frontend-ui#004",
+   "text": "Write a progressive-enhancement plan for a table with sticky headers and sorting. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-frontend-ui#005",
+   "text": "I’m working on a form-validation UX for long forms. Write a progressive-enhancement plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-frontend-ui#006",
+   "text": "Create a design-token mapping for a table with sticky headers and sorting for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-frontend-ui#007",
+   "text": "Create a design-token mapping for a form-validation UX for long forms. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-frontend-ui#008",
+   "text": "Help me with a toast system that doesn’t stack infinitely: explain the rendering behavior of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-frontend-ui#009",
+   "text": "Write the state-management approach for a drag-and-drop kanban board. Use a direct tone throughout."
+  },
+  {
+   "id": "coding-frontend-ui#010",
+   "text": "You are a developer-education author. Draft the edge-case test list for a table with sticky headers and sorting and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-frontend-ui#011",
+   "text": "Produce an accessibility checklist for a drag-and-drop kanban board. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-frontend-ui#012",
+   "text": "Before I start on a toast system that doesn’t stack infinitely, produce an accessibility checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-frontend-ui#013",
+   "text": "Design the component API for a form-validation UX for long forms. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-frontend-ui#014",
+   "text": "Write a progressive-enhancement plan for a toast system that doesn’t stack infinitely. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-frontend-ui#015",
+   "text": "As an open-source maintainer, I keep hitting the same wall with a responsive nav with a mobile drawer. Produce an accessibility checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-frontend-ui#016",
+   "text": "Explain the rendering behavior of an infinite-scroll list with keyboard support. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-frontend-ui#017",
+   "text": "Create a design-token mapping for an accessible modal focus trap."
+  },
+  {
+   "id": "coding-frontend-ui#018",
+   "text": "Write a progressive-enhancement plan for a multi-step form with resumable state. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-frontend-ui#019",
+   "text": "Act as an open-source maintainer. Create a design-token mapping for an optimistic-update cart, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-frontend-ui#020",
+   "text": "Produce an accessibility checklist for an infinite-scroll list with keyboard support. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-frontend-ui#021",
+   "text": "I’m working on a responsive nav with a mobile drawer. Refactor for performance in it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-frontend-ui#022",
+   "text": "Write a progressive-enhancement plan for a drag-and-drop kanban board for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-frontend-ui#023",
+   "text": "Produce an accessibility checklist for a table with sticky headers and sorting. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-frontend-ui#024",
+   "text": "Help me with a file-dropzone with progress: produce an accessibility checklist for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-frontend-ui#025",
+   "text": "Write the state-management approach for a toast system that doesn’t stack infinitely. Use a direct tone throughout."
+  },
+  {
+   "id": "coding-frontend-ui#026",
+   "text": "You are a staff engineer. Draft the edge-case test list for an infinite-scroll list with keyboard support and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-frontend-ui#027",
+   "text": "Explain the rendering behavior of a table with sticky headers and sorting. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-frontend-ui#028",
+   "text": "Before I start on a multi-step form with resumable state, write the state-management approach for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-frontend-ui#029",
+   "text": "Draft the edge-case test list for a file-dropzone with progress. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-frontend-ui#030",
+   "text": "Explain the rendering behavior of a file-dropzone with progress. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-frontend-ui#031",
+   "text": "As an open-source maintainer, I keep hitting the same wall with a responsive nav with a mobile drawer. Explain the rendering behavior of it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-frontend-ui#032",
+   "text": "Produce an accessibility checklist for an optimistic-update cart. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-frontend-ui#033",
+   "text": "Explain the rendering behavior of a multi-step form with resumable state."
+  },
+  {
+   "id": "coding-frontend-ui#034",
+   "text": "Write the state-management approach for a file-dropzone with progress. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-frontend-ui#035",
+   "text": "Act as a platform engineer. Design the component API for an infinite-scroll list with keyboard support, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-frontend-ui#036",
+   "text": "Create a design-token mapping for a toast system that doesn’t stack infinitely. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-frontend-ui#037",
+   "text": "I’m working on an optimistic-update cart. Write the state-management approach for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-frontend-ui#038",
+   "text": "Create a design-token mapping for a file-dropzone with progress for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-frontend-ui#039",
+   "text": "Explain the rendering behavior of a drag-and-drop kanban board. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-frontend-ui#040",
+   "text": "Help me with an infinite-scroll list with keyboard support: write a progressive-enhancement plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-frontend-ui#041",
+   "text": "Draft the edge-case test list for a skeleton-loading pattern that avoids jank. Use a empathetic tone throughout."
+  },
+  {
+   "id": "coding-frontend-ui#042",
+   "text": "You are an accessibility-minded frontend engineer. Design the component API for a dark-mode token strategy and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-frontend-ui#043",
+   "text": "Refactor for performance in a drag-and-drop kanban board. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-frontend-ui#044",
+   "text": "Before I start on a dark-mode token strategy, refactor for performance in it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-frontend-ui#045",
+   "text": "Refactor for performance in an optimistic-update cart. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-frontend-ui#046",
+   "text": "Refactor for performance in an infinite-scroll list with keyboard support. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-frontend-ui#047",
+   "text": "As an accessibility-minded frontend engineer, I keep hitting the same wall with a form-validation UX for long forms. Produce an accessibility checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-frontend-ui#048",
+   "text": "Refactor for performance in a file-dropzone with progress. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-frontend-ui#049",
+   "text": "Refactor for performance in a toast system that doesn’t stack infinitely."
+  },
+  {
+   "id": "coding-frontend-ui#050",
+   "text": "Write the state-management approach for a dark-mode token strategy. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-frontend-ui#051",
+   "text": "Act as a platform engineer. Write a progressive-enhancement plan for a responsive nav with a mobile drawer, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-frontend-ui#052",
+   "text": "Design the component API for an optimistic-update cart. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-frontend-ui#053",
+   "text": "I’m working on a table with sticky headers and sorting. Refactor for performance in it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-frontend-ui#054",
+   "text": "Write a progressive-enhancement plan for a skeleton-loading pattern that avoids jank for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-frontend-ui#055",
+   "text": "Design the component API for a file-dropzone with progress. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-frontend-ui#056",
+   "text": "Help me with a skeleton-loading pattern that avoids jank: explain the rendering behavior of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-frontend-ui#057",
+   "text": "Write the state-management approach for an accessible modal focus trap. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-frontend-ui#058",
+   "text": "You are an open-source maintainer. Draft the edge-case test list for a toast system that doesn’t stack infinitely and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-frontend-ui#059",
+   "text": "Create a design-token mapping for a drag-and-drop kanban board. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-frontend-ui#060",
+   "text": "Before I start on an infinite-scroll list with keyboard support, create a design-token mapping for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-frontend-ui#061",
+   "text": "Refactor for performance in a multi-step form with resumable state. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-frontend-ui#062",
+   "text": "Produce an accessibility checklist for a skeleton-loading pattern that avoids jank. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-frontend-ui#063",
+   "text": "As an accessibility-minded frontend engineer, I keep hitting the same wall with a skeleton-loading pattern that avoids jank. Write the state-management approach for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-frontend-ui#064",
+   "text": "Design the component API for a drag-and-drop kanban board. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-frontend-ui#065",
+   "text": "Design the component API for a toast system that doesn’t stack infinitely."
+  },
+  {
+   "id": "coding-frontend-ui#066",
+   "text": "Design the component API for a responsive nav with a mobile drawer. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-frontend-ui#067",
+   "text": "Act as a staff engineer. Write a progressive-enhancement plan for a dark-mode token strategy, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-frontend-ui#068",
+   "text": "Refactor for performance in an accessible modal focus trap. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-frontend-ui#069",
+   "text": "I’m working on a responsive nav with a mobile drawer. Write the state-management approach for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-frontend-ui#070",
+   "text": "Write the state-management approach for an infinite-scroll list with keyboard support for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-frontend-ui#071",
+   "text": "Design the component API for a multi-step form with resumable state. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-frontend-ui#072",
+   "text": "Help me with a drag-and-drop kanban board: draft the edge-case test list for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-frontend-ui#073",
+   "text": "Produce an accessibility checklist for an accessible modal focus trap. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-frontend-ui#074",
+   "text": "You are a code reviewer on a large codebase. Create a design-token mapping for a multi-step form with resumable state and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-frontend-ui#075",
+   "text": "Write the state-management approach for a form-validation UX for long forms. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-frontend-ui#076",
+   "text": "Before I start on a skeleton-loading pattern that avoids jank, design the component API for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-frontend-ui#077",
+   "text": "Draft the edge-case test list for an accessible modal focus trap. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-frontend-ui#078",
+   "text": "Design the component API for an accessible modal focus trap. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-frontend-ui#079",
+   "text": "As an accessibility-minded frontend engineer, I keep hitting the same wall with a skeleton-loading pattern that avoids jank. Refactor for performance in it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-frontend-ui#080",
+   "text": "Create a design-token mapping for a skeleton-loading pattern that avoids jank. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-frontend-ui#081",
+   "text": "Explain the rendering behavior of an optimistic-update cart."
+  },
+  {
+   "id": "coding-frontend-ui#082",
+   "text": "Write the state-management approach for a table with sticky headers and sorting. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-frontend-ui#083",
+   "text": "Act as a code reviewer on a large codebase. Explain the rendering behavior of a form-validation UX for long forms, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-frontend-ui#084",
+   "text": "Draft the edge-case test list for an optimistic-update cart. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-frontend-ui#085",
+   "text": "I’m working on a dark-mode token strategy. Draft the edge-case test list for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-frontend-ui#086",
+   "text": "Draft the edge-case test list for a multi-step form with resumable state for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-frontend-ui#087",
+   "text": "Write a progressive-enhancement plan for an optimistic-update cart. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-frontend-ui#088",
+   "text": "Help me with a responsive nav with a mobile drawer: draft the edge-case test list for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-frontend-ui#089",
+   "text": "Write a progressive-enhancement plan for an accessible modal focus trap. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-frontend-ui#090",
+   "text": "You are a code reviewer on a large codebase. Explain the rendering behavior of an accessible modal focus trap and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-frontend-ui#091",
+   "text": "Produce an accessibility checklist for a dark-mode token strategy. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-frontend-ui#092",
+   "text": "Before I start on a table with sticky headers and sorting, design the component API for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-frontend-ui#093",
+   "text": "Create a design-token mapping for a responsive nav with a mobile drawer. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-frontend-ui#094",
+   "text": "Draft the edge-case test list for a form-validation UX for long forms. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-frontend-ui#095",
+   "text": "As an accessibility-minded frontend engineer, I keep hitting the same wall with a form-validation UX for long forms. Refactor for performance in it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-frontend-ui#096",
+   "text": "Create a design-token mapping for a dark-mode token strategy. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-frontend-ui#097",
+   "text": "Write a progressive-enhancement plan for a file-dropzone with progress. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-frontend-ui#098",
+   "text": "Explain the rendering behavior of a dark-mode token strategy. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-frontend-ui#099",
+   "text": "Produce an accessibility checklist for a multi-step form with resumable state."
+  },
+  {
+   "id": "coding-frontend-ui#100",
+   "text": "Write a progressive-enhancement plan for a table with sticky headers and sorting."
+  },
+  {
+   "id": "coding-frontend-ui#101",
+   "text": "Write a progressive-enhancement plan for a form-validation UX for long forms."
+  },
+  {
+   "id": "coding-frontend-ui#102",
+   "text": "Create a design-token mapping for a table with sticky headers and sorting."
+  },
+  {
+   "id": "coding-frontend-ui#103",
+   "text": "Create a design-token mapping for a form-validation UX for long forms."
+  },
+  {
+   "id": "coding-frontend-ui#104",
+   "text": "Explain the rendering behavior of a toast system that doesn’t stack infinitely."
+  }
+ ]
+}

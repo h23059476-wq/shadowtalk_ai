@@ -1,0 +1,430 @@
+{
+ "slug": "design-brand-identity",
+ "categorySlug": "design",
+ "category": "Design & Visual",
+ "title": "Brand Identity",
+ "description": "Logos, palettes, and identity systems from brief to guidelines.",
+ "tags": [
+  "brand",
+  "identity",
+  "logo"
+ ],
+ "prompts": [
+  {
+   "id": "design-brand-identity#001",
+   "text": "Critique an existing identity concept for an artisan bakery named Hearth."
+  },
+  {
+   "id": "design-brand-identity#002",
+   "text": "Critique an existing identity concept for a plant-delivery service called Sprout Post. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-brand-identity#003",
+   "text": "Act as a photographer and retoucher. Propose color palettes with hex values and rationale for a yoga studio called Stillpoint, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-brand-identity#004",
+   "text": "Design a stationery and asset list for a design agency named North Studio. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-brand-identity#005",
+   "text": "I’m working on a robotics startup named Vector Works. Design a stationery and asset list for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-brand-identity#006",
+   "text": "Critique an existing identity concept for a hiking-gear brand called Trailhead Supply for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-brand-identity#007",
+   "text": "Write do-and-don’t usage guidelines for a jazz lounge named The Blue Hour. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-brand-identity#008",
+   "text": "Help me with a fintech app called Loop: critique an existing identity concept for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-brand-identity#009",
+   "text": "Write do-and-don’t usage guidelines for a children’s bookstore called The Paper Fox. Use a empathetic tone throughout."
+  },
+  {
+   "id": "design-brand-identity#010",
+   "text": "You are a design-systems maintainer. Critique an existing identity concept for a jazz lounge named The Blue Hour and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-brand-identity#011",
+   "text": "Generate logo concept directions for a design agency named North Studio. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-brand-identity#012",
+   "text": "Before I start on a board-game cafe named Meeple House, write a creative brief for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-brand-identity#013",
+   "text": "Recommend typeface pairings with reasoning for a design agency named North Studio. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-brand-identity#014",
+   "text": "Draft a mood-board description for a design agency named North Studio. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-brand-identity#015",
+   "text": "As a creative director, I keep hitting the same wall with a robotics startup named Vector Works. Write a creative brief for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-brand-identity#016",
+   "text": "Critique an existing identity concept for a yoga studio called Stillpoint. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-brand-identity#017",
+   "text": "Write do-and-don’t usage guidelines for a coffee roastery named Copper & Fern."
+  },
+  {
+   "id": "design-brand-identity#018",
+   "text": "Design a stationery and asset list for a coffee roastery named Copper & Fern. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-brand-identity#019",
+   "text": "Act as a motion designer. Propose color palettes with hex values and rationale for a coffee roastery named Copper & Fern, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-brand-identity#020",
+   "text": "Design a stationery and asset list for a cleaning service called Fresh Start. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-brand-identity#021",
+   "text": "I’m working on a hiking-gear brand called Trailhead Supply. Write a creative brief for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-brand-identity#022",
+   "text": "Propose color palettes with hex values and rationale for a hiking-gear brand called Trailhead Supply for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-brand-identity#023",
+   "text": "Recommend typeface pairings with reasoning for a yoga studio called Stillpoint. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-brand-identity#024",
+   "text": "Help me with a design agency named North Studio: write a creative brief for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-brand-identity#025",
+   "text": "Recommend typeface pairings with reasoning for a fintech app called Loop. Use a friendly tone throughout."
+  },
+  {
+   "id": "design-brand-identity#026",
+   "text": "You are a brand designer. Draft a mood-board description for a cleaning service called Fresh Start and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-brand-identity#027",
+   "text": "Propose color palettes with hex values and rationale for a design agency named North Studio. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-brand-identity#028",
+   "text": "Before I start on a fintech app called Loop, draft a mood-board description for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-brand-identity#029",
+   "text": "Critique an existing identity concept for a cleaning service called Fresh Start. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-brand-identity#030",
+   "text": "Critique an existing identity concept for a children’s bookstore called The Paper Fox. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-brand-identity#031",
+   "text": "As a photographer and retoucher, I keep hitting the same wall with a children’s bookstore called The Paper Fox. Write a creative brief for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-brand-identity#032",
+   "text": "Write do-and-don’t usage guidelines for an artisan bakery named Hearth. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-brand-identity#033",
+   "text": "Write do-and-don’t usage guidelines for a robotics startup named Vector Works."
+  },
+  {
+   "id": "design-brand-identity#034",
+   "text": "Recommend typeface pairings with reasoning for a robotics startup named Vector Works. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-brand-identity#035",
+   "text": "Act as a product designer with systems experience. Generate logo concept directions for a hiking-gear brand called Trailhead Supply, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-brand-identity#036",
+   "text": "Generate logo concept directions for a robotics startup named Vector Works. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-brand-identity#037",
+   "text": "I’m working on a robotics startup named Vector Works. Propose color palettes with hex values and rationale for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-brand-identity#038",
+   "text": "Write a creative brief for a cleaning service called Fresh Start for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-brand-identity#039",
+   "text": "Critique an existing identity concept for a robotics startup named Vector Works. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-brand-identity#040",
+   "text": "Help me with a board-game cafe named Meeple House: design a stationery and asset list for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-brand-identity#041",
+   "text": "Propose color palettes with hex values and rationale for a jazz lounge named The Blue Hour. Use a friendly tone throughout."
+  },
+  {
+   "id": "design-brand-identity#042",
+   "text": "You are a product designer with systems experience. Write a creative brief for an artisan bakery named Hearth and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-brand-identity#043",
+   "text": "Propose color palettes with hex values and rationale for a children’s bookstore called The Paper Fox. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-brand-identity#044",
+   "text": "Before I start on a coffee roastery named Copper & Fern, generate logo concept directions for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-brand-identity#045",
+   "text": "Propose color palettes with hex values and rationale for a board-game cafe named Meeple House. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-brand-identity#046",
+   "text": "Critique an existing identity concept for a coffee roastery named Copper & Fern. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-brand-identity#047",
+   "text": "As a photographer and retoucher, I keep hitting the same wall with a plant-delivery service called Sprout Post. Write a creative brief for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-brand-identity#048",
+   "text": "Write do-and-don’t usage guidelines for a plant-delivery service called Sprout Post. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-brand-identity#049",
+   "text": "Recommend typeface pairings with reasoning for an artisan bakery named Hearth."
+  },
+  {
+   "id": "design-brand-identity#050",
+   "text": "Recommend typeface pairings with reasoning for a hiking-gear brand called Trailhead Supply. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-brand-identity#051",
+   "text": "Act as a creative director. Write a creative brief for a jazz lounge named The Blue Hour, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-brand-identity#052",
+   "text": "Recommend typeface pairings with reasoning for a jazz lounge named The Blue Hour. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-brand-identity#053",
+   "text": "I’m working on a yoga studio called Stillpoint. Draft a mood-board description for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-brand-identity#054",
+   "text": "Propose color palettes with hex values and rationale for a fintech app called Loop for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-brand-identity#055",
+   "text": "Critique an existing identity concept for a board-game cafe named Meeple House. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-brand-identity#056",
+   "text": "Help me with an artisan bakery named Hearth: design a stationery and asset list for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-brand-identity#057",
+   "text": "Propose color palettes with hex values and rationale for an artisan bakery named Hearth. Use a formal tone throughout."
+  },
+  {
+   "id": "design-brand-identity#058",
+   "text": "You are a creative director. Write do-and-don’t usage guidelines for a board-game cafe named Meeple House and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-brand-identity#059",
+   "text": "Write do-and-don’t usage guidelines for a yoga studio called Stillpoint. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-brand-identity#060",
+   "text": "Before I start on a children’s bookstore called The Paper Fox, design a stationery and asset list for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-brand-identity#061",
+   "text": "Draft a mood-board description for a coffee roastery named Copper & Fern. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-brand-identity#062",
+   "text": "Write a creative brief for a coffee roastery named Copper & Fern. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-brand-identity#063",
+   "text": "As a creative director, I keep hitting the same wall with a cleaning service called Fresh Start. Generate logo concept directions for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-brand-identity#064",
+   "text": "Write do-and-don’t usage guidelines for a hiking-gear brand called Trailhead Supply. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-brand-identity#065",
+   "text": "Propose color palettes with hex values and rationale for a cleaning service called Fresh Start."
+  },
+  {
+   "id": "design-brand-identity#066",
+   "text": "Generate logo concept directions for a fintech app called Loop. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-brand-identity#067",
+   "text": "Act as a design-systems maintainer. Draft a mood-board description for an artisan bakery named Hearth, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-brand-identity#068",
+   "text": "Write a creative brief for a fintech app called Loop. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-brand-identity#069",
+   "text": "I’m working on a board-game cafe named Meeple House. Generate logo concept directions for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-brand-identity#070",
+   "text": "Design a stationery and asset list for a jazz lounge named The Blue Hour for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-brand-identity#071",
+   "text": "Design a stationery and asset list for a yoga studio called Stillpoint. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-brand-identity#072",
+   "text": "Help me with a board-game cafe named Meeple House: draft a mood-board description for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-brand-identity#073",
+   "text": "Design a stationery and asset list for a fintech app called Loop. Use a friendly tone throughout."
+  },
+  {
+   "id": "design-brand-identity#074",
+   "text": "You are a presentation designer. Generate logo concept directions for a plant-delivery service called Sprout Post and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-brand-identity#075",
+   "text": "Write do-and-don’t usage guidelines for a design agency named North Studio. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-brand-identity#076",
+   "text": "Before I start on a jazz lounge named The Blue Hour, draft a mood-board description for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-brand-identity#077",
+   "text": "Generate logo concept directions for a yoga studio called Stillpoint. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-brand-identity#078",
+   "text": "Generate logo concept directions for an artisan bakery named Hearth. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-brand-identity#079",
+   "text": "As a photographer and retoucher, I keep hitting the same wall with a plant-delivery service called Sprout Post. Design a stationery and asset list for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-brand-identity#080",
+   "text": "Recommend typeface pairings with reasoning for a plant-delivery service called Sprout Post. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-brand-identity#081",
+   "text": "Generate logo concept directions for a jazz lounge named The Blue Hour."
+  },
+  {
+   "id": "design-brand-identity#082",
+   "text": "Recommend typeface pairings with reasoning for a cleaning service called Fresh Start. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "design-brand-identity#083",
+   "text": "Act as a product designer with systems experience. Design a stationery and asset list for a hiking-gear brand called Trailhead Supply, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "design-brand-identity#084",
+   "text": "Generate logo concept directions for a children’s bookstore called The Paper Fox. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "design-brand-identity#085",
+   "text": "I’m working on a children’s bookstore called The Paper Fox. Recommend typeface pairings with reasoning for it and explain your reasoning as you go."
+  },
+  {
+   "id": "design-brand-identity#086",
+   "text": "Recommend typeface pairings with reasoning for a coffee roastery named Copper & Fern for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "design-brand-identity#087",
+   "text": "Draft a mood-board description for a children’s bookstore called The Paper Fox. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-brand-identity#088",
+   "text": "Help me with a board-game cafe named Meeple House: recommend typeface pairings with reasoning for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "design-brand-identity#089",
+   "text": "Write do-and-don’t usage guidelines for a fintech app called Loop. Use a friendly tone throughout."
+  },
+  {
+   "id": "design-brand-identity#090",
+   "text": "You are a photographer and retoucher. Critique an existing identity concept for a design agency named North Studio and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "design-brand-identity#091",
+   "text": "Propose color palettes with hex values and rationale for a plant-delivery service called Sprout Post. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "design-brand-identity#092",
+   "text": "Before I start on a cleaning service called Fresh Start, write do-and-don’t usage guidelines for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "design-brand-identity#093",
+   "text": "Draft a mood-board description for a plant-delivery service called Sprout Post. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "design-brand-identity#094",
+   "text": "Draft a mood-board description for a robotics startup named Vector Works. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "design-brand-identity#095",
+   "text": "As a photographer and retoucher, I keep hitting the same wall with a hiking-gear brand called Trailhead Supply. Draft a mood-board description for it and show me what I’m probably missing."
+  },
+  {
+   "id": "design-brand-identity#096",
+   "text": "Write a creative brief for a yoga studio called Stillpoint. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "design-brand-identity#097",
+   "text": "Critique an existing identity concept for an artisan bakery named Hearth. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-brand-identity#098",
+   "text": "Critique an existing identity concept for a plant-delivery service called Sprout Post. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "design-brand-identity#099",
+   "text": "Propose color palettes with hex values and rationale for a yoga studio called Stillpoint."
+  },
+  {
+   "id": "design-brand-identity#100",
+   "text": "Design a stationery and asset list for a design agency named North Studio."
+  },
+  {
+   "id": "design-brand-identity#101",
+   "text": "Design a stationery and asset list for a robotics startup named Vector Works."
+  },
+  {
+   "id": "design-brand-identity#102",
+   "text": "Critique an existing identity concept for a hiking-gear brand called Trailhead Supply."
+  },
+  {
+   "id": "design-brand-identity#103",
+   "text": "Write do-and-don’t usage guidelines for a jazz lounge named The Blue Hour."
+  },
+  {
+   "id": "design-brand-identity#104",
+   "text": "Critique an existing identity concept for a fintech app called Loop."
+  }
+ ]
+}

@@ -1,0 +1,430 @@
+{
+ "slug": "productivity-daily-planning",
+ "categorySlug": "productivity",
+ "category": "Productivity & Habits",
+ "title": "Daily Planning",
+ "description": "Morning setups, priorities, and shutdown rituals.",
+ "tags": [
+  "planning",
+  "routine",
+  "focus"
+ ],
+ "prompts": [
+  {
+   "id": "productivity-daily-planning#001",
+   "text": "Create a minimum-viable version of a morning routine for non-morning people."
+  },
+  {
+   "id": "productivity-daily-planning#002",
+   "text": "Write a realistic hourly plan for a night-owl-friendly schedule. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-daily-planning#003",
+   "text": "Act as a minimalist systems tinkerer. Create a minimum-viable version of a three-priority rule for overloaded days, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-daily-planning#004",
+   "text": "Design a repeatable template for a study-day structure with breaks. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-daily-planning#005",
+   "text": "I’m working on a job-search daily plan. Design a repeatable template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-daily-planning#006",
+   "text": "Create a minimum-viable version of a two-hour deep-work block before meetings for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-daily-planning#007",
+   "text": "Create a minimum-viable version of a job-search daily plan. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-daily-planning#008",
+   "text": "Help me with a travel-day task list: write a realistic hourly plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-daily-planning#009",
+   "text": "Write a realistic hourly plan for a study-day structure with breaks. Use a friendly tone throughout."
+  },
+  {
+   "id": "productivity-daily-planning#010",
+   "text": "You are a project manager. Explain how to prioritize within a two-hour deep-work block before meetings and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-daily-planning#011",
+   "text": "Explain how to prioritize within a Monday morning planning ritual. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-daily-planning#012",
+   "text": "Before I start on a Friday-review template, list the failure modes and fixes for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-daily-planning#013",
+   "text": "Draft a checklist version of a reset routine after a chaotic week. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-daily-planning#014",
+   "text": "List the failure modes and fixes for a job-search daily plan. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-daily-planning#015",
+   "text": "As a librarian of tidy systems, I keep hitting the same wall with a study-day structure with breaks. List the failure modes and fixes for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-daily-planning#016",
+   "text": "Explain how to prioritize within a morning routine for non-morning people. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-daily-planning#017",
+   "text": "Explain how to prioritize within a study-day structure with breaks."
+  },
+  {
+   "id": "productivity-daily-planning#018",
+   "text": "Design a repeatable template for a three-priority rule for overloaded days. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-daily-planning#019",
+   "text": "Act as a behavior-design researcher. Write a gentle restart plan after missing a reset routine after a chaotic week, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-daily-planning#020",
+   "text": "Draft a checklist version of a morning routine for non-morning people. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-daily-planning#021",
+   "text": "I’m working on a study-day structure with breaks. Create a minimum-viable version of it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-daily-planning#022",
+   "text": "List the failure modes and fixes for a three-priority rule for overloaded days for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-daily-planning#023",
+   "text": "Draft a checklist version of a Monday morning planning ritual. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-daily-planning#024",
+   "text": "Help me with planning around unpredictable childcare: draft a checklist version of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-daily-planning#025",
+   "text": "Draft a checklist version of a travel-day task list. Use a formal tone throughout."
+  },
+  {
+   "id": "productivity-daily-planning#026",
+   "text": "You are a remote-work veteran. Design a weekly review that feeds into a study-day structure with breaks and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-daily-planning#027",
+   "text": "Create a minimum-viable version of a Monday morning planning ritual. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-daily-planning#028",
+   "text": "Before I start on a night-owl-friendly schedule, create a minimum-viable version of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-daily-planning#029",
+   "text": "List the failure modes and fixes for a shutdown routine that ends work rumination. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-daily-planning#030",
+   "text": "Write a realistic hourly plan for a three-priority rule for overloaded days. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-daily-planning#031",
+   "text": "As a recovery-focused therapist-adjacent coach, I keep hitting the same wall with a reset routine after a chaotic week. List the failure modes and fixes for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-daily-planning#032",
+   "text": "List the failure modes and fixes for a Monday morning planning ritual. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-daily-planning#033",
+   "text": "Write a gentle restart plan after missing planning around unpredictable childcare."
+  },
+  {
+   "id": "productivity-daily-planning#034",
+   "text": "Design a weekly review that feeds into a Monday morning planning ritual. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-daily-planning#035",
+   "text": "Act as a remote-work veteran. Design a weekly review that feeds into a travel-day task list, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-daily-planning#036",
+   "text": "Draft a checklist version of a job-search daily plan. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-daily-planning#037",
+   "text": "I’m working on a three-priority rule for overloaded days. Draft a checklist version of it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-daily-planning#038",
+   "text": "Explain how to prioritize within a night-owl-friendly schedule for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-daily-planning#039",
+   "text": "Design a weekly review that feeds into a shutdown routine that ends work rumination. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-daily-planning#040",
+   "text": "Help me with a shutdown routine that ends work rumination: explain how to prioritize within it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-daily-planning#041",
+   "text": "Design a weekly review that feeds into a reset routine after a chaotic week. Use a direct tone throughout."
+  },
+  {
+   "id": "productivity-daily-planning#042",
+   "text": "You are a librarian of tidy systems. Write a realistic hourly plan for a Monday morning planning ritual and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-daily-planning#043",
+   "text": "Create a minimum-viable version of planning around unpredictable childcare. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-daily-planning#044",
+   "text": "Before I start on a travel-day task list, list the failure modes and fixes for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-daily-planning#045",
+   "text": "Write a gentle restart plan after missing a three-priority rule for overloaded days. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-daily-planning#046",
+   "text": "Draft a checklist version of a shutdown routine that ends work rumination. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-daily-planning#047",
+   "text": "As a recovery-focused therapist-adjacent coach, I keep hitting the same wall with a reset routine after a chaotic week. Design a repeatable template for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-daily-planning#048",
+   "text": "Write a realistic hourly plan for a job-search daily plan. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-daily-planning#049",
+   "text": "Create a minimum-viable version of a Friday-review template."
+  },
+  {
+   "id": "productivity-daily-planning#050",
+   "text": "Create a minimum-viable version of a travel-day task list. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-daily-planning#051",
+   "text": "Act as a recovery-focused therapist-adjacent coach. Design a weekly review that feeds into a morning routine for non-morning people, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-daily-planning#052",
+   "text": "Explain how to prioritize within a three-priority rule for overloaded days. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-daily-planning#053",
+   "text": "I’m working on a night-owl-friendly schedule. List the failure modes and fixes for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-daily-planning#054",
+   "text": "Design a repeatable template for a Monday morning planning ritual for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-daily-planning#055",
+   "text": "Design a weekly review that feeds into a two-hour deep-work block before meetings. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-daily-planning#056",
+   "text": "Help me with a two-hour deep-work block before meetings: draft a checklist version of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-daily-planning#057",
+   "text": "Write a gentle restart plan after missing a job-search daily plan. Use a encouraging tone throughout."
+  },
+  {
+   "id": "productivity-daily-planning#058",
+   "text": "You are a remote-work veteran. Write a gentle restart plan after missing a study-day structure with breaks and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-daily-planning#059",
+   "text": "Create a minimum-viable version of a reset routine after a chaotic week. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-daily-planning#060",
+   "text": "Before I start on a night-owl-friendly schedule, draft a checklist version of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-daily-planning#061",
+   "text": "Write a gentle restart plan after missing a travel-day task list. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-daily-planning#062",
+   "text": "Draft a checklist version of a Friday-review template. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-daily-planning#063",
+   "text": "As a behavior-design researcher, I keep hitting the same wall with a morning routine for non-morning people. List the failure modes and fixes for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-daily-planning#064",
+   "text": "Design a repeatable template for a two-hour deep-work block before meetings. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-daily-planning#065",
+   "text": "Design a weekly review that feeds into a three-priority rule for overloaded days."
+  },
+  {
+   "id": "productivity-daily-planning#066",
+   "text": "Write a realistic hourly plan for a reset routine after a chaotic week. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-daily-planning#067",
+   "text": "Act as a recovery-focused therapist-adjacent coach. Write a gentle restart plan after missing a Friday-review template, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-daily-planning#068",
+   "text": "Explain how to prioritize within a reset routine after a chaotic week. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-daily-planning#069",
+   "text": "I’m working on a two-hour deep-work block before meetings. Write a realistic hourly plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-daily-planning#070",
+   "text": "Design a repeatable template for a travel-day task list for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-daily-planning#071",
+   "text": "Explain how to prioritize within planning around unpredictable childcare. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-daily-planning#072",
+   "text": "Help me with a shutdown routine that ends work rumination: write a realistic hourly plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-daily-planning#073",
+   "text": "Write a gentle restart plan after missing a Monday morning planning ritual. Use a professional tone throughout."
+  },
+  {
+   "id": "productivity-daily-planning#074",
+   "text": "You are a librarian of tidy systems. Write a realistic hourly plan for a Friday-review template and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-daily-planning#075",
+   "text": "Write a gentle restart plan after missing a morning routine for non-morning people. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-daily-planning#076",
+   "text": "Before I start on a Friday-review template, design a repeatable template for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-daily-planning#077",
+   "text": "Design a repeatable template for a morning routine for non-morning people. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-daily-planning#078",
+   "text": "Design a weekly review that feeds into a job-search daily plan. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-daily-planning#079",
+   "text": "As a minimalist systems tinkerer, I keep hitting the same wall with a night-owl-friendly schedule. Design a weekly review that feeds into it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-daily-planning#080",
+   "text": "Write a realistic hourly plan for planning around unpredictable childcare. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-daily-planning#081",
+   "text": "Design a weekly review that feeds into planning around unpredictable childcare."
+  },
+  {
+   "id": "productivity-daily-planning#082",
+   "text": "Write a gentle restart plan after missing a night-owl-friendly schedule. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-daily-planning#083",
+   "text": "Act as a recovery-focused therapist-adjacent coach. Write a realistic hourly plan for a morning routine for non-morning people, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-daily-planning#084",
+   "text": "List the failure modes and fixes for planning around unpredictable childcare. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-daily-planning#085",
+   "text": "I’m working on a Friday-review template. Explain how to prioritize within it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-daily-planning#086",
+   "text": "Design a weekly review that feeds into a Friday-review template for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-daily-planning#087",
+   "text": "Design a repeatable template for planning around unpredictable childcare. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-daily-planning#088",
+   "text": "Help me with a shutdown routine that ends work rumination: create a minimum-viable version of it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-daily-planning#089",
+   "text": "Design a repeatable template for a shutdown routine that ends work rumination. Use a direct tone throughout."
+  },
+  {
+   "id": "productivity-daily-planning#090",
+   "text": "You are a behavior-design researcher. Explain how to prioritize within a job-search daily plan and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-daily-planning#091",
+   "text": "Write a gentle restart plan after missing a shutdown routine that ends work rumination. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-daily-planning#092",
+   "text": "Before I start on a night-owl-friendly schedule, design a repeatable template for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-daily-planning#093",
+   "text": "Draft a checklist version of a study-day structure with breaks. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-daily-planning#094",
+   "text": "Explain how to prioritize within a travel-day task list. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-daily-planning#095",
+   "text": "As a remote-work veteran, I keep hitting the same wall with a two-hour deep-work block before meetings. Write a gentle restart plan after missing it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-daily-planning#096",
+   "text": "List the failure modes and fixes for a two-hour deep-work block before meetings. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-daily-planning#097",
+   "text": "Create a minimum-viable version of a morning routine for non-morning people. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-daily-planning#098",
+   "text": "Write a realistic hourly plan for a night-owl-friendly schedule. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-daily-planning#099",
+   "text": "Create a minimum-viable version of a three-priority rule for overloaded days."
+  },
+  {
+   "id": "productivity-daily-planning#100",
+   "text": "Design a repeatable template for a study-day structure with breaks."
+  },
+  {
+   "id": "productivity-daily-planning#101",
+   "text": "Design a repeatable template for a job-search daily plan."
+  },
+  {
+   "id": "productivity-daily-planning#102",
+   "text": "Create a minimum-viable version of a two-hour deep-work block before meetings."
+  },
+  {
+   "id": "productivity-daily-planning#103",
+   "text": "Create a minimum-viable version of a job-search daily plan."
+  },
+  {
+   "id": "productivity-daily-planning#104",
+   "text": "Write a realistic hourly plan for a travel-day task list."
+  }
+ ]
+}

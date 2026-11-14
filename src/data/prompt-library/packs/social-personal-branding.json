@@ -1,0 +1,430 @@
+{
+ "slug": "social-personal-branding",
+ "categorySlug": "social",
+ "category": "Social Media",
+ "title": "Personal Branding",
+ "description": "Positioning, bios, and content pillars for individuals.",
+ "tags": [
+  "brand",
+  "bio",
+  "positioning"
+ ],
+ "prompts": [
+  {
+   "id": "social-personal-branding#001",
+   "text": "Write a positioning statement for a developer with a DevOps niche."
+  },
+  {
+   "id": "social-personal-branding#002",
+   "text": "Draft outreach templates for collaborations for a barista becoming a coffee educator. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-personal-branding#003",
+   "text": "Act as a personal-branding coach. Draft bios for multiple platforms for a barista becoming a coffee educator, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-personal-branding#004",
+   "text": "Design a content-to-offer ladder for a developer with a DevOps niche. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-personal-branding#005",
+   "text": "I’m working on a trainer for desk-bound workers. Draft bios for multiple platforms for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-personal-branding#006",
+   "text": "Write an origin story post for a data analyst becoming a data educator for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-personal-branding#007",
+   "text": "Write a credibility-building plan without spam for a trainer for desk-bound workers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-personal-branding#008",
+   "text": "Help me with a translator building a niche in board games: write a positioning statement for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-personal-branding#009",
+   "text": "Write a credibility-building plan without spam for a teacher creating classroom-resources content. Use a formal tone throughout."
+  },
+  {
+   "id": "social-personal-branding#010",
+   "text": "You are a short-video strategist. Write a positioning statement for a nurse sharing shift-work survival tips and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-personal-branding#011",
+   "text": "Write a positioning statement for a photographer specializing in small businesses. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-personal-branding#012",
+   "text": "Before I start on a trainer for desk-bound workers, write a positioning statement for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-personal-branding#013",
+   "text": "Define three content pillars for a trainer for desk-bound workers. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-personal-branding#014",
+   "text": "Create a ninety-day visibility plan for a financial coach for first-gen earners. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-personal-branding#015",
+   "text": "As a creator-economy analyst, I keep hitting the same wall with a barista becoming a coffee educator. Design a content-to-offer ladder for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-personal-branding#016",
+   "text": "Design a content-to-offer ladder for a financial coach for first-gen earners. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-personal-branding#017",
+   "text": "Create a ninety-day visibility plan for a data analyst becoming a data educator."
+  },
+  {
+   "id": "social-personal-branding#018",
+   "text": "Write a positioning statement for a chef building a recipe newsletter. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-personal-branding#019",
+   "text": "Act as a creator-economy analyst. Draft bios for multiple platforms for a nurse sharing shift-work survival tips, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-personal-branding#020",
+   "text": "Create a ninety-day visibility plan for a lawyer explaining everyday law simply. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-personal-branding#021",
+   "text": "I’m working on a barista becoming a coffee educator. Write an origin story post for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-personal-branding#022",
+   "text": "Write a credibility-building plan without spam for a data analyst becoming a data educator for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-personal-branding#023",
+   "text": "Design a content-to-offer ladder for a trainer for desk-bound workers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-personal-branding#024",
+   "text": "Help me with a designer focused on nonprofit work: write an origin story post for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-personal-branding#025",
+   "text": "Write a credibility-building plan without spam for a barista becoming a coffee educator. Use a direct tone throughout."
+  },
+  {
+   "id": "social-personal-branding#026",
+   "text": "You are a local-business owner. Draft outreach templates for collaborations for a translator building a niche in board games and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-personal-branding#027",
+   "text": "Draft bios for multiple platforms for a financial coach for first-gen earners. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-personal-branding#028",
+   "text": "Before I start on a nurse sharing shift-work survival tips, define three content pillars for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-personal-branding#029",
+   "text": "Define three content pillars for a financial coach for first-gen earners. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-personal-branding#030",
+   "text": "Write a credibility-building plan without spam for a developer with a DevOps niche. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-personal-branding#031",
+   "text": "As a creator-economy analyst, I keep hitting the same wall with a designer focused on nonprofit work. Design a content-to-offer ladder for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-personal-branding#032",
+   "text": "Design a content-to-offer ladder for a photographer specializing in small businesses. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-personal-branding#033",
+   "text": "Define three content pillars for a lawyer explaining everyday law simply."
+  },
+  {
+   "id": "social-personal-branding#034",
+   "text": "Write a credibility-building plan without spam for a chef building a recipe newsletter. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-personal-branding#035",
+   "text": "Act as a personal-branding coach. Define three content pillars for a barista becoming a coffee educator, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-personal-branding#036",
+   "text": "Create a ninety-day visibility plan for a photographer specializing in small businesses. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-personal-branding#037",
+   "text": "I’m working on a designer focused on nonprofit work. Draft bios for multiple platforms for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-personal-branding#038",
+   "text": "Draft outreach templates for collaborations for a teacher creating classroom-resources content for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-personal-branding#039",
+   "text": "Write a credibility-building plan without spam for a translator building a niche in board games. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-personal-branding#040",
+   "text": "Help me with a translator building a niche in board games: draft bios for multiple platforms for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-personal-branding#041",
+   "text": "Write a credibility-building plan without spam for a nurse sharing shift-work survival tips. Use a professional tone throughout."
+  },
+  {
+   "id": "social-personal-branding#042",
+   "text": "You are a local-business owner. Define three content pillars for a translator building a niche in board games and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-personal-branding#043",
+   "text": "Write an origin story post for a trainer for desk-bound workers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-personal-branding#044",
+   "text": "Before I start on a trainer for desk-bound workers, create a ninety-day visibility plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-personal-branding#045",
+   "text": "Create a ninety-day visibility plan for a developer with a DevOps niche. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-personal-branding#046",
+   "text": "Write a credibility-building plan without spam for a designer focused on nonprofit work. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-personal-branding#047",
+   "text": "As a customer-support voice, I keep hitting the same wall with a chef building a recipe newsletter. Draft bios for multiple platforms for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-personal-branding#048",
+   "text": "Write an origin story post for a financial coach for first-gen earners. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-personal-branding#049",
+   "text": "Write a positioning statement for a data analyst becoming a data educator."
+  },
+  {
+   "id": "social-personal-branding#050",
+   "text": "Draft outreach templates for collaborations for a lawyer explaining everyday law simply. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-personal-branding#051",
+   "text": "Act as a personal-branding coach. Write an origin story post for a translator building a niche in board games, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-personal-branding#052",
+   "text": "Write an origin story post for a developer with a DevOps niche. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-personal-branding#053",
+   "text": "I’m working on a lawyer explaining everyday law simply. Write a credibility-building plan without spam for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-personal-branding#054",
+   "text": "Write a positioning statement for a designer focused on nonprofit work for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-personal-branding#055",
+   "text": "Define three content pillars for a developer with a DevOps niche. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-personal-branding#056",
+   "text": "Help me with a designer focused on nonprofit work: define three content pillars for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-personal-branding#057",
+   "text": "Define three content pillars for a chef building a recipe newsletter. Use a empathetic tone throughout."
+  },
+  {
+   "id": "social-personal-branding#058",
+   "text": "You are a community manager. Draft bios for multiple platforms for a teacher creating classroom-resources content and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-personal-branding#059",
+   "text": "Draft bios for multiple platforms for a developer with a DevOps niche. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-personal-branding#060",
+   "text": "Before I start on a data analyst becoming a data educator, define three content pillars for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-personal-branding#061",
+   "text": "Draft outreach templates for collaborations for a nurse sharing shift-work survival tips. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-personal-branding#062",
+   "text": "Draft bios for multiple platforms for a lawyer explaining everyday law simply. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-personal-branding#063",
+   "text": "As a community manager, I keep hitting the same wall with a financial coach for first-gen earners. Write a credibility-building plan without spam for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-personal-branding#064",
+   "text": "Write a positioning statement for a teacher creating classroom-resources content. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-personal-branding#065",
+   "text": "Draft outreach templates for collaborations for a financial coach for first-gen earners."
+  },
+  {
+   "id": "social-personal-branding#066",
+   "text": "Create a ninety-day visibility plan for a barista becoming a coffee educator. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-personal-branding#067",
+   "text": "Act as a customer-support voice. Write an origin story post for a lawyer explaining everyday law simply, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-personal-branding#068",
+   "text": "Define three content pillars for a photographer specializing in small businesses. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-personal-branding#069",
+   "text": "I’m working on a data analyst becoming a data educator. Draft outreach templates for collaborations for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-personal-branding#070",
+   "text": "Create a ninety-day visibility plan for a translator building a niche in board games for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-personal-branding#071",
+   "text": "Write an origin story post for a nurse sharing shift-work survival tips. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-personal-branding#072",
+   "text": "Help me with a teacher creating classroom-resources content: define three content pillars for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-personal-branding#073",
+   "text": "Draft bios for multiple platforms for a data analyst becoming a data educator. Use a encouraging tone throughout."
+  },
+  {
+   "id": "social-personal-branding#074",
+   "text": "You are a creator-economy analyst. Create a ninety-day visibility plan for a chef building a recipe newsletter and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-personal-branding#075",
+   "text": "Write a positioning statement for a financial coach for first-gen earners. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-personal-branding#076",
+   "text": "Before I start on a teacher creating classroom-resources content, design a content-to-offer ladder for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-personal-branding#077",
+   "text": "Write an origin story post for a teacher creating classroom-resources content. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-personal-branding#078",
+   "text": "Design a content-to-offer ladder for a nurse sharing shift-work survival tips. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-personal-branding#079",
+   "text": "As a social media manager, I keep hitting the same wall with a teacher creating classroom-resources content. Create a ninety-day visibility plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-personal-branding#080",
+   "text": "Design a content-to-offer ladder for a translator building a niche in board games. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-personal-branding#081",
+   "text": "Design a content-to-offer ladder for a lawyer explaining everyday law simply."
+  },
+  {
+   "id": "social-personal-branding#082",
+   "text": "Write an origin story post for a chef building a recipe newsletter. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-personal-branding#083",
+   "text": "Act as a community manager. Design a content-to-offer ladder for a chef building a recipe newsletter, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-personal-branding#084",
+   "text": "Design a content-to-offer ladder for a data analyst becoming a data educator. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-personal-branding#085",
+   "text": "I’m working on a trainer for desk-bound workers. Draft outreach templates for collaborations for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-personal-branding#086",
+   "text": "Create a ninety-day visibility plan for a nurse sharing shift-work survival tips for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-personal-branding#087",
+   "text": "Write a credibility-building plan without spam for a photographer specializing in small businesses. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-personal-branding#088",
+   "text": "Help me with a photographer specializing in small businesses: write an origin story post for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-personal-branding#089",
+   "text": "Draft outreach templates for collaborations for a photographer specializing in small businesses. Use a encouraging tone throughout."
+  },
+  {
+   "id": "social-personal-branding#090",
+   "text": "You are a personal-branding coach. Draft bios for multiple platforms for a photographer specializing in small businesses and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-personal-branding#091",
+   "text": "Draft outreach templates for collaborations for a developer with a DevOps niche. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-personal-branding#092",
+   "text": "Before I start on a lawyer explaining everyday law simply, write a positioning statement for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-personal-branding#093",
+   "text": "Create a ninety-day visibility plan for a designer focused on nonprofit work. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-personal-branding#094",
+   "text": "Draft outreach templates for collaborations for a chef building a recipe newsletter. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-personal-branding#095",
+   "text": "As a creator-economy analyst, I keep hitting the same wall with a designer focused on nonprofit work. Draft outreach templates for collaborations for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-personal-branding#096",
+   "text": "Write a positioning statement for a barista becoming a coffee educator. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-personal-branding#097",
+   "text": "Write a positioning statement for a developer with a DevOps niche. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-personal-branding#098",
+   "text": "Draft outreach templates for collaborations for a barista becoming a coffee educator. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-personal-branding#099",
+   "text": "Draft bios for multiple platforms for a barista becoming a coffee educator."
+  },
+  {
+   "id": "social-personal-branding#100",
+   "text": "Design a content-to-offer ladder for a developer with a DevOps niche."
+  },
+  {
+   "id": "social-personal-branding#101",
+   "text": "Draft bios for multiple platforms for a trainer for desk-bound workers."
+  },
+  {
+   "id": "social-personal-branding#102",
+   "text": "Write an origin story post for a data analyst becoming a data educator."
+  },
+  {
+   "id": "social-personal-branding#103",
+   "text": "Write a credibility-building plan without spam for a trainer for desk-bound workers."
+  },
+  {
+   "id": "social-personal-branding#104",
+   "text": "Write a positioning statement for a translator building a niche in board games."
+  }
+ ]
+}

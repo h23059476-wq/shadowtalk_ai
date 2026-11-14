@@ -1,0 +1,430 @@
+{
+ "slug": "ai-coding-with-ai",
+ "categorySlug": "ai",
+ "category": "AI & ShadowTalk",
+ "title": "Coding With AI",
+ "description": "Pair-program in chat: specs, reviews, and safe changes.",
+ "tags": [
+  "coding",
+  "pair programming",
+  "review"
+ ],
+ "prompts": [
+  {
+   "id": "ai-coding-with-ai#001",
+   "text": "Design a spec-first request for converting a notebook into a module."
+  },
+  {
+   "id": "ai-coding-with-ai#002",
+   "text": "Draft a test-first workflow for a refactor plan with checkpoints. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-coding-with-ai#003",
+   "text": "Act as a privacy-conscious technologist. Create a handoff-summary template for getting a second opinion on a bug fix, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-coding-with-ai#004",
+   "text": "Design a checkpoint-and-commit plan for turning a feature idea into a spec. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-coding-with-ai#005",
+   "text": "I’m working on reviewing a pull request description. Design a checkpoint-and-commit plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-coding-with-ai#006",
+   "text": "Produce an explanation-first prompt for generating edge-case lists for a function for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-coding-with-ai#007",
+   "text": "Create a review-my-code instruction with severity levels for explaining unfamiliar code before editing it. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-coding-with-ai#008",
+   "text": "Help me with generating edge-case lists for a function: design a checkpoint-and-commit plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-coding-with-ai#009",
+   "text": "Draft a test-first workflow for a migration with a rollback plan. Use a professional tone throughout."
+  },
+  {
+   "id": "ai-coding-with-ai#010",
+   "text": "You are a privacy-conscious technologist. Write a safe-change checklist for a refactor plan with checkpoints and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-coding-with-ai#011",
+   "text": "Create a handoff-summary template for writing tests before the implementation. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-coding-with-ai#012",
+   "text": "Before I start on writing tests before the implementation, create a review-my-code instruction with severity levels for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-coding-with-ai#013",
+   "text": "Draft a test-first workflow for writing tests before the implementation. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-coding-with-ai#014",
+   "text": "Write a safe-change checklist for a debugging session with hypothesis tracking. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-coding-with-ai#015",
+   "text": "As an indie developer, I keep hitting the same wall with reviewing a pull request description. Produce an explanation-first prompt for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-coding-with-ai#016",
+   "text": "Produce an explanation-first prompt for getting a second opinion on a bug fix. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-coding-with-ai#017",
+   "text": "Draft a test-first workflow for converting a notebook into a module."
+  },
+  {
+   "id": "ai-coding-with-ai#018",
+   "text": "Write a safe-change checklist for turning a feature idea into a spec. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-coding-with-ai#019",
+   "text": "Act as a ShadowTalk power user. Create a review-my-code instruction with severity levels for turning a feature idea into a spec, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-coding-with-ai#020",
+   "text": "Produce an explanation-first prompt for a migration with a rollback plan. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-coding-with-ai#021",
+   "text": "I’m working on a performance investigation plan. Write a safe-change checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-coding-with-ai#022",
+   "text": "Produce an explanation-first prompt for converting a notebook into a module for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-coding-with-ai#023",
+   "text": "Design a spec-first request for reviewing a pull request description. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-coding-with-ai#024",
+   "text": "Help me with generating edge-case lists for a function: create a handoff-summary template for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-coding-with-ai#025",
+   "text": "Design a spec-first request for turning a feature idea into a spec. Use a persuasive tone throughout."
+  },
+  {
+   "id": "ai-coding-with-ai#026",
+   "text": "You are a ShadowTalk power user. Draft a test-first workflow for getting a second opinion on a bug fix and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-coding-with-ai#027",
+   "text": "Write a safe-change checklist for getting a second opinion on a bug fix. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-coding-with-ai#028",
+   "text": "Before I start on designing an API contract together, design a spec-first request for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-coding-with-ai#029",
+   "text": "Write a pairing-session prompt for a migration with a rollback plan. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-coding-with-ai#030",
+   "text": "Create a review-my-code instruction with severity levels for generating edge-case lists for a function. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-coding-with-ai#031",
+   "text": "As an AI-workflow consultant, I keep hitting the same wall with a migration with a rollback plan. Create a handoff-summary template for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-coding-with-ai#032",
+   "text": "Create a review-my-code instruction with severity levels for a performance investigation plan. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-coding-with-ai#033",
+   "text": "Create a review-my-code instruction with severity levels for a migration with a rollback plan."
+  },
+  {
+   "id": "ai-coding-with-ai#034",
+   "text": "Create a review-my-code instruction with severity levels for designing an API contract together. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-coding-with-ai#035",
+   "text": "Act as a privacy-conscious technologist. Design a checkpoint-and-commit plan for getting a second opinion on a bug fix, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-coding-with-ai#036",
+   "text": "Design a spec-first request for a debugging session with hypothesis tracking. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-coding-with-ai#037",
+   "text": "I’m working on a debugging session with hypothesis tracking. Draft a test-first workflow for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-coding-with-ai#038",
+   "text": "Write a safe-change checklist for explaining unfamiliar code before editing it for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-coding-with-ai#039",
+   "text": "Write a safe-change checklist for converting a notebook into a module. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-coding-with-ai#040",
+   "text": "Help me with converting a notebook into a module: write a pairing-session prompt for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-coding-with-ai#041",
+   "text": "Write a pairing-session prompt for turning a feature idea into a spec. Use a persuasive tone throughout."
+  },
+  {
+   "id": "ai-coding-with-ai#042",
+   "text": "You are an indie developer. Design a checkpoint-and-commit plan for converting a notebook into a module and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-coding-with-ai#043",
+   "text": "Produce an explanation-first prompt for designing an API contract together. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-coding-with-ai#044",
+   "text": "Before I start on getting a second opinion on a bug fix, write a pairing-session prompt for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-coding-with-ai#045",
+   "text": "Produce an explanation-first prompt for explaining unfamiliar code before editing it. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-coding-with-ai#046",
+   "text": "Design a checkpoint-and-commit plan for explaining unfamiliar code before editing it. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-coding-with-ai#047",
+   "text": "As a content creator using AI, I keep hitting the same wall with designing an API contract together. Draft a test-first workflow for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-coding-with-ai#048",
+   "text": "Design a spec-first request for explaining unfamiliar code before editing it. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-coding-with-ai#049",
+   "text": "Write a safe-change checklist for writing tests before the implementation."
+  },
+  {
+   "id": "ai-coding-with-ai#050",
+   "text": "Draft a test-first workflow for reviewing a pull request description. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-coding-with-ai#051",
+   "text": "Act as a ShadowTalk power user. Produce an explanation-first prompt for turning a feature idea into a spec, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-coding-with-ai#052",
+   "text": "Design a spec-first request for getting a second opinion on a bug fix. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-coding-with-ai#053",
+   "text": "I’m working on a migration with a rollback plan. Write a safe-change checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-coding-with-ai#054",
+   "text": "Design a checkpoint-and-commit plan for a refactor plan with checkpoints for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-coding-with-ai#055",
+   "text": "Create a handoff-summary template for a debugging session with hypothesis tracking. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-coding-with-ai#056",
+   "text": "Help me with designing an API contract together: design a checkpoint-and-commit plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-coding-with-ai#057",
+   "text": "Create a handoff-summary template for turning a feature idea into a spec. Use a persuasive tone throughout."
+  },
+  {
+   "id": "ai-coding-with-ai#058",
+   "text": "You are a content creator using AI. Design a spec-first request for generating edge-case lists for a function and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-coding-with-ai#059",
+   "text": "Write a pairing-session prompt for writing tests before the implementation. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-coding-with-ai#060",
+   "text": "Before I start on designing an API contract together, write a safe-change checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-coding-with-ai#061",
+   "text": "Create a handoff-summary template for explaining unfamiliar code before editing it. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-coding-with-ai#062",
+   "text": "Produce an explanation-first prompt for a performance investigation plan. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-coding-with-ai#063",
+   "text": "As an AI-workflow consultant, I keep hitting the same wall with a refactor plan with checkpoints. Produce an explanation-first prompt for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-coding-with-ai#064",
+   "text": "Create a review-my-code instruction with severity levels for a debugging session with hypothesis tracking. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-coding-with-ai#065",
+   "text": "Design a checkpoint-and-commit plan for a debugging session with hypothesis tracking."
+  },
+  {
+   "id": "ai-coding-with-ai#066",
+   "text": "Write a safe-change checklist for reviewing a pull request description. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-coding-with-ai#067",
+   "text": "Act as an indie developer. Design a checkpoint-and-commit plan for a migration with a rollback plan, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-coding-with-ai#068",
+   "text": "Draft a test-first workflow for a performance investigation plan. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-coding-with-ai#069",
+   "text": "I’m working on getting a second opinion on a bug fix. Create a review-my-code instruction with severity levels for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-coding-with-ai#070",
+   "text": "Create a handoff-summary template for designing an API contract together for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-coding-with-ai#071",
+   "text": "Design a spec-first request for writing tests before the implementation. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-coding-with-ai#072",
+   "text": "Help me with a refactor plan with checkpoints: create a review-my-code instruction with severity levels for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-coding-with-ai#073",
+   "text": "Create a review-my-code instruction with severity levels for reviewing a pull request description. Use a direct tone throughout."
+  },
+  {
+   "id": "ai-coding-with-ai#074",
+   "text": "You are a teacher of AI literacy. Draft a test-first workflow for turning a feature idea into a spec and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-coding-with-ai#075",
+   "text": "Create a handoff-summary template for reviewing a pull request description. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-coding-with-ai#076",
+   "text": "Before I start on a refactor plan with checkpoints, write a pairing-session prompt for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-coding-with-ai#077",
+   "text": "Design a spec-first request for a performance investigation plan. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-coding-with-ai#078",
+   "text": "Design a checkpoint-and-commit plan for writing tests before the implementation. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-coding-with-ai#079",
+   "text": "As an indie developer, I keep hitting the same wall with explaining unfamiliar code before editing it. Write a pairing-session prompt for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-coding-with-ai#080",
+   "text": "Draft a test-first workflow for generating edge-case lists for a function. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-coding-with-ai#081",
+   "text": "Draft a test-first workflow for explaining unfamiliar code before editing it."
+  },
+  {
+   "id": "ai-coding-with-ai#082",
+   "text": "Design a spec-first request for a refactor plan with checkpoints. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-coding-with-ai#083",
+   "text": "Act as an indie developer. Write a pairing-session prompt for a performance investigation plan, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-coding-with-ai#084",
+   "text": "Write a pairing-session prompt for designing an API contract together. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-coding-with-ai#085",
+   "text": "I’m working on a debugging session with hypothesis tracking. Produce an explanation-first prompt for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-coding-with-ai#086",
+   "text": "Design a checkpoint-and-commit plan for a performance investigation plan for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-coding-with-ai#087",
+   "text": "Create a review-my-code instruction with severity levels for converting a notebook into a module. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-coding-with-ai#088",
+   "text": "Help me with a migration with a rollback plan: design a spec-first request for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-coding-with-ai#089",
+   "text": "Write a pairing-session prompt for generating edge-case lists for a function. Use a friendly tone throughout."
+  },
+  {
+   "id": "ai-coding-with-ai#090",
+   "text": "You are a privacy-conscious technologist. Create a handoff-summary template for a refactor plan with checkpoints and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-coding-with-ai#091",
+   "text": "Produce an explanation-first prompt for writing tests before the implementation. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-coding-with-ai#092",
+   "text": "Before I start on converting a notebook into a module, create a handoff-summary template for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-coding-with-ai#093",
+   "text": "Write a pairing-session prompt for a debugging session with hypothesis tracking. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-coding-with-ai#094",
+   "text": "Create a handoff-summary template for a performance investigation plan. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-coding-with-ai#095",
+   "text": "As an indie developer, I keep hitting the same wall with reviewing a pull request description. Write a pairing-session prompt for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-coding-with-ai#096",
+   "text": "Write a safe-change checklist for generating edge-case lists for a function. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-coding-with-ai#097",
+   "text": "Design a spec-first request for converting a notebook into a module. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-coding-with-ai#098",
+   "text": "Draft a test-first workflow for a refactor plan with checkpoints. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-coding-with-ai#099",
+   "text": "Create a handoff-summary template for getting a second opinion on a bug fix."
+  },
+  {
+   "id": "ai-coding-with-ai#100",
+   "text": "Design a checkpoint-and-commit plan for turning a feature idea into a spec."
+  },
+  {
+   "id": "ai-coding-with-ai#101",
+   "text": "Design a checkpoint-and-commit plan for reviewing a pull request description."
+  },
+  {
+   "id": "ai-coding-with-ai#102",
+   "text": "Produce an explanation-first prompt for generating edge-case lists for a function."
+  },
+  {
+   "id": "ai-coding-with-ai#103",
+   "text": "Create a review-my-code instruction with severity levels for explaining unfamiliar code before editing it."
+  },
+  {
+   "id": "ai-coding-with-ai#104",
+   "text": "Design a checkpoint-and-commit plan for generating edge-case lists for a function."
+  }
+ ]
+}

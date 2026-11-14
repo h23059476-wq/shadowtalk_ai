@@ -1,0 +1,430 @@
+{
+ "slug": "coding-debugging",
+ "categorySlug": "coding",
+ "category": "Coding & Development",
+ "title": "Debugging",
+ "description": "Hypothesis-driven debugging plans for the bugs that won't reproduce.",
+ "tags": [
+  "debugging",
+  "root-cause",
+  "errors"
+ ],
+ "prompts": [
+  {
+   "id": "coding-debugging#001",
+   "text": "Create a post-fix regression test for a cron job skipping runs silently."
+  },
+  {
+   "id": "coding-debugging#002",
+   "text": "Explain how to confirm the fix for a race condition in a websocket reconnect. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-debugging#003",
+   "text": "Act as a developer-education author. List the five most likely root causes of a floating-point total off by a cent, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-debugging#004",
+   "text": "Design the smallest reproduction case for a file upload truncating at 5MB. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-debugging#005",
+   "text": "I’m working on a date bug around daylight-saving boundaries. Write an incident-summary template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-debugging#006",
+   "text": "Design the smallest reproduction case for an API route that times out only in production for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-debugging#007",
+   "text": "Write the logging and instrumentation to add for a database deadlock under sale-hour load. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-debugging#008",
+   "text": "Help me with a cron job skipping runs silently: design the smallest reproduction case for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-debugging#009",
+   "text": "Design the smallest reproduction case for an intermittent 401 after token refresh. Use a encouraging tone throughout."
+  },
+  {
+   "id": "coding-debugging#010",
+   "text": "You are a tech lead of a small team. List the five most likely root causes of a race condition in a websocket reconnect and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-debugging#011",
+   "text": "Write the logging and instrumentation to add for a floating-point total off by a cent. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-debugging#012",
+   "text": "Before I start on a build that fails only in CI, build a hypothesis-driven debugging plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-debugging#013",
+   "text": "Design the smallest reproduction case for a floating-point total off by a cent. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-debugging#014",
+   "text": "List the five most likely root causes of a CORS error that appears behind a proxy. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-debugging#015",
+   "text": "As a developer-education author, I keep hitting the same wall with a database deadlock under sale-hour load. Create a post-fix regression test for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-debugging#016",
+   "text": "Create a post-fix regression test for a floating-point total off by a cent. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-debugging#017",
+   "text": "Explain how to confirm the fix for a memory leak growing in a long-running worker."
+  },
+  {
+   "id": "coding-debugging#018",
+   "text": "Build a hypothesis-driven debugging plan for a floating-point total off by a cent. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-debugging#019",
+   "text": "Act as an accessibility-minded frontend engineer. Explain how to confirm the fix for an intermittent 401 after token refresh, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-debugging#020",
+   "text": "Write the logging and instrumentation to add for a date bug around daylight-saving boundaries. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-debugging#021",
+   "text": "I’m working on a race condition in a websocket reconnect. Build a hypothesis-driven debugging plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-debugging#022",
+   "text": "Draft a step-by-step bisect strategy for a CSS layout shifting on mobile Safari for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-debugging#023",
+   "text": "Explain how to confirm the fix for a database deadlock under sale-hour load. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-debugging#024",
+   "text": "Help me with a cron job skipping runs silently: build a hypothesis-driven debugging plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-debugging#025",
+   "text": "Write the logging and instrumentation to add for a CORS error that appears behind a proxy. Use a professional tone throughout."
+  },
+  {
+   "id": "coding-debugging#026",
+   "text": "You are a code reviewer on a large codebase. Explain how to confirm the fix for a webhook payload signed twice and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-debugging#027",
+   "text": "Write an incident-summary template for a floating-point total off by a cent. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-debugging#028",
+   "text": "Before I start on a cron job skipping runs silently, explain how to confirm the fix for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-debugging#029",
+   "text": "Build a hypothesis-driven debugging plan for an intermittent 401 after token refresh. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-debugging#030",
+   "text": "Write the logging and instrumentation to add for a CSS layout shifting on mobile Safari. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-debugging#031",
+   "text": "As a staff engineer, I keep hitting the same wall with a memory leak growing in a long-running worker. Design the smallest reproduction case for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-debugging#032",
+   "text": "Write an incident-summary template for a file upload truncating at 5MB. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-debugging#033",
+   "text": "Design the smallest reproduction case for a CORS error that appears behind a proxy."
+  },
+  {
+   "id": "coding-debugging#034",
+   "text": "List the five most likely root causes of a CSS layout shifting on mobile Safari. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-debugging#035",
+   "text": "Act as a tech lead of a small team. Write an incident-summary template for a memory leak growing in a long-running worker, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-debugging#036",
+   "text": "Design the smallest reproduction case for a webhook payload signed twice. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-debugging#037",
+   "text": "I’m working on a race condition in a websocket reconnect. Create a post-fix regression test for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-debugging#038",
+   "text": "Draft a step-by-step bisect strategy for a file upload truncating at 5MB for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-debugging#039",
+   "text": "Create a post-fix regression test for a build that fails only in CI. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-debugging#040",
+   "text": "Help me with a webhook payload signed twice: write an incident-summary template for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-debugging#041",
+   "text": "Write an incident-summary template for an intermittent 401 after token refresh. Use a encouraging tone throughout."
+  },
+  {
+   "id": "coding-debugging#042",
+   "text": "You are a code reviewer on a large codebase. List the five most likely root causes of a memory leak growing in a long-running worker and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-debugging#043",
+   "text": "Draft a step-by-step bisect strategy for a webhook payload signed twice. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-debugging#044",
+   "text": "Before I start on a memory leak growing in a long-running worker, create a post-fix regression test for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-debugging#045",
+   "text": "Write the logging and instrumentation to add for a file upload truncating at 5MB. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-debugging#046",
+   "text": "Build a hypothesis-driven debugging plan for a CORS error that appears behind a proxy. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-debugging#047",
+   "text": "As a code reviewer on a large codebase, I keep hitting the same wall with an intermittent 401 after token refresh. Write the logging and instrumentation to add for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-debugging#048",
+   "text": "Draft a step-by-step bisect strategy for a CORS error that appears behind a proxy. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-debugging#049",
+   "text": "List the five most likely root causes of a build that fails only in CI."
+  },
+  {
+   "id": "coding-debugging#050",
+   "text": "Write an incident-summary template for a database deadlock under sale-hour load. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-debugging#051",
+   "text": "Act as a tech lead of a small team. List the five most likely root causes of a webhook payload signed twice, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-debugging#052",
+   "text": "Explain how to confirm the fix for a cache that serves stale pricing. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-debugging#053",
+   "text": "I’m working on a race condition in a websocket reconnect. Write the logging and instrumentation to add for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-debugging#054",
+   "text": "Build a hypothesis-driven debugging plan for a date bug around daylight-saving boundaries for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-debugging#055",
+   "text": "Write an incident-summary template for a CSS layout shifting on mobile Safari. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-debugging#056",
+   "text": "Help me with a database deadlock under sale-hour load: build a hypothesis-driven debugging plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-debugging#057",
+   "text": "Create a post-fix regression test for a cache that serves stale pricing. Use a friendly tone throughout."
+  },
+  {
+   "id": "coding-debugging#058",
+   "text": "You are a tech lead of a small team. Design the smallest reproduction case for a cache that serves stale pricing and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-debugging#059",
+   "text": "Design the smallest reproduction case for a database deadlock under sale-hour load. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-debugging#060",
+   "text": "Before I start on a file upload truncating at 5MB, build a hypothesis-driven debugging plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-debugging#061",
+   "text": "Create a post-fix regression test for a webhook payload signed twice. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-debugging#062",
+   "text": "Create a post-fix regression test for an intermittent 401 after token refresh. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-debugging#063",
+   "text": "As a site-reliability engineer, I keep hitting the same wall with a date bug around daylight-saving boundaries. Create a post-fix regression test for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-debugging#064",
+   "text": "Create a post-fix regression test for a CSS layout shifting on mobile Safari. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-debugging#065",
+   "text": "Build a hypothesis-driven debugging plan for a webhook payload signed twice."
+  },
+  {
+   "id": "coding-debugging#066",
+   "text": "Write an incident-summary template for an API route that times out only in production. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-debugging#067",
+   "text": "Act as an open-source maintainer. Design the smallest reproduction case for a race condition in a websocket reconnect, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-debugging#068",
+   "text": "Explain how to confirm the fix for an API route that times out only in production. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-debugging#069",
+   "text": "I’m working on a cache that serves stale pricing. Write the logging and instrumentation to add for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-debugging#070",
+   "text": "Design the smallest reproduction case for a date bug around daylight-saving boundaries for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-debugging#071",
+   "text": "List the five most likely root causes of a cron job skipping runs silently. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-debugging#072",
+   "text": "Help me with an intermittent 401 after token refresh: draft a step-by-step bisect strategy for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-debugging#073",
+   "text": "Write the logging and instrumentation to add for an API route that times out only in production. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-debugging#074",
+   "text": "You are a staff engineer. Write the logging and instrumentation to add for a build that fails only in CI and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-debugging#075",
+   "text": "List the five most likely root causes of a database deadlock under sale-hour load. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-debugging#076",
+   "text": "Before I start on a cron job skipping runs silently, write the logging and instrumentation to add for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-debugging#077",
+   "text": "Draft a step-by-step bisect strategy for a cache that serves stale pricing. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-debugging#078",
+   "text": "Create a post-fix regression test for a file upload truncating at 5MB. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-debugging#079",
+   "text": "As a staff engineer, I keep hitting the same wall with a memory leak growing in a long-running worker. Draft a step-by-step bisect strategy for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-debugging#080",
+   "text": "Explain how to confirm the fix for a build that fails only in CI. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-debugging#081",
+   "text": "Build a hypothesis-driven debugging plan for a memory leak growing in a long-running worker."
+  },
+  {
+   "id": "coding-debugging#082",
+   "text": "Create a post-fix regression test for a CORS error that appears behind a proxy. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-debugging#083",
+   "text": "Act as a developer-education author. Draft a step-by-step bisect strategy for a floating-point total off by a cent, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-debugging#084",
+   "text": "Draft a step-by-step bisect strategy for a cron job skipping runs silently. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-debugging#085",
+   "text": "I’m working on a date bug around daylight-saving boundaries. Draft a step-by-step bisect strategy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-debugging#086",
+   "text": "Write an incident-summary template for a race condition in a websocket reconnect for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-debugging#087",
+   "text": "List the five most likely root causes of a file upload truncating at 5MB. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-debugging#088",
+   "text": "Help me with a webhook payload signed twice: write the logging and instrumentation to add for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-debugging#089",
+   "text": "Write the logging and instrumentation to add for a memory leak growing in a long-running worker. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-debugging#090",
+   "text": "You are an open-source maintainer. Explain how to confirm the fix for a floating-point total off by a cent and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-debugging#091",
+   "text": "List the five most likely root causes of a date bug around daylight-saving boundaries. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-debugging#092",
+   "text": "Before I start on an API route that times out only in production, create a post-fix regression test for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-debugging#093",
+   "text": "Explain how to confirm the fix for a file upload truncating at 5MB. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-debugging#094",
+   "text": "Write an incident-summary template for a cron job skipping runs silently. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-debugging#095",
+   "text": "As a platform engineer, I keep hitting the same wall with a cache that serves stale pricing. Write an incident-summary template for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-debugging#096",
+   "text": "Explain how to confirm the fix for a date bug around daylight-saving boundaries. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-debugging#097",
+   "text": "Draft a step-by-step bisect strategy for an API route that times out only in production."
+  },
+  {
+   "id": "coding-debugging#098",
+   "text": "Build a hypothesis-driven debugging plan for a cache that serves stale pricing. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-debugging#099",
+   "text": "Act as a tech lead of a small team. Design the smallest reproduction case for a CSS layout shifting on mobile Safari, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-debugging#100",
+   "text": "Build a hypothesis-driven debugging plan for an API route that times out only in production. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-debugging#101",
+   "text": "I’m working on a build that fails only in CI. Draft a step-by-step bisect strategy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-debugging#102",
+   "text": "List the five most likely root causes of a cache that serves stale pricing for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-debugging#103",
+   "text": "List the five most likely root causes of an API route that times out only in production. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-debugging#104",
+   "text": "Help me with a CSS layout shifting on mobile Safari: explain how to confirm the fix for it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

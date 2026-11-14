@@ -1,0 +1,430 @@
+{
+ "slug": "data-sql-help",
+ "categorySlug": "data",
+ "category": "Data & Analytics",
+ "title": "SQL Help",
+ "description": "Write, debug, and speed up the query you're stuck on.",
+ "tags": [
+  "sql",
+  "queries",
+  "databases"
+ ],
+ "prompts": [
+  {
+   "id": "data-sql-help#001",
+   "text": "Write the window-function version of an index-tuning case for a slow join."
+  },
+  {
+   "id": "data-sql-help#002",
+   "text": "Add safe NULL handling to a currency-normalized revenue rollup. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-sql-help#003",
+   "text": "Act as an analytics engineer. Add safe NULL handling to a median calculation in a warehouse dialect, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-sql-help#004",
+   "text": "Add safe NULL handling to a top-N-per-group query. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-sql-help#005",
+   "text": "I’m working on monthly cohort retention with SQL. Rewrite for a different SQL dialect it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-sql-help#006",
+   "text": "Rewrite for a different SQL dialect a currency-normalized revenue rollup for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-sql-help#007",
+   "text": "Add safe NULL handling to a year-over-year comparison query. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-sql-help#008",
+   "text": "Help me with a funnel-count query with time windows: optimize the slow query for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-sql-help#009",
+   "text": "Add safe NULL handling to finding duplicate customers across systems. Use a persuasive tone throughout."
+  },
+  {
+   "id": "data-sql-help#010",
+   "text": "You are a data storyteller. Rewrite for a different SQL dialect a median calculation in a warehouse dialect and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-sql-help#011",
+   "text": "Produce a commented, readable version of sessionizing events by gaps. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-sql-help#012",
+   "text": "Before I start on joining orders to refunds without double counting, produce a commented, readable version of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-sql-help#013",
+   "text": "Optimize the slow query for sessionizing events by gaps. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-sql-help#014",
+   "text": "Rewrite for a different SQL dialect sessionizing events by gaps. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-sql-help#015",
+   "text": "As a data storyteller, I keep hitting the same wall with an index-tuning case for a slow join. Explain what this query does step by step for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-sql-help#016",
+   "text": "Optimize the slow query for an index-tuning case for a slow join. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-sql-help#017",
+   "text": "Write the window-function version of monthly cohort retention with SQL."
+  },
+  {
+   "id": "data-sql-help#018",
+   "text": "Rewrite for a different SQL dialect finding duplicate customers across systems. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-sql-help#019",
+   "text": "Act as a data-quality steward. Write the SQL for monthly cohort retention with SQL, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-sql-help#020",
+   "text": "Write the window-function version of a currency-normalized revenue rollup. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-sql-help#021",
+   "text": "I’m working on a pivot of sales by category and month. Rewrite for a different SQL dialect it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-sql-help#022",
+   "text": "Add safe NULL handling to a rolling seven-day average query for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-sql-help#023",
+   "text": "Explain what this query does step by step for a median calculation in a warehouse dialect. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-sql-help#024",
+   "text": "Help me with sessionizing events by gaps: explain what this query does step by step for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-sql-help#025",
+   "text": "Rewrite for a different SQL dialect a funnel-count query with time windows. Use a formal tone throughout."
+  },
+  {
+   "id": "data-sql-help#026",
+   "text": "You are an experimentation specialist. Rewrite for a different SQL dialect joining orders to refunds without double counting and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-sql-help#027",
+   "text": "Write the SQL for a median calculation in a warehouse dialect. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-sql-help#028",
+   "text": "Before I start on a top-N-per-group query, write the SQL for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-sql-help#029",
+   "text": "Produce a commented, readable version of monthly cohort retention with SQL. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-sql-help#030",
+   "text": "Explain what this query does step by step for finding duplicate customers across systems. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-sql-help#031",
+   "text": "As an experimentation specialist, I keep hitting the same wall with finding duplicate customers across systems. Create test data to verify the query for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-sql-help#032",
+   "text": "Create test data to verify the query for monthly cohort retention with SQL. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-sql-help#033",
+   "text": "Add safe NULL handling to a pivot of sales by category and month."
+  },
+  {
+   "id": "data-sql-help#034",
+   "text": "Optimize the slow query for a pivot of sales by category and month. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-sql-help#035",
+   "text": "Act as a data-quality steward. Add safe NULL handling to joining orders to refunds without double counting, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-sql-help#036",
+   "text": "Produce a commented, readable version of a year-over-year comparison query. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-sql-help#037",
+   "text": "I’m working on a top-N-per-group query. Rewrite for a different SQL dialect it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-sql-help#038",
+   "text": "Create test data to verify the query for a top-N-per-group query for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-sql-help#039",
+   "text": "Add safe NULL handling to sessionizing events by gaps. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-sql-help#040",
+   "text": "Help me with a currency-normalized revenue rollup: write the SQL for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-sql-help#041",
+   "text": "Write the SQL for sessionizing events by gaps. Use a empathetic tone throughout."
+  },
+  {
+   "id": "data-sql-help#042",
+   "text": "You are an experimentation specialist. Write the window-function version of joining orders to refunds without double counting and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-sql-help#043",
+   "text": "Write the window-function version of a rolling seven-day average query. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-sql-help#044",
+   "text": "Before I start on a year-over-year comparison query, explain what this query does step by step for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-sql-help#045",
+   "text": "Produce a commented, readable version of a median calculation in a warehouse dialect. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-sql-help#046",
+   "text": "Produce a commented, readable version of a rolling seven-day average query. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-sql-help#047",
+   "text": "As a statistics tutor, I keep hitting the same wall with a rolling seven-day average query. Rewrite for a different SQL dialect it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-sql-help#048",
+   "text": "Rewrite for a different SQL dialect an index-tuning case for a slow join. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-sql-help#049",
+   "text": "Explain what this query does step by step for a pivot of sales by category and month."
+  },
+  {
+   "id": "data-sql-help#050",
+   "text": "Explain what this query does step by step for a rolling seven-day average query. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-sql-help#051",
+   "text": "Act as a data-quality steward. Create test data to verify the query for joining orders to refunds without double counting, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-sql-help#052",
+   "text": "Write the window-function version of sessionizing events by gaps. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-sql-help#053",
+   "text": "I’m working on a funnel-count query with time windows. Create test data to verify the query for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-sql-help#054",
+   "text": "Create test data to verify the query for a year-over-year comparison query for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-sql-help#055",
+   "text": "Explain what this query does step by step for a currency-normalized revenue rollup. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-sql-help#056",
+   "text": "Help me with a rolling seven-day average query: create test data to verify the query for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-sql-help#057",
+   "text": "Optimize the slow query for a median calculation in a warehouse dialect. Use a empathetic tone throughout."
+  },
+  {
+   "id": "data-sql-help#058",
+   "text": "You are an analytics engineer. Add safe NULL handling to a funnel-count query with time windows and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-sql-help#059",
+   "text": "Optimize the slow query for joining orders to refunds without double counting. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-sql-help#060",
+   "text": "Before I start on finding duplicate customers across systems, write the SQL for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-sql-help#061",
+   "text": "Produce a commented, readable version of a top-N-per-group query. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-sql-help#062",
+   "text": "Create test data to verify the query for a pivot of sales by category and month. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-sql-help#063",
+   "text": "As a senior data analyst, I keep hitting the same wall with a pivot of sales by category and month. Produce a commented, readable version of it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-sql-help#064",
+   "text": "Produce a commented, readable version of finding duplicate customers across systems. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-sql-help#065",
+   "text": "Optimize the slow query for a currency-normalized revenue rollup."
+  },
+  {
+   "id": "data-sql-help#066",
+   "text": "Optimize the slow query for monthly cohort retention with SQL. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-sql-help#067",
+   "text": "Act as a finance-planning analyst. Write the window-function version of a top-N-per-group query, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-sql-help#068",
+   "text": "Produce a commented, readable version of a funnel-count query with time windows. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-sql-help#069",
+   "text": "I’m working on joining orders to refunds without double counting. Explain what this query does step by step for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-sql-help#070",
+   "text": "Produce a commented, readable version of an index-tuning case for a slow join for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-sql-help#071",
+   "text": "Create test data to verify the query for sessionizing events by gaps. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-sql-help#072",
+   "text": "Help me with a rolling seven-day average query: optimize the slow query for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-sql-help#073",
+   "text": "Explain what this query does step by step for monthly cohort retention with SQL. Use a friendly tone throughout."
+  },
+  {
+   "id": "data-sql-help#074",
+   "text": "You are a finance-planning analyst. Optimize the slow query for finding duplicate customers across systems and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-sql-help#075",
+   "text": "Add safe NULL handling to an index-tuning case for a slow join. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-sql-help#076",
+   "text": "Before I start on a pivot of sales by category and month, write the SQL for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-sql-help#077",
+   "text": "Add safe NULL handling to monthly cohort retention with SQL. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-sql-help#078",
+   "text": "Create test data to verify the query for an index-tuning case for a slow join. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-sql-help#079",
+   "text": "As a senior data analyst, I keep hitting the same wall with a funnel-count query with time windows. Write the window-function version of it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-sql-help#080",
+   "text": "Write the SQL for a year-over-year comparison query. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-sql-help#081",
+   "text": "Explain what this query does step by step for a funnel-count query with time windows."
+  },
+  {
+   "id": "data-sql-help#082",
+   "text": "Write the SQL for joining orders to refunds without double counting. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-sql-help#083",
+   "text": "Act as an experimentation specialist. Write the SQL for a funnel-count query with time windows, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-sql-help#084",
+   "text": "Write the window-function version of a year-over-year comparison query. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-sql-help#085",
+   "text": "I’m working on a top-N-per-group query. Explain what this query does step by step for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-sql-help#086",
+   "text": "Create test data to verify the query for a currency-normalized revenue rollup for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-sql-help#087",
+   "text": "Optimize the slow query for a year-over-year comparison query. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-sql-help#088",
+   "text": "Help me with an index-tuning case for a slow join: write the SQL for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-sql-help#089",
+   "text": "Write the SQL for a rolling seven-day average query. Use a friendly tone throughout."
+  },
+  {
+   "id": "data-sql-help#090",
+   "text": "You are a data storyteller. Create test data to verify the query for a median calculation in a warehouse dialect and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-sql-help#091",
+   "text": "Produce a commented, readable version of a currency-normalized revenue rollup. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-sql-help#092",
+   "text": "Before I start on a year-over-year comparison query, rewrite for a different SQL dialect it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-sql-help#093",
+   "text": "Write the window-function version of a median calculation in a warehouse dialect. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-sql-help#094",
+   "text": "Write the window-function version of a pivot of sales by category and month. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-sql-help#095",
+   "text": "As an experimentation specialist, I keep hitting the same wall with finding duplicate customers across systems. Write the window-function version of it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-sql-help#096",
+   "text": "Optimize the slow query for a top-N-per-group query. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-sql-help#097",
+   "text": "Write the window-function version of an index-tuning case for a slow join. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-sql-help#098",
+   "text": "Add safe NULL handling to a currency-normalized revenue rollup. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-sql-help#099",
+   "text": "Add safe NULL handling to a median calculation in a warehouse dialect."
+  },
+  {
+   "id": "data-sql-help#100",
+   "text": "Add safe NULL handling to a top-N-per-group query."
+  },
+  {
+   "id": "data-sql-help#101",
+   "text": "Rewrite for a different SQL dialect monthly cohort retention with SQL."
+  },
+  {
+   "id": "data-sql-help#102",
+   "text": "Rewrite for a different SQL dialect a currency-normalized revenue rollup."
+  },
+  {
+   "id": "data-sql-help#103",
+   "text": "Add safe NULL handling to a year-over-year comparison query."
+  },
+  {
+   "id": "data-sql-help#104",
+   "text": "Optimize the slow query for a funnel-count query with time windows."
+  }
+ ]
+}

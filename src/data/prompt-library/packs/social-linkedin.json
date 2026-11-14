@@ -1,0 +1,430 @@
+{
+ "slug": "social-linkedin",
+ "categorySlug": "social",
+ "category": "Social Media",
+ "title": "LinkedIn",
+ "description": "Posts, comments, and profiles that build professional trust.",
+ "tags": [
+  "linkedin",
+  "career",
+  "b2b"
+ ],
+ "prompts": [
+  {
+   "id": "social-linkedin#001",
+   "text": "Draft a punchy hook and restructure for a post about a failed launch and lessons."
+  },
+  {
+   "id": "social-linkedin#002",
+   "text": "Write a comment that adds value to a post about a data-backed post on hiring speed. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-linkedin#003",
+   "text": "Act as a short-video strategist. Draft a punchy hook and restructure for a returning-to-work narrative, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-linkedin#004",
+   "text": "Draft a punchy hook and restructure for a teardown of a great onboarding email. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-linkedin#005",
+   "text": "I’m working on a returning-to-work narrative. Write a respectful contrarian take on it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-linkedin#006",
+   "text": "Write a respectful contrarian take on a job-change announcement for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-linkedin#007",
+   "text": "Write a story-driven LinkedIn post about a returning-to-work narrative. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-linkedin#008",
+   "text": "Help me with a layoff-and-job-search transparency post: write a story-driven LinkedIn post about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-linkedin#009",
+   "text": "Draft a hiring-post with role clarity for a team-culture photo caption. Use a direct tone throughout."
+  },
+  {
+   "id": "social-linkedin#010",
+   "text": "You are a customer-support voice. Draft a punchy hook and restructure for a hiring post for a first designer and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-linkedin#011",
+   "text": "Turn a long article into a carousel post about a teardown of a great onboarding email. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-linkedin#012",
+   "text": "Before I start on a mentor-thanks post, draft a hiring-post with role clarity for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-linkedin#013",
+   "text": "Draft a punchy hook and restructure for a hot take on endless meetings. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-linkedin#014",
+   "text": "Write a story-driven LinkedIn post about a team-culture photo caption. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-linkedin#015",
+   "text": "As a LinkedIn ghostwriter, I keep hitting the same wall with a hiring post for a first designer. Turn a long article into a carousel post about it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-linkedin#016",
+   "text": "Draft a hiring-post with role clarity for a teardown of a great onboarding email. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-linkedin#017",
+   "text": "Write a comment that adds value to a post about a hiring post for a first designer."
+  },
+  {
+   "id": "social-linkedin#018",
+   "text": "Create a weekly cadence plan around a hiring post for a first designer. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-linkedin#019",
+   "text": "Act as a LinkedIn ghostwriter. Draft a hiring-post with role clarity for a hot take on endless meetings, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-linkedin#020",
+   "text": "Draft a profile headline and about section for a hiring post for a first designer. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-linkedin#021",
+   "text": "I’m working on a post about a failed launch and lessons. Create a weekly cadence plan around it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-linkedin#022",
+   "text": "Draft a hiring-post with role clarity for a post about a failed launch and lessons for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-linkedin#023",
+   "text": "Draft a punchy hook and restructure for a layoff-and-job-search transparency post. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-linkedin#024",
+   "text": "Help me with a team-culture photo caption: write a respectful contrarian take on it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-linkedin#025",
+   "text": "Write a comment that adds value to a post about a summary of a conference talk. Use a formal tone throughout."
+  },
+  {
+   "id": "social-linkedin#026",
+   "text": "You are a local-business owner. Draft a punchy hook and restructure for a mentor-thanks post and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-linkedin#027",
+   "text": "Turn a long article into a carousel post about a client-win story without bragging. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-linkedin#028",
+   "text": "Before I start on a post about a failed launch and lessons, write a story-driven LinkedIn post about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-linkedin#029",
+   "text": "Draft a profile headline and about section for a team-culture photo caption. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-linkedin#030",
+   "text": "Write a respectful contrarian take on a data-backed post on hiring speed. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-linkedin#031",
+   "text": "As a social media manager, I keep hitting the same wall with a hot take on endless meetings. Write a story-driven LinkedIn post about it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-linkedin#032",
+   "text": "Turn a long article into a carousel post about a job-change announcement. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-linkedin#033",
+   "text": "Write a story-driven LinkedIn post about a mentor-thanks post."
+  },
+  {
+   "id": "social-linkedin#034",
+   "text": "Turn a long article into a carousel post about a mentor-thanks post. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-linkedin#035",
+   "text": "Act as a LinkedIn ghostwriter. Draft a profile headline and about section for a summary of a conference talk, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-linkedin#036",
+   "text": "Write a comment that adds value to a post about a layoff-and-job-search transparency post. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-linkedin#037",
+   "text": "I’m working on a hiring post for a first designer. Write a respectful contrarian take on it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-linkedin#038",
+   "text": "Create a weekly cadence plan around a data-backed post on hiring speed for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-linkedin#039",
+   "text": "Write a respectful contrarian take on a post about a failed launch and lessons. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-linkedin#040",
+   "text": "Help me with a summary of a conference talk: create a weekly cadence plan around it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-linkedin#041",
+   "text": "Draft a hiring-post with role clarity for a hiring post for a first designer. Use a persuasive tone throughout."
+  },
+  {
+   "id": "social-linkedin#042",
+   "text": "You are a creator-economy analyst. Draft a profile headline and about section for a client-win story without bragging and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-linkedin#043",
+   "text": "Turn a long article into a carousel post about a returning-to-work narrative. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-linkedin#044",
+   "text": "Before I start on a job-change announcement, draft a hiring-post with role clarity for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-linkedin#045",
+   "text": "Draft a hiring-post with role clarity for a layoff-and-job-search transparency post. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-linkedin#046",
+   "text": "Create a weekly cadence plan around a returning-to-work narrative. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-linkedin#047",
+   "text": "As a social media manager, I keep hitting the same wall with a summary of a conference talk. Draft a hiring-post with role clarity for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-linkedin#048",
+   "text": "Create a weekly cadence plan around a team-culture photo caption. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-linkedin#049",
+   "text": "Write a respectful contrarian take on a hot take on endless meetings."
+  },
+  {
+   "id": "social-linkedin#050",
+   "text": "Draft a profile headline and about section for a data-backed post on hiring speed. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-linkedin#051",
+   "text": "Act as a local-business owner. Draft a profile headline and about section for a job-change announcement, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-linkedin#052",
+   "text": "Turn a long article into a carousel post about a layoff-and-job-search transparency post. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-linkedin#053",
+   "text": "I’m working on a client-win story without bragging. Write a comment that adds value to a post about it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-linkedin#054",
+   "text": "Turn a long article into a carousel post about a team-culture photo caption for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-linkedin#055",
+   "text": "Turn a long article into a carousel post about a data-backed post on hiring speed. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-linkedin#056",
+   "text": "Help me with a layoff-and-job-search transparency post: create a weekly cadence plan around it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-linkedin#057",
+   "text": "Turn a long article into a carousel post about a post about a failed launch and lessons. Use a professional tone throughout."
+  },
+  {
+   "id": "social-linkedin#058",
+   "text": "You are a creator-economy analyst. Create a weekly cadence plan around a client-win story without bragging and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-linkedin#059",
+   "text": "Draft a profile headline and about section for a returning-to-work narrative. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-linkedin#060",
+   "text": "Before I start on a mentor-thanks post, create a weekly cadence plan around it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-linkedin#061",
+   "text": "Write a respectful contrarian take on a client-win story without bragging. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-linkedin#062",
+   "text": "Write a comment that adds value to a post about a returning-to-work narrative. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-linkedin#063",
+   "text": "As a social media manager, I keep hitting the same wall with a teardown of a great onboarding email. Write a story-driven LinkedIn post about it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-linkedin#064",
+   "text": "Write a comment that adds value to a post about a hot take on endless meetings. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-linkedin#065",
+   "text": "Turn a long article into a carousel post about a summary of a conference talk."
+  },
+  {
+   "id": "social-linkedin#066",
+   "text": "Write a comment that adds value to a post about a team-culture photo caption. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-linkedin#067",
+   "text": "Act as a creator-economy analyst. Draft a profile headline and about section for a post about a failed launch and lessons, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-linkedin#068",
+   "text": "Draft a profile headline and about section for a mentor-thanks post. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-linkedin#069",
+   "text": "I’m working on a client-win story without bragging. Draft a hiring-post with role clarity for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-linkedin#070",
+   "text": "Write a comment that adds value to a post about a mentor-thanks post for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-linkedin#071",
+   "text": "Write a comment that adds value to a post about a job-change announcement. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-linkedin#072",
+   "text": "Help me with a post about a failed launch and lessons: write a comment that adds value to a post about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-linkedin#073",
+   "text": "Draft a hiring-post with role clarity for a returning-to-work narrative. Use a playful tone throughout."
+  },
+  {
+   "id": "social-linkedin#074",
+   "text": "You are a creator-economy analyst. Write a story-driven LinkedIn post about a client-win story without bragging and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-linkedin#075",
+   "text": "Draft a punchy hook and restructure for a client-win story without bragging. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-linkedin#076",
+   "text": "Before I start on a mentor-thanks post, write a respectful contrarian take on it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-linkedin#077",
+   "text": "Write a story-driven LinkedIn post about a data-backed post on hiring speed. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-linkedin#078",
+   "text": "Write a respectful contrarian take on a summary of a conference talk. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-linkedin#079",
+   "text": "As a social media manager, I keep hitting the same wall with a hot take on endless meetings. Create a weekly cadence plan around it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-linkedin#080",
+   "text": "Draft a punchy hook and restructure for a data-backed post on hiring speed. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-linkedin#081",
+   "text": "Write a respectful contrarian take on a teardown of a great onboarding email."
+  },
+  {
+   "id": "social-linkedin#082",
+   "text": "Draft a hiring-post with role clarity for a data-backed post on hiring speed. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-linkedin#083",
+   "text": "Act as a LinkedIn ghostwriter. Write a comment that adds value to a post about a teardown of a great onboarding email, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-linkedin#084",
+   "text": "Turn a long article into a carousel post about a hot take on endless meetings. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-linkedin#085",
+   "text": "I’m working on a team-culture photo caption. Draft a punchy hook and restructure for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-linkedin#086",
+   "text": "Create a weekly cadence plan around a job-change announcement for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-linkedin#087",
+   "text": "Write a story-driven LinkedIn post about a summary of a conference talk. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-linkedin#088",
+   "text": "Help me with a teardown of a great onboarding email: create a weekly cadence plan around it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-linkedin#089",
+   "text": "Draft a profile headline and about section for a hot take on endless meetings. Use a formal tone throughout."
+  },
+  {
+   "id": "social-linkedin#090",
+   "text": "You are a LinkedIn ghostwriter. Draft a profile headline and about section for a layoff-and-job-search transparency post and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-linkedin#091",
+   "text": "Draft a punchy hook and restructure for a summary of a conference talk. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-linkedin#092",
+   "text": "Before I start on a hiring post for a first designer, write a story-driven LinkedIn post about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-linkedin#093",
+   "text": "Draft a punchy hook and restructure for a job-change announcement. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-linkedin#094",
+   "text": "Write a respectful contrarian take on a layoff-and-job-search transparency post. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-linkedin#095",
+   "text": "As a short-video strategist, I keep hitting the same wall with a job-change announcement. Write a story-driven LinkedIn post about it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-linkedin#096",
+   "text": "Draft a profile headline and about section for a teardown of a great onboarding email. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-linkedin#097",
+   "text": "Draft a punchy hook and restructure for a post about a failed launch and lessons. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-linkedin#098",
+   "text": "Write a comment that adds value to a post about a data-backed post on hiring speed. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-linkedin#099",
+   "text": "Draft a punchy hook and restructure for a returning-to-work narrative."
+  },
+  {
+   "id": "social-linkedin#100",
+   "text": "Draft a punchy hook and restructure for a teardown of a great onboarding email."
+  },
+  {
+   "id": "social-linkedin#101",
+   "text": "Write a respectful contrarian take on a returning-to-work narrative."
+  },
+  {
+   "id": "social-linkedin#102",
+   "text": "Write a respectful contrarian take on a job-change announcement."
+  },
+  {
+   "id": "social-linkedin#103",
+   "text": "Write a story-driven LinkedIn post about a returning-to-work narrative."
+  },
+  {
+   "id": "social-linkedin#104",
+   "text": "Write a story-driven LinkedIn post about a layoff-and-job-search transparency post."
+  }
+ ]
+}

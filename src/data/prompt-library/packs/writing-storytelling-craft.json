@@ -1,0 +1,430 @@
+{
+ "slug": "writing-storytelling-craft",
+ "categorySlug": "writing",
+ "category": "Writing & Editing",
+ "title": "Storytelling Craft",
+ "description": "Openings, arcs, dialogue, and worlds for fiction and narrative nonfiction.",
+ "tags": [
+  "fiction",
+  "narrative",
+  "creative"
+ ],
+ "prompts": [
+  {
+   "id": "writing-storytelling-craft#001",
+   "text": "List five story hooks with escalating stakes for a long-haul trucker and the passenger who won’t talk."
+  },
+  {
+   "id": "writing-storytelling-craft#002",
+   "text": "Develop a character backstory and motivation for a garden that grows faster when lies are told. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-storytelling-craft#003",
+   "text": "Act as a content marketing strategist. Build a three-act plot outline for a story about a translator who discovers errors with intent, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-storytelling-craft#004",
+   "text": "Draft a dialogue-heavy scene about a winter festival that keeps the dark away. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-storytelling-craft#005",
+   "text": "I’m working on a market where you can trade regrets. Build a three-act plot outline for a story about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-storytelling-craft#006",
+   "text": "Design a compelling antagonist for a story about a dynasty told through five family dinners for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-storytelling-craft#007",
+   "text": "Design a compelling antagonist for a story about a heist planned during a heatwave blackout. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-storytelling-craft#008",
+   "text": "Help me with a translator who discovers errors with intent: develop a character backstory and motivation for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-storytelling-craft#009",
+   "text": "Design a compelling antagonist for a story about a bakery that bakes predictions into bread. Use a persuasive tone throughout."
+  },
+  {
+   "id": "writing-storytelling-craft#010",
+   "text": "You are a brand journalist. Design a compelling antagonist for a story about a winter festival that keeps the dark away and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-storytelling-craft#011",
+   "text": "List five story hooks with escalating stakes for a market where you can trade regrets. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-storytelling-craft#012",
+   "text": "Before I start on a generation ship where memory is currency, develop a character backstory and motivation for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-storytelling-craft#013",
+   "text": "Write an ending scene with emotional payoff for a mapmaker in a country that keeps changing shape. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-storytelling-craft#014",
+   "text": "Write a vivid setting description for a winter festival that keeps the dark away. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-storytelling-craft#015",
+   "text": "As a career coach, I keep hitting the same wall with a child who befriends the town’s abandoned robot. Design a compelling antagonist for a story about it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-storytelling-craft#016",
+   "text": "Write an ending scene with emotional payoff for a heist planned during a heatwave blackout. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-storytelling-craft#017",
+   "text": "Write a vivid setting description for a ghost that only haunts Mondays."
+  },
+  {
+   "id": "writing-storytelling-craft#018",
+   "text": "Build a three-act plot outline for a story about a heist planned during a heatwave blackout. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-storytelling-craft#019",
+   "text": "Act as a content marketing strategist. Write a vivid setting description for a translator who discovers errors with intent, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-storytelling-craft#020",
+   "text": "List five story hooks with escalating stakes for a rivalry between two storm chasers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-storytelling-craft#021",
+   "text": "I’m working on a generation ship where memory is currency. Draft a dialogue-heavy scene about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-storytelling-craft#022",
+   "text": "List five story hooks with escalating stakes for a generation ship where memory is currency for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-storytelling-craft#023",
+   "text": "Write an immersive opening scene for a story about a generation ship where memory is currency. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-storytelling-craft#024",
+   "text": "Help me with a dynasty told through five family dinners: build a three-act plot outline for a story about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-storytelling-craft#025",
+   "text": "Write a vivid setting description for a dynasty told through five family dinners. Use a persuasive tone throughout."
+  },
+  {
+   "id": "writing-storytelling-craft#026",
+   "text": "You are a senior editor at a digital magazine. Write a vivid setting description for an orchestra conductor who lost their hearing and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-storytelling-craft#027",
+   "text": "List five story hooks with escalating stakes for a ghost that only haunts Mondays. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-storytelling-craft#028",
+   "text": "Before I start on a garden that grows faster when lies are told, design a compelling antagonist for a story about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-storytelling-craft#029",
+   "text": "Build a three-act plot outline for a story about an orchestra conductor who lost their hearing. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-storytelling-craft#030",
+   "text": "Write an ending scene with emotional payoff for a generation ship where memory is currency. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-storytelling-craft#031",
+   "text": "As a freelance copywriter, I keep hitting the same wall with a heist planned during a heatwave blackout. Write an immersive opening scene for a story about it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-storytelling-craft#032",
+   "text": "Write an immersive opening scene for a story about a translator who discovers errors with intent. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-storytelling-craft#033",
+   "text": "List five story hooks with escalating stakes for an orchestra conductor who lost their hearing."
+  },
+  {
+   "id": "writing-storytelling-craft#034",
+   "text": "Build a three-act plot outline for a story about a generation ship where memory is currency. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-storytelling-craft#035",
+   "text": "Act as a content marketing strategist. Draft a dialogue-heavy scene about an orchestra conductor who lost their hearing, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-storytelling-craft#036",
+   "text": "Build a three-act plot outline for a story about a rivalry between two storm chasers. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-storytelling-craft#037",
+   "text": "I’m working on a dynasty told through five family dinners. Develop a character backstory and motivation for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-storytelling-craft#038",
+   "text": "Write an immersive opening scene for a story about a child who befriends the town’s abandoned robot for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-storytelling-craft#039",
+   "text": "Design a compelling antagonist for a story about a detective who hears the city’s whispers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-storytelling-craft#040",
+   "text": "Help me with a rivalry between two storm chasers: write an immersive opening scene for a story about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-storytelling-craft#041",
+   "text": "List five story hooks with escalating stakes for a bakery that bakes predictions into bread. Use a persuasive tone throughout."
+  },
+  {
+   "id": "writing-storytelling-craft#042",
+   "text": "You are a content marketing strategist. Write an immersive opening scene for a story about a ghost that only haunts Mondays and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-storytelling-craft#043",
+   "text": "Draft a dialogue-heavy scene about a mapmaker in a country that keeps changing shape. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-storytelling-craft#044",
+   "text": "Before I start on a lighthouse keeper’s last winter, build a three-act plot outline for a story about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-storytelling-craft#045",
+   "text": "Design a compelling antagonist for a story about a ghost that only haunts Mondays. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-storytelling-craft#046",
+   "text": "Develop a character backstory and motivation for a detective who hears the city’s whispers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-storytelling-craft#047",
+   "text": "As a career coach, I keep hitting the same wall with a child who befriends the town’s abandoned robot. Draft a dialogue-heavy scene about it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-storytelling-craft#048",
+   "text": "Write an ending scene with emotional payoff for a child who befriends the town’s abandoned robot. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-storytelling-craft#049",
+   "text": "Develop a character backstory and motivation for an orchestra conductor who lost their hearing."
+  },
+  {
+   "id": "writing-storytelling-craft#050",
+   "text": "Draft a dialogue-heavy scene about a ghost that only haunts Mondays. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-storytelling-craft#051",
+   "text": "Act as a senior editor at a digital magazine. Develop a character backstory and motivation for a winter festival that keeps the dark away, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-storytelling-craft#052",
+   "text": "Write an ending scene with emotional payoff for a winter festival that keeps the dark away. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-storytelling-craft#053",
+   "text": "I’m working on a detective who hears the city’s whispers. Write a vivid setting description for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-storytelling-craft#054",
+   "text": "Design a compelling antagonist for a story about a rivalry between two storm chasers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-storytelling-craft#055",
+   "text": "List five story hooks with escalating stakes for a child who befriends the town’s abandoned robot. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-storytelling-craft#056",
+   "text": "Help me with a rivalry between two storm chasers: draft a dialogue-heavy scene about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-storytelling-craft#057",
+   "text": "Write an ending scene with emotional payoff for a long-haul trucker and the passenger who won’t talk. Use a direct tone throughout."
+  },
+  {
+   "id": "writing-storytelling-craft#058",
+   "text": "You are a freelance copywriter. Design a compelling antagonist for a story about a lighthouse keeper’s last winter and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-storytelling-craft#059",
+   "text": "Draft a dialogue-heavy scene about a heist planned during a heatwave blackout. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-storytelling-craft#060",
+   "text": "Before I start on a long-haul trucker and the passenger who won’t talk, draft a dialogue-heavy scene about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-storytelling-craft#061",
+   "text": "Write an ending scene with emotional payoff for a detective who hears the city’s whispers. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-storytelling-craft#062",
+   "text": "Build a three-act plot outline for a story about a long-haul trucker and the passenger who won’t talk. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-storytelling-craft#063",
+   "text": "As an executive assistant, I keep hitting the same wall with an orchestra conductor who lost their hearing. Write an immersive opening scene for a story about it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-storytelling-craft#064",
+   "text": "Build a three-act plot outline for a story about a garden that grows faster when lies are told. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-storytelling-craft#065",
+   "text": "Write an immersive opening scene for a story about a garden that grows faster when lies are told."
+  },
+  {
+   "id": "writing-storytelling-craft#066",
+   "text": "Write an ending scene with emotional payoff for a translator who discovers errors with intent. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-storytelling-craft#067",
+   "text": "Act as a senior editor at a digital magazine. Develop a character backstory and motivation for a bakery that bakes predictions into bread, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-storytelling-craft#068",
+   "text": "Write an immersive opening scene for a story about a lighthouse keeper’s last winter. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-storytelling-craft#069",
+   "text": "I’m working on a ghost that only haunts Mondays. Build a three-act plot outline for a story about it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-storytelling-craft#070",
+   "text": "Write a vivid setting description for a generation ship where memory is currency for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-storytelling-craft#071",
+   "text": "Write an immersive opening scene for a story about a detective who hears the city’s whispers. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-storytelling-craft#072",
+   "text": "Help me with a market where you can trade regrets: draft a dialogue-heavy scene about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-storytelling-craft#073",
+   "text": "Design a compelling antagonist for a story about a mapmaker in a country that keeps changing shape. Use a friendly tone throughout."
+  },
+  {
+   "id": "writing-storytelling-craft#074",
+   "text": "You are an executive assistant. Write an ending scene with emotional payoff for a market where you can trade regrets and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-storytelling-craft#075",
+   "text": "Write a vivid setting description for a rivalry between two storm chasers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-storytelling-craft#076",
+   "text": "Before I start on a bakery that bakes predictions into bread, write an ending scene with emotional payoff for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-storytelling-craft#077",
+   "text": "Develop a character backstory and motivation for a lighthouse keeper’s last winter. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-storytelling-craft#078",
+   "text": "Write an immersive opening scene for a story about a mapmaker in a country that keeps changing shape. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-storytelling-craft#079",
+   "text": "As an executive assistant, I keep hitting the same wall with a garden that grows faster when lies are told. List five story hooks with escalating stakes for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-storytelling-craft#080",
+   "text": "Write a vivid setting description for a child who befriends the town’s abandoned robot. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-storytelling-craft#081",
+   "text": "Build a three-act plot outline for a story about a mapmaker in a country that keeps changing shape."
+  },
+  {
+   "id": "writing-storytelling-craft#082",
+   "text": "Write an immersive opening scene for a story about a market where you can trade regrets. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-storytelling-craft#083",
+   "text": "Act as a senior editor at a digital magazine. Build a three-act plot outline for a story about a winter festival that keeps the dark away, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-storytelling-craft#084",
+   "text": "Write an immersive opening scene for a story about a winter festival that keeps the dark away. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-storytelling-craft#085",
+   "text": "I’m working on a mapmaker in a country that keeps changing shape. Develop a character backstory and motivation for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-storytelling-craft#086",
+   "text": "Build a three-act plot outline for a story about a detective who hears the city’s whispers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-storytelling-craft#087",
+   "text": "Write a vivid setting description for a mapmaker in a country that keeps changing shape. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-storytelling-craft#088",
+   "text": "Help me with a garden that grows faster when lies are told: draft a dialogue-heavy scene about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "writing-storytelling-craft#089",
+   "text": "Write an ending scene with emotional payoff for a lighthouse keeper’s last winter. Use a friendly tone throughout."
+  },
+  {
+   "id": "writing-storytelling-craft#090",
+   "text": "You are a freelance copywriter. Write a vivid setting description for a lighthouse keeper’s last winter and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "writing-storytelling-craft#091",
+   "text": "Write an immersive opening scene for a story about a dynasty told through five family dinners. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "writing-storytelling-craft#092",
+   "text": "Before I start on a long-haul trucker and the passenger who won’t talk, develop a character backstory and motivation for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "writing-storytelling-craft#093",
+   "text": "Develop a character backstory and motivation for a market where you can trade regrets. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "writing-storytelling-craft#094",
+   "text": "Draft a dialogue-heavy scene about a dynasty told through five family dinners. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "writing-storytelling-craft#095",
+   "text": "As a content marketing strategist, I keep hitting the same wall with a mapmaker in a country that keeps changing shape. List five story hooks with escalating stakes for it and show me what I’m probably missing."
+  },
+  {
+   "id": "writing-storytelling-craft#096",
+   "text": "Design a compelling antagonist for a story about a translator who discovers errors with intent. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "writing-storytelling-craft#097",
+   "text": "List five story hooks with escalating stakes for a winter festival that keeps the dark away."
+  },
+  {
+   "id": "writing-storytelling-craft#098",
+   "text": "Write an immersive opening scene for a story about a long-haul trucker and the passenger who won’t talk. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "writing-storytelling-craft#099",
+   "text": "Act as an executive assistant. Draft a dialogue-heavy scene about a lighthouse keeper’s last winter, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "writing-storytelling-craft#100",
+   "text": "List five story hooks with escalating stakes for a heist planned during a heatwave blackout. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "writing-storytelling-craft#101",
+   "text": "I’m working on a long-haul trucker and the passenger who won’t talk. Write a vivid setting description for it and explain your reasoning as you go."
+  },
+  {
+   "id": "writing-storytelling-craft#102",
+   "text": "Develop a character backstory and motivation for a ghost that only haunts Mondays for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "writing-storytelling-craft#103",
+   "text": "Write a vivid setting description for a garden that grows faster when lies are told. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "writing-storytelling-craft#104",
+   "text": "Help me with a bakery that bakes predictions into bread: draft a dialogue-heavy scene about it, then list the three most common mistakes and how to avoid them."
+  }
+ ]
+}

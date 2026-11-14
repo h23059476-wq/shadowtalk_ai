@@ -1,0 +1,430 @@
+{
+ "slug": "data-statistics-basics",
+ "categorySlug": "data",
+ "category": "Data & Analytics",
+ "title": "Statistics Basics",
+ "description": "Distributions, tests, and confidence without the panic.",
+ "tags": [
+  "statistics",
+  "tests",
+  "significance"
+ ],
+ "prompts": [
+  {
+   "id": "data-statistics-basics#001",
+   "text": "Explain the common misreadings of survivorship bias in success stories."
+  },
+  {
+   "id": "data-statistics-basics#002",
+   "text": "List the assumptions and checks for outliers: flag, keep, or drop. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-statistics-basics#003",
+   "text": "Act as a statistics tutor. Write the decision rules for choosing a test for regression to the mean in performance reviews, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-statistics-basics#004",
+   "text": "Walk through a worked example of interpreting a confidence interval. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-statistics-basics#005",
+   "text": "I’m working on interpreting a confidence interval. Draft an accessible explainer on it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-statistics-basics#006",
+   "text": "Explain the common misreadings of sample size for a survey for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-statistics-basics#007",
+   "text": "Walk through a worked example of choosing between a t-test and a z-test. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-statistics-basics#008",
+   "text": "Help me with margin of error in poll results: draft an accessible explainer on it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-statistics-basics#009",
+   "text": "List the assumptions and checks for p-values and what they don’t mean. Use a friendly tone throughout."
+  },
+  {
+   "id": "data-statistics-basics#010",
+   "text": "You are a data-quality steward. Draft an accessible explainer on variance in A/B test results and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-statistics-basics#011",
+   "text": "Explain the intuition behind survivorship bias in success stories. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-statistics-basics#012",
+   "text": "Before I start on margin of error in poll results, explain the intuition behind it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-statistics-basics#013",
+   "text": "Walk through a worked example of margin of error in poll results. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-statistics-basics#014",
+   "text": "Explain the common misreadings of regression to the mean in performance reviews. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-statistics-basics#015",
+   "text": "As a data storyteller, I keep hitting the same wall with variance in A/B test results. Explain the common misreadings of it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-statistics-basics#016",
+   "text": "Explain the common misreadings of outliers: flag, keep, or drop. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-statistics-basics#017",
+   "text": "Walk through a worked example of outliers: flag, keep, or drop."
+  },
+  {
+   "id": "data-statistics-basics#018",
+   "text": "Walk through a worked example of p-values and what they don’t mean. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-statistics-basics#019",
+   "text": "Act as a finance-planning analyst. Show the calculation with realistic numbers for margin of error in poll results, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-statistics-basics#020",
+   "text": "Explain the intuition behind sample size for a survey. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-statistics-basics#021",
+   "text": "I’m working on Simpson’s paradox in segment data. Explain the intuition behind it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-statistics-basics#022",
+   "text": "Explain the common misreadings of skewed distributions and averages for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-statistics-basics#023",
+   "text": "Explain the intuition behind p-values and what they don’t mean. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-statistics-basics#024",
+   "text": "Help me with outliers: flag, keep, or drop: create practice problems with solutions for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-statistics-basics#025",
+   "text": "Explain the common misreadings of choosing between a t-test and a z-test. Use a formal tone throughout."
+  },
+  {
+   "id": "data-statistics-basics#026",
+   "text": "You are a data-quality steward. List the assumptions and checks for survivorship bias in success stories and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-statistics-basics#027",
+   "text": "Explain the common misreadings of interpreting a confidence interval. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-statistics-basics#028",
+   "text": "Before I start on interpreting a confidence interval, write the decision rules for choosing a test for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-statistics-basics#029",
+   "text": "Draft an accessible explainer on regression to the mean in performance reviews. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-statistics-basics#030",
+   "text": "Show the calculation with realistic numbers for skewed distributions and averages. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-statistics-basics#031",
+   "text": "As a data storyteller, I keep hitting the same wall with variance in A/B test results. List the assumptions and checks for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-statistics-basics#032",
+   "text": "Show the calculation with realistic numbers for variance in A/B test results. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-statistics-basics#033",
+   "text": "Draft an accessible explainer on Simpson’s paradox in segment data."
+  },
+  {
+   "id": "data-statistics-basics#034",
+   "text": "Draft an accessible explainer on choosing between a t-test and a z-test. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-statistics-basics#035",
+   "text": "Act as a finance-planning analyst. Walk through a worked example of why correlation isn’t causation, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-statistics-basics#036",
+   "text": "Write the decision rules for choosing a test for why correlation isn’t causation. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-statistics-basics#037",
+   "text": "I’m working on p-values and what they don’t mean. Write the decision rules for choosing a test for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-statistics-basics#038",
+   "text": "Draft an accessible explainer on p-values and what they don’t mean for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-statistics-basics#039",
+   "text": "Explain the common misreadings of Simpson’s paradox in segment data. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-statistics-basics#040",
+   "text": "Help me with regression to the mean in performance reviews: explain the intuition behind it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-statistics-basics#041",
+   "text": "Write the decision rules for choosing a test for sample size for a survey. Use a professional tone throughout."
+  },
+  {
+   "id": "data-statistics-basics#042",
+   "text": "You are a business-intelligence lead. Explain the intuition behind why correlation isn’t causation and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-statistics-basics#043",
+   "text": "Write the decision rules for choosing a test for outliers: flag, keep, or drop. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-statistics-basics#044",
+   "text": "Before I start on choosing between a t-test and a z-test, list the assumptions and checks for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-statistics-basics#045",
+   "text": "Explain the common misreadings of why correlation isn’t causation. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-statistics-basics#046",
+   "text": "Explain the intuition behind variance in A/B test results. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-statistics-basics#047",
+   "text": "As an analytics engineer, I keep hitting the same wall with margin of error in poll results. List the assumptions and checks for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-statistics-basics#048",
+   "text": "Explain the common misreadings of p-values and what they don’t mean. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-statistics-basics#049",
+   "text": "Show the calculation with realistic numbers for interpreting a confidence interval."
+  },
+  {
+   "id": "data-statistics-basics#050",
+   "text": "Show the calculation with realistic numbers for survivorship bias in success stories. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-statistics-basics#051",
+   "text": "Act as a data storyteller. Draft an accessible explainer on sample size for a survey, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-statistics-basics#052",
+   "text": "Walk through a worked example of regression to the mean in performance reviews. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-statistics-basics#053",
+   "text": "I’m working on choosing between a t-test and a z-test. Create practice problems with solutions for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-statistics-basics#054",
+   "text": "Draft an accessible explainer on outliers: flag, keep, or drop for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-statistics-basics#055",
+   "text": "Create practice problems with solutions for variance in A/B test results. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-statistics-basics#056",
+   "text": "Help me with sample size for a survey: list the assumptions and checks for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-statistics-basics#057",
+   "text": "Write the decision rules for choosing a test for variance in A/B test results. Use a direct tone throughout."
+  },
+  {
+   "id": "data-statistics-basics#058",
+   "text": "You are a senior data analyst. Create practice problems with solutions for regression to the mean in performance reviews and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-statistics-basics#059",
+   "text": "Show the calculation with realistic numbers for choosing between a t-test and a z-test. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-statistics-basics#060",
+   "text": "Before I start on Simpson’s paradox in segment data, list the assumptions and checks for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-statistics-basics#061",
+   "text": "Create practice problems with solutions for sample size for a survey. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-statistics-basics#062",
+   "text": "List the assumptions and checks for regression to the mean in performance reviews. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-statistics-basics#063",
+   "text": "As an analytics engineer, I keep hitting the same wall with margin of error in poll results. Create practice problems with solutions for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-statistics-basics#064",
+   "text": "Explain the intuition behind outliers: flag, keep, or drop. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-statistics-basics#065",
+   "text": "Write the decision rules for choosing a test for skewed distributions and averages."
+  },
+  {
+   "id": "data-statistics-basics#066",
+   "text": "Write the decision rules for choosing a test for margin of error in poll results. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-statistics-basics#067",
+   "text": "Act as a data-quality steward. Create practice problems with solutions for skewed distributions and averages, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-statistics-basics#068",
+   "text": "List the assumptions and checks for interpreting a confidence interval. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-statistics-basics#069",
+   "text": "I’m working on sample size for a survey. Walk through a worked example of it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-statistics-basics#070",
+   "text": "Draft an accessible explainer on survivorship bias in success stories for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-statistics-basics#071",
+   "text": "Walk through a worked example of survivorship bias in success stories. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-statistics-basics#072",
+   "text": "Help me with interpreting a confidence interval: explain the intuition behind it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-statistics-basics#073",
+   "text": "Walk through a worked example of Simpson’s paradox in segment data. Use a friendly tone throughout."
+  },
+  {
+   "id": "data-statistics-basics#074",
+   "text": "You are an experimentation specialist. Show the calculation with realistic numbers for Simpson’s paradox in segment data and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-statistics-basics#075",
+   "text": "List the assumptions and checks for why correlation isn’t causation. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-statistics-basics#076",
+   "text": "Before I start on margin of error in poll results, explain the common misreadings of it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-statistics-basics#077",
+   "text": "Show the calculation with realistic numbers for outliers: flag, keep, or drop. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-statistics-basics#078",
+   "text": "Create practice problems with solutions for Simpson’s paradox in segment data. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-statistics-basics#079",
+   "text": "As an analytics engineer, I keep hitting the same wall with why correlation isn’t causation. Draft an accessible explainer on it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-statistics-basics#080",
+   "text": "Write the decision rules for choosing a test for survivorship bias in success stories. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-statistics-basics#081",
+   "text": "Create practice problems with solutions for interpreting a confidence interval."
+  },
+  {
+   "id": "data-statistics-basics#082",
+   "text": "Show the calculation with realistic numbers for why correlation isn’t causation. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-statistics-basics#083",
+   "text": "Act as a finance-planning analyst. Create practice problems with solutions for why correlation isn’t causation, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-statistics-basics#084",
+   "text": "Explain the intuition behind choosing between a t-test and a z-test. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-statistics-basics#085",
+   "text": "I’m working on skewed distributions and averages. Explain the intuition behind it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-statistics-basics#086",
+   "text": "Write the decision rules for choosing a test for Simpson’s paradox in segment data for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-statistics-basics#087",
+   "text": "Walk through a worked example of variance in A/B test results. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-statistics-basics#088",
+   "text": "Help me with sample size for a survey: show the calculation with realistic numbers for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-statistics-basics#089",
+   "text": "Draft an accessible explainer on skewed distributions and averages. Use a friendly tone throughout."
+  },
+  {
+   "id": "data-statistics-basics#090",
+   "text": "You are a data-quality steward. Create practice problems with solutions for survivorship bias in success stories and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-statistics-basics#091",
+   "text": "Show the calculation with realistic numbers for p-values and what they don’t mean. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-statistics-basics#092",
+   "text": "Before I start on choosing between a t-test and a z-test, write the decision rules for choosing a test for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-statistics-basics#093",
+   "text": "Create practice problems with solutions for p-values and what they don’t mean. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-statistics-basics#094",
+   "text": "Walk through a worked example of skewed distributions and averages. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-statistics-basics#095",
+   "text": "As a statistics tutor, I keep hitting the same wall with skewed distributions and averages. List the assumptions and checks for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-statistics-basics#096",
+   "text": "Show the calculation with realistic numbers for regression to the mean in performance reviews. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-statistics-basics#097",
+   "text": "Explain the common misreadings of survivorship bias in success stories. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-statistics-basics#098",
+   "text": "List the assumptions and checks for outliers: flag, keep, or drop. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-statistics-basics#099",
+   "text": "Write the decision rules for choosing a test for regression to the mean in performance reviews."
+  },
+  {
+   "id": "data-statistics-basics#100",
+   "text": "Walk through a worked example of interpreting a confidence interval."
+  },
+  {
+   "id": "data-statistics-basics#101",
+   "text": "Draft an accessible explainer on interpreting a confidence interval."
+  },
+  {
+   "id": "data-statistics-basics#102",
+   "text": "Explain the common misreadings of sample size for a survey."
+  },
+  {
+   "id": "data-statistics-basics#103",
+   "text": "Walk through a worked example of choosing between a t-test and a z-test."
+  },
+  {
+   "id": "data-statistics-basics#104",
+   "text": "Draft an accessible explainer on margin of error in poll results."
+  }
+ ]
+}

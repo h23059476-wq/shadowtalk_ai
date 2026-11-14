@@ -1,0 +1,430 @@
+{
+ "slug": "ai-voice-live-mode",
+ "categorySlug": "ai",
+ "category": "AI & ShadowTalk",
+ "title": "Voice & Live Mode",
+ "description": "Scripts and setups for talking with ShadowTalk out loud.",
+ "tags": [
+  "voice",
+  "live",
+  "conversation"
+ ],
+ "prompts": [
+  {
+   "id": "ai-voice-live-mode#001",
+   "text": "Create a follow-up text-recap prompt for practicing a difficult conversation aloud."
+  },
+  {
+   "id": "ai-voice-live-mode#002",
+   "text": "Design the interrupt-and-redirect cues for a bedtime story session for kids. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-voice-live-mode#003",
+   "text": "Act as a privacy-conscious technologist. Design the interrupt-and-redirect cues for a commute-time daily briefing, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-voice-live-mode#004",
+   "text": "Write a session-closing summary request for a morning-motivation check-in. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-voice-live-mode#005",
+   "text": "I’m working on a podcast-style discussion of my notes. Write a session-closing summary request for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-voice-live-mode#006",
+   "text": "Produce a accessibility checklist for interview practice with follow-ups for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-voice-live-mode#007",
+   "text": "Produce a accessibility checklist for practicing a difficult conversation aloud. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-voice-live-mode#008",
+   "text": "Help me with an accessibility-first voice workflow: write a voice-session plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-voice-live-mode#009",
+   "text": "Create a spoken-output style instruction for a podcast-style discussion of my notes. Use a formal tone throughout."
+  },
+  {
+   "id": "ai-voice-live-mode#010",
+   "text": "You are a privacy-conscious technologist. Write a session-closing summary request for a hands-free cooking Q&A session and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-voice-live-mode#011",
+   "text": "Write a voice-session plan for a commute-time daily briefing. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-voice-live-mode#012",
+   "text": "Before I start on a commute-time daily briefing, write a session-closing summary request for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-voice-live-mode#013",
+   "text": "Draft a role-play scenario script for a hands-free cooking Q&A session. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-voice-live-mode#014",
+   "text": "Design a hands-free safety setup for a morning-motivation check-in. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-voice-live-mode#015",
+   "text": "As an indie developer, I keep hitting the same wall with rehearsing a presentation with interruptions. Write a voice-session plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-voice-live-mode#016",
+   "text": "Design a hands-free safety setup for a live note-taking while shopping. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-voice-live-mode#017",
+   "text": "Produce a accessibility checklist for a morning-motivation check-in."
+  },
+  {
+   "id": "ai-voice-live-mode#018",
+   "text": "Produce a accessibility checklist for an accessibility-first voice workflow. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-voice-live-mode#019",
+   "text": "Act as an indie developer. Design the interrupt-and-redirect cues for a language-practice conversation, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-voice-live-mode#020",
+   "text": "Draft a role-play scenario script for a morning-motivation check-in. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-voice-live-mode#021",
+   "text": "I’m working on a walk-and-talk brainstorm. Create a spoken-output style instruction for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-voice-live-mode#022",
+   "text": "Create a spoken-output style instruction for an accessibility-first voice workflow for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-voice-live-mode#023",
+   "text": "Write a session-closing summary request for rehearsing a presentation with interruptions. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-voice-live-mode#024",
+   "text": "Help me with a bedtime story session for kids: write a session-closing summary request for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-voice-live-mode#025",
+   "text": "Produce a accessibility checklist for a language-practice conversation. Use a professional tone throughout."
+  },
+  {
+   "id": "ai-voice-live-mode#026",
+   "text": "You are a prompt-engineering coach. Design a hands-free safety setup for a podcast-style discussion of my notes and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-voice-live-mode#027",
+   "text": "Design a hands-free safety setup for practicing a difficult conversation aloud. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-voice-live-mode#028",
+   "text": "Before I start on interview practice with follow-ups, write a voice-session plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-voice-live-mode#029",
+   "text": "Write a voice-session plan for a morning-motivation check-in. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-voice-live-mode#030",
+   "text": "Design a hands-free safety setup for interview practice with follow-ups. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-voice-live-mode#031",
+   "text": "As a privacy-conscious technologist, I keep hitting the same wall with a live note-taking while shopping. Create a follow-up text-recap prompt for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-voice-live-mode#032",
+   "text": "Create a spoken-output style instruction for a bedtime story session for kids. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-voice-live-mode#033",
+   "text": "Write a voice-session plan for a bedtime story session for kids."
+  },
+  {
+   "id": "ai-voice-live-mode#034",
+   "text": "Create a follow-up text-recap prompt for a walk-and-talk brainstorm. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-voice-live-mode#035",
+   "text": "Act as a ShadowTalk power user. Create a follow-up text-recap prompt for interview practice with follow-ups, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-voice-live-mode#036",
+   "text": "Write a session-closing summary request for interview practice with follow-ups. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-voice-live-mode#037",
+   "text": "I’m working on a walk-and-talk brainstorm. Produce a accessibility checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-voice-live-mode#038",
+   "text": "Create a follow-up text-recap prompt for a commute-time daily briefing for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-voice-live-mode#039",
+   "text": "Draft a role-play scenario script for rehearsing a presentation with interruptions. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-voice-live-mode#040",
+   "text": "Help me with a live note-taking while shopping: write a session-closing summary request for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-voice-live-mode#041",
+   "text": "Draft a role-play scenario script for a walk-and-talk brainstorm. Use a persuasive tone throughout."
+  },
+  {
+   "id": "ai-voice-live-mode#042",
+   "text": "You are a teacher of AI literacy. Create a spoken-output style instruction for interview practice with follow-ups and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-voice-live-mode#043",
+   "text": "Write a session-closing summary request for a walk-and-talk brainstorm. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-voice-live-mode#044",
+   "text": "Before I start on a hands-free cooking Q&A session, design the interrupt-and-redirect cues for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-voice-live-mode#045",
+   "text": "Design the interrupt-and-redirect cues for a podcast-style discussion of my notes. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-voice-live-mode#046",
+   "text": "Create a follow-up text-recap prompt for a podcast-style discussion of my notes. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-voice-live-mode#047",
+   "text": "As a content creator using AI, I keep hitting the same wall with interview practice with follow-ups. Design the interrupt-and-redirect cues for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-voice-live-mode#048",
+   "text": "Create a follow-up text-recap prompt for a hands-free cooking Q&A session. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-voice-live-mode#049",
+   "text": "Create a spoken-output style instruction for a live note-taking while shopping."
+  },
+  {
+   "id": "ai-voice-live-mode#050",
+   "text": "Create a spoken-output style instruction for a commute-time daily briefing. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-voice-live-mode#051",
+   "text": "Act as an indie developer. Draft a role-play scenario script for a bedtime story session for kids, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-voice-live-mode#052",
+   "text": "Draft a role-play scenario script for a live note-taking while shopping. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-voice-live-mode#053",
+   "text": "I’m working on a podcast-style discussion of my notes. Produce a accessibility checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-voice-live-mode#054",
+   "text": "Produce a accessibility checklist for a hands-free cooking Q&A session for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-voice-live-mode#055",
+   "text": "Write a session-closing summary request for an accessibility-first voice workflow. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-voice-live-mode#056",
+   "text": "Help me with a morning-motivation check-in: create a follow-up text-recap prompt for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-voice-live-mode#057",
+   "text": "Create a follow-up text-recap prompt for a language-practice conversation. Use a professional tone throughout."
+  },
+  {
+   "id": "ai-voice-live-mode#058",
+   "text": "You are a prompt-engineering coach. Draft a role-play scenario script for a podcast-style discussion of my notes and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-voice-live-mode#059",
+   "text": "Draft a role-play scenario script for practicing a difficult conversation aloud. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-voice-live-mode#060",
+   "text": "Before I start on a live note-taking while shopping, design the interrupt-and-redirect cues for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-voice-live-mode#061",
+   "text": "Write a voice-session plan for a podcast-style discussion of my notes. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-voice-live-mode#062",
+   "text": "Design a hands-free safety setup for a language-practice conversation. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-voice-live-mode#063",
+   "text": "As an AI-workflow consultant, I keep hitting the same wall with a hands-free cooking Q&A session. Write a voice-session plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-voice-live-mode#064",
+   "text": "Create a spoken-output style instruction for a hands-free cooking Q&A session. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-voice-live-mode#065",
+   "text": "Create a spoken-output style instruction for rehearsing a presentation with interruptions."
+  },
+  {
+   "id": "ai-voice-live-mode#066",
+   "text": "Design a hands-free safety setup for a hands-free cooking Q&A session. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-voice-live-mode#067",
+   "text": "Act as an indie developer. Write a voice-session plan for a language-practice conversation, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-voice-live-mode#068",
+   "text": "Produce a accessibility checklist for a bedtime story session for kids. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-voice-live-mode#069",
+   "text": "I’m working on a live note-taking while shopping. Produce a accessibility checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-voice-live-mode#070",
+   "text": "Produce a accessibility checklist for rehearsing a presentation with interruptions for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-voice-live-mode#071",
+   "text": "Create a spoken-output style instruction for a language-practice conversation. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-voice-live-mode#072",
+   "text": "Help me with a live note-taking while shopping: write a voice-session plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-voice-live-mode#073",
+   "text": "Create a follow-up text-recap prompt for an accessibility-first voice workflow. Use a playful tone throughout."
+  },
+  {
+   "id": "ai-voice-live-mode#074",
+   "text": "You are a content creator using AI. Write a session-closing summary request for practicing a difficult conversation aloud and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-voice-live-mode#075",
+   "text": "Design the interrupt-and-redirect cues for a morning-motivation check-in. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-voice-live-mode#076",
+   "text": "Before I start on rehearsing a presentation with interruptions, create a follow-up text-recap prompt for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-voice-live-mode#077",
+   "text": "Write a voice-session plan for a walk-and-talk brainstorm. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-voice-live-mode#078",
+   "text": "Produce a accessibility checklist for a commute-time daily briefing. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-voice-live-mode#079",
+   "text": "As an AI-workflow consultant, I keep hitting the same wall with a bedtime story session for kids. Design a hands-free safety setup for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-voice-live-mode#080",
+   "text": "Draft a role-play scenario script for interview practice with follow-ups. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-voice-live-mode#081",
+   "text": "Draft a role-play scenario script for a commute-time daily briefing."
+  },
+  {
+   "id": "ai-voice-live-mode#082",
+   "text": "Design a hands-free safety setup for an accessibility-first voice workflow. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "ai-voice-live-mode#083",
+   "text": "Act as an indie developer. Draft a role-play scenario script for a language-practice conversation, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "ai-voice-live-mode#084",
+   "text": "Write a voice-session plan for practicing a difficult conversation aloud. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "ai-voice-live-mode#085",
+   "text": "I’m working on a morning-motivation check-in. Create a spoken-output style instruction for it and explain your reasoning as you go."
+  },
+  {
+   "id": "ai-voice-live-mode#086",
+   "text": "Design a hands-free safety setup for a walk-and-talk brainstorm for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "ai-voice-live-mode#087",
+   "text": "Create a spoken-output style instruction for practicing a difficult conversation aloud. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-voice-live-mode#088",
+   "text": "Help me with an accessibility-first voice workflow: design the interrupt-and-redirect cues for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "ai-voice-live-mode#089",
+   "text": "Design a hands-free safety setup for a commute-time daily briefing. Use a playful tone throughout."
+  },
+  {
+   "id": "ai-voice-live-mode#090",
+   "text": "You are a ShadowTalk power user. Draft a role-play scenario script for an accessibility-first voice workflow and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "ai-voice-live-mode#091",
+   "text": "Create a follow-up text-recap prompt for a bedtime story session for kids. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "ai-voice-live-mode#092",
+   "text": "Before I start on practicing a difficult conversation aloud, design the interrupt-and-redirect cues for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "ai-voice-live-mode#093",
+   "text": "Design the interrupt-and-redirect cues for rehearsing a presentation with interruptions. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "ai-voice-live-mode#094",
+   "text": "Design a hands-free safety setup for rehearsing a presentation with interruptions. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "ai-voice-live-mode#095",
+   "text": "As a content creator using AI, I keep hitting the same wall with a walk-and-talk brainstorm. Design the interrupt-and-redirect cues for it and show me what I’m probably missing."
+  },
+  {
+   "id": "ai-voice-live-mode#096",
+   "text": "Write a session-closing summary request for a language-practice conversation. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "ai-voice-live-mode#097",
+   "text": "Create a follow-up text-recap prompt for practicing a difficult conversation aloud. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-voice-live-mode#098",
+   "text": "Design the interrupt-and-redirect cues for a bedtime story session for kids. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "ai-voice-live-mode#099",
+   "text": "Design the interrupt-and-redirect cues for a commute-time daily briefing."
+  },
+  {
+   "id": "ai-voice-live-mode#100",
+   "text": "Write a session-closing summary request for a morning-motivation check-in."
+  },
+  {
+   "id": "ai-voice-live-mode#101",
+   "text": "Write a session-closing summary request for a podcast-style discussion of my notes."
+  },
+  {
+   "id": "ai-voice-live-mode#102",
+   "text": "Produce a accessibility checklist for interview practice with follow-ups."
+  },
+  {
+   "id": "ai-voice-live-mode#103",
+   "text": "Produce a accessibility checklist for practicing a difficult conversation aloud."
+  },
+  {
+   "id": "ai-voice-live-mode#104",
+   "text": "Write a voice-session plan for an accessibility-first voice workflow."
+  }
+ ]
+}

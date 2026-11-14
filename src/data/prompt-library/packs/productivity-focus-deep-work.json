@@ -1,0 +1,430 @@
+{
+ "slug": "productivity-focus-deep-work",
+ "categorySlug": "productivity",
+ "category": "Productivity & Habits",
+ "title": "Focus & Deep Work",
+ "description": "Protect attention in offices, homes, and open tabs.",
+ "tags": [
+  "focus",
+  "deep work",
+  "attention"
+ ],
+ "prompts": [
+  {
+   "id": "productivity-focus-deep-work#001",
+   "text": "Explain the attention science behind an evening-scroll habit stealing mornings."
+  },
+  {
+   "id": "productivity-focus-deep-work#002",
+   "text": "Propose a notification diet for attention crashes after lunch. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-focus-deep-work#003",
+   "text": "Act as a librarian of tidy systems. Create a distraction-response protocol for attention crashes after lunch, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-focus-deep-work#004",
+   "text": "Create a distraction-response protocol for worry spirals that eat work hours. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-focus-deep-work#005",
+   "text": "I’m working on an office with constant interruptions. Draft a with-partners-or-family agreement for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-focus-deep-work#006",
+   "text": "Create a distraction-response protocol for phone-check reflexes during study for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-focus-deep-work#007",
+   "text": "Write an environment-audit checklist for a brain that wants novelty at deadline time. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-focus-deep-work#008",
+   "text": "Help me with focus while working from a busy cafe: build a warm-up ritual for entering flow for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-focus-deep-work#009",
+   "text": "Design a focus-block system for an office with constant interruptions. Use a playful tone throughout."
+  },
+  {
+   "id": "productivity-focus-deep-work#010",
+   "text": "You are a remote-work veteran. Design a focus-block system for worry spirals that eat work hours and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-focus-deep-work#011",
+   "text": "Design a recovery plan after a distracted day for focus while working from a busy cafe. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-focus-deep-work#012",
+   "text": "Before I start on an office with constant interruptions, write an environment-audit checklist for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-focus-deep-work#013",
+   "text": "Draft a with-partners-or-family agreement for coding with a chatty Slack channel. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-focus-deep-work#014",
+   "text": "Propose a notification diet for coding with a chatty Slack channel. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-focus-deep-work#015",
+   "text": "As a librarian of tidy systems, I keep hitting the same wall with worry spirals that eat work hours. Write an environment-audit checklist for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-focus-deep-work#016",
+   "text": "Build a warm-up ritual for entering flow for phone-check reflexes during study. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-focus-deep-work#017",
+   "text": "Design a recovery plan after a distracted day for phone-check reflexes during study."
+  },
+  {
+   "id": "productivity-focus-deep-work#018",
+   "text": "Explain the attention science behind attention crashes after lunch. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-focus-deep-work#019",
+   "text": "Act as a minimalist systems tinkerer. Propose a notification diet for a notification system that respects focus, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-focus-deep-work#020",
+   "text": "Propose a notification diet for focus while working from a busy cafe. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-focus-deep-work#021",
+   "text": "I’m working on a notification system that respects focus. Explain the attention science behind it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-focus-deep-work#022",
+   "text": "Create a distraction-response protocol for reading long documents without drifting for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-focus-deep-work#023",
+   "text": "Design a focus-block system for coding with a chatty Slack channel. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-focus-deep-work#024",
+   "text": "Help me with focus while working from a busy cafe: draft a with-partners-or-family agreement for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-focus-deep-work#025",
+   "text": "Create a distraction-response protocol for writing with fifteen tabs open. Use a formal tone throughout."
+  },
+  {
+   "id": "productivity-focus-deep-work#026",
+   "text": "You are a productivity coach. Explain the attention science behind an office with constant interruptions and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-focus-deep-work#027",
+   "text": "Explain the attention science behind reading long documents without drifting. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-focus-deep-work#028",
+   "text": "Before I start on an evening-scroll habit stealing mornings, design a focus-block system for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-focus-deep-work#029",
+   "text": "Design a recovery plan after a distracted day for attention crashes after lunch. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-focus-deep-work#030",
+   "text": "Draft a with-partners-or-family agreement for a notification system that respects focus. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-focus-deep-work#031",
+   "text": "As a minimalist systems tinkerer, I keep hitting the same wall with attention crashes after lunch. Draft a with-partners-or-family agreement for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-focus-deep-work#032",
+   "text": "Write an environment-audit checklist for phone-check reflexes during study. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-focus-deep-work#033",
+   "text": "Write an environment-audit checklist for coding with a chatty Slack channel."
+  },
+  {
+   "id": "productivity-focus-deep-work#034",
+   "text": "Draft a with-partners-or-family agreement for reading long documents without drifting. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-focus-deep-work#035",
+   "text": "Act as a minimalist systems tinkerer. Write an environment-audit checklist for meetings that shred the afternoon, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-focus-deep-work#036",
+   "text": "Create a distraction-response protocol for a notification system that respects focus. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-focus-deep-work#037",
+   "text": "I’m working on an office with constant interruptions. Create a distraction-response protocol for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-focus-deep-work#038",
+   "text": "Build a warm-up ritual for entering flow for a notification system that respects focus for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-focus-deep-work#039",
+   "text": "Propose a notification diet for worry spirals that eat work hours. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-focus-deep-work#040",
+   "text": "Help me with coding with a chatty Slack channel: design a recovery plan after a distracted day for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-focus-deep-work#041",
+   "text": "Build a warm-up ritual for entering flow for attention crashes after lunch. Use a playful tone throughout."
+  },
+  {
+   "id": "productivity-focus-deep-work#042",
+   "text": "You are a remote-work veteran. Propose a notification diet for meetings that shred the afternoon and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-focus-deep-work#043",
+   "text": "Draft a with-partners-or-family agreement for writing with fifteen tabs open. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-focus-deep-work#044",
+   "text": "Before I start on worry spirals that eat work hours, build a warm-up ritual for entering flow for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-focus-deep-work#045",
+   "text": "Write an environment-audit checklist for focus while working from a busy cafe. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-focus-deep-work#046",
+   "text": "Propose a notification diet for reading long documents without drifting. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-focus-deep-work#047",
+   "text": "As a librarian of tidy systems, I keep hitting the same wall with phone-check reflexes during study. Design a focus-block system for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-focus-deep-work#048",
+   "text": "Propose a notification diet for a brain that wants novelty at deadline time. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-focus-deep-work#049",
+   "text": "Design a focus-block system for reading long documents without drifting."
+  },
+  {
+   "id": "productivity-focus-deep-work#050",
+   "text": "Build a warm-up ritual for entering flow for reading long documents without drifting. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-focus-deep-work#051",
+   "text": "Act as a productivity coach. Explain the attention science behind coding with a chatty Slack channel, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-focus-deep-work#052",
+   "text": "Propose a notification diet for an office with constant interruptions. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-focus-deep-work#053",
+   "text": "I’m working on attention crashes after lunch. Write an environment-audit checklist for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-focus-deep-work#054",
+   "text": "Create a distraction-response protocol for an evening-scroll habit stealing mornings for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-focus-deep-work#055",
+   "text": "Draft a with-partners-or-family agreement for meetings that shred the afternoon. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-focus-deep-work#056",
+   "text": "Help me with an evening-scroll habit stealing mornings: draft a with-partners-or-family agreement for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-focus-deep-work#057",
+   "text": "Design a focus-block system for focus while working from a busy cafe. Use a direct tone throughout."
+  },
+  {
+   "id": "productivity-focus-deep-work#058",
+   "text": "You are a minimalist systems tinkerer. Create a distraction-response protocol for focus while working from a busy cafe and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-focus-deep-work#059",
+   "text": "Design a recovery plan after a distracted day for a notification system that respects focus. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-focus-deep-work#060",
+   "text": "Before I start on phone-check reflexes during study, explain the attention science behind it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-focus-deep-work#061",
+   "text": "Design a recovery plan after a distracted day for worry spirals that eat work hours. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-focus-deep-work#062",
+   "text": "Design a recovery plan after a distracted day for reading long documents without drifting. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-focus-deep-work#063",
+   "text": "As a productivity coach, I keep hitting the same wall with writing with fifteen tabs open. Build a warm-up ritual for entering flow for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-focus-deep-work#064",
+   "text": "Write an environment-audit checklist for reading long documents without drifting. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-focus-deep-work#065",
+   "text": "Design a recovery plan after a distracted day for a brain that wants novelty at deadline time."
+  },
+  {
+   "id": "productivity-focus-deep-work#066",
+   "text": "Draft a with-partners-or-family agreement for phone-check reflexes during study. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-focus-deep-work#067",
+   "text": "Act as a remote-work veteran. Propose a notification diet for writing with fifteen tabs open, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-focus-deep-work#068",
+   "text": "Design a recovery plan after a distracted day for writing with fifteen tabs open. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-focus-deep-work#069",
+   "text": "I’m working on an office with constant interruptions. Build a warm-up ritual for entering flow for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-focus-deep-work#070",
+   "text": "Draft a with-partners-or-family agreement for worry spirals that eat work hours for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-focus-deep-work#071",
+   "text": "Create a distraction-response protocol for coding with a chatty Slack channel. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-focus-deep-work#072",
+   "text": "Help me with a brain that wants novelty at deadline time: create a distraction-response protocol for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-focus-deep-work#073",
+   "text": "Design a focus-block system for attention crashes after lunch. Use a playful tone throughout."
+  },
+  {
+   "id": "productivity-focus-deep-work#074",
+   "text": "You are a chief of staff. Write an environment-audit checklist for writing with fifteen tabs open and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-focus-deep-work#075",
+   "text": "Design a recovery plan after a distracted day for meetings that shred the afternoon. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-focus-deep-work#076",
+   "text": "Before I start on an evening-scroll habit stealing mornings, build a warm-up ritual for entering flow for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-focus-deep-work#077",
+   "text": "Design a focus-block system for a brain that wants novelty at deadline time. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-focus-deep-work#078",
+   "text": "Propose a notification diet for phone-check reflexes during study. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-focus-deep-work#079",
+   "text": "As a productivity coach, I keep hitting the same wall with writing with fifteen tabs open. Design a focus-block system for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-focus-deep-work#080",
+   "text": "Draft a with-partners-or-family agreement for a brain that wants novelty at deadline time. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-focus-deep-work#081",
+   "text": "Explain the attention science behind meetings that shred the afternoon."
+  },
+  {
+   "id": "productivity-focus-deep-work#082",
+   "text": "Design a recovery plan after a distracted day for an evening-scroll habit stealing mornings. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-focus-deep-work#083",
+   "text": "Act as a chief of staff. Build a warm-up ritual for entering flow for a brain that wants novelty at deadline time, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-focus-deep-work#084",
+   "text": "Design a focus-block system for a notification system that respects focus. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-focus-deep-work#085",
+   "text": "I’m working on meetings that shred the afternoon. Create a distraction-response protocol for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-focus-deep-work#086",
+   "text": "Explain the attention science behind a brain that wants novelty at deadline time for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-focus-deep-work#087",
+   "text": "Explain the attention science behind writing with fifteen tabs open. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-focus-deep-work#088",
+   "text": "Help me with an office with constant interruptions: design a recovery plan after a distracted day for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-focus-deep-work#089",
+   "text": "Write an environment-audit checklist for an evening-scroll habit stealing mornings. Use a friendly tone throughout."
+  },
+  {
+   "id": "productivity-focus-deep-work#090",
+   "text": "You are a remote-work veteran. Design a focus-block system for meetings that shred the afternoon and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-focus-deep-work#091",
+   "text": "Propose a notification diet for an evening-scroll habit stealing mornings. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-focus-deep-work#092",
+   "text": "Before I start on focus while working from a busy cafe, explain the attention science behind it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-focus-deep-work#093",
+   "text": "Explain the attention science behind worry spirals that eat work hours. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-focus-deep-work#094",
+   "text": "Write an environment-audit checklist for a notification system that respects focus. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-focus-deep-work#095",
+   "text": "As a librarian of tidy systems, I keep hitting the same wall with meetings that shred the afternoon. Build a warm-up ritual for entering flow for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-focus-deep-work#096",
+   "text": "Build a warm-up ritual for entering flow for coding with a chatty Slack channel. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-focus-deep-work#097",
+   "text": "Explain the attention science behind an evening-scroll habit stealing mornings. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-focus-deep-work#098",
+   "text": "Propose a notification diet for attention crashes after lunch. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-focus-deep-work#099",
+   "text": "Create a distraction-response protocol for attention crashes after lunch."
+  },
+  {
+   "id": "productivity-focus-deep-work#100",
+   "text": "Create a distraction-response protocol for worry spirals that eat work hours."
+  },
+  {
+   "id": "productivity-focus-deep-work#101",
+   "text": "Draft a with-partners-or-family agreement for an office with constant interruptions."
+  },
+  {
+   "id": "productivity-focus-deep-work#102",
+   "text": "Create a distraction-response protocol for phone-check reflexes during study."
+  },
+  {
+   "id": "productivity-focus-deep-work#103",
+   "text": "Write an environment-audit checklist for a brain that wants novelty at deadline time."
+  },
+  {
+   "id": "productivity-focus-deep-work#104",
+   "text": "Build a warm-up ritual for entering flow for focus while working from a busy cafe."
+  }
+ ]
+}

@@ -1,0 +1,430 @@
+{
+ "slug": "coding-performance",
+ "categorySlug": "coding",
+ "category": "Coding & Development",
+ "title": "Performance",
+ "description": "Find the real bottleneck, fix it, prove the win.",
+ "tags": [
+  "performance",
+  "optimization",
+  "profiling"
+ ],
+ "prompts": [
+  {
+   "id": "coding-performance#001",
+   "text": "List the likely bottlenecks in an API p95 that doubles at peak."
+  },
+  {
+   "id": "coding-performance#002",
+   "text": "Explain the profiling approach for a dashboard with 40 charts stuttering. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-performance#003",
+   "text": "Act as an open-source maintainer. Plan a measurement-first investigation of a regex catastrophic backtracking, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-performance#004",
+   "text": "Draft a prioritized optimization backlog for a first-load JS bundle over 2MB. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-performance#005",
+   "text": "I’m working on a video upload pipeline with high TTFB. Write the before-and-after benchmark for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-performance#006",
+   "text": "Explain the profiling approach for a slow cold-start on serverless for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-performance#007",
+   "text": "Explain the profiling approach for a React list re-rendering on every keystroke. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-performance#008",
+   "text": "Help me with an API p95 that doubles at peak: explain the profiling approach for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-performance#009",
+   "text": "Design the regression alarm for an API p95 that doubles at peak. Use a encouraging tone throughout."
+  },
+  {
+   "id": "coding-performance#010",
+   "text": "You are an open-source maintainer. Design the regression alarm for a React list re-rendering on every keystroke and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-performance#011",
+   "text": "Design the regression alarm for a database connection pool exhaustion. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-performance#012",
+   "text": "Before I start on an image-heavy gallery hurting LCP, explain the profiling approach for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-performance#013",
+   "text": "Write the before-and-after benchmark for a mobile app startup over five seconds. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-performance#014",
+   "text": "Create a performance budget for a CDN cache-hit ratio below 40%. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-performance#015",
+   "text": "As a code reviewer on a large codebase, I keep hitting the same wall with a slow cold-start on serverless. Plan a measurement-first investigation of it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-performance#016",
+   "text": "Draft a prioritized optimization backlog for a React list re-rendering on every keystroke. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-performance#017",
+   "text": "Draft a prioritized optimization backlog for a database connection pool exhaustion."
+  },
+  {
+   "id": "coding-performance#018",
+   "text": "Propose the caching strategy for a first-load JS bundle over 2MB. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-performance#019",
+   "text": "Act as a developer-education author. Propose the caching strategy for a React list re-rendering on every keystroke, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-performance#020",
+   "text": "Plan a measurement-first investigation of a first-load JS bundle over 2MB. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-performance#021",
+   "text": "I’m working on an image-heavy gallery hurting LCP. Create a performance budget for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-performance#022",
+   "text": "Draft a prioritized optimization backlog for a big-JSON parse blocking the main thread for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-performance#023",
+   "text": "Propose the caching strategy for a CDN cache-hit ratio below 40%. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-performance#024",
+   "text": "Help me with a regex catastrophic backtracking: write the before-and-after benchmark for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-performance#025",
+   "text": "Explain the profiling approach for a mobile app startup over five seconds. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-performance#026",
+   "text": "You are an open-source maintainer. Write the before-and-after benchmark for a React list re-rendering on every keystroke and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-performance#027",
+   "text": "List the likely bottlenecks in a CDN cache-hit ratio below 40%. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-performance#028",
+   "text": "Before I start on an image-heavy gallery hurting LCP, write the before-and-after benchmark for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-performance#029",
+   "text": "List the likely bottlenecks in a React list re-rendering on every keystroke. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-performance#030",
+   "text": "Draft a prioritized optimization backlog for a regex catastrophic backtracking. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-performance#031",
+   "text": "As a platform engineer, I keep hitting the same wall with a big-JSON parse blocking the main thread. Create a performance budget for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-performance#032",
+   "text": "List the likely bottlenecks in a first-load JS bundle over 2MB. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-performance#033",
+   "text": "Write the before-and-after benchmark for a big-JSON parse blocking the main thread."
+  },
+  {
+   "id": "coding-performance#034",
+   "text": "List the likely bottlenecks in a video upload pipeline with high TTFB. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-performance#035",
+   "text": "Act as a tech lead of a small team. Design the regression alarm for a mobile app startup over five seconds, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-performance#036",
+   "text": "Write the before-and-after benchmark for a database connection pool exhaustion. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-performance#037",
+   "text": "I’m working on a database connection pool exhaustion. Propose the caching strategy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-performance#038",
+   "text": "Plan a measurement-first investigation of a database connection pool exhaustion for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-performance#039",
+   "text": "Design the regression alarm for a first-load JS bundle over 2MB. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-performance#040",
+   "text": "Help me with a big-JSON parse blocking the main thread: list the likely bottlenecks in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-performance#041",
+   "text": "Create a performance budget for a mobile app startup over five seconds. Use a formal tone throughout."
+  },
+  {
+   "id": "coding-performance#042",
+   "text": "You are a tech lead of a small team. Propose the caching strategy for a big-JSON parse blocking the main thread and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-performance#043",
+   "text": "Draft a prioritized optimization backlog for a slow cold-start on serverless. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-performance#044",
+   "text": "Before I start on an API p95 that doubles at peak, draft a prioritized optimization backlog for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-performance#045",
+   "text": "Draft a prioritized optimization backlog for a CDN cache-hit ratio below 40%. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-performance#046",
+   "text": "Propose the caching strategy for a slow cold-start on serverless. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-performance#047",
+   "text": "As a code reviewer on a large codebase, I keep hitting the same wall with a CDN cache-hit ratio below 40%. Plan a measurement-first investigation of it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-performance#048",
+   "text": "Propose the caching strategy for a video upload pipeline with high TTFB. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-performance#049",
+   "text": "Write the before-and-after benchmark for a first-load JS bundle over 2MB."
+  },
+  {
+   "id": "coding-performance#050",
+   "text": "Explain the profiling approach for a first-load JS bundle over 2MB. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-performance#051",
+   "text": "Act as an open-source maintainer. Propose the caching strategy for a regex catastrophic backtracking, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-performance#052",
+   "text": "Propose the caching strategy for a mobile app startup over five seconds. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-performance#053",
+   "text": "I’m working on a video upload pipeline with high TTFB. Draft a prioritized optimization backlog for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-performance#054",
+   "text": "Draft a prioritized optimization backlog for an image-heavy gallery hurting LCP for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-performance#055",
+   "text": "Plan a measurement-first investigation of an API p95 that doubles at peak. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-performance#056",
+   "text": "Help me with a database connection pool exhaustion: create a performance budget for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-performance#057",
+   "text": "Create a performance budget for a slow cold-start on serverless. Use a encouraging tone throughout."
+  },
+  {
+   "id": "coding-performance#058",
+   "text": "You are a developer-education author. Design the regression alarm for a slow cold-start on serverless and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-performance#059",
+   "text": "Create a performance budget for a first-load JS bundle over 2MB. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-performance#060",
+   "text": "Before I start on a video upload pipeline with high TTFB, design the regression alarm for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-performance#061",
+   "text": "Design the regression alarm for a regex catastrophic backtracking. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-performance#062",
+   "text": "List the likely bottlenecks in an image-heavy gallery hurting LCP. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-performance#063",
+   "text": "As a site-reliability engineer, I keep hitting the same wall with a React list re-rendering on every keystroke. Create a performance budget for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-performance#064",
+   "text": "Design the regression alarm for a dashboard with 40 charts stuttering. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-performance#065",
+   "text": "List the likely bottlenecks in a slow cold-start on serverless."
+  },
+  {
+   "id": "coding-performance#066",
+   "text": "Plan a measurement-first investigation of a big-JSON parse blocking the main thread. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-performance#067",
+   "text": "Act as a tech lead of a small team. Draft a prioritized optimization backlog for a mobile app startup over five seconds, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-performance#068",
+   "text": "Explain the profiling approach for a video upload pipeline with high TTFB. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-performance#069",
+   "text": "I’m working on a dashboard with 40 charts stuttering. Write the before-and-after benchmark for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-performance#070",
+   "text": "Plan a measurement-first investigation of a dashboard with 40 charts stuttering for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-performance#071",
+   "text": "List the likely bottlenecks in a database connection pool exhaustion. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-performance#072",
+   "text": "Help me with an image-heavy gallery hurting LCP: design the regression alarm for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-performance#073",
+   "text": "Design the regression alarm for a CDN cache-hit ratio below 40%. Use a encouraging tone throughout."
+  },
+  {
+   "id": "coding-performance#074",
+   "text": "You are a tech lead of a small team. Explain the profiling approach for a big-JSON parse blocking the main thread and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-performance#075",
+   "text": "Create a performance budget for a dashboard with 40 charts stuttering. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-performance#076",
+   "text": "Before I start on an API p95 that doubles at peak, propose the caching strategy for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-performance#077",
+   "text": "Write the before-and-after benchmark for a CDN cache-hit ratio below 40%. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-performance#078",
+   "text": "Plan a measurement-first investigation of a video upload pipeline with high TTFB. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-performance#079",
+   "text": "As a platform engineer, I keep hitting the same wall with a big-JSON parse blocking the main thread. Design the regression alarm for it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-performance#080",
+   "text": "Create a performance budget for an API p95 that doubles at peak. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-performance#081",
+   "text": "Write the before-and-after benchmark for an API p95 that doubles at peak."
+  },
+  {
+   "id": "coding-performance#082",
+   "text": "List the likely bottlenecks in a dashboard with 40 charts stuttering. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "coding-performance#083",
+   "text": "Act as a platform engineer. Propose the caching strategy for a dashboard with 40 charts stuttering, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "coding-performance#084",
+   "text": "Plan a measurement-first investigation of a React list re-rendering on every keystroke. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "coding-performance#085",
+   "text": "I’m working on a CDN cache-hit ratio below 40%. Explain the profiling approach for it and explain your reasoning as you go."
+  },
+  {
+   "id": "coding-performance#086",
+   "text": "Explain the profiling approach for a database connection pool exhaustion for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "coding-performance#087",
+   "text": "List the likely bottlenecks in a mobile app startup over five seconds. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-performance#088",
+   "text": "Help me with a regex catastrophic backtracking: create a performance budget for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "coding-performance#089",
+   "text": "List the likely bottlenecks in a regex catastrophic backtracking. Use a friendly tone throughout."
+  },
+  {
+   "id": "coding-performance#090",
+   "text": "You are a tech lead of a small team. Explain the profiling approach for a regex catastrophic backtracking and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "coding-performance#091",
+   "text": "Write the before-and-after benchmark for a slow cold-start on serverless. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "coding-performance#092",
+   "text": "Before I start on an image-heavy gallery hurting LCP, propose the caching strategy for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "coding-performance#093",
+   "text": "Plan a measurement-first investigation of an image-heavy gallery hurting LCP. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "coding-performance#094",
+   "text": "Draft a prioritized optimization backlog for a dashboard with 40 charts stuttering. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "coding-performance#095",
+   "text": "As a staff engineer, I keep hitting the same wall with a mobile app startup over five seconds. Plan a measurement-first investigation of it and show me what I’m probably missing."
+  },
+  {
+   "id": "coding-performance#096",
+   "text": "Create a performance budget for a video upload pipeline with high TTFB. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "coding-performance#097",
+   "text": "List the likely bottlenecks in an API p95 that doubles at peak. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-performance#098",
+   "text": "Explain the profiling approach for a dashboard with 40 charts stuttering. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "coding-performance#099",
+   "text": "Plan a measurement-first investigation of a regex catastrophic backtracking."
+  },
+  {
+   "id": "coding-performance#100",
+   "text": "Draft a prioritized optimization backlog for a first-load JS bundle over 2MB."
+  },
+  {
+   "id": "coding-performance#101",
+   "text": "Write the before-and-after benchmark for a video upload pipeline with high TTFB."
+  },
+  {
+   "id": "coding-performance#102",
+   "text": "Explain the profiling approach for a slow cold-start on serverless."
+  },
+  {
+   "id": "coding-performance#103",
+   "text": "Explain the profiling approach for a React list re-rendering on every keystroke."
+  },
+  {
+   "id": "coding-performance#104",
+   "text": "Explain the profiling approach for an API p95 that doubles at peak."
+  }
+ ]
+}

@@ -1,0 +1,430 @@
+{
+ "slug": "productivity-meetings-email",
+ "categorySlug": "productivity",
+ "category": "Productivity & Habits",
+ "title": "Meetings & Email",
+ "description": "Fewer, shorter, and decision-first communications.",
+ "tags": [
+  "meetings",
+  "email",
+  "async"
+ ],
+ "prompts": [
+  {
+   "id": "productivity-meetings-email#001",
+   "text": "Write the agenda and pre-read for a follow-up email after a confusing call."
+  },
+  {
+   "id": "productivity-meetings-email#002",
+   "text": "Produce a time-audit plan for a calendar with no maker time. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-meetings-email#003",
+   "text": "Act as a project manager. Create an inbox-triage system for an inbox at four hundred unread, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-meetings-email#004",
+   "text": "Create an inbox-triage system for meeting notes nobody reads. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-meetings-email#005",
+   "text": "I’m working on a calendar with no maker time. Redesign the meeting around it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-meetings-email#006",
+   "text": "Draft the async-replacement proposal for a decision that keeps getting re-litigated for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-meetings-email#007",
+   "text": "Draft the async-replacement proposal for an inbox at four hundred unread. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-meetings-email#008",
+   "text": "Help me with a follow-up email after a confusing call: create an inbox-triage system for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-meetings-email#009",
+   "text": "Produce a time-audit plan for a project update written for executives. Use a encouraging tone throughout."
+  },
+  {
+   "id": "productivity-meetings-email#010",
+   "text": "You are a behavior-design researcher. Write templates for recurring replies to a meeting-invite with no agenda and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-meetings-email#011",
+   "text": "Redesign the meeting around a stakeholder who emails at midnight. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-meetings-email#012",
+   "text": "Before I start on a stakeholder who emails at midnight, create an inbox-triage system for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-meetings-email#013",
+   "text": "Design a decision-log format for a decision that keeps getting re-litigated. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-meetings-email#014",
+   "text": "Write templates for recurring replies to a decision that keeps getting re-litigated. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-meetings-email#015",
+   "text": "As a minimalist systems tinkerer, I keep hitting the same wall with a client who calls instead of writing. Draft a polite decline-and-redirect for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-meetings-email#016",
+   "text": "Draft a polite decline-and-redirect for a weekly status meeting that could be a doc. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-meetings-email#017",
+   "text": "Write templates for recurring replies to a recurring sync nobody can explain."
+  },
+  {
+   "id": "productivity-meetings-email#018",
+   "text": "Produce a time-audit plan for a follow-up email after a confusing call. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-meetings-email#019",
+   "text": "Act as a project manager. Draft a polite decline-and-redirect for a project update written for executives, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-meetings-email#020",
+   "text": "Write templates for recurring replies to a weekly status meeting that could be a doc. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-meetings-email#021",
+   "text": "I’m working on a calendar with no maker time. Draft the async-replacement proposal for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-meetings-email#022",
+   "text": "Design a decision-log format for a weekly status meeting that could be a doc for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-meetings-email#023",
+   "text": "Produce a time-audit plan for a decision that keeps getting re-litigated. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-meetings-email#024",
+   "text": "Help me with a follow-up email after a confusing call: draft a polite decline-and-redirect for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-meetings-email#025",
+   "text": "Draft the async-replacement proposal for a weekly status meeting that could be a doc. Use a empathetic tone throughout."
+  },
+  {
+   "id": "productivity-meetings-email#026",
+   "text": "You are a project manager. Write the agenda and pre-read for meeting notes nobody reads and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-meetings-email#027",
+   "text": "Design a decision-log format for a recurring sync nobody can explain. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-meetings-email#028",
+   "text": "Before I start on a client who calls instead of writing, create an inbox-triage system for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-meetings-email#029",
+   "text": "Redesign the meeting around a recurring sync nobody can explain. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-meetings-email#030",
+   "text": "Redesign the meeting around a decision that keeps getting re-litigated. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-meetings-email#031",
+   "text": "As a minimalist systems tinkerer, I keep hitting the same wall with a client who calls instead of writing. Draft the async-replacement proposal for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-meetings-email#032",
+   "text": "Design a decision-log format for a client who calls instead of writing. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-meetings-email#033",
+   "text": "Design a decision-log format for a project update written for executives."
+  },
+  {
+   "id": "productivity-meetings-email#034",
+   "text": "Draft a polite decline-and-redirect for an inbox at four hundred unread. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-meetings-email#035",
+   "text": "Act as a chief of staff. Produce a time-audit plan for a weekly status meeting that could be a doc, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-meetings-email#036",
+   "text": "Draft a polite decline-and-redirect for a calendar with no maker time. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-meetings-email#037",
+   "text": "I’m working on a calendar with no maker time. Create an inbox-triage system for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-meetings-email#038",
+   "text": "Create an inbox-triage system for a decision that keeps getting re-litigated for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-meetings-email#039",
+   "text": "Redesign the meeting around an inbox at four hundred unread. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-meetings-email#040",
+   "text": "Help me with a project update written for executives: draft the async-replacement proposal for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-meetings-email#041",
+   "text": "Create an inbox-triage system for an all-hands that runs long. Use a empathetic tone throughout."
+  },
+  {
+   "id": "productivity-meetings-email#042",
+   "text": "You are a minimalist systems tinkerer. Design a decision-log format for a stakeholder who emails at midnight and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-meetings-email#043",
+   "text": "Write the agenda and pre-read for an inbox at four hundred unread. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-meetings-email#044",
+   "text": "Before I start on a follow-up email after a confusing call, write templates for recurring replies to it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-meetings-email#045",
+   "text": "Draft a polite decline-and-redirect for meeting notes nobody reads. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-meetings-email#046",
+   "text": "Draft the async-replacement proposal for an all-hands that runs long. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-meetings-email#047",
+   "text": "As a minimalist systems tinkerer, I keep hitting the same wall with a calendar with no maker time. Design a decision-log format for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-meetings-email#048",
+   "text": "Produce a time-audit plan for meeting notes nobody reads. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-meetings-email#049",
+   "text": "Draft the async-replacement proposal for a stakeholder who emails at midnight."
+  },
+  {
+   "id": "productivity-meetings-email#050",
+   "text": "Write the agenda and pre-read for a stakeholder who emails at midnight. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-meetings-email#051",
+   "text": "Act as a productivity coach. Redesign the meeting around meeting notes nobody reads, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-meetings-email#052",
+   "text": "Write templates for recurring replies to a calendar with no maker time. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-meetings-email#053",
+   "text": "I’m working on an inbox at four hundred unread. Design a decision-log format for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-meetings-email#054",
+   "text": "Produce a time-audit plan for an inbox at four hundred unread for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-meetings-email#055",
+   "text": "Draft a polite decline-and-redirect for a decision that keeps getting re-litigated. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-meetings-email#056",
+   "text": "Help me with a project update written for executives: write the agenda and pre-read for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-meetings-email#057",
+   "text": "Write the agenda and pre-read for a client who calls instead of writing. Use a playful tone throughout."
+  },
+  {
+   "id": "productivity-meetings-email#058",
+   "text": "You are a productivity coach. Produce a time-audit plan for a client who calls instead of writing and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-meetings-email#059",
+   "text": "Design a decision-log format for an all-hands that runs long. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-meetings-email#060",
+   "text": "Before I start on a meeting-invite with no agenda, design a decision-log format for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-meetings-email#061",
+   "text": "Draft the async-replacement proposal for meeting notes nobody reads. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-meetings-email#062",
+   "text": "Draft the async-replacement proposal for a meeting-invite with no agenda. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-meetings-email#063",
+   "text": "As a recovery-focused therapist-adjacent coach, I keep hitting the same wall with a stakeholder who emails at midnight. Produce a time-audit plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-meetings-email#064",
+   "text": "Redesign the meeting around a weekly status meeting that could be a doc. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-meetings-email#065",
+   "text": "Redesign the meeting around an all-hands that runs long."
+  },
+  {
+   "id": "productivity-meetings-email#066",
+   "text": "Draft a polite decline-and-redirect for an all-hands that runs long. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-meetings-email#067",
+   "text": "Act as a behavior-design researcher. Draft a polite decline-and-redirect for a stakeholder who emails at midnight, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-meetings-email#068",
+   "text": "Write templates for recurring replies to an all-hands that runs long. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-meetings-email#069",
+   "text": "I’m working on a meeting-invite with no agenda. Create an inbox-triage system for it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-meetings-email#070",
+   "text": "Write the agenda and pre-read for a decision that keeps getting re-litigated for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-meetings-email#071",
+   "text": "Write templates for recurring replies to a client who calls instead of writing. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-meetings-email#072",
+   "text": "Help me with a follow-up email after a confusing call: redesign the meeting around it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-meetings-email#073",
+   "text": "Draft a polite decline-and-redirect for a recurring sync nobody can explain. Use a empathetic tone throughout."
+  },
+  {
+   "id": "productivity-meetings-email#074",
+   "text": "You are a recovery-focused therapist-adjacent coach. Write the agenda and pre-read for an all-hands that runs long and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-meetings-email#075",
+   "text": "Produce a time-audit plan for an all-hands that runs long. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-meetings-email#076",
+   "text": "Before I start on a meeting-invite with no agenda, draft a polite decline-and-redirect for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-meetings-email#077",
+   "text": "Produce a time-audit plan for a recurring sync nobody can explain. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-meetings-email#078",
+   "text": "Write the agenda and pre-read for a calendar with no maker time. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-meetings-email#079",
+   "text": "As a recovery-focused therapist-adjacent coach, I keep hitting the same wall with a stakeholder who emails at midnight. Write templates for recurring replies to it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-meetings-email#080",
+   "text": "Produce a time-audit plan for a meeting-invite with no agenda. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-meetings-email#081",
+   "text": "Create an inbox-triage system for a weekly status meeting that could be a doc."
+  },
+  {
+   "id": "productivity-meetings-email#082",
+   "text": "Write templates for recurring replies to meeting notes nobody reads. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "productivity-meetings-email#083",
+   "text": "Act as a recovery-focused therapist-adjacent coach. Design a decision-log format for a follow-up email after a confusing call, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "productivity-meetings-email#084",
+   "text": "Create an inbox-triage system for a recurring sync nobody can explain. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "productivity-meetings-email#085",
+   "text": "I’m working on a project update written for executives. Redesign the meeting around it and explain your reasoning as you go."
+  },
+  {
+   "id": "productivity-meetings-email#086",
+   "text": "Write the agenda and pre-read for a recurring sync nobody can explain for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "productivity-meetings-email#087",
+   "text": "Draft the async-replacement proposal for a recurring sync nobody can explain. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-meetings-email#088",
+   "text": "Help me with a follow-up email after a confusing call: draft the async-replacement proposal for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "productivity-meetings-email#089",
+   "text": "Redesign the meeting around a meeting-invite with no agenda. Use a encouraging tone throughout."
+  },
+  {
+   "id": "productivity-meetings-email#090",
+   "text": "You are a project manager. Design a decision-log format for meeting notes nobody reads and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "productivity-meetings-email#091",
+   "text": "Write templates for recurring replies to an inbox at four hundred unread. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "productivity-meetings-email#092",
+   "text": "Before I start on a weekly status meeting that could be a doc, write the agenda and pre-read for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "productivity-meetings-email#093",
+   "text": "Create an inbox-triage system for a project update written for executives. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "productivity-meetings-email#094",
+   "text": "Write templates for recurring replies to a project update written for executives. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "productivity-meetings-email#095",
+   "text": "As a minimalist systems tinkerer, I keep hitting the same wall with a client who calls instead of writing. Redesign the meeting around it and show me what I’m probably missing."
+  },
+  {
+   "id": "productivity-meetings-email#096",
+   "text": "Write the agenda and pre-read for a meeting-invite with no agenda. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "productivity-meetings-email#097",
+   "text": "Write the agenda and pre-read for a follow-up email after a confusing call. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-meetings-email#098",
+   "text": "Produce a time-audit plan for a calendar with no maker time. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "productivity-meetings-email#099",
+   "text": "Create an inbox-triage system for an inbox at four hundred unread."
+  },
+  {
+   "id": "productivity-meetings-email#100",
+   "text": "Create an inbox-triage system for meeting notes nobody reads."
+  },
+  {
+   "id": "productivity-meetings-email#101",
+   "text": "Redesign the meeting around a calendar with no maker time."
+  },
+  {
+   "id": "productivity-meetings-email#102",
+   "text": "Draft the async-replacement proposal for a decision that keeps getting re-litigated."
+  },
+  {
+   "id": "productivity-meetings-email#103",
+   "text": "Draft the async-replacement proposal for an inbox at four hundred unread."
+  },
+  {
+   "id": "productivity-meetings-email#104",
+   "text": "Create an inbox-triage system for a follow-up email after a confusing call."
+  }
+ ]
+}

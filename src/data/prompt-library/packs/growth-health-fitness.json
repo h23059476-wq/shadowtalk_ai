@@ -1,0 +1,430 @@
+{
+ "slug": "growth-health-fitness",
+ "categorySlug": "growth",
+ "category": "Personal Growth",
+ "title": "Health & Fitness",
+ "description": "Sustainable plans for movement, sleep, and eating.",
+ "tags": [
+  "health",
+  "fitness",
+  "sleep"
+ ],
+ "prompts": [
+  {
+   "id": "growth-health-fitness#001",
+   "text": "Create a progression schedule with rest days for an injury-comeback walking plan."
+  },
+  {
+   "id": "growth-health-fitness#002",
+   "text": "List the form cues and safety notes for an injury-comeback walking plan. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-health-fitness#003",
+   "text": "Act as a reflective journaling guide. Write a beginner-friendly plan for a couch-to-30-minutes running plan, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-health-fitness#004",
+   "text": "List the form cues and safety notes for a walking habit in a walkable-unfriendly area. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-health-fitness#005",
+   "text": "I’m working on posture breaks during desk days. Build a tracking sheet for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-health-fitness#006",
+   "text": "Write a travel-day adaptation for a couch-to-30-minutes running plan for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-health-fitness#007",
+   "text": "Create a progression schedule with rest days for reducing late-night snacking. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-health-fitness#008",
+   "text": "Help me with a screen-free wind-down hour: explain the recovery science behind it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-health-fitness#009",
+   "text": "List the form cues and safety notes for a sleep routine after years of late nights. Use a persuasive tone throughout."
+  },
+  {
+   "id": "growth-health-fitness#010",
+   "text": "You are a resilience and stress educator. List the form cues and safety notes for meal prep for shift workers and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-health-fitness#011",
+   "text": "Write a beginner-friendly plan for strength training twice a week. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-health-fitness#012",
+   "text": "Before I start on a couch-to-30-minutes running plan, draft a plateau-busting adjustment for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-health-fitness#013",
+   "text": "Write a beginner-friendly plan for a beginner swim routine. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-health-fitness#014",
+   "text": "Build a tracking sheet for a screen-free wind-down hour. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-health-fitness#015",
+   "text": "As a reflective journaling guide, I keep hitting the same wall with strength training twice a week. Explain the recovery science behind it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-health-fitness#016",
+   "text": "Create a progression schedule with rest days for a walking habit in a walkable-unfriendly area. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-health-fitness#017",
+   "text": "Draft a plateau-busting adjustment for a stretching plan for stiff shoulders."
+  },
+  {
+   "id": "growth-health-fitness#018",
+   "text": "Design a realistic weekly meal structure for a stretching plan for stiff shoulders. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-health-fitness#019",
+   "text": "Act as a mindful-movement teacher. Explain the recovery science behind hydration during long flights, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-health-fitness#020",
+   "text": "Create a progression schedule with rest days for a screen-free wind-down hour. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-health-fitness#021",
+   "text": "I’m working on posture breaks during desk days. List the form cues and safety notes for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-health-fitness#022",
+   "text": "Write a beginner-friendly plan for a sleep routine after years of late nights for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-health-fitness#023",
+   "text": "Build a tracking sheet for strength training twice a week. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-health-fitness#024",
+   "text": "Help me with a beginner swim routine: design a realistic weekly meal structure for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-health-fitness#025",
+   "text": "Design a realistic weekly meal structure for reducing late-night snacking. Use a direct tone throughout."
+  },
+  {
+   "id": "growth-health-fitness#026",
+   "text": "You are a financial-literacy educator. Draft a plateau-busting adjustment for an injury-comeback walking plan and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-health-fitness#027",
+   "text": "List the form cues and safety notes for a beginner swim routine. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-health-fitness#028",
+   "text": "Before I start on a beginner swim routine, write a travel-day adaptation for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-health-fitness#029",
+   "text": "Design a realistic weekly meal structure for posture breaks during desk days. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-health-fitness#030",
+   "text": "Design a realistic weekly meal structure for a couch-to-30-minutes running plan. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-health-fitness#031",
+   "text": "As a communication-skills coach, I keep hitting the same wall with a sleep routine after years of late nights. Write a travel-day adaptation for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-health-fitness#032",
+   "text": "Build a tracking sheet for a sleep routine after years of late nights. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-health-fitness#033",
+   "text": "Explain the recovery science behind a beginner swim routine."
+  },
+  {
+   "id": "growth-health-fitness#034",
+   "text": "Create a progression schedule with rest days for a stretching plan for stiff shoulders. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-health-fitness#035",
+   "text": "Act as a reflective journaling guide. Draft a plateau-busting adjustment for a sleep routine after years of late nights, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-health-fitness#036",
+   "text": "Explain the recovery science behind reducing late-night snacking. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-health-fitness#037",
+   "text": "I’m working on a stretching plan for stiff shoulders. Write a beginner-friendly plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-health-fitness#038",
+   "text": "Create a progression schedule with rest days for posture breaks during desk days for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-health-fitness#039",
+   "text": "Explain the recovery science behind a stretching plan for stiff shoulders. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-health-fitness#040",
+   "text": "Help me with meal prep for shift workers: write a beginner-friendly plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-health-fitness#041",
+   "text": "Write a travel-day adaptation for strength training twice a week. Use a formal tone throughout."
+  },
+  {
+   "id": "growth-health-fitness#042",
+   "text": "You are a reflective journaling guide. Build a tracking sheet for a walking habit in a walkable-unfriendly area and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-health-fitness#043",
+   "text": "Build a tracking sheet for reducing late-night snacking. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-health-fitness#044",
+   "text": "Before I start on hydration during long flights, write a beginner-friendly plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-health-fitness#045",
+   "text": "Write a travel-day adaptation for an injury-comeback walking plan. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-health-fitness#046",
+   "text": "List the form cues and safety notes for a screen-free wind-down hour. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-health-fitness#047",
+   "text": "As a values-and-purpose mentor, I keep hitting the same wall with a walking habit in a walkable-unfriendly area. Write a beginner-friendly plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-health-fitness#048",
+   "text": "Build a tracking sheet for a couch-to-30-minutes running plan. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-health-fitness#049",
+   "text": "Draft a plateau-busting adjustment for meal prep for shift workers."
+  },
+  {
+   "id": "growth-health-fitness#050",
+   "text": "Write a beginner-friendly plan for an injury-comeback walking plan. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-health-fitness#051",
+   "text": "Act as a mindful-movement teacher. Create a progression schedule with rest days for hydration during long flights, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-health-fitness#052",
+   "text": "Write a beginner-friendly plan for posture breaks during desk days. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-health-fitness#053",
+   "text": "I’m working on a couch-to-30-minutes running plan. Create a progression schedule with rest days for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-health-fitness#054",
+   "text": "Write a beginner-friendly plan for reducing late-night snacking for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-health-fitness#055",
+   "text": "Write a travel-day adaptation for hydration during long flights. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-health-fitness#056",
+   "text": "Help me with reducing late-night snacking: write a travel-day adaptation for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-health-fitness#057",
+   "text": "Design a realistic weekly meal structure for a walking habit in a walkable-unfriendly area. Use a playful tone throughout."
+  },
+  {
+   "id": "growth-health-fitness#058",
+   "text": "You are a decision-quality facilitator. Create a progression schedule with rest days for a sleep routine after years of late nights and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-health-fitness#059",
+   "text": "Explain the recovery science behind a sleep routine after years of late nights. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-health-fitness#060",
+   "text": "Before I start on an injury-comeback walking plan, design a realistic weekly meal structure for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-health-fitness#061",
+   "text": "Write a travel-day adaptation for a screen-free wind-down hour. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-health-fitness#062",
+   "text": "Explain the recovery science behind meal prep for shift workers. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-health-fitness#063",
+   "text": "As a practical life coach, I keep hitting the same wall with posture breaks during desk days. Write a travel-day adaptation for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-health-fitness#064",
+   "text": "Draft a plateau-busting adjustment for hydration during long flights. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-health-fitness#065",
+   "text": "List the form cues and safety notes for reducing late-night snacking."
+  },
+  {
+   "id": "growth-health-fitness#066",
+   "text": "Draft a plateau-busting adjustment for a beginner swim routine. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-health-fitness#067",
+   "text": "Act as a practical life coach. Design a realistic weekly meal structure for meal prep for shift workers, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-health-fitness#068",
+   "text": "Build a tracking sheet for an injury-comeback walking plan. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-health-fitness#069",
+   "text": "I’m working on a beginner swim routine. Build a tracking sheet for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-health-fitness#070",
+   "text": "Explain the recovery science behind a couch-to-30-minutes running plan for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-health-fitness#071",
+   "text": "Draft a plateau-busting adjustment for reducing late-night snacking. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-health-fitness#072",
+   "text": "Help me with a stretching plan for stiff shoulders: list the form cues and safety notes for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-health-fitness#073",
+   "text": "Build a tracking sheet for hydration during long flights. Use a playful tone throughout."
+  },
+  {
+   "id": "growth-health-fitness#074",
+   "text": "You are a practical life coach. Draft a plateau-busting adjustment for strength training twice a week and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-health-fitness#075",
+   "text": "Create a progression schedule with rest days for meal prep for shift workers. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-health-fitness#076",
+   "text": "Before I start on a stretching plan for stiff shoulders, write a travel-day adaptation for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-health-fitness#077",
+   "text": "Create a progression schedule with rest days for strength training twice a week. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-health-fitness#078",
+   "text": "Design a realistic weekly meal structure for strength training twice a week. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-health-fitness#079",
+   "text": "As a values-and-purpose mentor, I keep hitting the same wall with a walking habit in a walkable-unfriendly area. Explain the recovery science behind it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-health-fitness#080",
+   "text": "Draft a plateau-busting adjustment for a screen-free wind-down hour. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-health-fitness#081",
+   "text": "List the form cues and safety notes for strength training twice a week."
+  },
+  {
+   "id": "growth-health-fitness#082",
+   "text": "Design a realistic weekly meal structure for a sleep routine after years of late nights. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-health-fitness#083",
+   "text": "Act as a practical life coach. Write a travel-day adaptation for meal prep for shift workers, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-health-fitness#084",
+   "text": "Explain the recovery science behind posture breaks during desk days. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-health-fitness#085",
+   "text": "I’m working on a couch-to-30-minutes running plan. List the form cues and safety notes for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-health-fitness#086",
+   "text": "Build a tracking sheet for meal prep for shift workers for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-health-fitness#087",
+   "text": "Write a travel-day adaptation for a walking habit in a walkable-unfriendly area. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-health-fitness#088",
+   "text": "Help me with hydration during long flights: list the form cues and safety notes for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-health-fitness#089",
+   "text": "Design a realistic weekly meal structure for a screen-free wind-down hour. Use a direct tone throughout."
+  },
+  {
+   "id": "growth-health-fitness#090",
+   "text": "You are a reflective journaling guide. Build a tracking sheet for a stretching plan for stiff shoulders and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-health-fitness#091",
+   "text": "Write a beginner-friendly plan for a screen-free wind-down hour. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-health-fitness#092",
+   "text": "Before I start on an injury-comeback walking plan, explain the recovery science behind it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-health-fitness#093",
+   "text": "Create a progression schedule with rest days for a beginner swim routine. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-health-fitness#094",
+   "text": "Draft a plateau-busting adjustment for posture breaks during desk days. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-health-fitness#095",
+   "text": "As a values-and-purpose mentor, I keep hitting the same wall with a walking habit in a walkable-unfriendly area. Draft a plateau-busting adjustment for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-health-fitness#096",
+   "text": "Design a realistic weekly meal structure for hydration during long flights. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-health-fitness#097",
+   "text": "Create a progression schedule with rest days for an injury-comeback walking plan. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-health-fitness#098",
+   "text": "List the form cues and safety notes for an injury-comeback walking plan. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-health-fitness#099",
+   "text": "Write a beginner-friendly plan for a couch-to-30-minutes running plan."
+  },
+  {
+   "id": "growth-health-fitness#100",
+   "text": "List the form cues and safety notes for a walking habit in a walkable-unfriendly area."
+  },
+  {
+   "id": "growth-health-fitness#101",
+   "text": "Build a tracking sheet for posture breaks during desk days."
+  },
+  {
+   "id": "growth-health-fitness#102",
+   "text": "Write a travel-day adaptation for a couch-to-30-minutes running plan."
+  },
+  {
+   "id": "growth-health-fitness#103",
+   "text": "Create a progression schedule with rest days for reducing late-night snacking."
+  },
+  {
+   "id": "growth-health-fitness#104",
+   "text": "Explain the recovery science behind a screen-free wind-down hour."
+  }
+ ]
+}

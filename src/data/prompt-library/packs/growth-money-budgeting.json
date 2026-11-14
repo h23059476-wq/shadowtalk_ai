@@ -1,0 +1,430 @@
+{
+ "slug": "growth-money-budgeting",
+ "categorySlug": "growth",
+ "category": "Personal Growth",
+ "title": "Money & Budgeting",
+ "description": "Budgets, debt plans, and saving goals without shame.",
+ "tags": [
+  "money",
+  "budget",
+  "saving"
+ ],
+ "prompts": [
+  {
+   "id": "growth-money-budgeting#001",
+   "text": "Design a sinking-fund list for a no-spend weekend that isn’t miserable."
+  },
+  {
+   "id": "growth-money-budgeting#002",
+   "text": "Write a negotiation script for saving for a house deposit. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-money-budgeting#003",
+   "text": "Act as a decision-quality facilitator. Build a simple budget template for a first budget after moving out, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-money-budgeting#004",
+   "text": "Draft a savings-automation plan for saving for a house deposit. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-money-budgeting#005",
+   "text": "I’m working on a no-spend weekend that isn’t miserable. Explain the trade-offs involved in it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-money-budgeting#006",
+   "text": "Design a sinking-fund list for an emergency fund with irregular income for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-money-budgeting#007",
+   "text": "Write a negotiation script for a wedding budget without debt. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-money-budgeting#008",
+   "text": "Help me with splitting expenses fairly in a flatshare: list the hidden costs to plan for in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-money-budgeting#009",
+   "text": "Write a negotiation script for teaching kids about earning and saving. Use a formal tone throughout."
+  },
+  {
+   "id": "growth-money-budgeting#010",
+   "text": "You are a decision-quality facilitator. Design a sinking-fund list for saving for a house deposit and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-money-budgeting#011",
+   "text": "Create a debt-paydown plan with milestones for a no-spend weekend that isn’t miserable. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-money-budgeting#012",
+   "text": "Before I start on a subscription audit and cancellation script, build a simple budget template for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-money-budgeting#013",
+   "text": "Create a debt-paydown plan with milestones for paying down credit-card debt steadily. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-money-budgeting#014",
+   "text": "Explain the trade-offs involved in a first budget after moving out. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-money-budgeting#015",
+   "text": "As a practical life coach, I keep hitting the same wall with an emergency fund with irregular income. Draft a savings-automation plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-money-budgeting#016",
+   "text": "Build a simple budget template for a retirement-contributions starting plan. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-money-budgeting#017",
+   "text": "Draft a savings-automation plan for a subscription audit and cancellation script."
+  },
+  {
+   "id": "growth-money-budgeting#018",
+   "text": "Design a sinking-fund list for splitting expenses fairly in a flatshare. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-money-budgeting#019",
+   "text": "Act as a reflective journaling guide. List the hidden costs to plan for in saving for a house deposit, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-money-budgeting#020",
+   "text": "Build a simple budget template for splitting expenses fairly in a flatshare. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-money-budgeting#021",
+   "text": "I’m working on teaching kids about earning and saving. Create a monthly money-date ritual for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-money-budgeting#022",
+   "text": "Design a sinking-fund list for paying down credit-card debt steadily for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-money-budgeting#023",
+   "text": "List the hidden costs to plan for in a wedding budget without debt. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-money-budgeting#024",
+   "text": "Help me with a retirement-contributions starting plan: explain the trade-offs involved in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-money-budgeting#025",
+   "text": "Write a negotiation script for a retirement-contributions starting plan. Use a professional tone throughout."
+  },
+  {
+   "id": "growth-money-budgeting#026",
+   "text": "You are a values-and-purpose mentor. Create a monthly money-date ritual for a subscription audit and cancellation script and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-money-budgeting#027",
+   "text": "Write a negotiation script for splitting expenses fairly in a flatshare. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-money-budgeting#028",
+   "text": "Before I start on teaching kids about earning and saving, create a debt-paydown plan with milestones for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-money-budgeting#029",
+   "text": "List the hidden costs to plan for in teaching kids about earning and saving. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-money-budgeting#030",
+   "text": "Create a debt-paydown plan with milestones for negotiating a phone or internet bill. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-money-budgeting#031",
+   "text": "As a practical life coach, I keep hitting the same wall with an emergency fund with irregular income. List the hidden costs to plan for in it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-money-budgeting#032",
+   "text": "Explain the trade-offs involved in splitting expenses fairly in a flatshare. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-money-budgeting#033",
+   "text": "Draft a savings-automation plan for a car-ownership cost reality check."
+  },
+  {
+   "id": "growth-money-budgeting#034",
+   "text": "Write a negotiation script for an emergency fund with irregular income. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-money-budgeting#035",
+   "text": "Act as a reflective journaling guide. Create a debt-paydown plan with milestones for saving for a house deposit, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-money-budgeting#036",
+   "text": "Draft a savings-automation plan for a first budget after moving out. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-money-budgeting#037",
+   "text": "I’m working on a subscription audit and cancellation script. List the hidden costs to plan for in it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-money-budgeting#038",
+   "text": "Write a negotiation script for a subscription audit and cancellation script for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-money-budgeting#039",
+   "text": "Build a simple budget template for an emergency fund with irregular income. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-money-budgeting#040",
+   "text": "Help me with teaching kids about earning and saving: draft a savings-automation plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-money-budgeting#041",
+   "text": "Write a negotiation script for a no-spend weekend that isn’t miserable. Use a encouraging tone throughout."
+  },
+  {
+   "id": "growth-money-budgeting#042",
+   "text": "You are a financial-literacy educator. Create a monthly money-date ritual for a no-spend weekend that isn’t miserable and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-money-budgeting#043",
+   "text": "Design a sinking-fund list for teaching kids about earning and saving. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-money-budgeting#044",
+   "text": "Before I start on saving for a house deposit, create a monthly money-date ritual for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-money-budgeting#045",
+   "text": "Create a monthly money-date ritual for a wedding budget without debt. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-money-budgeting#046",
+   "text": "Draft a savings-automation plan for paying down credit-card debt steadily. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-money-budgeting#047",
+   "text": "As a financial-literacy educator, I keep hitting the same wall with a retirement-contributions starting plan. Design a sinking-fund list for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-money-budgeting#048",
+   "text": "Write a negotiation script for paying down credit-card debt steadily. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-money-budgeting#049",
+   "text": "Build a simple budget template for a car-ownership cost reality check."
+  },
+  {
+   "id": "growth-money-budgeting#050",
+   "text": "Write a negotiation script for a car-ownership cost reality check. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-money-budgeting#051",
+   "text": "Act as a reflective journaling guide. Explain the trade-offs involved in saving for a house deposit, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-money-budgeting#052",
+   "text": "Design a sinking-fund list for a subscription audit and cancellation script. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-money-budgeting#053",
+   "text": "I’m working on a car-ownership cost reality check. Design a sinking-fund list for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-money-budgeting#054",
+   "text": "Explain the trade-offs involved in teaching kids about earning and saving for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-money-budgeting#055",
+   "text": "Write a negotiation script for negotiating a phone or internet bill. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-money-budgeting#056",
+   "text": "Help me with negotiating a phone or internet bill: explain the trade-offs involved in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-money-budgeting#057",
+   "text": "Create a monthly money-date ritual for an emergency fund with irregular income. Use a encouraging tone throughout."
+  },
+  {
+   "id": "growth-money-budgeting#058",
+   "text": "You are a mindful-movement teacher. Create a debt-paydown plan with milestones for a retirement-contributions starting plan and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-money-budgeting#059",
+   "text": "Draft a savings-automation plan for splitting expenses fairly in a flatshare. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-money-budgeting#060",
+   "text": "Before I start on a car-ownership cost reality check, create a monthly money-date ritual for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-money-budgeting#061",
+   "text": "Create a debt-paydown plan with milestones for a first budget after moving out. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-money-budgeting#062",
+   "text": "Build a simple budget template for paying down credit-card debt steadily. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-money-budgeting#063",
+   "text": "As a financial-literacy educator, I keep hitting the same wall with a retirement-contributions starting plan. Create a monthly money-date ritual for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-money-budgeting#064",
+   "text": "Draft a savings-automation plan for a retirement-contributions starting plan. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-money-budgeting#065",
+   "text": "Create a monthly money-date ritual for negotiating a phone or internet bill."
+  },
+  {
+   "id": "growth-money-budgeting#066",
+   "text": "Explain the trade-offs involved in a subscription audit and cancellation script. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-money-budgeting#067",
+   "text": "Act as a decision-quality facilitator. Draft a savings-automation plan for a no-spend weekend that isn’t miserable, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-money-budgeting#068",
+   "text": "Draft a savings-automation plan for negotiating a phone or internet bill. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-money-budgeting#069",
+   "text": "I’m working on a no-spend weekend that isn’t miserable. List the hidden costs to plan for in it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-money-budgeting#070",
+   "text": "Build a simple budget template for a wedding budget without debt for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-money-budgeting#071",
+   "text": "Create a monthly money-date ritual for a first budget after moving out. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-money-budgeting#072",
+   "text": "Help me with saving for a house deposit: build a simple budget template for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-money-budgeting#073",
+   "text": "Explain the trade-offs involved in a wedding budget without debt. Use a playful tone throughout."
+  },
+  {
+   "id": "growth-money-budgeting#074",
+   "text": "You are a financial-literacy educator. Create a debt-paydown plan with milestones for an emergency fund with irregular income and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-money-budgeting#075",
+   "text": "List the hidden costs to plan for in a retirement-contributions starting plan. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-money-budgeting#076",
+   "text": "Before I start on a first budget after moving out, design a sinking-fund list for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-money-budgeting#077",
+   "text": "Explain the trade-offs involved in an emergency fund with irregular income. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-money-budgeting#078",
+   "text": "Create a monthly money-date ritual for splitting expenses fairly in a flatshare. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-money-budgeting#079",
+   "text": "As a values-and-purpose mentor, I keep hitting the same wall with paying down credit-card debt steadily. Create a monthly money-date ritual for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-money-budgeting#080",
+   "text": "List the hidden costs to plan for in a first budget after moving out. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-money-budgeting#081",
+   "text": "Design a sinking-fund list for a wedding budget without debt."
+  },
+  {
+   "id": "growth-money-budgeting#082",
+   "text": "Create a debt-paydown plan with milestones for a subscription audit and cancellation script. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-money-budgeting#083",
+   "text": "Act as a financial-literacy educator. Design a sinking-fund list for negotiating a phone or internet bill, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-money-budgeting#084",
+   "text": "Build a simple budget template for a no-spend weekend that isn’t miserable. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-money-budgeting#085",
+   "text": "I’m working on negotiating a phone or internet bill. Build a simple budget template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-money-budgeting#086",
+   "text": "Explain the trade-offs involved in paying down credit-card debt steadily for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-money-budgeting#087",
+   "text": "List the hidden costs to plan for in negotiating a phone or internet bill. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-money-budgeting#088",
+   "text": "Help me with a car-ownership cost reality check: explain the trade-offs involved in it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-money-budgeting#089",
+   "text": "Create a debt-paydown plan with milestones for a car-ownership cost reality check. Use a persuasive tone throughout."
+  },
+  {
+   "id": "growth-money-budgeting#090",
+   "text": "You are a decision-quality facilitator. List the hidden costs to plan for in a car-ownership cost reality check and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-money-budgeting#091",
+   "text": "Build a simple budget template for teaching kids about earning and saving. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-money-budgeting#092",
+   "text": "Before I start on a wedding budget without debt, draft a savings-automation plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-money-budgeting#093",
+   "text": "Create a debt-paydown plan with milestones for splitting expenses fairly in a flatshare. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-money-budgeting#094",
+   "text": "List the hidden costs to plan for in paying down credit-card debt steadily. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-money-budgeting#095",
+   "text": "As a values-and-purpose mentor, I keep hitting the same wall with a wedding budget without debt. Create a debt-paydown plan with milestones for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-money-budgeting#096",
+   "text": "Write a negotiation script for a first budget after moving out. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-money-budgeting#097",
+   "text": "Design a sinking-fund list for a no-spend weekend that isn’t miserable. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-money-budgeting#098",
+   "text": "Write a negotiation script for saving for a house deposit. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-money-budgeting#099",
+   "text": "Build a simple budget template for a first budget after moving out."
+  },
+  {
+   "id": "growth-money-budgeting#100",
+   "text": "Draft a savings-automation plan for saving for a house deposit."
+  },
+  {
+   "id": "growth-money-budgeting#101",
+   "text": "Explain the trade-offs involved in a no-spend weekend that isn’t miserable."
+  },
+  {
+   "id": "growth-money-budgeting#102",
+   "text": "Design a sinking-fund list for an emergency fund with irregular income."
+  },
+  {
+   "id": "growth-money-budgeting#103",
+   "text": "Write a negotiation script for a wedding budget without debt."
+  },
+  {
+   "id": "growth-money-budgeting#104",
+   "text": "List the hidden costs to plan for in splitting expenses fairly in a flatshare."
+  }
+ ]
+}

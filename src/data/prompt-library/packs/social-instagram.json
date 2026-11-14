@@ -1,0 +1,430 @@
+{
+ "slug": "social-instagram",
+ "categorySlug": "social",
+ "category": "Social Media",
+ "title": "Instagram",
+ "description": "Reels, carousels, and captions tuned for saves and shares.",
+ "tags": [
+  "instagram",
+  "reels",
+  "carousel"
+ ],
+ "prompts": [
+  {
+   "id": "social-instagram#001",
+   "text": "Draft a save-worthy checklist caption for a small-business milestone post."
+  },
+  {
+   "id": "social-instagram#002",
+   "text": "Propose an attention-grabbing cover text for a carousel debunking productivity myths. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-instagram#003",
+   "text": "Act as a social media manager. Write a collab-post caption for a new-menu announcement for a cafe, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-instagram#004",
+   "text": "Draft a save-worthy checklist caption for a carousel debunking productivity myths. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-instagram#005",
+   "text": "I’m working on a new-menu announcement for a cafe. Design a six-slide carousel outline for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-instagram#006",
+   "text": "Draft a save-worthy checklist caption for a charity-fundraiser story sequence for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-instagram#007",
+   "text": "Propose an attention-grabbing cover text for a mini-tutorial on phone photography. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-instagram#008",
+   "text": "Help me with a small-business milestone post: design a six-slide carousel outline for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-instagram#009",
+   "text": "Suggest a month of post ideas expanding on a mini-tutorial on phone photography. Use a direct tone throughout."
+  },
+  {
+   "id": "social-instagram#010",
+   "text": "You are a LinkedIn ghostwriter. Write the caption and hashtags for a client-testimonial carousel for a coach and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-instagram#011",
+   "text": "Write the caption and hashtags for a day-in-the-life reel for a florist. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-instagram#012",
+   "text": "Before I start on a client-testimonial carousel for a coach, draft a save-worthy checklist caption for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-instagram#013",
+   "text": "Suggest a month of post ideas expanding on a client-testimonial carousel for a coach. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-instagram#014",
+   "text": "Write the caption and hashtags for a bookstack aesthetic photo dump. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-instagram#015",
+   "text": "As a creator-economy analyst, I keep hitting the same wall with a day-in-the-life reel for a florist. Suggest a month of post ideas expanding on it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-instagram#016",
+   "text": "Draft a save-worthy checklist caption for a day-in-the-life reel for a florist. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-instagram#017",
+   "text": "Propose an attention-grabbing cover text for a client-testimonial carousel for a coach."
+  },
+  {
+   "id": "social-instagram#018",
+   "text": "Design a six-slide carousel outline for a mini-tutorial on phone photography. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-instagram#019",
+   "text": "Act as a customer-support voice. Script a reel with hook, beats, and CTA for a small-business milestone post, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-instagram#020",
+   "text": "Suggest a month of post ideas expanding on a behind-the-scenes pottery reel. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-instagram#021",
+   "text": "I’m working on a client-testimonial carousel for a coach. Write three story-frames with polls for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-instagram#022",
+   "text": "Write a collab-post caption for a bookstack aesthetic photo dump for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-instagram#023",
+   "text": "Script a reel with hook, beats, and CTA for a bookstack aesthetic photo dump. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-instagram#024",
+   "text": "Help me with a bookstack aesthetic photo dump: design a six-slide carousel outline for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-instagram#025",
+   "text": "Design a six-slide carousel outline for a thirty-second reel on knife skills. Use a direct tone throughout."
+  },
+  {
+   "id": "social-instagram#026",
+   "text": "You are a creator-economy analyst. Script a reel with hook, beats, and CTA for a charity-fundraiser story sequence and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-instagram#027",
+   "text": "Write three story-frames with polls for a mini-tutorial on phone photography. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-instagram#028",
+   "text": "Before I start on a before-and-after home-office glow-up, write three story-frames with polls for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-instagram#029",
+   "text": "Propose an attention-grabbing cover text for a behind-the-scenes pottery reel. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-instagram#030",
+   "text": "Design a six-slide carousel outline for a client-testimonial carousel for a coach. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-instagram#031",
+   "text": "As a community manager, I keep hitting the same wall with a carousel debunking productivity myths. Script a reel with hook, beats, and CTA for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-instagram#032",
+   "text": "Design a six-slide carousel outline for a charity-fundraiser story sequence. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-instagram#033",
+   "text": "Write a collab-post caption for a behind-the-scenes pottery reel."
+  },
+  {
+   "id": "social-instagram#034",
+   "text": "Draft a save-worthy checklist caption for a thirty-second reel on knife skills. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-instagram#035",
+   "text": "Act as a customer-support voice. Write a collab-post caption for a carousel debunking productivity myths, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-instagram#036",
+   "text": "Write three story-frames with polls for a bookstack aesthetic photo dump. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-instagram#037",
+   "text": "I’m working on a client-testimonial carousel for a coach. Script a reel with hook, beats, and CTA for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-instagram#038",
+   "text": "Write the caption and hashtags for a charity-fundraiser story sequence for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-instagram#039",
+   "text": "Script a reel with hook, beats, and CTA for a day-in-the-life reel for a florist. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-instagram#040",
+   "text": "Help me with a new-menu announcement for a cafe: script a reel with hook, beats, and CTA for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-instagram#041",
+   "text": "Draft a save-worthy checklist caption for a mini-tutorial on phone photography. Use a direct tone throughout."
+  },
+  {
+   "id": "social-instagram#042",
+   "text": "You are a local-business owner. Write a collab-post caption for a day-in-the-life reel for a florist and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-instagram#043",
+   "text": "Write a collab-post caption for a five-photo travel carousel of Lisbon. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-instagram#044",
+   "text": "Before I start on a carousel debunking productivity myths, design a six-slide carousel outline for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-instagram#045",
+   "text": "Propose an attention-grabbing cover text for a new-menu announcement for a cafe. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-instagram#046",
+   "text": "Suggest a month of post ideas expanding on a five-photo travel carousel of Lisbon. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-instagram#047",
+   "text": "As a LinkedIn ghostwriter, I keep hitting the same wall with a new-menu announcement for a cafe. Write the caption and hashtags for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-instagram#048",
+   "text": "Write three story-frames with polls for a five-photo travel carousel of Lisbon. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-instagram#049",
+   "text": "Write three story-frames with polls for a thirty-second reel on knife skills."
+  },
+  {
+   "id": "social-instagram#050",
+   "text": "Design a six-slide carousel outline for a day-in-the-life reel for a florist. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-instagram#051",
+   "text": "Act as a customer-support voice. Suggest a month of post ideas expanding on a carousel debunking productivity myths, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-instagram#052",
+   "text": "Write a collab-post caption for a small-business milestone post. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-instagram#053",
+   "text": "I’m working on a charity-fundraiser story sequence. Write a collab-post caption for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-instagram#054",
+   "text": "Suggest a month of post ideas expanding on a new-menu announcement for a cafe for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-instagram#055",
+   "text": "Draft a save-worthy checklist caption for a behind-the-scenes pottery reel. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-instagram#056",
+   "text": "Help me with a behind-the-scenes pottery reel: write three story-frames with polls for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-instagram#057",
+   "text": "Write a collab-post caption for a thirty-second reel on knife skills. Use a direct tone throughout."
+  },
+  {
+   "id": "social-instagram#058",
+   "text": "You are a LinkedIn ghostwriter. Write a collab-post caption for a client-testimonial carousel for a coach and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-instagram#059",
+   "text": "Write a collab-post caption for a mini-tutorial on phone photography. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-instagram#060",
+   "text": "Before I start on a mini-tutorial on phone photography, write the caption and hashtags for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-instagram#061",
+   "text": "Write three story-frames with polls for a new-menu announcement for a cafe. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-instagram#062",
+   "text": "Write the caption and hashtags for a before-and-after home-office glow-up. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-instagram#063",
+   "text": "As a customer-support voice, I keep hitting the same wall with a charity-fundraiser story sequence. Propose an attention-grabbing cover text for it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-instagram#064",
+   "text": "Write three story-frames with polls for a small-business milestone post. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-instagram#065",
+   "text": "Write the caption and hashtags for a behind-the-scenes pottery reel."
+  },
+  {
+   "id": "social-instagram#066",
+   "text": "Write three story-frames with polls for a carousel debunking productivity myths. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-instagram#067",
+   "text": "Act as a personal-branding coach. Propose an attention-grabbing cover text for a thirty-second reel on knife skills, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-instagram#068",
+   "text": "Propose an attention-grabbing cover text for a day-in-the-life reel for a florist. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-instagram#069",
+   "text": "I’m working on a before-and-after home-office glow-up. Draft a save-worthy checklist caption for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-instagram#070",
+   "text": "Write the caption and hashtags for a small-business milestone post for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-instagram#071",
+   "text": "Script a reel with hook, beats, and CTA for a thirty-second reel on knife skills. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-instagram#072",
+   "text": "Help me with a before-and-after home-office glow-up: design a six-slide carousel outline for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-instagram#073",
+   "text": "Draft a save-worthy checklist caption for a five-photo travel carousel of Lisbon. Use a formal tone throughout."
+  },
+  {
+   "id": "social-instagram#074",
+   "text": "You are a short-video strategist. Script a reel with hook, beats, and CTA for a behind-the-scenes pottery reel and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-instagram#075",
+   "text": "Write three story-frames with polls for a day-in-the-life reel for a florist. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-instagram#076",
+   "text": "Before I start on a new-menu announcement for a cafe, draft a save-worthy checklist caption for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-instagram#077",
+   "text": "Design a six-slide carousel outline for a five-photo travel carousel of Lisbon. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-instagram#078",
+   "text": "Script a reel with hook, beats, and CTA for a five-photo travel carousel of Lisbon. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-instagram#079",
+   "text": "As a customer-support voice, I keep hitting the same wall with a charity-fundraiser story sequence. Suggest a month of post ideas expanding on it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-instagram#080",
+   "text": "Write the caption and hashtags for a carousel debunking productivity myths. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-instagram#081",
+   "text": "Write the caption and hashtags for a five-photo travel carousel of Lisbon."
+  },
+  {
+   "id": "social-instagram#082",
+   "text": "Propose an attention-grabbing cover text for a five-photo travel carousel of Lisbon. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "social-instagram#083",
+   "text": "Act as a personal-branding coach. Write the caption and hashtags for a thirty-second reel on knife skills, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "social-instagram#084",
+   "text": "Propose an attention-grabbing cover text for a bookstack aesthetic photo dump. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "social-instagram#085",
+   "text": "I’m working on a before-and-after home-office glow-up. Write a collab-post caption for it and explain your reasoning as you go."
+  },
+  {
+   "id": "social-instagram#086",
+   "text": "Draft a save-worthy checklist caption for a bookstack aesthetic photo dump for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "social-instagram#087",
+   "text": "Suggest a month of post ideas expanding on a thirty-second reel on knife skills. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-instagram#088",
+   "text": "Help me with a before-and-after home-office glow-up: suggest a month of post ideas expanding on it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "social-instagram#089",
+   "text": "Propose an attention-grabbing cover text for a before-and-after home-office glow-up. Use a formal tone throughout."
+  },
+  {
+   "id": "social-instagram#090",
+   "text": "You are a community manager. Script a reel with hook, beats, and CTA for a before-and-after home-office glow-up and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "social-instagram#091",
+   "text": "Design a six-slide carousel outline for a behind-the-scenes pottery reel. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "social-instagram#092",
+   "text": "Before I start on a mini-tutorial on phone photography, script a reel with hook, beats, and CTA for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "social-instagram#093",
+   "text": "Write three story-frames with polls for a charity-fundraiser story sequence. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "social-instagram#094",
+   "text": "Suggest a month of post ideas expanding on a small-business milestone post. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "social-instagram#095",
+   "text": "As a personal-branding coach, I keep hitting the same wall with a bookstack aesthetic photo dump. Suggest a month of post ideas expanding on it and show me what I’m probably missing."
+  },
+  {
+   "id": "social-instagram#096",
+   "text": "Propose an attention-grabbing cover text for a small-business milestone post. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "social-instagram#097",
+   "text": "Draft a save-worthy checklist caption for a small-business milestone post. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-instagram#098",
+   "text": "Propose an attention-grabbing cover text for a carousel debunking productivity myths. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "social-instagram#099",
+   "text": "Write a collab-post caption for a new-menu announcement for a cafe."
+  },
+  {
+   "id": "social-instagram#100",
+   "text": "Draft a save-worthy checklist caption for a carousel debunking productivity myths."
+  },
+  {
+   "id": "social-instagram#101",
+   "text": "Design a six-slide carousel outline for a new-menu announcement for a cafe."
+  },
+  {
+   "id": "social-instagram#102",
+   "text": "Draft a save-worthy checklist caption for a charity-fundraiser story sequence."
+  },
+  {
+   "id": "social-instagram#103",
+   "text": "Propose an attention-grabbing cover text for a mini-tutorial on phone photography."
+  },
+  {
+   "id": "social-instagram#104",
+   "text": "Design a six-slide carousel outline for a small-business milestone post."
+  }
+ ]
+}

@@ -1,0 +1,430 @@
+{
+ "slug": "growth-confidence-mindset",
+ "categorySlug": "growth",
+ "category": "Personal Growth",
+ "title": "Confidence & Mindset",
+ "description": "Self-talk, fear maps, and evidence logs that build real confidence.",
+ "tags": [
+  "confidence",
+  "mindset",
+  "self-talk"
+ ],
+ "prompts": [
+  {
+   "id": "growth-confidence-mindset#001",
+   "text": "Draft a self-talk reframing guide for asking for help without feeling small."
+  },
+  {
+   "id": "growth-confidence-mindset#002",
+   "text": "Script a practice conversation for asking for help without feeling small. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-confidence-mindset#003",
+   "text": "Act as a mindful-movement teacher. List the stories I might be telling myself about returning to a hobby after years away, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-confidence-mindset#004",
+   "text": "Create a fear-setting worksheet for starting something as a self-taught beginner. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-confidence-mindset#005",
+   "text": "I’m working on speaking up in senior meetings. Create a supportive self-review template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-confidence-mindset#006",
+   "text": "Script a practice conversation for starting something as a self-taught beginner for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-confidence-mindset#007",
+   "text": "Draft a self-talk reframing guide for returning to a hobby after years away. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-confidence-mindset#008",
+   "text": "Help me with speaking up in senior meetings: create a fear-setting worksheet for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-confidence-mindset#009",
+   "text": "Design a small-wins ladder for holding your own in a heated debate. Use a empathetic tone throughout."
+  },
+  {
+   "id": "growth-confidence-mindset#010",
+   "text": "You are a mindful-movement teacher. Script a practice conversation for posting work publicly for the first time and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-confidence-mindset#011",
+   "text": "Create a supportive self-review template for learning in a group faster than you. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-confidence-mindset#012",
+   "text": "Before I start on speaking up in senior meetings, write a evidence-log exercise for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-confidence-mindset#013",
+   "text": "Create a supportive self-review template for imposter feelings in a new role. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-confidence-mindset#014",
+   "text": "Draft a self-talk reframing guide for holding your own in a heated debate. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-confidence-mindset#015",
+   "text": "As a practical life coach, I keep hitting the same wall with imposter feelings in a new role. Draft a self-talk reframing guide for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-confidence-mindset#016",
+   "text": "Write a pre-event confidence ritual for starting something as a self-taught beginner. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-confidence-mindset#017",
+   "text": "Create a fear-setting worksheet for negotiating for the first time."
+  },
+  {
+   "id": "growth-confidence-mindset#018",
+   "text": "Design a small-wins ladder for rebuilding confidence after a public flop. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-confidence-mindset#019",
+   "text": "Act as a practical life coach. List the stories I might be telling myself about learning in a group faster than you, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-confidence-mindset#020",
+   "text": "Write a evidence-log exercise for posting work publicly for the first time. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-confidence-mindset#021",
+   "text": "I’m working on learning in a group faster than you. Write a pre-event confidence ritual for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-confidence-mindset#022",
+   "text": "List the stories I might be telling myself about negotiating for the first time for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-confidence-mindset#023",
+   "text": "Script a practice conversation for returning to a hobby after years away. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-confidence-mindset#024",
+   "text": "Help me with holding your own in a heated debate: create a supportive self-review template for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-confidence-mindset#025",
+   "text": "Design a small-wins ladder for trying again after a rejected application. Use a friendly tone throughout."
+  },
+  {
+   "id": "growth-confidence-mindset#026",
+   "text": "You are a mindful-movement teacher. Create a fear-setting worksheet for posting work publicly for the first time and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-confidence-mindset#027",
+   "text": "Write a evidence-log exercise for making decisions without constant validation. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-confidence-mindset#028",
+   "text": "Before I start on rebuilding confidence after a public flop, list the stories I might be telling myself about it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-confidence-mindset#029",
+   "text": "Design a small-wins ladder for making decisions without constant validation. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-confidence-mindset#030",
+   "text": "Design a small-wins ladder for starting something as a self-taught beginner. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-confidence-mindset#031",
+   "text": "As a decision-quality facilitator, I keep hitting the same wall with learning in a group faster than you. Script a practice conversation for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-confidence-mindset#032",
+   "text": "Create a supportive self-review template for trying again after a rejected application. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-confidence-mindset#033",
+   "text": "List the stories I might be telling myself about posting work publicly for the first time."
+  },
+  {
+   "id": "growth-confidence-mindset#034",
+   "text": "Design a small-wins ladder for negotiating for the first time. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-confidence-mindset#035",
+   "text": "Act as a practical life coach. List the stories I might be telling myself about holding your own in a heated debate, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-confidence-mindset#036",
+   "text": "Write a pre-event confidence ritual for rebuilding confidence after a public flop. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-confidence-mindset#037",
+   "text": "I’m working on negotiating for the first time. Create a supportive self-review template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-confidence-mindset#038",
+   "text": "Create a fear-setting worksheet for asking for help without feeling small for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-confidence-mindset#039",
+   "text": "Design a small-wins ladder for returning to a hobby after years away. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-confidence-mindset#040",
+   "text": "Help me with making decisions without constant validation: script a practice conversation for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-confidence-mindset#041",
+   "text": "Write a pre-event confidence ritual for making decisions without constant validation. Use a direct tone throughout."
+  },
+  {
+   "id": "growth-confidence-mindset#042",
+   "text": "You are a communication-skills coach. Create a fear-setting worksheet for trying again after a rejected application and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-confidence-mindset#043",
+   "text": "Script a practice conversation for holding your own in a heated debate. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-confidence-mindset#044",
+   "text": "Before I start on speaking up in senior meetings, design a small-wins ladder for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-confidence-mindset#045",
+   "text": "Create a supportive self-review template for asking for help without feeling small. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-confidence-mindset#046",
+   "text": "Write a pre-event confidence ritual for asking for help without feeling small. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-confidence-mindset#047",
+   "text": "As a decision-quality facilitator, I keep hitting the same wall with learning in a group faster than you. Draft a self-talk reframing guide for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-confidence-mindset#048",
+   "text": "Write a pre-event confidence ritual for holding your own in a heated debate. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-confidence-mindset#049",
+   "text": "Write a evidence-log exercise for imposter feelings in a new role."
+  },
+  {
+   "id": "growth-confidence-mindset#050",
+   "text": "Create a fear-setting worksheet for making decisions without constant validation. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-confidence-mindset#051",
+   "text": "Act as a decision-quality facilitator. Script a practice conversation for imposter feelings in a new role, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-confidence-mindset#052",
+   "text": "Design a small-wins ladder for learning in a group faster than you. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-confidence-mindset#053",
+   "text": "I’m working on making decisions without constant validation. Create a supportive self-review template for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-confidence-mindset#054",
+   "text": "Write a pre-event confidence ritual for negotiating for the first time for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-confidence-mindset#055",
+   "text": "Create a fear-setting worksheet for holding your own in a heated debate. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-confidence-mindset#056",
+   "text": "Help me with starting something as a self-taught beginner: list the stories I might be telling myself about it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-confidence-mindset#057",
+   "text": "Script a practice conversation for trying again after a rejected application. Use a friendly tone throughout."
+  },
+  {
+   "id": "growth-confidence-mindset#058",
+   "text": "You are a reflective journaling guide. Write a evidence-log exercise for asking for help without feeling small and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-confidence-mindset#059",
+   "text": "List the stories I might be telling myself about imposter feelings in a new role. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-confidence-mindset#060",
+   "text": "Before I start on making decisions without constant validation, draft a self-talk reframing guide for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-confidence-mindset#061",
+   "text": "Write a pre-event confidence ritual for trying again after a rejected application. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-confidence-mindset#062",
+   "text": "Script a practice conversation for negotiating for the first time. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-confidence-mindset#063",
+   "text": "As a values-and-purpose mentor, I keep hitting the same wall with returning to a hobby after years away. Create a supportive self-review template for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-confidence-mindset#064",
+   "text": "Draft a self-talk reframing guide for speaking up in senior meetings. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-confidence-mindset#065",
+   "text": "Write a evidence-log exercise for negotiating for the first time."
+  },
+  {
+   "id": "growth-confidence-mindset#066",
+   "text": "Create a fear-setting worksheet for returning to a hobby after years away. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-confidence-mindset#067",
+   "text": "Act as a mindful-movement teacher. Design a small-wins ladder for asking for help without feeling small, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-confidence-mindset#068",
+   "text": "Design a small-wins ladder for imposter feelings in a new role. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-confidence-mindset#069",
+   "text": "I’m working on trying again after a rejected application. Draft a self-talk reframing guide for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-confidence-mindset#070",
+   "text": "List the stories I might be telling myself about making decisions without constant validation for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-confidence-mindset#071",
+   "text": "Script a practice conversation for rebuilding confidence after a public flop. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-confidence-mindset#072",
+   "text": "Help me with speaking up in senior meetings: script a practice conversation for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-confidence-mindset#073",
+   "text": "Write a evidence-log exercise for holding your own in a heated debate. Use a empathetic tone throughout."
+  },
+  {
+   "id": "growth-confidence-mindset#074",
+   "text": "You are a practical life coach. Write a pre-event confidence ritual for speaking up in senior meetings and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-confidence-mindset#075",
+   "text": "List the stories I might be telling myself about asking for help without feeling small. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-confidence-mindset#076",
+   "text": "Before I start on posting work publicly for the first time, draft a self-talk reframing guide for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-confidence-mindset#077",
+   "text": "List the stories I might be telling myself about trying again after a rejected application. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-confidence-mindset#078",
+   "text": "Create a supportive self-review template for rebuilding confidence after a public flop. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-confidence-mindset#079",
+   "text": "As a values-and-purpose mentor, I keep hitting the same wall with returning to a hobby after years away. Write a evidence-log exercise for it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-confidence-mindset#080",
+   "text": "Create a fear-setting worksheet for learning in a group faster than you. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-confidence-mindset#081",
+   "text": "Write a evidence-log exercise for learning in a group faster than you."
+  },
+  {
+   "id": "growth-confidence-mindset#082",
+   "text": "Create a supportive self-review template for starting something as a self-taught beginner. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "growth-confidence-mindset#083",
+   "text": "Act as a decision-quality facilitator. Write a pre-event confidence ritual for imposter feelings in a new role, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "growth-confidence-mindset#084",
+   "text": "Write a evidence-log exercise for rebuilding confidence after a public flop. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "growth-confidence-mindset#085",
+   "text": "I’m working on trying again after a rejected application. Write a evidence-log exercise for it and explain your reasoning as you go."
+  },
+  {
+   "id": "growth-confidence-mindset#086",
+   "text": "Draft a self-talk reframing guide for negotiating for the first time for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "growth-confidence-mindset#087",
+   "text": "Draft a self-talk reframing guide for rebuilding confidence after a public flop. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-confidence-mindset#088",
+   "text": "Help me with posting work publicly for the first time: design a small-wins ladder for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "growth-confidence-mindset#089",
+   "text": "Write a pre-event confidence ritual for posting work publicly for the first time. Use a professional tone throughout."
+  },
+  {
+   "id": "growth-confidence-mindset#090",
+   "text": "You are a communication-skills coach. Create a fear-setting worksheet for rebuilding confidence after a public flop and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "growth-confidence-mindset#091",
+   "text": "Write a evidence-log exercise for starting something as a self-taught beginner. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "growth-confidence-mindset#092",
+   "text": "Before I start on posting work publicly for the first time, create a supportive self-review template for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "growth-confidence-mindset#093",
+   "text": "Draft a self-talk reframing guide for starting something as a self-taught beginner. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "growth-confidence-mindset#094",
+   "text": "Write a pre-event confidence ritual for returning to a hobby after years away. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "growth-confidence-mindset#095",
+   "text": "As a reflective journaling guide, I keep hitting the same wall with speaking up in senior meetings. List the stories I might be telling myself about it and show me what I’m probably missing."
+  },
+  {
+   "id": "growth-confidence-mindset#096",
+   "text": "Create a fear-setting worksheet for imposter feelings in a new role. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "growth-confidence-mindset#097",
+   "text": "Draft a self-talk reframing guide for asking for help without feeling small. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-confidence-mindset#098",
+   "text": "Script a practice conversation for asking for help without feeling small. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "growth-confidence-mindset#099",
+   "text": "List the stories I might be telling myself about returning to a hobby after years away."
+  },
+  {
+   "id": "growth-confidence-mindset#100",
+   "text": "Create a fear-setting worksheet for starting something as a self-taught beginner."
+  },
+  {
+   "id": "growth-confidence-mindset#101",
+   "text": "Create a supportive self-review template for speaking up in senior meetings."
+  },
+  {
+   "id": "growth-confidence-mindset#102",
+   "text": "Script a practice conversation for starting something as a self-taught beginner."
+  },
+  {
+   "id": "growth-confidence-mindset#103",
+   "text": "Draft a self-talk reframing guide for returning to a hobby after years away."
+  },
+  {
+   "id": "growth-confidence-mindset#104",
+   "text": "Create a fear-setting worksheet for speaking up in senior meetings."
+  }
+ ]
+}

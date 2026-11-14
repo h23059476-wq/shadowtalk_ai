@@ -1,0 +1,430 @@
+{
+ "slug": "data-analysis-workflows",
+ "categorySlug": "data",
+ "category": "Data & Analytics",
+ "title": "Analysis Workflows",
+ "description": "From vague question to defensible answer, step by step.",
+ "tags": [
+  "analysis",
+  "workflow",
+  "insights"
+ ],
+ "prompts": [
+  {
+   "id": "data-analysis-workflows#001",
+   "text": "Propose three hypotheses and tests for which customer segments churn fastest."
+  },
+  {
+   "id": "data-analysis-workflows#002",
+   "text": "List the data I need and likely sources for which product features correlate with retention. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-analysis-workflows#003",
+   "text": "Act as an analytics engineer. List the data I need and likely sources for whether the loyalty program pays for itself, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-analysis-workflows#004",
+   "text": "List the data I need and likely sources for which customer segments churn fastest. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-analysis-workflows#005",
+   "text": "I’m working on which marketing channel actually drives signups. Design the follow-up deep-dive for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-analysis-workflows#006",
+   "text": "Propose three hypotheses and tests for whether longer trials convert better for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-analysis-workflows#007",
+   "text": "Build a reproducible notebook structure for which product features correlate with retention. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-analysis-workflows#008",
+   "text": "Help me with seasonality in our sales by region: draft the analysis with narrative and caveats for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-analysis-workflows#009",
+   "text": "Create the validation checks before trusting results for the impact of a price change on volume. Use a formal tone throughout."
+  },
+  {
+   "id": "data-analysis-workflows#010",
+   "text": "You are a data storyteller. Write a plain-language summary of findings on whether the loyalty program pays for itself and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-analysis-workflows#011",
+   "text": "Write a step-by-step analysis plan for the real cost of returns by category. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-analysis-workflows#012",
+   "text": "Before I start on the impact of a price change on volume, build a reproducible notebook structure for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-analysis-workflows#013",
+   "text": "Design the follow-up deep-dive for whether the loyalty program pays for itself. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-analysis-workflows#014",
+   "text": "Write a step-by-step analysis plan for whether the loyalty program pays for itself. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-analysis-workflows#015",
+   "text": "As a data storyteller, I keep hitting the same wall with the real cost of returns by category. Draft the analysis with narrative and caveats for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-analysis-workflows#016",
+   "text": "Propose three hypotheses and tests for the real cost of returns by category. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-analysis-workflows#017",
+   "text": "Design the follow-up deep-dive for supply delays by supplier."
+  },
+  {
+   "id": "data-analysis-workflows#018",
+   "text": "Build a reproducible notebook structure for the real cost of returns by category. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-analysis-workflows#019",
+   "text": "Act as a finance-planning analyst. Write a step-by-step analysis plan for which marketing channel actually drives signups, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-analysis-workflows#020",
+   "text": "Design the follow-up deep-dive for why refunds spiked last month. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-analysis-workflows#021",
+   "text": "I’m working on which customer segments churn fastest. Build a reproducible notebook structure for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-analysis-workflows#022",
+   "text": "Create the validation checks before trusting results for the real cost of returns by category for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-analysis-workflows#023",
+   "text": "Design the follow-up deep-dive for whether longer trials convert better. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-analysis-workflows#024",
+   "text": "Help me with supply delays by supplier: draft the analysis with narrative and caveats for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-analysis-workflows#025",
+   "text": "Create the validation checks before trusting results for whether the loyalty program pays for itself. Use a empathetic tone throughout."
+  },
+  {
+   "id": "data-analysis-workflows#026",
+   "text": "You are a data-quality steward. Draft the analysis with narrative and caveats for whether longer trials convert better and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-analysis-workflows#027",
+   "text": "Propose three hypotheses and tests for supply delays by supplier. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-analysis-workflows#028",
+   "text": "Before I start on which onboarding step loses the most users, design the follow-up deep-dive for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-analysis-workflows#029",
+   "text": "Build a reproducible notebook structure for whether the loyalty program pays for itself. Use a encouraging tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-analysis-workflows#030",
+   "text": "Draft the analysis with narrative and caveats for whether the loyalty program pays for itself. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-analysis-workflows#031",
+   "text": "As a statistics tutor, I keep hitting the same wall with supply delays by supplier. Write a plain-language summary of findings on it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-analysis-workflows#032",
+   "text": "List the data I need and likely sources for whether longer trials convert better. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-analysis-workflows#033",
+   "text": "Create the validation checks before trusting results for which marketing channel actually drives signups."
+  },
+  {
+   "id": "data-analysis-workflows#034",
+   "text": "Design the follow-up deep-dive for the impact of a price change on volume. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-analysis-workflows#035",
+   "text": "Act as a business-intelligence lead. Design the follow-up deep-dive for the real cost of returns by category, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-analysis-workflows#036",
+   "text": "Propose three hypotheses and tests for the impact of a price change on volume. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-analysis-workflows#037",
+   "text": "I’m working on which product features correlate with retention. Propose three hypotheses and tests for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-analysis-workflows#038",
+   "text": "Build a reproducible notebook structure for supply delays by supplier for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-analysis-workflows#039",
+   "text": "List the data I need and likely sources for the busiest hours at our support desk. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-analysis-workflows#040",
+   "text": "Help me with which customer segments churn fastest: create the validation checks before trusting results for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-analysis-workflows#041",
+   "text": "Write a plain-language summary of findings on which customer segments churn fastest. Use a playful tone throughout."
+  },
+  {
+   "id": "data-analysis-workflows#042",
+   "text": "You are a senior data analyst. Write a step-by-step analysis plan for why refunds spiked last month and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-analysis-workflows#043",
+   "text": "Write a plain-language summary of findings on the real cost of returns by category. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-analysis-workflows#044",
+   "text": "Before I start on seasonality in our sales by region, create the validation checks before trusting results for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-analysis-workflows#045",
+   "text": "List the data I need and likely sources for why refunds spiked last month. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-analysis-workflows#046",
+   "text": "Propose three hypotheses and tests for whether the loyalty program pays for itself. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-analysis-workflows#047",
+   "text": "As an experimentation specialist, I keep hitting the same wall with seasonality in our sales by region. Propose three hypotheses and tests for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-analysis-workflows#048",
+   "text": "Write a plain-language summary of findings on the impact of a price change on volume. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-analysis-workflows#049",
+   "text": "Write a plain-language summary of findings on why refunds spiked last month."
+  },
+  {
+   "id": "data-analysis-workflows#050",
+   "text": "Write a plain-language summary of findings on the busiest hours at our support desk. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-analysis-workflows#051",
+   "text": "Act as a senior data analyst. Write a plain-language summary of findings on which onboarding step loses the most users, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-analysis-workflows#052",
+   "text": "Write a step-by-step analysis plan for supply delays by supplier. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-analysis-workflows#053",
+   "text": "I’m working on the busiest hours at our support desk. Write a step-by-step analysis plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-analysis-workflows#054",
+   "text": "Write a plain-language summary of findings on which marketing channel actually drives signups for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-analysis-workflows#055",
+   "text": "Draft the analysis with narrative and caveats for which product features correlate with retention. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-analysis-workflows#056",
+   "text": "Help me with why refunds spiked last month: build a reproducible notebook structure for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-analysis-workflows#057",
+   "text": "Design the follow-up deep-dive for which product features correlate with retention. Use a encouraging tone throughout."
+  },
+  {
+   "id": "data-analysis-workflows#058",
+   "text": "You are a business-intelligence lead. Write a plain-language summary of findings on which product features correlate with retention and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-analysis-workflows#059",
+   "text": "Write a plain-language summary of findings on whether longer trials convert better. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-analysis-workflows#060",
+   "text": "Before I start on which product features correlate with retention, write a step-by-step analysis plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-analysis-workflows#061",
+   "text": "Draft the analysis with narrative and caveats for the busiest hours at our support desk. Use a friendly tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-analysis-workflows#062",
+   "text": "List the data I need and likely sources for the impact of a price change on volume. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-analysis-workflows#063",
+   "text": "As an experimentation specialist, I keep hitting the same wall with seasonality in our sales by region. Design the follow-up deep-dive for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-analysis-workflows#064",
+   "text": "Draft the analysis with narrative and caveats for which onboarding step loses the most users. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-analysis-workflows#065",
+   "text": "List the data I need and likely sources for which marketing channel actually drives signups."
+  },
+  {
+   "id": "data-analysis-workflows#066",
+   "text": "Write a step-by-step analysis plan for the impact of a price change on volume. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-analysis-workflows#067",
+   "text": "Act as a statistics tutor. Draft the analysis with narrative and caveats for why refunds spiked last month, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-analysis-workflows#068",
+   "text": "Design the follow-up deep-dive for the busiest hours at our support desk. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-analysis-workflows#069",
+   "text": "I’m working on the busiest hours at our support desk. Create the validation checks before trusting results for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-analysis-workflows#070",
+   "text": "List the data I need and likely sources for which onboarding step loses the most users for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-analysis-workflows#071",
+   "text": "Design the follow-up deep-dive for which customer segments churn fastest. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-analysis-workflows#072",
+   "text": "Help me with the busiest hours at our support desk: propose three hypotheses and tests for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-analysis-workflows#073",
+   "text": "Create the validation checks before trusting results for why refunds spiked last month. Use a playful tone throughout."
+  },
+  {
+   "id": "data-analysis-workflows#074",
+   "text": "You are a senior data analyst. Write a step-by-step analysis plan for which customer segments churn fastest and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-analysis-workflows#075",
+   "text": "Propose three hypotheses and tests for which onboarding step loses the most users. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-analysis-workflows#076",
+   "text": "Before I start on the impact of a price change on volume, draft the analysis with narrative and caveats for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-analysis-workflows#077",
+   "text": "Write a step-by-step analysis plan for seasonality in our sales by region. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-analysis-workflows#078",
+   "text": "Build a reproducible notebook structure for whether longer trials convert better. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-analysis-workflows#079",
+   "text": "As a statistics tutor, I keep hitting the same wall with supply delays by supplier. List the data I need and likely sources for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-analysis-workflows#080",
+   "text": "Draft the analysis with narrative and caveats for which marketing channel actually drives signups. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-analysis-workflows#081",
+   "text": "Write a plain-language summary of findings on seasonality in our sales by region."
+  },
+  {
+   "id": "data-analysis-workflows#082",
+   "text": "Draft the analysis with narrative and caveats for which customer segments churn fastest. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "data-analysis-workflows#083",
+   "text": "Act as a business-intelligence lead. List the data I need and likely sources for the real cost of returns by category, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "data-analysis-workflows#084",
+   "text": "Create the validation checks before trusting results for whether longer trials convert better. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "data-analysis-workflows#085",
+   "text": "I’m working on supply delays by supplier. Create the validation checks before trusting results for it and explain your reasoning as you go."
+  },
+  {
+   "id": "data-analysis-workflows#086",
+   "text": "Build a reproducible notebook structure for seasonality in our sales by region for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "data-analysis-workflows#087",
+   "text": "Create the validation checks before trusting results for which product features correlate with retention. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-analysis-workflows#088",
+   "text": "Help me with whether longer trials convert better: write a step-by-step analysis plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "data-analysis-workflows#089",
+   "text": "Create the validation checks before trusting results for which onboarding step loses the most users. Use a persuasive tone throughout."
+  },
+  {
+   "id": "data-analysis-workflows#090",
+   "text": "You are a senior data analyst. Propose three hypotheses and tests for why refunds spiked last month and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "data-analysis-workflows#091",
+   "text": "List the data I need and likely sources for seasonality in our sales by region. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "data-analysis-workflows#092",
+   "text": "Before I start on the busiest hours at our support desk, build a reproducible notebook structure for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "data-analysis-workflows#093",
+   "text": "Propose three hypotheses and tests for which marketing channel actually drives signups. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "data-analysis-workflows#094",
+   "text": "Write a step-by-step analysis plan for which onboarding step loses the most users. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "data-analysis-workflows#095",
+   "text": "As an experimentation specialist, I keep hitting the same wall with which onboarding step loses the most users. Build a reproducible notebook structure for it and show me what I’m probably missing."
+  },
+  {
+   "id": "data-analysis-workflows#096",
+   "text": "Build a reproducible notebook structure for which marketing channel actually drives signups. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "data-analysis-workflows#097",
+   "text": "Propose three hypotheses and tests for which customer segments churn fastest. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-analysis-workflows#098",
+   "text": "List the data I need and likely sources for which product features correlate with retention. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "data-analysis-workflows#099",
+   "text": "List the data I need and likely sources for whether the loyalty program pays for itself."
+  },
+  {
+   "id": "data-analysis-workflows#100",
+   "text": "List the data I need and likely sources for which customer segments churn fastest."
+  },
+  {
+   "id": "data-analysis-workflows#101",
+   "text": "Design the follow-up deep-dive for which marketing channel actually drives signups."
+  },
+  {
+   "id": "data-analysis-workflows#102",
+   "text": "Propose three hypotheses and tests for whether longer trials convert better."
+  },
+  {
+   "id": "data-analysis-workflows#103",
+   "text": "Build a reproducible notebook structure for which product features correlate with retention."
+  },
+  {
+   "id": "data-analysis-workflows#104",
+   "text": "Draft the analysis with narrative and caveats for seasonality in our sales by region."
+  }
+ ]
+}

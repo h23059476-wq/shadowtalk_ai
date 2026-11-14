@@ -1,0 +1,430 @@
+{
+ "slug": "sales-closing-negotiation",
+ "categorySlug": "sales",
+ "category": "Sales & Outreach",
+ "title": "Closing & Negotiation",
+ "description": "From verbal yes to signature without losing value.",
+ "tags": [
+  "closing",
+  "negotiation",
+  "contracts"
+ ],
+ "prompts": [
+  {
+   "id": "sales-closing-negotiation#001",
+   "text": "Prepare the final-call agenda for a deal waiting on a final legal pass."
+  },
+  {
+   "id": "sales-closing-negotiation#002",
+   "text": "Write the confirming-email that locks scope for a buyer asking for 20% off at the finish line. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-closing-negotiation#003",
+   "text": "Act as a customer-renewals specialist. Draft a concession-with-ask strategy for a pilot-to-production conversion, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-closing-negotiation#004",
+   "text": "Prepare a terms trade menu for a payment-terms standoff. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-closing-negotiation#005",
+   "text": "I’m working on a deal waiting on a final legal pass. Draft a concession-with-ask strategy for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-closing-negotiation#006",
+   "text": "Write a value-protection response for a payment-terms standoff for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-closing-negotiation#007",
+   "text": "Prepare the final-call agenda for a multi-year term proposal. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-closing-negotiation#008",
+   "text": "Help me with a buyer asking for 20% off at the finish line: design a deadline-creation plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-closing-negotiation#009",
+   "text": "Write the post-signature handoff note for a renewal with an expansion ask. Use a encouraging tone throughout."
+  },
+  {
+   "id": "sales-closing-negotiation#010",
+   "text": "You are a solution consultant. Prepare a terms trade menu for a verbal commitment that keeps slipping and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-closing-negotiation#011",
+   "text": "Prepare a terms trade menu for a buyer asking for 20% off at the finish line. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-closing-negotiation#012",
+   "text": "Before I start on a competitor’s last-minute counter-offer, write a value-protection response for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-closing-negotiation#013",
+   "text": "Write a value-protection response for a multi-year term proposal. Use a formal tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-closing-negotiation#014",
+   "text": "Script the ask-for-the-signature moment for a buyer asking for 20% off at the finish line. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-closing-negotiation#015",
+   "text": "As an enterprise account executive, I keep hitting the same wall with a champion asking you to hold price until next quarter. Prepare a terms trade menu for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-closing-negotiation#016",
+   "text": "Prepare a terms trade menu for a competitor’s last-minute counter-offer. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-closing-negotiation#017",
+   "text": "Write a value-protection response for a founder approving their first big contract."
+  },
+  {
+   "id": "sales-closing-negotiation#018",
+   "text": "Write a value-protection response for a services-and-software bundle close. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-closing-negotiation#019",
+   "text": "Act as a solution consultant. Design a deadline-creation plan for a founder approving their first big contract, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-closing-negotiation#020",
+   "text": "Draft a concession-with-ask strategy for a buyer asking for 20% off at the finish line. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-closing-negotiation#021",
+   "text": "I’m working on a verbal commitment that keeps slipping. Design a deadline-creation plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-closing-negotiation#022",
+   "text": "Prepare the final-call agenda for a verbal commitment that keeps slipping for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-closing-negotiation#023",
+   "text": "Draft a concession-with-ask strategy for a champion asking you to hold price until next quarter. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-closing-negotiation#024",
+   "text": "Help me with a services-and-software bundle close: draft a concession-with-ask strategy for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-closing-negotiation#025",
+   "text": "Write the confirming-email that locks scope for a deal waiting on a final legal pass. Use a direct tone throughout."
+  },
+  {
+   "id": "sales-closing-negotiation#026",
+   "text": "You are a channel-partnerships manager. Prepare a terms trade menu for a pilot-to-production conversion and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-closing-negotiation#027",
+   "text": "Design a deadline-creation plan for a payment-terms standoff. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-closing-negotiation#028",
+   "text": "Before I start on a procurement-led pricing squeeze, write the post-signature handoff note for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-closing-negotiation#029",
+   "text": "Design a deadline-creation plan for a champion asking you to hold price until next quarter. Use a persuasive tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-closing-negotiation#030",
+   "text": "Design a deadline-creation plan for a competitor’s last-minute counter-offer. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-closing-negotiation#031",
+   "text": "As an enterprise account executive, I keep hitting the same wall with a champion asking you to hold price until next quarter. Write the post-signature handoff note for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-closing-negotiation#032",
+   "text": "Write the confirming-email that locks scope for a services-and-software bundle close. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-closing-negotiation#033",
+   "text": "Prepare a terms trade menu for a procurement-led pricing squeeze."
+  },
+  {
+   "id": "sales-closing-negotiation#034",
+   "text": "Write the post-signature handoff note for a pilot-to-production conversion. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-closing-negotiation#035",
+   "text": "Act as a solution consultant. Prepare the final-call agenda for a services-and-software bundle close, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-closing-negotiation#036",
+   "text": "Write the post-signature handoff note for a multi-year term proposal. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-closing-negotiation#037",
+   "text": "I’m working on a pilot-to-production conversion. Write the confirming-email that locks scope for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-closing-negotiation#038",
+   "text": "Write the confirming-email that locks scope for a competitor’s last-minute counter-offer for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-closing-negotiation#039",
+   "text": "Write the post-signature handoff note for a services-and-software bundle close. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-closing-negotiation#040",
+   "text": "Help me with a competitor’s last-minute counter-offer: draft a concession-with-ask strategy for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-closing-negotiation#041",
+   "text": "Draft a concession-with-ask strategy for a payment-terms standoff. Use a professional tone throughout."
+  },
+  {
+   "id": "sales-closing-negotiation#042",
+   "text": "You are a revops analyst. Script the ask-for-the-signature moment for a multi-year term proposal and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-closing-negotiation#043",
+   "text": "Write a value-protection response for a procurement-led pricing squeeze. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-closing-negotiation#044",
+   "text": "Before I start on a verbal commitment that keeps slipping, write the post-signature handoff note for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-closing-negotiation#045",
+   "text": "Write the confirming-email that locks scope for a procurement-led pricing squeeze. Use a playful tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-closing-negotiation#046",
+   "text": "Draft a concession-with-ask strategy for a founder approving their first big contract. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-closing-negotiation#047",
+   "text": "As a channel-partnerships manager, I keep hitting the same wall with a procurement-led pricing squeeze. Design a deadline-creation plan for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-closing-negotiation#048",
+   "text": "Prepare the final-call agenda for a founder approving their first big contract. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-closing-negotiation#049",
+   "text": "Write a value-protection response for a buyer asking for 20% off at the finish line."
+  },
+  {
+   "id": "sales-closing-negotiation#050",
+   "text": "Script the ask-for-the-signature moment for a services-and-software bundle close. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-closing-negotiation#051",
+   "text": "Act as an enterprise account executive. Write the confirming-email that locks scope for a multi-year term proposal, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-closing-negotiation#052",
+   "text": "Draft a concession-with-ask strategy for a verbal commitment that keeps slipping. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-closing-negotiation#053",
+   "text": "I’m working on a competitor’s last-minute counter-offer. Prepare the final-call agenda for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-closing-negotiation#054",
+   "text": "Write a value-protection response for a renewal with an expansion ask for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-closing-negotiation#055",
+   "text": "Write the post-signature handoff note for a buyer asking for 20% off at the finish line. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-closing-negotiation#056",
+   "text": "Help me with a services-and-software bundle close: design a deadline-creation plan for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-closing-negotiation#057",
+   "text": "Prepare the final-call agenda for a renewal with an expansion ask. Use a encouraging tone throughout."
+  },
+  {
+   "id": "sales-closing-negotiation#058",
+   "text": "You are a revops analyst. Design a deadline-creation plan for a multi-year term proposal and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-closing-negotiation#059",
+   "text": "Prepare the final-call agenda for a buyer asking for 20% off at the finish line. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-closing-negotiation#060",
+   "text": "Before I start on a payment-terms standoff, write the post-signature handoff note for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-closing-negotiation#061",
+   "text": "Design a deadline-creation plan for a deal waiting on a final legal pass. Use a professional tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-closing-negotiation#062",
+   "text": "Prepare a terms trade menu for a renewal with an expansion ask. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-closing-negotiation#063",
+   "text": "As a freelance consultant selling retainers, I keep hitting the same wall with a multi-year term proposal. Prepare a terms trade menu for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-closing-negotiation#064",
+   "text": "Script the ask-for-the-signature moment for a founder approving their first big contract. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-closing-negotiation#065",
+   "text": "Write the confirming-email that locks scope for a champion asking you to hold price until next quarter."
+  },
+  {
+   "id": "sales-closing-negotiation#066",
+   "text": "Prepare the final-call agenda for a pilot-to-production conversion. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-closing-negotiation#067",
+   "text": "Act as a revops analyst. Write the confirming-email that locks scope for a verbal commitment that keeps slipping, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-closing-negotiation#068",
+   "text": "Script the ask-for-the-signature moment for a payment-terms standoff. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-closing-negotiation#069",
+   "text": "I’m working on a renewal with an expansion ask. Script the ask-for-the-signature moment for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-closing-negotiation#070",
+   "text": "Write the post-signature handoff note for a competitor’s last-minute counter-offer for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-closing-negotiation#071",
+   "text": "Write a value-protection response for a pilot-to-production conversion. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-closing-negotiation#072",
+   "text": "Help me with a services-and-software bundle close: prepare a terms trade menu for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-closing-negotiation#073",
+   "text": "Script the ask-for-the-signature moment for a champion asking you to hold price until next quarter. Use a formal tone throughout."
+  },
+  {
+   "id": "sales-closing-negotiation#074",
+   "text": "You are a founder selling to first customers. Prepare a terms trade menu for a deal waiting on a final legal pass and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-closing-negotiation#075",
+   "text": "Prepare the final-call agenda for a payment-terms standoff. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-closing-negotiation#076",
+   "text": "Before I start on a founder approving their first big contract, write the confirming-email that locks scope for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-closing-negotiation#077",
+   "text": "Script the ask-for-the-signature moment for a competitor’s last-minute counter-offer. Use a direct tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-closing-negotiation#078",
+   "text": "Write the confirming-email that locks scope for a payment-terms standoff. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-closing-negotiation#079",
+   "text": "As a customer-renewals specialist, I keep hitting the same wall with a deal waiting on a final legal pass. Script the ask-for-the-signature moment for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-closing-negotiation#080",
+   "text": "Draft a concession-with-ask strategy for a renewal with an expansion ask. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-closing-negotiation#081",
+   "text": "Draft a concession-with-ask strategy for a procurement-led pricing squeeze."
+  },
+  {
+   "id": "sales-closing-negotiation#082",
+   "text": "Prepare the final-call agenda for a champion asking you to hold price until next quarter. Keep it clear, specific, and ready to use."
+  },
+  {
+   "id": "sales-closing-negotiation#083",
+   "text": "Act as a freelance consultant selling retainers. Write a value-protection response for a champion asking you to hold price until next quarter, then wrap up with one short paragraph of key takeaways."
+  },
+  {
+   "id": "sales-closing-negotiation#084",
+   "text": "Draft a concession-with-ask strategy for a multi-year term proposal. Format the answer with a short intro, numbered steps, and a closing tip."
+  },
+  {
+   "id": "sales-closing-negotiation#085",
+   "text": "I’m working on a renewal with an expansion ask. Design a deadline-creation plan for it and explain your reasoning as you go."
+  },
+  {
+   "id": "sales-closing-negotiation#086",
+   "text": "Prepare the final-call agenda for a procurement-led pricing squeeze for a beginner - define jargon on first use and keep the detail manageable."
+  },
+  {
+   "id": "sales-closing-negotiation#087",
+   "text": "Write a value-protection response for a verbal commitment that keeps slipping. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-closing-negotiation#088",
+   "text": "Help me with a deal waiting on a final legal pass: write the post-signature handoff note for it, then list the three most common mistakes and how to avoid them."
+  },
+  {
+   "id": "sales-closing-negotiation#089",
+   "text": "Script the ask-for-the-signature moment for a pilot-to-production conversion. Use a professional tone throughout."
+  },
+  {
+   "id": "sales-closing-negotiation#090",
+   "text": "You are a founder selling to first customers. Write a value-protection response for a deal waiting on a final legal pass and finish with a short quality checklist I can apply myself."
+  },
+  {
+   "id": "sales-closing-negotiation#091",
+   "text": "Script the ask-for-the-signature moment for a procurement-led pricing squeeze. Give two versions: one concise, one detailed."
+  },
+  {
+   "id": "sales-closing-negotiation#092",
+   "text": "Before I start on a pilot-to-production conversion, design a deadline-creation plan for it and tell me exactly what information you still need from me."
+  },
+  {
+   "id": "sales-closing-negotiation#093",
+   "text": "Script the ask-for-the-signature moment for a verbal commitment that keeps slipping. Use a empathetic tone and address me as a busy reader who skims."
+  },
+  {
+   "id": "sales-closing-negotiation#094",
+   "text": "Write the confirming-email that locks scope for a renewal with an expansion ask. After the main answer, add an 'If this fails' section with one fallback."
+  },
+  {
+   "id": "sales-closing-negotiation#095",
+   "text": "As a customer-renewals specialist, I keep hitting the same wall with a founder approving their first big contract. Write the post-signature handoff note for it and show me what I’m probably missing."
+  },
+  {
+   "id": "sales-closing-negotiation#096",
+   "text": "Prepare a terms trade menu for a founder approving their first big contract. Structure it as: goal, approach, steps, pitfalls, and a one-line summary."
+  },
+  {
+   "id": "sales-closing-negotiation#097",
+   "text": "Prepare the final-call agenda for a deal waiting on a final legal pass. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-closing-negotiation#098",
+   "text": "Write the confirming-email that locks scope for a buyer asking for 20% off at the finish line. Keep it under 300 words and end with one actionable next step."
+  },
+  {
+   "id": "sales-closing-negotiation#099",
+   "text": "Draft a concession-with-ask strategy for a pilot-to-production conversion."
+  },
+  {
+   "id": "sales-closing-negotiation#100",
+   "text": "Prepare a terms trade menu for a payment-terms standoff."
+  },
+  {
+   "id": "sales-closing-negotiation#101",
+   "text": "Draft a concession-with-ask strategy for a deal waiting on a final legal pass."
+  },
+  {
+   "id": "sales-closing-negotiation#102",
+   "text": "Write a value-protection response for a payment-terms standoff."
+  },
+  {
+   "id": "sales-closing-negotiation#103",
+   "text": "Prepare the final-call agenda for a multi-year term proposal."
+  },
+  {
+   "id": "sales-closing-negotiation#104",
+   "text": "Design a deadline-creation plan for a buyer asking for 20% off at the finish line."
+  }
+ ]
+}
