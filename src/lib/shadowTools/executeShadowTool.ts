@@ -65,8 +65,8 @@ export async function executeShadowTool(
 
     case "image_generator": {
       const imgPrompt = (p.prompt as string) || message;
-      const { generateCloudImage } = await import("@/lib/cloudImage");
-      const imageUrl = await generateCloudImage(imgPrompt, { watermark: true });
+      const { generateImageWithFallback } = await import("@/lib/imageGen");
+      const { imageUrl } = await generateImageWithFallback(imgPrompt, { watermark: true });
       return {
         kind: "inline",
         tool,

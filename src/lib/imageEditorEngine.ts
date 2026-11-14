@@ -416,8 +416,8 @@ export async function editImageSeamlessly(
     originalImage,
   );
 
-  const { generateCloudImage } = await import("@/lib/cloudImage");
-  const editedImageUrl = await generateCloudImage(diffusionPrompt, {
+  const { generateImageWithFallback } = await import("@/lib/imageGen");
+  const { imageUrl: editedImageUrl } = await generateImageWithFallback(diffusionPrompt, {
     referenceImage: originalImage,
     signal,
   });

@@ -7,5 +7,6 @@ These guides describe the current repository implementation. They were checked a
 - [Data and security boundaries](architecture/data-and-security.md)
 - [Feature and integration inventory](architecture/feature-inventory.md)
 - [Build, configuration, and deployment](operations.md)
+- [Image & visual generation setup](IMAGE_GENERATION_GUIDE.md)
 
 Update the relevant guide when changing routes, providers, Firestore/Storage access, Functions exports, build behavior, or deployment configuration. Distinguish implemented behavior from UI shells, mock integrations, and unverified external services.

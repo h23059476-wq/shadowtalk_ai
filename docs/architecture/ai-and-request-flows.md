@@ -14,12 +14,15 @@ The main chat page is `src/pages/ChatbotPage.tsx`. It uses `src/lib/cloudChat.ts
 2. `functions/src/index.ts` verifies the token, checks that `user_settings` selects shared mode, validates the message array, and transactionally reserves one daily request.
 3. The Function sends the request to OpenRouter using `OPENROUTER_API_KEY`, streaming SSE back to the browser.
 4. The daily limit is 100 requests per UID per UTC date. Image generation uses the same counter. Failed requests can release the reservation before upstream streaming begins.
+5. Image generation in shared mode goes through the same package's `generateImage` Function, called by the client from `src/lib/sharedImage.ts` when no image-capable BYOK key is available (routing lives in `src/lib/imageGen.ts`).
 
 The current source declares `openrouter/free` as the shared chat model and `google/gemini-2.5-flash-image` for image generation. These are implementation defaults, not a guarantee of provider availability.
 
 ### BYOK mode
 
-`src/lib/byok.ts` stores a provider key and model choice in browser localStorage scoped to the signed-in UID. Requests go from the browser directly to the selected provider; the Firebase shared-AI quota does not apply. OpenAI and OpenRouter image generation are supported by the BYOK path; text and vision depend on the provider/model. Browser storage is not a hardware-backed secret store.
+`src/lib/byok.ts` stores a provider key and model choice in browser localStorage scoped to the signed-in UID. Requests go from the browser directly to the selected provider; the Firebase shared-AI quota does not apply. OpenAI, OpenRouter and Google Gemini image generation are supported by the BYOK path (see `IMAGE_CAPABLE_PROVIDERS` in `src/lib/cloudImage.ts`); text and vision depend on the provider/model. Browser storage is not a hardware-backed secret store.
+
+Image requests resolve through `src/lib/imageGen.ts`: BYOK first, then the shared `generateImage` fallback for signed-in shared-mode users, with actionable errors when neither path is available. Provider rejections on the BYOK path (auth, quota, content policy) are never retried against the shared pool. See the [image generation guide](../IMAGE_GENERATION_GUIDE.md).
 
 ### Local inference
 

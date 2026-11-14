@@ -33,7 +33,13 @@ Object.defineProperty(globalThis, "localStorage", { value: localStorageMock });
 const authMock = vi.hoisted(() => ({ uid: "test-uid-123" }));
 
 vi.mock("@/integrations/firebase/app", () => ({
-  fbAuth: () => ({ currentUser: { uid: authMock.uid } }),
+  fbAuth: () => ({
+    currentUser: {
+      uid: authMock.uid,
+      // Needed by the shared-image fallback client (mirrors cloudChat usage).
+      getIdToken: () => Promise.resolve("test-id-token"),
+    },
+  }),
   functionsBaseUrl: "https://test.functions.example.com",
 }));
 
@@ -124,8 +130,8 @@ describe("BYOK regression fixes (commit 9a3dba3)", () => {
     });
   });
 
-  describe("no platform-funded fallback", () => {
-    it("cloudImage source has no functionsBaseUrl in code", async () => {
+  describe("explicit, gated shared-image fallback", () => {
+    it("keeps cloudImage BYOK-pure (no functionsBaseUrl in code)", async () => {
       const fs = await import("fs");
       const path = await import("path");
       const src = fs.readFileSync(
@@ -134,6 +140,81 @@ describe("BYOK regression fixes (commit 9a3dba3)", () => {
       expect(withoutComments).not.toContain("functionsBaseUrl");
       expect(src).not.toContain("VITE_OPENROUTER_SHARED_KEY");
       expect(src).not.toContain("getSharedKey");
+    });
+
+    it("routes the shared fallback through dedicated, gated modules", async () => {
+      const fs = await import("fs");
+      const path = await import("path");
+      const shared = fs.readFileSync(
+        path.resolve(__dirname, "../../lib/sharedImage.ts"), "utf-8");
+      expect(shared).toContain("/generateImage");
+      expect(shared).toContain("getCachedAiAccessMode");
+      const gen = fs.readFileSync(
+        path.resolve(__dirname, "../../lib/imageGen.ts"), "utf-8");
+      expect(gen).toContain("isCloudImageConfigured");
+      expect(gen).toContain("isSharedImageEligible");
+    });
+  });
+
+  describe("generateImageWithFallback", () => {
+    beforeEach(() => { localStorageMock.clear(); authMock.uid = "test-uid-123"; });
+
+    it("uses the BYOK key first when an image-capable provider is configured", async () => {
+      localStorageMock.setItem("shadowtalk.byok.v2.test-uid-123",
+        JSON.stringify({ ...mockByokConfig, provider: "openai" }));
+      const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
+        new Response(JSON.stringify({ data: [{ url: "https://cdn.example.com/x.png" }] }), { status: 200 }));
+      const { generateImageWithFallback } = await import("@/lib/imageGen");
+      const result = await generateImageWithFallback("a cat", { watermark: false });
+      expect(result.source).toBe("byok");
+      expect(result.imageUrl).toBe("https://cdn.example.com/x.png");
+      expect(String(fetchSpy.mock.calls[0][0])).toContain("api.openai.com");
+      fetchSpy.mockRestore();
+    });
+
+    it("falls back to the shared generateImage Function when no key exists and mode is shared", async () => {
+      localStorageMock.setItem("shadowtalk.ai-access-mode.v1.test-uid-123", "shared");
+      const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
+        new Response(JSON.stringify({ data: [{ b64_json: "data:image/png;base64,AAA" }] }), { status: 200 }));
+      const { generateImageWithFallback } = await import("@/lib/imageGen");
+      const result = await generateImageWithFallback("a cat", { watermark: false });
+      expect(result.source).toBe("shared");
+      expect(result.imageUrl).toBe("data:image/png;base64,AAA");
+      expect(String(fetchSpy.mock.calls[0][0])).toContain("/generateImage");
+      const init = fetchSpy.mock.calls[0][1] as RequestInit;
+      expect(JSON.parse(String(init.body)).prompt).toBe("a cat");
+      fetchSpy.mockRestore();
+    });
+
+    it("returns the actionable setup error when neither path is available", async () => {
+      const fetchSpy = vi.spyOn(globalThis, "fetch");
+      const { generateImageWithFallback } = await import("@/lib/imageGen");
+      await expect(generateImageWithFallback("a cat")).rejects.toThrow(/quick setup/);
+      expect(fetchSpy).not.toHaveBeenCalled();
+      fetchSpy.mockRestore();
+    });
+
+    it("surfaces BYOK provider rejections instead of masking them with the shared fallback", async () => {
+      localStorageMock.setItem("shadowtalk.byok.v2.test-uid-123",
+        JSON.stringify({ ...mockByokConfig, provider: "openai" }));
+      localStorageMock.setItem("shadowtalk.ai-access-mode.v1.test-uid-123", "shared");
+      const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
+        new Response(JSON.stringify({ error: { message: "Incorrect API key provided" } }), { status: 401 }));
+      const { generateImageWithFallback } = await import("@/lib/imageGen");
+      await expect(generateImageWithFallback("a cat", { watermark: false }))
+        .rejects.toThrow(/key was rejected \(401\)/);
+      expect(fetchSpy).toHaveBeenCalledTimes(1); // only the BYOK call, no shared retry
+      fetchSpy.mockRestore();
+    });
+
+    it("explains mode mismatch when the shared Function rejects the account", async () => {
+      localStorageMock.setItem("shadowtalk.ai-access-mode.v1.test-uid-123", "shared");
+      const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
+        new Response(JSON.stringify({ error: "This account uses BYOK. Send the request directly through the selected provider." }), { status: 403 }));
+      const { generateImageWithFallback } = await import("@/lib/imageGen");
+      await expect(generateImageWithFallback("a cat", { watermark: false }))
+        .rejects.toThrow(/This account uses BYOK/);
+      fetchSpy.mockRestore();
     });
   });
 

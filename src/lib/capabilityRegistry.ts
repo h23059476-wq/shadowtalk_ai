@@ -273,7 +273,7 @@ export const PROVIDER_CAPABILITY_REGISTRY: Record<ByokProvider, ProviderCapabili
     providerLabel: "Google Gemini",
     providerLevelCapabilities: {
       webSearch: unsupported("official_documentation", "Gemini OpenAI-compat endpoint does not include grounding"),
-      imageGeneration: unsupported("inferred_from_adapter", "ShadowTalk's cloudImage.ts does not support Gemini image generation"),
+      imageGeneration: supported("inferred_from_adapter", "ShadowTalk's cloudImage.ts generates images with the dedicated gemini-2.5-flash-image model"),
     },
     models: [
       {
@@ -293,7 +293,7 @@ export const PROVIDER_CAPABILITY_REGISTRY: Record<ByokProvider, ProviderCapabili
           videoInput: unverified("Video is sent as extracted frames — Gemini supports native video but the adapter doesn't use it"),
           ...AGENT_BASIC,
           longContextSuitability: supported("official_documentation", "1M context window"),
-          imageGeneration: unsupported("inferred_from_adapter"),
+          imageGeneration: unsupported("inferred_from_adapter", "This chat model doesn't generate images — ShadowTalk automatically uses gemini-2.5-flash-image for image requests"),
           webSearch: unsupported("official_documentation", "Grounding not available via OpenAI-compat endpoint"),
           documentGeneration: supported("official_documentation"),
         },
@@ -692,7 +692,7 @@ export function getModelCapabilities(
     toolExecution: unknown("Tool execution not verified"),
     agentWorkflow: unknown("Agent workflow not verified"),
     longContextSuitability: unknown("Context window unknown"),
-    imageGeneration: unsupported("inferred_from_adapter", "Image generation requires a supported provider (OpenAI or OpenRouter)"),
+    imageGeneration: unsupported("inferred_from_adapter", "Image generation requires an image-capable provider (OpenAI, OpenRouter or Gemini)"),
     webSearch: unsupported("inferred_from_adapter", "Web search requires OpenRouter or Perplexity"),
     documentGeneration: supported("official_documentation"),
   };

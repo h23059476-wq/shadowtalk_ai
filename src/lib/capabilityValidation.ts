@@ -39,7 +39,8 @@ export interface CapabilityCheckResult {
  * - All providers support text_chat and document_processing (text is sent as plain text)
  * - All providers support document_generation (it's just text generation with a system prompt)
  * - image_input: providers that support vision/multimodal input
- * - image_generation: only OpenAI (gpt-image-1) and OpenRouter (gemini-2.5-flash-image)
+ * - image_generation: OpenAI (gpt-image-1), OpenRouter and Google Gemini
+ *   (gemini-2.5-flash-image) — mirrors IMAGE_CAPABLE_PROVIDERS in cloudImage.ts
  * - video_analysis: same as image_input (frames are extracted and sent as images)
  * - audio_input: OpenAI (Whisper), OpenRouter (models that accept audio)
  * - web_search: only OpenRouter (web_search tool) and Perplexity (online models)
@@ -56,7 +57,7 @@ const PROVIDER_CAPABILITIES: Record<ByokProvider, Set<Capability>> = {
     "document_generation", "web_search",
   ]),
   gemini: new Set([
-    "text_chat", "image_input",
+    "text_chat", "image_input", "image_generation",
     "document_processing", "video_analysis", "audio_input",
     "document_generation",
   ]),
@@ -119,7 +120,7 @@ const CAPABILITY_LABELS: Record<Capability, string> = {
 const CAPABILITY_PROVIDERS: Record<Capability, string[]> = {
   text_chat: ["all providers"],
   image_input: ["OpenAI", "OpenRouter", "Google Gemini", "Anthropic"],
-  image_generation: ["OpenAI", "OpenRouter"],
+  image_generation: ["OpenAI", "OpenRouter", "Google Gemini"],
   document_processing: ["all providers"],
   video_analysis: ["OpenAI", "OpenRouter", "Google Gemini", "Anthropic"],
   audio_input: ["OpenAI", "OpenRouter", "Google Gemini"],

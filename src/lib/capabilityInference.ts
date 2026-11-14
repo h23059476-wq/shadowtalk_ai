@@ -6,6 +6,9 @@
  */
 import type { ByokProvider } from "@/lib/byok";
 import type { CapabilityDetail, ModelCapabilities } from "./capabilityRegistry";
+// Single source of truth for image-capable providers — keeps this file in
+// sync with cloudImage.ts (which owns the actual image request paths).
+import { IMAGE_CAPABLE_PROVIDERS } from "./cloudImage";
 
 const inferred = (notes: string): CapabilityDetail => ({ status: "supported", evidence: "inferred_from_adapter", notes });
 const no = (notes: string): CapabilityDetail => ({ status: "unsupported", evidence: "inferred_from_adapter", notes });
@@ -23,7 +26,10 @@ export function classifyModel(modelId: string): ModelKind {
   const id = normalizeModelId(modelId).toLowerCase();
   if (/embed|embedding|bge-|e5-|gte-/.test(id)) return "embedding";
   if (/moderation|guard/.test(id)) return "moderation";
-  if (/^(dall-e|gpt-image|imagen|flux|stable-diffusion|sdxl)|-image-generation/.test(id)) return "image";
+  // Dedicated image models: classic prefixes, "-image-generation" infixes and
+  // Gemini-style suffixes (gemini-2.5-flash-image[-preview], incl. the
+  // OpenRouter "google/" path prefix). Keeps image models out of the chat picker.
+  if (/(^|\/)(dall-e|gpt-image|imagen|flux|stable-diffusion|sdxl)/.test(id) || /-image-generation|-image(-preview)?$/.test(id)) return "image";
   if (/whisper|tts|transcribe|-audio-|realtime|native-audio|speech/.test(id)) return "audio";
   if (/^aqa$|babbage|davinci-00/.test(id)) return "other";
   return "chat";
@@ -57,7 +63,8 @@ const FAMILIES: Family[] = [
 ];
 
 const WEB_PROVIDERS: ByokProvider[] = ["openrouter", "perplexity"];
-const IMAGE_PROVIDERS: ByokProvider[] = ["openai", "openrouter"];
+// Kept in sync with cloudImage.ts via the shared IMAGE_CAPABLE_PROVIDERS list.
+const IMAGE_PROVIDERS: readonly ByokProvider[] = IMAGE_CAPABLE_PROVIDERS;
 
 export function inferModelCapabilities(provider: ByokProvider, modelId: string): ModelCapabilities {
   const id = normalizeModelId(modelId).toLowerCase();
@@ -74,8 +81,8 @@ export function inferModelCapabilities(provider: ByokProvider, modelId: string):
     ? inferred("Available through this provider's web tools")
     : no("Web search needs an OpenRouter or Perplexity key");
   const imageGeneration = IMAGE_PROVIDERS.includes(provider)
-    ? inferred("ShadowTalk generates images with this provider's image model")
-    : no("ShadowTalk generates images only with OpenAI or OpenRouter keys");
+    ? inferred("ShadowTalk generates images with this provider's dedicated image model")
+    : no("Image generation needs an OpenAI, OpenRouter or Google Gemini key (or shared AI mode)");
 
   return {
     textInput: textOk,

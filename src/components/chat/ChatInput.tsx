@@ -54,6 +54,8 @@ interface ChatInputProps {
   shadowTwinActive?: boolean;
   /** Toggle Shadow Twin mode */
   onToggleShadowTwin?: () => void;
+  /** Whether image generation can run right now (BYOK image key or shared fallback). */
+  imageReady?: boolean;
 }
 
 const ChatInputInner = ({
@@ -83,6 +85,7 @@ const ChatInputInner = ({
   onSuggestionChange,
   shadowTwinActive = false,
   onToggleShadowTwin,
+  imageReady = true,
 }: ChatInputProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [slashMenuOpen, setSlashMenuOpen] = useState(false);
@@ -415,6 +418,7 @@ const ChatInputInner = ({
                 if (mode === "image") onOpenImageGenerator?.();
               }}
               disabled={isLoading}
+              imageReady={imageReady}
             />
             {chatMode === "research" && (
               <SearchHistory onSelectQuery={(query) => onMessageChange(query)} />

@@ -58,11 +58,11 @@ const SHADOWTALK_INTEGRATION_CAPS: Record<FeatureRequirement, {
   image_analysis: { supported: true, explanation: "ShadowTalk's chat adapter can send images to vision models" },
   image_generation: {
     supported: true,
-    explanation: "ShadowTalk's cloudImage.ts supports image generation via OpenAI and OpenRouter",
+    explanation: "ShadowTalk's cloudImage.ts supports image generation via OpenAI, OpenRouter and Google Gemini keys; shared-mode users also have the server-side generateImage fallback",
   },
   image_editing: {
     supported: true,
-    explanation: "ShadowTalk's cloudImage.ts supports image editing via OpenAI's image edits endpoint",
+    explanation: "ShadowTalk's cloudImage.ts supports image editing via OpenAI's edits endpoint and reference-image edits on OpenRouter and Gemini",
   },
   document_analysis: {
     supported: true,

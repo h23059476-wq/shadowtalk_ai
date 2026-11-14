@@ -37,5 +37,5 @@ Use the Firebase CLI with the intended project selected and credentials configur
 
 - `src/main.tsx` both registers a service worker and schedules service-worker unregistration.
 - Firebase Hosting's SPA rewrite does not make missing Cloud Functions endpoints exist.
-- The Functions package currently exports only `chat`, `generateImage`, `audio`, and `drive`.
+- The Functions package currently exports only `chat`, `generateImage`, `audio`, and `drive`. `generateImage` is called by the client (`src/lib/sharedImage.ts`) as the shared-mode image fallback; see the [image generation guide](IMAGE_GENERATION_GUIDE.md).
 - Browser-local model support depends on hardware, browser capabilities, network availability for initial model assets, and storage.

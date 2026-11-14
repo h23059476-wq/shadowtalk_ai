@@ -21,4 +21,15 @@ describe("BYOK capability profile is model-specific", () => {
     expect(classifyModel("whisper-large-v3")).toBe("audio");
     expect(classifyModel("gemini-2.5-pro")).toBe("chat");
   });
+
+  it("dedicated image models are classified as image, incl. Gemini-style ids", () => {
+    expect(classifyModel("gpt-image-1")).toBe("image");
+    expect(classifyModel("dall-e-3")).toBe("image");
+    expect(classifyModel("imagen-3.0-generate-002")).toBe("image");
+    expect(classifyModel("gemini-2.5-flash-image")).toBe("image");
+    expect(classifyModel("gemini-2.5-flash-image-preview")).toBe("image");
+    expect(classifyModel("google/gemini-2.5-flash-image")).toBe("image");
+    expect(classifyModel("google/gemini-2.0-flash")).toBe("chat");
+    expect(classifyModel("flux-schnell")).toBe("image");
+  });
 });

@@ -1,6 +1,7 @@
-// Image generation is BYOK-only: the user's own OpenAI, OpenRouter or Google
-// Gemini key is used for direct browser→provider calls. No shared-key path,
-// no free fallback — see the error messages below for the user guidance.
+// Image generation through the user's OWN key (BYOK): OpenAI, OpenRouter or
+// Google Gemini, called browser→provider. This module is deliberately
+// BYOK-pure — no shared keys, no fallback wiring. The shared-mode fallback
+// lives in sharedImage.ts + imageGen.ts (which compose this module).
 import { applyImageWatermark } from "@/lib/imageWatermark";
 import { getByokConfig, type ByokProvider } from "@/lib/byok";
 
@@ -163,8 +164,12 @@ export function decodeGeminiImageResult(body: unknown): string {
   } | null;
   const parts = b?.candidates?.[0]?.content?.parts ?? [];
   for (const part of parts) {
-    const inline = part.inlineData ?? part.inline_data;
-    const mimeType = inline?.mimeType ?? (inline as { mime_type?: string } | undefined)?.mime_type;
+    // The union of camelCase/snake_case inline shapes — flatten the type so
+    // both property spellings are readable without per-access casts.
+    const inline = (part.inlineData ?? part.inline_data) as
+      | { mimeType?: string; mime_type?: string; data?: string }
+      | undefined;
+    const mimeType = inline?.mimeType ?? inline?.mime_type;
     if (inline?.data && typeof inline.data === "string") {
       const mime =
         typeof mimeType === "string" && mimeType.startsWith("image/") ? mimeType : "image/png";

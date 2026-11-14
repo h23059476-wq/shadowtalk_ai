@@ -1,4 +1,4 @@
-import { MessageSquare, Image, FileText, Lightbulb } from "lucide-react";
+import { MessageSquare, Image, FileText, Lightbulb, KeyRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,6 +17,12 @@ interface ModeSelectorProps {
   mode: ChatMode;
   onModeChange: (mode: ChatMode) => void;
   disabled?: boolean;
+  /**
+   * Whether image generation can run right now (BYOK image-capable key or
+   * shared-mode fallback). When false, the Generate Image item shows a
+   * proactive "key needed" hint instead of failing after submission.
+   */
+  imageReady?: boolean;
 }
 
 const modes: { value: ChatMode; label: string; icon: React.ReactNode; prompt: string; color: string }[] = [
@@ -54,7 +60,7 @@ export const getModePrompt = (mode: ChatMode): string => {
   return modes.find(m => m.value === mode)?.prompt || "";
 };
 
-export const ModeSelector = ({ mode, onModeChange, disabled }: ModeSelectorProps) => {
+export const ModeSelector = ({ mode, onModeChange, disabled, imageReady = true }: ModeSelectorProps) => {
   const currentMode = modes.find(m => m.value === mode) || modes[0];
 
   return (
@@ -81,6 +87,15 @@ export const ModeSelector = ({ mode, onModeChange, disabled }: ModeSelectorProps
           >
             <span className={m.color}>{m.icon}</span>
             <span>{m.label}</span>
+            {m.value === "image" && !imageReady && (
+              <span
+                className="ml-auto inline-flex items-center gap-1 text-[10px] text-amber-500 font-normal"
+                title="Needs an OpenAI, OpenRouter or Gemini key (Settings → Personalization → BYOK), or shared AI mode"
+              >
+                <KeyRound className="h-3 w-3" />
+                key needed
+              </span>
+            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

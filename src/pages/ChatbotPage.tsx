@@ -66,7 +66,7 @@ import { useSessionActivation } from "@/hooks/useSessionActivation";
 import { useGlobalHotkeys } from "@/hooks/useGlobalHotkeys";
 import { useToolOrchestrator } from "@/hooks/useToolOrchestrator";
 import { executeShadowTool } from "@/lib/shadowTools/executeShadowTool";
-import { generateCloudImage } from "@/lib/cloudImage";
+import { generateImageWithFallback, isImageGenerationReady } from "@/lib/imageGen";
 // Lazy-load document + video intelligence (saves ~800KB from initial chat load)
 // These are only needed when a user attaches a file, not on every page visit.
 const lazyDocIntel = () => import("@/lib/documentIntelligence");
@@ -2092,6 +2092,28 @@ Structure and Content Guidelines:
       : detectTool(strippedForTools);
 
     if (toolResult.tool && toolResult.autoExecute) {
+      // Proactive image gate — tell the user HOW to enable image generation
+      // before running the tool, instead of letting a failed tool message be
+      // their first feedback. Shared-mode users pass this check and use the
+      // server-side fallback inside generateImageWithFallback.
+      if (toolResult.tool === "image_generator" && !isImageGenerationReady()) {
+        const guidanceId = (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `ai-${Date.now()}`);
+        setMessages((prev) => [...prev, {
+          id: guidanceId,
+          type: "ai" as const,
+          timestamp: new Date(),
+          content: [
+            "⚠️ **Image generation needs a quick setup.**",
+            "",
+            "- **Use your own key (recommended):** add an **OpenAI, OpenRouter or Google Gemini** key in **Settings → Personalization → BYOK** — all three support images, and Gemini keys are free to create in Google AI Studio.",
+            "- **Shared AI:** sign in and pick shared mode in AI setup — images then run through ShadowTalk's shared image service (100 requests/day, shared with chat).",
+            "",
+            "Note: charts and diagrams only need a regular chat key — any provider works for those.",
+          ].join("\n"),
+        }]);
+        setIsLoading(false);
+        return;
+      }
       const conversationId = await resolveConversationId();
       if (!conversationId) {
         setIsLoading(false);
@@ -2113,13 +2135,19 @@ Structure and Content Guidelines:
         // Batch R1 — citations returned by research tools, preserved on the
         // message for provenance-aware visualization downstream.
         let toolCitations: Citation[] | undefined;
-        // Image generation — BYOK only. Uses the user's own OpenAI or OpenRouter
-        // key. No fallback to free services. If the key is missing or fails,
-        // the error is shown to the user so they can fix their setup.
+        // Image generation — the user's own key first (OpenAI, OpenRouter or
+        // Gemini, browser→provider). Signed-in shared-mode users without an
+        // image-capable key fall back to the platform-funded generateImage
+        // Function (100/day quota, enforced server-side). Errors surface so
+        // the user can fix their setup.
         if (toolResult.tool === "image_generator") {
           const imgPrompt = toolResult.params?.prompt || strippedForTools;
-          const imageUrl = await generateCloudImage(imgPrompt, { watermark: true });
-          finalToolContent = `Generated image for: *${imgPrompt}*`;
+          const { imageUrl, source } = await generateImageWithFallback(imgPrompt, { watermark: true });
+          finalToolContent = `Generated image for: *${imgPrompt}*${
+            source === "shared"
+              ? "\n\n_Generated with ShadowTalk's shared AI — counts toward the 100 requests/day shared quota._"
+              : ""
+          }`;
           setMessages((prev) => prev.map((m) => m.id === toolMessageId ? {
             ...m,
             content: finalToolContent,
@@ -2362,7 +2390,7 @@ Structure and Content Guidelines:
       const { detectChatImageIntent } = await import("@/lib/chatImageIntent");
       if (detectChatImageIntent(msgContent) === "edit") {
         try {
-          const editedImage = await generateCloudImage(msgContent, { referenceImage: imageData, watermark: true });
+          const { imageUrl: editedImage } = await generateImageWithFallback(msgContent, { referenceImage: imageData, watermark: true });
           const reply = `Edited your image: ${msgContent}`;
           const editedMessage: Message = { id: crypto.randomUUID(), type: "ai", content: reply, imageUrl: editedImage, timestamp: new Date() };
           setMessages((prev) => [...prev, editedMessage]);
@@ -2755,6 +2783,9 @@ Structure and Content Guidelines:
     onModeChange: setChatMode,
     personality,
     layout: "composer" as const,
+    // Proactive image gate — recomputed on each relevant render; cheap
+    // (two localStorage reads) and lets the mode selector show "key needed".
+    imageReady: isImageGenerationReady(),
 
     promptSuggestion,
     onPromptAccept: setMessage,
