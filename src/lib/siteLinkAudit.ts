@@ -60,11 +60,36 @@ export function extractAppRoutePaths(appSource: string): string[] {
   return [...paths];
 }
 
-/** Whether an internal href resolves to a defined route or legacy redirect */
-export function isRoutableHref(href: string, appRoutePaths: readonly string[]): boolean {
+/** Dynamic route patterns (e.g. "/t/:username") declared in App.tsx */
+export function extractDynamicRoutePatterns(appSource: string): string[] {
+  const paths = new Set<string>();
+  const re = /path="([^"]+)"/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(appSource)) !== null) {
+    const p = m[1];
+    if (p.includes(":")) paths.add(p);
+  }
+  return [...paths];
+}
+
+/**
+ * Whether an internal href resolves to a defined route (static match or
+ * dynamic pattern match) or legacy redirect
+ */
+export function isRoutableHref(
+  href: string,
+  appRoutePaths: readonly string[],
+  dynamicPatterns: readonly string[] = [],
+): boolean {
   const clean = href.split("#")[0].split("?")[0];
   if (!clean.startsWith("/")) return false;
   if (appRoutePaths.includes(clean)) return true;
+  for (const pattern of dynamicPatterns) {
+    const regex = new RegExp(
+      "^" + pattern.split("/").map((seg) => (seg.startsWith(":") ? "[^/]+" : seg)).join("/") + "$",
+    );
+    if (regex.test(clean)) return true;
+  }
   if (LEGACY_REDIRECT_PATHS.includes(clean as (typeof LEGACY_REDIRECT_PATHS)[number])) return true;
   return false;
 }
