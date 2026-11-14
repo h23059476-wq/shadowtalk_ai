@@ -655,7 +655,7 @@ export const LiveVoiceMode: React.FC<LiveVoiceModeProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="st-live fixed inset-0 z-[100] flex flex-col relative overflow-hidden bg-[#050b18] text-[#e4e8f7] font-body antialiased select-none"
+          className="st-live fixed inset-0 z-[100] flex flex-col overflow-hidden bg-[#050b18] text-[#e4e8f7] font-body antialiased select-none"
         >
           {/* Celestial Deep Cobalt & Nebula Indigo Ambient Background Lighting */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
