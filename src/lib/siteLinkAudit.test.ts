@@ -4,6 +4,7 @@ import { resolve } from "path";
 import {
   CRITICAL_NAV_LINKS,
   extractAppRoutePaths,
+  extractDynamicRoutePatterns,
   isRoutableHref,
 } from "./siteLinkAudit";
 
@@ -34,6 +35,21 @@ function extractInternalHrefs(source: string): string[] {
 describe("site link audit", () => {
   const appSource = readSrc("App.tsx");
   const appRoutes = extractAppRoutePaths(appSource);
+  const dynamicPatterns = extractDynamicRoutePatterns(appSource);
+
+  /**
+   * Routes rendered with real page components (not <Navigate> redirects, not
+   * the "*" catch-all, and not the /auth/action email-link transactional
+   * handler). Every one of these must be reachable from the CommandPalette.
+   */
+  const PALETTE_ROUTE_EXCEPTIONS = new Set(["/auth/action"]);
+  const renderedStaticRoutes = appSource
+    .split("\n")
+    .filter((line) => line.includes('path="') && line.includes("element="))
+    .filter((line) => !line.includes("<Navigate"))
+    .map((line) => line.match(/path="([^"]+)"/)?.[1])
+    .filter((p): p is string => Boolean(p))
+    .filter((p) => p !== "*" && !p.includes(":") && !PALETTE_ROUTE_EXCEPTIONS.has(p));
 
   it("App.tsx defines all critical nav routes", () => {
     for (const path of CRITICAL_NAV_LINKS) {
@@ -59,6 +75,26 @@ describe("site link audit", () => {
     expect(palette).toContain('href: "/settings"');
   });
 
+  it("every CommandPalette href resolves to a real route", () => {
+    const palette = readSrc("components/CommandPalette.tsx");
+    const paletteHrefs = [...palette.matchAll(/href:\s*"(\/[^"]+)"/g)].map((m) => m[1]);
+    expect(paletteHrefs.length, "palette must not be empty").toBeGreaterThan(0);
+    const broken = paletteHrefs.filter((href) => !isRoutableHref(href, appRoutes, dynamicPatterns));
+    expect(broken, `palette links to non-existent routes: ${broken.join(", ")}`).toEqual([]);
+  });
+
+  it("CommandPalette covers every rendered page route in App.tsx", () => {
+    const palette = readSrc("components/CommandPalette.tsx");
+    const paletteHrefs = new Set(
+      [...palette.matchAll(/href:\s*"(\/[^"]+)"/g)].map((m) => m[1]),
+    );
+    const missing = renderedStaticRoutes.filter((route) => !paletteHrefs.has(route));
+    expect(
+      missing,
+      `real pages missing from CommandPalette: ${missing.join(", ")}`,
+    ).toEqual([]);
+  });
+
   it("Navigation includes Settings", () => {
     const nav = readSrc("components/Navigation.tsx");
     expect(nav).toContain('href: "/settings"');
@@ -79,7 +115,7 @@ describe("site link audit", () => {
     const broken: string[] = [];
     for (const src of sources) {
       for (const href of extractInternalHrefs(src)) {
-        if (!isRoutableHref(href, appRoutes)) {
+        if (!isRoutableHref(href, appRoutes, dynamicPatterns)) {
           broken.push(href);
         }
       }

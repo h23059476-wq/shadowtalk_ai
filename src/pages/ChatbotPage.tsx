@@ -312,7 +312,6 @@ const ChatbotPage = () => {
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [showShadowTalkLive, setShowShadowTalkLive] = useState(false);
   const [showShadowBrowser, setShowShadowBrowser] = useState(false);
-  const [showCommandPalette, setShowCommandPalette] = useState(false);
   const [toolsMenuOpen, setToolsMenuOpen] = useState(false);
   const [chatShareOffer, setChatShareOffer] = useState<{ title: string; subtitle?: string; prompt?: string; answer?: string } | null>(null);
   const [chatShareDialogOpen, setChatShareDialogOpen] = useState(false);
@@ -420,16 +419,6 @@ const ChatbotPage = () => {
   useEffect(() => {
   }, [chatMode]);
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        setShowCommandPalette((open) => !open);
-      }
-    };
-    window.addEventListener("keydown", onKey, true);
-    return () => window.removeEventListener("keydown", onKey, true);
-  }, []);
 
 
 
