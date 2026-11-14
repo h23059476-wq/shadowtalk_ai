@@ -51,26 +51,18 @@ const DocsPage = lazy(() => import("./pages/DocsPage"));
 const VizDemoPage = lazy(() => import("./pages/dev/VizDemoPage"));
 const AppearanceStudioPage = lazy(() => import("./pages/AppearanceStudioPage"));
 const ChangelogPage = lazy(() => import("./pages/ChangelogPage"));
-const PrivateAiHubPage = lazy(() => import("./pages/PrivateAiHubPage"));
 const FounderPage = lazy(() => import("./pages/FounderPage"));
-const ZainAhmedBioPage = lazy(() => import("./pages/ZainAhmedBioPage"));
-const FatimaPage = lazy(() => import("./pages/FatimaPage"));
 const ShadowTwinSettingsPage = lazy(() => import("./pages/ShadowTwinSettingsPage"));
 const PublicShadowTwinChat = lazy(() => import("./pages/PublicShadowTwinChat"));
 const ShadowMemoryPage = lazy(() => import("./pages/ShadowMemoryPage"));
 const TrustPage = lazy(() => import("./pages/TrustPage"));
 const KnowledgeGraphPage = lazy(() => import("./pages/KnowledgeGraphPage"));
-const AgenticAIWorkspacePage = lazy(() => import("./pages/AgenticAIWorkspacePage"));
-const FounderAccessPage = lazy(() => import("./pages/FounderAccessPage"));
 const ProofLoopPage = lazy(() => import("./pages/ProofLoopPage"));
 const PublicProofCardPage = lazy(() => import("./pages/PublicProofCardPage"));
 
 // Production Company, Support & Legal Pages
 const ContactPage = lazy(() => import("./pages/ContactPage"));
-const HelpCenterPage = lazy(() => import("./pages/HelpCenterPage"));
 const FAQPage = lazy(() => import("./pages/FAQPage"));
-const BlogPage = lazy(() => import("./pages/BlogPage"));
-const CaseStudiesPage = lazy(() => import("./pages/CaseStudiesPage"));
 const BenchmarksPage = lazy(() => import("./pages/BenchmarksPage"));
 const ComingSoonPage = lazy(() => import("./pages/ComingSoonPage"));
 const AgenticIdePage = lazy(() => import("./pages/AgenticIdePage"));
@@ -168,9 +160,9 @@ const AnimatedRoutes = () => {
           <Route path="/security" element={<Suspense fallback={<PageLoader />}><PageTransition><TrustPage /></PageTransition></Suspense>} />
           <Route path="/status" element={<PageTransition><StatusPage /></PageTransition>} />
           <Route path="/founder" element={<PageTransition><FounderPage /></PageTransition>} />
-          <Route path="/zain-ahmed" element={<PageTransition><ZainAhmedBioPage /></PageTransition>} />
-          <Route path="/zain-ahmed-biography" element={<Navigate to="/zain-ahmed" replace />} />
-          <Route path="/zain-ahmed-fahad-patel" element={<Navigate to="/zain-ahmed" replace />} />
+          <Route path="/zain-ahmed" element={<Navigate to="/founder" replace />} />
+          <Route path="/zain-ahmed-biography" element={<Navigate to="/founder" replace />} />
+          <Route path="/zain-ahmed-fahad-patel" element={<Navigate to="/founder" replace />} />
           <Route path="/fatima" element={<Navigate to="/about" replace />} />
           <Route path="/co-founder" element={<Navigate to="/about" replace />} />
           <Route path="/sadaf-tayyaba" element={<Navigate to="/about" replace />} />
@@ -192,7 +184,6 @@ const AnimatedRoutes = () => {
           <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
           <Route path="/help" element={<Navigate to="/docs" replace />} />
           <Route path="/faq" element={<PageTransition><FAQPage /></PageTransition>} />
-          <Route path="/blog" element={<PageTransition><BlogPage /></PageTransition>} />
           <Route path="/benchmarks" element={<Suspense fallback={<PageLoader />}><PageTransition><BenchmarksPage /></PageTransition></Suspense>} />
           <Route path="/case-studies" element={<Navigate to="/home" replace />} />
           <Route path="/gdpr" element={<PageTransition><GDPRPage /></PageTransition>} />

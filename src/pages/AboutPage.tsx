@@ -23,15 +23,13 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import SEOHead from "@/components/SEOHead";
-import { PAGE_SEO, getPersonSchema, getFAQSchema, GEO_CANONICAL_SUMMARIES, getSpeakableSchema } from "@/lib/seo";
-import GeoCanonicalSummaries from "@/components/seo/GeoCanonicalSummaries";
+import { PAGE_SEO, getPersonSchema, getSpeakableSchema } from "@/lib/seo";
 
 const AboutPage = () => {
   const navigate = useNavigate();
   const structuredData = [
     getPersonSchema(),
-    getFAQSchema(GEO_CANONICAL_SUMMARIES.map((s) => ({ question: s.question, answer: s.answer }))),
-    getSpeakableSchema(["#geo-canonical-heading", "[data-speakable]"]),
+    getSpeakableSchema(["[data-speakable]"]),
   ];
 
   return (
@@ -56,7 +54,6 @@ const AboutPage = () => {
       <AboutQuoteMarquee />
       <AboutInspire />
       <AboutFounderStory />
-      <GeoCanonicalSummaries />
       <Separator className="max-w-4xl mx-auto opacity-30" />
       <AboutStats />
       <Separator className="max-w-4xl mx-auto opacity-30" />

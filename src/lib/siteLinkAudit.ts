@@ -8,15 +8,21 @@ export const CRITICAL_NAV_LINKS = [
   "/founder",
   "/pricing",
   "/docs",
-  "/blog",
   "/faq",
   "/contact",
 ] as const;
 
-/** Legacy paths that must redirect via App.tsx (not 404) */
+/**
+ * Legacy paths that must redirect via App.tsx (not 404). These URLs were
+ * published in the past (static marketing pages, retired person/bio pages);
+ * the pages themselves are gone, but inbound links should still resolve.
+ */
 export const LEGACY_REDIRECT_PATHS = [
+  "/zain-ahmed",
   "/zain-ahmed-biography",
-  // Static marketing pages served as HTML by Firebase Hosting catch-all.
+  "/zain-ahmed-fahad-patel",
+  "/blog",
+  "/case-studies",
   "/anonymous-ai",
   "/ai-strategy-consultant",
   "/ai-business-planner",

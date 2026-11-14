@@ -18,6 +18,7 @@ const DIST_DIR = path.resolve(__dirname, 'dist');
 // The critical routes we want perfectly indexed by Google
 const ROUTES_TO_PRERENDER = [
   '/',
+  '/home',
   '/founder',
   '/about',
   '/pricing',
@@ -25,12 +26,13 @@ const ROUTES_TO_PRERENDER = [
   '/themes',
   '/docs',
   '/faq',
-  '/blog',
   '/changelog',
   '/security',
   '/benchmarks',
   '/contact',
-  '/help'
+  '/downloads',
+  '/ide',
+  '/proofloop',
 ];
 
 // Simple static file server

@@ -1,75 +1,36 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YC202MNN7"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-YC202MNN7');
-    </script>
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
 
-    <!-- Security hardening (defense-in-depth, alongside server headers) -->
+    <!-- Security -->
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Permissions-Policy" content="geolocation=(self), microphone=(self), camera=(self), payment=(self), usb=(), magnetometer=(), gyroscope=(), accelerometer=()" />
-    <!-- COOP/COEP for WebContainer: set via server headers (public/_headers, vercel.json, netlify.toml). Do not use same-origin-allow-popups here — it blocks SharedArrayBuffer. -->
-    <link rel="alternate" hreflang="x-default" href="https://www.shadowtalk-ai.com/" />
-    <link rel="alternate" hreflang="ar" href="https://www.shadowtalk-ai.com/?lang=ar" />
-    <link rel="alternate" hreflang="ur" href="https://www.shadowtalk-ai.com/?lang=ur" />
 
-    <!-- Primary Meta Tags - SEO Optimized -->
-    <title>Think AI. Think ShadowTalk.</title>
-    <meta name="title" content="Think AI. Think ShadowTalk. — Agentic AI Workspace" />
-    <meta name="description" content="ShadowTalk AI by Zain Ahmed Fahad Patel — encrypted chat, deep research, voice & code, desktop app. Free to use, no card. Founder: Karachi, Pakistan.">
-    <meta name="author" content="Zain Ahmed Fahad Patel, ShadowTalk AI" />
-    <meta name="keywords" content="ShadowTalk AI, Zain Ahmed Fahad Patel, Zain Ahmed founder, AI chatbot, free AI, agentic AI, GPT alternative, Karachi AI founder" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <!-- Primary SEO -->
+    <title>ShadowTalk AI — Agentic AI Workspace</title>
+    <meta name="description" content="One agentic AI workspace: encrypted multi-model chat, deep research with citations, ProofLoop missions, voice and IDE. Free with BYOK — no subscription, no card." />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <link rel="canonical" href="https://www.shadowtalk-ai.com/" />
-    <link rel="alternate" hreflang="en" href="https://www.shadowtalk-ai.com/" />
-    <link rel="alternate" hreflang="es" href="https://www.shadowtalk-ai.com/?lang=es" />
-    <link rel="alternate" hreflang="fr" href="https://www.shadowtalk-ai.com/?lang=fr" />
-    <link rel="alternate" hreflang="de" href="https://www.shadowtalk-ai.com/?lang=de" />
-    <link rel="alternate" hreflang="x-default" href="https://www.shadowtalk-ai.com/" />
-    <link rel="author" href="https://www.shadowtalk-ai.com/zain-ahmed-fahad-patel.html" title="Zain Ahmed Fahad Patel — Founder of ShadowTalk AI" />
-    <link rel="alternate" href="https://www.shadowtalk-ai.com/zain-ahmed-fahad-patel.html" title="Zain Ahmed Fahad Patel — Founder of ShadowTalk AI" />
-    <link rel="alternate" href="https://www.shadowtalk-ai.com/zain-ahmed.html" title="Zain Ahmed — ShadowTalk founder (short name alias)" />
-    <link rel="me" href="https://www.linkedin.com/in/zain-ahmed-917b6b3a6" />
-    <link rel="me" href="https://www.instagram.com/shadowtalk_ai" />
-    <link rel="alternate" type="text/plain" href="https://www.shadowtalk-ai.com/llms.txt" title="ShadowTalk AI llms.txt" />
-    <link rel="alternate" type="application/json" href="https://www.shadowtalk-ai.com/shadowtalk.json" title="ShadowTalk AI facts JSON" />
-    <link rel="alternate" type="text/html" href="https://www.shadowtalk-ai.com/aeo-answers.html" title="ShadowTalk AI AEO Q&amp;A corpus" />
-    <link rel="alternate" type="application/json" href="https://www.shadowtalk-ai.com/aeo-answers.json" title="ShadowTalk AI AEO JSON" />
-    <link rel="alternate" type="text/plain" href="https://www.shadowtalk-ai.com/google-aeo.txt" title="ShadowTalk Google SEO+AEO index" />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.shadowtalk-ai.com/" />
     <meta property="og:site_name" content="ShadowTalk AI" />
-    <meta property="og:title" content="Think AI. Think ShadowTalk. — Agentic AI Workspace" />
-    <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/V8jyBucpOGVaXrW2RrZwiDqjbdj1/social-images/social-1780296086790-shadowtalk-logo-v2-preview.webp">
+    <meta property="og:title" content="ShadowTalk AI — Agentic AI Workspace" />
+    <meta property="og:description" content="One workspace for agents, research, code & voice. Free to use, no card. Think AI. Think ShadowTalk." />
+    <meta property="og:image" content="https://www.shadowtalk-ai.com/og-image.svg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Think AI. Think ShadowTalk. — Agentic AI Workspace" />
-    <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/V8jyBucpOGVaXrW2RrZwiDqjbdj1/social-images/social-1780296086790-shadowtalk-logo-v2-preview.webp">
+    <meta name="twitter:title" content="ShadowTalk AI — Agentic AI Workspace" />
+    <meta name="twitter:description" content="One workspace for agents, research, code & voice. Free to use, no card. Think AI. Think ShadowTalk." />
+    <meta name="twitter:image" content="https://www.shadowtalk-ai.com/og-image.svg" />
 
-    <!-- Additional SEO -->
-    <meta name="rating" content="General" />
-    <meta name="revisit-after" content="7 days" />
-    <meta name="language" content="English" />
-    <meta name="geo.region" content="PK-SD" />
-    <meta name="geo.placename" content="Karachi, Pakistan" />
-
-    <!-- PWA Meta Tags -->
+    <!-- PWA / app identity -->
     <meta name="theme-color" content="#050508" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -80,15 +41,10 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="format-detection" content="telephone=no" />
 
-    <!-- Favicon and Icons -->
+    <!-- Icons & manifest -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-
-    <!-- Batch 5: removed dead asset references. The iOS splash PNGs
-         (splash-*.png) and safari-pinned-tab.svg were referenced here but the
-         files do not exist in public/, so every page load produced 404s and
-         iOS fell back to a plain screenshot anyway. Restoring real splash
-         artwork is tracked in the stabilization backlog. -->
 
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -100,163 +56,94 @@
     <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Sora:wght@300..800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
 
-    <!-- JSON-LD Structured Data -->
+    <!-- Structured data: one graph, shared @ids, current product facts only.
+         Per-page JSON-LD is injected by src/components/SEOHead.tsx. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "ShadowTalk AI",
-      "url": "https://www.shadowtalk-ai.com",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Web, Windows, iOS, Android",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "description": "Stop juggling AI tabs. ShadowTalk finishes the job—encrypted chat, deep research, voice and code, desktop app. Free to use, no card.",
-      "author": {
-        "@type": "Person",
-        "@id": "https://www.shadowtalk-ai.com/#zain-ahmed-fahad-patel-shadowtalk",
-        "name": "Zain Ahmed Fahad Patel",
-        "alternateName": ["Zain Ahmed", "Zain Ahmed — ShadowTalk AI"],
-        "givenName": "Zain",
-        "additionalName": "Ahmed Fahad",
-        "familyName": "Patel",
-        "jobTitle": "Founder & Lead Architect",
-        "description": "Founder of ShadowTalk AI — sovereign local-first AI workspace from Karachi, Pakistan. Not affiliated with Rastah fashion or NAPA theatre.",
-        "url": "https://www.shadowtalk-ai.com/zain-ahmed-fahad-patel.html",
-        "sameAs": [
-          "https://www.linkedin.com/in/zain-ahmed-917b6b3a6",
-          "https://www.instagram.com/shadowtalk_ai"
-        ]
-      },
-      "featureList": [
-        "End-to-end encrypted chat",
-        "Deep Research with citations",
-        "ShadowTalk Live voice mode",
-        "Code IDE and App Builder",
-        "BYOK (Bring Your Own Key)",
-        "Marketplace AI agents",
-        "Optional offline on-device AI",
-        "Desktop app and PWA"
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.shadowtalk-ai.com/#organization",
+          "name": "ShadowTalk AI",
+          "url": "https://www.shadowtalk-ai.com",
+          "logo": "https://www.shadowtalk-ai.com/pwa-512x512.png",
+          "slogan": "Think AI. Think ShadowTalk.",
+          "description": "Agentic AI workspace: encrypted multi-model chat, deep research with citations, ProofLoop verified missions, live voice mode, agentic IDE and optional on-device AI. Free to use with BYOK.",
+          "founder": { "@id": "https://www.shadowtalk-ai.com/#zain-ahmed-fahad-patel-shadowtalk" },
+          "sameAs": [
+            "https://www.linkedin.com/in/zain-ahmed-917b6b3a6",
+            "https://www.instagram.com/shadowtalk_ai",
+            "https://github.com/zain836/shadowtalk-ai-903ca615"
+          ],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "email": "shadowtalk@shadowtalk-ai.com",
+            "availableLanguage": ["English"]
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://www.shadowtalk-ai.com/#zain-ahmed-fahad-patel-shadowtalk",
+          "name": "Zain Ahmed Fahad Patel",
+          "alternateName": ["Zain Ahmed", "Zain Ahmed — ShadowTalk AI"],
+          "givenName": "Zain",
+          "additionalName": "Ahmed Fahad",
+          "familyName": "Patel",
+          "jobTitle": "Founder & Lead Architect",
+          "description": "Founder of ShadowTalk AI — an agentic AI workspace built in Karachi, Pakistan.",
+          "url": "https://www.shadowtalk-ai.com/founder",
+          "worksFor": { "@id": "https://www.shadowtalk-ai.com/#organization" },
+          "homeLocation": { "@type": "Place", "name": "Karachi, Pakistan" },
+          "knowsAbout": ["Artificial Intelligence", "Local-first software", "On-device LLM inference", "Agentic AI systems", "Privacy-preserving AI"],
+          "sameAs": [
+            "https://www.linkedin.com/in/zain-ahmed-917b6b3a6",
+            "https://www.instagram.com/shadowtalk_ai",
+            "https://github.com/zain836/shadowtalk-ai-903ca615"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.shadowtalk-ai.com/#website",
+          "name": "ShadowTalk AI",
+          "alternateName": ["ShadowTalk"],
+          "url": "https://www.shadowtalk-ai.com",
+          "description": "Agentic AI workspace — encrypted chat, deep research, voice & code.",
+          "publisher": { "@id": "https://www.shadowtalk-ai.com/#organization" }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://www.shadowtalk-ai.com/#application",
+          "name": "ShadowTalk AI",
+          "url": "https://www.shadowtalk-ai.com",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Web (installable PWA for iOS and Android)",
+          "description": "Encrypted multi-model chat, deep research with citations, ProofLoop missions, voice and IDE in one workspace. Free to use — bring your own API key.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "description": "Free to use. BYOK: your AI provider may charge separately for API usage."
+          },
+          "author": { "@id": "https://www.shadowtalk-ai.com/#zain-ahmed-fahad-patel-shadowtalk" },
+          "featureList": [
+            "Encrypted multi-model chat across 16+ providers",
+            "Deep Research with cited sources",
+            "ProofLoop — verifiable multi-step missions",
+            "ShadowTalk Live voice mode",
+            "Shadow Twin — shareable AI persona",
+            "Agentic IDE and app builder",
+            "End-to-end encrypted Stealth Vault",
+            "Optional on-device AI (WebGPU)",
+            "BYOK — keys stay with you",
+            "Installable PWA for iOS and Android"
+          ]
+        }
       ]
     }
     </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "ShadowTalk AI",
-      "url": "https://www.shadowtalk-ai.com",
-      "logo": "https://www.shadowtalk-ai.com/pwa-512x512.png",
-      "founder": {
-        "@type": "Person",
-        "@id": "https://www.shadowtalk-ai.com/#zain-ahmed-fahad-patel-shadowtalk",
-        "name": "Zain Ahmed Fahad Patel",
-        "alternateName": ["Zain Ahmed", "Zain Ahmed — ShadowTalk AI"],
-        "givenName": "Zain",
-        "additionalName": "Ahmed Fahad",
-        "familyName": "Patel",
-        "jobTitle": "Founder & Lead Architect",
-        "url": "https://www.shadowtalk-ai.com/zain-ahmed-fahad-patel.html",
-        "sameAs": [
-          "https://www.linkedin.com/in/zain-ahmed-917b6b3a6",
-          "https://www.instagram.com/shadowtalk_ai"
-        ]
-      },
-      "sameAs": [
-        "https://www.instagram.com/shadowtalk_ai",
-        "https://www.linkedin.com/in/zain-ahmed-917b6b3a6",
-        "https://github.com/zain836/shadowtalk-ai-903ca615"
-      ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "customer support",
-        "email": "shadowtalk@shadowtalk-ai.com",
-        "availableLanguage": ["English"]
-      }
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "ShadowTalk AI",
-      "alternateName": ["ShadowTalk", "shadowtalk-ai.com"],
-      "url": "https://www.shadowtalk-ai.com",
-      "description": "Agentic AI workspace — encrypted chat, deep research, voice & code. Founded by Zain Ahmed Fahad Patel.",
-      "publisher": { "@type": "Organization", "name": "ShadowTalk AI", "url": "https://www.shadowtalk-ai.com" },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": { "@type": "EntryPoint", "urlTemplate": "https://www.shadowtalk-ai.com/answers?q={search_term_string}" },
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": "https://www.shadowtalk-ai.com/#zain-ahmed-fahad-patel-shadowtalk",
-      "name": "Zain Ahmed Fahad Patel",
-      "alternateName": ["Zain Ahmed", "Zain Ahmed — ShadowTalk AI", "Zain Ahmed (ShadowTalk)"],
-      "givenName": "Zain",
-      "additionalName": "Ahmed Fahad",
-      "familyName": "Patel",
-      "jobTitle": "Founder & Lead Architect",
-      "description": "AI solutions engineer and founder of ShadowTalk AI — encrypted, local-first agentic AI workspace from Karachi, Pakistan.",
-      "url": "https://www.shadowtalk-ai.com/zain-ahmed-fahad-patel.html",
-      "worksFor": { "@type": "Organization", "name": "ShadowTalk AI", "url": "https://www.shadowtalk-ai.com" },
-      "knowsAbout": ["Artificial Intelligence", "On-device LLM", "Privacy-preserving AI", "Agentic systems"],
-      "homeLocation": { "@type": "Place", "name": "Karachi, Pakistan" },
-      "sameAs": [
-        "https://www.linkedin.com/in/zain-ahmed-917b6b3a6",
-        "https://www.instagram.com/shadowtalk_ai",
-        "https://github.com/zain836/shadowtalk-ai-903ca615",
-        "https://www.shadowtalk-ai.com/about"
-      ]
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "ShadowTalk AI",
-      "url": "https://www.shadowtalk-ai.com",
-      "description": "Stop juggling AI tabs. ShadowTalk finishes the job—encrypted chat, deep research, voice and code, desktop app. Free to use, no card.",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.shadowtalk-ai.com/chatbot?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-    
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <meta property="og:title" content="Think AI. Think ShadowTalk.">
-  <meta name="twitter:title" content="Think AI. Think ShadowTalk.">
-  <meta property="og:description" content="Why are builders switching to ShadowTalk? One workspace for agents, code, research &amp; voice—free, no card. Open it once and tab-hopping feels ancient.">
-  <meta name="twitter:description" content="Why are builders switching to ShadowTalk? One workspace for agents, code, research &amp; voice—free, no card. Open it once and tab-hopping feels ancient.">
-</head>
+  </head>
 
   <body>
     <div id="root"></div>

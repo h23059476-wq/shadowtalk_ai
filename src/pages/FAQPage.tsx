@@ -31,7 +31,6 @@ import {
 } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import { PAGE_SEO, getFAQSchema } from "@/lib/seo";
-import { AEO_ANSWER_CORPUS } from "@/lib/aeo";
 import { motion } from "framer-motion";
 
 interface FAQItem {
@@ -119,30 +118,7 @@ export const FAQPage = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [accordionValues, setAccordionValues] = useState<string[]>([]);
 
-  // Merge static FAQs with AEO answer corpus for complete coverage
-  const allFaqs = useMemo(() => {
-    const combined = [...STATIC_FAQS];
-    AEO_ANSWER_CORPUS.forEach((aeo, idx) => {
-      // Map category
-      const aeoCat = aeo.category as string;
-      let cat: FAQItem["category"] = "general";
-      if (aeoCat === "product") cat = "product";
-      else if (aeoCat === "pricing" || aeoCat === "comparison") cat = "pricing";
-      else if (aeoCat === "founder") cat = "founder";
-      else if (aeoCat === "privacy" || aeoCat === "security") cat = "security";
-
-      // Prevent duplicate questions
-      if (!combined.some((item) => item.question.toLowerCase === aeo.question.toLowerCase)) {
-        combined.push({
-          id: `aeo-${idx}`,
-          category: cat,
-          question: aeo.question,
-          answer: aeo.answer,
-        });
-      }
-    });
-    return combined;
-  }, []);
+  const allFaqs = useMemo(() => STATIC_FAQS, []);
 
   const filteredFaqs = useMemo(() => {
     return allFaqs.filter((item) => {
