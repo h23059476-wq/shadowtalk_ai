@@ -75,6 +75,8 @@ export default {
       fontFamily: {
         sans: ['var(--app-font-sans)', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['var(--app-font-mono)', 'JetBrains Mono', 'ui-monospace', 'monospace'],
+        headline: ['Sora', 'var(--app-font-sans)', 'sans-serif'],
+        body: ['Hanken Grotesk', 'var(--app-font-sans)', 'sans-serif'],
       },
       colors: {
         ...themedPalette,
