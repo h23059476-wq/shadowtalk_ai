@@ -35,7 +35,6 @@ import { streamCloudChat, isCloudChatConfigured, type CloudChatMessage } from "@
 import { buildChatSystemPrompt } from "@/lib/shadowTalkPersona";
 import { loadAiAccessMode, saveAiAccessMode, getPreferLocal } from "@/lib/aiAccessMode";
 
-import { ChatAmbientBackground } from "@/components/chat/ChatAmbientBackground";
 import { ChatEmptyState } from "@/components/chat/ChatEmptyState";
 import { ChatMainPanel } from "@/components/chat/ChatMainPanel";
 import { LegacyVaultRecoveryDialog } from "@/components/chat/LegacyVaultRecoveryDialog";
@@ -2783,9 +2782,8 @@ Structure and Content Guidelines:
 
 
   return (
-    <div className="shadowtalk-chat-shell neural-bg settings-scroll-smooth flex h-full min-h-0 flex-col overflow-hidden">
+    <div className="shadowtalk-chat-shell chat-flat-shell settings-scroll-smooth flex h-full min-h-0 flex-col overflow-hidden bg-[#131314] text-slate-200">
       <SEOHead meta={PAGE_SEO.chatbot} structuredData={[getChatbotFAQSchema(), getSpeakableSchema(["h1", "[data-speakable]"]), getWebSiteWithSearchSchema()]} />
-      <ChatAmbientBackground />
       <motion.div
         className="shadowtalk-chat-main flex w-full min-h-0 flex-1 relative overflow-hidden"
         initial={{ opacity: 0, y: 8 }}
@@ -2827,7 +2825,7 @@ Structure and Content Guidelines:
           onOpenSettings={() => navigate("/settings")}
         />
         <ChatMainPanel>
-          <div className="sticky top-0 z-30 shrink-0 ios-glass-nav border-b border-white/[0.06]">
+          <div className="sticky top-0 z-30 shrink-0">
             <ChatHeader
               variant="minimal"
               userPlan={userPlan}
@@ -2859,22 +2857,24 @@ Structure and Content Guidelines:
           )}
           <EnterpriseWelcomeBanner email={user?.email} displayName={userDisplayName} />
 
-          <ChatToolbar
-            hasActiveChat={hasActiveChat}
-            conversationCount={conversations.length}
-            onNewChat={handleNewChat}
-            onOpenHistory={() => {
-              if (isMobile) setShowMobileNav(true);
-              else if (sidebarCollapsed) toggleSidebar();
-            }}
-            onClearChat={handleClearCurrentChat}
-            onDeleteAllChats={handleClearAllChats}
-            encryptionActive={chatPrivate.active}
-            encryptionBusy={chatPrivate.busy}
-            onEnableEncryption={handleEnableChatEncryption}
-            onDisableEncryption={chatPrivate.disablePrivateMode}
-            onToggleLiveVoice={handleToggleLiveVoice}
-          />
+          {hasActiveChat && (
+            <ChatToolbar
+              hasActiveChat={hasActiveChat}
+              conversationCount={conversations.length}
+              onNewChat={handleNewChat}
+              onOpenHistory={() => {
+                if (isMobile) setShowMobileNav(true);
+                else if (sidebarCollapsed) toggleSidebar();
+              }}
+              onClearChat={handleClearCurrentChat}
+              onDeleteAllChats={handleClearAllChats}
+              encryptionActive={chatPrivate.active}
+              encryptionBusy={chatPrivate.busy}
+              onEnableEncryption={handleEnableChatEncryption}
+              onDisableEncryption={chatPrivate.disablePrivateMode}
+              onToggleLiveVoice={handleToggleLiveVoice}
+            />
+          )}
 
 
           {chatPrivate.active && (

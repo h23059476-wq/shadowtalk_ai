@@ -1,4 +1,4 @@
-import { MessageSquare, Image, FileText } from "lucide-react";
+import { MessageSquare, Image, FileText, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,7 +10,8 @@ import {
 /** Modes shown in the selector are general/image/document; the rest are still used internally by tools and agents. */
 export type ChatMode =
   | "general" | "image" | "document"
-  | "code" | "research" | "creative" | "summarize" | "debug" | "email" | "shadowspectre";
+  | "code" | "research" | "creative" | "summarize" | "debug" | "email" | "shadowspectre"
+  | "reasoning";
 
 interface ModeSelectorProps {
   mode: ChatMode;
@@ -39,6 +40,13 @@ const modes: { value: ChatMode; label: string; icon: React.ReactNode; prompt: st
     icon: <FileText className="h-4 w-4" />,
     prompt: "You are in document generation mode. Create well-structured, professional documents including reports, proposals, memos, and articles.",
     color: "text-green-500"
+  },
+  {
+    value: "reasoning",
+    label: "Deep Reasoning",
+    icon: <Lightbulb className="h-4 w-4" />,
+    prompt: "Think through this step by step: reason carefully, verify assumptions, check your work, and only then give the final answer.",
+    color: "text-purple-500"
   },
 ];
 
