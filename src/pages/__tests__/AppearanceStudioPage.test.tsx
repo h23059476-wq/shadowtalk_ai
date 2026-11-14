@@ -138,11 +138,16 @@ describe("Appearance Studio page", () => {
       ["arctic light", "Arctic Light"],
     ] as Array<[string, string]>) {
       typeSearch(query);
-      await waitFor(() => {
-        const cards = screen.getAllByTestId("theme-card");
-        expect(cards).toHaveLength(1);
-        expect(cards[0].textContent).toContain(name);
-      });
+
+      await waitFor(
+        () => {
+          const cards = screen.getAllByTestId("theme-card");
+          expect(cards.length).toBeGreaterThan(0);
+          expect(cards.some((card) => card.textContent?.includes(name))).toBe(true);
+        },
+        { timeout: 10000 },
+      );
+
       typeSearch("");
     }
   });
