@@ -1,16 +1,16 @@
 /**
- * LiveAvatar — the presence at the center of Live Mode.
+ * LiveAvatar — "Obsidian Core": the presence at the center of Live Mode.
  *
- * A canvas-rendered "living shadow" that replaces the old static orb:
- *  - Breathing idle (slow, organic scale oscillation)
- *  - Microphone-amplitude-driven surface morphing while listening
- *  - TTS-amplitude-driven undulation while speaking (sound you can SEE)
- *  - Two glowing eyes that blink, saccade and react to the phase
- *  - Orbital motes that breathe outward with loudness
- *  - Smooth color transitions between phases (never snaps)
+ * Monolith design language (ShadowTalk theme):
+ *  - A perfect obsidian sphere — no face, no eyes, no cartoon blob
+ *  - A single crescent rim light from above in the ShadowTalk cyan
+ *  - Breathing idle; mic/TTS amplitude lights the sphere from within
+ *  - Listening: a hairline ring whose opacity tracks the microphone
+ *  - Speaking: a slow glint travels the rim with the TTS amplitude
+ *  - Thinking: one small light orbits on a hairline ellipse — restrained
  *
- * All animation is a single requestAnimationFrame loop; the loudness comes
- * from a getter (ref-based) so React never re-renders per frame.
+ * All animation is a single requestAnimationFrame loop; loudness comes from
+ * a getter (ref-based) so React never re-renders per frame.
  */
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
@@ -25,16 +25,15 @@ interface LiveAvatarProps {
   className?: string;
 }
 
-/** Target hue per phase — deep shadow core, colored energy. */
-const PHASE_COLOR: Record<LiveAvatarPhase, [number, number, number]> = {
-  idle: [34, 211, 238], // cyan
-  listening: [99, 102, 241], // indigo
-  thinking: [167, 139, 250], // violet
-  speaking: [192, 132, 252], // purple-pink
+/** Phase hue in ShadowTalk brand space — ink monochrome + one cyan accent. */
+const PHASE_HSL: Record<LiveAvatarPhase, [number, number, number]> = {
+  idle: [195, 25, 68], // pale steel — barely tinted
+  listening: [195, 100, 62], // brand cyan
+  thinking: [270, 90, 72], // brand violet, lifted for glow
+  speaking: [197, 95, 66], // cyan, brightest
 };
 
 const TAU = Math.PI * 2;
-const POINTS = 72;
 
 export const LiveAvatar: React.FC<LiveAvatarProps> = ({
   phase,
@@ -44,7 +43,6 @@ export const LiveAvatar: React.FC<LiveAvatarProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const phaseRef = useRef(phase);
-  const levelRef = useRef(0);
   const getLevelRef = useRef(getLevel);
   phaseRef.current = phase;
   getLevelRef.current = getLevel;
@@ -65,34 +63,17 @@ export const LiveAvatar: React.FC<LiveAvatarProps> = ({
     const intensity: Record<LiveAvatarPhase, number> = {
       idle: 0, listening: 0, thinking: 0, speaking: 0,
     };
-    const color: [number, number, number] = [...PHASE_COLOR.idle] as [number, number, number];
+    const hsl: [number, number, number] = [...PHASE_HSL.idle] as [number, number, number];
 
-    // Eyes: blink timer + micro-saccades.
-    let nextBlink = 1.6 + Math.random() * 3;
-    let blinkT = 0; // 0 = open, 1 = closed
-    let eyeOffsetX = 0;
-    let eyeOffsetY = 0;
-    let nextSaccade = 2 + Math.random() * 2;
-    let saccadeTargetX = 0;
-    let saccadeTargetY = 0;
-
-    // Orbital motes.
-    const MOTES = reduced ? 0 : 14;
-    const motes = Array.from({ length: MOTES }, () => ({
-      angle: Math.random() * TAU,
-      radius: 0.55 + Math.random() * 0.5, // × core radius
-      speed: 0.12 + Math.random() * 0.5,
-      size: 1 + Math.random() * 2.2,
-      alpha: 0.25 + Math.random() * 0.5,
-      wobble: Math.random() * TAU,
-    }));
+    const lerp = (a: number, b: number, k: number) => a + (b - a) * k;
+    const k05 = (dt: number, halfLife: number) => 1 - Math.pow(0.5, dt / halfLife);
 
     let raf = 0;
     let last = performance.now();
     let t = 0; // seconds of animation time
     let smoothedLevel = 0;
 
-    const lerp = (a: number, b: number, k: number) => a + (b - a) * k;
+    const hslStr = (h: number, s: number, l: number, a: number) => `hsla(${h.toFixed(1)},${s.toFixed(1)}%,${l.toFixed(1)}%,${a.toFixed(3)})`;
 
     const frame = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.1);
@@ -103,33 +84,16 @@ export const LiveAvatar: React.FC<LiveAvatarProps> = ({
       const target = phaseRef.current;
       for (const p of Object.keys(intensity) as LiveAvatarPhase[]) {
         const want = p === target ? 1 : 0;
-        intensity[p] = lerp(intensity[p], want, 1 - Math.pow(0.001, dt)); // ~600ms
+        intensity[p] = lerp(intensity[p], want, k05(dt, 0.22)); // ~600ms full blend
       }
-      const targetColor = PHASE_COLOR[target];
       for (let i = 0; i < 3; i++) {
-        color[i] = lerp(color[i], targetColor[i], 1 - Math.pow(0.005, dt));
+        hsl[i] = lerp(hsl[i], PHASE_HSL[target][i], k05(dt, 0.15));
       }
 
       // --- loudness ---
       const raw = Math.max(0, Math.min(1, getLevelRef.current?.() ?? 0));
-      smoothedLevel = lerp(smoothedLevel, raw, raw > smoothedLevel ? 0.5 : 0.1);
-      levelRef.current = smoothedLevel;
-
-      // --- eyes behavior ---
-      nextBlink -= dt;
-      if (nextBlink <= 0) {
-        blinkT = 1;
-        nextBlink = 2.5 + Math.random() * 4;
-      }
-      blinkT = Math.max(0, blinkT - dt * 9);
-      nextSaccade -= dt;
-      if (nextSaccade <= 0) {
-        saccadeTargetX = (Math.random() - 0.5) * 7;
-        saccadeTargetY = (Math.random() - 0.5) * 5;
-        nextSaccade = 1.4 + Math.random() * 2.6;
-      }
-      eyeOffsetX = lerp(eyeOffsetX, saccadeTargetX, 1 - Math.pow(0.02, dt));
-      eyeOffsetY = lerp(eyeOffsetY, saccadeTargetY, 1 - Math.pow(0.02, dt));
+      smoothedLevel = lerp(smoothedLevel, raw, raw > smoothedLevel ? 0.5 : 0.12);
+      const level = smoothedLevel;
 
       // --- draw ---
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -141,122 +105,123 @@ export const LiveAvatar: React.FC<LiveAvatarProps> = ({
       const thinking = intensity.thinking;
       const speaking = intensity.speaking;
       const idle = intensity.idle;
-      const level = levelRef.current;
 
-      const thinkingSlow = 0.35 * thinking;
-      const breathe = 1 + Math.sin(t * 1.5) * 0.022 * (0.4 + idle);
-      const baseR = size * 0.26 * breathe;
+      const [h, s, l] = hsl;
+      const breathe = 1 + Math.sin(t * 1.15) * 0.014 * (0.5 + idle);
+      const R = size * 0.285 * breathe * (1 + level * 0.035);
 
-      const [r, g, b] = color.map(Math.round);
-      const energy = 0.35 + level * 0.65; // 0..1 overall liveliness
-
-      // --- outer aura ---
-      const auraR = baseR * (1.55 + level * 0.45 + listening * 0.15);
-      const aura = ctx.createRadialGradient(cx, cy, baseR * 0.4, cx, cy, auraR);
-      aura.addColorStop(0, `rgba(${r},${g},${b},${0.22 + level * 0.25})`);
-      aura.addColorStop(1, `rgba(${r},${g},${b},0)`);
-      ctx.fillStyle = aura;
+      // --- faint halo: keeps the stage alive without decoration ---
+      const haloR = R * (2.0 + level * 0.35);
+      const halo = ctx.createRadialGradient(cx, cy, R * 0.8, cx, cy, haloR);
+      halo.addColorStop(0, hslStr(h, s, l, 0.05 + level * 0.10 + speaking * 0.03));
+      halo.addColorStop(1, hslStr(h, s, l, 0));
+      ctx.fillStyle = halo;
       ctx.beginPath();
-      ctx.arc(cx, cy, auraR, 0, TAU);
+      ctx.arc(cx, cy, haloR, 0, TAU);
       ctx.fill();
 
-      // --- motes ---
-      if (MOTES) {
-        for (const m of motes) {
-          m.angle += (m.speed + thinkingSlow * 2.2 + speaking * level * 1.4) * dt;
-          const wob = Math.sin(t * 2 + m.wobble) * 6;
-          const mr = baseR * m.radius + wob + speaking * level * baseR * 0.35;
-          const mx = cx + Math.cos(m.angle) * mr;
-          const my = cy + Math.sin(m.angle) * mr * 0.92;
-          ctx.fillStyle = `rgba(${r},${g},${b},${m.alpha * (0.5 + energy * 0.5)})`;
-          ctx.beginPath();
-          ctx.arc(mx, my, m.size * (1 + level * 0.8), 0, TAU);
-          ctx.fill();
-        }
-      }
-
-      // --- thinking orbit ring ---
-      if (thinking > 0.02) {
-        ctx.strokeStyle = `rgba(${r},${g},${b},${0.28 * thinking})`;
-        ctx.lineWidth = 2;
+      // --- structural hairline orbits (static, Monolith discipline) ---
+      for (const [k, alpha] of [[1.42, 0.05], [1.58, 0.035], [1.74, 0.022]] as const) {
+        ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
+        ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.ellipse(cx, cy, baseR * 1.28, baseR * 1.28 * 0.35, Math.sin(t * 0.7) * 0.5, 0, TAU);
+        ctx.arc(cx, cy, R * k, 0, TAU);
         ctx.stroke();
-        // two bright dots chasing around the ring
-        for (let k = 0; k < 2; k++) {
-          const a = t * (1.8 + k * 0.9) + k * Math.PI;
-          const px = cx + Math.cos(a) * baseR * 1.28;
-          const py = cy + Math.sin(a) * baseR * 1.28 * 0.35;
-          ctx.fillStyle = `rgba(255,255,255,${0.75 * thinking})`;
+      }
+
+      // --- listening ring: hairline that answers the microphone ---
+      if (listening > 0.02) {
+        const ringA = listening * (0.10 + level * 0.42);
+        ctx.strokeStyle = hslStr(h, s, l, ringA);
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(cx, cy, R * 1.3, 0, TAU);
+        ctx.stroke();
+        if (level > 0.12) {
+          ctx.strokeStyle = hslStr(h, s, l, listening * level * 0.30);
           ctx.beginPath();
-          ctx.arc(px, py, 3.2, 0, TAU);
-          ctx.fill();
+          ctx.arc(cx, cy, R * 1.3 + level * 9, 0, TAU);
+          ctx.stroke();
         }
       }
 
-      // --- the body blob (harmonic surface) ---
-      const bodyPhase = t * 2.4 + thinking * t * 2.0;
-      const amp = (0.028 + level * 0.10) * (0.5 + speaking * 0.8 + listening * 0.7 + idle * 0.35);
-      ctx.beginPath();
-      for (let i = 0; i <= POINTS; i++) {
-        const a = (i / POINTS) * TAU;
-        const w =
-          Math.sin(a * 3 + bodyPhase) * amp +
-          Math.sin(a * 5 - bodyPhase * 1.35) * amp * 0.6 +
-          Math.sin(a * 2 + bodyPhase * 0.7) * amp * 0.8;
-        const rr = baseR * (1 + w);
-        const x = cx + Math.cos(a) * rr;
-        const y = cy + Math.sin(a) * rr * 0.96;
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+      // --- thinking: one small light on a hairline ellipse ---
+      if (thinking > 0.02) {
+        const orbR = R * 1.44;
+        ctx.strokeStyle = hslStr(h, s, l, 0.16 * thinking);
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, orbR, orbR * 0.42, -0.35, 0, TAU);
+        ctx.stroke();
+        const a = t * 1.1;
+        ctx.fillStyle = `rgba(255,255,255,${0.8 * thinking})`;
+        ctx.beginPath();
+        ctx.arc(cx + Math.cos(a) * orbR, cy + Math.sin(a) * orbR * 0.42 - orbR * 0.1, 2.2, 0, TAU);
+        ctx.fill();
       }
-      ctx.closePath();
 
-      const body = ctx.createRadialGradient(cx, cy - baseR * 0.25, baseR * 0.1, cx, cy, baseR * 1.15);
-      body.addColorStop(0, `rgba(${Math.min(r + 70, 255)},${Math.min(g + 70, 255)},${Math.min(b + 90, 255)},0.95)`);
-      body.addColorStop(0.45, `rgba(${r},${g},${b},0.75)`);
-      body.addColorStop(0.85, `rgba(${Math.max(r - 60, 10)},${Math.max(g - 70, 12)},${Math.max(b - 40, 30)},0.9)`);
-      body.addColorStop(1, `rgba(6,8,18,0.95)`);
+      // --- the sphere: perfect circle, opaque ink body ---
+      // Fully opaque so the halo behind can never bleed through — a
+      // transparent center is what made the sphere read as an eyeball.
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, TAU);
+      const body = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R * 1.05);
+      body.addColorStop(0, "rgba(10,14,21,1)");
+      body.addColorStop(0.72, "rgba(6,9,14,1)");
+      body.addColorStop(1, "rgba(2,4,8,1)");
       ctx.fillStyle = body;
-      ctx.shadowColor = `rgba(${r},${g},${b},${0.55 + level * 0.3})`;
-      ctx.shadowBlur = 26 + level * 30;
+      ctx.shadowColor = hslStr(h, s, l, 0.12 + level * 0.22);
+      ctx.shadowBlur = 16 + level * 28;
       ctx.fill();
       ctx.shadowBlur = 0;
 
-      // rim light
-      ctx.strokeStyle = `rgba(${Math.min(r + 90, 255)},${Math.min(g + 90, 255)},${Math.min(b + 110, 255)},${0.35 + level * 0.35})`;
-      ctx.lineWidth = 1.6;
+      // --- inner light: amplitude lights the core from within (overlay on
+      // the opaque ink, centered so it reads as glow, never as a face) ---
+      if (level > 0.02) {
+        const coreR = R * (0.30 + level * 0.34);
+        const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR);
+        core.addColorStop(0, hslStr(h, s, l + 8, 0.30 * (0.3 + speaking * 0.4 + listening * 0.35) * level + 0.05));
+        core.addColorStop(1, hslStr(h, s, l, 0));
+        ctx.fillStyle = core;
+        ctx.beginPath();
+        ctx.arc(cx, cy, coreR, 0, TAU);
+        ctx.fill();
+      }
+
+      // --- rim light: crisp crescent from above; glow radiates outward only
+      // (a shadow-blur glow bleeds into the ink and reads as an eyeball) ---
+      const rimA = 0.42 + level * 0.30 + speaking * 0.08;
+      for (const [lw, alpha, rOff] of [
+        [1.6, rimA, 0],
+        [3.2, rimA * 0.32, 2.2],
+        [6.5, rimA * 0.14, 5.5],
+      ] as const) {
+        ctx.strokeStyle = hslStr(h, s + 10, Math.min(l + 20, 92), alpha);
+        ctx.lineWidth = lw;
+        ctx.beginPath();
+        ctx.arc(cx, cy, R + rOff, -Math.PI * 0.92, -Math.PI * 0.08);
+        ctx.stroke();
+      }
+      // faint floor reflection on the lower edge
+      ctx.strokeStyle = "rgba(255,255,255,0.06)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R - 0.8, Math.PI * 0.18, Math.PI * 0.82);
       ctx.stroke();
 
-      // --- eyes ---
-      const eyeY = cy - baseR * 0.18 + eyeOffsetY;
-      const eyeDx = baseR * 0.34 + eyeOffsetX;
-      const openK = 1 - blinkT;
-      // speaking with energy → gentle happy squint; thinking → half-lidded, looking up-left
-      const squint = speaking * 0.18 + thinking * 0.30 - listening * 0.10;
-      const eyeH = baseR * 0.24 * Math.max(0.06, openK * (1 - Math.max(0, squint)));
-      const eyeW = baseR * 0.16;
-      const lookUp = thinking * baseR * 0.12;
-      for (const side of [-1, 1]) {
-        const ex = cx + side * eyeDx;
-        const ey = eyeY - lookUp;
-        ctx.save();
-        ctx.translate(ex, ey);
-        ctx.fillStyle = `rgba(240,252,255,${0.9 - blinkT * 0.85})`;
-        ctx.shadowColor = `rgba(${r},${g},${b},0.9)`;
-        ctx.shadowBlur = 12;
-        ctx.beginPath();
-        ctx.ellipse(0, 0, eyeW, eyeH, 0, 0, TAU);
-        ctx.fill();
-        ctx.shadowBlur = 0;
-        // pupil glint
-        if (openK > 0.5) {
-          ctx.fillStyle = `rgba(${r},${g},${b},0.85)`;
+      // --- speaking glint: travels the rim with the voice ---
+      if (speaking > 0.02) {
+        const sweep = t * 1.5;
+        for (const [lw, alpha, rOff] of [
+          [2, speaking * (0.18 + level * 0.45), 0],
+          [4, speaking * (0.08 + level * 0.2), 2],
+        ] as const) {
+          ctx.strokeStyle = hslStr(h, s, Math.min(l + 22, 94), alpha);
+          ctx.lineWidth = lw;
           ctx.beginPath();
-          ctx.ellipse(side * eyeW * 0.28, eyeH * 0.18, eyeW * 0.42, eyeH * 0.5, 0, 0, TAU);
-          ctx.fill();
+          ctx.arc(cx, cy, R + rOff, sweep, sweep + 0.7);
+          ctx.stroke();
         }
-        ctx.restore();
       }
 
       raf = requestAnimationFrame(frame);
