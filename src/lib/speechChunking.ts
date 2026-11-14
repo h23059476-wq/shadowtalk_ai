@@ -47,7 +47,10 @@ export function stripForSpeech(text: string): string {
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/[#*_>|~]+/g, "")
     // Emoji & symbol planes (TTS engines read them aloud or stutter on them).
-    .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}]/gu, "")
+    // FE0F (variation selector) sits in its own alternation branch: a lone
+    // combining character inside a character class is flagged by eslint's
+    // no-misleading-character-class rule. The union of matches is identical.
+    .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}]|\u{FE0F}/gu, "")
     .replace(/\s{2,}/g, " ")
     .trim();
 }
