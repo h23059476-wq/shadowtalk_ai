@@ -39,6 +39,8 @@ The Firestore adapter translates common query operations and can apply some filt
 ## Main application areas
 
 - Chat workspace: `src/pages/ChatbotPage.tsx`, `src/components/chat/`, chat hooks, and `src/lib/cloudChat.ts`.
+- Intelligent workspace: `src/lib/rag/` (local-first retrieval), context budgeting/compaction modules, and `src/lib/mcpBridge/` with the Node companion in `companion/`.
+- LIVE voice: `src/components/chat/LiveVoiceMode.tsx` with `LiveAvatar.tsx`, `src/hooks/useMicLevel.ts`, and `src/lib/speechChunking.ts`.
 - Account and settings: auth/profile/settings pages and `src/components/AuthProvider.tsx`.
 - Memory and identity: `src/contexts/ShadowMemoryContext.tsx`, memory hooks, Shadow Memory and Shadow Twin pages.
 - Local inference: `src/ai/`, `src/offline/`, and `@mlc-ai/web-llm`.

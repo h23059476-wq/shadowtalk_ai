@@ -23,6 +23,10 @@ Some aliases redirect (for example `/workspace` to `/chatbot`, `/marketplace` to
 - WebLLM browser inference when the model/device path is available.
 - Client-side code IDE and WebContainer Computer Mode modules, subject to browser isolation requirements.
 - Chat private mode that encrypts stored message/title content when enabled.
+- Intelligent workspace: local-first document ingestion and retrieval (`src/lib/rag/`), dynamic context budgeting with non-destructive compaction, and the MCP bridge client (`src/lib/mcpBridge/`) paired with the zero-dependency Node companion in `companion/`.
+- LIVE voice mode: canvas avatar (`src/components/chat/LiveAvatar.tsx`), echo-cancelled mic metering with hands-free barge-in (`src/hooks/useMicLevel.ts`), streaming sentence speech pipeline and rhythm engine (`src/lib/speechChunking.ts`) in `src/components/chat/LiveVoiceMode.tsx`.
+- Deterministic OAuth return handoff for Google redirect sign-in (lands on the workspace instead of looping).
+- Memory reflection with on-device embeddings (production-honest path replacing the earlier non-functional flow).
 - Public content and SEO assets, including static files under `public/`.
 
 ## Demo, shell, or unverified integrations
@@ -32,7 +36,7 @@ Some aliases redirect (for example `/workspace` to `/chatbot`, `/marketplace` to
 - Some pages are explicit coming-soon shells or aliases.
 - Hooks invoke Function names not exported by this repository's Functions package. Their availability depends on external deployments not represented here.
 - `supabase/` and `src/integrations/supabase/` are retained in the tree but Firebase is the backend constructed by the app-facing client.
-- PWA setup is internally inconsistent: the entry registers a service worker and later schedules unregistration. Verify runtime behavior before claiming offline caching is reliable.
+- PWA: the service worker registration was repaired — the earlier entry-level unregistration was removed after it broke offline caching and install; the manifest's display, start_url, and scope satisfy Chrome's install criteria. Verify runtime behavior on target browsers before relying on offline caching.
 
 ## How to verify a feature before changing or documenting it
 

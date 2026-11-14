@@ -1,6 +1,6 @@
 # ShadowTalk AI
 
-ShadowTalk is a React and TypeScript web application for AI chat and related personal, developer, and product workflows. Firebase is the active application backend. This guide describes the implementation in this repository as inspected on 2026-10-29; source code and deployment configuration remain authoritative when behavior changes.
+ShadowTalk is a React and TypeScript web application for AI chat and related personal, developer, and product workflows. Firebase is the active application backend. This guide describes the implementation in this repository as inspected on 2026-11-13; source code and deployment configuration remain authoritative when behavior changes.
 
 ## Start here
 
@@ -14,7 +14,7 @@ ShadowTalk is a React and TypeScript web application for AI chat and related per
 
 - React 18, TypeScript, Vite, React Router, TanStack Query
 - Firebase Authentication, Cloud Firestore, Cloud Storage, and Firebase Functions v2
-- AI request paths for shared OpenRouter access, user-supplied provider keys, and WebLLM local inference
+- BYOK-first AI request paths: user-supplied provider keys streaming directly to 16+ providers, local WebLLM inference, Stealth RAG on-device retrieval, the Dynamic Token Optimizer, the MCP bridge companion, and the LIVE voice mode
 - Tailwind CSS, Radix UI, Framer Motion, and feature-specific tools such as Monaco and WebContainer
 
 ## Local development

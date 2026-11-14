@@ -1,6 +1,6 @@
 # Project documentation
 
-These guides describe the current repository implementation. They were checked against source and deployment files on 2026-10-29. When a guide and source disagree, source code and Firebase configuration are the authority. Product claims and old design material are not treated as proof of a deployed feature.
+These guides describe the current repository implementation. They were checked against source and deployment files on 2026-11-13. When a guide and source disagree, source code and Firebase configuration are the authority. Product claims and old design material are not treated as proof of a deployed feature.
 
 - [Architecture and runtime map](architecture/README.md)
 - [AI request paths](architecture/ai-and-request-flows.md)
