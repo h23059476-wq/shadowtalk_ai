@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useMemo, useState } from "react";
 import { getChatEnterToSend } from "@/lib/profilePreferences";
-import { Send, Mic, MicOff, Square, Plus, Sparkles, Volume2, Brain } from "lucide-react";
+import { Send, Mic, MicOff, Square, Sparkles, Volume2, Brain, ArrowRight, Globe, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { FileUpload } from "@/components/chat/FileUpload";
@@ -217,7 +217,7 @@ const ChatInputInner = ({
       <div className="relative w-full">
         {voiceBanner}
         <div className={isEmptyState ? "w-full" : "w-full px-0 py-0"}>
-          <div className="ios-glass-input shadowtalk-composer group relative flex flex-col justify-between w-full rounded-2xl sm:rounded-3xl backdrop-blur-2xl transition-all duration-200">
+          <div className="shadowtalk-composer group relative flex flex-col justify-between w-full rounded-3xl bg-[#1e1e20] border border-[#2b2c31] hover:border-[#383a42] focus-within:border-[#45474f] focus-within:ring-1 focus-within:ring-slate-600/30 shadow-xl transition-all duration-200">
             <SlashCommandMenu
               query={message}
               open={slashMenuOpen}
@@ -243,7 +243,7 @@ const ChatInputInner = ({
                 value={message}
                 onChange={(e) => onMessageChange(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder={isListening ? "Listening..." : isNarrow ? "Message ShadowTalk…" : "Message ShadowTalk, draft a document, or generate code..."}
+                placeholder={isListening ? "Listening..." : isNarrow ? "Message ShadowTalk…" : "Ask anything, brainstorm ideas, or write code..."}
                 className="w-full resize-none border-0 bg-transparent p-0 text-base sm:text-[15px] text-foreground placeholder:text-muted-foreground/50 leading-relaxed focus-visible:ring-0 focus-visible:ring-offset-0 custom-scrollbar min-h-[44px] max-h-[220px]"
                 disabled={isLoading}
                 rows={1}
@@ -252,8 +252,8 @@ const ChatInputInner = ({
             </div>
 
             {/* Bottom Toolbar: Tools on Left, Actions on Right */}
-            <div className="flex items-center justify-between px-3 pb-3 pt-1 border-t border-border/50">
-              <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between px-1 pt-1">
+              <div className="flex items-center space-x-2">
                 {!selectedFile && (
                   <TooltipProvider>
                     <Tooltip>
@@ -269,19 +269,43 @@ const ChatInputInner = ({
                         </div>
                       </TooltipTrigger>
                       <TooltipContent side="top" className="text-xs">
-                        Attach document or image
+                        Attach file or photo
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
                 )}
-                <ModeSelector mode={chatMode} onModeChange={(mode) => {
-                  onModeChange(mode);
-                  if (mode === "image") onOpenImageGenerator?.();
-                }} disabled={isLoading} />
-                <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium text-muted-foreground/75 bg-card/60 border border-border/50 select-none">
-                  <Sparkles className="h-3 w-3 text-primary" />
-                  <span>Quantum Studio v4.2</span>
-                </span>
+                {/* Web Search toggle pill — activates research mode */}
+                <button
+                  type="button"
+                  onClick={() => onModeChange(chatMode === "research" ? "general" : "research")}
+                  disabled={isLoading}
+                  className={cn(
+                    "flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors disabled:opacity-50",
+                    chatMode === "research"
+                      ? "bg-sky-500/15 text-sky-300 ring-1 ring-sky-500/30"
+                      : "bg-white/[0.04] hover:bg-white/[0.08] text-slate-300"
+                  )}
+                  aria-pressed={chatMode === "research"}
+                >
+                  <Globe className="w-3.5 h-3.5 text-sky-400" />
+                  <span>Search</span>
+                </button>
+                {/* Deep Reasoning toggle pill — activates reasoning mode */}
+                <button
+                  type="button"
+                  onClick={() => onModeChange(chatMode === "reasoning" ? "general" : "reasoning")}
+                  disabled={isLoading}
+                  className={cn(
+                    "flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors disabled:opacity-50",
+                    chatMode === "reasoning"
+                      ? "bg-purple-500/15 text-purple-300 ring-1 ring-purple-500/30"
+                      : "bg-white/[0.04] hover:bg-white/[0.08] text-slate-300"
+                  )}
+                  aria-pressed={chatMode === "reasoning"}
+                >
+                  <Lightbulb className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Reason</span>
+                </button>
               </div>
 
               <div className="flex items-center gap-2">
@@ -304,7 +328,7 @@ const ChatInputInner = ({
                           variant="ghost"
                           size="icon"
                           className={cn(
-                            "h-8 w-8 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors",
+                            "h-8 w-8 rounded-full text-slate-400 hover:text-white hover:bg-white/[0.08] transition-colors",
                             isListening && "bg-primary text-primary-foreground border-primary"
                           )}
                           disabled={isLoading}
@@ -349,15 +373,11 @@ const ChatInputInner = ({
                 <Button
                   onClick={() => { play('send'); onSend(); }}
                   size="icon"
-                  className={cn(
-                    "shadowtalk-composer__send",
-                    "hover:scale-105 active:scale-95 hover:brightness-110",
-                    "disabled:opacity-25 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:brightness-100"
-                  )}
+                  className="shadowtalk-composer__send h-8 w-8 rounded-full bg-white text-black shadow-sm hover:bg-slate-200 hover:scale-[1.02] active:scale-95 disabled:bg-white/10 disabled:text-white/30 disabled:opacity-60 disabled:shadow-none"
                   disabled={!canSend || isLoading}
                   aria-label="Send message"
                 >
-                  <Send className="h-3.5 w-3.5" />
+                  <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
             </div>
