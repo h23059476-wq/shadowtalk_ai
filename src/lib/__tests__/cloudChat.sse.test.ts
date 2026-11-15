@@ -15,6 +15,9 @@ vi.mock("@/integrations/firebase/app", () => ({
 
 vi.mock("@/lib/aiAccessMode", () => ({
   getCachedAiAccessMode: () => "shared",
+  // Hybrid routing: prefer-local disabled in these SSE tests — the shared
+  // function path under test must stay reachable.
+  getPreferLocal: () => false,
 }));
 
 vi.mock("@/lib/byok", () => ({

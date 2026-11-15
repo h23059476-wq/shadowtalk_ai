@@ -37,7 +37,8 @@ describe("provider-source labeling — source contract", () => {
   it("LocalInferenceEngine.generate sets source='local' + modelUsed", () => {
     const src = read("src/offline/LocalInferenceEngine.ts");
     expect(src).toMatch(/source:\s*"local"/);
-    expect(src).toMatch(/modelUsed:\s*DEFAULT_LOCAL_MODEL\.id/);
+    // modelUsed reflects the actually-loaded model (tier-picked or user-chosen).
+    expect(src).toMatch(/modelUsed:\s*this\.currentModelId/);
   });
 
   it("MessageBubble renders a provider-source label for AI messages", () => {
@@ -81,6 +82,9 @@ vi.mock("@/integrations/firebase/app", () => ({
 
 vi.mock("@/lib/aiAccessMode", () => ({
   getCachedAiAccessMode: () => "shared",
+  // Hybrid routing off in these tests — the shared function path under test
+  // must stay reachable.
+  getPreferLocal: () => false,
 }));
 
 vi.mock("@/lib/byok", () => ({

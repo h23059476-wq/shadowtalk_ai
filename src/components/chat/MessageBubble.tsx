@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { User, Copy, RefreshCw, Volume2, VolumeX, Lock, Edit2, ExternalLink, Compass, Sparkles, Share2, MoreHorizontal, FileText, Paperclip } from 'lucide-react';
+import { User, Copy, RefreshCw, Volume2, VolumeX, Lock, Edit2, ExternalLink, Compass, Sparkles, Share2, MoreHorizontal, FileText, Paperclip, ShieldCheck } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -72,7 +72,7 @@ function formatSourceLabel(source: string, provider?: string, modelUsed?: string
     case "shared":
       return "via ShadowTalk shared";
     case "local":
-      return modelUsed ? `via Local (${modelUsed})` : "via Local (on-device)";
+      return modelUsed ? `On-device · private (${modelUsed})` : "On-device · private";
     case "omniroute":
       return "via OmniRoute";
     default:
@@ -222,9 +222,13 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
             {message.shadowTwinName || "Shadow Twin"}
           </div>
         )}
-        {/* Batch 4 — provider-source label for AI messages. */}
+        {/* Batch 4 — provider-source label for AI messages. Local replies get
+            the provenance shield: this answer was generated on-device. */}
         {!isUser && !message.isShadowTwin && message.source && (
-          <div className="text-[11px] font-medium text-muted-foreground/70 flex items-center gap-1 ml-1">
+          <div className={`text-[11px] font-medium flex items-center gap-1 ml-1 ${
+            message.source === 'local' ? 'text-success' : 'text-muted-foreground/70'
+          }`}>
+            {message.source === 'local' && <ShieldCheck className="h-3 w-3 shrink-0" />}
             {formatSourceLabel(message.source, message.provider, message.modelUsed)}
           </div>
         )}

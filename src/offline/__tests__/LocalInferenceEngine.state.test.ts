@@ -29,6 +29,12 @@ vi.mock("@/ai/ModelRegistry", () => ({
     displayName: "Test Model",
     approxStorageRequirementMB: 800,
   },
+  // Tier ladder — the engine resolves the model through these helpers.
+  getLocalModelDefinition: (id: string) =>
+    id === "test-model-id"
+      ? { id: "test-model-id", displayName: "Test Model", approxStorageRequirementMB: 800 }
+      : undefined,
+  pickLocalModelForDevice: () => ({ id: "test-model-id", displayName: "Test Model", approxStorageRequirementMB: 800 }),
 }));
 
 import { localInferenceEngine, type LocalEngineState } from "@/offline/LocalInferenceEngine";

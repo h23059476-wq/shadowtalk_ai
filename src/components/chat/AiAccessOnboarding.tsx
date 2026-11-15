@@ -1,7 +1,7 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import {
   KeyRound, Sparkles, Loader2, Check, ArrowRight, ArrowLeft,
-  ExternalLink, Eye, EyeOff, ShieldCheck, AlertCircle, Info, Zap,
+  ExternalLink, Eye, EyeOff, ShieldCheck, AlertCircle, Info, Zap, Cpu, Lock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,8 +17,12 @@ import {
   BYOK_PROVIDERS, getByokConfig, saveByokConfig, streamByokChat,
   type ByokProvider,
 } from "@/lib/byok";
-import { loadAiAccessMode, saveAiAccessMode, type AiAccessMode } from "@/lib/aiAccessMode";
+import { loadAiAccessMode, saveAiAccessMode, setPreferLocal, type AiAccessMode } from "@/lib/aiAccessMode";
 import { useApiKeyValidation } from "@/hooks/useApiKeyValidation";
+import { localInferenceEngine } from "@/offline/LocalInferenceEngine";
+import { StorageManager } from "@/offline/StorageManager";
+import { pickLocalModelForDevice, type LocalModelDefinition } from "@/ai/ModelRegistry";
+import { DeviceCapability } from "@/offline/DeviceCapability";
 
 interface ProviderMeta {
   description: string;
@@ -65,7 +69,7 @@ const KEY_URLS: Record<ByokProvider, string> = {
   deepinfra: "https://deepinfra.com/dash/api_keys",
 };
 
-type WizardStep = "welcome" | "provider" | "getkey" | "enter" | "testing" | "success";
+type WizardStep = "welcome" | "provider" | "getkey" | "enter" | "testing" | "success" | "private" | "private-ready";
 
 interface AiAccessOnboardingProps { userId: string; }
 
@@ -84,6 +88,19 @@ export function AiAccessOnboarding({ userId }: AiAccessOnboardingProps) {
   });
   const validation = useApiKeyValidation();
 
+  // ── Private-by-default path state ──
+  const [hasWebGPU, setHasWebGPU] = useState<boolean | null>(null);
+  const [localStatus, setLocalStatus] = useState<"idle" | "checking" | "downloading" | "ready" | "error">("idle");
+  const [localProgress, setLocalProgress] = useState(0);
+  const [localError, setLocalError] = useState("");
+  const deviceModel: LocalModelDefinition | null = useMemo(() => {
+    if (typeof navigator === "undefined") return null;
+    return pickLocalModelForDevice(
+      (navigator as any).deviceMemory,
+      /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent),
+    );
+  }, []);
+
   useEffect(() => {
     let active = true;
     setLoading(true);
@@ -100,6 +117,13 @@ export function AiAccessOnboarding({ userId }: AiAccessOnboardingProps) {
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
   }, [userId]);
+
+  // Probe WebGPU once — drives the private-on-device first-run card.
+  useEffect(() => {
+    let active = true;
+    void DeviceCapability.hasWebGPU().then((ok) => { if (active) setHasWebGPU(ok); });
+    return () => { active = false; };
+  }, []);
 
   const existingKey = getByokConfig();
   const open = !loading && !dismissed && (!mode || (mode === "byok" && !existingKey?.apiKey));
@@ -125,6 +149,51 @@ export function AiAccessOnboarding({ userId }: AiAccessOnboardingProps) {
       setSaving(false);
     }
   }, [userId, handleDismiss]);
+
+  // ── Private-by-default: download + load the on-device model ──
+  const startPrivateSetup = useCallback(async () => {
+    setLocalError("");
+    setLocalStatus("checking");
+    try {
+      if (navigator.storage?.persist) {
+        await navigator.storage.persist().catch(() => null);
+      }
+      const model = deviceModel;
+      if (model && navigator.storage?.estimate) {
+        const estimate = await navigator.storage.estimate();
+        const requiredBytes = model.approxStorageRequirementMB * 1024 * 1024;
+        if (estimate.quota && estimate.usage && estimate.quota - estimate.usage < requiredBytes) {
+          throw new Error(
+            `Not enough browser storage — needs ~${(requiredBytes / 1e9).toFixed(1)}GB, ` +
+            `only ~${((estimate.quota - estimate.usage) / 1e9).toFixed(1)}GB available.`,
+          );
+        }
+      }
+      if (model && !(await StorageManager.hasAvailableSpace(model.approxStorageRequirementMB))) {
+        throw new Error("Insufficient storage available for the local model.");
+      }
+      await StorageManager.requestPersistentStorage();
+
+      setLocalStatus("downloading");
+      const ok = await localInferenceEngine.initialize((report) => {
+        setLocalProgress(Math.round((report?.progress ?? 0) * 100));
+      });
+      if (!ok) throw new Error("Could not start the on-device AI engine (WebGPU unavailable or blocked).");
+
+      // Mark this account private-first: ordinary chat now runs on-device.
+      setPreferLocal(userId, true);
+      // Keep a mode on record as a fallback for escalation (shared is best-
+      // effort — when no Function backend exists, escalation prompts for a
+      // BYOK key with a clear message instead).
+      await saveAiAccessMode(userId, "shared").catch(() => {});
+      setMode("shared");
+      setLocalStatus("ready");
+      setStep("private-ready");
+    } catch (e) {
+      setLocalError(e instanceof Error ? e.message : "Private AI setup failed.");
+      setLocalStatus("error");
+    }
+  }, [userId, deviceModel]);
 
   const handleProviderSelect = (next: ByokProvider) => {
     setProvider(next); setModel(BYOK_PROVIDERS[next].defaultModel); setStep("getkey");
@@ -173,16 +242,35 @@ export function AiAccessOnboarding({ userId }: AiAccessOnboardingProps) {
             {step === "provider" && <><KeyRound className="h-5 w-5 text-primary" /> Choose your AI provider</>}
             {step === "getkey" && <><ExternalLink className="h-5 w-5 text-primary" /> Get your API key</>}
             {step === "enter" && <><KeyRound className="h-5 w-5 text-primary" /> Enter your API key</>}
-            {step === "testing" && <><Loader2 className="h-5 w-5 text-primary animate-spin" /> Testing connection\u2026</>}
+            {step === "testing" && <><Loader2 className="h-5 w-5 text-primary animate-spin" /> Testing connection…</>}
+            {step === "private" && <><Lock className="h-5 w-5 text-primary" /> Install your private AI</>}
+            {step === "private-ready" && <><ShieldCheck className="h-5 w-5 text-success" /> Private AI is ready</>}
             {step === "success" && <><Check className="h-5 w-5 text-success" /> You&apos;re all set!</>}
           </DialogTitle>
         </DialogHeader>
 
         {step === "welcome" && (
           <div className="space-y-4">
+            {hasWebGPU && deviceModel && (
+              <button
+                type="button"
+                onClick={() => setStep("private")}
+                className="w-full text-left rounded-xl border border-primary/50 bg-gradient-to-br from-primary/15 to-success/10 p-4 space-y-1.5 hover:border-primary transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-5 w-5 text-success" />
+                  <span className="font-semibold text-sm">Chat privately on your device</span>
+                  <Badge variant="outline" className="ml-auto text-[9px] h-4 px-1 text-success border-success/40">Recommended</Badge>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Free &amp; unlimited. Conversations never leave your browser — one-time ~{(deviceModel.approxStorageRequirementMB / 1024).toFixed(1)}GB model download ({deviceModel.displayName}).
+                </p>
+                <p className="text-[11px] text-primary flex items-center gap-1">Install private AI <ArrowRight className="h-3 w-3" /></p>
+              </button>
+            )}
             <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 space-y-2">
-              <p className="text-sm text-foreground leading-relaxed">ShadowTalk AI is a <strong>BYOK (Bring Your Own Key)</strong> workspace. You use your own AI provider account and API key \u2014 you pay your provider directly.</p>
-              <p className="text-xs text-muted-foreground">No subscription, no markup. You&apos;re in full control of costs and data.</p>
+              <p className="text-sm text-foreground leading-relaxed">Or connect a <strong>BYOK (Bring Your Own Key)</strong> provider. You use your own AI account and API key — you pay your provider directly.</p>
+              <p className="text-xs text-muted-foreground">A key is only needed for heavy tasks: document analysis, images, agents. The private model handles everyday chat.</p>
             </div>
             <div className="space-y-2 text-xs text-muted-foreground">
               <div className="flex items-start gap-2"><ShieldCheck className="h-4 w-4 text-success shrink-0 mt-0.5" /><span>Your key is stored in your browser only \u2014 never sent to ShadowTalk servers.</span></div>
@@ -260,6 +348,68 @@ export function AiAccessOnboarding({ userId }: AiAccessOnboardingProps) {
             <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
             <div><p className="text-sm font-semibold">Testing your {BYOK_PROVIDERS[provider].label} key\u2026</p><p className="text-xs text-muted-foreground mt-1">Sending a test request to verify your key works.</p></div>
             <p className="text-[11px] text-muted-foreground/60">Key: {maskedKey} \u00b7 Model: {model}</p>
+          </div>
+        )}
+
+        {step === "private" && (
+          <div className="space-y-4">
+            {localStatus === "idle" && deviceModel && (
+              <>
+                <div className="rounded-xl border border-border/60 bg-muted/20 p-4 space-y-2">
+                  <div className="flex items-center gap-2"><Cpu className="h-4 w-4 text-primary" /><span className="text-sm font-semibold">{deviceModel.displayName}</span></div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    One-time ~{(deviceModel.approxStorageRequirementMB / 1024).toFixed(1)}GB download, stored in your browser's persistent cache. After that, everyday chat is free, offline-capable, and never leaves this device.
+                  </p>
+                  <p className="text-[11px] text-muted-foreground/70">
+                    Heavy tasks (documents, vision, agents) will ask for an API key when you use them — your private chat keeps working without one.
+                  </p>
+                </div>
+                <div className="flex justify-between gap-2">
+                  <Button variant="ghost" onClick={() => setStep("welcome")} size="sm" className="gap-1.5"><ArrowLeft className="h-4 w-4" /> Back</Button>
+                  <Button onClick={() => void startPrivateSetup()} size="sm" className="gap-1.5"><ShieldCheck className="h-4 w-4" /> Download &amp; activate</Button>
+                </div>
+              </>
+            )}
+            {(localStatus === "checking" || localStatus === "downloading") && (
+              <div className="space-y-4 py-6 text-center">
+                <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+                <div>
+                  <p className="text-sm font-semibold">{localStatus === "checking" ? "Verifying storage…" : "Downloading your private model…"}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{deviceModel?.displayName} · runs entirely on your device</p>
+                </div>
+                {localStatus === "downloading" && (
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div className="bg-primary h-2 rounded-full transition-all" style={{ width: `${localProgress}%` }} />
+                  </div>
+                )}
+                <p className="text-[11px] text-muted-foreground/60">{localProgress}% · you can keep this tab open and continue setup later</p>
+              </div>
+            )}
+            {localStatus === "error" && (
+              <div className="space-y-4">
+                <p role="alert" className="text-sm text-destructive flex items-start gap-1.5"><AlertCircle className="h-4 w-4 shrink-0 mt-0.5" /> {localError}</p>
+                <div className="flex justify-between gap-2">
+                  <Button variant="ghost" onClick={() => setStep("welcome")} size="sm" className="gap-1.5"><ArrowLeft className="h-4 w-4" /> Back</Button>
+                  <Button variant="outline" onClick={() => { setLocalStatus("idle"); setLocalProgress(0); }} size="sm">Try again</Button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {step === "private-ready" && (
+          <div className="space-y-4 py-4 text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-success/15 border border-success/30 mx-auto"><ShieldCheck className="h-8 w-8 text-success" /></div>
+            <div>
+              <p className="text-lg font-bold">Your AI now runs on your device.</p>
+              <p className="text-sm text-muted-foreground mt-1">Everyday chat is private, free, and works offline. Nothing you say leaves this browser.</p>
+            </div>
+            <div className="rounded-lg border border-border/40 bg-muted/20 p-3 text-xs text-muted-foreground text-left">
+              <div className="flex items-center justify-between"><span>Model:</span><span className="text-foreground font-mono text-[11px]">{deviceModel?.id}</span></div>
+              <div className="flex items-center justify-between mt-1"><span>Privacy:</span><span className="text-success font-medium">on-device</span></div>
+              <div className="flex items-center justify-between mt-1"><span>Heavy tasks:</span><span className="text-foreground">asks for a key when needed</span></div>
+            </div>
+            <Button onClick={() => { handleDismiss(); window.location.assign("/chatbot"); }} className="w-full gap-1.5">Start chatting privately <ArrowRight className="h-4 w-4" /></Button>
           </div>
         )}
 

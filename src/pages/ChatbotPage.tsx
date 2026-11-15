@@ -31,7 +31,7 @@ import { inferDocumentTypeFromMessage } from "@/lib/kimiDocumentGeneration";
 
 
 
-import { streamCloudChat, isCloudChatConfigured, type CloudChatMessage } from "@/lib/cloudChat";
+import { streamCloudChat, isCloudChatConfigured, shouldEscalateToCloud, type CloudChatMessage } from "@/lib/cloudChat";
 import { buildChatSystemPrompt } from "@/lib/shadowTalkPersona";
 import { loadAiAccessMode, saveAiAccessMode, getPreferLocal } from "@/lib/aiAccessMode";
 
@@ -229,6 +229,9 @@ const ChatbotPage = () => {
     getChatDefaults,
   } = useAutoImproveContext();
   const { extractMemories, extractKnowledge, getMemoryContext } = useIntelligenceHub();
+  // Privacy ledger — on-device inference events are journaled so the user can
+  // verify which replies never left their machine.
+  const { log: logMemoryEvent } = useShadowMemoryContext();
   
   // Mocks for removed enterprise and self-healing features
   const enterprise = {
@@ -1538,16 +1541,24 @@ Structure and Content Guidelines:
       // behavior → ChatAIPreferencesCard). Contract:
       //  - The engine module is dynamically imported so @mlc-ai/web-llm stays
       //    out of the chat bundle unless the user actually opted in.
-      //  - Local replies carry source:"local" — MessageBubble renders
-      //    "via Local (<model>)" — cloud replies keep their provider label.
+      //  - Local replies carry source:"local" — MessageBubble renders the
+      //    on-device provenance shield — cloud replies keep their provider
+      //    label.
+      //  - Escalation: requests that outgrow the on-device model (document
+      //    analysis, vision, web search, structured/agentic output, oversized
+      //    context) skip the local engine and run on the cloud tier — the
+      //    user's BYOK key when present, else a clear "add your key" prompt.
       //  - NO silent provider switch: if the local engine fails mid-turn the
-      //    error is surfaced instead of quietly retrying on cloud; if
-      //    prefer-local is on but the engine is not loaded while ONLINE, the
-      //    cloud path runs with a one-time explicit notice (matches
-      //    AIProviderRouter's documented fall-through semantics); while
+      //    error is surfaced instead of quietly retrying on cloud; while
       //    OFFLINE it fails with actionable guidance.
       const preferLocal = getPreferLocal(user?.id ?? undefined);
-      if (preferLocal) {
+      if (preferLocal && shouldEscalateToCloud(cloudMessages)) {
+        // Heavy task — the private tier only covers everyday chat. Fall
+        // through to the cloud path (BYOK key or the honest escalation
+        // error that streamCloudChat returns for keyless local-first users).
+        console.info("[chat] prefer-local: escalating to cloud (task exceeds on-device scope)");
+      }
+      if (preferLocal && !shouldEscalateToCloud(cloudMessages)) {
         const { localInferenceEngine } = await import("@/offline/LocalInferenceEngine");
         const engineState = localInferenceEngine.getState();
         const isOffline = typeof navigator !== "undefined" && navigator.onLine === false;
@@ -1591,6 +1602,14 @@ Structure and Content Guidelines:
             recordFunnelEvent("first_reply");
             markHasChatted();
           }
+          // Privacy ledger: journal the on-device run so the user can verify
+          // that this reply never left the browser (tamper-evident journal).
+          void logMemoryEvent(
+            "chat",
+            "On-device inference completed",
+            `Reply generated locally by ${localResult.modelUsed || "the on-device model"} — nothing left this browser.`,
+            { deviceRun: true, cloudUpload: false, model: localResult.modelUsed },
+          ).catch(() => {});
           return localResult.content || undefined;
         }
 

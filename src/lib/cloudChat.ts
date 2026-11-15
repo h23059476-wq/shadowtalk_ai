@@ -8,7 +8,7 @@
 
 import { fbAuth, functionsBaseUrl } from "@/integrations/firebase/app";
 import { getByokConfig, streamByokChat } from "@/lib/byok";
-import { getCachedAiAccessMode } from "@/lib/aiAccessMode";
+import { getCachedAiAccessMode, getPreferLocal } from "@/lib/aiAccessMode";
 import type { Citation } from "@/lib/visualization/types";
 import { parseOpenAiUsageChunk, mergeUsage, type ProviderUsage } from "@/lib/tokenOptimizer/usage";
 
@@ -71,13 +71,88 @@ function getFunctionsUrl(): string {
   return `${functionsBaseUrl}/chat`;
 }
 
+// ── Private-by-default hybrid routing ────────────────────────────────────
+
+/**
+ * Payload size above which the on-device model is skipped and the request
+ * escalates to a frontier model. The local engine runs a 2k-token context
+ * (~8k chars); past that, quality collapses or the context overflows —
+ * exactly the "document analysis" tier BYOK exists for.
+ */
+const LOCAL_CONTEXT_CHAR_LIMIT = 8000;
+
+/** Total characters across all message contents (text parts only). */
+function totalMessageChars(messages: CloudChatMessage[]): number {
+  let total = 0;
+  for (const m of messages) {
+    if (typeof m.content === "string") total += m.content.length;
+    else if (Array.isArray(m.content)) {
+      for (const part of m.content) {
+        if (part.type === "text") total += part.text.length;
+      }
+    }
+  }
+  return total;
+}
+
+/**
+ * Decide whether this request exceeds the on-device model's competence:
+ * explicit cloud model selection, web search/fetch, structured output,
+ * vision input, or a payload beyond the local context window. Those are the
+ * "document analysis / agentic" tasks the BYOK tier exists for.
+ */
+export function shouldEscalateToCloud(
+  messages: CloudChatMessage[],
+  opts?: CloudChatOptions,
+): boolean {
+  if (opts?.model) return true;
+  if (opts?.webSearch || opts?.webFetch) return true;
+  if (opts?.structuredOutput) return true;
+  if (messages.some((m) => m.image)) return true;
+  return totalMessageChars(messages) > LOCAL_CONTEXT_CHAR_LIMIT;
+}
+
+const ESCALATION_ERROR =
+  "This task needs a frontier model. Your on-device model handles private chat, " +
+  "but document analysis, vision, and agentic tasks require an API key — " +
+  "add one in Settings → AI Access (works with OpenAI, Anthropic, Google, Groq, OpenRouter and more).";
+
 /**
  * Stream a chat reply through the provider selected during account onboarding.
+ *
+ * Private-by-default hybrid routing: when the user provisioned the on-device
+ * model (prefer_local) and the engine is loaded, ordinary chat runs locally —
+ * nothing leaves the browser. Requests that outgrow the local model
+ * (documents, vision, web search, agentic structured output) escalate to the
+ * cloud tier: the user's BYOK key when present, otherwise a clear
+ * "add your API key" error instead of a silent dead-end.
  */
 export async function streamCloudChat(
   messages: CloudChatMessage[],
   opts: CloudChatOptions = {},
 ): Promise<CloudChatResult> {
+  // ── Hybrid: on-device first when provisioned ──
+  // Dynamic import on purpose: LocalInferenceEngine pulls in @mlc-ai/web-llm
+  // (~large); statically importing it here would bloat every chunk that
+  // touches cloudChat.
+  if (getPreferLocal()) {
+    const { localInferenceEngine } = await import("@/offline/LocalInferenceEngine");
+    if (localInferenceEngine.isLoaded()) {
+      if (!shouldEscalateToCloud(messages, opts)) {
+        return localInferenceEngine.generate(messages, opts);
+      }
+      // Escalation: try the user's key first, else a clear prompt (never the
+      // shared function — local-first users may not be on a Blaze project).
+      const accessMode = getCachedAiAccessMode();
+      if (accessMode === "byok") {
+        const byok = getByokConfig();
+        if (byok?.apiKey) return streamByokChat(byok, messages, opts);
+      }
+      return { content: "", error: ESCALATION_ERROR, source: "local" };
+    }
+    // Not provisioned → fall through to the standard mode logic.
+  }
+
   const accessMode = getCachedAiAccessMode();
   if (accessMode === "byok") {
     const byok = getByokConfig();
