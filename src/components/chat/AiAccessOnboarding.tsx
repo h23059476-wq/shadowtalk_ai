@@ -21,6 +21,7 @@ import { loadAiAccessMode, saveAiAccessMode, setPreferLocal, type AiAccessMode }
 import { useApiKeyValidation } from "@/hooks/useApiKeyValidation";
 import { localInferenceEngine } from "@/offline/LocalInferenceEngine";
 import { StorageManager } from "@/offline/StorageManager";
+import { markInstalledViaWizard } from "@/offline/BackgroundInstall";
 import { pickLocalModelForDevice, type LocalModelDefinition } from "@/ai/ModelRegistry";
 import { DeviceCapability } from "@/offline/DeviceCapability";
 
@@ -182,6 +183,9 @@ export function AiAccessOnboarding({ userId }: AiAccessOnboardingProps) {
 
       // Mark this account private-first: ordinary chat now runs on-device.
       setPreferLocal(userId, true);
+      // Record the decision + ready snapshot so the background-install banner
+      // never shows on top of the wizard's own success screen.
+      markInstalledViaWizard(userId, localInferenceEngine.getCurrentModelId());
       // Keep a mode on record as a fallback for escalation (shared is best-
       // effort — when no Function backend exists, escalation prompts for a
       // BYOK key with a clear message instead).

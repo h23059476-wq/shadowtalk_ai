@@ -1,7 +1,8 @@
-import { CreateWebWorkerMLCEngine, WebWorkerMLCEngine, InitProgressReport } from "@mlc-ai/web-llm";
-import { DEFAULT_LOCAL_MODEL, getLocalModelDefinition, pickLocalModelForDevice } from "@/ai/ModelRegistry";
+import { CreateWebWorkerMLCEngine, WebWorkerMLCEngine, type InitProgressCallback, type InitProgressReport, type MLCEngineConfig } from "@mlc-ai/web-llm";
+import { DEFAULT_LOCAL_MODEL, getLocalModelDefinition, pickLocalModelForDevice, type LocalModelDefinition } from "@/ai/ModelRegistry";
 import { CloudChatMessage, CloudChatOptions, CloudChatResult } from "@/lib/cloudChat";
 import { DeviceCapability } from "@/offline/DeviceCapability";
+import { buildMirrorAppConfig, isMirrorEligibleError } from "@/offline/modelMirror";
 
 /**
  * Batch 4 — LocalInferenceEngine state machine.
@@ -59,6 +60,40 @@ export class LocalInferenceEngine {
     this.listeners.forEach((l) => l(next));
   }
 
+  /**
+   * Build the WebLLM worker engine for one model. Isolated so the mirror
+   * retry gets a pristine worker (a failed Create can leave the old one
+   * wedged) and can inject the mirrored appConfig.
+   */
+  private async createEngine(
+    model: LocalModelDefinition,
+    contextWindowSize: number,
+    progressCb: InitProgressCallback,
+    useMirror: boolean,
+  ): Promise<WebWorkerMLCEngine> {
+    const worker = new Worker(new URL('./llm.worker.ts', import.meta.url), { type: 'module' });
+    const engineConfigs: MLCEngineConfig = { initProgressCallback: progressCb };
+    if (useMirror) {
+      const mirrorAppConfig = buildMirrorAppConfig();
+      if (mirrorAppConfig) engineConfigs.appConfig = mirrorAppConfig;
+    }
+    try {
+      return await CreateWebWorkerMLCEngine(
+        worker,
+        model.id,
+        engineConfigs,
+        // web-llm ChatOptions — snake_case ChatConfig overrides. The context
+        // window cap lands here; engine-level config stays in createEngine.
+        { context_window_size: contextWindowSize },
+      );
+    } catch (error) {
+      // The worker is unusable after a failed create — free it before the
+      // caller decides whether to retry on the mirror.
+      try { worker.terminate(); } catch { /* already dead */ }
+      throw error;
+    }
+  }
+
   async initialize(
     onProgress?: (progress: InitProgressReport) => void,
     /** Optional explicit model id; defaults to the device-tier pick. */
@@ -95,34 +130,38 @@ export class LocalInferenceEngine {
     // GPUs (device-lost errors under memory pressure). 2k tokens covers
     // everyday private chat and roughly halves KV memory.
     const resolvedEngineConfig = { contextWindowSize: 2048, ...engineConfig };
+    const progressCb: InitProgressCallback = (report) => {
+      // web-llm emits progress through both the download and the model
+      // load. The progress text changes from "Fetching..." to
+      // "Loading..." once weights arrive; use that as the signal to
+      // move from `downloading` to `loading`.
+      const text = (report?.text || "").toLowerCase();
+      if (!sawModelLoadStart && (text.includes("loading") || text.includes("initializing"))) {
+        sawModelLoadStart = true;
+        this.setState("loading");
+      }
+      onProgress?.(report);
+    };
     try {
-      const worker = new Worker(new URL('./llm.worker.ts', import.meta.url), { type: 'module' });
-      this.engine = await CreateWebWorkerMLCEngine(
-        worker,
-        model.id,
-        {
-          initProgressCallback: (report: InitProgressReport) => {
-            // web-llm emits progress through both the download and the model
-            // load. The progress text changes from "Fetching..." to
-            // "Loading..." once weights arrive; use that as the signal to
-            // move from `downloading` to `loading`.
-            const text = (report?.text || "").toLowerCase();
-            if (!sawModelLoadStart && (text.includes("loading") || text.includes("initializing"))) {
-              sawModelLoadStart = true;
-              this.setState("loading");
-            }
-            onProgress?.(report);
-          },
-        },
-        // web-llm ChatOptions — snake_case ChatConfig overrides. The context
-        // window cap lands here; `resolvedEngineConfig` stays for future
-        // engine-level config surface.
-        { context_window_size: resolvedEngineConfig.contextWindowSize },
-      );
+      this.engine = await this.createEngine(model, resolvedEngineConfig.contextWindowSize, progressCb, false);
       this.isReady = true;
       this.setState("ready");
       return true;
     } catch (error) {
+      // Mirror retry: a Hugging Face CDN hiccup should never brick private AI.
+      // One attempt against the self-hosted mirror (when configured) for
+      // network-shaped failures; GPU/device errors are not worth a retry.
+      if (isMirrorEligibleError(error) && buildMirrorAppConfig()) {
+        console.info("[local-engine] primary download failed — retrying from the configured mirror");
+        try {
+          this.engine = await this.createEngine(model, resolvedEngineConfig.contextWindowSize, progressCb, true);
+          this.isReady = true;
+          this.setState("ready");
+          return true;
+        } catch (mirrorError) {
+          console.error("Mirror download also failed:", mirrorError);
+        }
+      }
       console.error("Failed to initialize WebLLM engine:", error);
       this.setState("error");
       return false;

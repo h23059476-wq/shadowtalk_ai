@@ -61,7 +61,14 @@ vi.mock("@/lib/byok", () => ({
 
 import { streamCloudChat, shouldEscalateToCloud, type CloudChatMessage } from "@/lib/cloudChat";
 import { setPreferLocal } from "@/lib/aiAccessMode";
-import { pickLocalModelForDevice, DEFAULT_LOCAL_MODEL, LOW_TIER_LOCAL_MODEL, HIGH_TIER_LOCAL_MODEL } from "@/ai/ModelRegistry";
+import {
+  pickLocalModelForDevice,
+  STARTER_LOCAL_MODEL,
+  LOCAL_MODEL_TIERS,
+  DEFAULT_LOCAL_MODEL,
+  LOW_TIER_LOCAL_MODEL,
+  HIGH_TIER_LOCAL_MODEL,
+} from "@/ai/ModelRegistry";
 
 const chat = (content: string): CloudChatMessage => ({ role: "user", content });
 
@@ -153,25 +160,30 @@ describe("streamCloudChat — private-by-default routing", () => {
   });
 });
 
-describe("pickLocalModelForDevice — device-tier ladder", () => {
-  it("picks the 3B Pro model for high-memory desktops", () => {
-    expect(pickLocalModelForDevice(8, false).id).toBe(HIGH_TIER_LOCAL_MODEL.id);
-    expect(pickLocalModelForDevice(16, false).id).toBe(HIGH_TIER_LOCAL_MODEL.id);
+describe("pickLocalModelForDevice — starter-first policy", () => {
+  it("returns the universal Nano starter for every device class", () => {
+    for (const memory of [undefined, 1, 2, 4, 8, 16]) {
+      expect(pickLocalModelForDevice(memory, false).id).toBe(STARTER_LOCAL_MODEL.id);
+    }
+    expect(pickLocalModelForDevice(8, true).id).toBe(STARTER_LOCAL_MODEL.id);
+    expect(pickLocalModelForDevice(2, true).id).toBe(STARTER_LOCAL_MODEL.id);
   });
 
-  it("picks the 1B Lite model for mid-range desktops (and unknown memory)", () => {
-    expect(pickLocalModelForDevice(4, false).id).toBe(DEFAULT_LOCAL_MODEL.id);
-    expect(pickLocalModelForDevice(undefined, false).id).toBe(DEFAULT_LOCAL_MODEL.id);
+  it("starter is the smallest tier; 1B/3B remain explicit upgrades, smallest first", () => {
+    expect(STARTER_LOCAL_MODEL.id).toBe(LOW_TIER_LOCAL_MODEL.id);
+    expect(LOCAL_MODEL_TIERS.map((m) => m.id)).toEqual([
+      LOW_TIER_LOCAL_MODEL.id,
+      DEFAULT_LOCAL_MODEL.id,
+      HIGH_TIER_LOCAL_MODEL.id,
+    ]);
+    const sizes = LOCAL_MODEL_TIERS.map((m) => m.approxStorageRequirementMB);
+    expect([...sizes].sort((a, b) => a - b)).toEqual(sizes);
   });
 
-  it("picks the 0.5B Nano model for low-memory devices", () => {
-    expect(pickLocalModelForDevice(1, false).id).toBe(LOW_TIER_LOCAL_MODEL.id);
-    expect(pickLocalModelForDevice(2, false).id).toBe(DEFAULT_LOCAL_MODEL.id);
-  });
-
-  it("caps phones below the 3B model (thermal + shared memory)", () => {
-    expect(pickLocalModelForDevice(8, true).id).toBe(DEFAULT_LOCAL_MODEL.id);
-    expect(pickLocalModelForDevice(16, true).id).toBe(DEFAULT_LOCAL_MODEL.id);
-    expect(pickLocalModelForDevice(2, true).id).toBe(LOW_TIER_LOCAL_MODEL.id);
+  it("keeps the first download a 5-minute ask, not a 20-minute one", () => {
+    expect(STARTER_LOCAL_MODEL.approxStorageRequirementMB).toBeLessThanOrEqual(700);
+    expect(HIGH_TIER_LOCAL_MODEL.approxStorageRequirementMB).toBeGreaterThan(
+      STARTER_LOCAL_MODEL.approxStorageRequirementMB,
+    );
   });
 });

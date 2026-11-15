@@ -1,12 +1,13 @@
 import React, { useMemo, useState } from 'react';
 import { localInferenceEngine } from '@/offline/LocalInferenceEngine';
 import { StorageManager } from '@/offline/StorageManager';
-import { LOCAL_MODEL_TIERS, pickLocalModelForDevice, type LocalModelDefinition } from '@/ai/ModelRegistry';
+import { LOCAL_MODEL_TIERS, STARTER_LOCAL_MODEL, pickLocalModelForDevice, type LocalModelDefinition } from '@/ai/ModelRegistry';
 import { Loader2, CheckCircle2, AlertCircle, Cpu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const OfflineSetup: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
-  // Tier-picked default, user-overridable before the download starts.
+  // Starter-first default (the Nano tier streams down in minutes); the user
+  // can still opt into the 1B/3B tiers as explicit upgrades before installing.
   const deviceModel = useMemo(
     () =>
       typeof navigator !== 'undefined'
@@ -14,7 +15,7 @@ export const OfflineSetup: React.FC<{ onComplete?: () => void }> = ({ onComplete
             (navigator as any).deviceMemory,
             /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent),
           )
-        : LOCAL_MODEL_TIERS[1],
+        : STARTER_LOCAL_MODEL,
     [],
   );
   const [selectedModelId, setSelectedModelId] = useState(deviceModel.id);
@@ -91,7 +92,7 @@ export const OfflineSetup: React.FC<{ onComplete?: () => void }> = ({ onComplete
             <strong>Size:</strong> ~{(selectedModel.approxStorageRequirementMB / 1024).toFixed(1)} GB
           </p>
           <div className="w-full space-y-1.5">
-            <p className="text-xs text-muted-foreground flex items-center gap-1.5"><Cpu className="h-3.5 w-3.5" /> Model for your device — switch below if you prefer:</p>
+            <p className="text-xs text-muted-foreground flex items-center gap-1.5"><Cpu className="h-3.5 w-3.5" /> Starts small so the download stays quick — the larger tiers are optional upgrades:</p>
             {LOCAL_MODEL_TIERS.map((m) => (
               <label
                 key={m.id}
@@ -111,7 +112,7 @@ export const OfflineSetup: React.FC<{ onComplete?: () => void }> = ({ onComplete
                   />
                   <span className="font-medium truncate">{m.displayName}</span>
                   {m.id === deviceModel.id && (
-                    <span className="text-[10px] text-primary shrink-0">recommended</span>
+                    <span className="text-[10px] text-primary shrink-0">starter · recommended</span>
                   )}
                 </span>
                 <span className="text-[10px] whitespace-nowrap">~{(m.approxStorageRequirementMB / 1024).toFixed(1)} GB</span>

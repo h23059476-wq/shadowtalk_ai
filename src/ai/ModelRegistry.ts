@@ -32,11 +32,13 @@ export const DEFAULT_LOCAL_MODEL: LocalModelDefinition = {
 
 // ── Private-by-default tier ladder ──────────────────────────────────────
 // One on-device model per hardware tier so the private chat path works on
-// everything from a $99 Android (WebGPU) to a 32GB workstation. The device
-// tier is picked automatically in pickLocalModelForDevice; OfflineSetup and
-// the onboarding wizard let the user override it.
+// everything from a $99 Android (WebGPU) to a 32GB workstation. Starter-first:
+// pickLocalModelForDevice always returns the Nano starter (a ~600MB download,
+// never a 20-minute ask) and the 1B/3B tiers are explicit user upgrades in
+// OfflineSetup / the onboarding wizard.
 
-/** Low-tier devices (≤2GB RAM reported, ≤2 cores, phones): smallest viable chat model. */
+/** Low-tier devices (≤2GB RAM reported, ≤2 cores, phones): smallest viable chat model. Also
+ *  the universal starter everyone downloads first (see STARTER_LOCAL_MODEL below). */
 export const LOW_TIER_LOCAL_MODEL: LocalModelDefinition = {
   id: "Qwen2.5-0.5B-Instruct-q4f16_1-MLC",
   displayName: "ShadowTalk Local - Nano",
@@ -135,22 +137,24 @@ export function getLocalModelDefinition(id: string): LocalModelDefinition | unde
 }
 
 /**
- * Pick the on-device model matching the hardware. Uses the same inputs as
- * devicePerfTier (navigator.deviceMemory / hardwareConcurrency) so the
- * private chat path degrades gracefully on weak devices instead of OOM-ing
- * the GPU. `deviceMemory` is in GB as reported by navigator.deviceMemory
- * (Chrome clamps it to 0.25/0.5/1/2/4/8); when unknown we assume 4GB (mid).
+ * The universal starter: the Nano tier streams down in minutes on any
+ * connection (~600MB vs ~1.1–2.4GB for the larger tiers) and runs on every
+ * WebGPU-capable device, from a $99 Android to a workstation. The 1B/3B
+ * tiers remain available as explicit, user-chosen upgrades (OfflineSetup's
+ * model picker) — nobody is blocked on a 20-minute download before their
+ * first private chat.
+ *
+ * `deviceMemoryGB` / `isMobile` are kept for signature compatibility (they
+ * were the old tier inputs); the starter-first policy intentionally ignores
+ * them so every new install starts small and cheap.
  */
+export const STARTER_LOCAL_MODEL: LocalModelDefinition = LOW_TIER_LOCAL_MODEL;
+
 export function pickLocalModelForDevice(
   deviceMemoryGB?: number,
   isMobile: boolean = false,
 ): LocalModelDefinition {
-  const memory = typeof deviceMemoryGB === "number" && deviceMemoryGB > 0 ? deviceMemoryGB : 4;
-  // Phones punch below their spec (thermal throttling, shared memory) — cap at 1B.
-  if (isMobile) {
-    return memory >= 8 ? DEFAULT_LOCAL_MODEL : LOW_TIER_LOCAL_MODEL;
-  }
-  if (memory >= 8) return HIGH_TIER_LOCAL_MODEL;
-  if (memory >= 2) return DEFAULT_LOCAL_MODEL;
-  return LOW_TIER_LOCAL_MODEL;
+  void deviceMemoryGB;
+  void isMobile;
+  return STARTER_LOCAL_MODEL;
 }

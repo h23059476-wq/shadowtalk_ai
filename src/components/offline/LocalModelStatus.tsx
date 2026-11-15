@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { localInferenceEngine, type LocalEngineState } from '@/offline/LocalInferenceEngine';
-import { DEFAULT_LOCAL_MODEL } from '@/ai/ModelRegistry';
+import { STARTER_LOCAL_MODEL, getLocalModelDefinition } from '@/ai/ModelRegistry';
 import { DeviceCapability } from '@/offline/DeviceCapability';
 
 /**
@@ -33,6 +33,13 @@ export const LocalModelStatus: React.FC = () => {
   const isLoaded = engineState === "ready" || engineState === "generating";
   const isError = engineState === "error";
 
+  // Show the model that is actually loaded (may be a user-picked upgrade or
+  // the q4f32 twin); before anything loads, show the starter that the
+  // background install / OfflineSetup will download.
+  const displayedModel =
+    (isLoaded ? getLocalModelDefinition(localInferenceEngine.getCurrentModelId()) : undefined) ??
+    STARTER_LOCAL_MODEL;
+
   return (
     <div className="p-4 rounded-lg bg-card border text-sm space-y-2">
       <h3 className="font-semibold flex items-center gap-2">
@@ -41,9 +48,9 @@ export const LocalModelStatus: React.FC = () => {
       </h3>
       <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-muted-foreground">
         <span>Model:</span>
-        <span className="text-foreground">{DEFAULT_LOCAL_MODEL.displayName}</span>
+        <span className="text-foreground">{displayedModel.displayName}</span>
         <span>Storage:</span>
-        <span className="text-foreground">~{DEFAULT_LOCAL_MODEL.approxStorageRequirementMB} MB</span>
+        <span className="text-foreground">~{displayedModel.approxStorageRequirementMB} MB</span>
         <span>Acceleration:</span>
         <span className="text-foreground">{hasWebGPU ? 'WebGPU' : 'CPU'}</span>
         <span>Status:</span>

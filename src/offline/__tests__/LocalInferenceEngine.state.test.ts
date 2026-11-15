@@ -10,6 +10,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 // Stub the web-llm worker factory so we don't load a real model.
 vi.mock("@mlc-ai/web-llm", () => {
   return {
+    prebuiltAppConfig: { model_list: [] },
     CreateWebWorkerMLCEngine: vi.fn(async () => ({
       chat: { completions: { create: async function* () {
         yield { choices: [{ delta: { content: "hi" } }] };
@@ -18,6 +19,12 @@ vi.mock("@mlc-ai/web-llm", () => {
     })),
   };
 });
+
+// Mirror module — default to "mirror disabled"; the retry tests below flip it.
+vi.mock("@/offline/modelMirror", () => ({
+  buildMirrorAppConfig: vi.fn(() => null),
+  isMirrorEligibleError: vi.fn(() => false),
+}));
 
 // Stub the worker constructor.
 vi.stubGlobal("Worker", class { constructor() {} postMessage() {} terminate() {} });
@@ -38,9 +45,18 @@ vi.mock("@/ai/ModelRegistry", () => ({
 }));
 
 import { localInferenceEngine, type LocalEngineState } from "@/offline/LocalInferenceEngine";
+import { CreateWebWorkerMLCEngine } from "@mlc-ai/web-llm";
+import { buildMirrorAppConfig, isMirrorEligibleError } from "@/offline/modelMirror";
+
+const createEngineMock = vi.mocked(CreateWebWorkerMLCEngine);
+const mirrorConfigMock = vi.mocked(buildMirrorAppConfig);
+const eligibleMock = vi.mocked(isMirrorEligibleError);
 
 describe("LocalInferenceEngine state machine", () => {
   beforeEach(() => {
+    createEngineMock.mockClear();
+    mirrorConfigMock.mockReturnValue(null);
+    eligibleMock.mockReturnValue(false);
     return localInferenceEngine.unload();
   });
   afterEach(() => localInferenceEngine.unload());
@@ -92,5 +108,43 @@ describe("LocalInferenceEngine state machine", () => {
     await localInferenceEngine.initialize();
     expect(seen.length).toBe(0);
     await localInferenceEngine.unload();
+  });
+
+  it("retries from the mirror once when the primary download fails with a network error", async () => {
+    eligibleMock.mockReturnValue(true);
+    mirrorConfigMock.mockReturnValue({ model_list: [] } as never);
+    createEngineMock.mockRejectedValueOnce(new Error("Failed to fetch"));
+
+    const ok = await localInferenceEngine.initialize();
+
+    expect(ok).toBe(true);
+    expect(localInferenceEngine.getState()).toBe("ready");
+    expect(createEngineMock).toHaveBeenCalledTimes(2);
+    // The retry injects the mirrored appConfig into the engine configs.
+    const retryConfigs = createEngineMock.mock.calls[1][2] as { appConfig?: unknown };
+    expect(retryConfigs?.appConfig).toEqual({ model_list: [] });
+  });
+
+  it("does not retry device-shaped failures (a different CDN cannot fix a GPU)", async () => {
+    eligibleMock.mockReturnValue(false);
+    mirrorConfigMock.mockReturnValue({ model_list: [] } as never);
+    createEngineMock.mockRejectedValueOnce(new Error("GPU device lost"));
+
+    const ok = await localInferenceEngine.initialize();
+
+    expect(ok).toBe(false);
+    expect(createEngineMock).toHaveBeenCalledTimes(1);
+    expect(localInferenceEngine.getState()).toBe("error");
+  });
+
+  it("skips the mirror retry when no mirror is configured", async () => {
+    eligibleMock.mockReturnValue(true);
+    mirrorConfigMock.mockReturnValue(null);
+    createEngineMock.mockRejectedValueOnce(new Error("Failed to fetch"));
+
+    const ok = await localInferenceEngine.initialize();
+
+    expect(ok).toBe(false);
+    expect(createEngineMock).toHaveBeenCalledTimes(1);
   });
 });

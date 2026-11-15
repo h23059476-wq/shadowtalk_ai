@@ -11,6 +11,8 @@ type AIProvider = "turbo" | string;
 import { ChatHeader } from "@/components/chat/ChatHeader";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { AiAccessOnboarding } from "@/components/chat/AiAccessOnboarding";
+import { PrivateAiBanner } from "@/components/chat/PrivateAiBanner";
+import { LOCAL_MODEL_READY_EVENT } from "@/offline/BackgroundInstall";
 const LiveVoiceMode = lazy(() => import("@/components/chat/LiveVoiceMode").then(m => ({ default: m.LiveVoiceMode })));
 const SettingsByokCard = lazy(() => import("@/components/settings/SettingsByokCard").then(m => ({ default: m.SettingsByokCard })));
 import { ChatToolbar } from "@/components/chat/ChatToolbar";
@@ -372,6 +374,29 @@ const ChatbotPage = () => {
   // SILENT provider switch.
   const preferLocalNoticeShownRef = useRef(false);
   useEffect(() => { messagesRef.current = messages; }, [messages]);
+
+  // Background install just landed — announce the silent flip to on-device
+  // (the flip itself is done by BackgroundInstall via setPreferLocal) and
+  // journal it in the tamper-evident privacy ledger.
+  useEffect(() => {
+    const onReady = (event: Event) => {
+      const modelId = (event as CustomEvent<{ modelId?: string }>).detail?.modelId;
+      toast({
+        title: "Private AI installed",
+        description: "Your chats now run on-device. Heavy tasks still use your cloud key.",
+      });
+      if (user) {
+        void logMemoryEvent(
+          "chat",
+          "Private AI installed in background",
+          `The on-device model (${modelId || "starter"}) finished downloading — ordinary chats now run locally.`,
+          { deviceRun: true, cloudUpload: false, model: modelId },
+        ).catch(() => {});
+      }
+    };
+    window.addEventListener(LOCAL_MODEL_READY_EVENT, onReady);
+    return () => window.removeEventListener(LOCAL_MODEL_READY_EVENT, onReady);
+  }, [user, toast, logMemoryEvent]);
 
   // Abort any in-flight chat request when the chat page unmounts — otherwise
   // the SSE reader keeps streaming (and may still write to the DB) after the
@@ -3102,6 +3127,7 @@ Structure and Content Guidelines:
         </Dialog>
 
         {user && <AiAccessOnboarding userId={user.id} />}
+        {user && <PrivateAiBanner userId={user.id} />}
 
         {/* Consent-gated recovery for pre-account-scoping E2EE vaults. */}
         <LegacyVaultRecoveryDialog
