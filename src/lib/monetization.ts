@@ -54,7 +54,7 @@ export const SUBSCRIPTION_TIERS: PricingTier[] = [
     period: '',
     description: 'Try our AI capabilities',
     features: [
-      '50 messages per day',
+      '100 shared AI messages per day',
       'Basic chat assistance',
       'Community support',
       '3 file uploads/day',

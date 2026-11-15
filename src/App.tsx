@@ -29,6 +29,7 @@ import PersistedAuthRedirect from "@/components/PersistedAuthRedirect";
 import { OAuthReturnHandler } from "@/components/OAuthReturnHandler";
 import { OAuthRedirectHandler } from "@/components/OAuthRedirectHandler";
 import EmailVerificationNotice from "@/components/auth/EmailVerificationNotice";
+import { useReferralCapture } from "@/hooks/useReferralTracking";
 
 export const CommandPaletteContext = createContext<{ open: () => void }>({ open: () => {} });
 // Critical path pages - loaded immediately
@@ -44,8 +45,6 @@ const ChatbotPage = lazy(() => import("./pages/ChatbotPage"));
 const PromptLibraryPage = lazy(() => import("./pages/PromptLibraryPage"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
-const AuthDesignGalleryPage = lazy(() => import("./pages/AuthDesignGalleryPage"));
-const AuthDesignPreviewPage = lazy(() => import("./pages/AuthDesignPreviewPage"));
 const SharedAnswerPage = lazy(() => import("./pages/SharedAnswerPage"));
 const DocsPage = lazy(() => import("./pages/DocsPage"));
 // Batch 2 — dev-only visualization demo (redirects to /chatbot in prod builds).
@@ -55,9 +54,7 @@ const ChangelogPage = lazy(() => import("./pages/ChangelogPage"));
 const FounderPage = lazy(() => import("./pages/FounderPage"));
 const ShadowTwinSettingsPage = lazy(() => import("./pages/ShadowTwinSettingsPage"));
 const PublicShadowTwinChat = lazy(() => import("./pages/PublicShadowTwinChat"));
-const ShadowMemoryPage = lazy(() => import("./pages/ShadowMemoryPage"));
 const TrustPage = lazy(() => import("./pages/TrustPage"));
-const KnowledgeGraphPage = lazy(() => import("./pages/KnowledgeGraphPage"));
 const ProofLoopPage = lazy(() => import("./pages/ProofLoopPage"));
 const PublicProofCardPage = lazy(() => import("./pages/PublicProofCardPage"));
 
@@ -65,7 +62,6 @@ const PublicProofCardPage = lazy(() => import("./pages/PublicProofCardPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const FAQPage = lazy(() => import("./pages/FAQPage"));
 const BenchmarksPage = lazy(() => import("./pages/BenchmarksPage"));
-const ComingSoonPage = lazy(() => import("./pages/ComingSoonPage"));
 const AgenticIdePage = lazy(() => import("./pages/AgenticIdePage"));
 const GDPRPage = lazy(() => import("./pages/GDPRPage"));
 const CookiePolicyPage = lazy(() => import("./pages/CookiePolicyPage"));
@@ -75,18 +71,8 @@ const AboutPage = lazy(() => import("./pages/AboutPage"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
 const StatusPage = lazy(() => import("./pages/StatusPage"));
 const DownloadPage = lazy(() => import("./pages/DownloadPage"));
-const AnalyticsPage = lazy(() => import("./pages/AnalyticsPage"));
-const ComputerPage = lazy(() => import("./pages/ComputerPage"));
-const MissionControlPage = lazy(() => import("./pages/MissionControlPage"));
-const PersonalLlmPage = lazy(() => import("./pages/PersonalLlmPage"));
-const TemplatesPage = lazy(() => import("./pages/TemplatesPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
 const IntelligenceCenterPage = lazy(() => import("./pages/IntelligenceCenterPage"));
-const ResearchPage = lazy(() => import("./pages/ResearchPage"));
-const DevelopersPage = lazy(() => import("./pages/DevelopersPage"));
-const EnterprisePage = lazy(() => import("./pages/EnterprisePage"));
-const ReferralPage = lazy(() => import("./pages/ReferralPage"));
-const SessionsPage = lazy(() => import("./pages/SessionsPage"));
 
 const AutoImproveEngine = lazy(() => import("@/components/autoImprove/AutoImproveEngine"));
 const CustomerSupportWidget = lazy(() => import("./components/CustomerSupportWidget"));
@@ -178,7 +164,6 @@ const AnimatedRoutes = () => {
           <Route path="/google-seo" element={<Navigate to="/home" replace />} />
           <Route path="/press" element={<Navigate to="/home" replace />} />
           <Route path="/ide" element={<Suspense fallback={<PageLoader />}><PageTransition><AgenticIdePage /></PageTransition></Suspense>} />
-          <Route path="/missioncontrol" element={<Navigate to="/chatbot" replace />} />
           <Route path="/workspace" element={<Navigate to="/chatbot" replace />} />
           <Route path="/marketplace" element={<Navigate to="/chatbot" replace />} />
           
@@ -196,8 +181,8 @@ const AnimatedRoutes = () => {
           {/* Feature Pages */}
           <Route path="/proofloop" element={<PageTransition><ProofLoopPage /></PageTransition>} />
           <Route path="/missions" element={<Navigate to="/proofloop" replace />} />
-          <Route path="/mission-control" element={<Navigate to="/proofloop" replace />} />
-          <Route path="/missioncontrol" element={<Navigate to="/proofloop" replace />} />
+          <Route path="/mission-control" element={<RedirectPreserveQuery to="/proofloop" />} />
+          <Route path="/missioncontrol" element={<RedirectPreserveQuery to="/proofloop" />} />
           <Route path="/proof/:proofId" element={<PageTransition><PublicProofCardPage /></PageTransition>} />
           <Route path="/mission/:id" element={<PageTransition><PublicProofCardPage /></PageTransition>} />
           <Route path="/analytics" element={<Navigate to="/chatbot" replace />} />
@@ -223,7 +208,7 @@ const AnimatedRoutes = () => {
           <Route path="/security-audit" element={<Navigate to="/chatbot" replace />} />
           <Route path="/studio" element={<Navigate to="/chatbot" replace />} />
           <Route path="/transparency" element={<Navigate to="/chatbot" replace />} />
-          <Route path="/trust" element={<Navigate to="/chatbot" replace />} />
+          <Route path="/trust" element={<Navigate to="/security" replace />} />
           <Route path="/video-studio" element={<Navigate to="/chatbot" replace />} />
 
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
@@ -233,7 +218,22 @@ const AnimatedRoutes = () => {
   );
 };
 
+/**
+ * Redirect that carries the current query string to the target path.
+ * A plain <Navigate> drops ?goal=&deliverable=…, silently breaking the
+ * chatbot → ProofLoop handoff that navigates to /mission-control?goal=…
+ */
+const RedirectPreserveQuery = ({ to, replace = true }: { to: string; replace?: boolean }) => {
+  const location = useLocation();
+  const search = location.search || "";
+  const hash = location.hash || "";
+  return <Navigate to={`${to}${search}${hash}`} replace={replace} />;
+};
+
 const App = () => {
+  // Capture ?ref= referral codes on any entry URL (writes shadowtalk_ref_code
+  // + logs the click event once per code per session).
+  useReferralCapture();
   const skipBoot = shouldSkipBootScreen();
   const [showBootScreen, setShowBootScreen] = useState(() => !skipBoot);
   const [hasBooted, setHasBooted] = useState(() => skipBoot);

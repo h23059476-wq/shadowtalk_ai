@@ -15,7 +15,7 @@
  */
 
 const PENDING_OAUTH_KEY = "shadowtalk_auth_redirect_pending";
-const OAUTH_RETURN_KEY = "shadowtalk_oauth_return_destination";
+export const OAUTH_RETURN_KEY = "shadowtalk_oauth_return_destination";
 const PENDING_FLAG_MAX_AGE_MS = 5 * 60 * 1000;
 
 export function setPendingOAuthFlag(): void {

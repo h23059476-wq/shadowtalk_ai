@@ -72,7 +72,7 @@ export const TrustBadge = ({ className }: { className?: string }) => {
               These features describe the technical architecture. No third-party audit has been conducted yet.
             </p>
             <Link
-              to="/trust"
+              to="/security"
               className="mt-2 block text-center text-[10px] font-mono text-primary hover:underline"
               onClick={() => setExpanded(false)}
             >

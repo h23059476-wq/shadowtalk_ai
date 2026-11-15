@@ -308,6 +308,16 @@ const ProfilePage = () => {
     try {
       const uid = user?.id;
       if (!uid) throw new Error("Sign in again before deleting your account.");
+      // Mint a fresh ID token before invoking — the server enforces a 5-minute
+      // token-freshness window for this destructive action (auth_time never
+      // moves without full reauthentication, so force-refreshing here is what
+      // makes deletion possible for any live session).
+      try {
+        await backend.auth.refreshSession();
+      } catch {
+        // invoke() still attaches the best available token and surfaces the
+        // server's auth error if it is stale.
+      }
       const { data, error } = await backend.functions.invoke("deleteAccount");
       if (error) throw error;
       if (!data?.deleted) throw new Error("Account deletion did not complete. Please try again.");

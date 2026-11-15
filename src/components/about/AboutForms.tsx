@@ -60,7 +60,7 @@ const AboutForms = () => {
 
     setLoading(true);
     try {
-      const { data, error } = await backend.functions.invoke("send-contact-email", {
+      const { data, error } = await backend.functions.invoke("sendContactEmail", {
         body: {
           name: form.name.trim(),
           email: form.email.trim(),

@@ -109,6 +109,23 @@ export function AiAccessOnboarding({ userId }: AiAccessOnboardingProps) {
     setDismissed(true);
   }, []);
 
+  // Keyless path: switch the account to the shared tier (server-enforced
+  // 100/day quota) instead of forcing every user through BYOK setup. Without
+  // this, ai_access_mode=shared could never be written from the UI and the
+  // shared chat/image Functions stayed unreachable for new users.
+  const switchToShared = useCallback(async () => {
+    setSaving(true); setError("");
+    try {
+      await saveAiAccessMode(userId, "shared");
+      setMode("shared");
+      handleDismiss();
+    } catch {
+      setError("Could not switch to shared AI. Check your connection and try again.");
+    } finally {
+      setSaving(false);
+    }
+  }, [userId, handleDismiss]);
+
   const handleProviderSelect = (next: ByokProvider) => {
     setProvider(next); setModel(BYOK_PROVIDERS[next].defaultModel); setStep("getkey");
   };
@@ -176,6 +193,15 @@ export function AiAccessOnboarding({ userId }: AiAccessOnboardingProps) {
               <Button variant="ghost" onClick={handleDismiss} size="sm">Skip for now</Button>
               <Button onClick={() => setStep("provider")} className="gap-1.5" size="sm">Get started <ArrowRight className="h-4 w-4" /></Button>
             </div>
+            {error && <p role="alert" className="text-xs text-destructive">{error}</p>}
+            <button
+              type="button"
+              onClick={() => void switchToShared()}
+              disabled={saving}
+              className="w-full text-center text-xs text-muted-foreground hover:text-foreground underline-offset-2 hover:underline pt-1 disabled:opacity-60"
+            >
+              {saving ? "Switching to shared AI\u2026" : "No API key yet? Continue with shared AI (100 messages/day)"}
+            </button>
           </div>
         )}
 

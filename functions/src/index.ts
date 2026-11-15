@@ -142,7 +142,12 @@ export const deleteAccount = onRequest({ timeoutSeconds: 540 }, async (req, res)
 
     try {
       const user = await requireAuthenticatedUser(req.headers.authorization);
-      if (Date.now() / 1000 - user.auth_time > 5 * 60) {
+      // Freshness gate: the token must have been MINTED in the last 5 minutes.
+      // `iat` updates on every token refresh, so the client's force-refresh
+      // before invoke satisfies this; `auth_time` (the previous check) only
+      // moves on full reauthentication, which no client path ever performed —
+      // making account deletion impossible for sessions older than 5 minutes.
+      if (Date.now() / 1000 - user.iat > 5 * 60) {
         throw new AiRequestError("For security, sign in again before deleting your account.", 401);
       }
 

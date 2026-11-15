@@ -294,7 +294,7 @@ export async function applyCanvasFilter(imageDataUrl: string, filter: DirectFilt
 }
 /**
  * Ask the AI to actually look at the image and return a JSON payload.
- * Uses the Lovable Cloud chat function with multimodal (vision) input.
+ * Uses the BYOK chat transport with multimodal (vision) input.
  */
 async function visionJson(
   systemPrompt: string,

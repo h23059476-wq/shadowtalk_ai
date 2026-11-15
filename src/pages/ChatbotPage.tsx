@@ -118,8 +118,6 @@ import { useE2EE } from "@/hooks/useE2EE";
 import { useChatPrivateMode } from "@/hooks/useChatPrivateMode";
 import { buildMemoryContextForUser } from "@/lib/memory/promptInjector";
 import {
-  getChatFetchHeaders,
-  getChatFunctionUrl,
   isCloudConfigured,
   DESKTOP_ENV_SETUP_HINT,
   formatChatFetchError,
@@ -2014,12 +2012,17 @@ Structure and Content Guidelines:
 
     try {
       let accessMode = await loadAiAccessMode(user.id);
-      // ShadowTalk is BYOK-only. Default to 'byok' mode when no mode is set.
-      // If the user has no API key, the cloudChat layer will prompt them to
-      // add one in Settings — we don't fall back to the shared tier.
+      // First-run mode selection: users who already have a BYOK key are 'byok';
+      // keyless users start on the shared tier (server-enforced 100/day quota)
+      // so chat and image generation work before they ever add a key. Writing
+      // 'byok' for keyless users locked the shared chat/image Functions behind
+      // a mode no UI could ever set.
       if (!accessMode) {
+        const hasKey = !!getByokConfig()?.apiKey;
+        const defaultMode = hasKey ? "byok" : "shared";
         try {
-          await saveAiAccessMode(user.id, "byok");
+          await saveAiAccessMode(user.id, defaultMode);
+          accessMode = defaultMode;
         } catch {
           // saveAiAccessMode is resilient (localStorage-first)
         }

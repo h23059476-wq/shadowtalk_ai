@@ -15,7 +15,7 @@
  *                     breaker key rotation. Uses the OmniRoute model
  *                     identifier `auto/fast` (or `auto/cheap` if configured).
  *                     Falls back to streamCloudChat if OmniRoute is not
- *                     configured. Subject to the 50/day cap enforced by
+ *                     configured. Subject to the 100/day shared cap enforced by
  *                     useDailyUsage.
  *
  * Error handling:

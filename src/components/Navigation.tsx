@@ -98,7 +98,7 @@ const Navigation = ({ landingAnimated = false }: NavigationProps) => {
   }, [deferredPrompt]);
 
   const primaryNavItems = [
-    { name: "Shadow Twin", href: "/shadow-memory", icon: Brain, isLink: true },
+    { name: "Shadow Twin", href: "/shadow-twin", icon: Brain, isLink: true },
   ];
 
   const secondaryNavItems = [

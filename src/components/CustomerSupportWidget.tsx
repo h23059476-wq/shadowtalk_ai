@@ -69,6 +69,10 @@ const CustomerSupportWidget = () => {
             ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
           },
           body: JSON.stringify({
+            // Non-stream request — the server returns a complete OpenAI-shaped
+            // JSON body the widget can parse in one shot. (Without this the
+            // server defaulted to SSE and response.json() always threw.)
+            stream: false,
             messages: [
               { role: "system", content: SUPPORT_SYSTEM_PROMPT },
               ...messages.map(m => ({ role: m.role, content: m.content })),
@@ -79,7 +83,9 @@ const CustomerSupportWidget = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Support assistant currently unavailable");
+        const errBody = await response.json().catch(() => null);
+        const detail = typeof errBody?.error === "string" ? errBody.error : "";
+        throw new Error(detail || "Support assistant currently unavailable");
       }
 
       const data = await response.json();
@@ -87,9 +93,10 @@ const CustomerSupportWidget = () => {
       setMessages(prev => [...prev, { role: "assistant", content: reply }]);
     } catch (err) {
       console.error("Chat error:", err);
+      const reason = err instanceof Error && err.message ? err.message : "";
       setMessages(prev => [...prev, {
         role: "assistant",
-        content: "Sorry, I'm having trouble connecting right now. Please email us at shadowtalk@shadowtalk-ai.com."
+        content: `Sorry, that didn't go through${reason ? ` — ${reason}` : ""}. Please email us at shadowtalk@shadowtalk-ai.com.`
       }]);
       toast({ variant: "destructive", title: "Connection Error", description: "Failed to send message." });
     } finally {

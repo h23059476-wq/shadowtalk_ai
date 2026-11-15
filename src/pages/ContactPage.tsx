@@ -59,28 +59,42 @@ export const ContactPage = () => {
     setIsSubmitting(true);
 
     try {
-      // Attempt backend function call if available
+      // Cloud Function persists the inquiry to the `contact_messages` collection
+      // where the team reads it. The exported function id is camelCase — the
+      // previous kebab-case name here 404'd on every submit. NOTE: invoke()
+      // RESOLVES with { error } instead of throwing on HTTP failures, so the
+      // error must be checked explicitly (a try/catch alone never fires).
+      let delivered = false;
       try {
-        await backend.functions.invoke("send-contact-email", {
+        const { error: invokeError } = await backend.functions.invoke("sendContactEmail", {
           body: { ...formData, source: "Contact Page" },
         });
+        delivered = !invokeError;
       } catch (fnErr) {
-        console.warn("Cloud contact function fallback triggered:", fnErr);
+        console.warn("Cloud contact function failed:", fnErr);
       }
 
-      // Store inquiry locally in browser storage so inquiry is never lost
+      // Keep a local copy so the inquiry is never lost, even on delivery failure.
       try {
         const inquiries = JSON.parse(localStorage.getItem("shadowtalk_contact_inquiries") || "[]");
         inquiries.unshift({
           ...formData,
           submittedAt: new Date().toISOString(),
-          status: "received",
+          status: delivered ? "received" : "delivery-failed",
         });
         localStorage.setItem("shadowtalk_contact_inquiries", JSON.stringify(inquiries.slice(0, 20)));
       } catch {}
 
-      setSubmitted(true);
-      toast.success("Message received! Our team will respond within 24 hours.");
+      if (delivered) {
+        setSubmitted(true);
+        toast.success("Message received! Our team will respond within 24 hours.");
+      } else {
+        // Honest failure: never claim success when the team cannot see the message.
+        toast.error(
+          "We couldn't deliver your message just now. A copy was saved on this device — please email shadowtalk@shadowtalk-ai.com directly.",
+          { duration: 8000 },
+        );
+      }
     } catch (error) {
       console.error("Contact form error:", error);
       toast.error("Failed to transmit. Please email shadowtalk@shadowtalk-ai.com directly.");

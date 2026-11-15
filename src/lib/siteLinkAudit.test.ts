@@ -46,7 +46,7 @@ describe("site link audit", () => {
   const renderedStaticRoutes = appSource
     .split("\n")
     .filter((line) => line.includes('path="') && line.includes("element="))
-    .filter((line) => !line.includes("<Navigate"))
+    .filter((line) => !line.includes("<Navigate") && !line.includes("<RedirectPreserveQuery"))
     .map((line) => line.match(/path="([^"]+)"/)?.[1])
     .filter((p): p is string => Boolean(p))
     .filter((p) => p !== "*" && !p.includes(":") && !PALETTE_ROUTE_EXCEPTIONS.has(p));
@@ -62,7 +62,7 @@ describe("site link audit", () => {
 
   // Note: The missioncontrol and AdNetwork tests were removed because those
   // pages/components were removed in the v3.0.0 architecture pivot.
-  // /missioncontrol is now a prerendered marketing page, not an app route.
+  // /missioncontrol now redirects to /proofloop (preserving query params).
 
   it("Voice home alias routes to marketing /home", () => {
     const voice = readSrc("components/VoiceCommandSystem.tsx");

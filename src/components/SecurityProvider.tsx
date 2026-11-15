@@ -32,15 +32,17 @@ export const SecurityProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, []);
 
-  // === Detect and warn about devtools (production only) ===
+  // === Detect and warn about devtools (production only, warn once) ===
   useEffect(() => {
     if (!import.meta.env.PROD) return;
 
     const threshold = 160;
+    let warned = false;
     const check = () => {
       const widthDiff = window.outerWidth - window.innerWidth > threshold;
       const heightDiff = window.outerHeight - window.innerHeight > threshold;
-      if (widthDiff || heightDiff) {
+      if ((widthDiff || heightDiff) && !warned) {
+        warned = true;
         console.warn('%c⚠️ Security Warning: Developer tools detected', 'color: red; font-size: 20px; font-weight: bold;');
       }
     };
@@ -68,22 +70,35 @@ export const SecurityProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, []);
 
-  // === Clickjacking detection (production only, skip known hosts) ===
+  // === Clickjacking detection (production only, allowlist-based) ===
   useEffect(() => {
     if (!import.meta.env.PROD) return;
-    if (window.self !== window.top) {
+    if (window.self === window.top) return;
+
+    const isAllowedHost = (host: string) =>
+      host === 'shadowtalk-ai.com' ||
+      host.endsWith('.shadowtalk-ai.com') ||
+      host.endsWith('.firebaseapp.com') ||
+      host.endsWith('.web.app');
+
+    // Identify the framing window: read it directly when same-origin, else
+    // fall back to the referrer. An empty referrer from a cross-origin frame
+    // is treated as UNTRUSTED — the previous logic inverted this and treated
+    // every referrer-less frame as safe, disabling the guard in practice.
+    let framedBy = '';
+    try {
+      framedBy = new URL(window.top.location.href).hostname;
+    } catch {
       try {
-        const parentOrigin = document.referrer;
-        const trusted = ['shadowtalk-ai.com', 'www.shadowtalk-ai.com'];
-        const currentHost = window.location.hostname;
-        const isTrusted = !parentOrigin || trusted.some(h => parentOrigin.includes(h) || currentHost.endsWith(h));
-        if (!isTrusted) {
-          document.body.style.display = 'none';
-          console.error('Clickjacking detected — content hidden');
-        }
+        framedBy = new URL(document.referrer).hostname;
       } catch {
-        document.body.style.display = 'none';
+        framedBy = '';
       }
+    }
+
+    if (!isAllowedHost(window.location.hostname) && !(framedBy && isAllowedHost(framedBy))) {
+      document.body.style.display = 'none';
+      console.error('Clickjacking detected — content hidden');
     }
   }, []);
 

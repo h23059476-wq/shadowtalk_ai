@@ -15,16 +15,19 @@ import {
   sendPasswordResetEmail,
   signInAnonymously as fbSignInAnonymously,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signInWithRedirect,
   signOut as fbSignOut,
   updateEmail,
   updatePassword,
   updateProfile,
   verifyPasswordResetCode,
-  type User as FbUser,
+  type UserCredential,
 } from 'firebase/auth';
 import { fbAuth } from './app';
+import type { User as FbUser } from 'firebase/auth';
 import {
+  OAUTH_RETURN_KEY,
   clearPendingOAuthFlag,
   hasPendingOAuthFlag,
   setOAuthReturnDestination,
@@ -257,20 +260,56 @@ export function createAuthAdapter() {
           p = new OAuthProvider(provider.includes('.') ? provider : `${provider}.com`);
         }
 
-        // signInWithRedirect always returns the browser to the initiating page
-        // (/auth) — the caller's intended destination is honored by persisting
-        // it here so the return handoff can navigate there once the session
-        // is restored (the previous implementation dropped it entirely).
         setPendingOAuthFlag();
         if (options?.redirectTo) setOAuthReturnDestination(options.redirectTo);
-        await signInWithRedirect(fbAuth(), p);
+
+        // POPUP-FIRST: signInWithRedirect bounces through the authDomain (a
+        // third-party origin), and on browsers that block or partition
+        // third-party storage (Chrome M115+ cookie phaseout, Safari ITP,
+        // Brave, incognito) the session is lost on the way back — the user
+        // "completes" Google sign-in and lands on /auth still signed out.
+        // The popup path returns the credential in-page via postMessage and
+        // needs no cross-site storage at all. Redirect stays as the fallback
+        // for environments where popups cannot be opened at all; its return
+        // handoff is handled by onAuthStateChange + useOAuthReturnHandoff.
+        let cred: UserCredential;
+        try {
+          cred = await signInWithPopup(fbAuth(), p);
+        } catch (popupError: any) {
+          const code: string = popupError?.code || '';
+          const popupUnavailable =
+            code === 'auth/popup-blocked' ||
+            code === 'auth/operation-not-supported-in-this-environment';
+          if (!popupUnavailable) throw popupError;
+
+          await signInWithRedirect(fbAuth(), p);
+          return {
+            data: { provider, url: window.location.href, user: null, session: null },
+            error: null,
+          };
+        }
+
+        // Popup succeeded — user and session are available immediately, so
+        // the caller can navigate to the workspace without a page reload.
+        // No redirect return will happen; drop the handoff state.
+        clearPendingOAuthFlag();
+        try {
+          window.sessionStorage.removeItem(OAUTH_RETURN_KEY);
+        } catch {
+          /* storage unavailable — the stale destination is never consumed */
+        }
         return {
-          data: { provider, url: window.location.href, user: null, session: null },
+          data: {
+            provider,
+            url: window.location.href,
+            user: toAdapterUser(cred.user),
+            session: await toAdapterSession(cred.user),
+          },
           error: null,
         };
       } catch (error: any) {
-        // The redirect never left the page — clear the handoff state so the
-        // auth page doesn't mistake the next visit for a return from Google.
+        // Nothing left the page — clear the handoff state so the auth page
+        // doesn't mistake the next visit for a return from Google.
         clearPendingOAuthFlag();
         return { data: { provider, url: '', user: null, session: null }, error: friendlyError(error) };
       }

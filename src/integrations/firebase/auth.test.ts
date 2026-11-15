@@ -4,6 +4,7 @@ const sdk = vi.hoisted(() => ({
   auth: { currentUser: null as any },
   sendPasswordResetEmail: vi.fn(),
   signInWithEmailAndPassword: vi.fn(),
+  signInWithPopup: vi.fn(),
   signInWithRedirect: vi.fn(),
   getRedirectResult: vi.fn(),
 }));
@@ -21,7 +22,8 @@ vi.mock("firebase/auth", () => ({
   onAuthStateChanged: vi.fn(), reload: vi.fn(), sendEmailVerification: vi.fn(),
   sendPasswordResetEmail: sdk.sendPasswordResetEmail,
   signInAnonymously: vi.fn(), signInWithEmailAndPassword: sdk.signInWithEmailAndPassword,
-  signInWithRedirect: sdk.signInWithRedirect, signOut: vi.fn(), updateEmail: vi.fn(),
+  signInWithPopup: sdk.signInWithPopup, signInWithRedirect: sdk.signInWithRedirect,
+  signOut: vi.fn(), updateEmail: vi.fn(),
   updatePassword: vi.fn(), updateProfile: vi.fn(), verifyPasswordResetCode: vi.fn(),
   deleteUser: vi.fn(),
 }));
@@ -73,23 +75,59 @@ describe("Firebase auth adapter", () => {
     expect(result.error?.message).not.toContain("person@example.test");
   });
 
-  it("persists the OAuth return destination and a fresh pending flag for the redirect handoff", async () => {
+  it("signs in via popup and returns the session immediately (no redirect handoff)", async () => {
+    window.sessionStorage.setItem(PENDING_KEY, String(Date.now()));
+    window.sessionStorage.setItem(RETURN_KEY, "https://example.org/chatbot?q=hello");
+    sdk.signInWithPopup.mockResolvedValueOnce({ user: mockFbUser() });
     const adapter = createAuthAdapter();
+
     const result = await adapter.signInWithOAuth({
       provider: "google",
       options: { redirectTo: "https://example.org/chatbot?q=hello" },
     });
+
+    expect(result.error).toBeNull();
+    expect(sdk.signInWithPopup).toHaveBeenCalledTimes(1);
+    expect(sdk.signInWithRedirect).not.toHaveBeenCalled();
+    expect(result.data?.user?.email).toBe("person@example.test");
+    expect(result.data?.session?.access_token).toBe("tok");
+    // No redirect return follows a popup success — the handoff state must be
+    // cleared so a later /auth visit never mistakes it for a pending return.
+    expect(window.sessionStorage.getItem(PENDING_KEY)).toBeNull();
+    expect(window.sessionStorage.getItem(RETURN_KEY)).toBeNull();
+  });
+
+  it("falls back to signInWithRedirect only when the popup cannot open", async () => {
+    const adapter = createAuthAdapter();
+
+    sdk.signInWithPopup.mockRejectedValueOnce({ code: "auth/popup-blocked" });
+    const result = await adapter.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: "https://example.org/chatbot?q=hello" },
+    });
+
     expect(result.error).toBeNull();
     expect(sdk.signInWithRedirect).toHaveBeenCalledTimes(1);
-
-    // The previous implementation dropped options.redirectTo entirely, so
-    // Firebase returned the browser to /auth and the destination was lost.
+    expect(result.data?.user).toBeNull();
+    // The browser is about to leave for Google — the return handoff state
+    // must survive so the redirect back can navigate to the destination.
     expect(window.sessionStorage.getItem(RETURN_KEY)).toBe("https://example.org/chatbot?q=hello");
-    // Timestamp format (not the legacy bare "1") so the handoff can expire it.
     expect(Number(window.sessionStorage.getItem(PENDING_KEY))).toBeGreaterThan(0);
   });
 
-  it("clears the handoff state when initiating the redirect fails", async () => {
+  it("does NOT fall back to redirect when the user merely closes the popup", async () => {
+    const adapter = createAuthAdapter();
+    sdk.signInWithPopup.mockRejectedValueOnce({ code: "auth/popup-closed-by-user" });
+
+    const result = await adapter.signInWithOAuth({ provider: "google" });
+
+    expect(result.error?.message).toContain("closed");
+    expect(sdk.signInWithRedirect).not.toHaveBeenCalled();
+    expect(window.sessionStorage.getItem(PENDING_KEY)).toBeNull();
+  });
+
+  it("clears the handoff state when both popup and redirect initiation fail", async () => {
+    sdk.signInWithPopup.mockRejectedValueOnce({ code: "auth/popup-blocked" });
     sdk.signInWithRedirect.mockRejectedValueOnce({ code: "auth/unauthorized-domain" });
     window.sessionStorage.setItem(PENDING_KEY, String(Date.now()));
     const adapter = createAuthAdapter();

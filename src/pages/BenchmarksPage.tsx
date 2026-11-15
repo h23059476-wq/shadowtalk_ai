@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Share2, ArrowRight, Sparkles, Zap, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { trackShadowTalkEvent } from "@/lib/analyticsEventTracker";
+import { stagePromptPrefill } from "@/lib/promptPrefill";
 import { ShareConsensusResult, type ConsensusPayload } from "@/components/growth/ShareConsensusResult";
 
 /**
@@ -45,8 +46,10 @@ function BenchmarkCard({ benchmark }: { benchmark: Benchmark }) {
 
   const handleTryInWorkspace = () => {
     trackShadowTalkEvent("benchmarks_try_in_workspace", { benchmark: benchmark.slug });
-    // Stash the prompt in sessionStorage so the chatbot can pre-fill it
-    sessionStorage.setItem("shadowtalk_prefill_prompt", benchmark.prompt);
+    // Stage via the same channel the Prompt Library uses — ChatbotPage reads
+    // and clears this key on mount. (The previous sessionStorage key was read
+    // by nothing, so the prompt never reached the composer.)
+    stagePromptPrefill(benchmark.prompt);
     navigate("/chatbot?demo=true");
   };
 

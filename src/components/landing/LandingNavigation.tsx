@@ -367,7 +367,7 @@ const LandingNavigation = ({ children }: LandingNavigationProps) => {
                               Company Vision
                             </Link>
                             <span className="text-neutral-700">&bull;</span>
-                            <Link to="/trust" onClick={closeDrawer} className="hover:text-white transition-colors">
+                            <Link to="/security" onClick={closeDrawer} className="hover:text-white transition-colors">
                               Security & Trust
                             </Link>
                           </div>

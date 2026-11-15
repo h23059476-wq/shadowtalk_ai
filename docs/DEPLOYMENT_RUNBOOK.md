@@ -3,7 +3,7 @@
 ## Pre-Deployment
 
 1. `git pull origin main`
-2. `npm install` (or `bun install`)
+2. `npm install` (the repo pins `package-lock.json` only; `bun.lock` was removed)
 3. `npm run build` — verify pass
 4. `npx tsc --noEmit` — verify zero errors
 5. `npx vitest run` — verify 169+ tests pass

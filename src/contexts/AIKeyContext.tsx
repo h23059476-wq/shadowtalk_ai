@@ -75,7 +75,7 @@ export interface AIKeyContextValue {
 
 // ── Constants ──────────────────────────────────────────────────────────
 
-const MAX_DAILY_LIMIT = 50;
+const MAX_DAILY_LIMIT = 100; // matches the server-enforced shared quota (functions/src/index.ts)
 
 const AIKeyContext = createContext<AIKeyContextValue | undefined>(undefined);
 

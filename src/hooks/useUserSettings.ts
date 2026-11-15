@@ -13,9 +13,13 @@ export function useUserSettings<T = any>(settingKey: string, defaultValue: T) {
     let unsubscribe: (() => void) | undefined;
     
     if (!user) {
-      // For unauthenticated users, use localStorage
+      // For unauthenticated users, use localStorage. save() writes the
+      // _guest-suffixed key, so that is what must be read back here — the
+      // bare key was only ever written by the signed-in DB-failure fallback.
       try {
-        const stored = localStorage.getItem(`shadowtalk_${settingKey}`);
+        const stored =
+          localStorage.getItem(`shadowtalk_${settingKey}_guest`)
+          || localStorage.getItem(`shadowtalk_${settingKey}`);
         if (stored) setValue(JSON.parse(stored));
       } catch { /* ignore */ }
       setIsLoading(false);
@@ -40,12 +44,13 @@ export function useUserSettings<T = any>(settingKey: string, defaultValue: T) {
                 const data = snapshot.docs[0].data;
                 setValue(data.setting_value as T);
               } else {
-                // Migrate from localStorage if exists
-                // Signed-in settings must never fall back to the anonymous,
-                // browser-wide value: it may belong to a different account.
+                // Migrate from localStorage if exists. The uid-scoped key is
+                // written by this same hook's DB-failure fallback (same
+                // account, same device), and the legacy custom_instructions
+                // key predates uid scoping — both are safe to migrate.
                 const stored = localStorage.getItem(`shadowtalk_${settingKey}_${user.id}`)
                   || localStorage.getItem(`custom_instructions_${user.id}`);
-                if (stored && settingKey === 'custom_instructions') {
+                if (stored) {
                   const parsed = JSON.parse(stored);
                   setValue(parsed as T);
                   // Save to DB
@@ -95,8 +100,10 @@ export function useUserSettings<T = any>(settingKey: string, defaultValue: T) {
       }, { onConflict: 'user_id,setting_key' });
     } catch (e) {
       console.error(`[UserSettings] Failed to save ${settingKey}:`, e);
-      // Fallback to localStorage
-      localStorage.setItem(`shadowtalk_${settingKey}`, JSON.stringify(newValue));
+      // Fallback to a uid-scoped localStorage key — the signed-in load path
+      // migrates exactly this key back into the DB once connectivity returns.
+      // (The previous unscoped write was never read by any code path.)
+      localStorage.setItem(`shadowtalk_${settingKey}_${user.id}`, JSON.stringify(newValue));
     }
     setIsSaving(false);
   }, [user, settingKey]);

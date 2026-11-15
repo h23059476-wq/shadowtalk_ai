@@ -186,7 +186,7 @@ export const useHardwareCapabilities = () => {
       caps.recommendedModels = MODEL_TIERS[tier].models;
 
       setCapabilities(prev => ({ ...prev, ...caps }) as HardwareCapabilities);
-      console.log('[Hardware] Detected capabilities:', caps);
+      if (import.meta.env.DEV) console.log('[Hardware] Detected capabilities:', caps);
     } catch (e) {
       console.error('[Hardware] Detection failed:', e);
       setError(e instanceof Error ? e.message : 'Hardware detection failed');

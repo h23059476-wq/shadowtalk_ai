@@ -72,12 +72,12 @@ describe("Image Editor Engine", () => {
   });
 
   describe("editImageSeamlessly", () => {
-    // Note: editImageSeamlessly makes real network calls to external image
-    // generation APIs (pollinations.ai / Supabase Edge Function). These
-    // integration tests are skipped in the unit test suite because they
-    // require a live backend and cannot pass in CI without network access.
-    // To run them manually: remove the .skip and ensure the backend is
-    // reachable.
+    // Note: editImageSeamlessly routes through AIProviderRouter → the unified
+    // image pipeline (src/lib/imageGen.ts: BYOK browser→provider, with the
+    // shared-mode Function fallback). These integration tests are skipped in
+    // the unit suite because they need a live provider key and network
+    // access. The pollinations.ai/Supabase backends referenced previously no
+    // longer exist. To run manually: remove the .skip and set a real key.
     it.skip("handles generative image edits with high quality Flux URL", async () => {
       const result = await editImageSeamlessly(sampleImage, "add cool sunglasses and a leather jacket");
       expect(result.editedImageUrl).toBeTruthy();

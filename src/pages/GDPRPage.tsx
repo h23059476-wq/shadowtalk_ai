@@ -34,6 +34,21 @@ export const GDPRPage = () => {
   const lastUpdated = "February 28, 2026";
   const [isExporting, setIsExporting] = useState(false);
 
+  // Settings and memories are stored under several uid-scoped key formats
+  // (guest vs signed-in, singular/plural history) — collect every entry under
+  // the given prefixes so the export reflects what actually exists on this
+  // device instead of reading keys nobody writes.
+  const gatherLocalStorage = (prefixes: string[]): Record<string, string | null> => {
+    const entries: Record<string, string | null> = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && prefixes.some((p) => key.startsWith(p))) {
+        entries[key] = localStorage.getItem(key);
+      }
+    }
+    return entries;
+  };
+
   // Interactive tool to export all personal local data stored in browser
   const handleExportPersonalData = () => {
     setIsExporting(true);
@@ -41,9 +56,9 @@ export const GDPRPage = () => {
       const exportPackage: Record<string, any> = {
         exportedAt: new Date().toISOString(),
         platform: "ShadowTalk AI",
-        userProfile: localStorage.getItem("shadowtalk_user_profile") || "Anonymous Session",
-        customInstructions: localStorage.getItem("shadowtalk_custom_instructions") || "None set",
-        businessMemory: localStorage.getItem("shadowtalk_business_memory") || "[]",
+        userProfile: localStorage.getItem("shadowtalk-local-user") || "Anonymous Session",
+        customInstructions: gatherLocalStorage(["shadowtalk_custom_instructions", "custom_instructions"]),
+        businessMemory: gatherLocalStorage(["shadowtalk_business_memories"]),
         recentInquiries: localStorage.getItem("shadowtalk_contact_inquiries") || "[]",
         localStorageKeys: Object.keys(localStorage).filter((k) => k.startsWith("shadowtalk_")),
       };

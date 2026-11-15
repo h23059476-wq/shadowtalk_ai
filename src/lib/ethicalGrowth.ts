@@ -9,9 +9,9 @@ export const PROOF_LINKS = [
   { href: "/changelog", label: "Changelog" },
   { href: "/status", label: "Status" },
   { href: "/docs", label: "Docs" },
-  { href: "/trust", label: "Security & trust" },
+  { href: "/security", label: "Security & trust" },
   { href: "/transparency", label: "Data handling" },
-  { href: "/competitive", label: "Feature comparison" },
+  { href: "/benchmarks", label: "Feature comparison" },
 ] as const;
 
 export const PRICING_TRANSPARENCY = {

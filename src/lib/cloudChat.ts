@@ -1,8 +1,9 @@
 /**
- * Lovable Cloud AI chat — streaming client.
+ * Cloud AI chat — streaming client.
  *
- * Calls the `chat` edge function, which proxies the Lovable AI Gateway with
- * `stream: true`, and yields incremental text through `onDelta`.
+ * BYOK keys call the provider directly from the browser (streamByokChat).
+ * Shared-mode users stream through the Firebase `chat` Cloud Function, which
+ * proxies OpenRouter with `stream: true` and yields text via `onDelta`.
  */
 
 import { fbAuth, functionsBaseUrl } from "@/integrations/firebase/app";

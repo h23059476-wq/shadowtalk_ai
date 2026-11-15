@@ -71,7 +71,9 @@ export async function trackAiMetrics(eventName: AiEventName, payload: AiMetricPa
     ...payload,
   };
 
-  console.log(`[agentic-metrics] ${JSON.stringify(logData)}`);
+  if (import.meta.env.DEV) {
+    console.log(`[agentic-metrics] ${JSON.stringify(logData)}`);
+  }
 
   try {
     const db = await getDB();

@@ -37,5 +37,5 @@ Use the Firebase CLI with the intended project selected and credentials configur
 
 - `src/main.tsx` both registers a service worker and schedules service-worker unregistration.
 - Firebase Hosting's SPA rewrite does not make missing Cloud Functions endpoints exist.
-- The Functions package currently exports only `chat`, `generateImage`, `audio`, and `drive`. `generateImage` is called by the client (`src/lib/sharedImage.ts`) as the shared-mode image fallback; see the [image generation guide](IMAGE_GENERATION_GUIDE.md).
+- The Functions package exports six HTTPS endpoints: `chat` (shared-mode proxy), `generateImage` (shared-mode image fallback, called by `src/lib/sharedImage.ts`; see the [image generation guide](IMAGE_GENERATION_GUIDE.md)), `deleteAccount` (full GDPR wipe; the client force-refreshes the ID token first for the 5-minute freshness gate), `sendContactEmail` (contact/feedback/waitlist intake into `contact_messages`), and the `audio` / `drive` 501 stubs (reserved, no callers). Function IDs are the exported camelCase names verbatim — kebab-case `invoke("send-contact-email")` calls 404.
 - Browser-local model support depends on hardware, browser capabilities, network availability for initial model assets, and storage.
