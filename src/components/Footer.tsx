@@ -101,6 +101,25 @@ const Footer = () => {
                 </LandingAnimate>
               ))}
             </LandingStagger>
+
+            {/* Directory badge — Launch01 backlink verification (dark theme, verbatim embed) */}
+            <div className="mt-5">
+              <p className="text-xs font-semibold text-foreground/80 mb-2">Featured On</p>
+              <a
+                href="https://launch01.com/projects/shadowtalk-ai?utm_source=badge"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Featured on Launch01"
+                className="inline-block opacity-90 hover:opacity-100 transition-opacity"
+              >
+                <img
+                  src="https://r2.direasy-multi-tenant.focusapps.app/uploads/616d0b1a-3979-4b8c-94d1-b4f1fedd3ead/1782997259567/w4wbn1tx1uj/featured-on-dark.svg"
+                  alt="Featured on Launch01"
+                  style={{ height: 44, width: "auto" }}
+                  loading="lazy"
+                />
+              </a>
+            </div>
           </LandingAnimate>
 
           {footerSections.map((section, i) => (
