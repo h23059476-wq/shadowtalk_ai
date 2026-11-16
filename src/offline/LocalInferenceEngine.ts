@@ -71,7 +71,7 @@ export class LocalInferenceEngine {
     progressCb: InitProgressCallback,
     useMirror: boolean,
   ): Promise<WebWorkerMLCEngine> {
-    const worker = new Worker(new URL('./llm.worker.ts', import.meta.url), { type: 'module' });
+    const worker = new Worker(new URL('../workers/webllm.worker.ts', import.meta.url), { type: 'module' });
     const engineConfigs: MLCEngineConfig = { initProgressCallback: progressCb };
     if (useMirror) {
       const mirrorAppConfig = buildMirrorAppConfig();

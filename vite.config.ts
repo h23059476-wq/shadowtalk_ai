@@ -90,6 +90,12 @@ export default defineConfig(({ mode }) => {
           ]
         },
         workbox: {
+          // Pre-caches the app shell, the webllm.worker chunk and the
+          // vendor-ai (web-llm runtime) chunk — hashed assets from dist only.
+          // NEVER raises above ~10MB per file and never hardcodes model
+          // weights: the multi-GB shards flow through web-llm's per-shard
+          // Cache API at runtime (see src/services/modelManager.ts), so PWA
+          // install stays fast even on slow networks.
           globPatterns: ['**/*.{js,css,html,ico,png,svg,json,wasm}'],
           maximumFileSizeToCacheInBytes: 10000000 // Increase limit for wasm/model artifacts
         }

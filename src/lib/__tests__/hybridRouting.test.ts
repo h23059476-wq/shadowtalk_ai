@@ -66,8 +66,13 @@ import {
   STARTER_LOCAL_MODEL,
   LOCAL_MODEL_TIERS,
   DEFAULT_LOCAL_MODEL,
+  DEFAULT_LOCAL_MODEL_F32,
   LOW_TIER_LOCAL_MODEL,
+  SMOLLM2_1_7B_LOCAL_MODEL,
+  QWEN25_3B_LOCAL_MODEL,
   HIGH_TIER_LOCAL_MODEL,
+  CODER_3B_LOCAL_MODEL,
+  CODER_1_5B_LOCAL_MODEL,
 } from "@/ai/ModelRegistry";
 
 const chat = (content: string): CloudChatMessage => ({ role: "user", content });
@@ -160,28 +165,39 @@ describe("streamCloudChat — private-by-default routing", () => {
   });
 });
 
-describe("pickLocalModelForDevice — starter-first policy", () => {
-  it("returns the universal Nano starter for every device class", () => {
-    for (const memory of [undefined, 1, 2, 4, 8, 16]) {
+describe("pickLocalModelForDevice — instant-default policy (tiered model manager)", () => {
+  it("returns the universal 1B instant default for normal devices", () => {
+    for (const memory of [undefined, 4, 8, 16]) {
       expect(pickLocalModelForDevice(memory, false).id).toBe(STARTER_LOCAL_MODEL.id);
     }
     expect(pickLocalModelForDevice(8, true).id).toBe(STARTER_LOCAL_MODEL.id);
-    expect(pickLocalModelForDevice(2, true).id).toBe(STARTER_LOCAL_MODEL.id);
   });
 
-  it("starter is the smallest tier; 1B/3B remain explicit upgrades, smallest first", () => {
-    expect(STARTER_LOCAL_MODEL.id).toBe(LOW_TIER_LOCAL_MODEL.id);
+  it("drops to the 0.5B ultra-light safety net on ≤2GB devices", () => {
+    expect(pickLocalModelForDevice(2, true).id).toBe(LOW_TIER_LOCAL_MODEL.id);
+    expect(pickLocalModelForDevice(1, false).id).toBe(LOW_TIER_LOCAL_MODEL.id);
+  });
+
+  it("starter is the instant default (Llama-3.2-1B); tiers ordered smallest → largest", () => {
+    expect(STARTER_LOCAL_MODEL.id).toBe(DEFAULT_LOCAL_MODEL.id);
+    expect(STARTER_LOCAL_MODEL.id).toBe("Llama-3.2-1B-Instruct-q4f16_1-MLC");
     expect(LOCAL_MODEL_TIERS.map((m) => m.id)).toEqual([
       LOW_TIER_LOCAL_MODEL.id,
       DEFAULT_LOCAL_MODEL.id,
+      CODER_1_5B_LOCAL_MODEL.id,
+      SMOLLM2_1_7B_LOCAL_MODEL.id,
       HIGH_TIER_LOCAL_MODEL.id,
+      QWEN25_3B_LOCAL_MODEL.id,
+      CODER_3B_LOCAL_MODEL.id,
     ]);
     const sizes = LOCAL_MODEL_TIERS.map((m) => m.approxStorageRequirementMB);
     expect([...sizes].sort((a, b) => a - b)).toEqual(sizes);
   });
 
-  it("keeps the first download a 5-minute ask, not a 20-minute one", () => {
-    expect(STARTER_LOCAL_MODEL.approxStorageRequirementMB).toBeLessThanOrEqual(700);
+  it("instant default matches the ~880MB–1.1GB budget (f16 vs f32 twin)", () => {
+    expect(STARTER_LOCAL_MODEL.approxStorageRequirementMB).toBeGreaterThanOrEqual(800);
+    expect(STARTER_LOCAL_MODEL.approxStorageRequirementMB).toBeLessThanOrEqual(900);
+    expect(DEFAULT_LOCAL_MODEL_F32.approxStorageRequirementMB).toBeLessThanOrEqual(1200);
     expect(HIGH_TIER_LOCAL_MODEL.approxStorageRequirementMB).toBeGreaterThan(
       STARTER_LOCAL_MODEL.approxStorageRequirementMB,
     );

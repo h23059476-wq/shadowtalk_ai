@@ -140,6 +140,12 @@ export function recordInstallDecision(uid: string, accepted: boolean): void {
   if (accepted) {
     acceptedBy = uid;
     void startBackgroundInstall(uid);
+  } else {
+    // "Not now" must also stop the automatic tier bootstrap (embeddings +
+    // instant chat) — dynamic import keeps the module graph acyclic.
+    void import("@/services/modelManager")
+      .then((m) => m.abortBootstrap())
+      .catch(() => {});
   }
 }
 

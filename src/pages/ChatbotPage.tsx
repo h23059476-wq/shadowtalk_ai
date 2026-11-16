@@ -12,7 +12,9 @@ import { ChatHeader } from "@/components/chat/ChatHeader";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { AiAccessOnboarding } from "@/components/chat/AiAccessOnboarding";
 import { PrivateAiBanner } from "@/components/chat/PrivateAiBanner";
+import { ModelManagerDrawer } from "@/components/ModelManagerDrawer";
 import { LOCAL_MODEL_READY_EVENT } from "@/offline/BackgroundInstall";
+import { initModelManager } from "@/services/modelManager";
 const LiveVoiceMode = lazy(() => import("@/components/chat/LiveVoiceMode").then(m => ({ default: m.LiveVoiceMode })));
 const SettingsByokCard = lazy(() => import("@/components/settings/SettingsByokCard").then(m => ({ default: m.SettingsByokCard })));
 import { ChatToolbar } from "@/components/chat/ChatToolbar";
@@ -397,6 +399,13 @@ const ChatbotPage = () => {
     window.addEventListener(LOCAL_MODEL_READY_EVENT, onReady);
     return () => window.removeEventListener(LOCAL_MODEL_READY_EVENT, onReady);
   }, [user, toast, logMemoryEvent]);
+
+  // Tiered pre-installed model manager: persistent storage + idle bootstrap
+  // (embeddings immediately, then the instant chat model in the background).
+  // Idempotent — safe across re-mounts and account switches.
+  useEffect(() => {
+    initModelManager({ uid: user?.id });
+  }, [user?.id]);
 
   // Abort any in-flight chat request when the chat page unmounts — otherwise
   // the SSE reader keeps streaming (and may still write to the DB) after the
@@ -3128,6 +3137,7 @@ Structure and Content Guidelines:
 
         {user && <AiAccessOnboarding userId={user.id} />}
         {user && <PrivateAiBanner userId={user.id} />}
+        <ModelManagerDrawer />
 
         {/* Consent-gated recovery for pre-account-scoping E2EE vaults. */}
         <LegacyVaultRecoveryDialog

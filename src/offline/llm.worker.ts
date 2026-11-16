@@ -1,12 +1,5 @@
-import { MLCEngine, WebWorkerMLCEngineHandler } from "@mlc-ai/web-llm";
-
-// Instantiate the core engine
-const engine = new MLCEngine();
-
-// Pass it to the Web Worker handler which takes care of communication with the main thread
-const handler = new (WebWorkerMLCEngineHandler as any)(engine);
-
-// Bind message events
-self.onmessage = (msg: MessageEvent) => {
-  handler.onmessage(msg);
-};
+// Compatibility shim — the canonical worker now lives at
+// `src/workers/webllm.worker.ts` (same handler, same engine). This file only
+// re-exports it so any stale reference keeps working while the engine and
+// the model manager both spawn the canonical path.
+import "./workers/webllm.worker";
