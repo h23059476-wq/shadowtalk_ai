@@ -22,15 +22,43 @@
  *
  * The template comes from VITE_MODEL_MIRROR_URL_TEMPLATE and MUST contain a
  * "{slug}" placeholder (replaced with the model's repo slug, e.g.
- * "Qwen2.5-0.5B-Instruct-q4f16_1-MLC"). Unset/invalid ⇒ mirror disabled and
- * everything behaves exactly as before. model_lib WASM URLs are NOT mirrored
- * — they point at raw.githubusercontent.com and are independent of the HF CDN.
+ * "Qwen2.5-0.5B-Instruct-q4f16_1-MLC"). Unset ⇒ the built-in ShadowTalk
+ * weights mirror is used (orphan `weights` branch of this repo, served by
+ * raw.githubusercontent.com with CORS — see DEFAULT_MIRROR_TEMPLATE);
+ * an invalid override (no {slug}) ⇒ mirror disabled and everything behaves
+ * exactly as before. model_lib WASM URLs are NOT mirrored — they point at
+ * raw.githubusercontent.com and are independent of the HF CDN.
  */
 import { prebuiltAppConfig, type AppConfig } from "@mlc-ai/web-llm";
 import { MODEL_REGISTRY } from "@/ai/ModelRegistry";
 
+/**
+ * Built-in $0 mirror: the universal starter's two 0.5B twins live on the
+ * orphan `weights` branch of this repo (models/<slug>/resolve/main/…), served
+ * by raw.githubusercontent.com — CORS verified in-browser (ACAO: *) and
+ * byte-identical to the Hugging Face originals. raw.github caps files at
+ * 100 MB (largest 0.5B shard 64.9 MB fits); 1B/3B shards exceed it, so those
+ * optional tiers stay HuggingFace-only. The `weights` branch is orphaned so
+ * ordinary `main` clones never download any weights.
+ */
+export const DEFAULT_MIRROR_TEMPLATE =
+  "https://raw.githubusercontent.com/h23059476-wq/shadowtalk_ai/weights/models/{slug}/resolve/main/";
+
+/**
+ * The model ids actually hosted on the built-in mirror (keep in sync with the
+ * `weights` branch). With the default template, only these records get
+ * rewritten — a 1B/3B mirror attempt would just 404 and waste a retry.
+ * A custom VITE_MODEL_MIRROR_URL_TEMPLATE host rewrites every registry model;
+ * the operator is responsible for what their mirror serves.
+ */
+export const DEFAULT_MIRRORED_MODEL_IDS: ReadonlySet<string> = new Set([
+  "Qwen2.5-0.5B-Instruct-q4f16_1-MLC",
+  "Qwen2.5-0.5B-Instruct-q4f32_1-MLC",
+]);
+
 const RAW_TEMPLATE =
-  (import.meta.env?.VITE_MODEL_MIRROR_URL_TEMPLATE as string | undefined)?.trim() ?? "";
+  (import.meta.env?.VITE_MODEL_MIRROR_URL_TEMPLATE as string | undefined)?.trim() ||
+  DEFAULT_MIRROR_TEMPLATE;
 
 /** The configured mirror template ("" when unset). */
 export function mirrorUrlTemplate(): string {
@@ -60,16 +88,20 @@ function slugOfModelUrl(modelUrl: string): string | null {
 }
 
 /**
- * Clone of prebuiltAppConfig with every registry model's `model` URL rewritten
- * to the mirror. Returns null when the mirror is disabled or malformed —
- * callers must treat null as "no mirror, keep the default behavior".
+ * Clone of prebuiltAppConfig with the mirrored models' `model` URLs rewritten
+ * to the mirror. With the built-in default template only the hosted 0.5B
+ * twins are rewritten; a custom template rewrites every registry model.
+ * Returns null when the mirror is disabled or malformed — callers must treat
+ * null as "no mirror, keep the default behavior".
  */
 export function buildMirrorAppConfig(): AppConfig | null {
   if (!isMirrorConfigured()) return null;
   const template = mirrorUrlTemplate();
+  const builtIn = template === DEFAULT_MIRROR_TEMPLATE;
   const registryIds = new Set(Object.keys(MODEL_REGISTRY));
   const model_list = prebuiltAppConfig.model_list.map((rec) => {
     if (!registryIds.has(rec.model_id)) return rec;
+    if (builtIn && !DEFAULT_MIRRORED_MODEL_IDS.has(rec.model_id)) return rec;
     const slug = slugOfModelUrl(rec.model);
     if (!slug) return rec;
     return { ...rec, model: template.replace("{slug}", slug) };

@@ -15,6 +15,8 @@ import {
   isMirrorConfigured,
   buildMirrorAppConfig,
   isMirrorEligibleError,
+  DEFAULT_MIRROR_TEMPLATE,
+  DEFAULT_MIRRORED_MODEL_IDS,
   __setMirrorTemplateForTests,
 } from "@/offline/modelMirror";
 
@@ -25,13 +27,43 @@ describe("modelMirror — template contract", () => {
     __setMirrorTemplateForTests(null);
   });
 
-  it("is disabled by default (no template configured)", () => {
-    expect(mirrorUrlTemplate()).toBe("");
-    expect(isMirrorConfigured()).toBe(false);
-    expect(buildMirrorAppConfig()).toBeNull();
+  it("falls back to the built-in ShadowTalk weights mirror by default", () => {
+    // The live default points at the orphan `weights` branch of this repo,
+    // served by raw.githubusercontent.com (CORS-verified, byte-identical to
+    // HF). VITE_MODEL_MIRROR_URL_TEMPLATE overrides it when set.
+    expect(mirrorUrlTemplate()).toBe(DEFAULT_MIRROR_TEMPLATE);
+    expect(DEFAULT_MIRROR_TEMPLATE).toContain("{slug}");
+    expect(DEFAULT_MIRROR_TEMPLATE).toContain("/resolve/");
+    expect(isMirrorConfigured()).toBe(true);
+    expect(buildMirrorAppConfig()).not.toBeNull();
   });
 
-  it("rejects templates without the {slug} placeholder", () => {
+  it("with the default template, only the hosted 0.5B twins are mirrored", () => {
+    // raw.githubusercontent caps files at 100 MB: the 0.5B twins fit (largest
+    // shard 64.9 MB) and live on the `weights` branch; 1B/3B shards (125/188
+    // MB) cannot, so they keep their HF URLs — a mirror attempt there would
+    // just 404 and waste the retry.
+    const cfg = buildMirrorAppConfig()!;
+    const mirrored = cfg.model_list.filter((r) =>
+      DEFAULT_MIRRORED_MODEL_IDS.has(r.model_id),
+    );
+    const untouched = cfg.model_list.filter(
+      (r) => !DEFAULT_MIRRORED_MODEL_IDS.has(r.model_id),
+    );
+    expect(mirrored.length).toBe(2);
+    for (const rec of mirrored) {
+      expect(rec.model.startsWith("https://raw.githubusercontent.com/")).toBe(true);
+      expect(rec.model).toContain("/shadowtalk_ai/weights/models/");
+      expect(rec.model).toContain("/resolve/main/");
+    }
+    const hfUntouched = untouched.filter((r) => REGISTRY_IDS.has(r.model_id));
+    expect(hfUntouched.length).toBeGreaterThan(0);
+    for (const rec of hfUntouched) {
+      expect(rec.model).toMatch(/^https:\/\/huggingface\.co\//);
+    }
+  });
+
+  it("an invalid override (no {slug}) disables the mirror entirely", () => {
     __setMirrorTemplateForTests("https://mirror.example.com/models/");
     expect(isMirrorConfigured()).toBe(false);
     expect(buildMirrorAppConfig()).toBeNull();

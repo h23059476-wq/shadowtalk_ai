@@ -1,5 +1,17 @@
 # On-device model mirror — $0 resilience setup
 
+> **Status: the built-in mirror is LIVE.** The two 0.5B starter twins are
+> mirrored on the orphan **`weights` branch of this repo**
+> (`models/<slug>/resolve/main/…`), served by raw.githubusercontent.com with
+> CORS (`Access-Control-Allow-Origin: *`, verified in-browser) and
+> byte-identical to the Hugging Face originals. `modelMirror.ts` falls back to
+> it by default; `VITE_MODEL_MIRROR_URL_TEMPLATE` overrides it, and an invalid
+> template (no `{slug}`) disables mirroring entirely. 1B/3B shards exceed
+> raw.github's 100 MB/file cap, so those optional tiers stay HF-only. The
+> branch is orphaned on purpose: `main` never carries the weights, so normal
+> clones/pulls stay small. Re-upload/refresh with
+> `scripts/upload-weights-branch.sh` (needs a PAT with contents:write here).
+
 ShadowTalk's private-by-default chat downloads WebLLM weights (default starter:
 Qwen2.5-0.5B-Instruct-q4f16_1-MLC, ~600MB) from the Hugging Face CDN and caches
 them per-shard in the browser. If that CDN has a hiccup, the engine now retries
