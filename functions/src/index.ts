@@ -692,29 +692,30 @@ export const generateImage = onRequest({ secrets: allSecrets, timeoutSeconds: 12
 });
 
 /**
- * Feedback email delivery.
+ * Transactional email delivery (shared by feedback intake and auth emails).
  *
- * Every contact/feedback submission is forwarded to the founder's inbox:
- *   zain@shadowtalk-ai.com  (override with FEEDBACK_TO_EMAIL in functions/.env)
+ * Feedback intake forwards every contact/feedback submission to the founder's
+ * inbox: zain@shadowtalk-ai.com (override with FEEDBACK_TO_EMAIL in .env).
  *
  * Two delivery paths, first match wins:
  *   1. Resend HTTP API — used when RESEND_API_KEY is set. Recommended: create
  *      a free account at resend.com, verify shadowtalk-ai.com, then put
  *      RESEND_API_KEY=re_... in functions/.env and redeploy.
- *   2. Firestore `mail` collection — used when no API key is set. Documents
- *      follow the schema of the official "Trigger Email from Firestore"
- *      extension; install it with SMTP credentials and queued docs are
- *      delivered automatically. If the extension is not installed, queued
- *      docs simply wait — nothing is lost.
+ *   2. Firestore `mail` collection — automatic fallback (also used when no API
+ *      key is set). Documents follow the schema of the official "Trigger Email
+ *      from Firestore" extension; install it with SMTP credentials and queued
+ *      docs are delivered automatically. If the extension is not installed,
+ *      queued docs simply wait — nothing is lost.
  *
- * Either way the original submission is always persisted to the
- * `contact_messages` collection first, so feedback is never lost even when
- * email delivery fails. Delivery is best-effort and never fails the request.
+ * Feedback intake additionally always persists the original submission to the
+ * `contact_messages` collection, so feedback is never lost even when email
+ * delivery fails. Delivery is best-effort and never fails the HTTP request.
  */
 const FEEDBACK_TO_EMAIL = process.env.FEEDBACK_TO_EMAIL || "zain@shadowtalk-ai.com";
-const FEEDBACK_FROM_EMAIL = process.env.FEEDBACK_FROM_EMAIL || "ShadowTalk AI <feedback@shadowtalk-ai.com>";
+const APP_FROM_EMAIL =
+  process.env.APP_FROM_EMAIL || process.env.FEEDBACK_FROM_EMAIL || "ShadowTalk AI <noreply@shadowtalk-ai.com>";
 
-type FeedbackDeliveryStatus = "sent" | "queued" | "not_configured" | "failed";
+type EmailDeliveryStatus = "sent" | "queued" | "failed";
 
 function escapeHtml(text: string): string {
   return text
@@ -725,13 +726,30 @@ function escapeHtml(text: string): string {
     .replace(/'/g, "&#39;");
 }
 
-async function deliverFeedbackEmail(message: {
+interface OutgoingEmail {
+  to: string;
   subject: string;
   text: string;
   html: string;
   replyTo: string | null;
-}): Promise<{ status: FeedbackDeliveryStatus; detail: string }> {
+}
+
+async function queueMailDoc(message: OutgoingEmail): Promise<void> {
+  await admin.firestore().collection("mail").add({
+    to: message.to,
+    ...(message.replyTo ? { replyTo: message.replyTo } : {}),
+    message: {
+      subject: message.subject,
+      text: message.text,
+      html: message.html,
+    },
+    created_at: admin.firestore.FieldValue.serverTimestamp(),
+  });
+}
+
+async function deliverEmail(message: OutgoingEmail): Promise<{ status: EmailDeliveryStatus; detail: string }> {
   const apiKey = process.env.RESEND_API_KEY;
+  let resendError: string | null = null;
   if (apiKey) {
     try {
       const response = await fetch("https://api.resend.com/emails", {
@@ -741,48 +759,40 @@ async function deliverFeedbackEmail(message: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: FEEDBACK_FROM_EMAIL,
-          to: [FEEDBACK_TO_EMAIL],
+          from: APP_FROM_EMAIL,
+          to: [message.to],
           subject: message.subject,
           text: message.text,
           html: message.html,
           ...(message.replyTo ? { reply_to: message.replyTo } : {}),
         }),
       });
-      if (!response.ok) {
-        const detail = (await response.text()).slice(0, 300);
-        console.error("Feedback email delivery failed (Resend):", response.status, detail);
-        return { status: "failed", detail: `Resend ${response.status}: ${detail}` };
-      }
-      return { status: "sent", detail: "resend" };
+      if (response.ok) return { status: "sent", detail: "resend" };
+      resendError = `Resend ${response.status}: ${(await response.text()).slice(0, 200)}`;
+      console.error("Email delivery failed (Resend), falling back to mail queue:", response.status, resendError);
     } catch (error) {
-      const detail = error instanceof Error ? error.message : String(error);
-      console.error("Feedback email delivery error (Resend):", error);
-      return { status: "failed", detail };
+      resendError = error instanceof Error ? error.message : String(error);
+      console.error("Email delivery error (Resend), falling back to mail queue:", error);
     }
   }
 
-  // No Resend key — queue in the `mail` collection for the Trigger Email
-  // extension (Admin SDK write, bypasses security rules).
+  // No key or Resend failed — queue in the `mail` collection for the Trigger
+  // Email extension (Admin SDK write, bypasses security rules).
   try {
-    await admin.firestore().collection("mail").add({
-      to: FEEDBACK_TO_EMAIL,
-      ...(message.replyTo ? { replyTo: message.replyTo } : {}),
-      message: {
-        subject: message.subject,
-        text: message.text,
-        html: message.html,
-      },
-      created_at: admin.firestore.FieldValue.serverTimestamp(),
-    });
+    await queueMailDoc(message);
     return {
       status: "queued",
-      detail: "mail collection — install the Trigger Email extension or set RESEND_API_KEY to deliver",
+      detail: resendError
+        ? `${resendError} — queued in mail collection instead`
+        : "mail collection — install the Trigger Email extension or set RESEND_API_KEY to deliver",
     };
   } catch (error) {
     const detail = error instanceof Error ? error.message : String(error);
-    console.error("Failed to queue feedback email:", error);
-    return { status: "failed", detail };
+    console.error("Failed to queue email:", error);
+    return {
+      status: "failed",
+      detail: (resendError ? `${resendError}; queue failed: ${detail}` : detail).slice(0, 300),
+    };
   }
 }
 
@@ -794,7 +804,7 @@ async function deliverFeedbackEmail(message: {
  * Firestore intake collection (the same destination the security rules'
  * `isValidIntake()` path was designed for), where admins can read them, and
  * additionally forwarded by email to zain@shadowtalk-ai.com (see
- * deliverFeedbackEmail above).
+ * deliverEmail above).
  *
  * Anonymous submission is intentional (matches the client rules), so the
  * caller's ID token is optional; when a valid one is presented, the uid and
@@ -867,9 +877,10 @@ export const sendContactEmail = onRequest(async (req, res) => {
         "</div>",
       ].join("");
 
-      let delivery: { status: FeedbackDeliveryStatus; detail: string };
+      let delivery: { status: EmailDeliveryStatus; detail: string };
       try {
-        delivery = await deliverFeedbackEmail({
+        delivery = await deliverEmail({
+          to: FEEDBACK_TO_EMAIL,
           subject: emailSubject,
           text: textBody,
           html: htmlBody,
@@ -900,6 +911,175 @@ export const sendContactEmail = onRequest(async (req, res) => {
       });
 
       return res.status(200).json({ ok: true, email_delivery: delivery.status });
+    } catch (error) {
+      return sendError(res, error);
+    }
+  });
+});
+
+/**
+ * Professional branded email verification.
+ *
+ * The default Firebase Auth template is plain and anonymous-looking. This
+ * endpoint generates the SAME out-of-band verification link the client SDK
+ * would generate (admin.auth().generateEmailVerificationLink with the same
+ * continue-URL semantics) and delivers it in a branded, responsive HTML
+ * template via deliverEmail(). Everything downstream (the hosted action
+ * handler, the in-app /auth/action page, emailVerified flag) works unchanged.
+ *
+ * Security:
+ *   - Requires a valid ID token; sends ONLY to the caller's own email (never
+ *     an open relay).
+ *   - 60s in-memory throttle per uid (best-effort, warm instances) to prevent
+ *     mail-bombing through the endpoint.
+ *   - The continue URL is allowlisted to ShadowTalk domains; anything else
+ *     falls back to the production verification page.
+ *
+ * The client falls back to Firebase's default sendEmailVerification() when
+ * this returns email_delivery === "failed", so verification never dead-ends.
+ */
+const AUTH_CONTINUE_DEFAULT =
+  process.env.AUTH_CONTINUE_DEFAULT || "https://shadowtalk-ai.com/auth?flow=verify-complete";
+const AUTH_CONTINUE_HOSTS = (
+  process.env.AUTH_CONTINUE_HOSTS ||
+  "shadowtalk-ai.com,www.shadowtalk-ai.com,shadowtalk-ai-7a513.firebaseapp.com,shadowtalk-ai-7a513.web.app"
+)
+  .split(",")
+  .map((h) => h.trim().toLowerCase())
+  .filter(Boolean);
+
+const VERIFICATION_RESEND_COOLDOWN_MS = 60_000;
+const lastVerificationSendByUid = new Map<string, number>();
+
+function safeAuthContinueUrl(requested: string | undefined): string {
+  if (requested) {
+    try {
+      const parsed = new URL(requested);
+      if (parsed.protocol === "https:" && AUTH_CONTINUE_HOSTS.includes(parsed.hostname.toLowerCase())) {
+        return parsed.toString();
+      }
+    } catch {
+      /* fall through to the default */
+    }
+  }
+  return AUTH_CONTINUE_DEFAULT;
+}
+
+function buildVerificationEmail(
+  name: string,
+  verificationLink: string,
+): { subject: string; text: string; html: string } {
+  const subject = "Verify your email address — ShadowTalk AI";
+  const text = [
+    `Hi ${name},`,
+    "",
+    "Welcome to ShadowTalk AI — one workspace for agentic chat, voice, code",
+    "and on-device models.",
+    "",
+    "Confirm your email address to activate your account:",
+    "",
+    verificationLink,
+    "",
+    "This link is valid for 24 hours. If it expires, sign in and request a new one.",
+    "",
+    "If you didn't create a ShadowTalk AI account, you can safely ignore this",
+    "email — no account will be activated without confirmation.",
+    "",
+    "— The ShadowTalk AI team · shadowtalk-ai.com",
+  ].join("\n");
+
+  const html = [
+    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+    '<html xmlns="http://www.w3.org/1999/xhtml">',
+    "<head>",
+    '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
+    '<meta name="viewport" content="width=device-width, initial-scale=1" />',
+    "<title>Verify your email — ShadowTalk AI</title>",
+    "</head>",
+    '<body style="margin:0;padding:0;background-color:#07080d;">',
+    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Confirm your email to activate your ShadowTalk AI account — the link is valid for 24 hours.</div>',
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#07080d;padding:32px 12px;">',
+    "<tr><td align=\"center\">",
+    '<table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">',
+    // Brand header
+    "<tr><td style=\"padding:8px 4px 18px 4px;\">",
+    '<div style="font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.3px;">ShadowTalk <span style="color:#22cfff;">AI</span></div>',
+    '<div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a90a5;margin-top:4px;">Think AI. Think ShadowTalk.</div>',
+    "</td></tr>",
+    // Card
+    "<tr><td>",
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0e0f16;border:1px solid #1d2130;border-radius:16px;">',
+    "<tr><td style=\"padding:36px 32px 32px 32px;\">",
+    '<h1 style="font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:700;color:#ffffff;margin:0 0 14px 0;line-height:1.3;">Confirm your email address</h1>',
+    `<p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#b7bccd;line-height:1.6;margin:0 0 6px 0;">Hi ${escapeHtml(name)},</p>`,
+    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#b7bccd;line-height:1.6;margin:0 0 26px 0;">Welcome to ShadowTalk AI — one workspace for agentic chat, voice, code and on-device models. Tap the button below to confirm this email address and activate your account.</p>',
+    // CTA button
+    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px 0;"><tr><td align="center" bgcolor="#22cfff" style="border-radius:10px;">',
+    `<a href="${escapeHtml(verificationLink)}" target="_blank" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:700;color:#07080d;text-decoration:none;padding:14px 32px;border-radius:10px;background-color:#22cfff;">Verify email address</a>`,
+    "</td></tr></table>",
+    // Fallback link
+    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8a90a5;line-height:1.6;margin:0 0 8px 0;">Or copy and paste this link into your browser:</p>',
+    `<p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#22cfff;line-height:1.5;margin:0 0 18px 0;word-break:break-all;">${escapeHtml(verificationLink)}</p>`,
+    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8a90a5;line-height:1.6;margin:0 0 22px 0;">This link is valid for <span style="color:#b7bccd;font-weight:700;">24 hours</span>. If it expires, sign in and request a new one.</p>',
+    // Security note
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#13141d;border-radius:10px;"><tr><td style="padding:14px 16px;">',
+    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8a90a5;line-height:1.5;margin:0;">Not you? If you didn\u2019t sign up for ShadowTalk AI, you can safely ignore this email — no account will be activated without confirmation.</p>',
+    "</td></tr></table>",
+    "</td></tr></table>",
+    "</td></tr>",
+    // Footer
+    "<tr><td style=\"padding:20px 4px 8px 4px;text-align:center;\">",
+    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6b7280;margin:0 0 6px 0;">ShadowTalk AI · shadowtalk-ai.com</p>',
+    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6b7280;margin:0;">Questions? <a href="mailto:zain@shadowtalk-ai.com" style="color:#22cfff;text-decoration:none;">zain@shadowtalk-ai.com</a></p>',
+    "</td></tr></table>",
+    "</td></tr></table>",
+    "</body></html>",
+  ].join("");
+
+  return { subject, text, html };
+}
+
+export const sendVerificationEmail = onRequest(async (req, res) => {
+  corsHandler(req, res, async () => {
+    if (req.method === "OPTIONS") return;
+    if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed." });
+
+    try {
+      const user = await requireAuthenticatedUser(req.headers.authorization);
+      const email = (user.email || "").trim();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        throw new AiRequestError("This account has no email address to verify.", 400);
+      }
+
+      const now = Date.now();
+      const lastSend = lastVerificationSendByUid.get(user.uid) || 0;
+      if (now - lastSend < VERIFICATION_RESEND_COOLDOWN_MS) {
+        throw new AiRequestError(
+          "A verification email was just sent. Wait a minute before requesting another.",
+          429,
+        );
+      }
+
+      const body = (req.body || {}) as Record<string, unknown>;
+      const continueUrl = safeAuthContinueUrl(typeof body.redirectTo === "string" ? body.redirectTo : undefined);
+
+      const link = await admin.auth().generateEmailVerificationLink(email, {
+        url: continueUrl,
+        handleCodeInApp: false,
+      });
+
+      const displayName = (user.name || email.split("@")[0] || "there").slice(0, 80);
+      const content = buildVerificationEmail(displayName, link);
+      const delivery = await deliverEmail({
+        to: email,
+        replyTo: null,
+        subject: content.subject,
+        text: content.text,
+        html: content.html,
+      });
+      lastVerificationSendByUid.set(user.uid, now);
+
+      return res.status(200).json({ ok: true, email_delivery: delivery.status, continue_url: continueUrl });
     } catch (error) {
       return sendError(res, error);
     }

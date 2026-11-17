@@ -24,7 +24,7 @@ import {
   verifyPasswordResetCode,
   type UserCredential,
 } from 'firebase/auth';
-import { fbAuth } from './app';
+import { fbAuth, functionsBaseUrl } from './app';
 import type { User as FbUser } from 'firebase/auth';
 import {
   OAUTH_RETURN_KEY,
@@ -51,6 +51,34 @@ export interface AdapterSession {
   expires_in: number;
   expires_at: number;
   user: AdapterUser;
+}
+
+/**
+ * Ask the backend for the branded verification email (professional template).
+ *
+ * Returns true when the backend accepted delivery ("sent" via Resend or
+ * "queued" in the mail collection). Returns false when anything went wrong —
+ * the caller then falls back to Firebase's default sendEmailVerification()
+ * so verification never dead-ends.
+ */
+async function sendBrandedVerificationEmail(user: FbUser, continueUrl: string): Promise<boolean> {
+  if (!functionsBaseUrl) return false;
+  try {
+    const token = await user.getIdToken(true);
+    const res = await fetch(`${functionsBaseUrl}/sendVerificationEmail`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ redirectTo: continueUrl }),
+    });
+    if (!res.ok) return false;
+    const data: any = await res.json().catch(() => null);
+    return data?.ok === true && data?.email_delivery !== 'failed';
+  } catch {
+    return false;
+  }
 }
 
 function friendlyError(err: any): Error {
@@ -214,7 +242,15 @@ export function createAuthAdapter() {
             url: safeAuthContinueUrl(options?.emailRedirectTo, '/auth?flow=verify-complete'),
             handleCodeInApp: false,
           };
-          await sendEmailVerification(cred.user, actionCodeSettings);
+          // Branded professional email first; Firebase's default template only
+          // as fallback when the custom delivery fails.
+          const brandedSent = await sendBrandedVerificationEmail(
+            cred.user,
+            actionCodeSettings.url as string,
+          );
+          if (!brandedSent) {
+            await sendEmailVerification(cred.user, actionCodeSettings);
+          }
           verificationEmailSent = true;
         } catch (verifyErr) {
           console.warn('[Firebase Auth] Email verification send failed:', verifyErr);
@@ -492,7 +528,15 @@ export function createAuthAdapter() {
           url: safeAuthContinueUrl(options?.redirectTo, '/auth?flow=verify-complete'),
           handleCodeInApp: false,
         };
-        await sendEmailVerification(user, actionCodeSettings);
+        // Branded professional email first; Firebase's default template only
+        // as fallback when the custom delivery fails.
+        const brandedSent = await sendBrandedVerificationEmail(
+          user,
+          actionCodeSettings.url as string,
+        );
+        if (!brandedSent) {
+          await sendEmailVerification(user, actionCodeSettings);
+        }
         return { data: null, error: null };
       } catch (error: any) {
         return { data: null, error: friendlyError(error) };
