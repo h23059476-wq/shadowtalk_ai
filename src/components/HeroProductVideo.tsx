@@ -1,13 +1,13 @@
 import React from "react";
 
 /**
- * Seamless 20s welcome loop — above-the-fold showcase.
+ * Seamless 20s welcome intro — above-the-fold showcase (v2).
  *
  * Rendered from the Remotion "WelcomeShadowTalk" composition (1280x720 @
- * 30fps, 600 frames, silent, no fake CTA buttons). It welcomes the visitor
- * and explains what ShadowTalk is: a zero-knowledge, multi-model AI canvas
- * where nothing leaves the device. Frame 599 is pixel-identical to frame 0,
- * so `loop` restarts with zero visible jump.
+ * 30fps, 600 frames, silent, no fake CTA buttons). Story: the original
+ * ShadowTalk logo transition -> the real /chatbot page -> a prompt being
+ * typed, sent and answered -> a warm free-start welcome. Frame 599 matches
+ * frame 0 (loop seam RMS < 1.5), so `loop` restarts with zero visible jump.
  *
  * `muted` is re-asserted inside the ref callback: React drops the muted
  * attribute in prerendered HTML, which blocks autoplay in Safari and some
@@ -26,7 +26,7 @@ const HeroProductVideo: React.FC = () => {
           muted
           playsInline
           preload="metadata"
-          aria-label="ShadowTalk welcome tour: what ShadowTalk is — a zero-knowledge, multi-model AI canvas on your own keys — and how your conversations stay encrypted and on-device"
+          aria-label="ShadowTalk intro: the ShadowTalk logo, the real /chatbot workspace, a launch-plan prompt being typed and answered, ending with a free-start welcome"
           ref={(el) => {
             if (el) el.muted = true;
           }}
@@ -36,7 +36,7 @@ const HeroProductVideo: React.FC = () => {
         </video>
       </div>
       <p className="text-center text-[11px] sm:text-xs text-muted-foreground/70 mt-2.5 font-mono">
-        welcome tour · zero-knowledge, multi-model canvas · nothing leaves your device
+        welcome intro · original logo · real /chatbot workspace · start free
       </p>
     </div>
   );
