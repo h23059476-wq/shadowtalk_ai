@@ -78,7 +78,9 @@ function titleCase(s: string): string {
 }
 
 function keywords(s: string): string[] {
-  return (s.toLowerCase().match(/[a-z0-9][a-z0-9._-]*/g) || []).filter((t) => t.length >= 3);
+  const tokens = s.toLowerCase().match(/[a-z0-9][a-z0-9._-]*/g);
+  if (!tokens) return [];
+  return tokens.filter((t) => t.length >= 3);
 }
 
 function scoreDataset(ds: ShadowDataset, requestTokens: string[]): number {

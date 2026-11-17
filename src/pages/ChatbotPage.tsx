@@ -14,7 +14,7 @@ import { AiAccessOnboarding } from "@/components/chat/AiAccessOnboarding";
 import { PrivateAiBanner } from "@/components/chat/PrivateAiBanner";
 import { ModelManagerDrawer } from "@/components/ModelManagerDrawer";
 import { LOCAL_MODEL_READY_EVENT } from "@/offline/BackgroundInstall";
-import { initModelManager } from "@/services/modelManager";
+import { initModelManager, isInstantModelReady } from "@/services/modelManager";
 const LiveVoiceMode = lazy(() => import("@/components/chat/LiveVoiceMode").then(m => ({ default: m.LiveVoiceMode })));
 const SettingsByokCard = lazy(() => import("@/components/settings/SettingsByokCard").then(m => ({ default: m.SettingsByokCard })));
 import { ChatToolbar } from "@/components/chat/ChatToolbar";
@@ -405,6 +405,31 @@ const ChatbotPage = () => {
   // Idempotent — safe across re-mounts and account switches.
   useEffect(() => {
     initModelManager({ uid: user?.id });
+  }, [user?.id]);
+
+  // Prewarm the on-device engine for prefer-local users. The bootstrap only
+  // initializes the engine while the snapshot is idle/downloading — once the
+  // install finished, the snapshot stays "ready" and NOTHING warmed the
+  // engine on a fresh page load: the first prefer-local message of every
+  // session silently bounced to cloud while the downloaded model sat idle.
+  // Weights are already on disk by then, so warming costs seconds of
+  // worker-spawn + shader compile and needs no network.
+  useEffect(() => {
+    if (!getPreferLocal(user?.id ?? undefined)) return;
+    let cancelled = false;
+    void (async () => {
+      try {
+        const { localInferenceEngine } = await import("@/offline/LocalInferenceEngine");
+        if (cancelled) return;
+        const state = localInferenceEngine.getState();
+        if (state === "idle" || state === "error") {
+          await localInferenceEngine.prewarm();
+        }
+      } catch {
+        // Engine module unavailable — the cloud path still serves this user.
+      }
+    })();
+    return () => { cancelled = true; };
   }, [user?.id]);
 
   // Abort any in-flight chat request when the chat page unmounts — otherwise
@@ -1598,9 +1623,31 @@ Structure and Content Guidelines:
         console.info("[chat] prefer-local: task exceeds on-device scope — cloud tier or fitted local fallback");
       }
       if (preferLocal && !shouldEscalateToCloud(cloudMessages)) {
-        const { localInferenceEngine } = await import("@/offline/LocalInferenceEngine");
-        const engineState = localInferenceEngine.getState();
+        const { localInferenceEngine, waitForLocalEngineReady } = await import("@/offline/LocalInferenceEngine");
         const isOffline = typeof navigator !== "undefined" && navigator.onLine === false;
+
+        // Make the engine actually usable for THIS message:
+        //  1. An init already in flight (mount prewarm / background install)
+        //     gets a bounded chance to finish — this message stays on-device
+        //     instead of bouncing to cloud while the engine compiles.
+        //  2. An idle/errored engine gets a prewarm kick. It is awaited only
+        //     when the weights are already cached (warm-up needs no network —
+        //     this is what makes OFFLINE private chat work instead of
+        //     dead-ending); a cold download runs in the background and this
+        //     message goes to cloud under the notice below.
+        let engineState = localInferenceEngine.getState();
+        if (engineState === "downloading" || engineState === "loading") {
+          await waitForLocalEngineReady(25_000, controller.signal);
+          engineState = localInferenceEngine.getState();
+        }
+        if (engineState === "idle" || engineState === "error") {
+          void localInferenceEngine.prewarm().catch(() => {});
+          const weightsCached = isOffline || (await isInstantModelReady().catch(() => false));
+          if (weightsCached) {
+            const warmed = await waitForLocalEngineReady(30_000, controller.signal);
+            if (warmed) engineState = "ready";
+          }
+        }
 
         if (engineState === "ready") {
           // Context-fit before the engine: the full persona system prompt can

@@ -13,6 +13,7 @@ import {
 } from "@/lib/tokenOptimizer/usage";
 import { estimateTokens } from "@/lib/tokenOptimizer/tokenEstimation";
 import { STREAM_USAGE_PROVIDERS } from "@/lib/tokenOptimizer/modelRegistry";
+import { createSseHardening, fetchWithNetworkRetry, StreamStalledError } from "@/lib/sseHardening";
 
 /**
  * Batch 1 (Research-to-Visualization) — citation capture.
@@ -223,26 +224,38 @@ async function streamAnthropicChat(
   const systemPayload = applyCacheControl && system
     ? [{ type: "text", text: system, cache_control: { type: "ephemeral" } }]
     : system || undefined;
+  // Silence watchdog + abort race (see sseHardening): a hung Anthropic socket
+  // previously spun the composer forever with no error, and a stream killed
+  // mid-generation looked like a complete answer.
+  const stallMs = opts.timeoutMs ?? 45_000;
+  const hardening = createSseHardening({ stallMs, outer: opts.signal });
   try {
-    response = await fetch(BYOK_PROVIDERS.anthropic.url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": cfg.apiKey,
-        "anthropic-version": "2023-06-01",
-        "anthropic-dangerous-direct-browser-access": "true",
-      },
-      body: JSON.stringify({
-        model: opts.model || cfg.model || BYOK_PROVIDERS.anthropic.defaultModel,
-        max_tokens: opts.maxTokens ?? 4096,
-        messages: toAnthropicMessages(messages, applyCacheControl),
-        ...(systemPayload ? { system: systemPayload } : {}),
-        ...(typeof opts.temperature === "number" ? { temperature: opts.temperature } : {}),
-        stream: true,
+    response = await fetchWithNetworkRetry(
+      () => fetch(BYOK_PROVIDERS.anthropic.url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": cfg.apiKey,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-access": "true",
+        },
+        body: JSON.stringify({
+          model: opts.model || cfg.model || BYOK_PROVIDERS.anthropic.defaultModel,
+          max_tokens: opts.maxTokens ?? 4096,
+          messages: toAnthropicMessages(messages, applyCacheControl),
+          ...(systemPayload ? { system: systemPayload } : {}),
+          ...(typeof opts.temperature === "number" ? { temperature: opts.temperature } : {}),
+          stream: true,
+        }),
+        signal: hardening.signal,
       }),
-      signal: opts.signal,
-    });
+      { hardening, outer: opts.signal, label: "Anthropic", stallMs },
+    );
   } catch (error) {
+    hardening.dispose();
+    if (error instanceof StreamStalledError) {
+      return { content: "", error: error.message, source: "byok" };
+    }
     if ((error as Error)?.name === "AbortError") throw error;
     return { content: "", error: "Could not reach Anthropic from this browser. Check the connection and try again.", source: "byok" };
   }
@@ -258,6 +271,7 @@ async function streamAnthropicChat(
       : response.status === 429
         ? "Anthropic rate limit or quota reached on your key."
         : `Anthropic error (${response.status})${detail ? `: ${detail}` : ""}`;
+    hardening.dispose();
     return { content: "", error, source: "byok" };
   }
 
@@ -272,6 +286,11 @@ async function streamAnthropicChat(
   const citations = new CitationCollector();
   // Batch 1: real usage from Anthropic's message_start / message_delta events.
   let anthropicUsage: ProviderUsage | null = null;
+  // Termination tracking: `sawStop` distinguishes a complete stream from one
+  // killed mid-generation, and `finishLength` flags a reply capped by
+  // max_tokens (message_delta stop_reason).
+  let sawStop = false;
+  let finishLength = false;
 
   const handleDataLine = (payload: string): boolean => {
     if (!payload) return true;
@@ -284,6 +303,10 @@ async function streamAnthropicChat(
         // Batch 1: Anthropic web-search citation deltas.
         const citation = event.delta.citation as { url?: unknown; title?: unknown } | undefined;
         if (citation?.url) citations.add(citation.url, citation.title);
+      } else if (event?.type === "message_delta" && event.delta?.stop_reason === "max_tokens") {
+        finishLength = true;
+      } else if (event?.type === "message_stop") {
+        sawStop = true;
       } else if (event?.type === "error") {
         streamError = event.error?.message || "Anthropic reported a mid-stream error.";
       }
@@ -296,9 +319,28 @@ async function streamAnthropicChat(
   };
 
   while (true) {
-    const { done, value } = await reader.read();
+    let readResult: { done: boolean; value?: Uint8Array };
+    try {
+      readResult = await hardening.race(reader.read() as Promise<{ done: boolean; value?: Uint8Array }>);
+    } catch (error) {
+      if ((error as Error)?.name === "AbortError") {
+        if (opts.signal?.aborted) {
+          hardening.dispose();
+          throw error; // caller-cancelled — propagate
+        }
+        // Silence watchdog fired: Anthropic stopped sending bytes mid-reply.
+        hardening.dispose();
+        streamError = "Anthropic stopped responding mid-reply — the connection stalled. Please regenerate.";
+        break;
+      }
+      hardening.dispose();
+      streamError = "Anthropic connection error mid-reply. Please regenerate.";
+      break;
+    }
+    const { done, value } = readResult;
     if (done) break;
-    buffer += decoder.decode(value, { stream: true });
+    hardening.arm();
+    buffer += decoder.decode(value!, { stream: true });
     let newline: number;
     while ((newline = buffer.indexOf("\n")) >= 0) {
       const line = buffer.slice(0, newline).trim();
@@ -317,6 +359,22 @@ async function streamAnthropicChat(
       streamError = "The AI response was cut off. Please regenerate.";
     }
   }
+
+  if (!streamError) {
+    if (hardening.timedOut()) {
+      streamError = "Anthropic stopped responding mid-reply — the connection stalled. Please regenerate.";
+    } else if (!sawStop) {
+      // The stream closed without the terminating message_stop event: killed
+      // mid-generation. Mark the answer incomplete instead of silently
+      // showing a truncated reply.
+      streamError = content
+        ? "The reply was cut off mid-stream and may be incomplete."
+        : "Anthropic closed the connection before sending a reply.";
+    } else if (finishLength) {
+      streamError = "The reply hit the model's maximum output length and was trimmed. Ask to continue for the rest.";
+    }
+  }
+  hardening.dispose();
 
   if (streamError) {
     return { content, error: streamError, source: "byok", citations: citations.toList(), usage: anthropicUsage ?? undefined };
@@ -346,29 +404,41 @@ export async function streamByokChat(
   // `stream_options.include_usage` — unknown params on other gateways can
   // hard-reject the request and break chat entirely.
   const requestUsage = STREAM_USAGE_PROVIDERS.has(cfg.provider);
+  // Silence watchdog + abort race (see sseHardening): a hung provider socket
+  // previously spun the composer forever with no error, and a stream closed
+  // mid-generation looked like a complete answer.
+  const stallMs = opts.timeoutMs ?? 45_000;
+  const hardening = createSseHardening({ stallMs, outer: opts.signal });
   let resp: Response;
   try {
-    resp = await fetch(provider.url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${cfg.apiKey}` },
-      body: JSON.stringify({
-        model: opts.model || cfg.model || provider.defaultModel,
-        messages: toPlainMessages(messages),
-        stream: true,
-        ...(requestUsage ? { stream_options: { include_usage: true } } : {}),
-        ...(typeof opts.temperature === "number" ? { temperature: opts.temperature } : {}),
-        ...(typeof opts.maxTokens === "number" ? { max_tokens: opts.maxTokens } : {}),
-        ...(opts.structuredOutput ? { response_format: { type: "json_object" } } : {}),
-        ...(cfg.provider === "openrouter" && (opts.webSearch || opts.webFetch)
-          ? { tools: [
-              ...(opts.webSearch ? [{ type: "openrouter:web_search" }] : []),
-              ...(opts.webFetch ? [{ type: "openrouter:web_fetch" }] : []),
-            ] }
-          : {}),
+    resp = await fetchWithNetworkRetry(
+      () => fetch(provider.url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${cfg.apiKey}` },
+        body: JSON.stringify({
+          model: opts.model || cfg.model || provider.defaultModel,
+          messages: toPlainMessages(messages),
+          stream: true,
+          ...(requestUsage ? { stream_options: { include_usage: true } } : {}),
+          ...(typeof opts.temperature === "number" ? { temperature: opts.temperature } : {}),
+          ...(typeof opts.maxTokens === "number" ? { max_tokens: opts.maxTokens } : {}),
+          ...(opts.structuredOutput ? { response_format: { type: "json_object" } } : {}),
+          ...(cfg.provider === "openrouter" && (opts.webSearch || opts.webFetch)
+            ? { tools: [
+                ...(opts.webSearch ? [{ type: "openrouter:web_search" }] : []),
+                ...(opts.webFetch ? [{ type: "openrouter:web_fetch" }] : []),
+              ] }
+            : {}),
+        }),
+        signal: hardening.signal,
       }),
-      signal: opts.signal,
-    });
+      { hardening, outer: opts.signal, label: provider.label, stallMs },
+    );
   } catch (err) {
+    hardening.dispose();
+    if (err instanceof StreamStalledError) {
+      return { content: "", error: err.message, source: "byok" };
+    }
     if ((err as Error)?.name === "AbortError") throw err;
     return { content: "", error: `Could not reach ${provider.label}.`, source: "byok" };
   }
@@ -383,6 +453,7 @@ export async function streamByokChat(
       resp.status === 401 ? `Your ${provider.label} key was rejected. Check it in Settings → Your own API key.`
       : resp.status === 429 ? `${provider.label} rate limit or quota reached on your key.`
       : `${provider.label} error (${resp.status})${detail ? `: ${detail}` : ""}`;
+    hardening.dispose();
     return { content: "", error: msg, source: "byok" };
   }
 
@@ -396,9 +467,18 @@ export async function streamByokChat(
   const citations = new CitationCollector();
   // Batch 1: real usage from the final chunk (include_usage providers).
   let openAiUsage: ProviderUsage | null = null;
+  // Termination tracking: `sawDone` distinguishes a complete stream from one
+  // killed mid-generation, and `finishLength` flags a reply capped by
+  // max_tokens.
+  let sawDone = false;
+  let finishLength = false;
 
   const handleDataLine = (payload: string): boolean => {
-    if (!payload || payload === "[DONE]") return true;
+    if (!payload) return true;
+    if (payload === "[DONE]") {
+      sawDone = true;
+      return true;
+    }
     try {
       const parsed = JSON.parse(payload);
       if (parsed?.error) {
@@ -418,6 +498,7 @@ export async function streamByokChat(
       if (choice?.delta?.annotations) citations.addOpenRouterAnnotations(choice.delta.annotations);
       if (Array.isArray(parsed?.citations)) citations.addPerplexityCitations(parsed.citations);
       if (Array.isArray(parsed?.search_results)) citations.addSearchResults(parsed.search_results);
+      if (choice?.finish_reason === "length") finishLength = true;
       const usageChunk = parseOpenAiUsageChunk(parsed);
       if (usageChunk) openAiUsage = mergeUsage(openAiUsage, usageChunk);
       return true;
@@ -427,9 +508,28 @@ export async function streamByokChat(
   };
 
   while (true) {
-    const { done, value } = await reader.read();
+    let readResult: { done: boolean; value?: Uint8Array };
+    try {
+      readResult = await hardening.race(reader.read() as Promise<{ done: boolean; value?: Uint8Array }>);
+    } catch (error) {
+      if ((error as Error)?.name === "AbortError") {
+        if (opts.signal?.aborted) {
+          hardening.dispose();
+          throw error; // caller-cancelled — propagate
+        }
+        // Silence watchdog fired: the provider stopped sending bytes mid-reply.
+        hardening.dispose();
+        streamError = `${provider.label} stopped responding mid-reply — the connection stalled. Please regenerate.`;
+        break;
+      }
+      hardening.dispose();
+      streamError = `${provider.label} connection error mid-reply. Please regenerate.`;
+      break;
+    }
+    const { done, value } = readResult;
     if (done) break;
-    buffer += decoder.decode(value, { stream: true });
+    hardening.arm();
+    buffer += decoder.decode(value!, { stream: true });
     let idx: number;
     while ((idx = buffer.indexOf("\n")) !== -1) {
       const line = buffer.slice(0, idx).trim();
@@ -448,6 +548,22 @@ export async function streamByokChat(
       streamError = "The AI response was cut off. Please regenerate.";
     }
   }
+
+  if (!streamError) {
+    if (hardening.timedOut()) {
+      streamError = `${provider.label} stopped responding mid-reply — the connection stalled. Please regenerate.`;
+    } else if (!sawDone) {
+      // The stream closed without the terminating [DONE] event: killed
+      // mid-generation. Mark the answer incomplete instead of silently
+      // showing a truncated reply.
+      streamError = content
+        ? "The reply was cut off mid-stream and may be incomplete."
+        : `${provider.label} closed the connection before sending a reply.`;
+    } else if (finishLength) {
+      streamError = "The reply hit the model's maximum output length and was trimmed. Ask to continue for the rest.";
+    }
+  }
+  hardening.dispose();
 
   if (streamError) {
     return { content, error: streamError, source: "byok", citations: citations.toList(), usage: openAiUsage ?? undefined };

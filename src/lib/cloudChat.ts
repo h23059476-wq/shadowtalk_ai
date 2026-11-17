@@ -43,6 +43,10 @@ export interface CloudChatOptions {
   webSearch?: boolean;
   /** Allow OpenRouter to fetch the URL asked about in this request. */
   webFetch?: boolean;
+  /** Local-path only: silence watchdog for on-device generation — a tokenless gap longer than this aborts and retries (default 30s). */
+  generationIdleTimeoutMs?: number;
+  /** Local-path only: hard cap on total on-device generation time; past it the partial reply is returned (default 120s). */
+  generationHardTimeoutMs?: number;
 }
 
 export interface CloudChatResult {
@@ -302,7 +306,7 @@ export async function streamCloudChat(
   // (~large); statically importing it here would bloat every chunk that
   // touches cloudChat.
   if (getPreferLocal()) {
-    const { localInferenceEngine } = await import("@/offline/LocalInferenceEngine");
+    const { localInferenceEngine, waitForLocalEngineReady } = await import("@/offline/LocalInferenceEngine");
     if (localInferenceEngine.isLoaded()) {
       if (!shouldEscalateToCloud(messages, opts)) {
         return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
@@ -321,6 +325,21 @@ export async function streamCloudChat(
         return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
       }
       return { content: "", error: ESCALATION_ERROR, source: "local" };
+    }
+    // Engine not loaded yet, but its initialization is already in flight
+    // (mount prewarm / background install): give it a bounded chance to
+    // finish so ordinary chat stays on-device instead of bouncing to the
+    // cloud tier while the engine compiles. The wait is watchdog-capped and
+    // skipped entirely for frontier tasks (cloud serves those better).
+    const engineState = localInferenceEngine.getState();
+    if (
+      (engineState === "downloading" || engineState === "loading") &&
+      !shouldEscalateToCloud(messages, opts)
+    ) {
+      const warmed = await waitForLocalEngineReady(25_000, opts.signal).catch(() => false);
+      if (warmed && localInferenceEngine.isLoaded()) {
+        return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
+      }
     }
     // Not provisioned → fall through to the standard mode logic.
   }

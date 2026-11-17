@@ -38,7 +38,8 @@ export function isReferentialRequest(request: string): boolean {
   // Strip trailing punctuation so "visually." matches the stopword list.
   const text = (request ?? "").toLowerCase().replace(/[.,;:!?]+/g, " ");
   if (REFERENTIAL_PHRASE.test(text)) return true;
-  const tokens = text.match(/[a-z0-9][a-z0-9._-]*/g) ?? [];
+  const tokens = text.match(/[a-z0-9][a-z0-9._-]*/g);
+  if (!tokens) return true;
   const contentTokens = tokens.filter((t) => t.length >= 3 && !COMMAND_STOPWORDS.has(t));
   return contentTokens.length === 0;
 }

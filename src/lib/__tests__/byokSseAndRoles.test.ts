@@ -147,7 +147,7 @@ describe("byok SSE error handling", () => {
   it("flushes a final data line without a trailing newline", async () => {
     fetchMock.mockResolvedValueOnce(
       sseResponse(
-        "data: {\"choices\":[{\"delta\":{\"content\":\"abc\"}}]}\n\ndata: {\"choices\":[{\"delta\":{\"content\":\"def\"}}]}",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"abc\"}}]}\n\ndata: {\"choices\":[{\"delta\":{\"content\":\"def\"}}]}\n\ndata: [DONE]",
       ),
     );
     const result = await streamByokChat(OPENAI_CFG, [{ role: "user", content: "hi" }], {});

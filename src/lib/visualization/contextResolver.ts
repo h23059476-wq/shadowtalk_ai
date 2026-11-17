@@ -58,9 +58,9 @@ const STOPWORDS = new Set([
 
 /** Tokenize a request/content into comparable lowercase keywords. */
 function tokenize(text: string): string[] {
-  return (text.toLowerCase().match(/[a-z0-9][a-z0-9._-]*/g) || []).filter(
-    (t) => t.length >= 3 && !STOPWORDS.has(t),
-  );
+  const tokens = text.toLowerCase().match(/[a-z0-9][a-z0-9._-]*/g);
+  if (!tokens) return [];
+  return tokens.filter((t) => t.length >= 3 && !STOPWORDS.has(t));
 }
 
 /** Count how many request keywords appear in the content. */

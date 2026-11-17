@@ -32,6 +32,29 @@ export type LocalEngineState =
   | "error"
   | "offline";
 
+// ── Never-fail watchdogs ───────────────────────────────────────────────────
+// Engine init: web-llm reports progress through the download AND the shader
+// compile. A silent gap means the install wedged (stalled CDN socket, hung
+// GPU compile) — previously nothing bounded this, so initialize() could hang
+// forever and every prefer-local message silently fell back to cloud.
+const INIT_IDLE_TIMEOUT_MS = 45_000;
+
+// Generation: on a 1B model tokens stream at 20-60/s, so a 30s tokenless gap
+// means the worker hung (WebGPU device lost mid-run) — not "thinking". The
+// hard cap bounds a pathologically slow device: past it the partial reply is
+// returned instead of spinning forever.
+const GENERATION_IDLE_TIMEOUT_MS = 30_000;
+const GENERATION_HARD_TIMEOUT_MS = 120_000;
+// Whole recovery ladder budget (retry → re-init → retry) — guarantees the
+// caller can never wait more than ~3 minutes even in the worst cascade.
+const GENERATION_LADDER_DEADLINE_MS = 180_000;
+
+export interface LocalEngineConfig {
+  contextWindowSize?: number;
+  /** Silence watchdog for initialize(): no progress for this long → fail (and retry via the mirror when eligible). */
+  initIdleTimeoutMs?: number;
+}
+
 export class LocalInferenceEngine {
   private engine: WebWorkerMLCEngine | null = null;
   private isInitializing = false;
@@ -42,6 +65,9 @@ export class LocalInferenceEngine {
   // Batch 4: state machine
   private state: LocalEngineState = "idle";
   private listeners = new Set<(s: LocalEngineState) => void>();
+
+  /** In-flight initialize() — concurrent callers adopt it instead of racing a second engine against the same GPU. */
+  private initPromise: Promise<boolean> | null = null;
 
   /** Current engine state. */
   getState(): LocalEngineState {
@@ -61,36 +87,76 @@ export class LocalInferenceEngine {
   }
 
   /**
-   * Build the WebLLM worker engine for one model. Isolated so the mirror
-   * retry gets a pristine worker (a failed Create can leave the old one
-   * wedged) and can inject the mirrored appConfig.
+   * Build the WebWorkerMLC engine for one model, under a no-progress
+   * watchdog. Isolated so the mirror retry gets a pristine worker (a failed
+   * Create can leave the old one wedged) and can inject the mirrored
+   * appConfig.
+   *
+   * The watchdog terminates the worker when initialization stops reporting
+   * progress — a stalled download socket or a hung GPU compile previously
+   * left the promise pending forever, wedging the engine in
+   * downloading/loading for the whole session. The thrown error is phrased
+   * so isMirrorEligibleError() treats it as network-shaped (mirror retry
+   * applies).
    */
   private async createEngine(
     model: LocalModelDefinition,
     contextWindowSize: number,
     progressCb: InitProgressCallback,
     useMirror: boolean,
+    idleTimeoutMs: number = INIT_IDLE_TIMEOUT_MS,
   ): Promise<WebWorkerMLCEngine> {
     const worker = new Worker(new URL('../workers/webllm.worker.ts', import.meta.url), { type: 'module' });
-    const engineConfigs: MLCEngineConfig = { initProgressCallback: progressCb };
+    let watchdogTimer: ReturnType<typeof setTimeout> | null = null;
+    let fireWatchdog: (() => void) | null = null;
+    const watchdogPromise = new Promise<never>((_, reject) => {
+      fireWatchdog = () => {
+        reject(new Error(
+          `The model install timed out — no progress for ${Math.round(idleTimeoutMs / 1000)}s. ` +
+          "Check the connection and retry from Settings → Offline AI.",
+        ));
+      };
+    });
+    const arm = () => {
+      if (watchdogTimer) clearTimeout(watchdogTimer);
+      watchdogTimer = setTimeout(() => {
+        watchdogTimer = null;
+        try { worker.terminate(); } catch { /* already dead */ }
+        fireWatchdog?.();
+      }, idleTimeoutMs);
+    };
+    // Reset the watchdog on every progress report — a healthy download or
+    // compile keeps pushing reports, so only a genuine stall fires it.
+    const watchedCb: InitProgressCallback = (report) => {
+      arm();
+      progressCb(report);
+    };
+    const engineConfigs: MLCEngineConfig = { initProgressCallback: watchedCb };
     if (useMirror) {
       const mirrorAppConfig = buildMirrorAppConfig();
       if (mirrorAppConfig) engineConfigs.appConfig = mirrorAppConfig;
     }
+    arm();
+    const createPromise = CreateWebWorkerMLCEngine(
+      worker,
+      model.id,
+      engineConfigs,
+      // web-llm ChatOptions — snake_case ChatConfig overrides. The context
+      // window cap lands here; engine-level config stays in createEngine.
+      { context_window_size: contextWindowSize },
+    );
+    // After a watchdog terminate the create promise may reject (dead worker)
+    // or pend forever — neither may surface as an unhandled rejection.
+    createPromise.catch(() => {});
     try {
-      return await CreateWebWorkerMLCEngine(
-        worker,
-        model.id,
-        engineConfigs,
-        // web-llm ChatOptions — snake_case ChatConfig overrides. The context
-        // window cap lands here; engine-level config stays in createEngine.
-        { context_window_size: contextWindowSize },
-      );
+      return await Promise.race([createPromise, watchdogPromise]);
     } catch (error) {
       // The worker is unusable after a failed create — free it before the
       // caller decides whether to retry on the mirror.
       try { worker.terminate(); } catch { /* already dead */ }
       throw error;
+    } finally {
+      if (watchdogTimer) clearTimeout(watchdogTimer);
     }
   }
 
@@ -98,15 +164,44 @@ export class LocalInferenceEngine {
     onProgress?: (progress: InitProgressReport) => void,
     /** Optional explicit model id; defaults to the device-tier pick. */
     modelId?: string,
-    /** Optional engine config overrides (contextWindowSize etc.). */
-    engineConfig?: { contextWindowSize?: number },
+    /** Optional engine config overrides (contextWindowSize, watchdog). */
+    engineConfig?: LocalEngineConfig,
   ): Promise<boolean> {
     if (this.isReady) {
       this.setState("ready");
       return true;
     }
-    if (this.isInitializing) return false;
+    // Dedupe concurrent starts (mount prewarm + background install + a
+    // message-triggered prewarm): adopt the in-flight run instead of
+    // spawning a second engine against the same GPU.
+    if (this.initPromise) return this.initPromise;
+    const promise = this.runInitialize(onProgress, modelId, engineConfig);
+    const wrapped = promise.finally(() => { this.initPromise = null; });
+    this.initPromise = wrapped;
+    return wrapped;
+  }
 
+  /**
+   * Bring the engine up for the next message without any UI: no-op when
+   * already loaded (or loading), otherwise initializes with the default
+   * device-tier model. Weights are already cached after the one-time
+   * install, so this costs seconds of worker-spawn + shader compile — what
+   * makes the FIRST chat message of a session run on-device instead of
+   * silently falling back to cloud while the engine sits idle.
+   */
+  async prewarm(): Promise<boolean> {
+    if (this.isReady) {
+      this.setState("ready");
+      return true;
+    }
+    return this.initialize();
+  }
+
+  private async runInitialize(
+    onProgress?: (progress: InitProgressReport) => void,
+    modelId?: string,
+    engineConfig?: LocalEngineConfig,
+  ): Promise<boolean> {
     this.isInitializing = true;
     this.setState("downloading");
     let sawModelLoadStart = false;
@@ -129,7 +224,11 @@ export class LocalInferenceEngine {
     // KV-cache cap: the 0.5B–3B local models can't fit a 4k context on weak
     // GPUs (device-lost errors under memory pressure). 2k tokens covers
     // everyday private chat and roughly halves KV memory.
-    const resolvedEngineConfig = { contextWindowSize: 2048, ...engineConfig };
+    const resolvedEngineConfig: LocalEngineConfig = {
+      contextWindowSize: 2048,
+      initIdleTimeoutMs: INIT_IDLE_TIMEOUT_MS,
+      ...engineConfig,
+    };
     const progressCb: InitProgressCallback = (report) => {
       // web-llm emits progress through both the download and the model
       // load. The progress text changes from "Fetching..." to
@@ -143,7 +242,7 @@ export class LocalInferenceEngine {
       onProgress?.(report);
     };
     try {
-      this.engine = await this.createEngine(model, resolvedEngineConfig.contextWindowSize, progressCb, false);
+      this.engine = await this.createEngine(model, resolvedEngineConfig.contextWindowSize!, progressCb, false, resolvedEngineConfig.initIdleTimeoutMs);
       this.isReady = true;
       this.setState("ready");
       return true;
@@ -154,7 +253,7 @@ export class LocalInferenceEngine {
       if (isMirrorEligibleError(error) && buildMirrorAppConfig()) {
         console.info("[local-engine] primary download failed — retrying from the configured mirror");
         try {
-          this.engine = await this.createEngine(model, resolvedEngineConfig.contextWindowSize, progressCb, true);
+          this.engine = await this.createEngine(model, resolvedEngineConfig.contextWindowSize!, progressCb, true, resolvedEngineConfig.initIdleTimeoutMs);
           this.isReady = true;
           this.setState("ready");
           return true;
@@ -179,6 +278,40 @@ export class LocalInferenceEngine {
     return this.currentModelId;
   }
 
+  /**
+   * Resolve when the engine reaches `ready`, or bail out on terminal
+   * failure / timeout. Used by callers that kicked off a prewarm (page
+   * mount, background install) and want the CURRENT message to stay
+   * on-device instead of bouncing to cloud while the engine compiles.
+   * Strictly bounded — the wait can never outlive `timeoutMs`.
+   */
+  async waitForReady(timeoutMs: number = 25_000, outer?: AbortSignal): Promise<boolean> {
+    if (this.isReady) return true;
+    if (this.state === "error") return false; // dead engine — don't wait
+    return new Promise<boolean>((resolve) => {
+      let settled = false;
+      let timer: ReturnType<typeof setTimeout> | null = null;
+      const finish = (ok: boolean) => {
+        if (settled) return;
+        settled = true;
+        if (timer) clearTimeout(timer);
+        unsub();
+        if (outer) outer.removeEventListener("abort", onAbort);
+        resolve(ok);
+      };
+      const unsub = this.subscribe((s) => {
+        if (s === "ready") finish(true);
+        else if (s === "error" || s === "idle") finish(false);
+      });
+      const onAbort = () => finish(false);
+      if (outer) {
+        if (outer.aborted) { finish(false); return; }
+        outer.addEventListener("abort", onAbort, { once: true });
+      }
+      timer = setTimeout(() => finish(false), timeoutMs);
+    });
+  }
+
   async generate(messages: CloudChatMessage[], options?: CloudChatOptions): Promise<CloudChatResult> {
     if (!this.engine || !this.isReady) {
       return { content: "", error: "Local engine not ready.", source: "local", modelUsed: this.currentModelId };
@@ -186,57 +319,39 @@ export class LocalInferenceEngine {
 
     this.setState("generating");
     try {
-      const webLlmMessages = messages.map(m => ({
-        role: m.role as "system" | "user" | "assistant",
-        content: m.content
-      }));
+      let attempt = await this.attemptGenerate(messages, options);
+      const callerAborted = () => options?.signal?.aborted === true;
+      const ladderDeadline = Date.now() + GENERATION_LADDER_DEADLINE_MS;
 
-      const chunks = await this.engine.chat.completions.create({
-        messages: webLlmMessages as any,
-        temperature: options?.temperature ?? 0.7,
-        // Explicit output cap (≈2 long chat replies). Previously no cap was
-        // set: a rambling response generated until the 2,048-token window
-        // filled and the reply died mid-sentence with no error anywhere.
-        max_tokens: options?.maxTokens ?? LOCAL_OUTPUT_TOKEN_RESERVE,
-        stream: true,
-      });
-
-      let content = "";
-      let finishReason: string | null = null;
-      let aborted = false;
-      for await (const chunk of chunks) {
-        if (options?.signal?.aborted) {
-          aborted = true;
-          break;
+      // Never-fail ladder. Caller aborts never retry.
+      //   1. Immediate retry after interruptGenerate — clears a wedged or
+      //      still-generating stream (the previous message's stop sometimes
+      //      leaves the worker busy; the retry then queues behind it).
+      //   2. Full engine re-init (WebGPU device lost mid-run) + one last
+      //      attempt — weights are cached, so this costs seconds.
+      if (attempt.result.error && attempt.retryable && !callerAborted() && Date.now() < ladderDeadline) {
+        await this.safeInterrupt();
+        attempt = await this.attemptGenerate(messages, options);
+        if (attempt.result.error && attempt.retryable && !callerAborted() && Date.now() < ladderDeadline) {
+          const reinitOk = await this.reinitialize();
+          if (reinitOk && this.isReady) {
+            attempt = await this.attemptGenerate(messages, options);
+          }
         }
-        const choice = chunk.choices[0];
-        const delta = choice?.delta?.content || "";
-        content += delta;
-        if (choice?.finish_reason) finishReason = choice.finish_reason;
-        options?.onDelta?.(content);
       }
-      // Breaking the read loop only stops CONSUMING the stream — the worker
-      // keeps generating the full reply in the background, and the next
-      // message queues behind it (looked like the model "stopped reacting").
-      // interruptGenerate() actually halts token production in the worker.
-      if (aborted) {
-        try {
-          await this.engine.interruptGenerate();
-        } catch { /* engine was not generating — nothing to interrupt */ }
+
+      const result = attempt.result;
+      if (result.error && !result.content) {
+        // Terminal failure — keep the state machine honest, then recover so
+        // the next message can proceed without a manual reload.
+        this.setState("error");
+        if (this.isReady) {
+          setTimeout(() => { if (this.isReady) this.setState("ready"); }, 1500);
+        }
+      } else {
+        this.setState("ready");
       }
-      this.setState("ready");
-      if (!aborted && finishReason === "length") {
-        // Honest truncation: the reply hit the output cap (window ran out).
-        // Content is still returned so the UI shows what arrived, and the
-        // error lets callers mark the answer as incomplete.
-        return {
-          content,
-          error: "The reply hit the on-device model's output limit and was trimmed. Ask to continue for the rest.",
-          source: "local",
-          modelUsed: this.currentModelId,
-        };
-      }
-      return { content, source: "local", modelUsed: this.currentModelId };
+      return result;
     } catch (error: any) {
       console.error("Local generation error:", error);
       this.setState("error");
@@ -247,6 +362,172 @@ export class LocalInferenceEngine {
       }
       return { content: "", error: error.message || "Local generation failed.", source: "local", modelUsed: this.currentModelId };
     }
+  }
+
+  private async safeInterrupt(): Promise<void> {
+    try {
+      await (this.engine as unknown as { interruptGenerate?: () => Promise<void> } | null)?.interruptGenerate?.();
+    } catch { /* engine was not generating — nothing to interrupt */ }
+  }
+
+  /** Tear down and rebuild the engine (device-lost recovery), watchdog-capped. */
+  private async reinitialize(): Promise<boolean> {
+    try { await this.engine?.unload(); } catch { /* already dead */ }
+    this.engine = null;
+    this.isReady = false;
+    this.setState("idle");
+    return this.initialize(undefined, this.currentModelId);
+  }
+
+  /**
+   * One bounded generation attempt. Returns the attempt's result plus
+   * whether the never-fail ladder may retry it (silence watchdog, worker
+   * crash). Terminal truncations (output cap, hard timeout) are NOT
+   * retried — a retry would just run into the same cap again.
+   */
+  private async attemptGenerate(
+    messages: CloudChatMessage[],
+    options?: CloudChatOptions,
+  ): Promise<{ result: CloudChatResult; retryable: boolean }> {
+    if (!this.engine || !this.isReady) {
+      return {
+        result: { content: "", error: "Local engine not ready.", source: "local", modelUsed: this.currentModelId },
+        retryable: false,
+      };
+    }
+
+    const webLlmMessages = messages.map(m => ({
+      role: m.role as "system" | "user" | "assistant",
+      content: m.content
+    }));
+
+    const idleMs = options?.generationIdleTimeoutMs ?? GENERATION_IDLE_TIMEOUT_MS;
+    const hardMs = options?.generationHardTimeoutMs ?? GENERATION_HARD_TIMEOUT_MS;
+
+    let chunks: AsyncIterable<any>;
+    try {
+      chunks = await this.engine.chat.completions.create({
+        messages: webLlmMessages as any,
+        temperature: options?.temperature ?? 0.7,
+        // Explicit output cap (≈2 long chat replies). Previously no cap was
+        // set: a rambling response generated until the 2,048-token window
+        // filled and the reply died mid-sentence with no error anywhere.
+        max_tokens: options?.maxTokens ?? LOCAL_OUTPUT_TOKEN_RESERVE,
+        stream: true,
+      });
+    } catch (error: any) {
+      console.error("Local generation error:", error);
+      return {
+        result: { content: "", error: error?.message || "Local generation failed.", source: "local", modelUsed: this.currentModelId },
+        retryable: true,
+      };
+    }
+
+    let content = "";
+    let finishReason: string | null = null;
+    let aborted = false;
+    let idleTimedOut = false;
+    let hardTimedOut = false;
+    let readError: unknown = null;
+
+    // Silence watchdog: a tokenless gap means the worker hung (WebGPU device
+    // lost mid-run) — racing every read against a timer turns that hang into
+    // a retryable failure instead of an eternal spinner.
+    let idleTimer: ReturnType<typeof setTimeout> | null = null;
+    let settleIdle: (() => void) | null = null;
+    const idlePromise = new Promise<void>((resolve) => { settleIdle = resolve; });
+    const armIdle = () => {
+      if (idleTimer) clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => { idleTimedOut = true; settleIdle?.(); }, idleMs);
+    };
+
+    const startedAt = Date.now();
+    const iterator = (chunks as AsyncIterable<any>)[Symbol.asyncIterator]();
+    try {
+      armIdle();
+      while (true) {
+        if (Date.now() - startedAt >= hardMs) { hardTimedOut = true; break; }
+        const raced = await Promise.race([
+          iterator.next(),
+          idlePromise.then(() => ({ stalled: true as const })),
+        ]);
+        if (idleTimer) clearTimeout(idleTimer);
+        if ("stalled" in raced && raced.stalled) break; // silence watchdog fired
+        if (options?.signal?.aborted) { aborted = true; break; }
+        const { done, value } = raced as { done: boolean; value?: any };
+        if (done) break;
+        const choice = value?.choices?.[0];
+        const delta = choice?.delta?.content || "";
+        content += delta;
+        if (choice?.finish_reason) finishReason = choice.finish_reason;
+        options?.onDelta?.(content);
+        armIdle();
+      }
+    } catch (error) {
+      readError = error;
+    } finally {
+      if (idleTimer) clearTimeout(idleTimer);
+    }
+
+    // Breaking the read loop only stops CONSUMING the stream — the worker
+    // keeps generating the full reply in the background, and the next
+    // message queues behind it (looked like the model "stopped reacting").
+    // interruptGenerate() actually halts token production in the worker.
+    if (aborted || idleTimedOut || hardTimedOut || readError) {
+      // Cancel the underlying stream without awaiting it — a hung generator
+      // must never turn the watchdog back into a hang.
+      Promise.resolve((iterator as AsyncIterator<any>).return?.()).catch(() => {});
+      await this.safeInterrupt();
+    }
+
+    if (aborted) {
+      return { result: { content, source: "local", modelUsed: this.currentModelId }, retryable: false };
+    }
+    if (readError) {
+      console.error("Local generation error:", readError);
+      const message = readError instanceof Error ? readError.message : "Local generation failed.";
+      return {
+        result: { content, error: message || "Local generation failed.", source: "local", modelUsed: this.currentModelId },
+        retryable: true,
+      };
+    }
+    if (idleTimedOut) {
+      return {
+        result: {
+          content,
+          error: "The on-device model stopped responding mid-reply.",
+          source: "local",
+          modelUsed: this.currentModelId,
+        },
+        retryable: true,
+      };
+    }
+    if (hardTimedOut) {
+      return {
+        result: {
+          content,
+          error: "The reply took too long on this device and was stopped. Ask to continue for the rest.",
+          source: "local",
+          modelUsed: this.currentModelId,
+        },
+        retryable: false,
+      };
+    }
+    if (!aborted && finishReason === "length") {
+      // Honest truncation: the reply hit the output cap (window ran out).
+      // Content is still returned so the UI shows what arrived, and the
+      // error lets callers mark the answer as incomplete.
+      return {
+        result: {
+          content,
+          error: "The reply hit the on-device model's output limit and was trimmed. Ask to continue for the rest.",
+          source: "local",
+          modelUsed: this.currentModelId,
+        },
+        retryable: false,
+      };
+    }
+    return { result: { content, source: "local", modelUsed: this.currentModelId }, retryable: false };
   }
 
   async unload() {
@@ -261,3 +542,12 @@ export class LocalInferenceEngine {
 
 // Singleton instance
 export const localInferenceEngine = new LocalInferenceEngine();
+
+/**
+ * Module-level helper for callers that dynamically import the engine module
+ * (streamCloudChat, ChatbotPage): wait for the singleton engine to reach
+ * `ready`, or bail out on terminal failure / timeout / caller abort.
+ */
+export function waitForLocalEngineReady(timeoutMs: number = 25_000, outer?: AbortSignal): Promise<boolean> {
+  return localInferenceEngine.waitForReady(timeoutMs, outer);
+}

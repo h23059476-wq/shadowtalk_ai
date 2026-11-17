@@ -40,6 +40,11 @@ vi.mock("@/integrations/firebase/app", () => ({
 
 const engineMock = vi.hoisted(() => ({
   isLoaded: vi.fn(() => true),
+  // Engine lifecycle — streamCloudChat waits on an in-flight init before it
+  // falls through to cloud, so the mock has to answer lifecycle questions.
+  getState: vi.fn(() => "idle" as const),
+  prewarm: vi.fn(async () => true),
+  waitForLocalEngineReady: vi.fn(async () => false),
   generate: vi.fn(async () => ({
     content: "local reply from the on-device model",
     source: "local",
@@ -48,6 +53,7 @@ const engineMock = vi.hoisted(() => ({
 }));
 vi.mock("@/offline/LocalInferenceEngine", () => ({
   localInferenceEngine: engineMock,
+  waitForLocalEngineReady: engineMock.waitForLocalEngineReady,
 }));
 
 const byokMock = vi.hoisted(() => ({
