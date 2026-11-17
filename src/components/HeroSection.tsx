@@ -104,8 +104,9 @@ const HeroSection = () => {
             </p>
           </div>
 
-          {/* Above-the-fold product showcase — 14s seamless loop, silent,
-              real UI in action; the actual CTAs sit right above it */}
+          {/* Above-the-fold welcome tour — 20s seamless loop, silent,
+              welcomes new users and explains what ShadowTalk is; the actual
+              CTAs sit right above it */}
           <HeroProductVideo />
 
           {/* BYOK / WebGPU / RAG feature pills — explicit, scannable */}

@@ -1,11 +1,13 @@
 import React from "react";
 
 /**
- * Seamless 14s product loop — above-the-fold showcase.
+ * Seamless 20s welcome loop — above-the-fold showcase.
  *
- * Rendered from the Remotion "HeroLoop" composition (1280x720 @ 30fps,
- * 420 frames, silent, no fake CTA buttons). Frame 420 is pixel-identical to
- * frame 0, so `loop` restarts with zero visible jump.
+ * Rendered from the Remotion "WelcomeShadowTalk" composition (1280x720 @
+ * 30fps, 600 frames, silent, no fake CTA buttons). It welcomes the visitor
+ * and explains what ShadowTalk is: a zero-knowledge, multi-model AI canvas
+ * where nothing leaves the device. Frame 599 is pixel-identical to frame 0,
+ * so `loop` restarts with zero visible jump.
  *
  * `muted` is re-asserted inside the ref callback: React drops the muted
  * attribute in prerendered HTML, which blocks autoplay in Safari and some
@@ -24,7 +26,7 @@ const HeroProductVideo: React.FC = () => {
           muted
           playsInline
           preload="metadata"
-          aria-label="ShadowTalk product preview: one prompt refactoring a RAG pipeline across Claude, GPT-4o, Gemini and Llama, with local IndexedDB vector search and WebGPU inference staying on-device"
+          aria-label="ShadowTalk welcome tour: what ShadowTalk is — a zero-knowledge, multi-model AI canvas on your own keys — and how your conversations stay encrypted and on-device"
           ref={(el) => {
             if (el) el.muted = true;
           }}
@@ -34,7 +36,7 @@ const HeroProductVideo: React.FC = () => {
         </video>
       </div>
       <p className="text-center text-[11px] sm:text-xs text-muted-foreground/70 mt-2.5 font-mono">
-        live product loop · one prompt, four models · RAG stays on-device
+        welcome tour · zero-knowledge, multi-model canvas · nothing leaves your device
       </p>
     </div>
   );
