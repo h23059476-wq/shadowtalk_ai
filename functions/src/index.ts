@@ -692,15 +692,109 @@ export const generateImage = onRequest({ secrets: allSecrets, timeoutSeconds: 12
 });
 
 /**
+ * Feedback email delivery.
+ *
+ * Every contact/feedback submission is forwarded to the founder's inbox:
+ *   zain@shadowtalk-ai.com  (override with FEEDBACK_TO_EMAIL in functions/.env)
+ *
+ * Two delivery paths, first match wins:
+ *   1. Resend HTTP API — used when RESEND_API_KEY is set. Recommended: create
+ *      a free account at resend.com, verify shadowtalk-ai.com, then put
+ *      RESEND_API_KEY=re_... in functions/.env and redeploy.
+ *   2. Firestore `mail` collection — used when no API key is set. Documents
+ *      follow the schema of the official "Trigger Email from Firestore"
+ *      extension; install it with SMTP credentials and queued docs are
+ *      delivered automatically. If the extension is not installed, queued
+ *      docs simply wait — nothing is lost.
+ *
+ * Either way the original submission is always persisted to the
+ * `contact_messages` collection first, so feedback is never lost even when
+ * email delivery fails. Delivery is best-effort and never fails the request.
+ */
+const FEEDBACK_TO_EMAIL = process.env.FEEDBACK_TO_EMAIL || "zain@shadowtalk-ai.com";
+const FEEDBACK_FROM_EMAIL = process.env.FEEDBACK_FROM_EMAIL || "ShadowTalk AI <feedback@shadowtalk-ai.com>";
+
+type FeedbackDeliveryStatus = "sent" | "queued" | "not_configured" | "failed";
+
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+async function deliverFeedbackEmail(message: {
+  subject: string;
+  text: string;
+  html: string;
+  replyTo: string | null;
+}): Promise<{ status: FeedbackDeliveryStatus; detail: string }> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (apiKey) {
+    try {
+      const response = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: FEEDBACK_FROM_EMAIL,
+          to: [FEEDBACK_TO_EMAIL],
+          subject: message.subject,
+          text: message.text,
+          html: message.html,
+          ...(message.replyTo ? { reply_to: message.replyTo } : {}),
+        }),
+      });
+      if (!response.ok) {
+        const detail = (await response.text()).slice(0, 300);
+        console.error("Feedback email delivery failed (Resend):", response.status, detail);
+        return { status: "failed", detail: `Resend ${response.status}: ${detail}` };
+      }
+      return { status: "sent", detail: "resend" };
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : String(error);
+      console.error("Feedback email delivery error (Resend):", error);
+      return { status: "failed", detail };
+    }
+  }
+
+  // No Resend key — queue in the `mail` collection for the Trigger Email
+  // extension (Admin SDK write, bypasses security rules).
+  try {
+    await admin.firestore().collection("mail").add({
+      to: FEEDBACK_TO_EMAIL,
+      ...(message.replyTo ? { replyTo: message.replyTo } : {}),
+      message: {
+        subject: message.subject,
+        text: message.text,
+        html: message.html,
+      },
+      created_at: admin.firestore.FieldValue.serverTimestamp(),
+    });
+    return {
+      status: "queued",
+      detail: "mail collection — install the Trigger Email extension or set RESEND_API_KEY to deliver",
+    };
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : String(error);
+    console.error("Failed to queue feedback email:", error);
+    return { status: "failed", detail };
+  }
+}
+
+/**
  * Contact / waitlist intake (final completion phase).
  *
- * Both contact surfaces (ContactPage, AboutForms) invoke this function; until
- * now it did not exist, so About-page submissions hard-failed and the
- * ContactPage fell back to browser-only storage. There is deliberately no
- * third-party mail provider in the current architecture — messages are
- * persisted to the `contact_messages` Firestore intake collection (the same
- * destination the security rules' `isValidIntake()` path was designed for),
- * where admins can read them.
+ * Both contact surfaces (ContactPage, AboutForms) and the in-app FeedbackForm
+ * invoke this function. Messages are persisted to the `contact_messages`
+ * Firestore intake collection (the same destination the security rules'
+ * `isValidIntake()` path was designed for), where admins can read them, and
+ * additionally forwarded by email to zain@shadowtalk-ai.com (see
+ * deliverFeedbackEmail above).
  *
  * Anonymous submission is intentional (matches the client rules), so the
  * caller's ID token is optional; when a valid one is presented, the uid and
@@ -723,7 +817,9 @@ export const sendContactEmail = onRequest(async (req, res) => {
       const source = typeof body.source === "string" ? body.source.slice(0, 120) : "website";
 
       if (!name || name.length > 256) throw new AiRequestError("Name is required (max 256 characters).", 400);
-      if (!email || email.length > 256 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      // Email is optional (anonymous in-app feedback may omit it); when it is
+      // present it must be well-formed and reasonably sized.
+      if (email && (email.length > 256 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
         throw new AiRequestError("A valid email is required.", 400);
       }
       if (subject.length > 256) throw new AiRequestError("Subject is too long (max 256 characters).", 400);
@@ -740,20 +836,70 @@ export const sendContactEmail = onRequest(async (req, res) => {
         /* anonymous submission */
       }
 
+      // Compose and deliver the notification email to the founder's inbox.
+      const submittedAt = new Date().toISOString();
+      const emailSubject = `[ShadowTalk AI] ${subject || "General Inquiry"}`;
+      const identityLine = uid
+        ? `Signed in as ${uid}${userEmail ? ` (${userEmail})` : ""}`
+        : "Not signed in (anonymous submission)";
+      const textBody = [
+        `New message submitted on ShadowTalk AI — source: ${source}.`,
+        "",
+        `Name: ${name}`,
+        `Email: ${email || "not provided"}`,
+        identityLine,
+        `Submitted: ${submittedAt}`,
+        "",
+        "Message:",
+        message,
+      ].join("\n");
+      const htmlBody = [
+        '<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px">',
+        '<h2 style="margin:0 0 4px">New ShadowTalk AI message</h2>',
+        `<p style="color:#555;margin:0 0 16px">Source: ${escapeHtml(source)} &middot; Submitted ${escapeHtml(submittedAt)}</p>`,
+        '<table style="border-collapse:collapse;margin-bottom:16px">',
+        `<tr><td style="color:#555;padding:2px 12px 2px 0">Name</td><td><strong>${escapeHtml(name)}</strong></td></tr>`,
+        `<tr><td style="color:#555;padding:2px 12px 2px 0">Email</td><td>${email ? escapeHtml(email) : "<em>not provided</em>"}</td></tr>`,
+        `<tr><td style="color:#555;padding:2px 12px 2px 0">Account</td><td>${escapeHtml(identityLine)}</td></tr>`,
+        "</table>",
+        `<div style="white-space:pre-wrap;background:#f6f6f6;border:1px solid #e5e5e5;border-radius:8px;padding:16px">${escapeHtml(message)}</div>`,
+        '<p style="color:#888;font-size:12px;margin-top:16px">A copy of this message is stored in the Firestore &quot;contact_messages&quot; collection.</p>',
+        "</div>",
+      ].join("");
+
+      let delivery: { status: FeedbackDeliveryStatus; detail: string };
+      try {
+        delivery = await deliverFeedbackEmail({
+          subject: emailSubject,
+          text: textBody,
+          html: htmlBody,
+          replyTo: email || null,
+        });
+      } catch (deliveryError) {
+        // Storage below must never depend on email delivery succeeding.
+        delivery = {
+          status: "failed",
+          detail: deliveryError instanceof Error ? deliveryError.message : String(deliveryError),
+        };
+      }
+
       const db = admin.firestore();
       await db.collection("contact_messages").add({
         name,
-        email,
+        email: email || null,
         subject: subject || "General Inquiry",
         message,
         source,
         user_id: uid,
         identity_email: userEmail,
         status: "received",
+        email_delivery: delivery.status,
+        email_delivery_detail: delivery.detail.slice(0, 300),
+        notified_email: FEEDBACK_TO_EMAIL,
         created_at: admin.firestore.FieldValue.serverTimestamp(),
       });
 
-      return res.status(200).json({ ok: true });
+      return res.status(200).json({ ok: true, email_delivery: delivery.status });
     } catch (error) {
       return sendError(res, error);
     }

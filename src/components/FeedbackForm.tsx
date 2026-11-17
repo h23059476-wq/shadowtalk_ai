@@ -19,7 +19,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { MessageSquareHeart, Star, Send } from "lucide-react";
-// ShadowTalk backend removed — feedback is now local-only
+import { backend } from "@/integrations/local/client";
 import { useAuth } from "@/components/AuthProvider";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -74,14 +74,50 @@ export const FeedbackForm = ({ open: controlledOpen, onOpenChange, hideTrigger }
 
     setLoading(true);
     try {
-      // Local-only: just show success
-      await new Promise(r => setTimeout(r, 300));
-      toast.success("Thank you for your feedback!");
+      const categoryLabel =
+        categories.find((cat) => cat.value === formData.category)?.label ?? "General Feedback";
+      const contactEmail = formData.email.trim() || user?.email || "";
+      const name =
+        (user?.user_metadata?.display_name as string | undefined)?.trim() ||
+        (user?.user_metadata?.full_name as string | undefined)?.trim() ||
+        contactEmail ||
+        "Anonymous user";
+      // The gateway requires a valid email when one is provided; anonymous
+      // users may omit it entirely.
+      const body = {
+        name: name.slice(0, 256),
+        subject: `[FEEDBACK] ${categoryLabel} — rated ${formData.rating}/5`,
+        message: `${formData.message.trim()}\n\n— Rating: ${formData.rating}/5\n— Category: ${categoryLabel}`,
+        source: "In-app Feedback Form",
+        ...(contactEmail ? { email: contactEmail } : {}),
+      };
+
+      // invoke() RESOLVES with { error } instead of throwing on HTTP failures,
+      // so the error must be checked explicitly (same contract as ContactPage).
+      const { error: invokeError } = await backend.functions.invoke("sendContactEmail", { body });
+      if (invokeError) {
+        throw invokeError instanceof Error ? invokeError : new Error(String(invokeError));
+      }
+
+      toast.success("Thank you for your feedback! It was sent to the team.");
       setFormData({ email: "", category: "general", rating: 0, message: "" });
       setOpen(false);
     } catch (error) {
       console.error("Error submitting feedback:", error);
-      toast.error("Failed to submit feedback. Please try again.");
+      // Honest failure: keep a local copy so the message is never lost.
+      try {
+        const backlog = JSON.parse(localStorage.getItem("shadowtalk_feedback_backlog") || "[]");
+        backlog.unshift({
+          ...formData,
+          submittedAt: new Date().toISOString(),
+          status: "delivery-failed",
+        });
+        localStorage.setItem("shadowtalk_feedback_backlog", JSON.stringify(backlog.slice(0, 20)));
+      } catch {}
+      toast.error(
+        "Feedback couldn't be delivered just now. Please email zain@shadowtalk-ai.com directly.",
+        { duration: 8000 },
+      );
     } finally {
       setLoading(false);
     }
