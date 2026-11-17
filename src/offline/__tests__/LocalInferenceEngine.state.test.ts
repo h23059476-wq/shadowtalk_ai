@@ -148,3 +148,85 @@ describe("LocalInferenceEngine state machine", () => {
     expect(createEngineMock).toHaveBeenCalledTimes(1);
   });
 });
+
+describe("LocalInferenceEngine.generate — bounded, interruptible streaming", () => {
+  beforeEach(() => {
+    createEngineMock.mockReset();
+    mirrorConfigMock.mockReturnValue(null);
+    eligibleMock.mockReturnValue(false);
+    createEngineMock.mockResolvedValue({
+      chat: { completions: { create: async function* () {
+        yield { choices: [{ delta: { content: "hi" } }] };
+      } } },
+      unload: vi.fn(async () => {}),
+    } as never);
+    return localInferenceEngine.unload();
+  });
+  afterEach(() => localInferenceEngine.unload());
+
+  function engineWithStream(streamFactory: () => AsyncGenerator<any>, extra: Record<string, unknown> = {}) {
+    const createSpy = vi.fn((_request: unknown) => streamFactory());
+    const interruptSpy = vi.fn(async () => {});
+    createEngineMock.mockResolvedValueOnce({
+      chat: { completions: { create: createSpy } },
+      interruptGenerate: interruptSpy,
+      unload: vi.fn(async () => {}),
+      ...extra,
+    } as never);
+    return { createSpy, interruptSpy };
+  }
+
+  it("passes an explicit max_tokens output cap to the engine", async () => {
+    const { createSpy } = engineWithStream(async function* () {
+      yield { choices: [{ delta: { content: "ok" } }] };
+    });
+    await localInferenceEngine.initialize();
+    await localInferenceEngine.generate([{ role: "user", content: "hi" }]);
+    const request = createSpy.mock.calls[0][0] as { max_tokens?: number };
+    // The old request set no cap: a rambling reply generated until the
+    // 2048-token window filled and died mid-sentence with no error.
+    expect(request.max_tokens).toBeGreaterThan(0);
+    expect(request.max_tokens).toBeLessThanOrEqual(1024);
+  });
+
+  it("interrupts the worker when the caller aborts mid-generation", async () => {
+    const { interruptSpy } = engineWithStream(async function* () {
+      yield { choices: [{ delta: { content: "one" } }] };
+      yield { choices: [{ delta: { content: "-two" } }] };
+      yield { choices: [{ delta: { content: "-three" } }] };
+    });
+    await localInferenceEngine.initialize();
+    const controller = new AbortController();
+    const result = await localInferenceEngine.generate([{ role: "user", content: "hi" }], {
+      signal: controller.signal,
+      onDelta: () => controller.abort(), // abort right after the first delta
+    });
+    // Breaking the loop only stops READING — without interruptGenerate() the
+    // worker keeps generating and the NEXT message queues behind it.
+    expect(interruptSpy).toHaveBeenCalledTimes(1);
+    expect(result.content).toBe("one");
+    expect(result.error).toBeUndefined();
+  });
+
+  it("flags finish_reason=length as an incomplete reply with partial content", async () => {
+    engineWithStream(async function* () {
+      yield { choices: [{ delta: { content: "long answer" }, finish_reason: null }] };
+      yield { choices: [{ delta: {}, finish_reason: "length" }] };
+    });
+    await localInferenceEngine.initialize();
+    const result = await localInferenceEngine.generate([{ role: "user", content: "hi" }]);
+    expect(result.content).toBe("long answer");
+    expect(result.error).toContain("output limit");
+  });
+
+  it("does not flag a clean finish as truncated", async () => {
+    engineWithStream(async function* () {
+      yield { choices: [{ delta: { content: "done" }, finish_reason: null }] };
+      yield { choices: [{ delta: {}, finish_reason: "stop" }] };
+    });
+    await localInferenceEngine.initialize();
+    const result = await localInferenceEngine.generate([{ role: "user", content: "hi" }]);
+    expect(result.content).toBe("done");
+    expect(result.error).toBeUndefined();
+  });
+});

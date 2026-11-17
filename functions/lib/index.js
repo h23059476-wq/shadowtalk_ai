@@ -171,7 +171,12 @@ exports.deleteAccount = (0, https_1.onRequest)({ timeoutSeconds: 540 }, async (r
             return res.status(405).json({ error: "Method not allowed." });
         try {
             const user = await requireAuthenticatedUser(req.headers.authorization);
-            if (Date.now() / 1000 - user.auth_time > 5 * 60) {
+            // Freshness gate: the token must have been MINTED in the last 5 minutes.
+            // `iat` updates on every token refresh, so the client's force-refresh
+            // before invoke satisfies this; `auth_time` (the previous check) only
+            // moves on full reauthentication, which no client path ever performed —
+            // making account deletion impossible for sessions older than 5 minutes.
+            if (Date.now() / 1000 - user.iat > 5 * 60) {
                 throw new AiRequestError("For security, sign in again before deleting your account.", 401);
             }
             const db = admin.firestore();
@@ -301,7 +306,16 @@ function sendError(res, error) {
         console.error("AI function error:", error);
     res.status(status).json({ error: message });
 }
-exports.chat = (0, https_1.onRequest)({ secrets: allSecrets }, (req, res) => {
+// ── Shared-chat stream tuning ────────────────────────────────────────────
+// `openrouter/free` picks a RANDOM free model per request and free endpoints
+// are congested: the first SSE byte can take many seconds, and generations
+// regularly run past the 60s default function timeout (which killed the
+// instance mid-stream — the "incomplete answer" bug). These knobs bound the
+// wait so we fail over fast instead of stalling the user.
+const FIRST_CHUNK_TIMEOUT_MS = 20000;
+const HEARTBEAT_INTERVAL_MS = 5000;
+const HEARTBEAT_IDLE_MS = 10000;
+exports.chat = (0, https_1.onRequest)({ secrets: allSecrets, timeoutSeconds: 300 }, (req, res) => {
     corsHandler(req, res, async () => {
         if (req.method === "OPTIONS")
             return;
@@ -317,7 +331,7 @@ exports.chat = (0, https_1.onRequest)({ secrets: allSecrets }, (req, res) => {
             if (poolKeys.length === 0) {
                 throw new AiRequestError("Shared AI is not configured. Set the OPENROUTER_API_KEY Firebase secret.", 503);
             }
-            const { messages, stream = true, personality, deepResearch, maxTokens, structuredOutput, } = req.body || {};
+            const { messages, stream = true, personality, deepResearch, maxTokens, temperature, structuredOutput, } = req.body || {};
             if (!Array.isArray(messages) || messages.length === 0 || messages.length > 40) {
                 throw new AiRequestError("messages must contain between 1 and 40 entries.", 400);
             }
@@ -338,45 +352,99 @@ exports.chat = (0, https_1.onRequest)({ secrets: allSecrets }, (req, res) => {
             if (deepResearch) {
                 systemPrompts.push("The user has requested deep research. Provide thorough, well-structured analysis with citations where possible.");
             }
-            // === Multi-key retry loop ===
+            // === Multi-key retry loop + first-chunk failover ===
+            // If no SSE byte arrives within FIRST_CHUNK_TIMEOUT_MS the request is
+            // aborted and the pool re-rolls (next key / next random free model).
             let upstream = null;
+            let firstChunk = null;
+            let upstreamReader = null;
             let lastError = null;
             let lastStatus = 502;
-            for (let attempt = 0; attempt < poolKeys.length; attempt++) {
+            const maxAttempts = Math.max(poolKeys.length, 2); // ≥2 so a single-key pool still gets one re-roll
+            for (let attempt = 0; attempt < maxAttempts; attempt++) {
                 const apiKey = keyPool.next();
                 if (!apiKey) {
                     lastError = "No API keys available in the pool.";
                     lastStatus = 503;
                     break;
                 }
-                upstream = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${apiKey}`,
-                        "Content-Type": "application/json",
-                        "HTTP-Referer": "https://shadowtalk-ai-7a513.web.app",
-                        "X-Title": "ShadowTalk AI",
-                    },
-                    body: JSON.stringify({
-                        model: SHARED_CHAT_MODEL,
-                        messages: [{ role: "system", content: systemPrompts.join("\n\n") }, ...messages],
-                        stream: Boolean(stream),
-                        ...(structuredOutput ? { response_format: { type: "json_object" } } : {}),
-                        max_tokens: Math.max(256, Math.min(16384, Number.isFinite(Number(maxTokens))
-                            ? Math.floor(Number(maxTokens))
-                            : deepResearch ? 8192 : 8192)),
-                    }),
-                });
-                if (upstream.ok)
-                    break;
-                const detail = (await upstream.text()).slice(0, 500);
-                lastStatus = upstream.status === 429 ? 503 : 502;
-                lastError = `OpenRouter request failed (${upstream.status}) on key ${attempt + 1}/${poolKeys.length}. ${detail}`;
-                if (upstream.status === 429 || upstream.status >= 500) {
-                    keyPool.markCooldown(apiKey);
+                const attemptController = new AbortController();
+                const attemptTimer = setTimeout(() => attemptController.abort(), FIRST_CHUNK_TIMEOUT_MS);
+                try {
+                    upstream = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                        method: "POST",
+                        headers: {
+                            Authorization: `Bearer ${apiKey}`,
+                            "Content-Type": "application/json",
+                            "HTTP-Referer": "https://shadowtalk-ai-7a513.web.app",
+                            "X-Title": "ShadowTalk AI",
+                        },
+                        body: JSON.stringify({
+                            model: SHARED_CHAT_MODEL,
+                            messages: [{ role: "system", content: systemPrompts.join("\n\n") }, ...messages],
+                            stream: Boolean(stream),
+                            ...(structuredOutput ? { response_format: { type: "json_object" } } : {}),
+                            ...(Number.isFinite(Number(temperature))
+                                ? { temperature: Math.min(2, Math.max(0, Number(temperature))) }
+                                : {}),
+                            max_tokens: Math.max(256, Math.min(16384, Number.isFinite(Number(maxTokens))
+                                ? Math.floor(Number(maxTokens))
+                                : deepResearch ? 8192 : 8192)),
+                        }),
+                        signal: attemptController.signal,
+                    });
+                }
+                catch (fetchError) {
+                    clearTimeout(attemptTimer);
+                    upstream = null;
+                    lastStatus = 502;
+                    lastError = `OpenRouter request failed (${fetchError?.name || "NetworkError"}) on attempt ${attempt + 1}/${maxAttempts}.`;
                     continue;
                 }
-                break;
+                if (!upstream.ok) {
+                    clearTimeout(attemptTimer);
+                    const detail = (await upstream.text()).slice(0, 500);
+                    lastStatus = upstream.status === 429 ? 503 : 502;
+                    lastError = `OpenRouter request failed (${upstream.status}) on attempt ${attempt + 1}/${maxAttempts}. ${detail}`;
+                    if (upstream.status === 429 || upstream.status >= 500) {
+                        keyPool.markCooldown(apiKey);
+                        continue;
+                    }
+                    break;
+                }
+                // Non-streaming: the body is consumed below as JSON; the abort timer
+                // only guards the streaming handoff, so disarm it here.
+                if (!stream) {
+                    clearTimeout(attemptTimer);
+                    break;
+                }
+                // Wait for the FIRST SSE byte. A queued/congested free model is the
+                // main source of "the answer never starts" — bound it and re-roll.
+                const reader = upstream.body?.getReader();
+                if (!reader) {
+                    clearTimeout(attemptTimer);
+                    lastError = "OpenRouter returned an empty response stream.";
+                    break;
+                }
+                let chunk;
+                try {
+                    chunk = await reader.read();
+                }
+                catch {
+                    chunk = { done: true }; // aborted by the timer or connection reset
+                }
+                clearTimeout(attemptTimer);
+                if (!chunk.done && chunk.value) {
+                    firstChunk = chunk;
+                    upstreamReader = reader;
+                    break;
+                }
+                // Nothing arrived in time — fail over.
+                void reader.cancel().catch(() => { });
+                upstream = null;
+                keyPool.markCooldown(apiKey);
+                lastStatus = 503;
+                lastError = `OpenRouter did not start responding within ${FIRST_CHUNK_TIMEOUT_MS / 1000}s (attempt ${attempt + 1}/${maxAttempts}).`;
             }
             if (!upstream || !upstream.ok) {
                 await releaseSharedAiRequest(db, usageRef);
@@ -399,21 +467,62 @@ exports.chat = (0, https_1.onRequest)({ secrets: allSecrets }, (req, res) => {
             res.setHeader("Connection", "keep-alive");
             res.setHeader("X-Provider", "openrouter");
             res.setHeader("X-Model", SHARED_CHAT_MODEL);
-            const reader = upstream.body?.getReader();
-            if (!reader)
-                throw new Error("OpenRouter returned an empty response stream.");
+            res.setHeader("X-Accel-Buffering", "no");
+            res.flushHeaders?.();
+            const reader = upstreamReader;
             const decoder = new TextDecoder();
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done)
-                    break;
-                res.write(decoder.decode(value, { stream: true }));
+            let finished = false;
+            let lastWriteAt = Date.now();
+            // Keep-alive during upstream stalls: free models can sit silent for
+            // >30s mid-generation. Without periodic bytes the load balancer reaps
+            // the connection — the client saw a truncated answer with no error.
+            // SSE comment lines (": ping") are skipped by every client parser.
+            const heartbeat = setInterval(() => {
+                if (finished || res.writableEnded)
+                    return;
+                if (Date.now() - lastWriteAt > HEARTBEAT_IDLE_MS) {
+                    res.write(": ping\n\n");
+                    lastWriteAt = Date.now();
+                }
+            }, HEARTBEAT_INTERVAL_MS);
+            // Stop burning upstream tokens when the client hangs up mid-stream —
+            // previously an abandoned chat kept generating until the model finished.
+            const abortUpstream = () => {
+                if (!finished)
+                    void reader.cancel().catch(() => { });
+            };
+            res.on("close", abortUpstream);
+            try {
+                let chunk = firstChunk;
+                while (chunk && !chunk.done) {
+                    res.write(decoder.decode(chunk.value, { stream: true }));
+                    lastWriteAt = Date.now();
+                    chunk = await reader.read();
+                }
+                const tail = decoder.decode(); // flush any truncated multi-byte sequence
+                if (tail && !res.writableEnded)
+                    res.write(tail);
+            }
+            finally {
+                finished = true;
+                clearInterval(heartbeat);
+                res.off("close", abortUpstream);
+                // Release the upstream connection (harmless no-op once `done`).
+                void reader.cancel().catch(() => { });
             }
             return res.end();
         }
         catch (error) {
             if (usageRef && !upstreamStarted) {
                 await releaseSharedAiRequest(db, usageRef).catch((releaseError) => console.error("Failed to release AI request reservation:", releaseError));
+            }
+            if (upstreamStarted && res.headersSent && !res.writableEnded) {
+                // Mid-stream failure: writing JSON here would corrupt the SSE body.
+                // Emit an error EVENT instead — the client already surfaces
+                // `data: {"error": ...}` alongside the partial answer.
+                const message = error instanceof Error ? error.message : "The AI stream failed mid-generation.";
+                res.write(`data: ${JSON.stringify({ error: message })}\n\n`);
+                return res.end();
             }
             return sendError(res, error);
         }
@@ -445,7 +554,7 @@ exports.drive = (0, https_1.onRequest)((req, res) => {
         }
     });
 });
-exports.generateImage = (0, https_1.onRequest)({ secrets: allSecrets }, (req, res) => {
+exports.generateImage = (0, https_1.onRequest)({ secrets: allSecrets, timeoutSeconds: 120 }, (req, res) => {
     corsHandler(req, res, async () => {
         if (req.method === "OPTIONS")
             return;

@@ -31,7 +31,11 @@ export interface CloudChatOptions {
   onDelta?: (accumulated: string) => void;
   /** Request a strict JSON output format when the provider supports it. */
   structuredOutput?: boolean;
-  /** Request timeout in milliseconds (provider-dependent). */
+  /** Request timeout in milliseconds (provider-dependent).
+   *
+   *  Shared-gateway path: this is the SILENCE watchdog — when no SSE byte
+   *  (including gateway heartbeats) arrives for this long, the request is
+   *  aborted with an error instead of hanging forever. Defaults to 45s. */
   timeoutMs?: number;
   /** Maximum output tokens (provider-dependent). */
   maxTokens?: number;
@@ -177,12 +181,44 @@ const ESCALATION_ERROR =
 // ── Local context fitting ────────────────────────────────────────────────
 
 /**
+ * The engine's fixed context window (LocalInferenceEngine.initialize creates
+ * every engine with `context_window_size: 2048`). Single source of truth for
+ * the fitting math below.
+ */
+export const LOCAL_ENGINE_CONTEXT_TOKENS = 2048;
+
+/**
+ * Output-token reserve: the fitted prompt must leave this much room inside
+ * the engine's window. The old fitting budget (8,000 chars ≈ 2,000 tokens)
+ * consumed the ENTIRE window, so replies were cut off mid-sentence as soon
+ * as the KV cache filled — the "local answers are incomplete" bug.
+ */
+export const LOCAL_OUTPUT_TOKEN_RESERVE = 640;
+
+/** Chat-template + sampling headroom between the prompt and the output. */
+const LOCAL_TEMPLATE_HEADROOM_TOKENS = 128;
+
+/** Conservative characters-per-token ratio for the fitted payload. */
+const LOCAL_CHARS_PER_TOKEN = 4;
+
+/**
+ * Default character budget for fitMessagesToLocal:
+ * (window − output reserve − template headroom) × chars/token.
+ */
+export const LOCAL_INPUT_CHAR_BUDGET = Math.max(
+  0,
+  (LOCAL_ENGINE_CONTEXT_TOKENS - LOCAL_OUTPUT_TOKEN_RESERVE - LOCAL_TEMPLATE_HEADROOM_TOKENS) *
+    LOCAL_CHARS_PER_TOKEN,
+);
+
+/**
  * Character cap for the system prompt when fitting a payload onto the
  * on-device model. The full persona prompt (~8k chars) alone overflows the
  * engine's 2k-token context; the top of the prompt carries identity and
  * tone, so a line-boundary truncation keeps it useful for ordinary chat.
+ * Kept well under the input budget so the newest user turn survives intact.
  */
-const LOCAL_SYSTEM_CHAR_LIMIT = 2000;
+const LOCAL_SYSTEM_CHAR_LIMIT = 1000;
 
 function trimSystem(content: string, cap: number): string {
   if (content.length <= cap) return content;
@@ -198,10 +234,14 @@ function trimSystem(content: string, cap: number): string {
  * image parts are stripped (local models cannot do vision), and history is
  * kept newest-first within the budget so the newest user turn is always
  * served verbatim. Oldest messages drop first.
+ *
+ * The default budget is derived from the engine's 2,048-token window MINUS
+ * an output reserve — the prompt must never consume the whole window, or the
+ * reply gets truncated mid-sentence (see LOCAL_OUTPUT_TOKEN_RESERVE).
  */
 export function fitMessagesToLocal(
   messages: CloudChatMessage[],
-  budget: number = LOCAL_CONTEXT_CHAR_LIMIT,
+  budget: number = LOCAL_INPUT_CHAR_BUDGET,
 ): CloudChatMessage[] {
   const sysOut: CloudChatMessage[] = messages
     .filter((m) => m.role === "system")
@@ -316,7 +356,39 @@ async function streamBuiltInChat(
   const maxRetries = 1;
   let attempt = 0;
   let resp: Response | null = null;
-  
+
+  // ── Silence watchdog ──────────────────────────────────────────────────
+  // The gateway emits SSE heartbeat comments while it waits on OpenRouter,
+  // so a silent period longer than `stallMs` means the stream is genuinely
+  // dead (killed function instance, dropped connection, hung upstream).
+  // Previously nothing bounded this: the bubble spun forever with no error.
+  const stallMs = opts.timeoutMs ?? 45_000;
+  const stallController = new AbortController();
+  const onOuterAbort = () => stallController.abort();
+  if (opts.signal) {
+    if (opts.signal.aborted) stallController.abort();
+    else opts.signal.addEventListener("abort", onOuterAbort, { once: true });
+  }
+  let watchdogTimer: ReturnType<typeof setTimeout> | null = null;
+  let timedOut = false;
+  const armWatchdog = () => {
+    if (watchdogTimer !== null) clearTimeout(watchdogTimer);
+    watchdogTimer = setTimeout(() => {
+      timedOut = true;
+      stallController.abort();
+    }, stallMs);
+  };
+  const disarmWatchdog = () => {
+    if (watchdogTimer !== null) {
+      clearTimeout(watchdogTimer);
+      watchdogTimer = null;
+    }
+  };
+
+  // A hung fetch (cold start + dead upstream) is bounded by the same watchdog:
+  // the timer marks `timedOut`, aborts the fetch, and we return a friendly
+  // error instead of an unhelpful thrown AbortError.
+  armWatchdog();
   while (attempt <= maxRetries) {
     try {
       resp = await fetch(url, {
@@ -333,13 +405,20 @@ async function streamBuiltInChat(
           ...(opts.structuredOutput ? { structuredOutput: true } : {}),
           stream: true,
         }),
-        signal: opts.signal,
+        signal: stallController.signal,
       });
       
       if (resp.ok || (resp.status !== 502 && resp.status !== 503 && resp.status !== 504)) {
         break; // Success or a non-retriable error
       }
     } catch (err) {
+      if ((err as Error)?.name === "AbortError") {
+        if (opts.signal?.aborted) throw err; // caller-cancelled — never retried
+        if (timedOut) {
+          return { content: "", error: `The AI service did not respond within ${Math.round(stallMs / 1000)}s. Please try again.`, source: "shared" };
+        }
+        throw err;
+      }
       if (attempt === maxRetries) throw err;
     }
     
@@ -380,13 +459,22 @@ async function streamBuiltInChat(
   // Mid-stream `data: {"error": ...}` events must surface — previously they
   // were swallowed, so a failed stream returned an empty answer with no error.
   let streamError: string | null = null;
+  // Termination tracking: `sawDone` distinguishes a complete stream from one
+  // killed mid-generation (the gateway instance timeout produces exactly
+  // this), and `finishLength` flags a reply capped by max_tokens.
+  let sawDone = false;
+  let finishLength = false;
   // Intelligent-workspace Batch 1: the shared gateway proxies OpenRouter,
   // which emits a usage-bearing final chunk. Parse when present; absence is
   // normal and callers fall back to estimation.
   let sharedUsage: ProviderUsage | null = null;
 
   const handleDataLine = (payload: string): boolean => {
-    if (!payload || payload === "[DONE]") return true;
+    if (!payload) return true;
+    if (payload === "[DONE]") {
+      sawDone = true;
+      return true;
+    }
     try {
       const parsed = JSON.parse(payload);
       if (parsed?.error) {
@@ -396,11 +484,13 @@ async function streamBuiltInChat(
             : parsed.error?.message || "The AI service reported an error mid-stream.";
         return true;
       }
-      const delta: string | undefined = parsed?.choices?.[0]?.delta?.content;
+      const choice = parsed?.choices?.[0];
+      const delta: string | undefined = choice?.delta?.content;
       if (delta) {
         content += delta;
         opts.onDelta?.(content);
       }
+      if (choice?.finish_reason === "length") finishLength = true;
       const usageChunk = parseOpenAiUsageChunk(parsed);
       if (usageChunk) sharedUsage = mergeUsage(sharedUsage, usageChunk);
       return true;
@@ -409,29 +499,84 @@ async function streamBuiltInChat(
     }
   };
 
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-
-    let idx: number;
-    while ((idx = buffer.indexOf("\n")) !== -1) {
-      const line = buffer.slice(0, idx).trim();
-      buffer = buffer.slice(idx + 1);
-      if (!line.startsWith("data:")) continue;
-      handleDataLine(line.slice(5).trim());
+  // Race every read against the abort signal: a plain `reader.read()` may
+  // never settle in some environments when the fetch signal aborts, which
+  // would hang the loop even though the watchdog already fired.
+  const abortPromise = new Promise<never>((_, reject) => {
+    if (stallController.signal.aborted) {
+      // Aborted between fetch resolution and here — reject immediately,
+      // the `abort` event already fired so a listener would never run.
+      reject(new DOMException("The AI stream stalled.", "AbortError"));
+      return;
     }
-  }
-  buffer += decoder.decode(); // flush the decoder
+    stallController.signal.addEventListener(
+      "abort",
+      () => reject(new DOMException("The AI stream stalled.", "AbortError")),
+      { once: true },
+    );
+  });
+  let pendingRead: Promise<{ done: boolean; value?: Uint8Array }> | null = null;
+  const readChunk = () => {
+    pendingRead = reader.read() as Promise<{ done: boolean; value?: Uint8Array }>;
+    return Promise.race([pendingRead, abortPromise]);
+  };
 
-  // Flush the final buffered line — streams may end without a trailing
-  // newline, and the last event (or a truncated JSON payload) lives there.
-  const tail = buffer.trim();
-  if (tail.startsWith("data:")) {
-    const parsedOk = handleDataLine(tail.slice(5).trim());
-    if (!parsedOk && !streamError) {
-      // Truncated final event — the response was cut off mid-generation.
-      streamError = "The AI response was cut off. Please regenerate.";
+  armWatchdog();
+  try {
+    while (true) {
+      const { done, value } = await readChunk();
+      if (done) break;
+      armWatchdog();
+      buffer += decoder.decode(value!, { stream: true });
+
+      let idx: number;
+      while ((idx = buffer.indexOf("\n")) !== -1) {
+        const line = buffer.slice(0, idx).trim();
+        buffer = buffer.slice(idx + 1);
+        if (!line.startsWith("data:")) continue;
+        handleDataLine(line.slice(5).trim());
+      }
+    }
+    buffer += decoder.decode(); // flush the decoder
+
+    // Flush the final buffered line — streams may end without a trailing
+    // newline, and the last event (or a truncated JSON payload) lives there.
+    const tail = buffer.trim();
+    if (tail.startsWith("data:")) {
+      const parsedOk = handleDataLine(tail.slice(5).trim());
+      if (!parsedOk && !streamError) {
+        // Truncated final event — the response was cut off mid-generation.
+        streamError = "The AI response was cut off. Please regenerate.";
+      }
+    }
+  } catch (err) {
+    if ((err as Error)?.name === "AbortError") {
+      if (opts.signal?.aborted) throw err; // caller-cancelled — propagate
+      timedOut = true; // silence watchdog fired — handled below
+    } else {
+      throw err;
+    }
+  } finally {
+    disarmWatchdog();
+    if (opts.signal) opts.signal.removeEventListener("abort", onOuterAbort);
+    // Swallow the dangling read (if any) so cancelling never becomes an
+    // unhandled rejection, then release the connection.
+    pendingRead?.then(() => {}, () => {});
+    void reader.cancel().catch(() => {});
+  }
+
+  if (!streamError) {
+    if (timedOut) {
+      streamError = "The AI stopped responding — the connection stalled. Please regenerate.";
+    } else if (!sawDone) {
+      // The stream closed without the terminating [DONE] event: the gateway
+      // or upstream was killed mid-generation (e.g. instance timeout). Mark
+      // the answer incomplete instead of silently showing a truncated reply.
+      streamError = content
+        ? "The reply was cut off mid-stream and may be incomplete."
+        : "The AI service closed the connection before sending a reply.";
+    } else if (finishLength) {
+      streamError = "The reply hit the model's maximum output length and was trimmed. Ask to continue for the rest.";
     }
   }
 

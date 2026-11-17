@@ -93,11 +93,78 @@ describe("cloudChat SSE handling", () => {
 
   it("flushes the final data line without a trailing newline", async () => {
     fetchMock.mockResolvedValueOnce(
-      sseResponse("data: {\"choices\":[{\"delta\":{\"content\":\"tail\"}}]}"),
+      sseResponse("data: {\"choices\":[{\"delta\":{\"content\":\"tail\"}}]}\n\ndata: [DONE]"),
     );
     const result = await streamCloudChat(MSG, {});
     expect(result.error).toBeUndefined();
     expect(result.content).toBe("tail");
+  });
+
+  it("flags a stream that closes without [DONE] as a truncated reply", async () => {
+    // A killed gateway instance closes the socket mid-generation without the
+    // terminating event — previously this rendered as a silent partial answer.
+    fetchMock.mockResolvedValueOnce(
+      sseResponse("data: {\"choices\":[{\"delta\":{\"content\":\"half a\"}}]}\n\ndata: {\"choices\":[{\"delta\":{\"content\":\"n answer\"}}]}\n\n"),
+    );
+    const result = await streamCloudChat(MSG, {});
+    expect(result.content).toBe("half an answer");
+    expect(result.error).toContain("incomplete");
+  });
+
+  it("flags an empty stream that closes without [DONE] as a connection failure", async () => {
+    fetchMock.mockResolvedValueOnce(sseResponse(": ping\n\n"));
+    const result = await streamCloudChat(MSG, {});
+    expect(result.content).toBe("");
+    expect(result.error).toBeTruthy();
+  });
+
+  it("flags finish_reason=length as an output-cap truncation", async () => {
+    fetchMock.mockResolvedValueOnce(
+      sseResponse(
+        "data: {\"choices\":[{\"delta\":{\"content\":\"long answer\"},\"finish_reason\":null}]}\n\n" +
+        "data: {\"choices\":[{\"delta\":{},\"finish_reason\":\"length\"}]}\n\n" +
+        "data: [DONE]\n\n",
+      ),
+    );
+    const result = await streamCloudChat(MSG, {});
+    expect(result.content).toBe("long answer");
+    expect(result.error).toContain("output length");
+  });
+
+  it("reports a stalled stream via the silence watchdog", async () => {
+    // Stream delivers one chunk then goes silent forever (never closes).
+    fetchMock.mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+      body: new ReadableStream<Uint8Array>({
+        start(controller) {
+          controller.enqueue(new TextEncoder().encode("data: {\"choices\":[{\"delta\":{\"content\":\"partial\"}}]}\n\n"));
+          // no close() — the connection hangs
+        },
+      }),
+      json: async () => ({}),
+    } as unknown as Response);
+    const result = await streamCloudChat(MSG, { timeoutMs: 25 });
+    expect(result.content).toBe("partial");
+    expect(result.error).toContain("stopped responding");
+  });
+
+  it("propagates a caller abort instead of turning it into an error result", async () => {
+    const controller = new AbortController();
+    fetchMock.mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+      body: new ReadableStream<Uint8Array>({
+        start(controller2) {
+          controller2.enqueue(new TextEncoder().encode("data: {\"choices\":[{\"delta\":{\"content\":\"one\"}}]}\n\n"));
+          controller.abort();
+        },
+      }),
+      json: async () => ({}),
+    } as unknown as Response);
+    await expect(
+      streamCloudChat(MSG, { signal: controller.signal }),
+    ).rejects.toMatchObject({ name: "AbortError" });
   });
 
   it("reports a truncated final JSON event instead of silent success", async () => {

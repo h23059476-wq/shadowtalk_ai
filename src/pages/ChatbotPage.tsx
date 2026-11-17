@@ -1617,7 +1617,18 @@ Structure and Content Guidelines:
             finalizeAssistant();
             throw new Error(localResult.error);
           }
-          if (localResult.content) pushAssistant(localResult.content);
+          if (localResult.error && localResult.content) {
+            // Partial on-device reply (output-cap trim / mid-generation
+            // failure): previously the error was silently dropped and the
+            // truncated text looked like a complete answer. Mirror the cloud
+            // path — show what arrived, mark it incomplete, never persist
+            // the truncation as if it were the full reply.
+            pushAssistant(`${localResult.content}\n\n_[Response interrupted — ${localResult.error}]_`);
+            finalizeAssistant();
+            toast({ title: "Response incomplete", description: localResult.error, variant: "destructive" });
+          } else if (localResult.content) {
+            pushAssistant(localResult.content);
+          }
           finalizeAssistant();
 
           // Batch R1 — capture structured shadowdata blocks from local replies

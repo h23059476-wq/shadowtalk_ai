@@ -1,6 +1,6 @@
 import { CreateWebWorkerMLCEngine, WebWorkerMLCEngine, type InitProgressCallback, type InitProgressReport, type MLCEngineConfig } from "@mlc-ai/web-llm";
 import { DEFAULT_LOCAL_MODEL, getLocalModelDefinition, pickLocalModelForDevice, type LocalModelDefinition } from "@/ai/ModelRegistry";
-import { CloudChatMessage, CloudChatOptions, CloudChatResult } from "@/lib/cloudChat";
+import { CloudChatMessage, CloudChatOptions, CloudChatResult, LOCAL_OUTPUT_TOKEN_RESERVE } from "@/lib/cloudChat";
 import { DeviceCapability } from "@/offline/DeviceCapability";
 import { buildMirrorAppConfig, isMirrorEligibleError } from "@/offline/modelMirror";
 
@@ -194,19 +194,48 @@ export class LocalInferenceEngine {
       const chunks = await this.engine.chat.completions.create({
         messages: webLlmMessages as any,
         temperature: options?.temperature ?? 0.7,
+        // Explicit output cap (≈2 long chat replies). Previously no cap was
+        // set: a rambling response generated until the 2,048-token window
+        // filled and the reply died mid-sentence with no error anywhere.
+        max_tokens: options?.maxTokens ?? LOCAL_OUTPUT_TOKEN_RESERVE,
         stream: true,
       });
 
       let content = "";
+      let finishReason: string | null = null;
+      let aborted = false;
       for await (const chunk of chunks) {
         if (options?.signal?.aborted) {
+          aborted = true;
           break;
         }
-        const delta = chunk.choices[0]?.delta?.content || "";
+        const choice = chunk.choices[0];
+        const delta = choice?.delta?.content || "";
         content += delta;
+        if (choice?.finish_reason) finishReason = choice.finish_reason;
         options?.onDelta?.(content);
       }
+      // Breaking the read loop only stops CONSUMING the stream — the worker
+      // keeps generating the full reply in the background, and the next
+      // message queues behind it (looked like the model "stopped reacting").
+      // interruptGenerate() actually halts token production in the worker.
+      if (aborted) {
+        try {
+          await this.engine.interruptGenerate();
+        } catch { /* engine was not generating — nothing to interrupt */ }
+      }
       this.setState("ready");
+      if (!aborted && finishReason === "length") {
+        // Honest truncation: the reply hit the output cap (window ran out).
+        // Content is still returned so the UI shows what arrived, and the
+        // error lets callers mark the answer as incomplete.
+        return {
+          content,
+          error: "The reply hit the on-device model's output limit and was trimmed. Ask to continue for the rest.",
+          source: "local",
+          modelUsed: this.currentModelId,
+        };
+      }
       return { content, source: "local", modelUsed: this.currentModelId };
     } catch (error: any) {
       console.error("Local generation error:", error);

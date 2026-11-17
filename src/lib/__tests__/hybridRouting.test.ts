@@ -70,6 +70,7 @@ import {
   isTrivialChitChat,
   hasFrontierTrigger,
   fitMessagesToLocal,
+  LOCAL_INPUT_CHAR_BUDGET,
   type CloudChatMessage,
 } from "@/lib/cloudChat";
 import { setPreferLocal } from "@/lib/aiAccessMode";
@@ -173,9 +174,28 @@ describe("fitMessagesToLocal — context fitting for the on-device engine", () =
     };
     const fitted = fitMessagesToLocal([bigSystem, chat("hi")]);
     const sys = fitted[0];
-    expect(String(sys.content).length).toBeLessThanOrEqual(2100); // 2000 cap + marker
+    // System cap (1000) + ellipsis marker — the cap shrank from 2000 so the
+    // fitted prompt leaves output room inside the 2048-token engine window.
+    expect(String(sys.content).length).toBeLessThanOrEqual(1100);
     expect(String(sys.content).endsWith("[...]")).toBe(true);
     expect(String(sys.content).startsWith("persona line 0")).toBe(true);
+  });
+
+  it("default budget leaves room for the reply inside the engine window", () => {
+    // The old default (8000 chars ≈ the whole 2048-token window) starved the
+    // output: replies were cut mid-sentence. The default must now derive
+    // from window − output reserve, so the fitted payload stays under it.
+    const msgs: CloudChatMessage[] = [
+      { role: "system", content: Array.from({ length: 200 }, (_, i) => `persona line ${i} with padding`).join("\n") },
+      chat("old big turn ".repeat(300)),
+      chat("old big turn 2 ".repeat(300)),
+      chat("newest survives verbatim"),
+    ];
+    const fitted = fitMessagesToLocal(msgs); // default budget
+    const total = fitted.reduce((n, m) => n + String(m.content).length, 0);
+    expect(total).toBeLessThanOrEqual(LOCAL_INPUT_CHAR_BUDGET);
+    const last = fitted[fitted.length - 1];
+    expect(last.content).toBe("newest survives verbatim");
   });
 
   it("strips image parts (local models cannot do vision) and fits within budget", () => {
