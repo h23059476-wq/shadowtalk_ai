@@ -56,6 +56,16 @@ interface TierView extends ModelTier {
   incompatibleReason: string | null;
 }
 
+interface ModelManagerDrawerProps {
+  /**
+   * Optional controlled open state — lets other surfaces (chat header's
+   * model dropdown) open the drawer. When omitted the drawer manages its
+   * own state behind the floating status chip, exactly as before.
+   */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
 function roleLabel(role: ModelRow["role"]): string | null {
   if (role === "alternative") return "alternative";
   if (role === "low-spec-option") return "for lower-spec devices";
@@ -69,7 +79,14 @@ function roleLabel(role: ModelRow["role"]): string | null {
  * Download / Activate / Clear actions. Auto-cache tiers (embeddings,
  * instant chat) show their background bootstrap progress inline.
  */
-export function ModelManagerDrawer() {
+export function ModelManagerDrawer({ open, onOpenChange }: ModelManagerDrawerProps) {
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const isControlled = open !== undefined;
+  const drawerOpen = isControlled ? open : uncontrolledOpen;
+  const handleOpenChange = (next: boolean) => {
+    if (isControlled) onOpenChange?.(next);
+    else setUncontrolledOpen(next);
+  };
   const [snap, setSnap] = useState<ModelManagerSnapshot>(() => getModelManagerSnapshot());
   const [bgSnap, setBgSnap] = useState(() => getBackgroundInstallSnapshot());
   const [engineState, setEngineState] = useState<LocalEngineState>(localInferenceEngine.getState());
@@ -199,7 +216,7 @@ export function ModelManagerDrawer() {
   const persisted = caps.storagePersisted;
 
   return (
-    <Drawer>
+    <Drawer open={drawerOpen} onOpenChange={handleOpenChange}>
       <DrawerTrigger asChild>
         <button
           className="fixed bottom-24 left-4 z-40 flex items-center gap-2 rounded-full border bg-card px-3 py-2 text-xs shadow-lg md:left-6"

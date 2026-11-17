@@ -5,7 +5,7 @@ import {
   Bot, ArrowLeft, Home, LogOut, Settings, Download, Lock, Crown, Star, Zap, Menu,
   Search, Image, Play, Eye, Wand2, Compass, FileText, Mic, AudioLines, MoreVertical, Music,
   LayoutGrid, Sparkles, MessageCircle, Briefcase, Heart, Laugh, Lightbulb,
-  Scale, Target, HelpCircle, Share2, Plus, Pin, Mail, KeyRound,
+  Scale, Target, HelpCircle, Share2, Plus, Pin, Mail, KeyRound, Cpu, Loader2,
   PanelLeft, ChevronDown, CircleCheck
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/components/AuthProvider";
 import { useAIKeyContext } from "@/contexts/AIKeyContext";
+import { useToast } from "@/hooks/use-toast";
+import { useLocalChatModels, type LocalChatModelOption } from "@/hooks/useLocalChatModels";
+import { formatModelSize } from "@/lib/localModelCatalog";
 
 import {
   Select,
@@ -31,6 +34,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuSub,
@@ -77,6 +81,8 @@ interface ChatHeaderProps {
   onToolsMenuOpenChange?: (open: boolean) => void;
   onOpenByok?: () => void;
   onOpenKeySettings?: () => void;
+  /** Open the model manager (download / manage on-device models). */
+  onOpenModelManager?: () => void;
 }
 
 
@@ -96,11 +102,51 @@ const ChatHeaderInner = ({
   onToolsMenuOpenChange,
   onOpenByok,
   onOpenKeySettings,
+  onOpenModelManager,
 }: ChatHeaderProps) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const isMobile = useIsMobile();
   const { userCohort, remainingMessages, maxDailyLimit } = useAIKeyContext();
+  const { toast } = useToast();
+
+  // ── On-device model switcher (model dropdown) ──
+  // Lists downloaded local models next to the house cloud model so switching
+  // is one click. The listing only probes the cache while the menu is open.
+  const [modelMenuOpen, setModelMenuOpen] = useState(false);
+  const {
+    downloadedModels,
+    selectedLocalModel,
+    switchingId,
+    switchToLocalModel,
+    switchToCloud,
+  } = useLocalChatModels(modelMenuOpen, user?.id);
+
+  const handleSwitchToLocal = (model: LocalChatModelOption) => {
+    void switchToLocalModel(model.id).then((ok) => {
+      toast(
+        ok
+          ? {
+              title: `${model.displayName} active`,
+              description: "Replies now run on-device — private, and they keep working offline.",
+            }
+          : {
+              title: "Could not switch model",
+              description: `“${model.displayName}” could not be activated. Try again from the model manager.`,
+              variant: "destructive",
+            },
+      );
+    });
+  };
+
+  const handleUseHouseModel = () => {
+    if (!selectedLocalModel) return;
+    switchToCloud();
+    toast({
+      title: "ShadowTalk 2.5 Ultra active",
+      description: "Back to the house cloud model. Your downloaded models stay ready offline.",
+    });
+  };
   
   const userInitials = user?.email ? user.email.charAt(0).toUpperCase() : "G";
   // FREE ACCESS TRANSITION: nothing to upgrade to — Upgrade buttons removed.
@@ -184,24 +230,79 @@ const ChatHeaderInner = ({
               <PanelLeft className="w-4 h-4" />
             </button>
 
-            {/* Model dropdown selector */}
-            <DropdownMenu>
+            {/* Model dropdown selector — house cloud model + downloaded on-device models */}
+            <DropdownMenu open={modelMenuOpen} onOpenChange={setModelMenuOpen}>
               <DropdownMenuTrigger asChild>
                 <button
                   type="button"
                   className="flex items-center space-x-2 px-3 py-1.5 rounded-xl hover:bg-white/[0.06] text-foreground hover:text-foreground transition-colors group"
                   aria-label="Select model"
                 >
-                  <span className="text-base font-semibold tracking-tight text-foreground">ShadowTalk 2.5 Ultra</span>
+                  {selectedLocalModel && (
+                    <Cpu className="h-4 w-4 text-emerald-400 shrink-0" />
+                  )}
+                  <span className="text-base font-semibold tracking-tight text-foreground max-w-[210px] md:max-w-[300px] truncate">
+                    {selectedLocalModel ? selectedLocalModel.displayName : "ShadowTalk 2.5 Ultra"}
+                  </span>
                   <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-foreground/80 transition-colors" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-64 p-1.5 rounded-2xl bg-card/95 backdrop-blur-2xl border border-white/10 shadow-2xl">
-                <DropdownMenuItem className="gap-2.5 rounded-lg py-2.5" disabled>
-                  <CircleCheck className="h-4 w-4 text-sky-400" />
+              <DropdownMenuContent align="start" className="w-72 p-1.5 rounded-2xl bg-card/95 backdrop-blur-2xl border border-white/10 shadow-2xl">
+                {/* House cloud model — highlighted as the current pick when no on-device model is selected */}
+                <DropdownMenuItem
+                  onClick={handleUseHouseModel}
+                  className={"gap-2.5 rounded-lg py-2.5 " + (selectedLocalModel ? "cursor-pointer" : "bg-white/[0.04]")}
+                >
+                  <CircleCheck className={"h-4 w-4 shrink-0 " + (selectedLocalModel ? "text-slate-500" : "text-sky-400")} />
                   <span className="text-[13px] font-medium text-foreground">ShadowTalk 2.5 Ultra</span>
-                  <span className="ml-auto text-[10px] text-slate-500">House model</span>
+                  <span className="ml-auto text-[10px] text-slate-500">
+                    {selectedLocalModel ? "Switch to cloud" : "House model"}
+                  </span>
                 </DropdownMenuItem>
+
+                {/* Downloaded on-device models — one click to go private */}
+                {downloadedModels.length > 0 && (
+                  <>
+                    <DropdownMenuLabel className="px-2 pt-2 pb-1 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
+                      Private — on-device
+                    </DropdownMenuLabel>
+                    {downloadedModels.map((model) => (
+                      <DropdownMenuItem
+                        key={model.id}
+                        onClick={() => handleSwitchToLocal(model)}
+                        className={"gap-2.5 rounded-lg py-2.5 cursor-pointer " + (model.active ? "bg-emerald-500/[0.07]" : "")}
+                        disabled={switchingId !== null}
+                      >
+                        {switchingId === model.id ? (
+                          <Loader2 className="h-4 w-4 shrink-0 animate-spin text-emerald-400" />
+                        ) : (
+                          <Cpu className={"h-4 w-4 shrink-0 " + (model.active ? "text-emerald-400" : "text-slate-400")} />
+                        )}
+                        <span className="text-[13px] font-medium text-foreground truncate">{model.displayName}</span>
+                        <span className="ml-auto flex items-center gap-1.5 text-[10px] text-slate-500 shrink-0">
+                          {model.active ? (
+                            <span className="text-emerald-400 font-semibold">Active</span>
+                          ) : (
+                            formatModelSize(model.sizeMB)
+                          )}
+                        </span>
+                      </DropdownMenuItem>
+                    ))}
+                  </>
+                )}
+
+                {/* Model manager — download more, or manage what's installed */}
+                {onOpenModelManager && (
+                  <DropdownMenuItem
+                    onClick={onOpenModelManager}
+                    className="gap-2.5 rounded-lg py-2.5 cursor-pointer"
+                  >
+                    <Download className="h-4 w-4 text-slate-400" />
+                    <span className="text-[13px]">
+                      {downloadedModels.length > 0 ? "Manage downloaded models" : "Download on-device models"}
+                    </span>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuSeparator className="bg-white/5 my-1" />
                 {onOpenByok && (
                   <DropdownMenuItem

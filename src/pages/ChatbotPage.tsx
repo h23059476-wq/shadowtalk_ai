@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { AiAccessOnboarding } from "@/components/chat/AiAccessOnboarding";
 import { PrivateAiBanner } from "@/components/chat/PrivateAiBanner";
 import { ModelManagerDrawer } from "@/components/ModelManagerDrawer";
+import { GUEST_LOCAL_UID } from "@/hooks/useLocalChatModels";
 import { LOCAL_MODEL_READY_EVENT } from "@/offline/BackgroundInstall";
 import { initModelManager, isInstantModelReady } from "@/services/modelManager";
 const LiveVoiceMode = lazy(() => import("@/components/chat/LiveVoiceMode").then(m => ({ default: m.LiveVoiceMode })));
@@ -299,6 +300,8 @@ const ChatbotPage = () => {
   // Modals
   const [showImageGenerator, setShowImageGenerator] = useState(false);
   const [showByok, setShowByok] = useState(false);
+  // Opened from the chat header's model dropdown ("Manage downloaded models").
+  const [showModelManager, setShowModelManager] = useState(false);
   const [showMusicGenerator, setShowMusicGenerator] = useState(false);
   const [musicPrompt, setMusicPrompt] = useState("");
   const [musicAutoGenerate, setMusicAutoGenerate] = useState(false);
@@ -415,7 +418,7 @@ const ChatbotPage = () => {
   // Weights are already on disk by then, so warming costs seconds of
   // worker-spawn + shader compile and needs no network.
   useEffect(() => {
-    if (!getPreferLocal(user?.id ?? undefined)) return;
+    if (!getPreferLocal(user?.id ?? GUEST_LOCAL_UID)) return;
     let cancelled = false;
     void (async () => {
       try {
@@ -1613,7 +1616,9 @@ Structure and Content Guidelines:
       //  - NO silent provider switch: if the local engine fails mid-turn the
       //    error is surfaced instead of quietly retrying on cloud; while
       //    OFFLINE it fails with actionable guidance.
-      const preferLocal = getPreferLocal(user?.id ?? undefined);
+      // Guests share the "guest" routing slot so the header's model switcher
+      // works before sign-in too — the switcher writes the same key.
+      const preferLocal = getPreferLocal(user?.id ?? GUEST_LOCAL_UID);
       if (preferLocal && shouldEscalateToCloud(cloudMessages)) {
         // Heavy task — the private tier only covers everyday chat. Fall
         // through to the cloud path: streamCloudChat routes it to the BYOK
@@ -2994,6 +2999,7 @@ Structure and Content Guidelines:
               toolsMenuOpen={toolsMenuOpen}
               onToolsMenuOpenChange={setToolsMenuOpen}
               onOpenByok={() => setShowByok(true)}
+              onOpenModelManager={() => setShowModelManager(true)}
             />
           </div>
           {hasActiveChat && (
@@ -3203,7 +3209,7 @@ Structure and Content Guidelines:
 
         {user && <AiAccessOnboarding userId={user.id} />}
         {user && <PrivateAiBanner userId={user.id} />}
-        <ModelManagerDrawer />
+        <ModelManagerDrawer open={showModelManager} onOpenChange={setShowModelManager} />
 
         {/* Consent-gated recovery for pre-account-scoping E2EE vaults. */}
         <LegacyVaultRecoveryDialog

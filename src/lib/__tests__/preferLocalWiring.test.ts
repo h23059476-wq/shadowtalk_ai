@@ -132,14 +132,30 @@ describe("ChatbotPage prefer-local integration (source contract)", () => {
 
   it("checks the preference and engine state before cloud streaming, and labels local replies", async () => {
     const src = await read("src/pages/ChatbotPage.tsx");
-    // Preference is read from the UID-scoped helper with the current user id.
-    expect(src).toContain("getPreferLocal(user?.id ?? undefined)");
+    // Preference is read from the UID-scoped helper with the current user id
+    // (guests share the "guest" routing slot the header switcher writes).
+    expect(src).toContain("getPreferLocal(user?.id ?? GUEST_LOCAL_UID)");
+    expect(src).toContain('import { GUEST_LOCAL_UID } from "@/hooks/useLocalChatModels"');
     // The engine is loaded lazily so web-llm stays out of the chat bundle.
     expect(src).toContain('await import("@/offline/LocalInferenceEngine")');
     // Local generation only when the engine is actually ready.
     expect(src).toContain('engineState === "ready"');
     // Local replies are labeled as local (never claim cloud execution was local).
     expect(src).toContain("localResult.content");
+  });
+
+  it("lists downloaded on-device models in the header dropdown (source contract)", async () => {
+    const header = await read("src/components/chat/ChatHeader.tsx");
+    // The switcher hook feeds the dropdown; the drawer is reachable from it.
+    expect(header).toContain("useLocalChatModels(modelMenuOpen, user?.id)");
+    expect(header).toContain("downloadedModels.map");
+    expect(header).toContain("onOpenModelManager");
+    const hook = await read("src/hooks/useLocalChatModels.ts");
+    // Switching mirrors exactly the two states the router reads.
+    expect(hook).toContain("setPreferLocal(routingUid, true)");
+    expect(hook).toContain("switchActiveModel(modelId)");
+    // The listing only probes the cache while the menu is open.
+    expect(hook).toMatch(/if \(menuOpen\) void refresh\(\)/);
   });
 
   it("never silently switches providers", async () => {
