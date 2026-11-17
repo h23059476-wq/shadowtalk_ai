@@ -3,11 +3,16 @@
  *
  * Verifies streamCloudChat's on-device-first behavior:
  *  - ordinary chat runs on the local engine when prefer-local is set and the
- *    engine is loaded (nothing escalates);
- *  - requests that outgrow the on-device model (explicit cloud model, web
- *    search/fetch, structured output, vision input, oversized payloads)
- *    escalate to the BYOK key when present, else return the clear
- *    "add your API key" escalation error — never a silent dead-end;
+ *    engine is loaded (nothing escalates), with payloads context-fitted for
+ *    the engine's small window;
+ *  - greetings / small talk NEVER escalate — a plain "hi" always gets an
+ *    on-device reply, even when the app-generated system prompt alone blows
+ *    the local context budget (regression for the "Message failed" bug);
+ *  - hard frontier tasks (explicit cloud model, web search/fetch, structured
+ *    output, vision input) escalate to the BYOK key when present, else
+ *    return the clear "add your API key" escalation error;
+ *  - size-only overflows degrade to a context-fitted local run instead of
+ *    dead-ending keyless users;
  *  - prefer-local with a not-yet-loaded engine falls through to the standard
  *    mode logic unchanged.
  *
@@ -59,7 +64,14 @@ vi.mock("@/lib/byok", () => ({
   streamByokChat: byokMock.streamByokChat,
 }));
 
-import { streamCloudChat, shouldEscalateToCloud, type CloudChatMessage } from "@/lib/cloudChat";
+import {
+  streamCloudChat,
+  shouldEscalateToCloud,
+  isTrivialChitChat,
+  hasFrontierTrigger,
+  fitMessagesToLocal,
+  type CloudChatMessage,
+} from "@/lib/cloudChat";
 import { setPreferLocal } from "@/lib/aiAccessMode";
 import {
   pickLocalModelForDevice,
@@ -94,6 +106,105 @@ describe("shouldEscalateToCloud — heavy-task detection", () => {
     const big = "x".repeat(8001);
     expect(shouldEscalateToCloud([chat(big)])).toBe(true);
     expect(shouldEscalateToCloud([chat("x".repeat(7999))])).toBe(false);
+  });
+
+  it("never escalates greetings — even when the system prompt alone blows the budget", () => {
+    // Regression: the app-generated persona prompt (~8k chars) used to push
+    // a plain "hi" over the local context limit → "Message failed" for
+    // keyless free users. Greetings must always stay on-device.
+    const hugeSystem: CloudChatMessage = { role: "system", content: "You are ShadowTalk. ".repeat(400) };
+    expect(shouldEscalateToCloud([hugeSystem, chat("hi")])).toBe(false);
+    expect(shouldEscalateToCloud([hugeSystem, chat("hello there!")])).toBe(false);
+    expect(shouldEscalateToCloud([hugeSystem, chat("thanks a lot!!")])).toBe(false);
+  });
+});
+
+describe("isTrivialChitChat — greeting detection", () => {
+  it("matches greetings, thanks, acknowledgments, farewells", () => {
+    for (const t of ["hi", "Hi!!", "hey", "hello", "yo", "gm", "good morning", "How are you?", "how's it going", "what's up", "thanks", "Thank you so much!", "ok", "okay", "cool", "nice", "great", "lol", "bye", "see ya", "good night"]) {
+      expect(isTrivialChitChat([chat(t)])).toBe(true);
+    }
+  });
+
+  it("does not match real requests or word-prefix traps", () => {
+    for (const t of ["hire me", "hi can you help me", "generate an image of a cat", "summarize this document", "what is ShadowTalk?", "hi there, I need a business plan", ""]) {
+      expect(isTrivialChitChat([chat(t)])).toBe(false);
+    }
+  });
+
+  it("only inspects the newest user turn", () => {
+    const msgs: CloudChatMessage[] = [
+      chat("summarize the quarterly report"),
+      { role: "assistant", content: "Sure — here is the summary..." },
+      chat("thanks"),
+    ];
+    expect(isTrivialChitChat(msgs)).toBe(true);
+  });
+
+  it("an image turn is never trivial chit-chat", () => {
+    expect(isTrivialChitChat([{ role: "user", content: "hi", image: "data:image/png;base64,x" }])).toBe(false);
+    expect(hasFrontierTrigger([{ role: "user", content: "hi", image: "data:image/png;base64,x" }])).toBe(true);
+  });
+});
+
+describe("fitMessagesToLocal — context fitting for the on-device engine", () => {
+  it("keeps the newest user message verbatim and drops oldest history first", () => {
+    const msgs: CloudChatMessage[] = [
+      { role: "system", content: "short system prompt" },
+      chat("old message 1 ".repeat(400)),
+      chat("old message 2 ".repeat(400)),
+      { role: "assistant", content: "recent assistant reply" },
+      chat("the newest user message that must survive"),
+    ];
+    const fitted = fitMessagesToLocal(msgs, 8000);
+    const last = fitted[fitted.length - 1];
+    expect(last.role).toBe("user");
+    expect(last.content).toBe("the newest user message that must survive");
+    // oldest dropped, newest kept, order preserved
+    const texts = fitted.map((m) => String(m.content));
+    expect(texts.some((t) => t.includes("old message 1"))).toBe(false);
+    expect(texts.some((t) => t.includes("recent assistant reply"))).toBe(true);
+  });
+
+  it("truncates the system prompt at a line boundary with an ellipsis marker", () => {
+    const bigSystem: CloudChatMessage = {
+      role: "system",
+      content: Array.from({ length: 300 }, (_, i) => `persona line ${i} with some padding text`).join("\n"),
+    };
+    const fitted = fitMessagesToLocal([bigSystem, chat("hi")]);
+    const sys = fitted[0];
+    expect(String(sys.content).length).toBeLessThanOrEqual(2100); // 2000 cap + marker
+    expect(String(sys.content).endsWith("[...]")).toBe(true);
+    expect(String(sys.content).startsWith("persona line 0")).toBe(true);
+  });
+
+  it("strips image parts (local models cannot do vision) and fits within budget", () => {
+    const msgs: CloudChatMessage[] = [
+      { role: "system", content: "sys" },
+      { role: "user", content: [{ type: "text", text: "what is in this picture?" }, { type: "image_url", image_url: { url: "data:image/png;base64,x" } }], image: "data:image/png;base64,x" },
+      { role: "assistant", content: "a cat" },
+      chat("ok thanks"),
+    ];
+    const fitted = fitMessagesToLocal(msgs, 8000);
+    for (const m of fitted) {
+      expect(m.image).toBeUndefined();
+      if (Array.isArray(m.content)) {
+        expect(m.content.some((p) => p.type === "image_url")).toBe(false);
+      }
+    }
+    const total = fitted.reduce((n, m) => n + String(m.content).length, 0);
+    expect(total).toBeLessThanOrEqual(8000);
+  });
+
+  it("never returns an empty conversation — newest message is kept even when it alone overflows", () => {
+    const msgs: CloudChatMessage[] = [
+      { role: "system", content: "sys" },
+      chat("y".repeat(9000)),
+    ];
+    const fitted = fitMessagesToLocal(msgs, 8000);
+    const convo = fitted.filter((m) => m.role !== "system");
+    expect(convo.length).toBe(1);
+    expect(String(convo[0].content).length).toBeGreaterThan(0);
   });
 });
 
@@ -140,6 +251,23 @@ describe("streamCloudChat — private-by-default routing", () => {
     expect(result.content).toBe("");
     expect(result.error).toContain("frontier model");
     expect(result.error).toContain("API key");
+  });
+
+  it("degrades size-only escalation to a context-fitted local run instead of failing", async () => {
+    // Regression for the "Message failed" bug: a huge persona system prompt
+    // + a plain "hi" used to escalate and hard-fail for keyless users.
+    setPreferLocal("uid-alice", true);
+    const hugeSystem: CloudChatMessage = { role: "system", content: "You are ShadowTalk. ".repeat(400) };
+    const result = await streamCloudChat([hugeSystem, chat("hi")]);
+    expect(engineMock.generate).toHaveBeenCalledTimes(1);
+    expect(result.error).toBeUndefined();
+    expect(result.source).toBe("local");
+    expect(result.content).toBe("local reply from the on-device model");
+    // the engine received a fitted payload, not the oversized original
+    const arg = (engineMock.generate.mock.calls as unknown as [CloudChatMessage[]][])[0][0];
+    const total = arg.reduce((n, m) => n + String(m.content).length, 0);
+    expect(total).toBeLessThanOrEqual(8000);
+    expect(String(arg[arg.length - 1].content)).toBe("hi");
   });
 
   it("never calls the shared function for keyless local-first escalation", async () => {

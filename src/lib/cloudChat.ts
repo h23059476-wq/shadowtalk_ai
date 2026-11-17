@@ -95,13 +95,54 @@ function totalMessageChars(messages: CloudChatMessage[]): number {
   return total;
 }
 
+function textOf(content: CloudChatContent): string {
+  if (typeof content === "string") return content;
+  return content
+    .filter((p) => p.type === "text")
+    .map((p) => (p as { type: "text"; text: string }).text)
+    .join("\n");
+}
+
+// ── Chit-chat detection ──────────────────────────────────────────────────
+
 /**
- * Decide whether this request exceeds the on-device model's competence:
- * explicit cloud model selection, web search/fetch, structured output,
- * vision input, or a payload beyond the local context window. Those are the
- * "document analysis / agentic" tasks the BYOK tier exists for.
+ * Greetings / small talk that ANY on-device model can serve. These must
+ * never dead-end the conversation just because the surrounding context is
+ * heavy — previously a plain "hi" hit the escalation error because the
+ * app-generated system prompt alone blew the local context budget.
  */
-export function shouldEscalateToCloud(
+const TRIVIAL_CHAT_RE =
+  /^(hi+|hey+|hello+|yo|sup|gm|gn|howdy|(?:hi|hey|hello)\s+there|good\s?(morning|afternoon|evening|day|night)|how\s+(are|is|r)\s+(you|u|things|everything|it\s+going)|what'?s\s+up|whats\s+up|how'?s\s+it\s+going|how\s+do\s+you\s+do|thanks?(\s+(you|a\s+lot|a\s+bunch|so\s+much))?|thank\s+you(\s+(so|very)\s+much)?|ty|ok(ay)?|cool|nice|great|awesome|perfect|lol|lmao|haha+|hehe+|bye+|goodbye|good\s?night|see\s+(ya|you)|later)[!.,?~\s]*$/i;
+
+function lastUserText(messages: CloudChatMessage[]): string {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const m = messages[i];
+    if (m.role !== "user") continue;
+    if (m.image) return ""; // image turn is never trivial chit-chat
+    return textOf(m.content);
+  }
+  return "";
+}
+
+/**
+ * True when the newest user turn is plain small talk (greeting, thanks,
+ * acknowledgment, farewell). Whole-word anchored, so "hire me" does not
+ * match "hi". Exported for tests and for callers that want to bias routing
+ * toward the on-device model.
+ */
+export function isTrivialChitChat(messages: CloudChatMessage[]): boolean {
+  const text = lastUserText(messages).trim();
+  return text.length > 0 && text.length <= 40 && TRIVIAL_CHAT_RE.test(text);
+}
+
+// ── Escalation policy ────────────────────────────────────────────────────
+
+/**
+ * Hard frontier triggers: capabilities the on-device model cannot serve at
+ * all, regardless of payload size. Size alone is NOT a hard trigger — size
+ * overflows degrade to a context-fitted local run (see fitMessagesToLocal).
+ */
+export function hasFrontierTrigger(
   messages: CloudChatMessage[],
   opts?: CloudChatOptions,
 ): boolean {
@@ -109,6 +150,22 @@ export function shouldEscalateToCloud(
   if (opts?.webSearch || opts?.webFetch) return true;
   if (opts?.structuredOutput) return true;
   if (messages.some((m) => m.image)) return true;
+  return false;
+}
+
+/**
+ * Decide whether this request exceeds the on-device model's competence:
+ * explicit cloud model selection, web search/fetch, structured output,
+ * vision input, or a payload beyond the local context window. Trivial
+ * chit-chat is exempt from the size check — a greeting must always get a
+ * reply (the payload is context-fitted before it reaches the engine).
+ */
+export function shouldEscalateToCloud(
+  messages: CloudChatMessage[],
+  opts?: CloudChatOptions,
+): boolean {
+  if (hasFrontierTrigger(messages, opts)) return true;
+  if (isTrivialChitChat(messages)) return false;
   return totalMessageChars(messages) > LOCAL_CONTEXT_CHAR_LIMIT;
 }
 
@@ -117,15 +174,84 @@ const ESCALATION_ERROR =
   "but document analysis, vision, and agentic tasks require an API key — " +
   "add one in Settings → AI Access (works with OpenAI, Anthropic, Google, Groq, OpenRouter and more).";
 
+// ── Local context fitting ────────────────────────────────────────────────
+
+/**
+ * Character cap for the system prompt when fitting a payload onto the
+ * on-device model. The full persona prompt (~8k chars) alone overflows the
+ * engine's 2k-token context; the top of the prompt carries identity and
+ * tone, so a line-boundary truncation keeps it useful for ordinary chat.
+ */
+const LOCAL_SYSTEM_CHAR_LIMIT = 2000;
+
+function trimSystem(content: string, cap: number): string {
+  if (content.length <= cap) return content;
+  const slice = content.slice(0, cap);
+  const nl = slice.lastIndexOf("\n");
+  const head = nl > cap * 0.5 ? slice.slice(0, nl) : slice;
+  return `${head.trimEnd()}\n[...]`;
+}
+
+/**
+ * Fit a (potentially oversized) payload onto the on-device engine's small
+ * context window: the system prompt is truncated to its leading block,
+ * image parts are stripped (local models cannot do vision), and history is
+ * kept newest-first within the budget so the newest user turn is always
+ * served verbatim. Oldest messages drop first.
+ */
+export function fitMessagesToLocal(
+  messages: CloudChatMessage[],
+  budget: number = LOCAL_CONTEXT_CHAR_LIMIT,
+): CloudChatMessage[] {
+  const sysOut: CloudChatMessage[] = messages
+    .filter((m) => m.role === "system")
+    .map((m) => ({
+      role: "system" as const,
+      content:
+        typeof m.content === "string"
+          ? trimSystem(m.content, LOCAL_SYSTEM_CHAR_LIMIT)
+          : m.content,
+    }));
+  let used = sysOut.reduce((n, m) => n + textOf(m.content).length, 0);
+
+  const convo = messages.filter((m) => m.role !== "system");
+  const kept: CloudChatMessage[] = [];
+  for (let i = convo.length - 1; i >= 0; i--) {
+    const m = convo[i];
+    // Local models cannot use images — text part only (vision never fits).
+    const text = textOf(m.content);
+    const len = text.length;
+    if (used + len > budget) {
+      if (kept.length === 0) {
+        // Newest message alone overflows the budget — keep its head.
+        kept.push({ role: m.role, content: text.slice(0, Math.max(0, budget - used)) });
+        used = budget;
+      }
+      break;
+    }
+    used += len;
+    kept.push({ role: m.role, content: text });
+  }
+  kept.reverse();
+  return [...sysOut, ...kept];
+}
+
 /**
  * Stream a chat reply through the provider selected during account onboarding.
  *
  * Private-by-default hybrid routing: when the user provisioned the on-device
  * model (prefer_local) and the engine is loaded, ordinary chat runs locally —
- * nothing leaves the browser. Requests that outgrow the local model
- * (documents, vision, web search, agentic structured output) escalate to the
- * cloud tier: the user's BYOK key when present, otherwise a clear
- * "add your API key" error instead of a silent dead-end.
+ * nothing leaves the browser. Payloads are context-fitted before they reach
+ * the engine, so greetings and everyday chat always get a reply.
+ *
+ * Escalation: hard frontier tasks (vision, web search/fetch, structured
+ * agentic output, explicit cloud model) escalate to the cloud tier — the
+ * user's BYOK key when present, otherwise a clear "add your API key" error
+ * instead of a silent dead-end. Size-only overflows (heavy system prompt,
+ * long history) no longer dead-end keyless users: they degrade to a
+ * context-fitted on-device run — previously even "hi" hit the escalation
+ * error because the app-generated system prompt alone exceeded the local
+ * budget (the "Message failed" bug).
  */
 export async function streamCloudChat(
   messages: CloudChatMessage[],
@@ -139,14 +265,20 @@ export async function streamCloudChat(
     const { localInferenceEngine } = await import("@/offline/LocalInferenceEngine");
     if (localInferenceEngine.isLoaded()) {
       if (!shouldEscalateToCloud(messages, opts)) {
-        return localInferenceEngine.generate(messages, opts);
+        return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
       }
-      // Escalation: try the user's key first, else a clear prompt (never the
-      // shared function — local-first users may not be on a Blaze project).
+      // Escalation: try the user's key first.
       const accessMode = getCachedAiAccessMode();
       if (accessMode === "byok") {
         const byok = getByokConfig();
         if (byok?.apiKey) return streamByokChat(byok, messages, opts);
+      }
+      // No key. Hard frontier triggers (vision, web, structured output,
+      // explicit cloud model) genuinely cannot run on-device → the honest
+      // escalation prompt. Size-only overflow → degrade to a context-fitted
+      // on-device run instead of dead-ending the conversation.
+      if (!hasFrontierTrigger(messages, opts)) {
+        return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
       }
       return { content: "", error: ESCALATION_ERROR, source: "local" };
     }

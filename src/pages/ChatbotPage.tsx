@@ -35,7 +35,7 @@ import { inferDocumentTypeFromMessage } from "@/lib/kimiDocumentGeneration";
 
 
 
-import { streamCloudChat, isCloudChatConfigured, shouldEscalateToCloud, type CloudChatMessage } from "@/lib/cloudChat";
+import { streamCloudChat, isCloudChatConfigured, shouldEscalateToCloud, fitMessagesToLocal, type CloudChatMessage } from "@/lib/cloudChat";
 import { buildChatSystemPrompt } from "@/lib/shadowTalkPersona";
 import { loadAiAccessMode, saveAiAccessMode, getPreferLocal } from "@/lib/aiAccessMode";
 
@@ -1578,19 +1578,24 @@ Structure and Content Guidelines:
       //  - Local replies carry source:"local" — MessageBubble renders the
       //    on-device provenance shield — cloud replies keep their provider
       //    label.
-      //  - Escalation: requests that outgrow the on-device model (document
-      //    analysis, vision, web search, structured/agentic output, oversized
-      //    context) skip the local engine and run on the cloud tier — the
-      //    user's BYOK key when present, else a clear "add your key" prompt.
+      //  - Escalation: hard frontier tasks (vision, web search/fetch,
+      //    structured/agentic output, explicit cloud model) skip the local
+      //    engine and run on the cloud tier — the user's BYOK key when
+      //    present, else a clear "add your key" prompt. Size-only overflows
+      //    degrade to a context-fitted local run instead of failing, and
+      //    greetings/small talk always stay on-device — a plain "hi" must
+      //    never dead-end with "Message failed".
       //  - NO silent provider switch: if the local engine fails mid-turn the
       //    error is surfaced instead of quietly retrying on cloud; while
       //    OFFLINE it fails with actionable guidance.
       const preferLocal = getPreferLocal(user?.id ?? undefined);
       if (preferLocal && shouldEscalateToCloud(cloudMessages)) {
         // Heavy task — the private tier only covers everyday chat. Fall
-        // through to the cloud path (BYOK key or the honest escalation
-        // error that streamCloudChat returns for keyless local-first users).
-        console.info("[chat] prefer-local: escalating to cloud (task exceeds on-device scope)");
+        // through to the cloud path: streamCloudChat routes it to the BYOK
+        // key when present, degrades size-only overflows to a context-fitted
+        // local run, and only surfaces the honest escalation error for hard
+        // frontier tasks (vision / web / structured / explicit cloud model).
+        console.info("[chat] prefer-local: task exceeds on-device scope — cloud tier or fitted local fallback");
       }
       if (preferLocal && !shouldEscalateToCloud(cloudMessages)) {
         const { localInferenceEngine } = await import("@/offline/LocalInferenceEngine");
@@ -1598,7 +1603,10 @@ Structure and Content Guidelines:
         const isOffline = typeof navigator !== "undefined" && navigator.onLine === false;
 
         if (engineState === "ready") {
-          const localResult = await localInferenceEngine.generate(cloudMessages, {
+          // Context-fit before the engine: the full persona system prompt can
+          // exceed the 2k-token local window even when the payload passed the
+          // escalation check. Keeps identity/tone, newest turns verbatim.
+          const localResult = await localInferenceEngine.generate(fitMessagesToLocal(cloudMessages), {
             signal: controller.signal,
             temperature: 0.7,
             onDelta: (accumulated) => pushAssistant(accumulated),
