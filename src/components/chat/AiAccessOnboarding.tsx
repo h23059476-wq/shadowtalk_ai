@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import {
   KeyRound, Sparkles, Loader2, Check, ArrowRight, ArrowLeft,
-  ExternalLink, Eye, EyeOff, ShieldCheck, AlertCircle, Info, Zap, Cpu, Lock,
+  ExternalLink, Eye, EyeOff, ShieldCheck, AlertCircle, Info, Cpu, Lock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,6 +17,7 @@ import {
   BYOK_PROVIDERS, getByokConfig, saveByokConfig, streamByokChat,
   type ByokProvider,
 } from "@/lib/byok";
+import { ByokMotionIntro } from "@/components/chat/ByokMotionIntro";
 import { loadAiAccessMode, saveAiAccessMode, setPreferLocal, type AiAccessMode } from "@/lib/aiAccessMode";
 import { useApiKeyValidation } from "@/hooks/useApiKeyValidation";
 import { localInferenceEngine } from "@/offline/LocalInferenceEngine";
@@ -272,14 +273,15 @@ export function AiAccessOnboarding({ userId }: AiAccessOnboardingProps) {
                 <p className="text-[11px] text-primary flex items-center gap-1">Install private AI <ArrowRight className="h-3 w-3" /></p>
               </button>
             )}
-            <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 space-y-2">
-              <p className="text-sm text-foreground leading-relaxed">Or connect a <strong>BYOK (Bring Your Own Key)</strong> provider. You use your own AI account and API key — you pay your provider directly.</p>
-              <p className="text-xs text-muted-foreground">A key is only needed for heavy tasks: document analysis, images, agents. The private model handles everyday chat.</p>
-            </div>
+            <ByokMotionIntro />
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              That&apos;s <strong className="text-foreground">BYOK (Bring Your Own Key)</strong> — you use your own
+              AI account and pay your provider directly. A key is only needed for heavy tasks: document
+              analysis, images, agents. Everyday chat stays on the private model.
+            </p>
             <div className="space-y-2 text-xs text-muted-foreground">
-              <div className="flex items-start gap-2"><ShieldCheck className="h-4 w-4 text-success shrink-0 mt-0.5" /><span>Your key is stored in your browser only \u2014 never sent to ShadowTalk servers.</span></div>
+              <div className="flex items-start gap-2"><ShieldCheck className="h-4 w-4 text-success shrink-0 mt-0.5" /><span>Your key is stored in your browser only — never sent to ShadowTalk servers.</span></div>
               <div className="flex items-start gap-2"><Info className="h-4 w-4 text-primary shrink-0 mt-0.5" /><span>Provider charges apply separately. Review your provider&apos;s pricing.</span></div>
-              <div className="flex items-start gap-2"><Zap className="h-4 w-4 text-warning shrink-0 mt-0.5" /><span>Setup takes ~2 minutes. Change providers anytime in Settings.</span></div>
             </div>
             <div className="flex justify-between gap-2 pt-2">
               <Button variant="ghost" onClick={handleDismiss} size="sm">Skip for now</Button>
@@ -333,10 +335,10 @@ export function AiAccessOnboarding({ userId }: AiAccessOnboardingProps) {
                 <button type="button" onClick={() => setShowKey((v) => !v)} className="text-[11px] text-muted-foreground hover:text-foreground flex items-center gap-1">{showKey ? <><EyeOff className="h-3 w-3" /> Hide</> : <><Eye className="h-3 w-3" /> Show</>}</button>
               </Label>
               <Input id="wizard-api-key" type={showKey ? "text" : "password"} value={apiKey} onChange={(e) => handleKeyChange(e.target.value)} placeholder={BYOK_PROVIDERS[provider].keyHint} autoComplete="new-password" className={validation.status === "valid" ? "border-success/50" : validation.status === "invalid" ? "border-destructive/50" : ""} />
-              {validation.status === "validating" && <p className="text-[11px] text-muted-foreground flex items-center gap-1"><Loader2 className="h-3 w-3 animate-spin" /> Verifying\u2026</p>}
+              {validation.status === "validating" && <p className="text-[11px] text-muted-foreground flex items-center gap-1"><Loader2 className="h-3 w-3 animate-spin" /> Verifying…</p>}
               {validation.status === "valid" && <p className="text-[11px] text-success flex items-center gap-1"><ShieldCheck className="h-3 w-3" /> Key valid{validation.detail ? ` \u00b7 ${validation.detail}` : ""}</p>}
               {validation.status === "invalid" && <p className="text-[11px] text-destructive flex items-center gap-1"><AlertCircle className="h-3 w-3" /> Invalid key</p>}
-              {validation.status === "error" && <p className="text-[11px] text-muted-foreground flex items-center gap-1"><Info className="h-3 w-3" /> {validation.detail || "Can't verify (CORS) \u2014 click Test to confirm"}</p>}
+              {validation.status === "error" && <p className="text-[11px] text-muted-foreground flex items-center gap-1"><Info className="h-3 w-3" /> {validation.detail || "Can't verify (CORS) — click Test to confirm"}</p>}
             </div>
             <details className="text-xs"><summary className="cursor-pointer text-muted-foreground hover:text-foreground">Advanced: change model (default: {BYOK_PROVIDERS[provider].defaultModel})</summary><div className="mt-2 space-y-1">{validation.status === "valid" && validation.models.length > 0 ? (<Select value={model} onValueChange={setModel}><SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger><SelectContent className="max-h-48">{validation.models.map((m) => <SelectItem key={m} value={m} className="text-xs">{m}</SelectItem>)}</SelectContent></Select>) : (<Input value={model} onChange={(e) => setModel(e.target.value)} placeholder={BYOK_PROVIDERS[provider].defaultModel} className="h-8 text-xs" autoComplete="off" />)}</div></details>
             {error && <p role="alert" className="text-sm text-destructive flex items-start gap-1.5"><AlertCircle className="h-4 w-4 shrink-0 mt-0.5" /> {error}</p>}
@@ -350,8 +352,8 @@ export function AiAccessOnboarding({ userId }: AiAccessOnboardingProps) {
         {step === "testing" && (
           <div className="space-y-4 py-8 text-center">
             <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
-            <div><p className="text-sm font-semibold">Testing your {BYOK_PROVIDERS[provider].label} key\u2026</p><p className="text-xs text-muted-foreground mt-1">Sending a test request to verify your key works.</p></div>
-            <p className="text-[11px] text-muted-foreground/60">Key: {maskedKey} \u00b7 Model: {model}</p>
+            <div><p className="text-sm font-semibold">Testing your {BYOK_PROVIDERS[provider].label} key…</p><p className="text-xs text-muted-foreground mt-1">Sending a test request to verify your key works.</p></div>
+            <p className="text-[11px] text-muted-foreground/60">Key: {maskedKey} · Model: {model}</p>
           </div>
         )}
 
