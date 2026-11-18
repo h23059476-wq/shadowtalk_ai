@@ -1,5 +1,6 @@
 import { fbAuth } from "@/integrations/firebase/app";
 import { backend } from "@/integrations/local/client";
+import { isOffline, withNetworkTimeout } from "@/lib/offlineGuards";
 
 export type AiAccessMode = "byok" | "shared";
 
@@ -41,15 +42,26 @@ export async function loadAiAccessMode(uid: string): Promise<AiAccessMode | null
     return cached;
   }
 
-  // No cache — must read from Firestore. If this fails, return null (user
-  // will be prompted to choose their mode again).
+  // No cache — read from Firestore, but never let the send path hang:
+  //  - hard-offline ⇒ the read cannot succeed; return null immediately
+  //    (the caller falls back to the default mode from the BYOK key).
+  //  - soft-offline (captive portal / 2G) ⇒ an 8s ceiling so a stalled read
+  //    loses to the timeout instead of spinning forever.
+  if (isOffline()) {
+    console.warn("[aiAccessMode] offline with no cached mode — skipping the Firestore read");
+    return null;
+  }
   try {
-    const { data, error } = await backend
-      .from("user_settings")
-      .select("setting_value")
-      .eq("user_id", uid)
-      .eq("setting_key", SETTING_KEY)
-      .maybeSingle();
+    const { data, error } = await withNetworkTimeout(
+      backend
+        .from("user_settings")
+        .select("setting_value")
+        .eq("user_id", uid)
+        .eq("setting_key", SETTING_KEY)
+        .maybeSingle(),
+      8_000,
+      "AI access mode lookup",
+    );
 
     if (error) throw error;
 

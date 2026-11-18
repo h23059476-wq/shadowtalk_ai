@@ -132,8 +132,9 @@ export function PrivateAiBanner({ userId }: { userId: string }) {
         <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold">Install your private AI in the background?</p>
           <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-            ~600MB, one time. Your chats stay on this device — nothing is sent to a server. Keep
-            chatting while it downloads; private mode switches on automatically.
+            ~300–700MB, one time depending on your device. Your chats stay on this device — nothing
+            is sent to a server. Keep chatting while it downloads; private mode switches on
+            automatically.
           </p>
           <div className="mt-3 flex items-center gap-2">
             <Button size="sm" className="h-7 gap-1.5 text-xs" onClick={accept}>

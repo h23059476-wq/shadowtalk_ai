@@ -279,7 +279,7 @@ export const DOC_WORKSPACE_GUIDE: DocWorkspaceTopic[] = [
       "Background Model Loading: The LocalInferenceEngine utilizes a Web Worker to ensure UI responsiveness while models are loaded and running.",
       "Progressive Web App (PWA): Install ShadowTalk on your device to cache application assets and run AI models without an active network connection.",
       "Intelligent Fallbacks: Tools requiring the cloud (e.g. real-time web search) are automatically queued in IndexedDB and execute upon reconnection.",
-      "Architecture: The LocalInferenceEngine relies on a persistent Web Worker (`webllm.worker.ts`) to manage model weights. By caching the model in IndexedDB (OPFS), subsequent loads are near-instant, providing an unparalleled user experience even in airplane mode."
+      "Architecture: The LocalInferenceEngine relies on a persistent Web Worker (`webllm.worker.ts`) to manage model weights. Weights cache per-shard in the browser Cache API (with a self-hosted mirror fallback), so interrupted downloads resume where they stopped and subsequent loads are near-instant — even in airplane mode."
     ],
   }
 ];

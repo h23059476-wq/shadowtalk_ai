@@ -9,6 +9,7 @@
 import { fbAuth, functionsBaseUrl } from "@/integrations/firebase/app";
 import { getByokConfig, streamByokChat } from "@/lib/byok";
 import { getCachedAiAccessMode, getPreferLocal } from "@/lib/aiAccessMode";
+import { isOffline } from "@/lib/offlineGuards";
 import type { Citation } from "@/lib/visualization/types";
 import { parseOpenAiUsageChunk, mergeUsage, type ProviderUsage } from "@/lib/tokenOptimizer/usage";
 
@@ -362,14 +363,32 @@ async function streamBuiltInChat(
   messages: CloudChatMessage[],
   opts: CloudChatOptions = {},
 ): Promise<CloudChatResult> {
+  // Shared mode is a server round-trip (Firebase Function + auth token) — it
+  // cannot work offline, and offline token refresh used to fall through to a
+  // misleading "Sign in to use ShadowTalk AI." Say what is actually wrong.
+  if (isOffline()) {
+    return {
+      content: "",
+      error:
+        "You're offline — shared-mode chat needs a connection. The on-device model still works offline: Settings → Offline AI.",
+    };
+  }
   const url = getFunctionsUrl();
   if (!url) {
     return { content: "", error: "Firebase Cloud Functions are not configured." };
   }
 
-  const idToken = await fbAuth().currentUser?.getIdToken().catch(() => null);
+  const currentUser = fbAuth().currentUser;
+  const idToken = await currentUser?.getIdToken().catch(() => null);
   if (!idToken) {
-    return { content: "", error: "Sign in to use ShadowTalk AI." };
+    // A signed-in user whose token cannot be refreshed is an offline/stale
+    // session, not a signed-out visitor — never tell them to "sign in".
+    return {
+      content: "",
+      error: currentUser
+        ? "Your session couldn't be refreshed (you may be offline). Reconnect and try again, or add your own API key in Settings → Personalization → BYOK."
+        : "Sign in to use ShadowTalk AI.",
+    };
   }
 
   const maxRetries = 1;

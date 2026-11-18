@@ -6,8 +6,9 @@ import { Loader2, CheckCircle2, AlertCircle, Cpu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const OfflineSetup: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
-  // Starter-first default (the Nano tier streams down in minutes); the user
-  // can still opt into the 1B/3B tiers as explicit upgrades before installing.
+  // Starter-first default: the smallest model that fits the device (Nano on
+  // ≤2GB RAM — the mirror-backed 290MB tier; Lite 1B elsewhere). The user
+  // can still opt into the 1.5B/3B tiers as explicit upgrades before installing.
   const deviceModel = useMemo(
     () =>
       typeof navigator !== 'undefined'

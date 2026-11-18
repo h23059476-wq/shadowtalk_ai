@@ -66,6 +66,7 @@ import {
   markInstalledViaWizard,
   LOCAL_MODEL_READY_EVENT,
   __patchSnapshotForTests,
+  __resetInstallLatchesForTests,
 } from "@/offline/BackgroundInstall";
 import { STARTER_LOCAL_MODEL } from "@/ai/ModelRegistry";
 
@@ -80,6 +81,7 @@ describe("BackgroundInstall — one-time ask", () => {
   beforeEach(() => {
     lsMock.clear();
     readyEvents = 0;
+    __resetInstallLatchesForTests();
     window.addEventListener(LOCAL_MODEL_READY_EVENT, onReady);
     __patchSnapshotForTests({
       phase: "not-started",

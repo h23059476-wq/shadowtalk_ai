@@ -17,13 +17,27 @@ const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-// Initialize Analytics conditionally (only in browser, usually wrapped in checks for production/consent)
-export const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
+// Analytics is OPTIONAL: `getAnalytics` throws on browsers without the
+// required storage/API support (and in some embedded webviews), which used to
+// blow up this whole module at import time — a white screen for the chat page.
+// Gate it behind isSupported() and never let analytics kill the app.
+import { isSupported } from "firebase/analytics";
+
+let analyticsInstance: any = null;
+if (typeof window !== "undefined") {
+  isSupported()
+    .then((ok) => {
+      if (ok) analyticsInstance = getAnalytics(app);
+    })
+    .catch(() => {
+      // Analytics unavailable (unsupported browser / blocked storage) — fine.
+    });
+}
 
 export const trackEvent = (eventName: string, eventParams?: Record<string, any>) => {
   try {
-    if (analytics) {
-      firebaseLogEvent(analytics, eventName, eventParams);
+    if (analyticsInstance) {
+      firebaseLogEvent(analyticsInstance, eventName, eventParams);
     }
   } catch (error) {
     console.warn("Analytics error:", error);

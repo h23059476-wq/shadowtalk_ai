@@ -24,6 +24,7 @@ import { TokenTelemetryBadge } from "@/components/chat/TokenTelemetryBadge";
 import { McpApprovalDialog, type McpApprovalRequest } from "@/components/chat/McpApprovalDialog";
 import { EnterpriseWelcomeBanner } from "@/components/chat/EnterpriseWelcomeBanner";
 import { ChatShadowSidebar } from "@/components/chat/ChatShadowSidebar";
+import { isOffline, withNetworkTimeout } from "@/lib/offlineGuards";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { ShareWinBanner } from "@/components/growth/ShareWinBanner";
 import { ShareResultDialog } from "@/components/growth/ShareResultDialog";
@@ -925,6 +926,25 @@ const ChatbotPage = () => {
       return localId;
     }
 
+    // OFFLINE SHORT-CIRCUIT — never let a signed-in user's first message hang
+    // on a Firestore insert that cannot settle without a connection (the
+    // Firestore SDK retries network failures indefinitely). Go straight to
+    // the local conversation; it syncs when the connection returns.
+    if (isOffline()) {
+      const localId = `local-${Date.now()}`;
+      setCurrentConversationId(localId);
+      setConversations((prev) => [
+        { id: localId, title: chatPrivate.active ? "Private Chat" : "New Chat", created_at: new Date().toISOString() },
+        ...prev,
+      ]);
+      toast({
+        title: "Offline — chatting on-device",
+        description:
+          "No connection right now. Chatting still works; history saved to the cloud catches up when you reconnect (keep this tab open).",
+      });
+      return localId;
+    }
+
     const titleToSave = chatPrivate.active
       ? await chatPrivate.wrapForStorage("New Chat")
       : "New Chat";
@@ -934,11 +954,18 @@ const ChatbotPage = () => {
     let insertDenied = false;
     if (titleToSave !== null) {
       try {
-      const { data, error } = await backend
-        .from('conversations')
-        .insert({ user_id: user.id, title: titleToSave })
-        .select()
-        .single();
+      // A stalled insert (captive portal, dead cell link) used to hang the
+      // first message forever — the 10s ceiling routes it to the local
+      // fallback below instead.
+      const { data, error } = await withNetworkTimeout(
+        backend
+          .from('conversations')
+          .insert({ user_id: user.id, title: titleToSave })
+          .select()
+          .single(),
+        10_000,
+        "Conversation creation",
+      );
 
       if (!error && data?.id) {
         setCurrentConversationId(data.id);
@@ -1647,7 +1674,11 @@ Structure and Content Guidelines:
         }
         if (engineState === "idle" || engineState === "error") {
           void localInferenceEngine.prewarm().catch(() => {});
-          const weightsCached = isOffline || (await isInstantModelReady().catch(() => false));
+          // Wait on REAL cache evidence only. The old `isOffline ||` forced a
+          // 30s spin when offline with an empty cache — the engine can't
+          // download weights it doesn't have, so the honest error below must
+          // come immediately, not after a doomed wait.
+          const weightsCached = await isInstantModelReady().catch(() => false);
           if (weightsCached) {
             const warmed = await waitForLocalEngineReady(30_000, controller.signal);
             if (warmed) engineState = "ready";

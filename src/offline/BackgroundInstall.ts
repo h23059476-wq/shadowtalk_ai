@@ -2,9 +2,10 @@
  * Background install for the on-device starter model.
  *
  * The download never blocks anything: on first sign-in the user is asked once
- * ("Install private AI in background? ~600MB"), then keeps chatting via their
- * BYOK key / escalation prompts while the shards stream down. WebLLM caches
- * weights per-shard, so an interrupted download resumes where it stopped.
+ * ("Install private AI in background? ~700MB for the Lite starter, ~300MB for
+ * the Nano tier"), then keeps chatting via their BYOK key / escalation
+ * prompts while the shards stream down. WebLLM caches weights per-shard, so
+ * an interrupted download resumes where it stopped.
  *
  * When the model lands, chat silently flips to on-device (setPreferLocal) and
  * a `shadowtalk:local-model-ready` window event fires — ChatbotPage turns that
@@ -17,7 +18,10 @@
  *  - the decision   → per-user key (the one-time ask is per account).
  */
 import { setPreferLocal } from "@/lib/aiAccessMode";
-import { STARTER_LOCAL_MODEL } from "@/ai/ModelRegistry";
+import { STARTER_LOCAL_MODEL, getLocalModelDefinition } from "@/ai/ModelRegistry";
+import { StorageManager } from "@/offline/StorageManager";
+import { isMirrorEligibleError } from "@/offline/modelMirror";
+import { INSTALL_RETRY_LIMIT, installRetryBackoffMs, isOffline } from "@/lib/offlineGuards";
 
 export const LOCAL_MODEL_READY_EVENT = "shadowtalk:local-model-ready";
 
@@ -49,6 +53,91 @@ let snapshot: BackgroundInstallSnapshot = loadSnapshot();
 let starting = false;
 let acceptedBy: string | null = null;
 const listeners = new Set<(s: BackgroundInstallSnapshot) => void>();
+
+// ── Never-fail install hardening ────────────────────────────────────────
+//
+// Remote-area connections fail mid-download for minutes at a time. Without
+// the three knobs below, a single network hiccup left the banner stuck on
+// "install failed" until the user noticed and pressed Retry manually.
+//
+//  1. AUTO-RETRY: network-shaped failures re-arm themselves with backoff
+//     (15s / 45s / 120s), and a fresh `online` event retries immediately.
+//  2. ABORT: declining the banner ("Not now") really stops the flow — the
+//     snapshot goes back to not-started, no silent prefer-local flip and no
+//     ready toast ever fire, even if the in-flight engine download completes
+//     into cache.
+//  3. SPACE CHECK: the storage pre-check the onboarding wizard always had
+//     also guards the banner path, with a distinct "not enough storage"
+//     failure instead of a generic engine error.
+let declineAbort = false;
+let retryAttempt = 0;
+let retryTimer: ReturnType<typeof setTimeout> | null = null;
+
+function clearRetryTimer(): void {
+  if (retryTimer !== null) {
+    clearTimeout(retryTimer);
+    retryTimer = null;
+  }
+}
+
+function storageFloorMB(): number {
+  // The engine may fall back to the q4f32 twin on adapters without
+  // shader-f16 — that twin is the bigger download, so require room for it.
+  const twin = STARTER_LOCAL_MODEL.fallbackModelId
+    ? getLocalModelDefinition(STARTER_LOCAL_MODEL.fallbackModelId)
+    : undefined;
+  return Math.max(STARTER_LOCAL_MODEL.approxStorageRequirementMB, twin?.approxStorageRequirementMB ?? 0);
+}
+
+/**
+ * Schedule the next automatic retry for a network-shaped failure. Returns
+ * the human-readable suffix to append to the failure message, or null when
+ * no retry was scheduled (attempts exhausted / declined / not a network
+ * problem).
+ */
+function scheduleRetryIfEligible(error: unknown): string | null {
+  if (declineAbort) return null;
+  if (retryAttempt >= INSTALL_RETRY_LIMIT) return null;
+  if (!isMirrorEligibleError(error)) return null;
+  if (isOffline()) {
+    // Pointless to spin now — the `online` listener retries immediately.
+    return null;
+  }
+  const delay = installRetryBackoffMs(retryAttempt);
+  retryAttempt += 1;
+  clearRetryTimer();
+  retryTimer = setTimeout(() => {
+    retryTimer = null;
+    void startBackgroundInstall();
+  }, delay);
+  return ` Retrying automatically in ${Math.round(delay / 1000)}s…`;
+}
+
+/**
+ * Decline / teardown hook: stop any pending auto-retry and mark the flow
+ * aborted. An engine download already in flight is left to finish into the
+ * shard cache (bytes are not wasted), but no side effects fire: no
+ * prefer-local flip, no ready toast, no "ready" snapshot.
+ */
+export function abortBackgroundInstall(): void {
+  declineAbort = true;
+  clearRetryTimer();
+  if (snapshot.phase === "failed" || snapshot.phase === "downloading") {
+    patchSnapshot({ phase: "not-started", progress: 0, progressText: "", error: null });
+  }
+}
+
+if (typeof window !== "undefined") {
+  // A fresh reconnect is the best possible moment to resume a failed
+  // install — retry immediately instead of waiting out the backoff.
+  window.addEventListener("online", () => {
+    if (declineAbort || starting) return;
+    if (snapshot.phase !== "failed") return;
+    if (retryAttempt >= INSTALL_RETRY_LIMIT) return;
+    clearRetryTimer();
+    void startBackgroundInstall();
+  });
+}
 
 function loadSnapshot(): BackgroundInstallSnapshot {
   if (typeof localStorage === "undefined") return { ...DEFAULT_SNAPSHOT };
@@ -139,10 +228,16 @@ export function recordInstallDecision(uid: string, accepted: boolean): void {
   writeDecision(uid, accepted ? "accepted" : "declined");
   if (accepted) {
     acceptedBy = uid;
+    // A fresh accept overrides any earlier decline this session (Settings →
+    // Offline AI path) and re-arms the auto-retry ladder.
+    declineAbort = false;
+    retryAttempt = 0;
     void startBackgroundInstall(uid);
   } else {
     // "Not now" must also stop the automatic tier bootstrap (embeddings +
-    // instant chat) — dynamic import keeps the module graph acyclic.
+    // instant chat) and any in-flight/retrying install — dynamic import
+    // keeps the module graph acyclic.
+    abortBackgroundInstall();
     void import("@/services/modelManager")
       .then((m) => m.abortBootstrap())
       .catch(() => {});
@@ -173,7 +268,8 @@ export function markInstalledViaWizard(uid: string, modelId?: string): void {
  */
 export async function startBackgroundInstall(uid?: string): Promise<void> {
   if (typeof uid === "string" && uid) acceptedBy = uid;
-  if (snapshot.phase === "ready" || starting) return;
+  if (snapshot.phase === "ready" || starting || declineAbort) return;
+  clearRetryTimer();
   starting = true;
   try {
     const { localInferenceEngine } = await import("@/offline/LocalInferenceEngine");
@@ -204,6 +300,19 @@ export async function startBackgroundInstall(uid?: string): Promise<void> {
       return;
     }
 
+    // Storage pre-check — the wizard path always had one; the banner path
+    // skipped it, so low-disk devices surfaced a generic engine error after
+    // minutes of downloading. Check the q4f32-twin-sized floor.
+    const floorMB = storageFloorMB();
+    const storage = await StorageManager.getStorageEstimate().catch(() => null);
+    if (storage && storage.availableMB > 0 && storage.availableMB < floorMB * 0.9) {
+      patchSnapshot({
+        phase: "failed",
+        error: `Not enough browser storage free for the on-device model (~${Math.round(floorMB)}MB needed, ${Math.round(storage.availableMB)}MB free). Free up space and retry from Settings → Offline AI.`,
+      });
+      return;
+    }
+
     patchSnapshot({
       phase: "downloading",
       progress: snapshot.phase === "failed" ? 0 : snapshot.progress,
@@ -221,6 +330,7 @@ export async function startBackgroundInstall(uid?: string): Promise<void> {
       // persistence denied — weights still cache, just evictable
     }
 
+    let initError: unknown = null;
     const ok = await localInferenceEngine
       .initialize((report) => {
         const progress = Math.max(0, Math.min(1, report?.progress ?? 0));
@@ -229,7 +339,10 @@ export async function startBackgroundInstall(uid?: string): Promise<void> {
           progressText: report?.text || snapshot.progressText,
         });
       }, STARTER_LOCAL_MODEL.id)
-      .catch(() => false);
+      .catch((error) => {
+        initError = error;
+        return false;
+      });
 
     if (ok && localInferenceEngine.isLoaded()) {
       finishReady(localInferenceEngine.getCurrentModelId());
@@ -247,17 +360,24 @@ export async function startBackgroundInstall(uid?: string): Promise<void> {
       await awaitEngineSettled(localInferenceEngine);
       return;
     }
-    throw new Error(
+    throw initError ?? new Error(
       "The on-device engine could not start (WebGPU unavailable, blocked, or the download failed).",
     );
   } catch (error) {
     starting = false;
+    if (declineAbort) {
+      // The user declined while the engine was still working — land the
+      // flow silently on not-started. Cached shards stay; no flip, no toast.
+      patchSnapshot({ phase: "not-started", progress: 0, progressText: "", error: null });
+      return;
+    }
+    const retrySuffix = scheduleRetryIfEligible(error);
     patchSnapshot({
       phase: "failed",
       error:
         error instanceof Error
-          ? error.message
-          : "The background install failed. You can retry from Settings → Offline AI.",
+          ? `${error.message}${retrySuffix ?? ""}`
+          : `The background install failed. You can retry from Settings → Offline AI.${retrySuffix ?? ""}`,
     });
     // preferLocal intentionally untouched — the user keeps chatting via cloud.
     return;
@@ -268,6 +388,13 @@ export async function startBackgroundInstall(uid?: string): Promise<void> {
 
 function finishReady(modelId: string): void {
   starting = false;
+  if (declineAbort) {
+    // Declined mid-download: the engine finished into cache on its own.
+    // Honor the decline — no flip, no event, snapshot back to not-started.
+    patchSnapshot({ phase: "not-started", progress: 0, progressText: "", error: null });
+    return;
+  }
+  retryAttempt = 0;
   patchSnapshot({ phase: "ready", progress: 1, progressText: "Ready", modelId, error: null });
   // Silent flip: ordinary chat now runs on-device for the accepting account.
   if (acceptedBy) setPreferLocal(acceptedBy, true);
@@ -304,14 +431,32 @@ async function awaitEngineSettled(engine: {
   if (state === "ready" && engine.getCurrentModelId) {
     finishReady(engine.getCurrentModelId());
   } else if (state !== "ready") {
+    if (declineAbort) {
+      patchSnapshot({ phase: "not-started", progress: 0, progressText: "", error: null });
+      return;
+    }
+    const retrySuffix = scheduleRetryIfEligible(
+      state === "error" ? "engine fetch failed" : "install interrupted",
+    );
     patchSnapshot({
       phase: "failed",
       error:
         state === "error"
-          ? "The on-device engine failed to finish installing."
-          : "The install was interrupted. Retry from Settings → Offline AI.",
+          ? `The on-device engine failed to finish installing.${retrySuffix ?? ""}`
+          : `The install was interrupted. Retry from Settings → Offline AI.${retrySuffix ?? ""}`,
     });
   }
 }
 
-export { patchSnapshot as __patchSnapshotForTests };
+export {
+  patchSnapshot as __patchSnapshotForTests,
+  // Exposed for tests: the decline/abort latch is module state that must not
+  // leak between test cases.
+  __resetInstallLatchesForTests,
+};
+
+function __resetInstallLatchesForTests(): void {
+  declineAbort = false;
+  retryAttempt = 0;
+  clearRetryTimer();
+}
