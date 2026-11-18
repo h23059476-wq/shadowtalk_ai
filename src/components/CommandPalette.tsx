@@ -38,6 +38,7 @@ import {
   Scale,
   Cookie,
   Download,
+  WifiOff,
 } from "lucide-react";
 
 export type PageGroup =
@@ -311,6 +312,30 @@ export const pages: PageEntry[] = [
     desc: "Verified answers regarding models, privacy, missions & founder",
     group: "Resources & Company",
     keywords: ["faq", "questions", "answers", "missions", "billing", "founder"],
+  },
+  {
+    name: "Offline AI Chat guide",
+    href: "/offline-ai-chat",
+    icon: WifiOff,
+    desc: "Chat with AI with no internet — on-device models, offline queueing, sync on reconnect",
+    group: "Resources & Company",
+    keywords: ["offline", "ai", "chat", "no internet", "airplane", "tunnel", "remote", "sync", "guide"],
+  },
+  {
+    name: "Private AI Chat guide",
+    href: "/private-ai-chat",
+    icon: ShieldCheck,
+    desc: "Encrypted, no-account AI chat — guest mode, BYOK direct, Private Mode",
+    group: "Resources & Company",
+    keywords: ["private", "ai", "chat", "encrypted", "e2ee", "privacy", "byok", "no account", "guide"],
+  },
+  {
+    name: "Run an LLM in your browser",
+    href: "/run-llm-in-browser",
+    icon: Globe,
+    desc: "WebGPU browser LLM guide — models, sizes, speed, switching",
+    group: "Resources & Company",
+    keywords: ["llm", "browser", "webgpu", "local", "model", "llama", "qwen", "smollm", "guide"],
   },
   {
     name: "Contact Us & Support",

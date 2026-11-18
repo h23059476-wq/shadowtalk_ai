@@ -34,6 +34,9 @@ const ROUTES_TO_PRERENDER = [
   '/downloads',
   '/ide',
   '/proofloop',
+  '/offline-ai-chat',
+  '/private-ai-chat',
+  '/run-llm-in-browser',
 ];
 
 // Simple static file server

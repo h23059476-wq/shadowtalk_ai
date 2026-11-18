@@ -24,6 +24,14 @@ const Footer = () => {
       ],
     },
     {
+      title: "Guides",
+      links: [
+        { name: "Offline AI chat", href: "/offline-ai-chat" },
+        { name: "Private AI chat", href: "/private-ai-chat" },
+        { name: "Run an LLM in your browser", href: "/run-llm-in-browser" },
+      ],
+    },
+    {
       title: "Support",
       links: [
         { name: "Docs", href: "/docs" },

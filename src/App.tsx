@@ -60,6 +60,7 @@ const PublicProofCardPage = lazy(() => import("./pages/PublicProofCardPage"));
 
 // Production Company, Support & Legal Pages
 const ContactPage = lazy(() => import("./pages/ContactPage"));
+const GuidePage = lazy(() => import("./pages/GuidePage"));
 const FAQPage = lazy(() => import("./pages/FAQPage"));
 const BenchmarksPage = lazy(() => import("./pages/BenchmarksPage"));
 const AgenticIdePage = lazy(() => import("./pages/AgenticIdePage"));
@@ -171,6 +172,10 @@ const AnimatedRoutes = () => {
           <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
           <Route path="/help" element={<Navigate to="/docs" replace />} />
           <Route path="/faq" element={<PageTransition><FAQPage /></PageTransition>} />
+          {/* SEO/GEO intent-cluster guides (see src/content/seoGuides.ts) */}
+          <Route path="/offline-ai-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="offline-ai-chat" /></PageTransition></Suspense>} />
+          <Route path="/private-ai-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="private-ai-chat" /></PageTransition></Suspense>} />
+          <Route path="/run-llm-in-browser" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="run-llm-in-browser" /></PageTransition></Suspense>} />
           <Route path="/benchmarks" element={<Suspense fallback={<PageLoader />}><PageTransition><BenchmarksPage /></PageTransition></Suspense>} />
           <Route path="/case-studies" element={<Navigate to="/home" replace />} />
           <Route path="/gdpr" element={<PageTransition><GDPRPage /></PageTransition>} />

@@ -97,6 +97,24 @@ export const PAGE_SEO: Record<string, PageMeta> = {
       "What ShadowTalk AI is, how it differs from ChatGPT, what it costs (nothing), which models it supports and how your data stays private.",
     canonical: `${SITE_URL}/faq`,
   },
+  "offline-ai-chat": {
+    title: "Offline AI Chat — Use AI Without Internet (Free)",
+    description:
+      "Chat with AI offline: the model runs on your device via WebGPU — no internet needed after a one-time download. Chats you send offline queue up and sync when you're back. Free, no account, no card.",
+    canonical: `${SITE_URL}/offline-ai-chat`,
+  },
+  "private-ai-chat": {
+    title: "Private AI Chat — Encrypted, No Account, BYOK",
+    description:
+      "Free private AI chat: start as a guest with no account, BYOK requests go browser-to-provider, AES-256 end-to-end encryption in Private Mode, plus an optional on-device model with zero network egress.",
+    canonical: `${SITE_URL}/private-ai-chat`,
+  },
+  "run-llm-in-browser": {
+    title: "Run an LLM in Your Browser — WebGPU, No Install",
+    description:
+      "Run Llama 3.2, Qwen 2.5 and SmolLM2 in your browser with WebGPU: no install, no server, resumable model downloads, device-tiered models and automatic cloud fallback. Free.",
+    canonical: `${SITE_URL}/run-llm-in-browser`,
+  },
   about: {
     title: "About — The Story Behind ShadowTalk",
     description:
@@ -335,6 +353,35 @@ export function getFAQSchema(faqs: Array<{ question: string; answer: string }>) 
       "@type": "Question",
       name: faq.question,
       acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
+}
+
+/** schema.org HowTo from ordered step strings (used by guide pages) */
+export function getHowToSchema(name: string, steps: string[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    step: steps.map((text, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: `Step ${i + 1}`,
+      text,
+    })),
+  };
+}
+
+/** schema.org BreadcrumbList (used by guide pages) */
+export function getBreadcrumbSchema(items: Array<{ name: string; url: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: item.url,
     })),
   };
 }

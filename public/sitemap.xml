@@ -120,4 +120,22 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url>
+    <loc>https://www.shadowtalk-ai.com/offline-ai-chat</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.shadowtalk-ai.com/private-ai-chat</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.shadowtalk-ai.com/run-llm-in-browser</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
