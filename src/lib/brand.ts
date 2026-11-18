@@ -12,6 +12,13 @@ export const BRAND = {
   mnemonic: "Think AI. Think ShadowTalk.",
   /** Primary brand line — landing hero, manifesto, chat empty state, SEO */
   tagline: "Think AI. Think ShadowTalk.",
+  /** Category claim — THE differentiator. One sentence, said the same way
+   *  everywhere (hero eyebrow, landing band, FAQ, docs, SEO, chat). The
+   *  offline-first stack makes it true: zero third-party app shell,
+   *  resumable on-device model install, durable IndexedDB history. */
+  offlineLine: "The first AI that works without internet.",
+  offlineSubline:
+    "Install the on-device engine once while connected. After that the model, your chats and your history all live on the device — built for remote areas, flights and blackout zones.",
   shortPitch:
     "Stop juggling AI tabs. ShadowTalk finishes the job—voice & code, deep research, and a desktop app in one workspace.",
   manifesto:
@@ -20,7 +27,7 @@ export const BRAND = {
   heroHeadline: ["Don't just get an answer.", "Get it done."],
   heroSubtitle:
     "ShadowTalk turns ideas into actions through agentic workflows.",
-  heroBadge: "Free to use · No card · Your old stack will feel slow",
+  heroBadge: "Free to use · No card · Works without internet",
 } as const;
 
 /** Section headlines & subcopy for the home page */
@@ -99,6 +106,7 @@ export const BRAND_PILLARS = [
 /** Rotating hero / chat hooks — memorable, specific */
 export const BRAND_HOOKS = [
   "Think AI. Think ShadowTalk.",
+  "The first AI that works without internet.",
   "Stop juggling tabs — finish the job here.",
   "Chat suggests. ShadowTalk ships.",
   "One workspace. Every tool. Zero tab marathon.",

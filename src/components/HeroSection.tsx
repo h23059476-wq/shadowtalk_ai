@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Bot, Zap, ArrowRight, Search, Workflow, Target, Key, Cpu, Sparkles } from "lucide-react";
+import { MessageCircle, Bot, Zap, ArrowRight, Search, Workflow, Target, Key, Cpu, Sparkles, WifiOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CommandPaletteContext } from "@/App";
 import { BRAND, BRAND_HOOKS, LANDING_COPY } from "@/lib/brand";
@@ -48,9 +48,9 @@ const HeroSection = () => {
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Explicit value-prop eyebrow — screams core value within 3 seconds */}
           <div className="inline-flex items-center flex-wrap justify-center gap-2 glass-subtle rounded-full px-4 py-2 sm:px-5 sm:py-2.5 mb-6 sm:mb-8 max-w-[95vw] border-primary/30">
-            <Sparkles className="h-4 w-4 text-primary shrink-0" />
+            <WifiOff className="h-4 w-4 text-primary shrink-0" />
             <span className="text-xs sm:text-sm font-semibold tracking-wide text-center text-foreground">
-              The World&apos;s First Zero-Knowledge, Multi-Model AI Canvas
+              The first AI that works without internet
             </span>
             <span className="w-2 h-2 bg-success rounded-full shrink-0 animate-pulse" />
           </div>
@@ -63,7 +63,7 @@ const HeroSection = () => {
           </h1>
 
           <p className="text-sm sm:text-base md:text-lg text-foreground/90 mb-5 max-w-3xl mx-auto leading-relaxed px-2 font-medium">
-            100% BYOK &amp; WebGPU Local Vector RAG. One workspace, every frontier model, zero data leaves your device.
+            100% BYOK &amp; WebGPU Local Vector RAG. One workspace, every frontier model, zero data leaves your device — even with no signal.
           </p>
 
           <p className="text-xs sm:text-sm md:text-base text-muted-foreground mb-7 max-w-2xl mx-auto leading-relaxed px-2">
@@ -114,6 +114,7 @@ const HeroSection = () => {
           <div className="mb-6 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 px-2">
             {[
               { icon: Key, label: "100% BYOK" },
+              { icon: WifiOff, label: "Works without internet" },
               { icon: Cpu, label: "WebGPU Local Inference" },
               { icon: Sparkles, label: "Local Vector RAG" },
               { icon: Workflow, label: "Multi-Model Canvas" },

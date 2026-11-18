@@ -519,7 +519,7 @@ const DocsPage = () => {
               <DocSection title="System Requirements">
                 <div className="grid gap-5 md:grid-cols-2">
                   {[
-                    { icon: Monitor, title: "Desktop", items: ["Chrome 80+, Firefox 75+, Safari 14+, Edge 80+", "4GB RAM minimum, 8GB recommended", "Stable internet connection (5+ Mbps)", "JavaScript enabled"] },
+                    { icon: Monitor, title: "Desktop", items: ["Chrome 80+, Firefox 75+, Safari 14+, Edge 80+", "4GB RAM minimum, 8GB recommended", "Internet needed for the first visit & cloud models — on-device AI runs offline", "JavaScript enabled"] },
                     { icon: Smartphone, title: "Mobile", items: ["iOS 14+ (Safari), Android 8+ (Chrome)", "PWA installation supported", "4G/5G or WiFi connection", "Microphone for voice features"] },
                   ].map((platform, idx) => (
                     <motion.div key={idx} custom={idx} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>

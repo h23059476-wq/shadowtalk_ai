@@ -18,6 +18,7 @@ import { ChevronDown, ChevronUp, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const WhatIsShadowTalk = lazy(() => import("@/components/landing/WhatIsShadowTalk"));
+const OfflineFirstBand = lazy(() => import("@/components/landing/OfflineFirstBand"));
 const FounderSpotlightSection = lazy(() => import("@/components/founder/FounderSpotlightSection"));
 const PricingSection = lazy(() => import("@/components/PricingSection"));
 const LandingContactSectionComp = lazy(() => import("@/components/landing/LandingContactSection"));
@@ -85,6 +86,12 @@ const Index = () => {
           <div className="min-h-screen bg-background text-foreground landing-page-content">
             <LandingNavigation />
             <HeroSection />
+
+            {/* The category claim, on its own band — "the first AI that works
+                without internet." Always visible (not hub-tabbed). */}
+            <Suspense fallback={<div className="py-8" aria-hidden /> }>
+              <OfflineFirstBand />
+            </Suspense>
 
             <LandingSectionHub
               activeTab={activeSection}

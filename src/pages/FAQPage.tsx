@@ -93,7 +93,7 @@ const STATIC_FAQS: FAQItem[] = [
     id: "faq-private-ai",
     category: "security",
     question: "Can ShadowTalk run on-device without internet?",
-    answer: "Yes, on supported devices with WebGPU (Chrome 113+, Edge 113+), you can opt in to download compact quantized models (~130MB to larger Gemma models) to execute chat inference directly in your browser with zero network egress.",
+    answer: "Yes — that's the product's core promise: ShadowTalk is the first AI that works without internet. On WebGPU-capable devices (Chrome/Edge 113+), install the on-device engine once while connected (~300-700MB depending on device tier, resumable on weak links); chat inference then runs entirely in your browser with zero network egress — the model, your chats and your history all stay on the device.",
   },
   {
     id: "faq-export-data",

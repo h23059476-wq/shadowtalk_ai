@@ -2225,6 +2225,17 @@ html.perf-low .bg-gradient-to-tr {
   background-image: none;
 }
 
+/* bg-clip-text elements are text painted BY the gradient — stripping the
+   background above leaves text-fill-color transparent with nothing behind
+   it: INVISIBLE copy. That used to blank the hero headline (and every
+   section title) on low-end devices — precisely the remote-area audience.
+   Restore a solid, readable fill for gradient text. */
+html.perf-low .gradient-text {
+  background-image: none;
+  color: hsl(var(--primary));
+  -webkit-text-fill-color: currentColor;
+}
+
 /* Turn off ambient/aurora/blob decorations on low-end */
 html.perf-low .aurora,
 html.perf-low .aurora-bg,
