@@ -63,6 +63,36 @@ describe("modelMirror — template contract", () => {
     }
   });
 
+  it("with the default template, the mirrored twins' model_lib WASM is pinned to our weights branch", () => {
+    // The WASM runtime comes from a third repo (mlc-ai/binary-mlc-llm-libs)
+    // that moves independently of HF — a rename there would break engine init
+    // even with a healthy weights mirror. The built-in mirror hosts its own
+    // copies (scripts/upload-weights-branch.sh uploads them), so a mirrored
+    // model's entire init depends only on this repo.
+    const cfg = buildMirrorAppConfig()!;
+    const mirrored = cfg.model_list.filter((r) =>
+      DEFAULT_MIRRORED_MODEL_IDS.has(r.model_id),
+    );
+    expect(mirrored.length).toBe(2);
+    for (const rec of mirrored) {
+      expect(rec.model_lib).toContain("/shadowtalk_ai/weights/wasm/");
+      // The runtime binary keeps its exact file name — it is what the
+      // upload script stores under wasm/.
+      const original = prebuiltAppConfig.model_list.find(
+        (r) => r.model_id === rec.model_id,
+      )!;
+      expect(rec.model_lib.endsWith(original.model_lib!.split("/").pop()!)).toBe(true);
+    }
+    // Non-mirrored registry models keep the mlc-ai URLs.
+    const untouched = cfg.model_list.filter(
+      (r) => REGISTRY_IDS.has(r.model_id) && !DEFAULT_MIRRORED_MODEL_IDS.has(r.model_id),
+    );
+    for (const rec of untouched) {
+      const original = prebuiltAppConfig.model_list.find((r) => r.model_id === rec.model_id)!;
+      expect(rec.model_lib).toBe(original.model_lib);
+    }
+  });
+
   it("an invalid override (no {slug}) disables the mirror entirely", () => {
     __setMirrorTemplateForTests("https://mirror.example.com/models/");
     expect(isMirrorConfigured()).toBe(false);

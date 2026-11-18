@@ -26,8 +26,10 @@
  * weights mirror is used (orphan `weights` branch of this repo, served by
  * raw.githubusercontent.com with CORS — see DEFAULT_MIRROR_TEMPLATE);
  * an invalid override (no {slug}) ⇒ mirror disabled and everything behaves
- * exactly as before. model_lib WASM URLs are NOT mirrored — they point at
- * raw.githubusercontent.com and are independent of the HF CDN.
+ * exactly as before. For the built-in mirror, the mirrored models' model_lib
+ * WASM URLs are ALSO rewritten to our own copy on the weights branch (see
+ * WASM_MIRROR_BASE) — the default mlc-ai URLs stay untouched for every
+ * non-mirrored model.
  */
 import { prebuiltAppConfig, type AppConfig } from "@mlc-ai/web-llm";
 import { MODEL_REGISTRY } from "@/ai/ModelRegistry";
@@ -43,6 +45,18 @@ import { MODEL_REGISTRY } from "@/ai/ModelRegistry";
  */
 export const DEFAULT_MIRROR_TEMPLATE =
   "https://raw.githubusercontent.com/h23059476-wq/shadowtalk_ai/weights/models/{slug}/resolve/main/";
+
+/**
+ * Mirror for the web-llm model_lib WASM runtimes of the mirrored models.
+ * The WASM is fetched from a THIRD repo (mlc-ai/binary-mlc-llm-libs) that
+ * moves independently of Hugging Face — a rename or deletion there would
+ * break engine init even when the weights mirror is healthy. We host our own
+ * copies at wasm/<filename> on the same orphan branch, so a mirrored model's
+ * entire init (config + shards + WASM) depends only on this repo.
+ * (Keep in sync with scripts/upload-weights-branch.sh, which uploads them.)
+ */
+export const WASM_MIRROR_BASE =
+  "https://raw.githubusercontent.com/h23059476-wq/shadowtalk_ai/weights/wasm/";
 
 /**
  * The model ids actually hosted on the built-in mirror (keep in sync with the
@@ -104,7 +118,16 @@ export function buildMirrorAppConfig(): AppConfig | null {
     if (builtIn && !DEFAULT_MIRRORED_MODEL_IDS.has(rec.model_id)) return rec;
     const slug = slugOfModelUrl(rec.model);
     if (!slug) return rec;
-    return { ...rec, model: template.replace("{slug}", slug) };
+    const mirrored: typeof rec = { ...rec, model: template.replace("{slug}", slug) };
+    // Built-in mirror only: also pin the model_lib WASM to our own copy so a
+    // mirrored model never depends on mlc-ai's binary-mlc-llm-libs repo.
+    // Custom-operator mirrors only rewrite the weights (they serve what they
+    // serve); the WASM URL is an absolute URL, independent of {slug}.
+    if (builtIn && rec.model_lib) {
+      const wasmName = rec.model_lib.split("/").pop();
+      if (wasmName) mirrored.model_lib = WASM_MIRROR_BASE + wasmName;
+    }
+    return mirrored;
   });
   return { ...prebuiltAppConfig, model_list };
 }
