@@ -47,14 +47,15 @@
     <link rel="manifest" href="/manifest.webmanifest" />
 
     <!-- Preconnect for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://api.shadowtalk-ai.com" crossorigin />
     <link rel="dns-prefetch" href="https://api.shadowtalk-ai.com" />
 
-    <!-- Live mode typefaces (Sora / Hanken Grotesk / JetBrains Mono) + Material Symbols icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Sora:wght@300..800&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+    <!-- Self-hosted fonts (public/fonts/, precached by the service worker):
+         zero runtime dependency on the Google Fonts CDN, so typography loads
+         instantly offline and on flaky remote connections. The live-mode
+         icon font ships with the app bundle (src/fonts.css). -->
+    <link rel="preload" href="/fonts/inter-var-100_900.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/jetbrains-mono-var-100_800.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Structured data: one graph, shared @ids, current product facts only.
          Per-page JSON-LD is injected by src/components/SEOHead.tsx. -->
@@ -148,5 +149,62 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- First-visit offline gate.
+         A PWA can only serve offline AFTER its first online visit installs
+         the service worker + app shell. This gate catches the windows where
+         that guarantee doesn't exist yet: navigator.onLine === false with no
+         controlling service worker (hard offline), or the app shell stalled
+         long enough that the mount point is still empty (captive portals,
+         dying connections — the HTML arrived but the bundle didn't).
+         Returning users are untouched: their SW controls the page, so the
+         shell always loads from precache. -->
+    <div id="offline-gate" style="display:none; position:fixed; inset:0; z-index:2147483647; background:#050508; color:#e8e8ef; font-family:system-ui,-apple-system,sans-serif; text-align:center; padding:24px;">
+      <div style="max-width:520px; margin:18vh auto 0;">
+        <div style="font-size:44px; line-height:1; margin-bottom:18px;">&#127760;</div>
+        <h1 style="font-size:20px; font-weight:700; margin:0 0 10px;">You're offline</h1>
+        <p style="font-size:14px; line-height:1.6; color:#9ca3af; margin:0 0 22px;">
+          ShadowTalk works offline — but the very first visit needs a connection
+          to install its offline shell. Connect once (any network, even a few
+          seconds), and everything after that runs on this device.
+        </p>
+        <button onclick="location.reload()" style="background:#14b8f5; color:#050508; border:0; border-radius:10px; padding:10px 22px; font-size:14px; font-weight:600; cursor:pointer;">Retry now</button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        try {
+          var gate = document.getElementById("offline-gate");
+          if (!gate) return;
+          var shown = false;
+          var attempts = 0;
+          function provisioned() {
+            return !!(navigator.serviceWorker && navigator.serviceWorker.controller);
+          }
+          function appMounted() {
+            var root = document.getElementById("root");
+            return !!(root && root.children.length > 0);
+          }
+          // Watch every 2s: show the gate when the shell stalls (hard or soft
+          // offline), hide it again the moment the app mounts or a service
+          // worker takes control (a slow-but-working load is never blocked).
+          var timer = setInterval(function () {
+            if (provisioned() || appMounted()) {
+              if (shown) { shown = false; gate.style.display = "none"; }
+              clearInterval(timer);
+              return;
+            }
+            attempts++;
+            if (!shown && (navigator.onLine === false || attempts >= 4)) {
+              shown = true;
+              gate.style.display = "block";
+            }
+          }, 2000);
+          window.addEventListener("online", function () {
+            if (shown) location.reload();
+          });
+        } catch (e) { /* never block the app */ }
+      })();
+    </script>
   </body>
 </html>

@@ -144,3 +144,65 @@ describe("PWA installation reliability", () => {
     expect(src).toMatch(/const onInstalled = \(\) => setIsInstalled\(true\);/);
   });
 });
+
+describe("Offline resilience — no third-party runtime dependencies", () => {
+  it("index.html never loads fonts (or anything else) from Google Fonts CDNs", () => {
+    // fonts.googleapis.com / fonts.gstatic.com were render-blocking network
+    // dependencies on every cold load — they stall first paint offline and
+    // lose the app typography in remote areas. Fonts are self-hosted now.
+    const html = read("index.html");
+    expect(html).not.toContain("fonts.googleapis.com");
+    expect(html).not.toContain("fonts.gstatic.com");
+  });
+
+  it("index.css never imports fonts from Google Fonts CDNs", () => {
+    const css = read("src/index.css");
+    expect(css).not.toContain("fonts.googleapis.com");
+    expect(css).not.toContain("fonts.gstatic.com");
+    // The self-hosted faces are wired in.
+    expect(css).toContain("./fonts.css");
+  });
+
+  it("every font referenced by src/fonts.css exists in public/fonts/", () => {
+    const css = read("src/fonts.css");
+    const files = [...css.matchAll(/url\('\/fonts\/([^']+)'\)/g)].map((m) => m[1]);
+    expect(files.length).toBeGreaterThanOrEqual(13);
+    for (const file of new Set(files)) {
+      expect(() => readFileSync(resolve(process.cwd(), "public", "fonts", file)), `missing font: ${file}`).not.toThrow();
+    }
+    // The two preloaded core fonts must exist too.
+    const html = read("index.html");
+    const preloads = [...html.matchAll(/rel="preload"\s+href="(\/fonts\/[^"]+)"/g)].map((m) => m[1]);
+    for (const href of preloads) {
+      expect(() => readFileSync(resolve(process.cwd(), "public", href.replace(/^\//, ""))), `missing preloaded font: ${href}`).not.toThrow();
+    }
+  });
+
+  it("the SW precaches fonts, the pdf worker asset and the webmanifest", () => {
+    const cfg = read("vite.config.ts");
+    const globs = cfg.match(/globPatterns:\s*\[([^\]]*)\]/);
+    expect(globs).not.toBeNull();
+    const pattern = globs![1];
+    for (const ext of ["woff2", "woff", "mjs", "webmanifest", "wasm"]) {
+      expect(pattern).toContain(ext);
+    }
+  });
+
+  it("the SW serves the weights/mirror host stale-while-revalidate", () => {
+    const cfg = read("vite.config.ts");
+    // raw.githubusercontent.com hosts the built-in weights mirror AND the
+    // web-llm model_lib WASMs — runtime caching there keeps in-flight model
+    // downloads resilient on flaky links.
+    expect(cfg).toContain("raw\\.githubusercontent\\.com");
+    expect(cfg).toContain("StaleWhileRevalidate");
+  });
+
+  it("the first-visit offline gate ships in index.html", () => {
+    // A PWA can only work offline AFTER the first online visit installs the
+    // service worker. Until then, a hard-offline first visit used to be a
+    // blank page; the gate explains it and reloads when a connection appears.
+    const html = read("index.html");
+    expect(html).toContain('id="offline-gate"');
+    expect(html).toContain("navigator.serviceWorker && navigator.serviceWorker.controller");
+  });
+});

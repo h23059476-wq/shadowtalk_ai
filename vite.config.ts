@@ -90,14 +90,34 @@ export default defineConfig(({ mode }) => {
           ]
         },
         workbox: {
-          // Pre-caches the app shell, the webllm.worker chunk and the
-          // vendor-ai (web-llm runtime) chunk — hashed assets from dist only.
-          // NEVER raises above ~10MB per file and never hardcodes model
-          // weights: the multi-GB shards flow through web-llm's per-shard
-          // Cache API at runtime (see src/services/modelManager.ts), so PWA
-          // install stays fast even on slow networks.
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,json,wasm}'],
-          maximumFileSizeToCacheInBytes: 10000000 // Increase limit for wasm/model artifacts
+          // Pre-caches the app shell, the webllm.worker chunk, the
+          // vendor-ai (web-llm runtime) chunk, the SELF-HOSTED fonts
+          // (/fonts/*.woff2) and the pdf.js worker asset — hashed assets
+          // from dist only. NEVER raises above ~10MB per file and never
+          // hardcodes model weights: the multi-GB shards flow through
+          // web-llm's per-shard Cache API at runtime (see
+          // src/services/modelManager.ts), so PWA install stays fast even
+          // on slow networks.
+          globPatterns: ['**/*.{js,mjs,css,html,ico,png,svg,json,wasm,woff,woff2,webmanifest,webp,webm,mp4}'],
+          maximumFileSizeToCacheInBytes: 10000000, // Increase limit for wasm/model artifacts
+          runtimeCaching: [
+            {
+              // Model infrastructure on raw.githubusercontent.com: the
+              // built-in weights mirror (orphan `weights` branch) and the
+              // web-llm model_lib WASMs (mlc-ai binary-mlc-llm-libs).
+              // Stale-while-revalidate keeps downloads working even when
+              // the network is flaky mid-session, and refreshes in the
+              // background once a connection is back. Responses are
+              // CORS-clean (ACAO: *), so nothing opaque enters the cache.
+              urlPattern: /^https:\/\/raw\.githubusercontent\.com\//,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'st-raw-github',
+                expiration: { maxEntries: 64, maxAgeSeconds: 30 * 24 * 60 * 60 },
+                cacheableResponse: { statuses: [200] },
+              },
+            },
+          ],
         }
       })
     ],

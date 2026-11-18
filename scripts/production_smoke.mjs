@@ -25,7 +25,8 @@ function wait(ms) { return new Promise((r) => setTimeout(r, ms)); }
 
 async function startPreview() {
   const child = spawn("npx", ["vite", "preview", "--port", String(PORT), "--strictPort", "--host", "127.0.0.1"], {
-    cwd: "/home/z/my-project",
+    // Repo-relative so the smoke test works from any checkout location.
+    cwd: new URL("..", import.meta.url).pathname,
     stdio: ["ignore", "pipe", "pipe"],
   });
   const ready = new Promise((resolve, reject) => {
@@ -45,7 +46,7 @@ async function startPreview() {
 
 function scanBundleForMockImports() {
   // The built bundle must not contain test-mock internals.
-  const dist = "/home/z/my-project/dist";
+  const dist = new URL("../dist", import.meta.url).pathname;
   const offenders = [];
   const walk = (dir) => {
     for (const name of readdirSync(dir)) {
