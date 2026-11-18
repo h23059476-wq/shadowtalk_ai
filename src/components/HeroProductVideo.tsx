@@ -1,13 +1,17 @@
 import React from "react";
 
 /**
- * Seamless 20s welcome intro — above-the-fold showcase (v2).
+ * Seamless 20s brand film — above-the-fold showcase.
  *
- * Rendered from the Remotion "WelcomeShadowTalk" composition (1280x720 @
- * 30fps, 600 frames, silent, no fake CTA buttons). Story: the original
- * ShadowTalk logo transition -> the real /chatbot page -> a prompt being
- * typed, sent and answered -> a warm free-start welcome. Frame 599 matches
- * frame 0 (loop seam RMS < 1.5), so `loop` restarts with zero visible jump.
+ * Rendered from the Remotion "BrandFilm" composition (1280x720 @ 30fps,
+ * 600 frames, silent, no fake CTA buttons). Story: the ShadowTalk mark
+ * blooms into the "SHADOWTALK · Think AI. Think ShadowTalk." lockup, the
+ * statement "Every model. One voice." lands, a multi-model canvas switches
+ * between GPT-5.1, Claude 4.5, Gemini 3 Pro and on-device Llama 4 while a
+ * prompt is typed and answered, and the film closes on "Every model. One
+ * voice." before resting back on the mark. Frame 599 matches frame 0
+ * (loop seam PSNR ~45 dB vs ~53 dB for a normal frame step), so `loop`
+ * restarts with zero visible jump.
  *
  * `muted` is re-asserted inside the ref callback: React drops the muted
  * attribute in prerendered HTML, which blocks autoplay in Safari and some
@@ -26,7 +30,7 @@ const HeroProductVideo: React.FC = () => {
           muted
           playsInline
           preload="metadata"
-          aria-label="ShadowTalk intro: the ShadowTalk logo, the real /chatbot workspace, a launch-plan prompt being typed and answered, ending with a free-start welcome"
+          aria-label="ShadowTalk brand film: the ShadowTalk logo blooms into the Think AI, Think ShadowTalk lockup, the statement Every model. One voice. lands, a prompt runs across GPT-5.1, Claude 4.5, Gemini 3 Pro and on-device Llama 4, closing with Every model. One voice."
           ref={(el) => {
             if (el) el.muted = true;
           }}
@@ -36,7 +40,7 @@ const HeroProductVideo: React.FC = () => {
         </video>
       </div>
       <p className="text-center text-[11px] sm:text-xs text-muted-foreground/70 mt-2.5 font-mono">
-        welcome intro · original logo · real /chatbot workspace · start free
+        brand film · every model, one voice · think AI, think ShadowTalk
       </p>
     </div>
   );
