@@ -93,7 +93,7 @@ const STATIC_FAQS: FAQItem[] = [
     id: "faq-private-ai",
     category: "security",
     question: "Can ShadowTalk run on-device without internet?",
-    answer: "Yes — that's the product's core promise: ShadowTalk is the first AI that works without internet. On WebGPU-capable devices (Chrome/Edge 113+), install the on-device engine once while connected (~300-700MB depending on device tier, resumable on weak links); chat inference then runs entirely in your browser with zero network egress — the model, your chats and your history all stay on the device.",
+    answer: "Yes — that's the product's core promise: ShadowTalk is the first AI chat in a browser that works offline — and syncs when you're back. On WebGPU-capable devices (Chrome/Edge 113+), install the on-device engine once while connected (~300-700MB depending on device tier, resumable on weak links); chat inference then runs entirely in your browser with zero network egress — the model, your chats and your history all stay on the device, and anything you write with no signal queues up and syncs the moment you're back online (end-to-end encrypted when Private Mode is on).",
   },
   {
     id: "faq-export-data",

@@ -50,7 +50,7 @@ const HeroSection = () => {
           <div className="inline-flex items-center flex-wrap justify-center gap-2 glass-subtle rounded-full px-4 py-2 sm:px-5 sm:py-2.5 mb-6 sm:mb-8 max-w-[95vw] border-primary/30">
             <WifiOff className="h-4 w-4 text-primary shrink-0" />
             <span className="text-xs sm:text-sm font-semibold tracking-wide text-center text-foreground">
-              The first AI that works without internet
+              The first AI chat in a browser that works offline — and syncs when you're back
             </span>
             <span className="w-2 h-2 bg-success rounded-full shrink-0 animate-pulse" />
           </div>

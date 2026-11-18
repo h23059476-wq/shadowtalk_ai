@@ -9,7 +9,7 @@ import LandingInteractiveCard from "@/components/landing/LandingInteractiveCard"
 
 /**
  * Offline-first band — the category claim, shown on its own so it can't be
- * skimmed past: "The first AI that works without internet."
+ * skimmed past: "The first AI chat in a browser that works offline — and syncs when you're back."
  *
  * Three concrete promises, all backed by shipped engineering (zero third-
  * party app shell, resumable per-shard model install, durable IndexedDB
@@ -51,7 +51,7 @@ const OfflineFirstBand = () => {
           badgeIcon={WifiOff}
           title={
             <span id="offline-first-title">
-              The first AI that works <span className="gradient-text">without internet.</span>
+              The first AI chat in a browser that works <span className="gradient-text">offline — and syncs when you're back.</span>
             </span>
           }
           subtitle={BRAND.offlineSubline}

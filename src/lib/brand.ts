@@ -13,12 +13,19 @@ export const BRAND = {
   /** Primary brand line — landing hero, manifesto, chat empty state, SEO */
   tagline: "Think AI. Think ShadowTalk.",
   /** Category claim — THE differentiator. One sentence, said the same way
-   *  everywhere (hero eyebrow, landing band, FAQ, docs, SEO, chat). The
+   *  everywhere (hero eyebrow, landing bands, FAQ, docs, SEO, chat). The
    *  offline-first stack makes it true: zero third-party app shell,
-   *  resumable on-device model install, durable IndexedDB history. */
-  offlineLine: "The first AI that works without internet.",
+   *  resumable on-device model install, on-device WebGPU inference, and a
+   *  durable cache that queues offline chats and syncs on reconnect.
+   *
+   *  Defensibility (landscape scan, Nov 2026): offline AI apps don't sync
+   *  (LM Studio device sync = open feature request #2467; ChatterUI WebDAV
+   *  merge unshipped), encrypted assistants (Lumo, Confer) are cloud-only,
+   *  and local+sync attempts (Locra, Pal Chat, LocalMind) are native apps
+   *  or bring-your-own-server — never a browser. The intersection is empty. */
+  offlineLine: "The first AI chat in a browser that works offline — and syncs when you're back.",
   offlineSubline:
-    "Install the on-device engine once while connected. After that the model, your chats and your history all live on the device — built for remote areas, flights and blackout zones.",
+    "The AI runs on your device. Chats you send with no signal queue up and arrive the moment you're back — no setup, no other servers.",
   shortPitch:
     "Stop juggling AI tabs. ShadowTalk finishes the job—voice & code, deep research, and a desktop app in one workspace.",
   manifesto:
@@ -106,7 +113,7 @@ export const BRAND_PILLARS = [
 /** Rotating hero / chat hooks — memorable, specific */
 export const BRAND_HOOKS = [
   "Think AI. Think ShadowTalk.",
-  "The first AI that works without internet.",
+  "The first AI chat in a browser that works offline — and syncs when you're back.",
   "Stop juggling tabs — finish the job here.",
   "Chat suggests. ShadowTalk ships.",
   "One workspace. Every tool. Zero tab marathon.",

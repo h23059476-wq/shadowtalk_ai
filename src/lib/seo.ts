@@ -70,7 +70,7 @@ export const PAGE_SEO: Record<string, PageMeta> = {
   home: {
     title: "Agentic AI Workspace — Encrypted Chat, Research & Voice",
     description:
-      "The first AI that works without internet. ShadowTalk AI unifies encrypted multi-model chat, deep research with citations, ProofLoop missions, voice and an IDE — with on-device AI that keeps working offline. Free with BYOK.",
+      "The first AI chat in a browser that works offline — and syncs when you're back. ShadowTalk AI unifies encrypted multi-model chat, deep research with citations, ProofLoop missions, voice and an IDE — all in one workspace. Free with BYOK.",
     canonical: `${SITE_URL}/home`,
   },
   chatbot: {

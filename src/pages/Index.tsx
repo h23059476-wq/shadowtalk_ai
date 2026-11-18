@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 
 const WhatIsShadowTalk = lazy(() => import("@/components/landing/WhatIsShadowTalk"));
 const OfflineFirstBand = lazy(() => import("@/components/landing/OfflineFirstBand"));
+const MarketGapBand = lazy(() => import("@/components/landing/MarketGapBand"));
 const FounderSpotlightSection = lazy(() => import("@/components/founder/FounderSpotlightSection"));
 const PricingSection = lazy(() => import("@/components/PricingSection"));
 const LandingContactSectionComp = lazy(() => import("@/components/landing/LandingContactSection"));
@@ -87,10 +88,16 @@ const Index = () => {
             <LandingNavigation />
             <HeroSection />
 
-            {/* The category claim, on its own band — "the first AI that works
-                without internet." Always visible (not hub-tabbed). */}
+            {/* The category claim, on its own band — "the first AI chat in a browser
+                that works offline — and syncs when you're back." Always visible
+                (not hub-tabbed), followed by the market-gap differentiators. */}
             <Suspense fallback={<div className="py-8" aria-hidden /> }>
               <OfflineFirstBand />
+            </Suspense>
+
+            {/* Why no one else can say the claim — the three-camp differentiators. */}
+            <Suspense fallback={<div className="py-8" aria-hidden /> }>
+              <MarketGapBand />
             </Suspense>
 
             <LandingSectionHub

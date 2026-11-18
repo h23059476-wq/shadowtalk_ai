@@ -275,7 +275,7 @@ export const DOC_WORKSPACE_GUIDE: DocWorkspaceTopic[] = [
   {
     title: "Offline Mode & Local Edge AI (PWA)",
     items: [
-      "Category claim: ShadowTalk is the first AI that works without internet — install the on-device engine once while connected and everything after that runs on the device.",
+      "Category claim: ShadowTalk is the first AI chat in a browser that works offline — and syncs when you're back — install the on-device engine once while connected and everything after that runs on the device; chats written with no signal queue up and sync the moment it returns.",
       "Zero-Cloud Execution: ShadowTalk can run entirely disconnected from the internet, leveraging WebGPU to run localized models.",
       "Background Model Loading: The LocalInferenceEngine utilizes a Web Worker to ensure UI responsiveness while models are loaded and running.",
       "Progressive Web App (PWA): Install ShadowTalk on your device to cache application assets and run AI models without an active network connection.",
