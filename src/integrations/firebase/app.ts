@@ -7,7 +7,13 @@
  */
 import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, setPersistence, browserLocalPersistence, type Auth } from 'firebase/auth';
-import { getFirestore, type Firestore } from 'firebase/firestore';
+import {
+  getFirestore,
+  initializeFirestore,
+  persistentLocalCache,
+  persistentMultipleTabManager,
+  type Firestore,
+} from 'firebase/firestore';
 import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
 const env = (import.meta as any).env ?? {};
@@ -54,7 +60,33 @@ export function fbAuth(): Auth {
 }
 
 export function fbDb(): Firestore {
-  if (!_db) _db = getFirestore(fbApp());
+  if (!_db) {
+    try {
+      // PERSISTENT multi-tab cache — the backbone of "offline never fails".
+      // getFirestore() defaults to a memory-only cache (LruGcMemoryOffline
+      // ComponentProvider in firebase v12), which means every Firestore write
+      // queued while offline lived in RAM only: a page reload (or the OS
+      // killing the tab) silently threw it away, and queries answered empty
+      // offline after a reload. persistentLocalCache writes the mutation
+      // queue and snapshot to IndexedDB, so offline messages survive reloads,
+      // reconnects flush them to the backend, and reads resolve from cache
+      // while the device has no network. persistentMultipleTabManager lets
+      // every open tab share that cache instead of demoting all-but-one tab
+      // to the degraded memory-only mode.
+      // If IndexedDB is unavailable (private browsing, locked-down webviews)
+      // Firestore falls back to the memory cache automatically.
+      _db = initializeFirestore(fbApp(), {
+        localCache: persistentLocalCache({
+          tabManager: persistentMultipleTabManager(),
+        }),
+      });
+    } catch {
+      // initializeFirestore throws when a Firestore instance already exists
+      // for this app (another module created the default first). Reuse it —
+      // degraded (memory) but functional; never let bootstrap throw.
+      _db = getFirestore(fbApp());
+    }
+  }
   return _db;
 }
 

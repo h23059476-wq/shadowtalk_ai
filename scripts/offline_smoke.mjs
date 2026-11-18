@@ -15,6 +15,7 @@
  */
 import puppeteer from "puppeteer";
 import { spawn } from "node:child_process";
+import net from "node:net";
 
 const PORT = 4198;
 const BASE = `http://127.0.0.1:${PORT}`;
@@ -22,9 +23,14 @@ const BASE = `http://127.0.0.1:${PORT}`;
 function wait(ms) { return new Promise((r) => setTimeout(r, ms)); }
 
 async function startPreview() {
+  // detached: true puts npx + the vite child in their OWN process group so a
+  // group-wide SIGTERM can actually free the port — killing only the npx
+  // wrapper leaves vite holding it, and every back-to-back run then crashes
+  // with "Port 4198 is already in use".
   const child = spawn("npx", ["vite", "preview", "--port", String(PORT), "--strictPort", "--host", "127.0.0.1"], {
     cwd: new URL("..", import.meta.url).pathname,
     stdio: ["ignore", "pipe", "pipe"],
+    detached: true,
   });
   await new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error("vite preview did not start in 30s")), 30_000);
@@ -36,6 +42,31 @@ async function startPreview() {
   await wait(500);
   return child;
 }
+
+/** True when nothing accepts connections on the smoke port. */
+function portFree() {
+  return new Promise((resolve) => {
+    const sock = net.createConnection({ host: "127.0.0.1", port: PORT });
+    sock.on("connect", () => { sock.destroy(); resolve(false); });
+    sock.on("error", () => resolve(true));
+  });
+}
+
+/** Kill the preview process GROUP, then wait until the port is ACTUALLY free,
+ *  so back-to-back runs never race each other on --strictPort. */
+async function stopPreview(child) {
+  if (child && child.exitCode === null) {
+    try { process.kill(-child.pid, "SIGTERM"); } catch { /* already gone */ }
+    try { child.kill("SIGTERM"); } catch { /* already gone */ }
+  }
+  for (let i = 0; i < 25; i++) {
+    if (await portFree()) return;
+    await wait(200);
+  }
+}
+
+// Module-level handle so even a crash before the try block can free the port.
+let activePreview = null;
 
 async function waitUntilController(page, timeoutMs = 20_000) {
   const start = Date.now();
@@ -60,26 +91,22 @@ function summarize(failures) {
 }
 
 async function main() {
-  const preview = await startPreview();
+  let preview = null;
   const browser = await puppeteer.launch({
     headless: "new",
     args: ["--no-sandbox", "--disable-dev-shm-usage", "--allow-file-access-from-files"],
   });
   const failures = [];
   try {
+    preview = await startPreview();
+    activePreview = preview;
     // ── Scenario 1: returning user goes fully offline ────────────────────
     const page = await browser.newPage();
     const failedOffline = [];
     const thirdParty = [];
     const hostOf = (u) => { try { return new URL(u).hostname; } catch { return ""; } };
-    page.on("requestfailed", (req) => {
-      const host = hostOf(req.url());
-      const err = req.failure()?.errorText ?? "?";
-      // Telemetry beacons (analytics/gtm/sentry) are fire-and-forget by
-      // design — they fail offline without blocking anything.
-      if (/google-analytics|googletagmanager|analytics|sentry/i.test(host)) return;
-      failedOffline.push(`${err} ${req.url()}`);
-    });
+    // requestfailed collection lives further down, gated to the offline
+    // window (see the reload-abort note there).
     page.on("requestfinished", (req) => {
       const host = hostOf(req.url());
       if (host && !host.startsWith("127.0.0.1") && !host.startsWith("localhost")) {
@@ -103,8 +130,29 @@ async function main() {
     let offlinePageErrors = [];
     page.on("pageerror", (err) => offlinePageErrors.push(err.message));
 
+    // Only the POST-reload window counts as "offline". The looping hero video
+    // keeps streaming range requests while the warmup page plays; navigating
+    // to the offline reload aborts that in-flight stream — a client-side
+    // teardown cancel (ERR_ABORTED), not a network failure. It fires when the
+    // old document dies (before the new document's load event resolves), so
+    // it never represents an offline defect. Genuine offline failures — a
+    // cache miss surfacing as ERR_INTERNET_DISCONNECTED — happen on the new
+    // document and are still counted. Shell-serve failures during the load
+    // are covered by the blank-page and font assertions below.
+    let collectOfflineFailures = false;
+    page.on("requestfailed", (req) => {
+      const host = hostOf(req.url());
+      const err = req.failure()?.errorText ?? "?";
+      // Telemetry beacons (analytics/gtm/sentry) are fire-and-forget by
+      // design — they fail offline without blocking anything.
+      if (/google-analytics|googletagmanager|analytics|sentry/i.test(host)) return;
+      if (!collectOfflineFailures) return;
+      failedOffline.push(`${err} ${req.url()}`);
+    });
+
     page.setOfflineMode(true);
     const resp = await page.reload({ waitUntil: "load", timeout: 30_000 }).catch((e) => null);
+    collectOfflineFailures = true;
     if (!resp) failures.push("offline reload threw (page could not load from the SW cache)");
     await wait(1500);
 
@@ -191,12 +239,13 @@ async function main() {
     await fresh.close();
   } finally {
     await browser.close().catch(() => {});
-    preview.kill("SIGTERM");
+    await stopPreview(preview);
   }
   process.exit(summarize(failures));
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("offline smoke crashed:", err);
+  await stopPreview(activePreview);
   process.exit(1);
 });

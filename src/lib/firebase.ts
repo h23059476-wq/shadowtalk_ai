@@ -1,21 +1,17 @@
-import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
 import { getAnalytics, logEvent as firebaseLogEvent } from "firebase/analytics";
 
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyAOKVUWGIVihDXqAsY_Cl_XXeojTZ9xFNQ",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "shadowtalk-ai-7a513.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "shadowtalk-ai-7a513",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "shadowtalk-ai-7a513.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "819076379544",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:819076379544:web:d164455df140a1255971ed",
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-LGJV8D66QM"
-};
+// Single source of truth: the shared Firebase app AND the persistent-cache
+// Firestore instance both come from integrations/firebase/app.ts. Creating a
+// second getFirestore() here would race the persistent one on import order —
+// and the loser silently degraded to the memory-only cache, losing offline
+// writes on reload. fbDb() is memoized, so both entry points share ONE
+// instance with the durable IndexedDB mutation queue.
+import { fbApp, fbDb } from "@/integrations/firebase/app";
 
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+const app = fbApp();
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+export const db = fbDb();
 
 // Analytics is OPTIONAL: `getAnalytics` throws on browsers without the
 // required storage/API support (and in some embedded webviews), which used to
