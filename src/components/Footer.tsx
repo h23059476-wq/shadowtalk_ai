@@ -29,6 +29,9 @@ const Footer = () => {
         { name: "Offline AI chat", href: "/offline-ai-chat" },
         { name: "Private AI chat", href: "/private-ai-chat" },
         { name: "Run an LLM in your browser", href: "/run-llm-in-browser" },
+        { name: "What is on-device AI", href: "/what-is-on-device-ai" },
+        { name: "Best offline AI chat", href: "/best-offline-ai-chat" },
+        { name: "AI chat without an account", href: "/ai-chat-without-account" },
       ],
     },
     {
@@ -38,6 +41,8 @@ const Footer = () => {
         { name: "vs ChatGPT", href: "/vs/chatgpt" },
         { name: "vs LM Studio", href: "/vs/lm-studio" },
         { name: "vs Proton Lumo", href: "/vs/proton-lumo" },
+        { name: "vs web-llm-chat", href: "/vs/web-llm-chat" },
+        { name: "vs Ollama", href: "/vs/ollama" },
         { name: "vs Perplexity", href: "/vs/perplexity" },
       ],
     },

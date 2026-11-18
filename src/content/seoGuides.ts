@@ -306,4 +306,234 @@ export const SEO_GUIDES: Record<string, SeoGuide> = {
     ],
     ctaLabel: "Run your first browser LLM — free",
   },
+
+  "what-is-on-device-ai": {
+    slug: "what-is-on-device-ai",
+    breadcrumb: "What is on-device AI",
+    h1: "What is on-device AI? The plain-English explainer",
+    definition:
+      "On-device AI means the model runs on your own hardware instead of a cloud server: your prompt, the context and the reply never leave the machine. In a browser this works through WebGPU — your GPU executes a quantized model (roughly 600MB-2.6GB) inside the tab. ShadowTalk AI is a free workspace built around it: on-device chat with zero network egress, offline queueing and automatic sync, plus cloud models when a task needs them.",
+    intro:
+      "\"On-device\" is the phrase behind private AI, offline AI and edge AI — and it's often used loosely for products that still phone home. This page defines it precisely, shows how a browser can run a model, and lays out what on-device AI is genuinely good for and where cloud models still win.",
+    sections: [
+      {
+        heading: "On-device vs cloud AI",
+        paragraphs: ["The two architectures differ in where the model physically runs — everything else follows from that:"],
+        table: {
+          headers: ["Aspect", "On-device AI", "Cloud AI"],
+          rows: [
+            ["Where inference runs", "Your CPU/GPU — in a browser via WebGPU", "The provider's servers"],
+            ["What leaves your device", "Nothing (zero network egress)", "Your prompt, context and identity"],
+            ["Works offline", "Yes, after a one-time model download", "No"],
+            ["Model capability", "Practical ceiling ~3B-class in a browser tab", "Frontier models, hundreds of billions of parameters"],
+            ["Cost of inference", "Your electricity — nothing else", "Metered or subscription"],
+            ["Latency", "Speed of your hardware, not your signal", "Network round-trips"],
+          ],
+        },
+      },
+      {
+        heading: "How a browser can run a model",
+        paragraphs: [
+          "Three pieces make it work. WebGPU exposes your GPU's compute shaders to JavaScript. An inference engine (MLC's WebLLM class) executes the transformer in a background Web Worker so the interface stays responsive. And model weights stream down as shards cached in the browser — which makes downloads resumable and repeat visits instant. ShadowTalk wraps that capability with a device-tiered model registry, quota pre-checks and watchdogged workers.",
+        ],
+      },
+      {
+        heading: "The privacy math",
+        paragraphs: [
+          "On-device chat has zero network egress: no prompt, no context, no metadata leaves the tab, so there is nothing to intercept or store server-side. That is the tier where 'nothing sees my prompt' is literally true. Stored history is a separate question — ShadowTalk's Private Mode encrypts chats end-to-end (AES-256-GCM) with keys derived on your device, and default chats are stored server-side when Private Mode is off. Both facts are documented, because privacy claims die in the fine print.",
+        ],
+      },
+      {
+        heading: "What on-device AI is good for (and not)",
+        paragraphs: [
+          "Good for: everyday chat, drafting, summarizing, code help at small scale, anything sensitive, and any situation with bad or no connectivity. Not (yet) for: frontier-level reasoning, very long context, or the newest model releases — those need cloud models, which is why ShadowTalk routes heavy tasks upward automatically instead of pretending a 3B model is a frontier model.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What does on-device AI mean?",
+        answer:
+          "The AI model executes on your hardware rather than a cloud server. Your prompt, context and the reply never leave the machine — in a browser, via WebGPU compute shaders running a quantized model. It's the architecture behind private AI, offline AI and edge AI.",
+      },
+      {
+        question: "Is on-device AI better for privacy?",
+        answer:
+          "For the prompt itself, yes — categorically. With zero network egress there is nothing to intercept, log or store server-side. Stored history is a separate matter: ShadowTalk's Private Mode encrypts it end-to-end (AES-256-GCM); default chats are stored server-side when Private Mode is off, and we say so in public.",
+      },
+      {
+        question: "How big are on-device AI models?",
+        answer:
+          "In a browser, roughly 600MB-2.6GB depending on tier: Qwen2.5-0.5B (600MB), Llama-3.2-1B (880MB), SmolLM2-1.7B (1.68GB) up to Qwen2.5-3B (2.3GB). The model manager pre-checks your GPU features and storage quota before downloading anything.",
+      },
+      {
+        question: "Does on-device AI work offline?",
+        answer:
+          "Yes — that's the point. After the one-time model download, inference runs entirely locally with no connection. ShadowTalk additionally queues messages you send while offline and syncs them when you're back, which is the combination the rest of the market doesn't ship.",
+      },
+      {
+        question: "Which devices support on-device AI?",
+        answer:
+          "Anything with a WebGPU-capable browser — Chrome or Edge 113+ on Windows, macOS, Linux and most modern Android. GPUs without the shader-f16 feature automatically get q4f32 quantized model twins; devices without usable WebGPU fall back to cloud chat when online.",
+      },
+    ],
+    related: [
+      { label: "Run an LLM in your browser", href: "/run-llm-in-browser", note: "The technical how-to" },
+      { label: "Offline AI chat — works with no internet", href: "/offline-ai-chat", note: "Offline chat + sync, honestly" },
+      { label: "Private AI chat — encrypted, no account", href: "/private-ai-chat", note: "The three privacy tiers" },
+      { label: "All comparisons", href: "/compare", note: "On-device AI vs the market" },
+    ],
+    ctaLabel: "Try on-device AI — free",
+  },
+
+  "best-offline-ai-chat": {
+    slug: "best-offline-ai-chat",
+    breadcrumb: "Best offline AI chat",
+    h1: "The best offline AI chat in 2026 — ranked with criteria, not vibes",
+    definition:
+      "The best offline AI chat depends on one question: does your history survive the device? Most local tools don't clear that bar — LM Studio's device sync is still an open feature request (#2467), ChatterUI's WebDAV merge never shipped, and browser demos like Secret Llama and web-llm-chat have no sync at all. ShadowTalk AI is the only option that combines on-device WebGPU chat, offline queueing, automatic sync when you're back, and zero install — free.",
+    intro:
+      "\"Best\" lists usually hide the criteria. Here's ours, up front: what actually runs offline, whether your chats follow you across devices, whether an account is forced on you, what has to be installed, and what it costs. Then we score the real contenders — including the ones that beat us on raw model size.",
+    sections: [
+      {
+        heading: "The criteria (what \"best offline\" has to mean)",
+        bullets: [
+          "Offline inference — answers generated with zero network after setup, not a cached chat log",
+          "Sync — chats follow you across devices, including messages queued while offline",
+          "No forced account — usable as a guest, instantly",
+          "Friction — what must be installed, and how big the download is",
+          "Privacy — where prompts are processed and what the defaults store",
+          "Price — free to use, or gated",
+        ],
+      },
+      {
+        heading: "The contenders, scored",
+        paragraphs: ["Landscape checked Nov 2026 — every cell is checkable:"],
+        table: {
+          headers: ["Tool", "Runs", "Syncs chats", "Account", "Install"],
+          rows: [
+            ["ShadowTalk AI", "Browser tab (WebGPU) + cloud", "Yes — incl. offline queue", "No", "None — one tab"],
+            ["LM Studio", "Desktop app (GGUF)", "No — open feature request #2467", "No", "Native app"],
+            ["Ollama", "Local runtime + terminal", "No — assemble it yourself", "No", "CLI + models"],
+            ["PocketPal", "Mobile app", "No", "No", "App store"],
+            ["Secret Llama / web-llm-chat", "Browser demo", "No", "No", "None — one tab"],
+            ["ChatGPT / Gemini / Claude", "Cloud only", "Yes (online only)", "Yes", "None — one tab"],
+          ],
+        },
+      },
+      {
+        heading: "The ranking",
+        paragraphs: [
+          "1. ShadowTalk AI — the only tool that clears every criterion at once: on-device WebGPU models, offline queueing with automatic catch-up sync, no account, nothing to install, free. Its honest limit: browser models top out around 3B-class, with automatic cloud escalation when a task needs more.",
+          "2. LM Studio — the best desktop local-AI experience and the widest model library, with a real local API. Loses the top spot on one measurable fact: no sync (issue #2467), and nothing runs in a browser.",
+          "3. Ollama — the developer's local runtime with a huge model zoo; terminal-first and sync-less by default.",
+          "4. PocketPal — capable mobile offline chat, single-device.",
+          "5. Secret Llama / web-llm-chat — the honest demos: real local inference in a tab, no durability, no sync.",
+          "6. ChatGPT / Gemini / Claude — excluded from the top ranks by definition: cloud-only, so they don't work offline at all.",
+        ],
+      },
+      {
+        heading: "Which to pick if…",
+        bullets: [
+          "You want offline chat whose history follows you across devices — ShadowTalk, the only one that ships both",
+          "You want the biggest local models on desktop hardware — LM Studio (or Ollama)",
+          "You're building your own stack and need a local API — Ollama",
+          "You want to learn how browser inference works — Secret Llama or web-llm-chat",
+          "You only ever have signal — the cloud assistants are fine, and ShadowTalk's cloud tier with BYOK covers that too",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What is the best offline AI chat app?",
+        answer:
+          "For the combination of offline inference, cross-device sync and zero install: ShadowTalk AI — free, no account, on-device WebGPU models with offline queueing and automatic sync. If you want maximum local model size on desktop hardware instead, LM Studio or Ollama are stronger — but their chats stay on one machine (LM Studio sync is still feature request #2467).",
+      },
+      {
+        question: "Why do most offline AI apps fail the sync test?",
+        answer:
+          "Because offline-first storage is engineering nobody shipped: LM Studio's device sync remains an open feature request, ChatterUI's WebDAV chat-merge never launched, and browser demos persist nothing. Local+sync attempts (Locra, Pal Chat via iCloud; LocalMind via your own Ollama plus S3) are native apps or bring-your-own-server — never just a browser tab.",
+      },
+      {
+        question: "Is offline AI chat actually private?",
+        answer:
+          "On-device chat is the most private tier that exists: zero network egress means prompts, context and replies never leave your device. For stored history, check each product's defaults — ShadowTalk's Private Mode encrypts end-to-end (AES-256-GCM) and its honest-limits paragraph states exactly what happens when it's off.",
+      },
+      {
+        question: "Do offline AI chat apps cost money?",
+        answer:
+          "The local options are free to varying degrees — ShadowTalk is free to use with no card (your provider may charge separately if you use cloud models via BYOK), LM Studio and Ollama are free downloads, and the browser demos are free. Subscription AI assistants are cloud products, so they aren't offline options at all.",
+      },
+    ],
+    related: [
+      { label: "Offline AI chat — works with no internet", href: "/offline-ai-chat", note: "The flagship guide" },
+      { label: "ShadowTalk vs LM Studio", href: "/vs/lm-studio", note: "The closest contender, scored" },
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "Why cloud-only tools rank last for offline" },
+      { label: "What is on-device AI", href: "/what-is-on-device-ai", note: "The concept behind the ranking" },
+    ],
+    ctaLabel: "Try the top pick — free",
+  },
+
+  "ai-chat-without-account": {
+    slug: "ai-chat-without-account",
+    breadcrumb: "AI chat without an account",
+    h1: "AI chat without an account — what's actually possible",
+    definition:
+      "You can chat with AI without creating an account: ShadowTalk AI starts guests immediately on an on-device model — no email, no sign-up, no card — and the on-device tier has zero network egress, so nothing leaves your browser. Cloud chat also works free within shared-tier daily limits. An account only becomes necessary if you want your encrypted history to follow you across devices.",
+    intro:
+      "\"No sign-up AI chat\" searches exploded because every major assistant gates itself behind an account — and most no-login tools turn out to be thin wrappers over someone else's API. This page defines exactly what works without an account in ShadowTalk, what an account adds, and the honest limits of guest mode.",
+    sections: [
+      {
+        heading: "What you can do with no account",
+        bullets: [
+          "Chat instantly with the on-device model — zero network egress, so prompts never leave the device",
+          "Use free cloud chat within shared-tier daily limits",
+          "Install the PWA to your home screen or dock in one tap",
+          "Work offline after the one-time model download — chats queue and sync when you're back",
+          "Switch on Private Mode for end-to-end encryption of stored chats",
+        ],
+      },
+      {
+        heading: "What an account actually adds",
+        paragraphs: [
+          "One thing, honestly: persistence across devices. A guest's workspace lives in that browser; an account lets your encrypted history catch up on your other machines, including messages queued while you were offline. That's it — no feature is held hostage behind sign-up, no trial timer, no card.",
+        ],
+      },
+      {
+        heading: "The honest limits of guest mode",
+        paragraphs: [
+          "Guest history is local to the browser you used — clear the browser's storage and it's gone. Cloud chat without an account is rate-limited to protect the shared pool (BYOK keys are namespaced per user, so unlimited cloud models come with a free account and your own key). And the standing fine print: default chats are stored server-side when Private Mode is off, and free shared-mode requests transit ShadowTalk's server — on-device mode is the tier where nothing touches a server.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Can I use AI chat without signing up?",
+        answer:
+          "Yes. ShadowTalk AI starts guests immediately — no email, no card — including with the on-device model, which has zero network egress. Free cloud chat works within shared-tier daily limits. An account is only needed if you want your encrypted history to follow you across devices.",
+      },
+      {
+        question: "Is no-account AI chat private?",
+        answer:
+          "The on-device tier is the most private AI that exists: no account means no identity to attach, and zero network egress means no prompt ever leaves your device. For stored history, Private Mode encrypts end-to-end (AES-256-GCM). Honest caveat: default chats are stored server-side when Private Mode is off — the tiers exist so you can choose.",
+      },
+      {
+        question: "Why do most AI assistants force accounts?",
+        answer:
+          "Because their architecture requires it — inference runs on their servers, so they need identity, billing and abuse controls around every request. When the model runs on your device, none of that is necessary: there is no server call to gate. That's the structural reason ShadowTalk can offer guest mode.",
+      },
+      {
+        question: "What happens to my chats if I stay a guest?",
+        answer:
+          "They persist in that browser's local storage — reloads, offline work and restarts keep them. They don't sync to other devices until you create an account, and clearing browser storage clears them. If that persistence matters to you, sign up free and switch on Private Mode so what syncs is encrypted.",
+      },
+    ],
+    related: [
+      { label: "Private AI chat — encrypted, no account", href: "/private-ai-chat", note: "The three privacy tiers" },
+      { label: "Offline AI chat — works with no internet", href: "/offline-ai-chat", note: "Guest mode, offline" },
+      { label: "What is on-device AI", href: "/what-is-on-device-ai", note: "Why no server is needed" },
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "Account-required vs guest-first, scored" },
+    ],
+    ctaLabel: "Start chatting — no account",
+  },
 };

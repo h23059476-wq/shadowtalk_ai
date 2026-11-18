@@ -126,6 +126,24 @@ export const PAGE_SEO: Record<string, PageMeta> = {
       "Honest head-to-heads on offline AI, sync, encryption, model choice and price: ShadowTalk AI vs ChatGPT, LM Studio, Proton Lumo, web-llm-chat, Ollama and Perplexity.",
     canonical: `${SITE_URL}/compare`,
   },
+  "what-is-on-device-ai": {
+    title: "What Is On-Device AI? The Plain-English Explainer",
+    description:
+      "On-device AI runs the model on your hardware — prompts never leave your machine. How WebGPU makes it work in a browser tab, what it's good for, and where cloud still wins.",
+    canonical: `${SITE_URL}/what-is-on-device-ai`,
+  },
+  "best-offline-ai-chat": {
+    title: "Best Offline AI Chat in 2026 — Ranked With Criteria",
+    description:
+      "The best offline AI chat, scored on published criteria: offline inference, cross-device sync, no account, no install, price. ShadowTalk vs LM Studio, Ollama, PocketPal and the demos.",
+    canonical: `${SITE_URL}/best-offline-ai-chat`,
+  },
+  "ai-chat-without-account": {
+    title: "AI Chat Without an Account — Guest Mode, Free",
+    description:
+      "Chat with AI with no sign-up: ShadowTalk guests start instantly on an on-device model with zero network egress. What works without an account, what one adds, honest limits.",
+    canonical: `${SITE_URL}/ai-chat-without-account`,
+  },
   "vs-chatgpt": {
     title: "ShadowTalk AI vs ChatGPT — Offline, Private, Free",
     description:

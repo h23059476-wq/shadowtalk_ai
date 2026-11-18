@@ -42,6 +42,9 @@ ShadowTalk AI is free to use — no subscriptions, no paid tiers, no credit card
 - [Offline AI chat guide](https://www.shadowtalk-ai.com/offline-ai-chat): how to chat with AI without internet — on-device WebGPU models, offline queueing, automatic sync on reconnect, honest requirements
 - [Private AI chat guide](https://www.shadowtalk-ai.com/private-ai-chat): the three privacy tiers — guest on-device, BYOK browser-to-provider, AES-256 end-to-end encryption in Private Mode — with honest server-visibility limits
 - [Run an LLM in your browser](https://www.shadowtalk-ai.com/run-llm-in-browser): WebGPU browser LLM guide — how it works, model sizes (Llama 3.2, Qwen 2.5, SmolLM2), speed, switching
+- [What is on-device AI](https://www.shadowtalk-ai.com/what-is-on-device-ai): plain-English definition — on-device vs cloud AI, how WebGPU runs a model in a tab, the privacy math, honest capability limits
+- [Best offline AI chat](https://www.shadowtalk-ai.com/best-offline-ai-chat): offline AI apps ranked with published criteria (offline inference, sync, account, install, price) — ShadowTalk, LM Studio, Ollama, PocketPal, Secret Llama, web-llm-chat, cloud assistants
+- [AI chat without an account](https://www.shadowtalk-ai.com/ai-chat-without-account): guest mode explained — start instantly on-device with zero network egress, what an account adds, honest guest-mode limits
 - [Compare — all head-to-heads](https://www.shadowtalk-ai.com/compare): honest scored comparisons on offline, sync, privacy, model choice and price — including where competitors win
 - [ShadowTalk AI vs ChatGPT](https://www.shadowtalk-ai.com/vs/chatgpt): cloud-only, account-required, no offline use vs on-device inference, offline queue + sync, no account, BYOK across 16+ providers
 - [ShadowTalk AI vs LM Studio](https://www.shadowtalk-ai.com/vs/lm-studio): powerful desktop app, no browser, chats stuck on one machine (sync is open feature request #2467) vs zero-install browser tab with automatic sync
@@ -59,5 +62,6 @@ ShadowTalk AI is free to use — no subscriptions, no paid tiers, no credit card
 
 ## Optional
 
+- [Full reference for LLMs (llms-full.txt)](https://www.shadowtalk-ai.com/llms-full.txt): complete machine-readable knowledge dump — entity facts, the category claim with defensibility, features, privacy tiers, pricing, all guides and all comparisons in full text, specs sheet, FAQ
 - [FAQ page](https://www.shadowtalk-ai.com/faq): full question and answer list in HTML
 - [Sitemap](https://www.shadowtalk-ai.com/sitemap.xml): all indexable routes

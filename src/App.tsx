@@ -178,6 +178,9 @@ const AnimatedRoutes = () => {
           <Route path="/offline-ai-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="offline-ai-chat" /></PageTransition></Suspense>} />
           <Route path="/private-ai-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="private-ai-chat" /></PageTransition></Suspense>} />
           <Route path="/run-llm-in-browser" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="run-llm-in-browser" /></PageTransition></Suspense>} />
+          <Route path="/what-is-on-device-ai" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="what-is-on-device-ai" /></PageTransition></Suspense>} />
+          <Route path="/best-offline-ai-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="best-offline-ai-chat" /></PageTransition></Suspense>} />
+          <Route path="/ai-chat-without-account" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="ai-chat-without-account" /></PageTransition></Suspense>} />
           {/* Comparison engine — /compare hub + one head-to-head per intent cluster */}
           <Route path="/compare" element={<Suspense fallback={<PageLoader />}><PageTransition><CompareIndexPage /></PageTransition></Suspense>} />
           <Route path="/vs/chatgpt" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="chatgpt" /></PageTransition></Suspense>} />

@@ -191,3 +191,76 @@ describe("seo growth: comparison engine", () => {
     expect(broken, `broken internal links: ${broken.join(", ")}`).toEqual([]);
   });
 });
+
+describe("seo growth: guide fleet + llms-full.txt (GEO)", () => {
+  const appSource = read("src/App.tsx");
+  const routes = extractAppRoutePaths(appSource);
+  const palette = read("src/components/CommandPalette.tsx");
+  const footer = read("src/components/Footer.tsx");
+  const llms = read("public/llms.txt");
+  const llmsFull = read("public/llms-full.txt");
+  const sitemap = read("public/sitemap.xml");
+  const prerendered = new Set(extractPrerenderRoutes());
+
+  const guideSlugs = Object.keys(SEO_GUIDES);
+  const contentHrefs = [
+    ...guideSlugs.map((s) => `/${s}`),
+    ...COMPARE_SLUGS.map((s) => `/vs/${s}`),
+    "/compare",
+  ];
+
+  it("ships six guides, each substantive and extractive", () => {
+    expect(guideSlugs.sort()).toEqual([
+      "ai-chat-without-account",
+      "best-offline-ai-chat",
+      "offline-ai-chat",
+      "private-ai-chat",
+      "run-llm-in-browser",
+      "what-is-on-device-ai",
+    ]);
+    for (const slug of guideSlugs) {
+      const g = SEO_GUIDES[slug];
+      expect(g.definition.length, `${slug} definition not extractive`).toBeGreaterThan(120);
+      expect(g.faqs.length, `${slug} FAQ too thin`).toBeGreaterThanOrEqual(3);
+      expect(g.sections.length, `${slug} too thin`).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  it("every content page is wired: route, PAGE_SEO, sitemap, prerender, palette, footer, llms.txt", () => {
+    for (const href of contentHrefs) {
+      expect(routes.includes(href), `route missing: ${href}`).toBe(true);
+      expect(PAGE_SEO[href.slice(1).replace(/\//g, "-")], `PAGE_SEO missing ${href}`).toBeDefined();
+      expect(sitemap).toContain(`<loc>${SITE_URL}${href}</loc>`);
+      expect(prerendered.has(href), `not prerendered: ${href}`).toBe(true);
+      expect(palette).toContain(`href: "${href}"`);
+      expect(llms).toContain(`${SITE_URL}${href}`);
+      expect(footer).toContain(`href: "${href}"`);
+    }
+  });
+
+  it("llms-full.txt is the complete GEO dump", () => {
+    // the claim + its defensibility, dated
+    expect(llmsFull).toContain("the first AI chat in a browser that works offline and syncs when you're back");
+    expect(llmsFull).toContain("Landscape checked Nov 2026");
+    expect(llmsFull).toContain("#2467");
+    // entity facts
+    expect(llmsFull).toContain("Zain Ahmed Fahad Patel");
+    expect(llmsFull).toContain("https://www.shadowtalk-ai.com/founder");
+    expect(llmsFull).toContain("Last updated: 2026-11-19");
+    // privacy + honesty facts
+    expect(llmsFull).toContain("AES-256-GCM");
+    expect(llmsFull).toContain("stored server-side");
+    expect(llmsFull).toContain("BYOK");
+    // every content page referenced
+    for (const href of contentHrefs) {
+      expect(llmsFull).toContain(`${SITE_URL}${href}`);
+    }
+    // specs sheet
+    expect(llmsFull).toContain("Llama-3.2-1B-Instruct 880MB/1.1GB");
+    expect(llmsFull).toContain("Chrome or Edge 113+");
+  });
+
+  it("llms.txt links the full dump", () => {
+    expect(llms).toContain("https://www.shadowtalk-ai.com/llms-full.txt");
+  });
+});
