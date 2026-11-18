@@ -120,6 +120,48 @@ export const PAGE_SEO: Record<string, PageMeta> = {
       "Run Llama 3.2, Qwen 2.5 and SmolLM2 in your browser with WebGPU: no install, no server, resumable model downloads, device-tiered models and automatic cloud fallback. Free.",
     canonical: `${SITE_URL}/run-llm-in-browser`,
   },
+  compare: {
+    title: "Compare — ShadowTalk AI vs ChatGPT, LM Studio, Lumo & More",
+    description:
+      "Honest head-to-heads on offline AI, sync, encryption, model choice and price: ShadowTalk AI vs ChatGPT, LM Studio, Proton Lumo, web-llm-chat, Ollama and Perplexity.",
+    canonical: `${SITE_URL}/compare`,
+  },
+  "vs-chatgpt": {
+    title: "ShadowTalk AI vs ChatGPT — Offline, Private, Free",
+    description:
+      "ChatGPT needs an account, the internet and OpenAI's servers. ShadowTalk AI runs on-device, queues offline chats and syncs when you're back, never trains on your chats — free.",
+    canonical: `${SITE_URL}/vs/chatgpt`,
+  },
+  "vs-lm-studio": {
+    title: "ShadowTalk AI vs LM Studio — Browser vs Desktop",
+    description:
+      "LM Studio is a powerful desktop app whose chats stay on one machine — sync is still feature request #2467. ShadowTalk runs in a browser tab and syncs offline-queued chats.",
+    canonical: `${SITE_URL}/vs/lm-studio`,
+  },
+  "vs-proton-lumo": {
+    title: "ShadowTalk AI vs Proton Lumo — Encrypted AI, Honestly",
+    description:
+      "Lumo encrypts stored history but decrypts prompts server-side and needs an account plus internet. ShadowTalk adds on-device inference, offline chat and BYOK — limits in public.",
+    canonical: `${SITE_URL}/vs/proton-lumo`,
+  },
+  "vs-web-llm-chat": {
+    title: "ShadowTalk AI vs web-llm-chat — Demo vs Product",
+    description:
+      "web-llm-chat proves browsers can run LLMs. ShadowTalk ships the product around it: durable storage, offline queue with sync, cloud escalation, research and tools — free.",
+    canonical: `${SITE_URL}/vs/web-llm-chat`,
+  },
+  "vs-ollama": {
+    title: "ShadowTalk AI vs Ollama — No Install vs Local Server",
+    description:
+      "Ollama is a developer-grade local runtime with a huge model zoo and its own API. ShadowTalk needs no install: WebGPU in a tab, resumable downloads, offline chat that syncs.",
+    canonical: `${SITE_URL}/vs/ollama`,
+  },
+  "vs-perplexity": {
+    title: "ShadowTalk AI vs Perplexity — Research With Privacy",
+    description:
+      "Perplexity answers with live web citations but is always online and account-based. ShadowTalk adds offline on-device chat, private tiers and ProofLoop missions — free with BYOK.",
+    canonical: `${SITE_URL}/vs/perplexity`,
+  },
   about: {
     title: "About — The Story Behind ShadowTalk",
     description:

@@ -61,6 +61,8 @@ const PublicProofCardPage = lazy(() => import("./pages/PublicProofCardPage"));
 // Production Company, Support & Legal Pages
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const GuidePage = lazy(() => import("./pages/GuidePage"));
+const ComparePage = lazy(() => import("./pages/ComparePage"));
+const CompareIndexPage = lazy(() => import("./pages/CompareIndexPage"));
 const FAQPage = lazy(() => import("./pages/FAQPage"));
 const BenchmarksPage = lazy(() => import("./pages/BenchmarksPage"));
 const AgenticIdePage = lazy(() => import("./pages/AgenticIdePage"));
@@ -176,6 +178,14 @@ const AnimatedRoutes = () => {
           <Route path="/offline-ai-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="offline-ai-chat" /></PageTransition></Suspense>} />
           <Route path="/private-ai-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="private-ai-chat" /></PageTransition></Suspense>} />
           <Route path="/run-llm-in-browser" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="run-llm-in-browser" /></PageTransition></Suspense>} />
+          {/* Comparison engine — /compare hub + one head-to-head per intent cluster */}
+          <Route path="/compare" element={<Suspense fallback={<PageLoader />}><PageTransition><CompareIndexPage /></PageTransition></Suspense>} />
+          <Route path="/vs/chatgpt" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="chatgpt" /></PageTransition></Suspense>} />
+          <Route path="/vs/lm-studio" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="lm-studio" /></PageTransition></Suspense>} />
+          <Route path="/vs/proton-lumo" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="proton-lumo" /></PageTransition></Suspense>} />
+          <Route path="/vs/web-llm-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="web-llm-chat" /></PageTransition></Suspense>} />
+          <Route path="/vs/ollama" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="ollama" /></PageTransition></Suspense>} />
+          <Route path="/vs/perplexity" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="perplexity" /></PageTransition></Suspense>} />
           <Route path="/benchmarks" element={<Suspense fallback={<PageLoader />}><PageTransition><BenchmarksPage /></PageTransition></Suspense>} />
           <Route path="/case-studies" element={<Navigate to="/home" replace />} />
           <Route path="/gdpr" element={<PageTransition><GDPRPage /></PageTransition>} />

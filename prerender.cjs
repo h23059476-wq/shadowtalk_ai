@@ -42,6 +42,13 @@ const ROUTES_TO_PRERENDER = [
   '/offline-ai-chat',
   '/private-ai-chat',
   '/run-llm-in-browser',
+  '/compare',
+  '/vs/chatgpt',
+  '/vs/lm-studio',
+  '/vs/proton-lumo',
+  '/vs/web-llm-chat',
+  '/vs/ollama',
+  '/vs/perplexity',
 ];
 
 // Simple static file server

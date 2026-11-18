@@ -126,6 +126,7 @@ export const SEO_GUIDES: Record<string, SeoGuide> = {
       },
     ],
     related: [
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "Cloud-only vs offline-first, scored" },
       { label: "Private AI chat — encryption, no account, BYOK", href: "/private-ai-chat", note: "How the three privacy tiers work" },
       { label: "Run an LLM in your browser", href: "/run-llm-in-browser", note: "WebGPU models, sizes and speed" },
       { label: "Security & Trust", href: "/security", note: "Encryption, keys and data handling" },
@@ -204,6 +205,7 @@ export const SEO_GUIDES: Record<string, SeoGuide> = {
       },
     ],
     related: [
+      { label: "ShadowTalk vs Proton Lumo", href: "/vs/proton-lumo", note: "Encrypted AI, compared honestly" },
       { label: "Offline AI chat — works with no internet", href: "/offline-ai-chat", note: "On-device models plus sync on reconnect" },
       { label: "Run an LLM in your browser", href: "/run-llm-in-browser", note: "Which models run on-device" },
       { label: "Security & Trust", href: "/security", note: "The full data-handling write-up" },
@@ -296,6 +298,8 @@ export const SEO_GUIDES: Record<string, SeoGuide> = {
       },
     ],
     related: [
+      { label: "ShadowTalk vs web-llm-chat", href: "/vs/web-llm-chat", note: "The demo vs the product, scored" },
+      { label: "ShadowTalk vs LM Studio", href: "/vs/lm-studio", note: "Desktop local AI vs browser local AI" },
       { label: "Offline AI chat — works with no internet", href: "/offline-ai-chat", note: "What keeps working after the download" },
       { label: "Private AI chat — encrypted, no account", href: "/private-ai-chat", note: "The three privacy tiers" },
       { label: "Documentation", href: "/docs", note: "Full feature and setup reference" },

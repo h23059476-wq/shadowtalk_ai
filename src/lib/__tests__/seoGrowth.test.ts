@@ -2,6 +2,9 @@ import { describe, expect, it } from "vitest";
 import { readFileSync, statSync, existsSync } from "fs";
 import { resolve } from "path";
 import { PAGE_SEO, SITE_URL } from "../seo";
+import { SEO_COMPARISONS, COMPARE_SLUGS, COMPARE_HUB_LINE } from "../../content/seoComparisons";
+import { SEO_GUIDES } from "../../content/seoGuides";
+import { extractAppRoutePaths, isRoutableHref, extractDynamicRoutePatterns } from "../siteLinkAudit";
 
 /**
  * SEO/GEO/AEO growth contracts.
@@ -113,5 +116,78 @@ describe("seo growth: answer-engine crawler policy", () => {
     for (const p of indexablePaths) {
       expect(robots).not.toMatch(new RegExp(`Disallow:\\s*${p.replace(/\//g, "\\/")}\\s*$`, "m"));
     }
+  });
+});
+
+describe("seo growth: comparison engine", () => {
+  const appSource = read("src/App.tsx");
+  const routes = extractAppRoutePaths(appSource);
+  const palette = read("src/components/CommandPalette.tsx");
+  const footer = read("src/components/Footer.tsx");
+  const llms = read("public/llms.txt");
+  const compareHrefs = ["/compare", ...COMPARE_SLUGS.map((s) => `/vs/${s}`)];
+
+  it("ships the six head-to-heads plus hub, each wired to route + PAGE_SEO", () => {
+    expect(COMPARE_SLUGS).toEqual(["chatgpt", "lm-studio", "proton-lumo", "web-llm-chat", "ollama", "perplexity"]);
+    for (const href of compareHrefs) {
+      expect(routes.includes(href), `route missing: ${href}`).toBe(true);
+    }
+    expect(PAGE_SEO["compare"]).toBeDefined();
+    for (const slug of COMPARE_SLUGS) {
+      expect(PAGE_SEO[`vs-${slug}`], `PAGE_SEO missing vs-${slug}`).toBeDefined();
+    }
+  });
+
+  it("every comparison is discoverable: sitemap, prerender, palette, footer, llms.txt", () => {
+    const sitemap = read("public/sitemap.xml");
+    const prerendered = new Set(extractPrerenderRoutes());
+    for (const href of compareHrefs) {
+      expect(sitemap).toContain(`<loc>${SITE_URL}${href}</loc>`);
+      expect(prerendered.has(href), `not prerendered: ${href}`).toBe(true);
+      expect(palette).toContain(`href: "${href}"`);
+      expect(llms).toContain(`${SITE_URL}${href}`);
+    }
+    // hub + top comparisons linked from the global footer (crawl depth 1 from every page)
+    expect(footer).toContain('href: "/compare"');
+    for (const href of ["/vs/chatgpt", "/vs/lm-studio", "/vs/proton-lumo", "/vs/perplexity"]) {
+      expect(footer).toContain(`href: "${href}"`);
+    }
+  });
+
+  it("every comparison is honest: where-they-win section, dated landscape, per-row edges", () => {
+    for (const slug of COMPARE_SLUGS) {
+      const c = SEO_COMPARISONS[slug];
+      expect(c.whereTheyWin.length, `${slug} must credit the competitor`).toBeGreaterThanOrEqual(2);
+      expect(c.whereTheyWinHeading).toMatch(/^Where .+ wins?$/);
+      expect(c.rows.length, `${slug} table too thin`).toBeGreaterThanOrEqual(6);
+      expect(c.faqs.length, `${slug} FAQ too thin`).toBeGreaterThanOrEqual(3);
+      expect(COMPARE_HUB_LINE[slug]).toBeTruthy();
+      // verdict carries the category claim
+      expect(c.verdictParagraphs.join(" "), `${slug} verdict missing the claim`).toContain("works offline");
+      // the honest-limits rows exist somewhere in the content (server-side default or transit)
+      const blob = JSON.stringify(c);
+      expect(blob).toMatch(/stored server-side|transit|sees your prompt|machine/i);
+    }
+  });
+
+  it("every comparison definition is extractive: names both products and stays quotable", () => {
+    for (const slug of COMPARE_SLUGS) {
+      const c = SEO_COMPARISONS[slug];
+      expect(c.definition).toContain("ShadowTalk");
+      expect(c.definition).toContain(c.competitor);
+      expect(c.definition.length).toBeGreaterThan(120);
+      expect(c.definition.length).toBeLessThan(700);
+    }
+  });
+
+  it("related links in guides and comparisons all resolve to real routes", () => {
+    const dynamicPatterns = extractDynamicRoutePatterns(appSource);
+    const broken: string[] = [];
+    const check = (href: string) => {
+      if (!isRoutableHref(href, routes, dynamicPatterns)) broken.push(href);
+    };
+    for (const g of Object.values(SEO_GUIDES)) g.related.forEach((r) => check(r.href));
+    for (const c of Object.values(SEO_COMPARISONS)) c.related.forEach((r) => check(r.href));
+    expect(broken, `broken internal links: ${broken.join(", ")}`).toEqual([]);
   });
 });

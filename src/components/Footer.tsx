@@ -32,6 +32,16 @@ const Footer = () => {
       ],
     },
     {
+      title: "Compare",
+      links: [
+        { name: "All comparisons", href: "/compare" },
+        { name: "vs ChatGPT", href: "/vs/chatgpt" },
+        { name: "vs LM Studio", href: "/vs/lm-studio" },
+        { name: "vs Proton Lumo", href: "/vs/proton-lumo" },
+        { name: "vs Perplexity", href: "/vs/perplexity" },
+      ],
+    },
+    {
       title: "Support",
       links: [
         { name: "Docs", href: "/docs" },
@@ -76,7 +86,7 @@ const Footer = () => {
       />
 
       <div className="container mx-auto px-4 py-12 sm:py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 sm:gap-10 mb-12 sm:mb-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-8 sm:gap-10 mb-12 sm:mb-14">
           <LandingAnimate preset="slideLeft" className="lg:col-span-2">
             <div className="flex items-center space-x-2.5 mb-5 sm:mb-6">
               <div className="relative">
