@@ -10,7 +10,12 @@ import { SOCIAL_SAME_AS } from "@/lib/socialLinks";
 
 export const SITE_URL = "https://www.shadowtalk-ai.com";
 export const SITE_NAME = "ShadowTalk AI";
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.svg`;
+/**
+ * PNG, not SVG: social scrapers (X, LinkedIn, Facebook, Slack) and AI answer
+ * engines do not render SVG previews. Regenerate with
+ * `node scripts/generate-og-image.mjs`.
+ */
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 /** Google/Bing search snippet — keep ≤160 characters */
 export const SITE_SEARCH_DESCRIPTION =
