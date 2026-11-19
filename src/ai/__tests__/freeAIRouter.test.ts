@@ -68,8 +68,9 @@ vi.mock("@/services/modelManager", () => ({
   isInstantModelReady: modelManagerMock.isInstantModelReady,
 }));
 
-import { saveVaultKey, __resetKeyVaultForTests, orderedVaultEntries } from "@/lib/keyVault";
+import { saveVaultKey, __resetKeyVaultForTests, orderedVaultEntries, type VaultEntry } from "@/lib/keyVault";
 import { __resetQuotaLedgerForTests, isProviderBlocked } from "@/lib/quotaLedger";
+import type { ByokConfig } from "@/lib/byok";
 import {
   classifyProviderError,
   planFreeRoutes,
@@ -106,10 +107,10 @@ describe("classifyProviderError", () => {
 });
 
 describe("planFreeRoutes", () => {
-  const byok = { provider: "groq", apiKey: "gsk_byok", model: "", mode: "always" as const };
+  const byok: ByokConfig = { provider: "groq", apiKey: "gsk_byok", model: "", mode: "always" };
 
   it("filters cooldown-blocked providers", () => {
-    const vault = [
+    const vault: VaultEntry[] = [
       { provider: "gemini", apiKey: "AIza_1", addedAt: "t1" },
       { provider: "groq", apiKey: "gsk_1", addedAt: "t2" },
     ];
@@ -118,7 +119,7 @@ describe("planFreeRoutes", () => {
   });
 
   it("dedupes a vault entry identical to the BYOK route but keeps a second key", () => {
-    const vault = [
+    const vault: VaultEntry[] = [
       { provider: "groq", apiKey: "gsk_byok", addedAt: "t1" }, // same provider + key as BYOK
       { provider: "groq", apiKey: "gsk_second", addedAt: "t2" }, // second key = real failover
     ];
