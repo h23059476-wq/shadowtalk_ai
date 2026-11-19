@@ -58,9 +58,11 @@ export const COMPARE_SLUGS = [
   "ollama",
   "jan",
   "perplexity",
+  "poe",
   "pocketpal",
   "deepseek",
   "copilot",
+  "grok",
   "duckduckgo-ai",
   "brave-leo",
 ] as const;
@@ -1442,6 +1444,208 @@ export const SEO_COMPARISONS: Record<string, SeoComparison> = {
     ],
     ctaLabel: "Any browser, on-device, free",
   },
+
+  grok: {
+    slug: "grok",
+    competitor: "Grok",
+    breadcrumb: "ShadowTalk vs Grok",
+    h1: "ShadowTalk AI vs Grok — real-time X data vs an AI that works offline",
+    definition:
+      "Grok is xAI's cloud assistant: prompts are processed on xAI's servers, an account is required, and without internet it cannot answer at all. Its real differentiator is live access to X (Twitter) posts and trends — genuinely useful for breaking events and real-time sentiment. ShadowTalk AI is a free browser workspace that runs a model on your own device, queues chats sent offline and syncs when you're back, and never trains on your data.",
+    intro:
+      "Grok is the cloud assistant with a genuinely distinct hook — the social firehose — so this comparison scores that strength honestly instead of dismissing it, then maps the structural differences: offline, account, model choice, encryption and price. Landscape checked Nov 2026; verify current tiers with xAI.",
+    rows: [
+      {
+        dimension: "Works offline",
+        shadowtalk: "Yes — after a one-time model download, on-device WebGPU inference with zero network egress",
+        them: "No — every answer is generated on xAI's servers, so no connection means no answer",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Chats sent while offline",
+        shadowtalk: "Queue in durable local storage and sync automatically when signal returns",
+        them: "Not applicable — the app needs a connection to function",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Account required",
+        shadowtalk: "No — guests chat immediately, including with the on-device model",
+        them: "Yes — an X or grok.com account",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Real-time social data",
+        shadowtalk: "Deep research with citations when online — but no social firehose",
+        them: "Live integration with X posts and trends — differentiating for breaking events and sentiment",
+        edge: "them",
+      },
+      {
+        dimension: "Model choice",
+        shadowtalk: "16+ providers via BYOK — OpenAI, Anthropic, Google, Groq, DeepSeek and more — plus the on-device model",
+        them: "xAI's Grok models only",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Stored-chat encryption",
+        shadowtalk: "Private Mode encrypts chats end-to-end (AES-256-GCM) with device-derived keys. Honest default: chats are stored server-side when Private Mode is off",
+        them: "Stored server-side on xAI infrastructure; no client-side end-to-end encryption",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Training on your chats",
+        shadowtalk: "Never — on any tier, including free shared mode",
+        them: "Public X content is a documented training source; chat-data terms live in its published privacy notice — check current terms",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Price",
+        shadowtalk: "Free to use, no card; BYOK passes provider costs straight through at cost",
+        them: "Free tier with usage limits; X Premium subscriptions raise limits and model access (checked Nov 2026)",
+        edge: "both",
+      },
+    ],
+    whereTheyWinHeading: "Where Grok wins",
+    whereTheyWin: [
+      "Real-time X integration: live posts and trends for breaking events, sentiment and what the social web is actually saying — nothing offline can replicate that",
+      "Frontier-class Grok models with a distinct, less-filtered voice that some users genuinely prefer",
+      "Built-in image generation inside the same assistant",
+    ],
+    verdictHeading: "The verdict",
+    verdictParagraphs: [
+      "Choose Grok when you're always online and want its real X firehose — breaking events, sentiment, the social layer no other assistant has. Choose ShadowTalk when the network disappears, when you don't want an account, when you want your pick of 16+ providers, or when you want encryption you control: ShadowTalk is the first AI chat in a browser that works offline and syncs when you're back, and a cloud-only assistant is structurally unable to say that.",
+      "The honest middle path: many users keep both — Grok for the social web, ShadowTalk as the default workspace that keeps answering offline, with defaults published rather than buried (chats stored server-side when Private Mode is off, E2EE when it's on).",
+    ],
+    faqs: [
+      {
+        question: "Can Grok work offline?",
+        answer:
+          "No. Grok is a cloud service — prompts are processed on xAI's servers, so without internet it produces nothing. If you need offline AI chat, you need an on-device model like ShadowTalk's WebGPU mode, LM Studio or Ollama. ShadowTalk also gives you cloud power via BYOK when you're back online.",
+      },
+      {
+        question: "Is Grok free?",
+        answer:
+          "There's a free tier with usage limits, and X Premium subscriptions raise limits and model access (checked Nov 2026 — verify current tiers with xAI). ShadowTalk is free with no subscription and no card: the on-device model costs nothing to run, and BYOK passes provider API prices through at cost.",
+      },
+      {
+        question: "Does xAI train on my data?",
+        answer:
+          "Public X posts are a documented training source for xAI; for chat-specific terms, read its current published privacy notice rather than taking this page's word for it. ShadowTalk's commitment is unconditional: no training on your chats on any tier, and the on-device model keeps sensitive prompts on your machine entirely.",
+      },
+      {
+        question: "Which should I actually pick?",
+        answer:
+          "If your work is real-time social intelligence, Grok's firehose is the point — use it. If your work has to survive dead zones, blocked networks and privacy-conscious material, ShadowTalk's offline core, no-account guest mode and E2EE Private Mode are the point. They're not mutually exclusive: one is a source, the other is a workspace that keeps working.",
+      },
+    ],
+    related: [
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "The other cloud giant, scored" },
+      { label: "ShadowTalk vs Perplexity", href: "/vs/perplexity", note: "Real-time answers, compared" },
+      { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "How offline + sync works" },
+      { label: "Free AI chat guide", href: "/free-ai-chat", note: "What 'free' means here" },
+    ],
+    ctaLabel: "Try AI that works offline — free",
+  },
+
+  poe: {
+    slug: "poe",
+    competitor: "Poe",
+    breadcrumb: "ShadowTalk vs Poe",
+    h1: "ShadowTalk AI vs Poe — points-metered aggregator vs BYOK at cost, offline",
+    definition:
+      "Poe is Quora's multi-model aggregator: one account gives you chat access to many providers' models, but everything runs on Poe's cloud servers — account required, no offline mode, and usage metered through daily points or a subscription. ShadowTalk AI aggregates differently: your own API keys (BYOK) go browser-to-provider at cost across 16+ providers, plus an on-device model that works offline and syncs when you're back — no subscription, no points.",
+    intro:
+      "Both products answer the same need — many models, one place — so this comparison is about the mechanics: who holds the keys, who meters your usage, where inference runs, and what happens when the internet does. Where Poe is genuinely better, we say so. Landscape checked Nov 2026.",
+    rows: [
+      {
+        dimension: "Works offline",
+        shadowtalk: "Yes — after a one-time model download, on-device WebGPU inference with zero network egress",
+        them: "No — a cloud aggregator; every answer is generated on Poe's servers",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Chats sent while offline",
+        shadowtalk: "Queue in durable local storage and sync automatically when signal returns",
+        them: "Not applicable — the app needs a connection to function",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Account required",
+        shadowtalk: "No — guests chat immediately, including with the on-device model",
+        them: "Yes — a Quora/Poe account",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Multi-model access",
+        shadowtalk: "16+ providers via BYOK at provider cost — pick the best model per task, no markup",
+        them: "Many providers' models behind one login — simple, but metered in points",
+        edge: "both",
+      },
+      {
+        dimension: "Usage metering",
+        shadowtalk: "On-device is unlimited and free; BYOK pays provider API prices at cost — no points, no subscription",
+        them: "Free daily points; a subscription raises the ceiling for heavy use",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Stored-chat encryption",
+        shadowtalk: "Private Mode encrypts chats end-to-end (AES-256-GCM) with device-derived keys. Honest default: chats are stored server-side when Private Mode is off",
+        them: "Stored server-side on Quora infrastructure; no client-side end-to-end encryption",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Custom bots and sharing",
+        shadowtalk: "Workspace tools instead: research with citations, ProofLoop missions, voice, an IDE",
+        them: "Create, publish and even monetize custom bots — a real ecosystem ShadowTalk doesn't try to copy",
+        edge: "them",
+      },
+      {
+        dimension: "Price",
+        shadowtalk: "Free to use, no card; BYOK at cost — heavy use bills like the API it is",
+        them: "Free tier on daily points; subscription for serious volume",
+        edge: "both",
+      },
+    ],
+    whereTheyWinHeading: "Where Poe wins",
+    whereTheyWin: [
+      "Zero-setup breadth: many frontier models behind one login — no API keys to create, store or manage, which is genuinely simpler for casual multi-model sampling",
+      "The custom-bot ecosystem: build, publish and monetize bots inside Poe — a network effect nothing in ShadowTalk mirrors",
+      "Bundled image and video generation alongside chat models",
+    ],
+    verdictHeading: "The verdict",
+    verdictParagraphs: [
+      "Choose Poe when you want many models with zero setup and you're happy metering your usage in points — its custom-bot ecosystem is real value for creators. Choose ShadowTalk when you want the economics at cost instead of points, the privacy dial (on-device zero egress, E2EE Private Mode), or the part no cloud aggregator can offer: it works offline and syncs when you're back — the first AI chat in a browser that can say that.",
+      "The mechanics matter long-term: points end, subscriptions renew, and aggregator markups sit between you and the provider. BYOK is the same one-workplace idea with you holding the keys — provider prices at cost, no metering games, and an on-device model underneath it all that answers whether or not the network does.",
+    ],
+    faqs: [
+      {
+        question: "Can Poe work offline?",
+        answer:
+          "No. Poe is a cloud aggregator — prompts are processed on its servers, so without internet it cannot answer. ShadowTalk's on-device model runs in the browser on your GPU with zero network egress, and chats sent offline queue and sync when you're back.",
+      },
+      {
+        question: "Is Poe cheaper than BYOK?",
+        answer:
+          "Depends on volume. Light users ride free daily points and Poe is effectively free. Heavy users should compare honestly: a Poe subscription versus provider API prices paid at cost through BYOK — at high volume, at-cost pricing usually wins, and the on-device tier is free in both worlds. Your meter decides.",
+      },
+      {
+        question: "Does Poe see my chats?",
+        answer:
+          "As a cloud service, Poe processes every prompt server-side and stores chats on Quora infrastructure — that's how the product works. ShadowTalk's tiers are published: on-device chats never transit the server, Private Mode stores ciphertext (AES-256-GCM), and the default (server-side storage when Private Mode is off) is documented rather than buried.",
+      },
+      {
+        question: "Why does ShadowTalk use BYOK instead of reselling models?",
+        answer:
+          "Because reselling inference means metering it. ShadowTalk is a workspace, not a middleman: your keys go browser-to-provider at the provider's own price, with no points and no markup — and the on-device model underneath costs nothing to run, works offline, and never trains on your chats.",
+      },
+    ],
+    related: [
+      { label: "ShadowTalk vs Perplexity", href: "/vs/perplexity", note: "The answer engine, scored" },
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "The single-provider giant" },
+      { label: "Free AI chat guide", href: "/free-ai-chat", note: "What 'free' means here" },
+      { label: "Private AI chat guide", href: "/private-ai-chat", note: "The three privacy tiers" },
+    ],
+    ctaLabel: "One workspace, your keys, offline too — free",
+  },
 };
 
 /** One-line verdicts for the /compare hub and llms.txt */
@@ -1460,4 +1664,6 @@ export const COMPARE_HUB_LINE: Record<string, string> = {
   copilot: "Microsoft's cloud assistant baked into Windows vs a browser tab that answers offline and syncs",
   "duckduckgo-ai": "Anonymous cloud chat with a no-training policy vs zero-egress on-device chat that also syncs",
   "brave-leo": "A Brave-only sidebar on cloud models vs a workspace whose model runs on your GPU in any browser",
+  poe: "Quora's points-metered aggregator on cloud servers vs BYOK at cost across 16+ providers — plus an offline on-device model",
+  grok: "xAI's cloud assistant with the live X firehose vs on-device chat with zero egress and no account",
 };

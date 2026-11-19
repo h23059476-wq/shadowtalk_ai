@@ -105,7 +105,7 @@ export const PAGE_SEO: Record<string, PageMeta> = {
   guides: {
     title: "Guides — Offline, Private & Browser AI Explained",
     description:
-      "Ten honest guides: offline AI chat, private AI, WebGPU in the browser, free AI chat, mobile PWA install, local vs cloud — quotable answers, dated fine print.",
+      "Fifteen honest guides: offline AI chat, private AI, WebGPU in the browser, free AI chat, students, ChatGPT Plus math, who reads your chats — quotable answers, dated fine print.",
     canonical: `${SITE_URL}/guides`,
   },
   "offline-ai-chat": {
@@ -185,6 +185,24 @@ export const PAGE_SEO: Record<string, PageMeta> = {
     description:
       "Download a model before you fly, chat in airplane mode on your own GPU, queue what you send and sync on landing. No roaming, no account, no app store.",
     canonical: `${SITE_URL}/ai-chat-for-travel`,
+  },
+  "ai-chat-for-students": {
+    title: "AI Chat for Students — Free, No Account, Works Offline",
+    description:
+      "Free AI for students: guest mode with no account, the on-device model survives school wifi blocks, chats sent offline sync later. A study aid with honest limits — tutor, not ghostwriter.",
+    canonical: `${SITE_URL}/ai-chat-for-students`,
+  },
+  "who-can-read-your-ai-chats": {
+    title: "Who Can Read Your AI Chats — The Honest Tier-by-Tier Answer",
+    description:
+      "Who can reach your AI conversations: cloud employees, legal process, free-tier training pipelines — versus ShadowTalk's tiers: zero-egress on-device, E2EE Private Mode (AES-256-GCM), server-side default documented.",
+    canonical: `${SITE_URL}/who-can-read-your-ai-chats`,
+  },
+  "is-chatgpt-plus-worth-it": {
+    title: "Is ChatGPT Plus Worth It? The Honest 2026 Math",
+    description:
+      "When $20/month earns it — and the free stack that covers most of what it does: an on-device model with no limits, shared cloud chat, BYOK across 16+ providers at cost. Criteria, not an ad.",
+    canonical: `${SITE_URL}/is-chatgpt-plus-worth-it`,
   },
   "vs-chatgpt": {
     title: "ShadowTalk AI vs ChatGPT — Offline, Private, Free",
@@ -269,6 +287,18 @@ export const PAGE_SEO: Record<string, PageMeta> = {
     description:
       "Leo is a Brave-only sidebar on cloud models, rate-limited free and paid beyond. ShadowTalk: any browser, on-device offline chat, queue + sync, BYOK — free.",
     canonical: `${SITE_URL}/vs/brave-leo`,
+  },
+  "vs-grok": {
+    title: "ShadowTalk AI vs Grok — Live X Data vs AI That Works Offline",
+    description:
+      "Grok's real edge is the live X firehose — but it's cloud-only, account-required, no offline. ShadowTalk: on-device inference, queue + sync, no account, 16+ providers via BYOK — free.",
+    canonical: `${SITE_URL}/vs/grok`,
+  },
+  "vs-poe": {
+    title: "ShadowTalk AI vs Poe — Aggregator Points vs BYOK at Cost",
+    description:
+      "Poe meters many models in points behind a subscription — cloud-only, account-required. ShadowTalk: BYOK at provider cost, on-device offline chat that syncs, no subscription, no points.",
+    canonical: `${SITE_URL}/vs/poe`,
   },
   about: {
     title: "About — The Story Behind ShadowTalk",

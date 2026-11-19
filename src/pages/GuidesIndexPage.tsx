@@ -24,16 +24,19 @@ import { COMPARE_SLUGS } from "@/content/seoComparisons";
 const GUIDE_ORDER = [
   "offline-ai-chat",
   "private-ai-chat",
+  "who-can-read-your-ai-chats",
   "run-llm-in-browser",
   "what-is-on-device-ai",
   "best-offline-ai-chat",
   "ai-chat-without-account",
   "free-ai-chat",
+  "is-chatgpt-plus-worth-it",
   "mobile-offline-ai",
   "webgpu-ai-chat",
   "local-vs-cloud-ai",
   "chatgpt-down",
   "ai-chat-for-travel",
+  "ai-chat-for-students",
 ] as const;
 
 const GuidesIndexPage = () => {
@@ -99,7 +102,7 @@ const GuidesIndexPage = () => {
         <section aria-labelledby="guide-pages" className="mb-10">
           <h2 id="guide-pages" className="text-xl sm:text-2xl font-semibold mb-4 flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-primary" aria-hidden />
-            All ten guides
+            All fifteen guides
           </h2>
           <div className="grid gap-3">
             {GUIDE_ORDER.map((slug) => {

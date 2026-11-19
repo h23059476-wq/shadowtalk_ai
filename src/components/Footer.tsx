@@ -38,6 +38,9 @@ const Footer = () => {
         { name: "WebGPU AI chat", href: "/webgpu-ai-chat" },
         { name: "Local vs cloud AI", href: "/local-vs-cloud-ai" },
         { name: "AI chat for travel", href: "/ai-chat-for-travel" },
+        { name: "AI chat for students", href: "/ai-chat-for-students" },
+        { name: "Who can read your AI chats", href: "/who-can-read-your-ai-chats" },
+        { name: "Is ChatGPT Plus worth it", href: "/is-chatgpt-plus-worth-it" },
         { name: "ChatGPT down playbook", href: "/chatgpt-down" },
       ],
     },
@@ -59,6 +62,8 @@ const Footer = () => {
         { name: "vs Microsoft Copilot", href: "/vs/copilot" },
         { name: "vs DuckDuckGo AI", href: "/vs/duckduckgo-ai" },
         { name: "vs Brave Leo", href: "/vs/brave-leo" },
+        { name: "vs Grok", href: "/vs/grok" },
+        { name: "vs Poe", href: "/vs/poe" },
       ],
     },
     {

@@ -1077,6 +1077,265 @@ export const SEO_GUIDES: Record<string, SeoGuide> = {
     ],
     ctaLabel: "Install before you fly — free",
   },
+  "ai-chat-for-students": {
+    slug: "ai-chat-for-students",
+    breadcrumb: "AI chat for students",
+    h1: "AI chat for students — free, no account, and it works offline at school",
+    definition:
+      "Students get the worst deal from cloud AI: school networks that block it, subscriptions that need a card, and accounts that follow you around. ShadowTalk AI is a free browser workspace where guests start instantly with no account, the on-device model answers after a one-time download with zero network — so school firewalls and dead wifi simply don't matter — and chats sent offline queue up and sync when you're back. It's a study aid built to explain and drill, not to write your essay for you.",
+    intro:
+      "This guide is written for the actual student situation: locked-down school networks, shared laptops, no budget, and the line between getting help and getting caught cheating. We cover what the on-device model handles well for study, what it doesn't, and the honest rules of using AI to actually learn.",
+    sections: [
+      {
+        heading: "Why school networks break cloud AI (and why local AI doesn't care)",
+        paragraphs: [
+          "School and university networks block AI sites for policy and bandwidth reasons: domain filters, captive portals that log you in before anything loads, and device restrictions on managed laptops. Every cloud assistant — ChatGPT, Gemini, Copilot — needs to reach its provider's servers for every single token, so any one of those blocks stops it completely.",
+          "An on-device model has no such choke point: after the one-time download, inference runs on your own GPU inside the browser tab and makes zero network requests. There is literally nothing for the filter to block — the model is already on your machine. Install it on your home wifi once, and it works at school, in the library basement and on the bus.",
+        ],
+      },
+      {
+        heading: "What the on-device model handles well for study",
+        paragraphs: ["Honest capabilities, at the 1B-3B class your browser can run:", ""],
+        bullets: [
+          "Explaining concepts in plain language — ask for the same idea three ways until one lands",
+          "Quizzing you: have it generate practice questions from a topic, then check your answers",
+          "Summarizing your own notes and drafts — text you paste stays on your device with zero egress",
+          "Planning: study schedules, essay outlines, revision priorities",
+          "Drafting and rewriting practice — but as feedback on your writing, not a replacement for it",
+        ],
+      },
+      {
+        heading: "Use it to learn, not to cheat",
+        paragraphs: [
+          "The honest framing: this is a tutor that never gets tired of your questions, not a homework machine. Submitting AI-written text as your own work is cheating at most schools — and the on-device model, at 1B-3B class, won't produce frontier essays anyway. What it does produce is patient explanation and endless practice questions, which is exactly the part of studying nobody gets enough of.",
+          "The learning loop that works: read the material, explain it back to the model in your own words, ask it to poke holes, quiz yourself, repeat. Your school's AI policy is the final word on what's allowed in graded work — policies differ, so know yours.",
+        ],
+      },
+      {
+        heading: "Honest limits",
+        paragraphs: ["What a browser-tab model can't do, stated plainly:", ""],
+        bullets: [
+          "The on-device model is 1B-3B class — excellent at explanation and drilling, not frontier quality; escalate heavy tasks to cloud models (free shared tier or BYOK) when you're back online",
+          "No live web offline — research current sources when you have a connection",
+          "The first install and model download need real wifi — set up at home, not in class",
+          "iOS: the PWA installs, but on-device mode targets Chrome/Edge on desktop and Android first — WebGPU support on iPhones varies by iOS version",
+        ],
+      },
+    ],
+    howTo: {
+      name: "Set up study-ready offline AI in five minutes",
+      steps: [
+        "On your home wifi, open shadowtalk-ai.com in Chrome or Edge 113+ on your laptop or Android phone.",
+        "Install the PWA from the address bar — one tap, no app store, no account needed.",
+        "Open the model manager and download the suggested model tier once (600MB-2.6GB; interrupted downloads resume).",
+        "Test it offline: turn wifi off and ask it to quiz you on a topic you're revising.",
+        "At school: open the installed app and study — queued messages sync when you reconnect; keep graded work inside your school's AI rules.",
+      ],
+    },
+    faqs: [
+      {
+        question: "How can I use AI at school when the wifi blocks it?",
+        answer:
+          "Use an on-device model. After the one-time download, inference runs entirely on your own GPU with zero network requests — there's no AI site for the school filter to block, because the model is already on your machine. Install on home wifi first, then the app and model work anywhere: classroom, library, bus.",
+      },
+      {
+        question: "Is there a free AI that doesn't need an account for homework help?",
+        answer:
+          "Yes — ShadowTalk guests start chatting immediately with no sign-up, no email and no card: the on-device model runs on your device for free. Cloud models are free within shared-tier daily limits, or unlimited with your own API key via BYOK at provider cost. Nothing here requires an account.",
+      },
+      {
+        question: "Can my teacher or parents see my chats?",
+        answer:
+          "On-device chats never cross the network, so nobody sees them in transit — and ShadowTalk never trains on your chats on any tier. Default chats are stored server-side when Private Mode is off; turn Private Mode on and stored chats are end-to-end encrypted (AES-256-GCM) so even ShadowTalk's servers can't read them. Since it's your device and your session, what you study is between you and the model.",
+      },
+      {
+        question: "Can it write my essay for me?",
+        answer:
+          "It can draft text, but submitting AI writing as your own is academic dishonesty at most schools and a bad way to learn. Use it the way that actually raises your grades: outlines, feedback on your drafts, explanations of concepts you're stuck on, and unlimited practice quizzes. The on-device model is a tutor, not a ghostwriter.",
+      },
+      {
+        question: "Does it work on a phone or a school Chromebook?",
+        answer:
+          "Android phones and laptops with Chrome or Edge 113+ are the supported path for on-device mode. Managed Chromebooks vary: the workspace itself works in any modern browser, and WebGPU availability on locked-down devices depends on the admin's configuration — the app tells you what's available on your device.",
+      },
+    ],
+    related: [
+      { label: "AI chat without an account", href: "/ai-chat-without-account", note: "Guest mode, in detail" },
+      { label: "Free AI chat guide", href: "/free-ai-chat", note: "What 'free' means here" },
+      { label: "Offline AI on your phone", href: "/mobile-offline-ai", note: "The mobile PWA setup" },
+      { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "How offline + sync works" },
+    ],
+    ctaLabel: "Study-ready AI, free — no account",
+  },
+  "who-can-read-your-ai-chats": {
+    slug: "who-can-read-your-ai-chats",
+    breadcrumb: "Who can read your AI chats",
+    h1: "Who can read your AI chats — the honest tier-by-tier answer",
+    definition:
+      "It depends entirely on where the model runs. Cloud assistants keep your prompts on the company's servers, where employees in defined roles, legal process and — on some free tiers — training pipelines can reach them. ShadowTalk AI publishes its own answer tier by tier: the on-device model never crosses the network, Private Mode encrypts chats end-to-end (AES-256-GCM), and default chats are stored server-side — stated plainly instead of buried in a policy.",
+    intro:
+      "\"Are my AI chats private?\" deserves a better answer than a shrug. This page maps who can actually reach your conversations on the big cloud assistants and in ShadowTalk's three tiers — and where each one's guarantees genuinely end. No marketing, just the reach paths, named.",
+    sections: [
+      {
+        heading: "The cloud default: who can reach your prompts",
+        paragraphs: [
+          "On any cloud assistant, your prompt travels to the provider's servers and is processed there. The people who can reach it fall into a few buckets: employees and contractors in defined trust-and-safety or support roles under the provider's published policies; legal process (warrants, subpoenas, government requests) under the provider's jurisdiction; and on several free tiers, the training pipeline itself — ChatGPT's free-tier conversations can be used for training unless you opt out, Google's Gemini Apps notice says free-tier conversations can improve its products, and Anthropic's consumer settings may use conversations for improvement unless configured otherwise (landscape checked Nov 2026 — verify current notices). Breach risk is the tail case every server-side store carries.",
+          "None of this makes cloud AI unusable — it makes it a choice you should actually know you're making.",
+        ],
+      },
+      {
+        heading: "ShadowTalk's tiers, stated plainly",
+        paragraphs: ["Three tiers, each with a different reach profile:", ""],
+        bullets: [
+          "On-device (WebGPU): inference runs on your GPU with zero network egress — the prompt never leaves your machine, full stop. This is the only tier with no server in the loop at all.",
+          "BYOK cloud: your API key sends requests browser-to-provider. The provider you chose sees the prompt under its policies; ShadowTalk's server isn't in the request path.",
+          "Private Mode: stored chats are end-to-end encrypted (AES-256-GCM) with device-derived, non-extractable keys — message content, titles and metadata are ciphertext at rest, and full history can be encrypted retroactively.",
+          "The honest default: when Private Mode is off, chats are stored server-side — readable by the same classes of access as any cloud store. That default is documented, not hidden.",
+          "Training: never — on any tier, including free shared mode.",
+        ],
+      },
+      {
+        heading: "What end-to-end encryption does — and doesn't — cover",
+        paragraphs: [
+          "E2EE protects stored and synced chat content: what sits on the server is ciphertext, and the keys live on your device. What it does not do is change where inference happens — if you ask a cloud model, the prompt necessarily reaches that provider. That's physics, not policy: the only way for the model to answer without anyone else seeing the prompt is to run the model on your own hardware.",
+          "So the private stack, in order of strength: on-device for sensitive material (zero exposure), E2EE Private Mode for stored history you sync across devices, BYOK for cloud power with a direct provider relationship. Honest limits: sync requires servers to relay ciphertext, account recovery can't read what the keys can't decrypt, and screenshots on your screen are outside any encryption model.",
+        ],
+      },
+    ],
+    howTo: {
+      name: "Lock your chats down in four steps",
+      steps: [
+        "Install the PWA and download the on-device model — sensitive questions then never leave your machine.",
+        "Turn on Private Mode and set your passphrase: stored history becomes AES-256-GCM ciphertext on the server.",
+        "Prefer the on-device model for anything you wouldn't paste into a public forum; use BYOK cloud when you need frontier capability.",
+        "Review the security page's published limits — including the server-side default — so your threat model matches the product's real guarantees.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Can OpenAI employees read my ChatGPT conversations?",
+        answer:
+          "In defined circumstances, yes: OpenAI's policy allows limited human review for trust-and-safety purposes, and free-tier conversations can be used for model training unless you opt out. Paid tiers come with different training defaults. It's a published policy, not a secret — but most people never read it, which is why this page exists.",
+      },
+      {
+        question: "Are ShadowTalk's on-device chats visible to anyone?",
+        answer:
+          "No one sees them in transit because there is no transit: on-device inference makes zero network requests, and the chat lives in your device's local storage. If you're signed in and Private Mode is off, the stored copy syncs server-side; turn Private Mode on and the synced copy is end-to-end encrypted ciphertext. Either way, ShadowTalk never trains on your chats.",
+      },
+      {
+        question: "What does end-to-end encryption actually protect here?",
+        answer:
+          "Stored chat content, titles and metadata at rest — AES-256-GCM with device-derived non-extractable keys, plus an encrypt-or-null storage contract and retroactive encryption of existing history. It does not change where inference runs: a cloud model always receives your prompt, so the most sensitive questions belong on the on-device model, where nothing leaves the machine.",
+      },
+      {
+        question: "Does ShadowTalk train on my chats?",
+        answer:
+          "Never — on any tier, including the free shared tier. ShadowTalk doesn't resell inference and doesn't resell your data; the business is the workspace, not the corpus.",
+      },
+      {
+        question: "What's the most private way to use AI here?",
+        answer:
+          "On-device model for anything sensitive — zero network egress means zero server exposure. Private Mode on for stored history you want synced as ciphertext. BYOK when you want cloud capability with a browser-to-provider request path. And keep the honest default in mind: Private Mode off means chats are stored server-side, same as any cloud product's storage.",
+      },
+    ],
+    related: [
+      { label: "Private AI chat guide", href: "/private-ai-chat", note: "The three privacy tiers, in detail" },
+      { label: "What is on-device AI", href: "/what-is-on-device-ai", note: "Zero egress, defined" },
+      { label: "ShadowTalk vs Proton Lumo", href: "/vs/proton-lumo", note: "Encrypted cloud AI, compared honestly" },
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "The cloud default, scored" },
+    ],
+    ctaLabel: "Keep your chats yours — free",
+  },
+  "is-chatgpt-plus-worth-it": {
+    slug: "is-chatgpt-plus-worth-it",
+    breadcrumb: "Is ChatGPT Plus worth it",
+    h1: "Is ChatGPT Plus worth it? The honest 2026 math",
+    definition:
+      "For some people, yes: if you hit ChatGPT's free-tier limits most days, need frontier models for professional output and live in its ecosystem, the $20/month subscription buys real capability. For everyday use — chatting, drafting, studying, summarizing — the honest math is different: ShadowTalk AI runs an on-device model free with no usage limits, offers shared cloud chat within daily limits, and takes BYOK keys straight to 16+ providers at cost — no subscription, no card, and the offline core keeps working when the internet doesn't.",
+    intro:
+      "\"Is Plus worth it?\" has no universal answer, so this page gives you criteria instead of a verdict-shaped ad: when the subscription earns its money, when it doesn't, and what a free BYOK workspace covers. Prices change — we note where to verify current terms — but the structural part of the math doesn't.",
+    sections: [
+      {
+        heading: "When Plus is genuinely worth it",
+        paragraphs: [
+          "The subscription earns its $20 when you hit one or more of these, checked honestly: you regularly exhaust the free tier's message limits and pay in waiting time; your work needs the strongest frontier models for long, complex output; you lean on ecosystem features (custom GPTs, integrations, advanced voice/image daily); or your hourly rate makes the subscription trivially cheaper than friction. For a working professional who uses AI all day, that math usually lands on yes.",
+        ],
+      },
+      {
+        heading: "When it isn't",
+        paragraphs: [
+          "The math flips for light and mid-weight use — the majority of people, by usage:",
+        ],
+        bullets: [
+          "Under the free limits most days? A subscription buys capacity you aren't using",
+          "Drafting, Q&A, study help, summarizing: the on-device model in ShadowTalk covers these free, with zero usage limits and zero network",
+          "Want many models, not one company's? BYOK routes OpenAI, Anthropic, Google, Groq, DeepSeek, OpenRouter and more through one workspace — at provider cost, no markup, no middleman subscription",
+          "Care about privacy or working offline? A cloud subscription can't run on your GPU, can't work in airplane mode and can't encrypt stored chats end-to-end — ShadowTalk does all three",
+        ],
+      },
+      {
+        heading: "The free stack, in one place",
+        paragraphs: ["What ShadowTalk gives you without a subscription or card:", ""],
+        bullets: [
+          "On-device models: free forever, no rate limits — 0.5B-3B class on your GPU via WebGPU",
+          "Shared cloud chat: free within daily limits on the shared tier",
+          "BYOK: 16+ providers at cost — you pay the provider's API price for what you actually use, and nothing when you don't",
+          "Deep research with citations, ProofLoop missions, voice and the IDE: built in, not gated behind a tier",
+          "The claim no subscription can make: ShadowTalk is the first AI chat in a browser that works offline and syncs when you're back",
+        ],
+      },
+      {
+        heading: "The honest catch",
+        paragraphs: [
+          "BYOK usage is billed by the provider and varies with volume — heavy frontier-model use can cost more than $20/month at list API prices, and it's your card, not a flat fee. The on-device model is not frontier quality; if you need maximum capability with zero setup and zero key management, Plus is genuinely the simpler product. A free stack is not the same as a frontier stack — know which one your work actually needs before you cancel anything.",
+        ],
+      },
+    ],
+    howTo: {
+      name: "Test the free stack before you pay",
+      steps: [
+        "Open shadowtalk-ai.com in Chrome or Edge 113+ — no account, no card.",
+        "Use the on-device model for a week of your normal tasks: drafting, Q&A, summaries. It's free with no limits.",
+        "If you need frontier quality, add one BYOK key (OpenAI, Anthropic, Google, Groq and more) and compare — you pay the provider's API price only for what you use.",
+        "Compare that month's real usage bill against $20 — and against what the shared free tier already covered.",
+        "Subscribe to Plus only if the frontier ceiling and its ecosystem still justify the flat fee for your actual workload.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Is ChatGPT Plus worth $20 a month?",
+        answer:
+          "If you're a daily heavy user who needs frontier-model quality and the ecosystem, usually yes. If you're under the free limits most days, probably not — much of what you do (drafting, Q&A, studying, summarizing) runs free and unlimited on an on-device model, and multi-model access can come from BYOK at provider cost instead of a flat subscription. Judge by your actual usage, not by the feature list.",
+      },
+      {
+        question: "What's the cheapest way to use top AI models?",
+        answer:
+          "At volume, BYOK is usually the cheapest honest option: ShadowTalk passes provider API prices straight through with no markup, you can route each task to the best-value provider (Groq for speed, DeepSeek for cheap reasoning, OpenAI or Anthropic for frontier quality), and the on-device model handles everything it can for free. Check current provider pricing yourself — it moves often.",
+      },
+      {
+        question: "Can I use ChatGPT models without a Plus subscription?",
+        answer:
+          "Yes — an OpenAI API key works inside ShadowTalk via BYOK, billed by OpenAI at usage cost with no subscription. You get the same OpenAI models inside a workspace that also runs an on-device model offline and connects 15+ other providers.",
+      },
+      {
+        question: "Do I lose anything by skipping Plus?",
+        answer:
+          "Honestly, yes: the frontier ceiling on demand, OpenAI's ecosystem polish (custom GPTs, integrations), and the simplicity of one flat bill with no keys to manage. If those matter to your daily work, subscribe. What you gain by skipping: no flat fee, provider prices at cost, model choice, and an on-device model that works offline — a cloud subscription can't offer any of those.",
+      },
+      {
+        question: "Is free AI worse for privacy?",
+        answer:
+          "Cloud free tiers are where training-on-chats clauses bite hardest: ChatGPT's free-tier conversations can train unless you opt out, and Google's Gemini notice says free-tier conversations can improve its products (checked Nov 2026). Free doesn't have to mean that — ShadowTalk never trains on chats on any tier, the on-device model never phones home, and Private Mode encrypts stored history end-to-end (AES-256-GCM).",
+      },
+    ],
+    related: [
+      { label: "Free AI chat guide", href: "/free-ai-chat", note: "What 'free' means here" },
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "The structural comparison" },
+      { label: "Local vs cloud AI", href: "/local-vs-cloud-ai", note: "The cost math, dimension by dimension" },
+      { label: "ChatGPT down playbook", href: "/chatgpt-down", note: "The outage angle subscriptions can't fix" },
+    ],
+    ctaLabel: "Run the free math yourself",
+  },
 };
 
 /** One-line summaries for the /guides hub and llms.txt */
@@ -1093,4 +1352,7 @@ export const GUIDE_HUB_LINE: Record<string, string> = {
   "local-vs-cloud-ai": "The trade-offs scored, and the hybrid that ends the argument",
   "chatgpt-down": "The outage playbook: on-device AI + multi-provider BYOK, so no single cloud stops your work",
   "ai-chat-for-travel": "Offline AI on flights, roaming and dead zones — download before you fly, sync on landing",
+  "ai-chat-for-students": "Free study aid with no account that survives school wifi — learn with it, honestly",
+  "who-can-read-your-ai-chats": "The tier-by-tier answer: who can reach your prompts — and what E2EE actually covers",
+  "is-chatgpt-plus-worth-it": "The honest math: when $20/month earns it, and the free stack that covers most of what it does",
 };

@@ -52,6 +52,9 @@ ShadowTalk AI is free to use — no subscriptions, no paid tiers, no credit card
 - [Local vs cloud AI](https://www.shadowtalk-ai.com/local-vs-cloud-ai): the trade-offs scored dimension by dimension, and the hybrid — on-device first, cloud escalation, one synced workspace
 - [ChatGPT down playbook](https://www.shadowtalk-ai.com/chatgpt-down): what still works when ChatGPT or any cloud AI goes down — on-device inference plus multi-provider BYOK failover, the outage playbook
 - [AI chat for travel](https://www.shadowtalk-ai.com/ai-chat-for-travel): offline AI on flights, roaming and dead zones — download the model before you fly, chat in airplane mode, sync on landing
+- [AI chat for students](https://www.shadowtalk-ai.com/ai-chat-for-students): free study aid with no account that survives school wifi — on-device offline chat, learn-not-cheat framing, honest limits
+- [Who can read your AI chats](https://www.shadowtalk-ai.com/who-can-read-your-ai-chats): the tier-by-tier privacy answer — who can reach cloud prompts (employees, legal process, free-tier training) vs on-device zero egress, E2EE Private Mode, documented server-side default
+- [Is ChatGPT Plus worth it](https://www.shadowtalk-ai.com/is-chatgpt-plus-worth-it): the honest $20/month math — when the subscription earns it, and the free stack that covers most of what it does (on-device unlimited, shared cloud, BYOK at cost)
 - [Compare — all head-to-heads](https://www.shadowtalk-ai.com/compare): honest scored comparisons on offline, sync, privacy, model choice and price — including where competitors win
 - [ShadowTalk AI vs ChatGPT](https://www.shadowtalk-ai.com/vs/chatgpt): cloud-only, account-required, no offline use vs on-device inference, offline queue + sync, no account, BYOK across 16+ providers
 - [ShadowTalk AI vs Gemini](https://www.shadowtalk-ai.com/vs/gemini): Google account + cloud-only + free-tier chats can improve Google's products (per its own privacy notice) vs on-device, no account, never trained on
@@ -67,6 +70,8 @@ ShadowTalk AI is free to use — no subscriptions, no paid tiers, no credit card
 - [ShadowTalk AI vs Microsoft Copilot](https://www.shadowtalk-ai.com/vs/copilot): Microsoft account + cloud-only + ecosystem-locked vs any-browser workspace with on-device inference, queue + sync and 16+ providers via BYOK
 - [ShadowTalk AI vs DuckDuckGo AI](https://www.shadowtalk-ai.com/vs/duckduckgo-ai): anonymous cloud chat with a published no-training policy — still cloud-relayed, no offline, no cross-device sync vs on-device zero-egress chat that also syncs
 - [ShadowTalk AI vs Brave Leo](https://www.shadowtalk-ai.com/vs/brave-leo): Brave-only sidebar on cloud models, rate-limited free and subscription-paid beyond vs any-browser on-device workspace with E2EE synced history
+- [ShadowTalk AI vs Grok](https://www.shadowtalk-ai.com/vs/grok): xAI's cloud assistant with the live X firehose — account required, no offline, no client-side E2EE vs on-device zero-egress chat that also syncs
+- [ShadowTalk AI vs Poe](https://www.shadowtalk-ai.com/vs/poe): Quora's points-metered multi-model aggregator, cloud-only with a subscription ceiling vs BYOK at provider cost across 16+ providers, plus an offline on-device model
 
 ## Contact
 

@@ -50,7 +50,7 @@ Free to use — no subscriptions, no paid tiers, no credit card. On-device model
 
 ## Guides (full text)
 
-- Guides hub: https://www.shadowtalk-ai.com/guides — index of all ten guides, each leading with a quotable short answer
+- Guides hub: https://www.shadowtalk-ai.com/guides — index of all fifteen guides, each leading with a quotable short answer
 
 ### Offline AI chat — https://www.shadowtalk-ai.com/offline-ai-chat
 
@@ -112,6 +112,15 @@ What still works when ChatGPT (or any cloud AI) goes down: cloud-only assistants
 ### AI chat for travel — https://www.shadowtalk-ai.com/ai-chat-for-travel
 Offline AI for flights, roaming and dead zones: download the model once before you fly (600MB-2.6GB, device-tiered, resumable) and chat in airplane mode — inference runs on your GPU with zero network egress, so no roaming data, no inflight wifi, no SIM. Messages sent offline queue in durable local storage and sync automatically on landing (E2EE when Private Mode is on); the installed PWA reloads offline with no app store. Honest limits: no live web mid-flight (research before boarding), frontier cloud models need a connection, iOS WebGPU support varies by version (desktop/Android Chrome/Edge 113+ is the supported path), and the very first install needs a real connection — set up before travel, not at the gate. Free: no account, no card; BYOK cloud passes provider prices through at cost.
 
+### AI chat for students — https://www.shadowtalk-ai.com/ai-chat-for-students
+Free AI for students, built for the real constraints: school networks that block AI sites, no budget, no card, shared laptops. ShadowTalk guests start instantly with no account; the on-device model runs on your GPU with zero network after a one-time download, so school filters have nothing to block — install on home wifi once and it works anywhere. What it handles well for study: plain-language explanations, generating and checking practice quizzes, summarizing your own notes on-device, planning schedules and outlines. Honest framing: a tutor, not a ghostwriter — submitting AI text as your own is academic dishonesty at most schools, and the 1B-3B on-device model won't produce frontier essays anyway. Limits stated: not frontier quality (escalate to cloud shared tier or BYOK when online), no live web offline, iOS WebGPU varies, first download needs real wifi. Free: no account, no card.
+
+### Who can read your AI chats — https://www.shadowtalk-ai.com/who-can-read-your-ai-chats
+The honest tier-by-tier answer. Cloud assistants: prompts are processed and stored on the provider's servers, where employees/contractors in defined trust-and-safety roles, legal process under the provider's jurisdiction, and — on several free tiers — training pipelines can reach them (ChatGPT free tier trains unless opted out; Google's Gemini Apps notice says free-tier chats can improve products; Anthropic consumer settings may use conversations unless configured — checked Nov 2026). ShadowTalk's tiers, plainly: on-device WebGPU inference makes zero network requests — the only tier with no server in the loop; BYOK sends requests browser-to-provider under the provider's own policies; Private Mode encrypts stored chats end-to-end (AES-256-GCM, device-derived non-extractable keys, content + titles + metadata, retroactive encryption, encrypt-or-null contract); the honest default is server-side storage when Private Mode is off — documented, not hidden; training on chats: never, on any tier. E2EE protects stored and synced content — it does not change where inference runs, so the most sensitive questions belong on the on-device model.
+
+### Is ChatGPT Plus worth it — https://www.shadowtalk-ai.com/is-chatgpt-plus-worth-it
+The honest math, by use case. Plus earns its $20/month when you regularly exhaust free-tier limits, need frontier models for professional output, or live in the ecosystem (custom GPTs, integrations, daily voice/image). It doesn't for light and mid-weight use — the majority of people: ShadowTalk's on-device model covers drafting, Q&A and summarizing free with no usage limits; the shared cloud tier is free within daily limits; BYOK routes OpenAI, Anthropic, Google, Groq, DeepSeek and 16+ providers at provider cost with no markup; deep research, ProofLoop, voice and the IDE are built in, not tier-gated. The honest catch: BYOK bills at the provider and varies with volume — heavy frontier use can exceed $20/month at list prices, and the on-device model is not frontier quality; if you need maximum capability with zero key management, Plus is the simpler product. Judge by your actual usage.
+
 ## Head-to-head comparisons (full text)
 
 ### ShadowTalk AI vs ChatGPT — https://www.shadowtalk-ai.com/vs/chatgpt
@@ -161,6 +170,12 @@ duck.ai is the best anonymous cloud chat: no account, published policy that mode
 
 ### ShadowTalk AI vs Brave Leo — https://www.shadowtalk-ai.com/vs/brave-leo
 Brave Leo is a sidebar assistant inside the Brave browser: Brave-curated cloud models, rate-limited free tier, Leo Premium subscription beyond, per-device history with no cross-device chat sync (Brave publishes that Leo chats aren't used for training; advanced users can add custom endpoints incl. local Ollama — genuinely good). Leo wins: zero setup inside Brave, custom model endpoints, no-training default. ShadowTalk wins: runs in any modern browser (Chrome/Edge/Brave), on-device WebGPU inference with zero egress, offline queue + sync, E2EE Private Mode, 16+ providers via BYOK, free with no card.
+
+### ShadowTalk AI vs Grok — https://www.shadowtalk-ai.com/vs/grok
+Grok is xAI's cloud assistant: prompts processed on xAI's servers, an X or grok.com account required, no offline mode, no client-side E2EE. Its real differentiator is live access to X posts and trends — genuinely differentiating for breaking events and real-time sentiment — plus built-in image generation and frontier-class models with a distinct voice. Free tier with usage limits; X Premium subscriptions raise limits (checked Nov 2026). Public X content is a documented training source; chat-data terms live in its privacy notice. ShadowTalk wins: works offline with zero egress after a one-time download, offline queue + sync, no account, 16+ providers via BYOK, never trains on chats, free — the first AI chat in a browser that works offline and syncs when you're back.
+
+### ShadowTalk AI vs Poe — https://www.shadowtalk-ai.com/vs/poe
+Poe is Quora's multi-model aggregator: one account, many providers' models, everything on Poe's cloud servers — account required, no offline, usage metered in free daily points or a subscription, chats stored server-side with no client-side E2EE. Poe wins: zero-setup multi-model sampling without managing API keys, a real custom-bot ecosystem (publish and monetize), bundled image/video generation. ShadowTalk wins: BYOK at provider cost with no points or markup, on-device inference with zero egress, offline queue + sync, E2EE Private Mode, never trains on chats — and the on-device model answers whether or not the network does.
 
 ## Comparison hub
 

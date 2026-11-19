@@ -128,11 +128,11 @@ describe("seo growth: comparison engine", () => {
   const llms = read("public/llms.txt");
   const compareHrefs = ["/compare", ...COMPARE_SLUGS.map((s) => `/vs/${s}`)];
 
-  it("ships the fourteen head-to-heads plus hub, each wired to route + PAGE_SEO", () => {
+  it("ships the sixteen head-to-heads plus hub, each wired to route + PAGE_SEO", () => {
     expect(COMPARE_SLUGS).toEqual([
       "chatgpt", "gemini", "claude", "lm-studio", "proton-lumo",
-      "web-llm-chat", "ollama", "jan", "perplexity", "pocketpal",
-      "deepseek", "copilot", "duckduckgo-ai", "brave-leo",
+      "web-llm-chat", "ollama", "jan", "perplexity", "poe",
+      "pocketpal", "deepseek", "copilot", "grok", "duckduckgo-ai", "brave-leo",
     ]);
     for (const href of compareHrefs) {
       expect(routes.includes(href), `route missing: ${href}`).toBe(true);
@@ -215,13 +215,15 @@ describe("seo growth: guide fleet + llms-full.txt (GEO)", () => {
     "/compare",
   ];
 
-  it("ships twelve guides, each substantive and extractive", () => {
+  it("ships fifteen guides, each substantive and extractive", () => {
     expect(guideSlugs.sort()).toEqual([
+      "ai-chat-for-students",
       "ai-chat-for-travel",
       "ai-chat-without-account",
       "best-offline-ai-chat",
       "chatgpt-down",
       "free-ai-chat",
+      "is-chatgpt-plus-worth-it",
       "local-vs-cloud-ai",
       "mobile-offline-ai",
       "offline-ai-chat",
@@ -229,6 +231,7 @@ describe("seo growth: guide fleet + llms-full.txt (GEO)", () => {
       "run-llm-in-browser",
       "webgpu-ai-chat",
       "what-is-on-device-ai",
+      "who-can-read-your-ai-chats",
     ]);
     for (const slug of guideSlugs) {
       const g = SEO_GUIDES[slug];
@@ -253,7 +256,7 @@ describe("seo growth: guide fleet + llms-full.txt (GEO)", () => {
   it("both hubs list every fleet page and cross-link each other", () => {
     const guidesPage = read("src/pages/GuidesIndexPage.tsx");
     const comparePage = read("src/pages/CompareIndexPage.tsx");
-    // guides hub lists all ten guides via ItemList and links /compare
+    // guides hub lists all fifteen guides via ItemList and links /compare
     for (const slug of Object.keys(SEO_GUIDES)) {
       expect(guidesPage).toContain(`"${slug}"`);
     }
