@@ -127,8 +127,11 @@ describe("seo growth: comparison engine", () => {
   const llms = read("public/llms.txt");
   const compareHrefs = ["/compare", ...COMPARE_SLUGS.map((s) => `/vs/${s}`)];
 
-  it("ships the six head-to-heads plus hub, each wired to route + PAGE_SEO", () => {
-    expect(COMPARE_SLUGS).toEqual(["chatgpt", "lm-studio", "proton-lumo", "web-llm-chat", "ollama", "perplexity"]);
+  it("ships the ten head-to-heads plus hub, each wired to route + PAGE_SEO", () => {
+    expect(COMPARE_SLUGS).toEqual([
+      "chatgpt", "gemini", "claude", "lm-studio", "proton-lumo",
+      "web-llm-chat", "ollama", "jan", "perplexity", "pocketpal",
+    ]);
     for (const href of compareHrefs) {
       expect(routes.includes(href), `route missing: ${href}`).toBe(true);
     }
@@ -149,7 +152,7 @@ describe("seo growth: comparison engine", () => {
     }
     // hub + top comparisons linked from the global footer (crawl depth 1 from every page)
     expect(footer).toContain('href: "/compare"');
-    for (const href of ["/vs/chatgpt", "/vs/lm-studio", "/vs/proton-lumo", "/vs/perplexity"]) {
+    for (const href of ["/vs/chatgpt", "/vs/gemini", "/vs/claude", "/vs/lm-studio", "/vs/proton-lumo", "/vs/perplexity"]) {
       expect(footer).toContain(`href: "${href}"`);
     }
   });
@@ -204,18 +207,23 @@ describe("seo growth: guide fleet + llms-full.txt (GEO)", () => {
 
   const guideSlugs = Object.keys(SEO_GUIDES);
   const contentHrefs = [
+    "/guides",
     ...guideSlugs.map((s) => `/${s}`),
     ...COMPARE_SLUGS.map((s) => `/vs/${s}`),
     "/compare",
   ];
 
-  it("ships six guides, each substantive and extractive", () => {
+  it("ships ten guides, each substantive and extractive", () => {
     expect(guideSlugs.sort()).toEqual([
       "ai-chat-without-account",
       "best-offline-ai-chat",
+      "free-ai-chat",
+      "local-vs-cloud-ai",
+      "mobile-offline-ai",
       "offline-ai-chat",
       "private-ai-chat",
       "run-llm-in-browser",
+      "webgpu-ai-chat",
       "what-is-on-device-ai",
     ]);
     for (const slug of guideSlugs) {
@@ -236,6 +244,18 @@ describe("seo growth: guide fleet + llms-full.txt (GEO)", () => {
       expect(llms).toContain(`${SITE_URL}${href}`);
       expect(footer).toContain(`href: "${href}"`);
     }
+  });
+
+  it("both hubs list every fleet page and cross-link each other", () => {
+    const guidesPage = read("src/pages/GuidesIndexPage.tsx");
+    const comparePage = read("src/pages/CompareIndexPage.tsx");
+    // guides hub lists all ten guides via ItemList and links /compare
+    for (const slug of Object.keys(SEO_GUIDES)) {
+      expect(guidesPage).toContain(`"${slug}"`);
+    }
+    expect(guidesPage).toContain('"/compare"');
+    // compare hub renders all ten comparisons via COMPARE_SLUGS and links onward
+    expect(comparePage).toContain("COMPARE_SLUGS.map");
   });
 
   it("llms-full.txt is the complete GEO dump", () => {

@@ -63,6 +63,7 @@ const ContactPage = lazy(() => import("./pages/ContactPage"));
 const GuidePage = lazy(() => import("./pages/GuidePage"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
 const CompareIndexPage = lazy(() => import("./pages/CompareIndexPage"));
+const GuidesIndexPage = lazy(() => import("./pages/GuidesIndexPage"));
 const FAQPage = lazy(() => import("./pages/FAQPage"));
 const BenchmarksPage = lazy(() => import("./pages/BenchmarksPage"));
 const AgenticIdePage = lazy(() => import("./pages/AgenticIdePage"));
@@ -181,6 +182,12 @@ const AnimatedRoutes = () => {
           <Route path="/what-is-on-device-ai" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="what-is-on-device-ai" /></PageTransition></Suspense>} />
           <Route path="/best-offline-ai-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="best-offline-ai-chat" /></PageTransition></Suspense>} />
           <Route path="/ai-chat-without-account" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="ai-chat-without-account" /></PageTransition></Suspense>} />
+          <Route path="/free-ai-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="free-ai-chat" /></PageTransition></Suspense>} />
+          <Route path="/mobile-offline-ai" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="mobile-offline-ai" /></PageTransition></Suspense>} />
+          <Route path="/webgpu-ai-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="webgpu-ai-chat" /></PageTransition></Suspense>} />
+          <Route path="/local-vs-cloud-ai" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="local-vs-cloud-ai" /></PageTransition></Suspense>} />
+          {/* Guide fleet hub */}
+          <Route path="/guides" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidesIndexPage /></PageTransition></Suspense>} />
           {/* Comparison engine — /compare hub + one head-to-head per intent cluster */}
           <Route path="/compare" element={<Suspense fallback={<PageLoader />}><PageTransition><CompareIndexPage /></PageTransition></Suspense>} />
           <Route path="/vs/chatgpt" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="chatgpt" /></PageTransition></Suspense>} />
@@ -189,6 +196,10 @@ const AnimatedRoutes = () => {
           <Route path="/vs/web-llm-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="web-llm-chat" /></PageTransition></Suspense>} />
           <Route path="/vs/ollama" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="ollama" /></PageTransition></Suspense>} />
           <Route path="/vs/perplexity" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="perplexity" /></PageTransition></Suspense>} />
+          <Route path="/vs/gemini" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="gemini" /></PageTransition></Suspense>} />
+          <Route path="/vs/claude" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="claude" /></PageTransition></Suspense>} />
+          <Route path="/vs/jan" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="jan" /></PageTransition></Suspense>} />
+          <Route path="/vs/pocketpal" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="pocketpal" /></PageTransition></Suspense>} />
           <Route path="/benchmarks" element={<Suspense fallback={<PageLoader />}><PageTransition><BenchmarksPage /></PageTransition></Suspense>} />
           <Route path="/case-studies" element={<Navigate to="/home" replace />} />
           <Route path="/gdpr" element={<PageTransition><GDPRPage /></PageTransition>} />

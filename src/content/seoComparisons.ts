@@ -50,11 +50,15 @@ export interface SeoComparison {
 
 export const COMPARE_SLUGS = [
   "chatgpt",
+  "gemini",
+  "claude",
   "lm-studio",
   "proton-lumo",
   "web-llm-chat",
   "ollama",
+  "jan",
   "perplexity",
+  "pocketpal",
 ] as const;
 
 export const SEO_COMPARISONS: Record<string, SeoComparison> = {
@@ -653,14 +657,403 @@ export const SEO_COMPARISONS: Record<string, SeoComparison> = {
     ],
     ctaLabel: "Research offline + private — free",
   },
+
+  gemini: {
+    slug: "gemini",
+    competitor: "Gemini",
+    breadcrumb: "ShadowTalk vs Gemini",
+    h1: "ShadowTalk AI vs Gemini — Google's cloud vs your own device",
+    definition:
+      "Gemini is Google's cloud AI assistant: it requires a Google account and a connection — every answer is generated on Google's servers, and Google's published Gemini Apps privacy notice states free-tier conversations can be used to improve its products. ShadowTalk AI runs a model on your own device with zero network egress, queues chats sent offline and syncs them when you're back, and never trains on your data — free, no account required.",
+    intro:
+      "Gemini is the default AI for billions of Android and Chrome users, so this is the second comparison people search for. The honest summary: Gemini's multimodal breadth and Google integration are real strengths; offline work, guest privacy and model choice are structurally impossible for it — and that's exactly the half ShadowTalk owns.",
+    rows: [
+      {
+        dimension: "Works offline",
+        shadowtalk: "Yes — after a one-time model download, inference runs on your device with zero network egress",
+        them: "No — every answer is generated on Google's servers",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Account required",
+        shadowtalk: "No — guests chat immediately, including with the on-device model",
+        them: "Yes — a Google account is required for use",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Chats sent while offline",
+        shadowtalk: "Queue in durable local storage and sync automatically when signal returns",
+        them: "Not applicable — the assistant requires a connection",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Training on your chats",
+        shadowtalk: "Never — on any tier, including free shared mode",
+        them: "Google's published Gemini Apps privacy notice states free-tier conversations can be used to improve its products",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Multimodal breadth",
+        shadowtalk: "Cloud models via BYOK — multimodal support depends on the provider you choose",
+        them: "Deep native image, video and audio understanding in one model family",
+        edge: "them",
+      },
+      {
+        dimension: "Stored-chat encryption",
+        shadowtalk:
+          "Private Mode encrypts chats end-to-end (AES-256-GCM) with device-derived keys. Honest default: chats are stored server-side when Private Mode is off",
+        them: "Stored on Google's infrastructure under Google's policy; no client-side end-to-end encryption",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Model choice",
+        shadowtalk:
+          "16+ providers via BYOK plus an on-device model — pick per task, including Google itself",
+        them: "Google models only",
+        edge: "shadowtalk",
+      },
+    ],
+    whereTheyWinHeading: "Where Gemini wins",
+    whereTheyWin: [
+      "Multimodal depth: Gemini's native image, video and audio understanding is genuinely ahead — if your work is visual or audio-heavy, that matters",
+      "Google ecosystem: Workspace, Android and Chrome integrations put Gemini where a billion people already are",
+      "Frontier capability and long context on Google's hardware, no download required",
+    ],
+    verdictHeading: "The verdict",
+    verdictParagraphs: [
+      "Choose Gemini when you live in Google's ecosystem and want the strongest multimodal cloud assistant, always online. Choose ShadowTalk when the network disappears, when you don't want a Google account attached to your prompts, when training-free chat matters, or when you want your pick of 16+ providers — ShadowTalk is the first AI chat in a browser that works offline and syncs when you're back, and Gemini is structurally unable to say that.",
+      "They are not mutually exclusive: with BYOK, your Google AI Studio key runs Gemini models inside ShadowTalk — with an on-device fallback underneath and a privacy dial around them.",
+    ],
+    faqs: [
+      {
+        question: "Can Gemini run offline?",
+        answer:
+          "No. Gemini is a cloud service — prompts are answered on Google's servers, so without a connection neither the web app nor the Android app can generate an answer. For offline AI chat you need an on-device model like ShadowTalk's WebGPU mode, or desktop tools like LM Studio and Ollama.",
+      },
+      {
+        question: "Does Google train on my Gemini conversations?",
+        answer:
+          "On free tiers, Google's published Gemini Apps privacy notice states conversations can be used to improve its products; paid tiers carry different terms. ShadowTalk never trains on your conversations on any tier — the on-device tier additionally never sends your prompt anywhere at all.",
+      },
+      {
+        question: "Which is more private?",
+        answer:
+          "ShadowTalk, with published limits: on-device chat has zero network egress, Private Mode encrypts stored chats end-to-end (AES-256-GCM), BYOK requests go browser-to-provider — while default chats are stored server-side when Private Mode is off and free shared-mode requests transit ShadowTalk's server. Gemini offers no client-side end-to-end encryption and processes every prompt on Google's servers.",
+      },
+      {
+        question: "Can I use my Gemini API key inside ShadowTalk?",
+        answer:
+          "Yes — paste a Google AI Studio key into BYOK settings and Gemini models run inside your ShadowTalk workspace directly from the browser, alongside 15+ other providers, with the on-device model as your offline fallback.",
+      },
+    ],
+    related: [
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "The other cloud giant, scored" },
+      { label: "ShadowTalk vs Claude", href: "/vs/claude", note: "Anthropic's assistant, compared" },
+      { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "Offline + sync, end to end" },
+      { label: "Private AI chat guide", href: "/private-ai-chat", note: "The three privacy tiers" },
+    ],
+    ctaLabel: "Try ShadowTalk free — no account",
+  },
+
+  claude: {
+    slug: "claude",
+    competitor: "Claude",
+    breadcrumb: "ShadowTalk vs Claude",
+    h1: "ShadowTalk AI vs Claude — frontier writing vs offline-first work",
+    definition:
+      "Claude is Anthropic's cloud assistant — one of the strongest writers and coders available, and it requires an account and a live connection: there is no offline mode and no client-side end-to-end encryption. ShadowTalk AI keeps working when the internet doesn't: on-device inference in the browser, offline-queued chats that sync when you're back, and your choice of 16+ providers — including Anthropic itself via BYOK.",
+    intro:
+      "Claude has earned its reputation on long-form writing and code, and we say so plainly below. This comparison is about the structural differences: where inference runs, what happens when the network drops, who holds the encryption keys, and what either costs.",
+    rows: [
+      {
+        dimension: "Works offline",
+        shadowtalk: "Yes — after a one-time model download, inference runs on your device",
+        them: "No — cloud service; no connection means no answers",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Long-form writing and code quality",
+        shadowtalk: "Strong via BYOK frontier models, capped by what a tab can run on-device",
+        them: "Among the best available — Anthropic's models are genuinely excellent at writing and coding",
+        edge: "them",
+      },
+      {
+        dimension: "Chats sent while offline",
+        shadowtalk: "Queue in durable local storage and sync automatically when signal returns",
+        them: "Not applicable — the assistant requires a connection",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Account required",
+        shadowtalk: "No — guests chat immediately, including with the on-device model",
+        them: "Yes — account required for use",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Stored-chat encryption",
+        shadowtalk:
+          "Private Mode encrypts chats end-to-end (AES-256-GCM) with device-derived keys. Honest default: chats are stored server-side when Private Mode is off",
+        them: "Stored server-side under Anthropic's policy; no client-side end-to-end encryption",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Training on your chats",
+        shadowtalk: "Never — on any tier, including free shared mode",
+        them: "Anthropic states consumer-tier conversations may be used for model improvement unless settings say otherwise (checked Nov 2026)",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Model choice",
+        shadowtalk:
+          "16+ providers via BYOK plus an on-device model — pick per task, including Anthropic itself",
+        them: "Anthropic models only",
+        edge: "shadowtalk",
+      },
+    ],
+    whereTheyWinHeading: "Where Claude wins",
+    whereTheyWin: [
+      "Writing and code quality: Anthropic's frontier models are among the strongest available for long-form drafting and software work",
+      "Very large context windows on server hardware — whole codebases and book-length documents in one prompt",
+      "A mature agentic coding surface backed by frontier capability",
+    ],
+    verdictHeading: "The verdict",
+    verdictParagraphs: [
+      "Choose Claude when you need the best writing and coding a frontier model can do and you're always online. Choose ShadowTalk when the network can't be trusted, when you don't want an account, when you want training-free chat, or when you want Anthropic models inside a private, synced workspace — ShadowTalk is the first AI chat in a browser that works offline and syncs when you're back, and Claude has no offline story at all.",
+      "Many users get both: paste an Anthropic key into BYOK and Claude's models run inside ShadowTalk from your browser — with the on-device model underneath for the moments the network fails.",
+    ],
+    faqs: [
+      {
+        question: "Can Claude work offline?",
+        answer:
+          "No. Claude is a cloud service — inference happens on Anthropic's servers, so without a connection it cannot answer. If you need AI that works offline, ShadowTalk's on-device mode, LM Studio, Ollama or Jan run models directly on your hardware.",
+      },
+      {
+        question: "Is Claude free to use?",
+        answer:
+          "Claude has a free tier with usage caps, and its stronger usage sits behind subscriptions. ShadowTalk is free to use with no card: on-device chat costs nothing, shared-tier cloud chat runs within daily limits, and BYOK passes your provider's API price straight through at cost.",
+      },
+      {
+        question: "Which is more private?",
+        answer:
+          "ShadowTalk, with its limits published: on-device chat has zero network egress, Private Mode encrypts stored chats end-to-end (AES-256-GCM), and BYOK requests go browser-to-provider — while default chats are stored server-side when Private Mode is off. Claude processes every prompt on Anthropic's servers and offers no client-side end-to-end encryption.",
+      },
+      {
+        question: "Can I use my Anthropic API key inside ShadowTalk?",
+        answer:
+          "Yes — paste your Anthropic key into BYOK settings and Claude's models run inside your ShadowTalk workspace directly from the browser, next to 15+ other providers, with offline on-device chat as the fallback underneath.",
+      },
+    ],
+    related: [
+      { label: "ShadowTalk vs Gemini", href: "/vs/gemini", note: "Google's assistant, scored" },
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "The original cloud comparison" },
+      { label: "Local vs cloud AI", href: "/local-vs-cloud-ai", note: "The trade-offs, dimension by dimension" },
+      { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "How the offline half works" },
+    ],
+    ctaLabel: "Try ShadowTalk free — no account",
+  },
+
+  jan: {
+    slug: "jan",
+    competitor: "Jan",
+    breadcrumb: "ShadowTalk vs Jan",
+    h1: "ShadowTalk AI vs Jan — open-source desktop vs browser tab",
+    definition:
+      "Jan is a free, open-source desktop app that runs GGUF models locally with a built-in local API server — genuinely good software with the same structural limits as every native local-AI app: it doesn't run in a browser tab, and its chats stay on the machine you installed it on. ShadowTalk AI is the browser-native counterpart: zero install, WebGPU inference, resumable model downloads, and offline-queued chats that sync across devices when you're back.",
+    intro:
+      "Jan sits in the same family as LM Studio and Ollama — desktop local AI, with the strengths (hardware ceiling, model breadth, openness) and the limits (install, one machine, no browser) that family implies. This page scores both sides honestly, checked November 2026.",
+    rows: [
+      {
+        dimension: "Install required",
+        shadowtalk: "None — the browser tab is the app; models download per-shard and resume",
+        them: "Desktop app to download and maintain per operating system",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Runs in a browser",
+        shadowtalk: "Yes — that's the whole product",
+        them: "No — native desktop application",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Sync across devices",
+        shadowtalk: "Automatic catch-up sync, including messages queued while offline; E2EE when Private Mode is on",
+        them: "Chats stay on the machine where Jan is installed (no built-in cross-device chat sync as of Nov 2026)",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Open source",
+        shadowtalk: "Client is public; sync and shared-mode infrastructure are not fully open",
+        them: "Fully open-source codebase you can audit and fork",
+        edge: "them",
+      },
+      {
+        dimension: "Model breadth",
+        shadowtalk: "Device-tiered on-device fleet plus 16+ cloud providers via BYOK",
+        them: "The whole GGUF/Hugging Face zoo on your own hardware",
+        edge: "them",
+      },
+      {
+        dimension: "Works offline",
+        shadowtalk: "Yes — on-device WebGPU inference plus durable offline queue",
+        them: "Yes — local inference by design",
+        edge: "both",
+      },
+      {
+        dimension: "Stored-chat encryption",
+        shadowtalk:
+          "Private Mode encrypts chats end-to-end (AES-256-GCM). Honest default: chats are stored server-side when Private Mode is off",
+        them: "Chats stay in local files on your machine — nothing to encrypt in transit",
+        edge: "both",
+      },
+    ],
+    whereTheyWinHeading: "Where Jan wins",
+    whereTheyWin: [
+      "Fully open-source: every line is auditable and forkable — a real commitment we don't fully match on the infrastructure side",
+      "Desktop hardware ceiling: with a big GPU, Jan runs model sizes no browser tab can touch",
+      "A local API server and extension ecosystem for tinkerers",
+    ],
+    verdictHeading: "The verdict",
+    verdictParagraphs: [
+      "Choose Jan if open source is your priority and you want desktop-grade local AI with a local API server. Choose ShadowTalk when you want the same offline capability with nothing to install, a synced history that follows you across devices, and cloud escalation when a task outgrows the tab — ShadowTalk is the first AI chat in a browser that works offline and syncs when you're back, while Jan's chats stay on the machine that ran them.",
+      "The pattern is the one that repeats across local AI: native tools win on openness and raw hardware; the browser wins on reach, sync and zero friction.",
+    ],
+    faqs: [
+      {
+        question: "Is Jan free?",
+        answer:
+          "Yes — Jan is free and open-source, and its local models cost nothing to run. ShadowTalk is also free with no card; its on-device tier is likewise free, with cloud models available through the shared tier or your own BYOK key at provider cost.",
+      },
+      {
+        question: "Does Jan sync chats across devices?",
+        answer:
+          "Not built-in as of November 2026 — Jan's chats live in local storage on the machine where it's installed. Cross-device sync is exactly the gap ShadowTalk fills: offline-queued messages catch up automatically, end-to-end encrypted when Private Mode is on.",
+      },
+      {
+        question: "Which runs bigger models?",
+        answer:
+          "Jan — desktop apps tap your full hardware, so with a large GPU it runs GGUF models far beyond what fits in a browser tab. ShadowTalk's honest ceiling is the ~3B class on-device, with automatic cloud escalation (16+ providers) for everything heavier.",
+      },
+      {
+        question: "Do both work offline?",
+        answer:
+          "Yes — local inference is the shared value. The difference is everything around it: ShadowTalk adds the synced workspace, guest mode and zero install, while Jan adds full openness and a local API server on your desktop.",
+      },
+    ],
+    related: [
+      { label: "ShadowTalk vs LM Studio", href: "/vs/lm-studio", note: "The better-known desktop local AI" },
+      { label: "ShadowTalk vs Ollama", href: "/vs/ollama", note: "The developer runtime, scored" },
+      { label: "Run an LLM in your browser", href: "/run-llm-in-browser", note: "The WebGPU mechanics" },
+      { label: "Best offline AI chat — ranked", href: "/best-offline-ai-chat", note: "Where each tool ranks" },
+    ],
+    ctaLabel: "Try the browser tab — free",
+  },
+
+  pocketpal: {
+    slug: "pocketpal",
+    competitor: "PocketPal",
+    breadcrumb: "ShadowTalk vs PocketPal",
+    h1: "ShadowTalk AI vs PocketPal — phone AI with and without a sync gap",
+    definition:
+      "PocketPal is an open-source mobile app that runs GGUF models entirely on your phone — genuinely useful offline AI with the gap every native on-device app shares: history lives on that one phone, and there is no web version. ShadowTalk AI installs as a PWA straight from the browser on iOS and Android, also runs on-device offline, queues chats sent offline and syncs them when you're back — so phone and desktop share one history.",
+    intro:
+      "This is the mobile-flavored version of the desktop comparisons: a capable native on-device app against a browser workspace that also runs on-device but doesn't strand your history on the device. Both approaches are legitimate; the difference is what happens when you put the phone down.",
+    rows: [
+      {
+        dimension: "Install",
+        shadowtalk: "One tap from the browser — installable PWA, no store visit",
+        them: "App store or APK download per platform",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Runs models on the phone, offline",
+        shadowtalk: "Yes — device-tiered WebGPU models, zero network egress",
+        them: "Yes — GGUF models run fully on-device",
+        edge: "both",
+      },
+      {
+        dimension: "Cross-device sync",
+        shadowtalk: "Automatic catch-up sync; offline-queued messages arrive when signal returns; E2EE when Private Mode is on — with the honest default stated: chats are stored server-side when Private Mode is off",
+        them: "Chats stay on the phone — no cross-device sync as of Nov 2026",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Desktop companion",
+        shadowtalk: "The same workspace in any browser — one history across phone and desktop",
+        them: "None — mobile-only",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Model breadth",
+        shadowtalk: "Device-tiered on-device fleet plus 16+ cloud providers via BYOK",
+        them: "Any GGUF model from Hugging Face your phone can carry",
+        edge: "them",
+      },
+      {
+        dimension: "Cloud escalation",
+        shadowtalk: "Automatic fallback to cloud models when a task or device outgrows the tab",
+        them: "None — purely local",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Price",
+        shadowtalk: "Free, no card; BYOK passes provider cost straight through",
+        them: "Free and open-source",
+        edge: "both",
+      },
+    ],
+    whereTheyWinHeading: "Where PocketPal wins",
+    whereTheyWin: [
+      "Native performance: a native app can use the phone more directly — warm-up and thermals are often better than a browser tab doing GPU work",
+      "Full GGUF zoo: swap in any community model your phone can carry, without waiting for our device tiers",
+      "No browser dependency at all — the app is the OS citizen",
+    ],
+    verdictHeading: "The verdict",
+    verdictParagraphs: [
+      "Choose PocketPal if you want a dedicated native app and you'll only ever work on that one phone. Choose ShadowTalk when the phone is one of several screens: the same on-device offline chat, plus a synced history that reaches your desktop, plus cloud escalation for the tasks a phone can't chew — ShadowTalk is the first AI chat in a browser that works offline and syncs when you're back, and a native mobile app without a backend can't close that loop.",
+      "Both are free; try them the same afternoon and keep the one that matches how many devices you actually use.",
+    ],
+    faqs: [
+      {
+        question: "Does PocketPal sync chats between devices?",
+        answer:
+          "No — PocketPal's chats are stored locally on the phone, with no built-in cross-device sync as of November 2026. ShadowTalk's offline queue plus catch-up sync moves history between phone and desktop, encrypted end-to-end when Private Mode is on.",
+      },
+      {
+        question: "Which is better on Android?",
+        answer:
+          "For raw on-device model variety and native performance, PocketPal. For the same offline chat with sync, a desktop companion and cloud escalation in the same workspace, ShadowTalk — it installs on Android in one tap with no app store.",
+      },
+      {
+        question: "Can I use PocketPal offline?",
+        answer:
+          "Yes — that's its core strength: GGUF models run fully on the phone. ShadowTalk's on-device tier matches that offline capability and adds the sync layer for when the network returns.",
+      },
+      {
+        question: "Do I need an app store for ShadowTalk on my phone?",
+        answer:
+          "No — it's a PWA: open the site in a mobile browser, add it to the home screen, and the installed app runs offline with the device-tiered model. No store review, no APK sideloading, and updates arrive when you reload.",
+      },
+    ],
+    related: [
+      { label: "Offline AI on your phone", href: "/mobile-offline-ai", note: "The mobile PWA guide" },
+      { label: "ShadowTalk vs Jan", href: "/vs/jan", note: "The desktop sibling of this comparison" },
+      { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "Offline + sync, end to end" },
+      { label: "AI chat without an account", href: "/ai-chat-without-account", note: "Guest mode on mobile" },
+    ],
+    ctaLabel: "Install the PWA — free",
+  },
 };
 
 /** One-line verdicts for the /compare hub and llms.txt */
 export const COMPARE_HUB_LINE: Record<string, string> = {
   chatgpt: "Cloud giant vs offline-first: account, servers and no internet vs on-device, no account, free",
+  gemini: "Google's cloud assistant vs on-device zero-egress chat that syncs when you're back",
+  claude: "Frontier writing, cloud-only and account-required vs offline queue + sync in a tab",
   "lm-studio": "Powerful desktop app whose sync is still feature request #2467 vs browser tab that syncs",
   "proton-lumo": "Zero-access stored history — but prompts decrypted server-side and no offline vs on-device + E2EE",
   "web-llm-chat": "The MIT-licensed demo that proved browser LLMs vs the product around it",
   ollama: "The developer runtime with a huge model zoo vs zero-install end-user local AI",
+  jan: "Fully open-source desktop local AI vs the zero-install browser tab that syncs",
   perplexity: "The always-online answer engine vs cited research that survives dead zones",
+  pocketpal: "On-device AI on one phone vs the PWA that also runs on-device — and syncs",
 };

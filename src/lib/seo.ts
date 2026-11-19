@@ -102,6 +102,12 @@ export const PAGE_SEO: Record<string, PageMeta> = {
       "What ShadowTalk AI is, how it differs from ChatGPT, what it costs (nothing), which models it supports and how your data stays private.",
     canonical: `${SITE_URL}/faq`,
   },
+  guides: {
+    title: "Guides — Offline, Private & Browser AI Explained",
+    description:
+      "Ten honest guides: offline AI chat, private AI, WebGPU in the browser, free AI chat, mobile PWA install, local vs cloud — quotable answers, dated fine print.",
+    canonical: `${SITE_URL}/guides`,
+  },
   "offline-ai-chat": {
     title: "Offline AI Chat — Use AI Without Internet (Free)",
     description:
@@ -144,6 +150,30 @@ export const PAGE_SEO: Record<string, PageMeta> = {
       "Chat with AI with no sign-up: ShadowTalk guests start instantly on an on-device model with zero network egress. What works without an account, what one adds, honest limits.",
     canonical: `${SITE_URL}/ai-chat-without-account`,
   },
+  "free-ai-chat": {
+    title: "Free AI Chat — No Card, No Markup, No Feature Locks",
+    description:
+      "Free AI chat that's actually free: on-device models cost nothing, shared cloud chat within daily limits, BYOK passes provider prices through at cost. No subscription, no card.",
+    canonical: `${SITE_URL}/free-ai-chat`,
+  },
+  "mobile-offline-ai": {
+    title: "Offline AI on Your Phone — PWA, No App Store, Synced",
+    description:
+      "Offline AI on iOS and Android as a one-tap PWA: the model runs on your phone's GPU, chats sent offline queue and sync, and phone and desktop share one history.",
+    canonical: `${SITE_URL}/mobile-offline-ai`,
+  },
+  "webgpu-ai-chat": {
+    title: "WebGPU AI Chat — How a Browser Tab Runs an LLM",
+    description:
+      "How WebGPU lets a browser tab run a language model on your GPU: browser support (Chrome/Edge 113+), device tiers, why weights come from our own infrastructure, honest limits.",
+    canonical: `${SITE_URL}/webgpu-ai-chat`,
+  },
+  "local-vs-cloud-ai": {
+    title: "Local vs Cloud AI — Honest Trade-offs, Hybrid Answer",
+    description:
+      "Local AI vs cloud AI scored dimension by dimension: privacy, offline, latency, cost, capability — and the hybrid that runs both in one synced workspace for free.",
+    canonical: `${SITE_URL}/local-vs-cloud-ai`,
+  },
   "vs-chatgpt": {
     title: "ShadowTalk AI vs ChatGPT — Offline, Private, Free",
     description:
@@ -179,6 +209,30 @@ export const PAGE_SEO: Record<string, PageMeta> = {
     description:
       "Perplexity answers with live web citations but is always online and account-based. ShadowTalk adds offline on-device chat, private tiers and ProofLoop missions — free with BYOK.",
     canonical: `${SITE_URL}/vs/perplexity`,
+  },
+  "vs-gemini": {
+    title: "ShadowTalk AI vs Gemini — Google's Cloud vs Your Device",
+    description:
+      "Gemini needs a Google account, a connection and Google's servers — its privacy notice states free-tier chats can improve its products. ShadowTalk: on-device, offline queue + sync, no account.",
+    canonical: `${SITE_URL}/vs/gemini`,
+  },
+  "vs-claude": {
+    title: "ShadowTalk AI vs Claude — Frontier Writing vs Offline-First",
+    description:
+      "Claude is a superb writer and coder — cloud-only, account-required, no offline mode. ShadowTalk keeps working offline: on-device inference, queue + sync, 16+ providers via BYOK.",
+    canonical: `${SITE_URL}/vs/claude`,
+  },
+  "vs-jan": {
+    title: "ShadowTalk AI vs Jan — Open-Source Desktop vs Browser Tab",
+    description:
+      "Jan is free, open-source desktop local AI with a local API server — chats stay on one machine. ShadowTalk needs no install, syncs across devices and escalates to cloud when needed.",
+    canonical: `${SITE_URL}/vs/jan`,
+  },
+  "vs-pocketpal": {
+    title: "ShadowTalk AI vs PocketPal — Phone AI With and Without Sync",
+    description:
+      "PocketPal runs GGUF models on your phone — with history trapped on it. ShadowTalk installs as a PWA, runs on-device offline too, and syncs phone and desktop into one history.",
+    canonical: `${SITE_URL}/vs/pocketpal`,
   },
   about: {
     title: "About — The Story Behind ShadowTalk",

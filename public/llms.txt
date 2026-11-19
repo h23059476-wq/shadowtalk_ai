@@ -39,19 +39,28 @@ ShadowTalk AI is free to use — no subscriptions, no paid tiers, no credit card
 - [Changelog](https://www.shadowtalk-ai.com/changelog)
 - [Privacy Policy](https://www.shadowtalk-ai.com/privacy)
 - [Terms of Service](https://www.shadowtalk-ai.com/terms)
+- [All guides](https://www.shadowtalk-ai.com/guides): the full guide fleet — offline AI, private AI, WebGPU, free AI chat, mobile PWA, local vs cloud — each leading with a quotable short answer and dated fine print
 - [Offline AI chat guide](https://www.shadowtalk-ai.com/offline-ai-chat): how to chat with AI without internet — on-device WebGPU models, offline queueing, automatic sync on reconnect, honest requirements
 - [Private AI chat guide](https://www.shadowtalk-ai.com/private-ai-chat): the three privacy tiers — guest on-device, BYOK browser-to-provider, AES-256 end-to-end encryption in Private Mode — with honest server-visibility limits
 - [Run an LLM in your browser](https://www.shadowtalk-ai.com/run-llm-in-browser): WebGPU browser LLM guide — how it works, model sizes (Llama 3.2, Qwen 2.5, SmolLM2), speed, switching
 - [What is on-device AI](https://www.shadowtalk-ai.com/what-is-on-device-ai): plain-English definition — on-device vs cloud AI, how WebGPU runs a model in a tab, the privacy math, honest capability limits
 - [Best offline AI chat](https://www.shadowtalk-ai.com/best-offline-ai-chat): offline AI apps ranked with published criteria (offline inference, sync, account, install, price) — ShadowTalk, LM Studio, Ollama, PocketPal, Secret Llama, web-llm-chat, cloud assistants
 - [AI chat without an account](https://www.shadowtalk-ai.com/ai-chat-without-account): guest mode explained — start instantly on-device with zero network egress, what an account adds, honest guest-mode limits
+- [Free AI chat](https://www.shadowtalk-ai.com/free-ai-chat): what "free" actually means — no card, no markup, no feature locks; on-device is free forever, shared cloud tier within daily limits, BYOK passes provider prices through at cost
+- [Offline AI on your phone](https://www.shadowtalk-ai.com/mobile-offline-ai): offline AI on iOS and Android as a one-tap PWA — no app store, device-tiered models, phone and desktop share one synced history
+- [WebGPU AI chat](https://www.shadowtalk-ai.com/webgpu-ai-chat): how a browser tab runs a language model on your GPU — Chrome/Edge 113+, device tiers, why weights come from ShadowTalk's own infrastructure
+- [Local vs cloud AI](https://www.shadowtalk-ai.com/local-vs-cloud-ai): the trade-offs scored dimension by dimension, and the hybrid — on-device first, cloud escalation, one synced workspace
 - [Compare — all head-to-heads](https://www.shadowtalk-ai.com/compare): honest scored comparisons on offline, sync, privacy, model choice and price — including where competitors win
 - [ShadowTalk AI vs ChatGPT](https://www.shadowtalk-ai.com/vs/chatgpt): cloud-only, account-required, no offline use vs on-device inference, offline queue + sync, no account, BYOK across 16+ providers
+- [ShadowTalk AI vs Gemini](https://www.shadowtalk-ai.com/vs/gemini): Google account + cloud-only + free-tier chats can improve Google's products (per its own privacy notice) vs on-device, no account, never trained on
+- [ShadowTalk AI vs Claude](https://www.shadowtalk-ai.com/vs/claude): superb frontier writing and code, cloud-only with no offline mode vs offline queue + sync and Anthropic models via BYOK
 - [ShadowTalk AI vs LM Studio](https://www.shadowtalk-ai.com/vs/lm-studio): powerful desktop app, no browser, chats stuck on one machine (sync is open feature request #2467) vs zero-install browser tab with automatic sync
 - [ShadowTalk AI vs Proton Lumo](https://www.shadowtalk-ai.com/vs/proton-lumo): zero-access encrypted history but cloud-only inference with server-side prompt decryption vs on-device zero-egress option plus E2EE Private Mode
 - [ShadowTalk AI vs web-llm-chat](https://www.shadowtalk-ai.com/vs/web-llm-chat): the MIT-licensed browser-LLM demo vs the product around it — durable storage, offline queue + sync, cloud escalation, workspace
 - [ShadowTalk AI vs Ollama](https://www.shadowtalk-ai.com/vs/ollama): developer-grade local runtime, terminal-first, huge model zoo vs end-user local AI with nothing to install and sync built in
 - [ShadowTalk AI vs Perplexity](https://www.shadowtalk-ai.com/vs/perplexity): always-online answer engine with cited web results vs cited research in a private workspace that also runs offline
+- [ShadowTalk AI vs Jan](https://www.shadowtalk-ai.com/vs/jan): fully open-source desktop local AI with a local API server, chats on one machine vs zero-install browser tab with sync and cloud escalation
+- [ShadowTalk AI vs PocketPal](https://www.shadowtalk-ai.com/vs/pocketpal): open-source mobile GGUF app with history trapped on one phone vs the PWA that also runs on-device and syncs with desktop
 
 ## Contact
 

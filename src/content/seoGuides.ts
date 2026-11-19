@@ -536,4 +536,382 @@ export const SEO_GUIDES: Record<string, SeoGuide> = {
     ],
     ctaLabel: "Start chatting — no account",
   },
+
+  "free-ai-chat": {
+    slug: "free-ai-chat",
+    breadcrumb: "Free AI chat",
+    h1: "Free AI chat that's actually free — no card, no markup, no feature locks",
+    definition:
+      "ShadowTalk AI is a free AI chat workspace with no subscription, no paywalled features and no credit card: the on-device model costs nothing to run, cloud chat is free within shared-tier daily limits, and if you bring your own API key (BYOK) you pay your provider directly at cost — ShadowTalk adds no markup and does not resell inference. And because the model runs in your browser, the free tier works offline too.",
+    intro:
+      "Almost every 'free AI chat' lands you on a metered tier: caps that tighten, features reserved for subscribers, and free conversations that may be used for training. This page explains what free actually means in ShadowTalk — what costs nothing, what you'd ever pay for and why, and where the honest limits sit.",
+    sections: [
+      {
+        heading: "What 'free' means across AI apps, honestly",
+        paragraphs: [
+          "Every AI product is free somewhere — the differences are in what the free tier actually includes and where it quietly stops being free. The table below is the honest version, checked November 2026.",
+        ],
+        table: {
+          headers: ["Product style", "What's free", "The catch"],
+          rows: [
+            [
+              "Cloud assistants (ChatGPT, Gemini, Claude)",
+              "A daily-capped free tier",
+              "Limits tighten without notice, stronger models and research sit behind subscriptions, and free-tier conversations can be used for training unless you opt out where the settings allow",
+            ],
+            [
+              "Local desktop apps (LM Studio, Ollama, Jan)",
+              "The software and the models",
+              "Your hardware is the price — and chats stay on that one machine, with no sync (LM Studio's is still feature request #2467)",
+            ],
+            [
+              "Browser demos (web-llm-chat, Secret Llama)",
+              "Everything",
+              "They're demos — no durable storage, no sync, no product around the model",
+            ],
+            [
+              "ShadowTalk AI",
+              "The whole workspace, the on-device model and a shared cloud tier",
+              "Heavy BYOK cloud use passes your provider's API price straight through — at cost, with no markup",
+            ],
+          ],
+        },
+      },
+      {
+        heading: "The three free tiers inside ShadowTalk",
+        paragraphs: [
+          "One workspace, three ways to chat for nothing — each with its limits stated in public:",
+        ],
+        bullets: [
+          "On-device model: runs on your GPU via WebGPU, costs nothing forever, zero network egress after the one-time download (300MB-2.6GB depending on device tier)",
+          "Shared free tier: cloud chat within daily limits, no key needed — honest fine print: free shared-mode requests transit ShadowTalk's server, and default chats are stored server-side unless Private Mode is on",
+          "BYOK: paste a key from any of 16+ providers (OpenAI, Anthropic, Google, Groq, DeepSeek, OpenRouter and more); requests go browser-to-provider and your provider may charge for API usage — at their price, not inflated",
+        ],
+      },
+      {
+        heading: "What you never pay for",
+        bullets: [
+          "The workspace itself: multi-model chat, tools, streaming and mission control",
+          "ProofLoop missions, deep research with citations and the agentic IDE",
+          "Sync across devices, the offline queue, and encrypted Private Mode (AES-256-GCM when you switch it on)",
+          "No feature locks: nothing on this list is gated behind a plan",
+        ],
+      },
+      {
+        heading: "When you'd still pay — and why that's not a subscription in disguise",
+        paragraphs: [
+          "The only money that ever moves is between you and your model provider. If you run frontier models all day through your own API key, your provider bills you directly for those tokens — ShadowTalk never sees the payment, never marks it up and never resells inference. That's the difference between a product that's free and a product that's 'free' with a meter inside.",
+        ],
+      },
+    ],
+    howTo: {
+      name: "Start free in under a minute",
+      steps: [
+        "Open shadowtalk-ai.com/chatbot in Chrome or Edge (113+) — no sign-up screen, no card form",
+        "Pick the on-device model to chat for free with zero network egress — the model downloads once in device-sized shards (resumable if interrupted)",
+        "Or skip the download and use a shared-tier cloud model within daily limits",
+        "Optional: paste an API key in BYOK settings for your choice of 16+ providers, billed by them at cost",
+      ],
+    },
+    faqs: [
+      {
+        question: "Is ShadowTalk AI really free, or free like a trial?",
+        answer:
+          "Really free — there is no paid tier to upgrade to. The workspace, ProofLoop, deep research, voice, the IDE, sync and the on-device model are all free. The only possible cost is your own provider's API price if you bring a key and use it heavily, and that goes directly to the provider.",
+      },
+      {
+        question: "What's the catch with the free shared tier?",
+        answer:
+          "Daily limits, stated up front, plus the honest fine print: free shared-mode requests transit ShadowTalk's server and default chats are stored server-side unless Private Mode is on. If you want cloud chat without that server in the middle, BYOK sends requests straight from your browser to your provider.",
+      },
+      {
+        question: "Do I need a credit card for anything?",
+        answer:
+          "No. Guests start with the on-device model and shared-tier cloud chat without ever entering payment details. A card only enters the picture if you create one with a provider to buy an API key — that's their relationship, not ours.",
+      },
+      {
+        question: "How is this different from ChatGPT's free tier?",
+        answer:
+          "ChatGPT's free tier meters a cloud product and reserves its best features for subscribers; ShadowTalk is free because the expensive part — inference — happens on your hardware, and cloud models come from 16+ providers you choose, not one vendor's meter. The comparison is scored dimension by dimension in ShadowTalk vs ChatGPT.",
+      },
+    ],
+    related: [
+      { label: "AI chat without an account", href: "/ai-chat-without-account", note: "Guest mode, zero sign-up" },
+      { label: "Best offline AI chat — ranked", href: "/best-offline-ai-chat", note: "Free options compared on criteria" },
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "Free tiers, compared honestly" },
+      { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "The free model that runs offline" },
+    ],
+    ctaLabel: "Chat free — no card",
+  },
+
+  "mobile-offline-ai": {
+    slug: "mobile-offline-ai",
+    breadcrumb: "Offline AI on your phone",
+    h1: "Offline AI on your phone — no app store, no sync gap",
+    definition:
+      "ShadowTalk AI runs offline on iOS and Android as an installable PWA: one tap from the browser, no app store, and the model runs on your phone's GPU with zero network egress after a one-time download. Chats you send offline queue up and sync when you're back — and because the workspace is the same web app on every device, phone and desktop history catch up with each other instead of living on separate machines.",
+    intro:
+      "Offline AI on mobile usually means a native app from an app store — and native on-device apps share one structural flaw: their history is trapped on the device. This page covers what offline AI actually looks like on a phone in ShadowTalk, what your hardware can handle, and the limits we'd rather tell you now than after you install.",
+    sections: [
+      {
+        heading: "Native offline AI apps have a sync problem on phones",
+        paragraphs: [
+          "Mobile on-device apps like PocketPal run GGUF models on your phone — real offline AI, and we credit them for it. But their chats live on that one phone: nothing flows to a desktop, nothing backs up, and switching devices means starting over. That's the same gap desktop tools like LM Studio have (device sync is still open feature request #2467 there), repeated on the device you actually carry.",
+          "ShadowTalk approaches it from the other side: the phone gets the same web workspace as every other device, the model runs on-device, and the durable offline queue plus catch-up sync means what you do on the train arrives on your desktop.",
+        ],
+      },
+      {
+        heading: "What offline looks like on a phone",
+        bullets: [
+          "Install is one tap: open the site in a mobile browser and add it to your home screen as a PWA — no store, no review lag, no separate download",
+          "The app picks a model sized to your device tier — roughly 300MB to 2.6GB, downloaded once over Wi-Fi in resumable shards",
+          "Inference runs in a background worker on your phone's GPU — replies stream at hardware speed, not signal speed",
+          "Messages sent with no signal queue in durable local storage and sync when the network returns",
+          "Reloads, force-quits and restarts lose nothing — the cache is built to survive, verified by automated offline smoke tests",
+        ],
+      },
+      {
+        heading: "Honest limits on mobile hardware",
+        paragraphs: [
+          "Phones are not GPUs with screens, and pretending otherwise is how on-device AI gets a bad name. The practical ceiling for smooth on-device chat is the 1B-3B class — strong for drafting, summarizing, rewriting and Q&A, not frontier reasoning. WebGPU on mobile means a current Chrome or Edge on Android (113+); iOS Safari can run the PWA and its cloud tiers, with on-device support dependent on Apple's WebGPU rollout as of November 2026. Long sessions warm the phone and spend battery like any 3D game would — the GPU is doing real work. And the first visit plus model download need a connection; offline starts on the second.",
+        ],
+      },
+    ],
+    howTo: {
+      name: "Install offline AI on your phone",
+      steps: [
+        "Open shadowtalk-ai.com in Chrome (Android) or Safari (iOS)",
+        "Add to Home Screen — Android: menu → 'Install app'; iOS: Share → 'Add to Home Screen'",
+        "Open the installed app and pick the on-device model; let the device-tiered model download over Wi-Fi once (shards resume if interrupted)",
+        "Chat — from here on, no signal required; offline messages queue and sync when you're back",
+      ],
+    },
+    faqs: [
+      {
+        question: "Does offline AI work on iPhone?",
+        answer:
+          "The ShadowTalk PWA installs on iOS and works offline for the app shell and your chats. The on-device model depends on WebGPU support in iOS Safari, which Apple is still rolling out — as of November 2026 the reliable fully-offline path on iOS is the app's cached shell with queued chats that sync, while Android Chrome 113+ gets the complete on-device GPU experience.",
+      },
+      {
+        question: "How big are the on-device models on mobile?",
+        answer:
+          "Device-tiered: roughly 300MB-2.6GB, downloaded once. The smallest tier (Llama-3.2-1B-Instruct class, around 880MB-1.1GB) runs well on mid-range phones; the practical ceiling for smooth mobile chat is the ~3B class, with automatic cloud fallback for heavier asks.",
+      },
+      {
+        question: "Will this eat my mobile data?",
+        answer:
+          "Only the first model download is large, and it should be done over Wi-Fi — after that, offline chat uses zero data because inference happens on the phone. Sync and cloud models are small requests. If you install on mobile data, shard-resumable downloads mean an interruption never restarts from zero.",
+      },
+      {
+        question: "Can my phone and desktop share the same history?",
+        answer:
+          "Yes — that's the point. Sign in free and both devices see the same workspace: chats composed offline on the phone queue locally, then sync and appear on desktop, encrypted end-to-end when Private Mode is on. Native on-device apps can't offer this without their own cloud backend.",
+      },
+    ],
+    related: [
+      { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "How offline + sync works end to end" },
+      { label: "AI chat without an account", href: "/ai-chat-without-account", note: "Try it before signing up" },
+      { label: "Run an LLM in your browser", href: "/run-llm-in-browser", note: "The WebGPU mechanics underneath" },
+      { label: "ShadowTalk vs PocketPal", href: "/vs/pocketpal", note: "Native mobile app vs synced PWA, scored" },
+    ],
+    ctaLabel: "Install on your phone — free",
+  },
+
+  "webgpu-ai-chat": {
+    slug: "webgpu-ai-chat",
+    breadcrumb: "WebGPU AI chat",
+    h1: "WebGPU AI chat — how a browser tab runs a language model on your GPU",
+    definition:
+      "WebGPU is the browser API that gives a web page direct access to your GPU's compute power, and it's what makes ShadowTalk AI possible: a quantized language model loads into GPU memory and generates tokens inside the tab — no server, no prompt leaving the device. It needs a modern Chromium browser (Chrome or Edge 113+), a one-time model download, and nothing else: no install, no drivers, no cloud GPU.",
+    intro:
+      "For thirty years the browser could show you things and, eventually, run games — but it couldn't think. WebGPU changed that, and this page explains what it actually does, what hardware and browsers support it today (November 2026), why the model weights come from ShadowTalk's own infrastructure, and where the honest limits sit.",
+    sections: [
+      {
+        heading: "What WebGPU actually does",
+        paragraphs: [
+          "WebGL let the browser paint; WebGPU lets it compute. It exposes modern GPU compute shaders to JavaScript, and language-model inference is exactly that — a long chain of matrix multiplications that GPUs do orders of magnitude faster than CPUs. ShadowTalk runs the model inside a background Web Worker talking to the GPU through WebGPU, so the tab stays responsive while tokens stream at hardware speed.",
+          "The model itself is quantized — compressed from full precision so that billion-parameter networks fit in consumer memory. That's why the on-device fleet is the 1B-3B class rather than a frontier model: a quantized 3B is genuinely useful and fits in an integrated GPU's reach; a frontier model does not fit in your tab, and honesty about that is part of the product.",
+        ],
+      },
+      {
+        heading: "Browser and hardware support, honestly",
+        bullets: [
+          "Desktop: Chrome and Edge 113 or newer ship WebGPU by default — that's the supported path",
+          "Android: current Chrome supports WebGPU, which is what makes fully-offline AI work on Android phones",
+          "Safari and Firefox: incomplete or behind flags as of November 2026 — the PWA and cloud tiers still work there, but the on-device GPU path targets Chromium",
+          "Hardware: integrated GPUs handle the 1B class comfortably; the practical ceiling in-browser is the ~3B class — low-end devices automatically fall back to cloud models instead of stuttering",
+          "First run needs a connection to fetch the model (300MB-2.6GB, resumable shard-by-shard); every run after that is fully offline",
+        ],
+      },
+      {
+        heading: "Why the model weights come from ShadowTalk's own infrastructure",
+        paragraphs: [
+          "A surprising number of browser AI demos pull their model weights from third-party CDNs, which means your first load trusts a supply chain you can't see. ShadowTalk serves its own app shell and model weights from its own infrastructure with zero third-party requests — the offline hardening work exists so the whole stack, from fonts to shards, behaves like one self-hosted product. Downloads are sharded and resumable, so a dropped connection never restarts a 2GB file from byte zero.",
+        ],
+      },
+      {
+        heading: "What the GPU path changes for privacy",
+        paragraphs: [
+          "When inference happens on your GPU, the prompt never crosses the network — there is no server to see it, no log to hold it. That's the on-device tier. Sync is a separate, opt-in system: default chats are stored server-side when Private Mode is off, and when you switch Private Mode on, stored chats are end-to-end encrypted (AES-256-GCM) with keys derived on your device. The GPU path is private by physics; Private Mode is private by cryptography — you can have both.",
+        ],
+      },
+    ],
+    howTo: {
+      name: "Check your browser is WebGPU-ready and start",
+      steps: [
+        "Check your version: Chrome or Edge 113 or newer (chrome://version), on desktop or Android",
+        "Open shadowtalk-ai.com/chatbot — no install step exists",
+        "Pick the on-device model and let it download over Wi-Fi once; shards resume if the connection drops",
+        "Chat — if your device is below the GPU bar, ShadowTalk automatically falls back to cloud models rather than stalling",
+      ],
+    },
+    faqs: [
+      {
+        question: "Which browsers support WebGPU for AI chat?",
+        answer:
+          "Chrome and Edge 113 or newer, including current Chrome on Android — that's the supported path for on-device inference. Safari and Firefox remain incomplete or behind flags as of November 2026; the ShadowTalk PWA and its cloud tiers still work in them, but the fully-offline GPU chat targets Chromium.",
+      },
+      {
+        question: "Do I need a gaming GPU for browser AI?",
+        answer:
+          "No. Integrated graphics handle the 1B-class quantized models comfortably, and that class covers drafting, rewriting, summarizing and Q&A. Bigger quantized models up to roughly 3B run on better hardware; beyond that, ShadowTalk escalates to cloud models instead of pretending a tab can do frontier reasoning.",
+      },
+      {
+        question: "Why does the model download before I can chat offline?",
+        answer:
+          "Because the weights have to live on your device for inference to be local — that's the entire privacy and offline story. The download happens once, in resumable shards sized to your device tier (300MB-2.6GB); after it, inference runs with zero network egress.",
+      },
+      {
+        question: "Is running a model in my browser safe?",
+        answer:
+          "The model is data, not code — loading weights cannot execute anything on your machine. ShadowTalk additionally serves the whole stack from its own infrastructure with zero third-party requests, so there's no CDN supply chain in the loop, and the app works as an installed PWA afterward.",
+      },
+    ],
+    related: [
+      { label: "Run an LLM in your browser", href: "/run-llm-in-browser", note: "The practical WebGPU guide" },
+      { label: "What is on-device AI", href: "/what-is-on-device-ai", note: "The plain-English definition" },
+      { label: "Local vs cloud AI", href: "/local-vs-cloud-ai", note: "When the GPU path is the right one" },
+      { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "Offline + sync, end to end" },
+    ],
+    ctaLabel: "Run WebGPU AI — free",
+  },
+
+  "local-vs-cloud-ai": {
+    slug: "local-vs-cloud-ai",
+    breadcrumb: "Local vs cloud AI",
+    h1: "Local AI vs cloud AI — the honest trade-offs, and the hybrid that ends the argument",
+    definition:
+      "Local AI runs the model on your hardware: your data stays put, it works offline, and marginal cost is zero — but models that fit a browser or phone (practical up to ~3B parameters) trail frontier cloud models on hard reasoning. Cloud AI delivers frontier capability for a metered price, online-only, with every prompt processed on someone else's servers. ShadowTalk AI runs both in one workspace — on-device first, cloud escalation when a task outgrows the tab — and syncs your history across devices either way.",
+    intro:
+      "The local-vs-cloud debate is usually tribal: privacy maximalists on one side, capability maximalists on the other. Both are right about their half. This page scores the trade-offs dimension by dimension, says plainly where each side wins, and shows the hybrid design that stops forcing a choice.",
+    sections: [
+      {
+        heading: "The dimension-by-dimension trade",
+        paragraphs: ["Scored honestly, checked November 2026:"],
+        table: {
+          headers: ["Dimension", "Local (on-device)", "Cloud"],
+          rows: [
+            [
+              "Privacy",
+              "Prompt never leaves the device — nothing to leak, log or subpoena",
+              "Every prompt is processed on the provider's servers under their policy",
+            ],
+            [
+              "Offline",
+              "Fully works after a one-time model download",
+              "No connection, no answers — by architecture",
+            ],
+            [
+              "Latency",
+              "Bound by your hardware, not your signal — no network round-trip",
+              "Bound by network plus server queue",
+            ],
+            [
+              "Cost",
+              "Free after the download; your electricity",
+              "Free tiers with caps, then subscriptions or metered API pricing",
+            ],
+            [
+              "Capability",
+              "Practical ceiling ~3B in a browser — great at everyday tasks, not frontier reasoning",
+              "Frontier models, huge contexts, live web, broad multimodal",
+            ],
+            [
+              "Setup",
+              "One-time download; no account",
+              "Account, billing identity, terms acceptance",
+            ],
+          ],
+        },
+      },
+      {
+        heading: "Where local wins today",
+        bullets: [
+          "Sensitive material — medical notes, legal drafts, financials, HR documents — where 'processed on our servers' is a dealbreaker",
+          "Flights, tunnels, rural dead zones, capped data plans and censored or fragile networks",
+          "Volume work: no rate limits, no token bills, no throttling — the marginal chat costs nothing",
+          "Guest-mode use with no identity attached at all",
+        ],
+      },
+      {
+        heading: "Where cloud still wins",
+        bullets: [
+          "Frontier reasoning: anything that needs the smartest model available still belongs to the cloud",
+          "Very long context and heavy multimodal work (images, audio, video at scale)",
+          "Live web knowledge and fresh citations",
+          "Zero-wait start: no model download when you just need one answer",
+        ],
+      },
+      {
+        heading: "The hybrid: on-device first, cloud when a task outgrows the tab",
+        paragraphs: [
+          "ShadowTalk's architecture is the compromise neither camp offers: device-tiered on-device models answer first, and when a request exceeds what the tab can handle, it escalates to cloud models automatically — BYOK across 16+ providers, or the shared free tier within daily limits. Your history stays in one synced workspace across devices, with the honest defaults in the open: chats are stored server-side when Private Mode is off, end-to-end encrypted (AES-256-GCM) when it's on, and BYOK requests go browser-to-provider without passing through ShadowTalk.",
+          "That's the practical answer to local vs cloud: local as the always-available floor, cloud as the capability ceiling you reach for deliberately — in one tab, for free.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Is local AI good enough for daily use?",
+        answer:
+          "For the everyday majority — drafting, rewriting, summarizing, Q&A, coding help at small scale — a quantized 1B-3B model on your hardware is genuinely good, and it's instant, private and free. For hard reasoning and long documents, frontier cloud models still win; a hybrid workspace lets each task take the right path.",
+      },
+      {
+        question: "Can I mix local and cloud models in one chat history?",
+        answer:
+          "Yes — that's the point of the hybrid design. On-device, shared-tier and BYOK cloud models all write into the same synced workspace, so a conversation can start on a train with no signal on the local model and escalate to a frontier cloud model when you're back.",
+      },
+      {
+        question: "Is local AI actually private?",
+        answer:
+          "Inference is: the prompt is processed on your GPU and never crosses the network. Storage and sync are separate choices — ShadowTalk's defaults are published (chats stored server-side when Private Mode is off), and Private Mode encrypts stored chats end-to-end with AES-256-GCM so what syncs is unreadable in transit and at rest.",
+      },
+      {
+        question: "Which should I start with?",
+        answer:
+          "Start with the on-device model: it's free, private, needs no account and works offline — then add cloud when you meet a task that outgrows it. Setup is one download, not one subscription.",
+      },
+    ],
+    related: [
+      { label: "What is on-device AI", href: "/what-is-on-device-ai", note: "The local side, defined" },
+      { label: "Run an LLM in your browser", href: "/run-llm-in-browser", note: "How the local half runs" },
+      { label: "Private AI chat guide", href: "/private-ai-chat", note: "The privacy tiers in detail" },
+      { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "Local AI when the network dies" },
+    ],
+    ctaLabel: "Run both — free",
+  },
+};
+
+/** One-line summaries for the /guides hub and llms.txt */
+export const GUIDE_HUB_LINE: Record<string, string> = {
+  "offline-ai-chat": "How offline chat and automatic sync actually work — honestly",
+  "private-ai-chat": "The three privacy tiers: on-device, BYOK, end-to-end encryption",
+  "run-llm-in-browser": "WebGPU step by step — model sizes, speed, switching",
+  "what-is-on-device-ai": "The plain-English definition, with the privacy math",
+  "best-offline-ai-chat": "Offline AI apps ranked on published criteria",
+  "ai-chat-without-account": "Guest mode: zero sign-up, zero egress, honest limits",
+  "free-ai-chat": "What 'free' actually means — no card, no markup, no locks",
+  "mobile-offline-ai": "Offline AI on your phone as a PWA, without the sync gap",
+  "webgpu-ai-chat": "How a browser tab runs a language model on your GPU",
+  "local-vs-cloud-ai": "The trade-offs scored, and the hybrid that ends the argument",
 };

@@ -50,6 +50,8 @@ Free to use — no subscriptions, no paid tiers, no credit card. On-device model
 
 ## Guides (full text)
 
+- Guides hub: https://www.shadowtalk-ai.com/guides — index of all ten guides, each leading with a quotable short answer
+
 ### Offline AI chat — https://www.shadowtalk-ai.com/offline-ai-chat
 
 ShadowTalk AI is a free, installable web app where the AI model runs on your own device. After a one-time download (300MB-2.6GB depending on device tier), chat works with zero internet — and anything you send while offline queues up in durable local storage and syncs the moment you're back. Install is one tap from the browser: no app store, no account, no card.
@@ -92,6 +94,18 @@ Ranked with published criteria (offline inference; sync incl. offline queue; no 
 
 Guests start immediately on the on-device model — no email, no sign-up, no card — with zero network egress; free cloud chat works within shared-tier daily limits. An account only adds cross-device persistence of your encrypted history (including offline-queued messages). Guest limits: history is local to that browser; guest cloud chat is rate-limited to protect the shared pool; default chats are stored server-side when Private Mode is off. When the model runs on your device there is no server call to gate — that is the structural reason guest mode can exist.
 
+### Free AI chat — https://www.shadowtalk-ai.com/free-ai-chat
+Free AI chat with no card, no markup and no feature locks: the on-device model costs nothing to run, cloud chat is free within shared-tier daily limits, and BYOK passes provider API prices straight through at cost — ShadowTalk never resells inference. Three free tiers: on-device (zero cost, zero egress after the 300MB-2.6GB download), shared cloud tier (daily limits; honest fine print — free shared-mode requests transit ShadowTalk's server and default chats are stored server-side unless Private Mode is on), BYOK (16+ providers, browser-to-provider). What is never paid: workspace, ProofLoop, deep research, voice, IDE, sync, Private Mode. The only money that can move is between the user and their provider.
+
+### Offline AI on your phone — https://www.shadowtalk-ai.com/mobile-offline-ai
+Offline AI on iOS and Android as an installable PWA: one tap from the browser, no app store. The model runs on the phone's GPU with zero network egress after a one-time device-tiered download (300MB-2.6GB, resumable shards). Chats sent offline queue in durable local storage and sync when the network returns; phone and desktop share one history. Honest limits: practical on-device ceiling is the 1B-3B class; WebGPU on mobile means current Chrome/Edge on Android (113+); iOS gets the cached PWA shell and queued-chat sync with on-device dependent on Apple's WebGPU rollout as of Nov 2026; first download needs Wi-Fi; long GPU sessions cost battery.
+
+### WebGPU AI chat — https://www.shadowtalk-ai.com/webgpu-ai-chat
+WebGPU is the browser API that exposes GPU compute to a web page; ShadowTalk uses it to run quantized language models inside a background Web Worker — tokens stream at hardware speed with no server in the loop. Support honestly stated (Nov 2026): Chrome/Edge 113+ desktop and Android is the supported path; Safari and Firefox incomplete or behind flags (PWA and cloud tiers still work there); integrated GPUs handle the 1B class, practical ceiling ~3B, low-end devices fall back to cloud automatically. Model weights and the app shell are served from ShadowTalk's own infrastructure with zero third-party requests, sharded and resumable. Privacy: inference never crosses the network; storage and sync are separate opt-ins (Private Mode = AES-256-GCM).
+
+### Local vs cloud AI — https://www.shadowtalk-ai.com/local-vs-cloud-ai
+The trade-offs, dimension by dimension: privacy (prompt never leaves the device vs processed on provider servers), offline (works after one download vs no connection no answers), latency (hardware-bound vs network-bound), cost (free after download vs metered), capability (practical ~3B in a tab vs frontier models, huge context, live web), setup (one download vs account). Where local wins: sensitive material, dead zones, volume work with no rate limits, guest privacy. Where cloud wins: frontier reasoning, long context, multimodal, fresh citations. ShadowTalk's hybrid: device-tiered on-device models answer first, cloud escalation when a task outgrows the tab, one synced history across devices, defaults stated in public.
+
 ## Head-to-head comparisons (full text)
 
 ### ShadowTalk AI vs ChatGPT — https://www.shadowtalk-ai.com/vs/chatgpt
@@ -117,6 +131,18 @@ Verdict: Ollama is a developer-grade local runtime — terminal-first, huge mode
 ### ShadowTalk AI vs Perplexity — https://www.shadowtalk-ai.com/vs/perplexity
 
 Verdict: Perplexity is an answer engine — live web search with citations, fast and excellent for lookups; always online, account-based, free tier ad-supported. ShadowTalk runs deep research with cited sources inside a private workspace that also chats offline on-device, with ProofLoop verifiable missions, free with BYOK. Where Perplexity wins: index freshness and breadth, iterative search UX, speed for quick lookups when online. Dimensions: live cited web answers (built-in / the core product); offline (yes / no); account (none / required); privacy dial (on-device zero egress, BYOK direct, E2EE Private Mode / cloud processing of every query, ads on free tier); model choice (16+ BYOK + on-device / served selection); verifiable missions (ProofLoop / not a capability); price (free + BYOK at cost / free with ads, Pro subscription).
+
+### ShadowTalk AI vs Gemini — https://www.shadowtalk-ai.com/vs/gemini
+Gemini is Google's cloud assistant: Google account required, every answer generated on Google's servers, and Google's published Gemini Apps privacy notice states free-tier conversations can be used to improve its products. Gemini wins on multimodal depth (native image/video/audio), Google ecosystem integration and frontier capability. ShadowTalk wins: offline with zero network egress, offline queue + sync, no account, never trains on chats on any tier, E2EE Private Mode (AES-256-GCM; default chats stored server-side when off), 16+ providers via BYOK including Google AI Studio keys.
+
+### ShadowTalk AI vs Claude — https://www.shadowtalk-ai.com/vs/claude
+Claude is Anthropic's cloud assistant — among the strongest writers and coders, with very large context windows and a mature agentic coding surface; cloud-only, account-required, no offline mode, no client-side E2EE; consumer-tier conversations may be used for model improvement unless settings say otherwise (checked Nov 2026). ShadowTalk: on-device inference in the browser, offline-queued chats that sync, no account, never trains on chats, Private Mode E2EE, and Anthropic models available inside it via BYOK at provider cost.
+
+### ShadowTalk AI vs Jan — https://www.shadowtalk-ai.com/vs/jan
+Jan is free, fully open-source desktop local AI: GGUF models on your hardware, a local API server, extension ecosystem, desktop hardware ceiling. Structural limits: no browser, install required, chats stay on the machine (no built-in cross-device sync as of Nov 2026). ShadowTalk: zero install, browser-native, WebGPU on-device inference, offline queue + automatic catch-up sync (E2EE when Private Mode is on), cloud escalation across 16+ providers.
+
+### ShadowTalk AI vs PocketPal — https://www.shadowtalk-ai.com/vs/pocketpal
+PocketPal is an open-source mobile app running GGUF models fully on the phone — real offline AI with history trapped on that one phone and no web version. PocketPal wins: native performance and thermals, the full GGUF zoo, no browser dependency. ShadowTalk: installs as a PWA in one tap (no store), device-tiered on-device models, offline queue + sync so phone and desktop share one history, automatic cloud escalation, free with BYOK at cost.
 
 ## Comparison hub
 

@@ -26,12 +26,17 @@ const Footer = () => {
     {
       title: "Guides",
       links: [
+        { name: "All guides", href: "/guides" },
         { name: "Offline AI chat", href: "/offline-ai-chat" },
         { name: "Private AI chat", href: "/private-ai-chat" },
         { name: "Run an LLM in your browser", href: "/run-llm-in-browser" },
         { name: "What is on-device AI", href: "/what-is-on-device-ai" },
         { name: "Best offline AI chat", href: "/best-offline-ai-chat" },
         { name: "AI chat without an account", href: "/ai-chat-without-account" },
+        { name: "Free AI chat", href: "/free-ai-chat" },
+        { name: "Offline AI on your phone", href: "/mobile-offline-ai" },
+        { name: "WebGPU AI chat", href: "/webgpu-ai-chat" },
+        { name: "Local vs cloud AI", href: "/local-vs-cloud-ai" },
       ],
     },
     {
@@ -39,11 +44,15 @@ const Footer = () => {
       links: [
         { name: "All comparisons", href: "/compare" },
         { name: "vs ChatGPT", href: "/vs/chatgpt" },
+        { name: "vs Gemini", href: "/vs/gemini" },
+        { name: "vs Claude", href: "/vs/claude" },
         { name: "vs LM Studio", href: "/vs/lm-studio" },
         { name: "vs Proton Lumo", href: "/vs/proton-lumo" },
         { name: "vs web-llm-chat", href: "/vs/web-llm-chat" },
         { name: "vs Ollama", href: "/vs/ollama" },
+        { name: "vs Jan", href: "/vs/jan" },
         { name: "vs Perplexity", href: "/vs/perplexity" },
+        { name: "vs PocketPal", href: "/vs/pocketpal" },
       ],
     },
     {

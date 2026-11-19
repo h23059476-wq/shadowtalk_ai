@@ -45,13 +45,22 @@ const ROUTES_TO_PRERENDER = [
   '/what-is-on-device-ai',
   '/best-offline-ai-chat',
   '/ai-chat-without-account',
+  '/free-ai-chat',
+  '/mobile-offline-ai',
+  '/webgpu-ai-chat',
+  '/local-vs-cloud-ai',
+  '/guides',
   '/compare',
   '/vs/chatgpt',
+  '/vs/gemini',
+  '/vs/claude',
   '/vs/lm-studio',
   '/vs/proton-lumo',
   '/vs/web-llm-chat',
   '/vs/ollama',
+  '/vs/jan',
   '/vs/perplexity',
+  '/vs/pocketpal',
 ];
 
 // Simple static file server
