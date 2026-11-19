@@ -150,7 +150,7 @@ describe("Appearance Studio page", () => {
 
       typeSearch("");
     }
-  });
+  }, 20_000); // three sequential search round trips; CI runners can exceed vitest's 5s default (2026-11-19 deploy incidents)
 
   it("renders the custom themes empty state with a designer CTA", async () => {
     renderPage();
