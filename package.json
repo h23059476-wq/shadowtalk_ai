@@ -2,11 +2,11 @@
   "name": "shadowtalk-ai",
   "private": true,
   "version": "1.0.0",
-  "description": "Think AI. Think ShadowTalk. \u2014 Agentic AI workspace with encrypted chat, deep research, and multi-model intelligence.",
+  "description": "Think AI. Think ShadowTalk. — Agentic AI workspace with encrypted chat, deep research, and multi-model intelligence.",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node prerender.cjs",
+    "build": "vite build && node scripts/generate-sitemap.mjs --out dist && node prerender.cjs",
     "build:dev": "vite build --mode development",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "lint": "eslint .",

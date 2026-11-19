@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync, statSync, existsSync } from "fs";
 import { resolve } from "path";
+import { execSync } from "child_process";
 import { PAGE_SEO, SITE_URL } from "../seo";
 import { SEO_COMPARISONS, COMPARE_SLUGS, COMPARE_HUB_LINE } from "../../content/seoComparisons";
 import { SEO_GUIDES } from "../../content/seoGuides";
@@ -282,5 +283,45 @@ describe("seo growth: guide fleet + llms-full.txt (GEO)", () => {
 
   it("llms.txt links the full dump", () => {
     expect(llms).toContain("https://www.shadowtalk-ai.com/llms-full.txt");
+  });
+});
+
+describe("seo growth: build-time sitemap generator + IndexNow pipeline", () => {
+  const pkg = JSON.parse(read("package.json"));
+  const generator = read("scripts/generate-sitemap.mjs");
+  const submitter = read("scripts/submit-indexnow.mjs");
+  const INDEXNOW_KEY = "d13c725ef8b8d4b4bc693b954d61c248";
+
+  it("the build pipeline regenerates dist/sitemap.xml before prerendering", () => {
+    expect(pkg.scripts.build).toContain("node scripts/generate-sitemap.mjs --out dist");
+    expect(pkg.scripts.build).toContain("node prerender.cjs");
+    expect(pkg.scripts.build.indexOf("generate-sitemap")).toBeLessThan(pkg.scripts.build.indexOf("prerender.cjs"));
+  });
+
+  it("the generator derives URLs from PAGE_SEO (single source of truth)", () => {
+    // the script parses the same canonical lines the data tests pin — not a hand list
+    expect(generator).toContain("matchAll(/canonical:");
+    expect(generator).toContain("src/lib/seo.ts");
+    expect(generator).toContain("--check");
+  });
+
+  it("the committed sitemap.xml is in sync with PAGE_SEO (generator --check passes)", () => {
+    expect(() =>
+      execSync("node scripts/generate-sitemap.mjs --check", { cwd: root, stdio: "pipe" }),
+    ).not.toThrow();
+  });
+
+  it("IndexNow: key file deployed at the site root matches the submit script", () => {
+    const keyFile = read(`public/${INDEXNOW_KEY}.txt`).trim();
+    expect(keyFile).toBe(INDEXNOW_KEY);
+    expect(submitter).toContain(`INDEXNOW_KEY = "${INDEXNOW_KEY}"`);
+    expect(submitter).toContain("api.indexnow.org/indexnow");
+    expect(submitter).toContain("--dry");
+  });
+
+  it("IndexNow submits every sitemap URL, never invents URLs", () => {
+    // the submitter reads public/sitemap.xml — no separate URL list to drift
+    expect(submitter).toContain('readFileSync(resolve(ROOT, "public/sitemap.xml")');
+    expect(submitter).toContain('matchAll(/<loc>([^<]+)<\\/loc>/g)');
   });
 });
