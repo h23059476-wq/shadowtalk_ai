@@ -39,6 +39,14 @@ jobs:
       - name: Write Firebase service account for rules deploy
         run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > "$RUNNER_TEMP/firebase-sa.json"
       - name: Deploy Firestore rules and indexes
+        # ----------------------------------------------------------------
+        # continue-on-error: a rules-auth failure (e.g. FIREBASE_SERVICE_ACCOUNT
+        # rotated/invalid) must not block the hosting deploy and IndexNow
+        # submission behind it. The step stays visibly red on every run until
+        # the secret is fixed, and content keeps shipping meanwhile.
+        # Restore to blocking once the service account secret is verified.
+        # ----------------------------------------------------------------
+        continue-on-error: true
         run: npx --yes firebase-tools@14 deploy --only firestore:rules,firestore:indexes --project shadowtalk-ai-7a513 --force
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
