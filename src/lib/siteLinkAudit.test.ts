@@ -95,6 +95,25 @@ describe("site link audit", () => {
     ).toEqual([]);
   });
 
+  it("CommandPalette includes every Footer page link (Ctrl+K parity)", () => {
+    const palette = readSrc("components/CommandPalette.tsx");
+    const footer = readSrc("components/Footer.tsx");
+    const footerHrefs = [
+      ...new Set(
+        [...footer.matchAll(/href:\s*"(\/[^"]+)"/g)].map((m) => m[1].split("#")[0]),
+      ),
+    ];
+    expect(footerHrefs.length, "footer must expose its page links").toBeGreaterThan(0);
+    const paletteHrefs = new Set(
+      [...palette.matchAll(/href:\s*"(\/[^"]+)"/g)].map((m) => m[1].split("#")[0]),
+    );
+    const missing = footerHrefs.filter((href) => !paletteHrefs.has(href));
+    expect(
+      missing,
+      `footer pages missing from the Ctrl+K CommandPalette: ${missing.join(", ")}`,
+    ).toEqual([]);
+  });
+
   it("Navigation includes Settings", () => {
     const nav = readSrc("components/Navigation.tsx");
     expect(nav).toContain('href: "/settings"');
