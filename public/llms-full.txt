@@ -106,6 +106,12 @@ WebGPU is the browser API that exposes GPU compute to a web page; ShadowTalk use
 ### Local vs cloud AI — https://www.shadowtalk-ai.com/local-vs-cloud-ai
 The trade-offs, dimension by dimension: privacy (prompt never leaves the device vs processed on provider servers), offline (works after one download vs no connection no answers), latency (hardware-bound vs network-bound), cost (free after download vs metered), capability (practical ~3B in a tab vs frontier models, huge context, live web), setup (one download vs account). Where local wins: sensitive material, dead zones, volume work with no rate limits, guest privacy. Where cloud wins: frontier reasoning, long context, multimodal, fresh citations. ShadowTalk's hybrid: device-tiered on-device models answer first, cloud escalation when a task outgrows the tab, one synced history across devices, defaults stated in public.
 
+### ChatGPT down — https://www.shadowtalk-ai.com/chatgpt-down
+What still works when ChatGPT (or any cloud AI) goes down: cloud-only assistants share one structural failure mode — every answer requires the provider's servers, so outages at status.openai.com stop your work. Two moves make any single outage irrelevant: (1) an on-device model — after a one-time download, inference runs on your GPU with zero network and answers even in airplane mode; (2) multi-provider BYOK — if OpenAI is down, route the same prompt to Anthropic, Google, Groq, DeepSeek or 16+ providers in the same workspace, same history, no re-setup. Honest limits: on-device models are 1B-3B class (great for drafting, Q&A, reasoning; not frontier quality), live web search needs a network, and if your own internet is down only on-device works — which is why the model must be downloaded before the outage. ShadowTalk's default chats are stored server-side with a durable local cache that survives outages; Private Mode makes the synced copy end-to-end encrypted (AES-256-GCM).
+
+### AI chat for travel — https://www.shadowtalk-ai.com/ai-chat-for-travel
+Offline AI for flights, roaming and dead zones: download the model once before you fly (600MB-2.6GB, device-tiered, resumable) and chat in airplane mode — inference runs on your GPU with zero network egress, so no roaming data, no inflight wifi, no SIM. Messages sent offline queue in durable local storage and sync automatically on landing (E2EE when Private Mode is on); the installed PWA reloads offline with no app store. Honest limits: no live web mid-flight (research before boarding), frontier cloud models need a connection, iOS WebGPU support varies by version (desktop/Android Chrome/Edge 113+ is the supported path), and the very first install needs a real connection — set up before travel, not at the gate. Free: no account, no card; BYOK cloud passes provider prices through at cost.
+
 ## Head-to-head comparisons (full text)
 
 ### ShadowTalk AI vs ChatGPT — https://www.shadowtalk-ai.com/vs/chatgpt
@@ -144,9 +150,21 @@ Jan is free, fully open-source desktop local AI: GGUF models on your hardware, a
 ### ShadowTalk AI vs PocketPal — https://www.shadowtalk-ai.com/vs/pocketpal
 PocketPal is an open-source mobile app running GGUF models fully on the phone — real offline AI with history trapped on that one phone and no web version. PocketPal wins: native performance and thermals, the full GGUF zoo, no browser dependency. ShadowTalk: installs as a PWA in one tap (no store), device-tiered on-device models, offline queue + sync so phone and desktop share one history, automatic cloud escalation, free with BYOK at cost.
 
+### ShadowTalk AI vs DeepSeek — https://www.shadowtalk-ai.com/vs/deepseek
+DeepSeek's official chat is a cloud service: account required, server-side answers, no offline mode; its consumer privacy notice permits improvement uses and 2025 regulator action followed (Italy restricted the service; South Korea suspended app downloads). The models themselves are open-weight (MIT) — the community runs them in LM Studio, Ollama and vLLM on hardware you own. DeepSeek wins: frontier reasoning per dollar, open weights, math/code strength. ShadowTalk wins: on-device inference with zero egress, offline queue + sync, no account, never trains on chats, E2EE Private Mode, and DeepSeek's own API available via BYOK alongside 16+ providers at cost.
+
+### ShadowTalk AI vs Microsoft Copilot — https://www.shadowtalk-ai.com/vs/copilot
+Copilot is a cloud assistant: Microsoft account required, answers generated on Microsoft's servers, no offline mode, provider choice fixed by Microsoft; free tier with limits, Copilot Pro subscription for heavier use. Copilot wins: Windows/Edge/Microsoft 365 ecosystem integration (best-in-class inside that world), built-in image generation and web grounding, enterprise M365 governance. ShadowTalk wins: on-device WebGPU inference with zero egress, offline queue + sync, no account, 16+ providers via BYOK, never trains on chats, free with no subscription.
+
+### ShadowTalk AI vs DuckDuckGo AI — https://www.shadowtalk-ai.com/vs/duckduckgo-ai
+duck.ai is the best anonymous cloud chat: no account, published policy that model providers can't train on your chats, free with daily limits and a paid plan for more. Structural gaps: prompts are cloud-relayed every time (no offline), recent chats live per-browser with no cross-device sync (as of Nov 2026). ShadowTalk keeps the anonymity and adds local compute: on-device inference with zero egress, offline queue + sync across devices, E2EE Private Mode, 16+ providers via BYOK — also with no account.
+
+### ShadowTalk AI vs Brave Leo — https://www.shadowtalk-ai.com/vs/brave-leo
+Brave Leo is a sidebar assistant inside the Brave browser: Brave-curated cloud models, rate-limited free tier, Leo Premium subscription beyond, per-device history with no cross-device chat sync (Brave publishes that Leo chats aren't used for training; advanced users can add custom endpoints incl. local Ollama — genuinely good). Leo wins: zero setup inside Brave, custom model endpoints, no-training default. ShadowTalk wins: runs in any modern browser (Chrome/Edge/Brave), on-device WebGPU inference with zero egress, offline queue + sync, E2EE Private Mode, 16+ providers via BYOK, free with no card.
+
 ## Comparison hub
 
-https://www.shadowtalk-ai.com/compare — lists all six head-to-heads with the dimensions scored: offline; sync; privacy (where the prompt is processed, who holds keys, what defaults store); model choice; price; honesty (limits documented in public).
+https://www.shadowtalk-ai.com/compare — lists every head-to-head with the dimensions scored: offline; sync; privacy (where the prompt is processed, who holds keys, what defaults store); model choice; price; honesty (limits documented in public).
 
 ## Specs sheet
 

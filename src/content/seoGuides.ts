@@ -900,6 +900,183 @@ export const SEO_GUIDES: Record<string, SeoGuide> = {
     ],
     ctaLabel: "Run both — free",
   },
+  "chatgpt-down": {
+    slug: "chatgpt-down",
+    breadcrumb: "ChatGPT down",
+    h1: "ChatGPT down? What still works when AI goes offline",
+    definition:
+      "When ChatGPT goes down, every cloud assistant riding the same dependence fails with it — status.openai.com tracks the incidents, and they happen several times a year. On-device AI is the chat that keeps answering: ShadowTalk's WebGPU model runs on your machine with zero network, and a multi-provider BYOK workspace routes the same prompt to Anthropic, Google or Groq when one provider has a bad day.",
+    intro:
+      "Outages are the tax you pay for cloud-only AI: when the provider's servers are down, your work stops with them. This guide explains why outages happen, exactly what still works during one, and the two moves — an on-device model and multi-provider BYOK — that make any single outage irrelevant. Written as preparation, not panic.",
+    sections: [
+      {
+        heading: "Why ChatGPT goes down (and why that's structural)",
+        paragraphs: [
+          "Cloud-only AI has one path to an answer: your prompt reaches the provider's servers, gets processed there, and the response travels back. Capacity shifts, deployments, regional incidents or attacks anywhere on that path mean no answers — no matter how good your connection is. OpenAI publishes incidents at status.openai.com; Google and Anthropic run their own status pages, and the same applies to every cloud-only assistant including Gemini, Claude and Copilot.",
+          "The point is not that OpenAI is unreliable — it's that any cloud-only tool carries this failure mode by construction. The servers are someone else's, and so is the downtime.",
+        ],
+      },
+      {
+        heading: "The two moves that make outages irrelevant",
+        paragraphs: [
+          "Neither move requires giving up the cloud. Together they remove the single point of failure:",
+        ],
+        bullets: [
+          "Move 1 — an on-device model: after a one-time download, inference runs on your own GPU in the browser with zero network. Outages on someone else's servers cannot touch it; in airplane mode it still answers.",
+          "Move 2 — multi-provider BYOK: if OpenAI specifically is down, route the same prompt to Anthropic, Google, Groq, DeepSeek or any of 16+ providers in the same workspace — same chat history, same tools, no re-setup.",
+          "Local history stays readable: chats cached on your device are available during an outage, while cloud-only history sits unreachable behind the provider's downtime.",
+        ],
+      },
+      {
+        heading: "Honest limits during an outage",
+        paragraphs: [
+          "Preparation has limits worth knowing in advance:",
+        ],
+        bullets: [
+          "The on-device model is small — nano to 3B-class depending on your device. It handles drafting, Q&A and reasoning well; it is not frontier quality, and saying otherwise would be dishonest",
+          "Live web search and grounding need a network — do research before the outage or after connectivity returns",
+          "If your own internet is down entirely, cloud providers can't help at all — that's the on-device case, and it needs the model downloaded in advance",
+          "ShadowTalk's default chats are stored server-side with a durable local cache that survives outages — use Private Mode if you want the synced copy end-to-end encrypted",
+        ],
+      },
+    ],
+    howTo: {
+      name: "Make your AI outage-proof in five minutes",
+      steps: [
+        "Open shadowtalk-ai.com in Chrome or Edge 113+ while your connection is healthy.",
+        "Install the app (PWA): the install icon in the address bar puts it on your home screen or dock.",
+        "Open the model manager and download the suggested model tier once — interrupted downloads resume automatically.",
+        "Optionally add your own provider API keys in Settings for multi-provider failover: OpenAI, Anthropic, Google, Groq and more.",
+        "Next outage: keep working on the on-device model, and flip frontier tasks to another provider — one click, same history.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Why is ChatGPT down right now?",
+        answer:
+          "Check status.openai.com — most incidents are capacity or deployment problems that resolve in minutes to hours, and the status page is the only live source of truth. This page can't see live status; the whole point is not needing to. With an on-device model and multi-provider BYOK, one provider's downtime stops being your problem.",
+      },
+      {
+        question: "Can I use ChatGPT offline?",
+        answer:
+          "No. ChatGPT is cloud-only — every token is generated on OpenAI's servers, so without internet it cannot answer at all. That's structural, not a bug they can patch away. On-device AI (like ShadowTalk's WebGPU mode) is the chat that keeps working offline.",
+      },
+      {
+        question: "What can I use when ChatGPT is down?",
+        answer:
+          "Two things, in one free workspace: the on-device model, which answers regardless of any provider's status, and other cloud providers — Anthropic, Google, Groq and more via BYOK — which are unaffected by an OpenAI incident. If the outage is capacity-related, a smaller on-device model also sidesteps the queue entirely.",
+      },
+      {
+        question: "Will an outage delete or hide my chats?",
+        answer:
+          "Cloud history lives server-side, so if a provider is down you may not reach it until they recover — your chats aren't gone, just temporarily unreachable. Chats stored on your device stay readable throughout. ShadowTalk's default chats are stored server-side too, but with a durable local cache that survives outages; Private Mode makes the synced copy end-to-end encrypted.",
+      },
+      {
+        question: "Does outage-proofing cost anything?",
+        answer:
+          "No. The on-device model is free to download and free to run, ShadowTalk has no subscription and no card, and BYOK passes provider API prices through at cost. Outage-proofing is a setup step, not a purchase.",
+      },
+    ],
+    related: [
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "The structural difference, scored" },
+      { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "How offline + sync actually works" },
+      { label: "Free AI chat guide", href: "/free-ai-chat", note: "What 'free' means here" },
+      { label: "AI chat without an account", href: "/ai-chat-without-account", note: "Start as a guest" },
+    ],
+    ctaLabel: "Get outage-proof AI — free",
+  },
+  "ai-chat-for-travel": {
+    slug: "ai-chat-for-travel",
+    breadcrumb: "AI chat for travel",
+    h1: "AI chat that works while traveling — offline on flights, abroad, anywhere",
+    definition:
+      "Yes — you can chat with AI in airplane mode. Download a model to your device once (from about 600MB), and ShadowTalk AI answers on your own GPU with zero network: no roaming, no SIM, no hotel wifi needed. Anything you send while offline queues in durable local storage and syncs automatically when you land. No app store, no account, no card.",
+    intro:
+      "Travel is where cloud AI fails hardest: airplane wifi that barely opens a webpage, roaming charges, hotel captive portals, dead zones on trains and in the mountains. This guide covers what actually works mid-flight, what to set up before you leave, and the honest limits — because offline-AI claims deserve fine print too.",
+    sections: [
+      {
+        heading: "The travel problem: AI dies exactly when you need it",
+        paragraphs: [
+          "Cloud assistants need constant connectivity, and travel strips it away: inflight wifi is slow and expensive, roaming data is costly and metered, hotel networks hide behind captive portals that block apps, and trains, mountains and rural routes have dead zones by design. The fix is local compute — a model that lives on your device and answers without asking any server.",
+          "That's what ShadowTalk's on-device mode is: WebGPU inference in a browser tab, running on your laptop or Android phone with zero network egress. The app installs as a PWA in one tap — no app store — and the whole shell works offline once installed.",
+        ],
+      },
+      {
+        heading: "What works mid-flight (and at 30,000 feet)",
+        paragraphs: ["With the model downloaded before boarding:", ""],
+        bullets: [
+          "On-device chat is unlimited and network-free — drafting, translating, summarizing, planning, Q&A at the speed of your GPU",
+          "Messages you send while offline queue in durable local storage and sync automatically when you land — end-to-end encrypted when Private Mode is on",
+          "Your full local chat history stays readable offline — review notes and drafts from the ground",
+          "The installed PWA reloads offline — no first-page stall, no app-store dependency",
+        ],
+      },
+      {
+        heading: "Prep checklist before you leave",
+        paragraphs: ["Five minutes on good wifi covers the whole trip:", ""],
+        bullets: [
+          "Install the PWA and download the model tier your device suggests (600MB-2.6GB; the manager pre-checks storage quota)",
+          "Use Chrome or Edge 113+ on laptop or Android — the app pre-checks WebGPU support for you",
+          "Add provider API keys if you want frontier models the moment you reconnect (BYOK, at cost, no markup)",
+          "GPU work draws battery — plugged-in seats help; a nano tier runs comfortably on modest hardware",
+        ],
+      },
+      {
+        heading: "Honest limits on the road",
+        paragraphs: ["What offline AI can't do, stated plainly:", ""],
+        bullets: [
+          "No live web mid-flight — flight statuses, news and search need a connection; do research before boarding",
+          "Frontier cloud models need the network — the on-device tier trades capability for independence",
+          "iOS: the PWA installs on iPhones, but WebGPU support varies by iOS version — on-device mode targets Chrome/Edge on desktop and Android first",
+          "The very first install needs a real connection — captive portals can block it, so set up before travel, not at the gate",
+        ],
+      },
+    ],
+    howTo: {
+      name: "Set up travel-ready offline AI before you fly",
+      steps: [
+        "On good wifi, open shadowtalk-ai.com in Chrome or Edge 113+ and install the PWA from the address bar.",
+        "Open the model manager and download the suggested model tier once — 600MB-2.6GB depending on your device.",
+        "Verify airplane-readiness: turn on airplane mode and confirm chat still answers (it runs on your GPU).",
+        "Optionally add your provider API keys for instant frontier-model access when you reconnect.",
+        "Fly: chat offline as much as you like — queued messages sync automatically on landing, E2EE with Private Mode on.",
+      ],
+    },
+    faqs: [
+      {
+        question: "Can I use AI in airplane mode?",
+        answer:
+          "Yes — with an on-device model. After the one-time download, inference runs entirely on your GPU with zero network activity: no wifi needed, no cellular data, nothing sends or receives. Cloud-only assistants cannot do this — they need a connection for every token.",
+      },
+      {
+        question: "Will offline AI use my roaming data?",
+        answer:
+          "No — on-device inference has zero network egress, so roaming isn't touched at all. Messages you send offline queue locally and sync later when you choose to connect, so you control when data is used.",
+      },
+      {
+        question: "Does it work in a hotel with a captive portal?",
+        answer:
+          "Once installed, yes — the app shell and model are cached on your device, so the app runs without passing the portal. The very first install does need a real internet connection, which captive portals can block — that's why you set up before travel or on a network you can pass.",
+      },
+      {
+        question: "What about iPhone?",
+        answer:
+          "The PWA installs on iOS, but WebGPU support on iPhones varies by iOS version, so on-device mode targets Chrome/Edge on desktop and Android first. Everything else — install, offline shell, queued sync — works on iOS; check the model manager on your device to see what's available.",
+      },
+      {
+        question: "Is travel-ready AI free?",
+        answer:
+          "Yes — the app is free with no account and no card, and the on-device model costs nothing to run. Cloud models via BYOK pass provider prices through at cost if you add them; the offline core costs nothing.",
+      },
+    ],
+    related: [
+      { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "The full offline + sync guide" },
+      { label: "Offline AI on your phone", href: "/mobile-offline-ai", note: "The mobile PWA, in detail" },
+      { label: "ChatGPT down playbook", href: "/chatgpt-down", note: "The outage version of this page" },
+      { label: "Free AI chat guide", href: "/free-ai-chat", note: "What 'free' means here" },
+    ],
+    ctaLabel: "Install before you fly — free",
+  },
 };
 
 /** One-line summaries for the /guides hub and llms.txt */
@@ -914,4 +1091,6 @@ export const GUIDE_HUB_LINE: Record<string, string> = {
   "mobile-offline-ai": "Offline AI on your phone as a PWA, without the sync gap",
   "webgpu-ai-chat": "How a browser tab runs a language model on your GPU",
   "local-vs-cloud-ai": "The trade-offs scored, and the hybrid that ends the argument",
+  "chatgpt-down": "The outage playbook: on-device AI + multi-provider BYOK, so no single cloud stops your work",
+  "ai-chat-for-travel": "Offline AI on flights, roaming and dead zones — download before you fly, sync on landing",
 };

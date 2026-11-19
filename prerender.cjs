@@ -49,6 +49,8 @@ const ROUTES_TO_PRERENDER = [
   '/mobile-offline-ai',
   '/webgpu-ai-chat',
   '/local-vs-cloud-ai',
+  '/chatgpt-down',
+  '/ai-chat-for-travel',
   '/guides',
   '/compare',
   '/vs/chatgpt',
@@ -61,6 +63,10 @@ const ROUTES_TO_PRERENDER = [
   '/vs/jan',
   '/vs/perplexity',
   '/vs/pocketpal',
+  '/vs/deepseek',
+  '/vs/copilot',
+  '/vs/duckduckgo-ai',
+  '/vs/brave-leo',
 ];
 
 // Simple static file server

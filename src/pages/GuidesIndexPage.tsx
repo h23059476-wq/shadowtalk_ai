@@ -32,6 +32,8 @@ const GUIDE_ORDER = [
   "mobile-offline-ai",
   "webgpu-ai-chat",
   "local-vs-cloud-ai",
+  "chatgpt-down",
+  "ai-chat-for-travel",
 ] as const;
 
 const GuidesIndexPage = () => {

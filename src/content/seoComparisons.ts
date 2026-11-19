@@ -59,6 +59,10 @@ export const COMPARE_SLUGS = [
   "jan",
   "perplexity",
   "pocketpal",
+  "deepseek",
+  "copilot",
+  "duckduckgo-ai",
+  "brave-leo",
 ] as const;
 
 export const SEO_COMPARISONS: Record<string, SeoComparison> = {
@@ -1042,6 +1046,402 @@ export const SEO_COMPARISONS: Record<string, SeoComparison> = {
     ],
     ctaLabel: "Install the PWA — free",
   },
+  deepseek: {
+    slug: "deepseek",
+    competitor: "DeepSeek",
+    breadcrumb: "ShadowTalk vs DeepSeek",
+    h1: "ShadowTalk AI vs DeepSeek — open-weight value, but the official app is cloud-only",
+    definition:
+      "DeepSeek's official chat is a cloud service: answers are generated on its servers, an account is required, and without internet it cannot reply. Its models are open-weight — but running them locally means assembling your own stack. ShadowTalk AI is a free browser workspace that runs a model on your device, queues chats sent offline and syncs them when you're back — and can call DeepSeek's own API via BYOK.",
+    intro:
+      "This comparison separates the two things people mean by 'DeepSeek': the open-weight models anyone can self-host, and the official chat app, which is a cloud product with an account, server-side storage and no offline mode. We score the app, note where the open weights change the picture, and credit DeepSeek fully where it wins.",
+    rows: [
+      {
+        dimension: "Works offline",
+        shadowtalk: "Yes — after a one-time model download, on-device WebGPU inference with zero network egress",
+        them: "No — the official chat app is cloud-only; every token is generated on DeepSeek's servers",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Chats sent while offline",
+        shadowtalk: "Queue in durable local storage and sync automatically when signal returns",
+        them: "Not applicable — the app needs a connection to function",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Account required",
+        shadowtalk: "No — guests chat immediately, including with the on-device model",
+        them: "Yes — email or phone sign-up for the chat app",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Model choice",
+        shadowtalk: "16+ providers via BYOK — DeepSeek's API among them — plus the on-device model",
+        them: "DeepSeek models only",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Running DeepSeek's open weights",
+        shadowtalk: "Via BYOK: call DeepSeek's hosted API from the same workspace as every other provider",
+        them: "MIT-licensed weights — the community runs them in LM Studio, Ollama and vLLM on hardware you own and size yourself",
+        edge: "them",
+      },
+      {
+        dimension: "Stored-chat encryption",
+        shadowtalk: "Private Mode encrypts chats end-to-end (AES-256-GCM) with device-derived keys. Honest default: chats are stored server-side when Private Mode is off",
+        them: "Stored server-side on DeepSeek infrastructure; its consumer privacy notice permits using data to improve services, and transparency concerns drew regulator action in 2025 — Italy restricted the service and South Korea suspended app downloads",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Training on your chats",
+        shadowtalk: "Never — on any tier, including free shared mode",
+        them: "Consumer terms permit improvement uses; API and enterprise terms differ",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Price",
+        shadowtalk: "Free to use, no card; BYOK passes provider costs straight through at cost",
+        them: "Free chat; an API among the cheapest of the major labs",
+        edge: "both",
+      },
+    ],
+    whereTheyWinHeading: "Where DeepSeek wins",
+    whereTheyWin: [
+      "Frontier reasoning per dollar: near-frontier quality at API prices that undercut the major labs — through BYOK, that value reaches you with no markup",
+      "Open weights: MIT-licensed releases the community can inspect, fine-tune and self-host — a freedom no closed cloud assistant offers",
+      "Math, code and reasoning strength that punches far above its price point",
+    ],
+    verdictHeading: "The verdict",
+    verdictParagraphs: [
+      "DeepSeek's models are genuinely excellent, which is exactly why ShadowTalk supports them via BYOK. The official DeepSeek app, though, is structurally cloud-only: account required, no offline mode, consumer data usable for improvement, and a 2025 privacy record that drew regulator action in Italy and South Korea. Choose the DeepSeek app when you always work online and want the cheapest frontier-adjacent API. Choose ShadowTalk when you want those same models in one workspace next to 15+ other providers — plus an on-device model that works offline and syncs when you're back. ShadowTalk is the first AI chat in a browser that works offline and syncs when you're back, and a cloud-only app can't say that.",
+    ],
+    faqs: [
+      {
+        question: "Can DeepSeek work offline?",
+        answer:
+          "The official DeepSeek chat app cannot — it's cloud-only, so without internet it produces nothing. The models themselves are open-weight, so you can run DeepSeek models offline with your own tooling (LM Studio, Ollama) on your own hardware. ShadowTalk gives you the middle path: DeepSeek via BYOK when online, plus a built-in on-device model that always works offline.",
+      },
+      {
+        question: "Is DeepSeek private?",
+        answer:
+          "Its privacy posture has real limits: the consumer notice permits using your data to improve services, chats are stored server-side, and in 2025 Italy restricted the service and South Korea suspended app downloads over transparency concerns about data handling. If you want DeepSeek models with privacy controls around them, BYOK in ShadowTalk routes requests browser-to-provider and Private Mode encrypts stored chats end-to-end.",
+      },
+      {
+        question: "Why does ShadowTalk support DeepSeek if it's a competitor?",
+        answer:
+          "Because ShadowTalk is a workspace, not a model lab: it doesn't resell inference or lock you to one provider. DeepSeek's API is one of 16+ providers you can connect — pick the best model per task, at provider prices, with no markup.",
+      },
+      {
+        question: "Which is cheaper?",
+        answer:
+          "For the app experience, both are free — ShadowTalk has no subscription and no card, and DeepSeek's chat is free. For model usage: DeepSeek's API is famously cheap, and ShadowTalk's BYOK passes it through at cost; the on-device model costs nothing to run at all.",
+      },
+    ],
+    related: [
+      { label: "Private AI chat guide", href: "/private-ai-chat", note: "The privacy tiers in detail" },
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "The other cloud giant, scored" },
+      { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "Offline + sync, end to end" },
+      { label: "Free AI chat guide", href: "/free-ai-chat", note: "What 'free' means here" },
+    ],
+    ctaLabel: "Run DeepSeek in ShadowTalk — free",
+  },
+  copilot: {
+    slug: "copilot",
+    competitor: "Microsoft Copilot",
+    breadcrumb: "ShadowTalk vs Copilot",
+    h1: "ShadowTalk AI vs Microsoft Copilot — cloud assistant vs offline workspace",
+    definition:
+      "Microsoft Copilot is a cloud assistant: every answer is generated on Microsoft's servers, a Microsoft account is required, and offline it cannot answer at all. ShadowTalk AI is a free browser workspace that runs a model on your own device, queues chats sent offline and syncs them when you're back, and spans 16+ providers via BYOK — with no subscription.",
+    intro:
+      "Copilot is deeply useful inside Microsoft's world — Windows, Edge and Microsoft 365. This comparison scores the fundamentals that matter everywhere else: what happens when the network drops, where prompts are processed, what an account buys you, and what each product costs. We credit Copilot fully where its ecosystem wins.",
+    rows: [
+      {
+        dimension: "Works offline",
+        shadowtalk: "Yes — on-device WebGPU inference with zero network egress after a one-time download",
+        them: "No — cloud-only; no connection means no answers",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Chats sent while offline",
+        shadowtalk: "Queue locally and sync automatically when signal returns",
+        them: "Not applicable — the assistant itself requires a connection",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Account required",
+        shadowtalk: "No — guests chat immediately, including with the on-device model",
+        them: "Yes — a Microsoft account for the consumer product",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Model choice",
+        shadowtalk: "16+ providers via BYOK — OpenAI, Anthropic, Google, Groq, DeepSeek and more",
+        them: "Microsoft-curated models; no provider choice",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Stored-chat encryption",
+        shadowtalk: "Private Mode encrypts chats end-to-end (AES-256-GCM). Honest default: chats are stored server-side when Private Mode is off",
+        them: "Stored server-side in your Microsoft account; consumer and enterprise tiers carry different contractual protections",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Training on your chats",
+        shadowtalk: "Never — on any tier, including free shared mode",
+        them: "Consumer conversations are processed under Microsoft's privacy policy; enterprise M365 Copilot carries stronger contractual commitments",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Workspace integration",
+        shadowtalk: "Chat, deep research with citations, ProofLoop missions, voice and an IDE in one synced workspace",
+        them: "Windows, Edge and Microsoft 365 integration is best-in-class inside that ecosystem",
+        edge: "them",
+      },
+      {
+        dimension: "Price",
+        shadowtalk: "Free to use, no card; BYOK passes provider costs through at cost",
+        them: "Free tier with limits; Copilot Pro subscription for heavier use",
+        edge: "shadowtalk",
+      },
+    ],
+    whereTheyWinHeading: "Where Microsoft Copilot wins",
+    whereTheyWin: [
+      "Ecosystem depth: Windows, Edge, Word, Excel and Teams integration — Copilot is the OS citizen ShadowTalk deliberately is not",
+      "Image generation and web-grounded answers are built into the free tier",
+      "Enterprise reach: M365 Copilot with tenant-level data governance for organizations already inside Microsoft's contracts",
+    ],
+    verdictHeading: "The verdict",
+    verdictParagraphs: [
+      "If you live inside Windows and Microsoft 365, Copilot earns its place — that integration is real and we don't pretend otherwise. But as a chat product it is structurally cloud-only: account required, no offline mode, provider choice fixed by Microsoft. ShadowTalk is the first AI chat in a browser that works offline and syncs when you're back — free, no account, 16+ providers via BYOK — which makes the two useful together: Copilot for the Microsoft surface, ShadowTalk for everything that has to keep working when the network doesn't.",
+    ],
+    faqs: [
+      {
+        question: "Can Microsoft Copilot work offline?",
+        answer:
+          "No — Copilot is cloud-only, so without a connection it cannot answer. If you need offline AI chat, you need an on-device model: ShadowTalk's WebGPU mode in a browser tab, or desktop tools like LM Studio and Ollama.",
+      },
+      {
+        question: "Does Copilot train on my chats?",
+        answer:
+          "Consumer Copilot conversations are processed under Microsoft's privacy policy with associated controls; enterprise M365 Copilot carries explicit contractual commitments around tenant data. ShadowTalk never trains on your chats on any tier, and Private Mode encrypts stored chats end-to-end.",
+      },
+      {
+        question: "Which is better on Windows?",
+        answer:
+          "For OS and Office integration, Copilot — nothing beats it inside that ecosystem. For offline work, provider choice, research tools and privacy dials, ShadowTalk. They coexist fine: many users keep Copilot in Windows and ShadowTalk as the workspace that works everywhere, including offline.",
+      },
+      {
+        question: "Is ShadowTalk really free where Copilot charges?",
+        answer:
+          "Yes — ShadowTalk is free with no subscription and no card; on-device models cost nothing to run and BYOK cloud usage passes through at provider prices with no markup. Copilot's heavier usage sits behind the Copilot Pro subscription.",
+      },
+    ],
+    related: [
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "The OpenAI side of Copilot, scored" },
+      { label: "ShadowTalk vs Gemini", href: "/vs/gemini", note: "The other OS-bundled assistant" },
+      { label: "Local vs cloud AI guide", href: "/local-vs-cloud-ai", note: "The trade-offs, dimension by dimension" },
+      { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "Offline + sync, end to end" },
+    ],
+    ctaLabel: "Try the offline workspace — free",
+  },
+  "duckduckgo-ai": {
+    slug: "duckduckgo-ai",
+    competitor: "DuckDuckGo AI Chat",
+    breadcrumb: "ShadowTalk vs DuckDuckGo AI",
+    h1: "ShadowTalk AI vs DuckDuckGo AI Chat — anonymous cloud vs on-device",
+    definition:
+      "DuckDuckGo AI Chat (duck.ai) is anonymous and free, with a published policy that model providers can't train on your chats — but the models still run in the cloud, so it needs a connection and cannot answer offline. ShadowTalk AI runs a model on your own GPU with zero network egress, queues chats sent offline and syncs them when you're back — also with no account.",
+    intro:
+      "DuckDuckGo deserves real credit: duck.ai proves anonymous cloud chat can work, and its no-training policy is public. This comparison is about the remaining structural gap — inference location. Cloud models need a connection every time; an on-device model doesn't. We score both honestly.",
+    rows: [
+      {
+        dimension: "Works offline",
+        shadowtalk: "Yes — on-device inference with zero network egress after a one-time download",
+        them: "No — prompts are proxied to cloud model providers; no connection, no answers",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Chats sent while offline",
+        shadowtalk: "Queue in durable local storage and sync when you're back",
+        them: "Not applicable — the service is a cloud relay",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Account required",
+        shadowtalk: "No — guests chat immediately, including with the on-device model",
+        them: "No — anonymous by design, DuckDuckGo's genuinely good idea",
+        edge: "both",
+      },
+      {
+        dimension: "Inference location",
+        shadowtalk: "Your GPU, in your browser tab — prompts never cross the network in on-device mode",
+        them: "Cloud: DuckDuckGo proxies prompts to model providers under a no-training contract",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Stored-chat encryption",
+        shadowtalk: "Private Mode encrypts chats end-to-end (AES-256-GCM). Honest default: chats are stored server-side when Private Mode is off",
+        them: "Recent chats kept locally in the browser; no end-to-end encryption layer and no cross-device sync ships as of November 2026",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Model choice",
+        shadowtalk: "Device-tiered open models on-device plus 16+ cloud providers via BYOK",
+        them: "A small curated menu of cloud models; daily limits on the free tier",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Cross-device sync",
+        shadowtalk: "Yes — one synced history across phone and desktop, E2EE when Private Mode is on",
+        them: "No account means no cross-device chat sync — history stays per-device",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Price",
+        shadowtalk: "Free to use, no card; BYOK passes provider costs through at cost",
+        them: "Free with daily limits; a paid plan adds higher limits and extra models",
+        edge: "both",
+      },
+    ],
+    whereTheyWinHeading: "Where DuckDuckGo AI Chat wins",
+    whereTheyWin: [
+      "Simplicity: duck.ai is a webpage with zero setup — no model download, nothing to install, usable in seconds",
+      "Frontier models anonymously: curated cloud models under a published no-training policy — anonymous access to big models is something on-device tiers can't match",
+      "Trust signal: DuckDuckGo's brand is privacy, and its no-training contract with model providers is public",
+    ],
+    verdictHeading: "The verdict",
+    verdictParagraphs: [
+      "duck.ai is the best anonymous cloud chat on the market — if your bar is 'no account, no training', it clears it. The structural limit is the same as every cloud tool: prompts cross the network every time, so there's no offline mode and no cross-device history. ShadowTalk keeps the anonymity and adds local compute: the first AI chat in a browser that works offline and syncs when you're back — no account either, with zero-egress on-device inference and end-to-end encryption when Private Mode is on.",
+    ],
+    faqs: [
+      {
+        question: "Is DuckDuckGo AI chat private?",
+        answer:
+          "More than most cloud chat: no account, and DuckDuckGo publishes its policy that model providers can't train on your duck.ai chats. But prompts still cross the network to cloud servers every time. ShadowTalk's on-device mode keeps prompts on your GPU entirely — nothing crosses the network at all — and Private Mode adds end-to-end encryption for stored and synced chats.",
+      },
+      {
+        question: "Does duck.ai work offline?",
+        answer:
+          "No — it relays prompts to cloud models, so it needs a connection every time. For offline chat you need a model that runs on your device: ShadowTalk's WebGPU mode, LM Studio, Ollama or similar.",
+      },
+      {
+        question: "Does duck.ai sync chats across devices?",
+        answer:
+          "No — with no account there's no cross-device chat sync; recent chats live per browser as of November 2026. ShadowTalk syncs one history across phone and desktop, encrypted end-to-end when Private Mode is on.",
+      },
+      {
+        question: "Which is more private — duck.ai or ShadowTalk?",
+        answer:
+          "They differ by layer. duck.ai anonymizes transit to the cloud (strong no-training policy, but your prompt still reaches a server to be answered). ShadowTalk's on-device mode eliminates transit entirely — the strongest privacy there is — and its published defaults state exactly what still touches a server in other modes.",
+      },
+    ],
+    related: [
+      { label: "AI chat without an account", href: "/ai-chat-without-account", note: "Guest mode, honestly" },
+      { label: "Private AI chat guide", href: "/private-ai-chat", note: "The three privacy tiers" },
+      { label: "ShadowTalk vs Brave Leo", href: "/vs/brave-leo", note: "The other browser AI, scored" },
+      { label: "What is on-device AI", href: "/what-is-on-device-ai", note: "Why inference location matters" },
+    ],
+    ctaLabel: "Anonymous + on-device — free",
+  },
+  "brave-leo": {
+    slug: "brave-leo",
+    competitor: "Brave Leo",
+    breadcrumb: "ShadowTalk vs Brave Leo",
+    h1: "ShadowTalk AI vs Brave Leo — browser AI, scored honestly",
+    definition:
+      "Brave Leo is a sidebar assistant built into the Brave browser: its default models run on Brave's cloud servers, the free tier is rate-limited, and heavier use is a paid subscription. ShadowTalk AI is a free workspace that runs a model on your own GPU, works offline with queued sync, and runs in any modern browser — Chrome, Edge or Brave itself.",
+    intro:
+      "Leo and ShadowTalk share a privacy-first instinct — Brave states Leo chats aren't used for training, and it even lets advanced users point Leo at their own model server. The structural differences are where the models run and what happens to your history. Both sides get full credit below.",
+    rows: [
+      {
+        dimension: "Works offline",
+        shadowtalk: "Yes — on-device WebGPU inference, zero network egress after a one-time download",
+        them: "Not by default — Leo's models run on Brave's cloud; only a self-hosted custom model endpoint changes that",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Chats sent while offline",
+        shadowtalk: "Queue in durable local storage and sync when signal returns",
+        them: "Not applicable — the default experience needs a connection",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Browser lock-in",
+        shadowtalk: "None — works in Chrome, Edge, Brave, any modern browser with WebGPU",
+        them: "Brave browser only — the sidebar ships inside Brave",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Account required",
+        shadowtalk: "No — guests chat immediately, including with the on-device model",
+        them: "No account for the rate-limited free tier; Leo Premium subscription for higher limits",
+        edge: "both",
+      },
+      {
+        dimension: "Stored-chat encryption",
+        shadowtalk: "Private Mode encrypts chats end-to-end (AES-256-GCM). Honest default: chats are stored server-side when Private Mode is off",
+        them: "Leo history lives locally per device and can auto-wipe on exit; no end-to-end encrypted cross-device sync ships as of November 2026",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Cross-device sync",
+        shadowtalk: "Yes — one synced history across phone and desktop, E2EE when Private Mode is on",
+        them: "Leo chats are per-device; Brave Sync covers browser data, not Leo chats",
+        edge: "shadowtalk",
+      },
+      {
+        dimension: "Model choice",
+        shadowtalk: "Device-tiered open models on-device + 16+ cloud providers via BYOK",
+        them: "Brave-curated cloud models; advanced users can add a custom (e.g. local Ollama) endpoint",
+        edge: "both",
+      },
+      {
+        dimension: "Price",
+        shadowtalk: "Free to use, no card; BYOK passes provider costs through at cost",
+        them: "Free tier with rate limits; Leo Premium subscription beyond that",
+        edge: "shadowtalk",
+      },
+    ],
+    whereTheyWinHeading: "Where Brave Leo wins",
+    whereTheyWin: [
+      "Zero setup inside Brave: the sidebar is already there — no download, no tab management, one shortcut away",
+      "Custom model endpoints: Leo can point at your own OpenAI-compatible server (including local Ollama) — an advanced feature done well",
+      "No-training stance by default: Brave's published policy says Leo conversations aren't used for model training",
+    ],
+    verdictHeading: "The verdict",
+    verdictParagraphs: [
+      "Leo is a good sidebar and Brave's privacy instincts are real — the custom-endpoint support deserves respect. But it is still cloud inference inside a single browser, rate-limited free and subscription-paid beyond that, with per-device history. ShadowTalk is the first AI chat in a browser that works offline and syncs when you're back: the model runs on your GPU in any modern browser, on-device chat has no rate limits, and your history follows you across devices end-to-end encrypted when Private Mode is on.",
+    ],
+    faqs: [
+      {
+        question: "Does Brave Leo work offline?",
+        answer:
+          "Not by default — Leo's models run on Brave's cloud. Advanced users can add a custom endpoint pointing at a local Ollama server, but that's your own stack to run and it still lives outside the browser tab. ShadowTalk's on-device model needs no stack: it downloads into the browser once and runs offline with zero network egress.",
+      },
+      {
+        question: "Is Brave Leo private?",
+        answer:
+          "Respectably: Brave publishes that Leo chats aren't used for training and routes them through its own infrastructure. They still cross the network to be answered, and history is per-device. ShadowTalk's on-device mode never transits, and Private Mode encrypts stored and synced chats end-to-end.",
+      },
+      {
+        question: "Does Leo sync chats across devices?",
+        answer:
+          "No — Leo chat history is per-device as of November 2026; Brave Sync handles browser data, not Leo conversations. ShadowTalk syncs one history across phone and desktop, end-to-end encrypted when Private Mode is on.",
+      },
+      {
+        question: "Do I need Brave to use ShadowTalk?",
+        answer:
+          "No — ShadowTalk runs in any modern browser with WebGPU: Chrome, Edge or Brave itself, on desktop and Android. Install it as a PWA in one tap; no app store, no account.",
+      },
+    ],
+    related: [
+      { label: "AI chat without an account", href: "/ai-chat-without-account", note: "Guest mode, honestly" },
+      { label: "Run an LLM in your browser", href: "/run-llm-in-browser", note: "How on-device inference works" },
+      { label: "ShadowTalk vs DuckDuckGo AI", href: "/vs/duckduckgo-ai", note: "The anonymous cloud alternative, scored" },
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "The cloud giant, scored" },
+    ],
+    ctaLabel: "Any browser, on-device, free",
+  },
 };
 
 /** One-line verdicts for the /compare hub and llms.txt */
@@ -1056,4 +1456,8 @@ export const COMPARE_HUB_LINE: Record<string, string> = {
   jan: "Fully open-source desktop local AI vs the zero-install browser tab that syncs",
   perplexity: "The always-online answer engine vs cited research that survives dead zones",
   pocketpal: "On-device AI on one phone vs the PWA that also runs on-device — and syncs",
+  deepseek: "Open-weight frontier value, but the official app is cloud-only with 2025 regulator scrutiny vs BYOK + on-device offline",
+  copilot: "Microsoft's cloud assistant baked into Windows vs a browser tab that answers offline and syncs",
+  "duckduckgo-ai": "Anonymous cloud chat with a no-training policy vs zero-egress on-device chat that also syncs",
+  "brave-leo": "A Brave-only sidebar on cloud models vs a workspace whose model runs on your GPU in any browser",
 };

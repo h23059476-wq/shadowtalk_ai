@@ -174,6 +174,18 @@ export const PAGE_SEO: Record<string, PageMeta> = {
       "Local AI vs cloud AI scored dimension by dimension: privacy, offline, latency, cost, capability — and the hybrid that runs both in one synced workspace for free.",
     canonical: `${SITE_URL}/local-vs-cloud-ai`,
   },
+  "chatgpt-down": {
+    title: "ChatGPT Down? What Still Works When AI Goes Offline",
+    description:
+      "When ChatGPT goes down, cloud assistants fail with it. On-device AI keeps answering with zero network; multi-provider BYOK routes around one outage. Free.",
+    canonical: `${SITE_URL}/chatgpt-down`,
+  },
+  "ai-chat-for-travel": {
+    title: "AI Chat While Traveling — Offline on Flights, No Roaming",
+    description:
+      "Download a model before you fly, chat in airplane mode on your own GPU, queue what you send and sync on landing. No roaming, no account, no app store.",
+    canonical: `${SITE_URL}/ai-chat-for-travel`,
+  },
   "vs-chatgpt": {
     title: "ShadowTalk AI vs ChatGPT — Offline, Private, Free",
     description:
@@ -233,6 +245,30 @@ export const PAGE_SEO: Record<string, PageMeta> = {
     description:
       "PocketPal runs GGUF models on your phone — with history trapped on it. ShadowTalk installs as a PWA, runs on-device offline too, and syncs phone and desktop into one history.",
     canonical: `${SITE_URL}/vs/pocketpal`,
+  },
+  "vs-deepseek": {
+    title: "ShadowTalk AI vs DeepSeek — Open Weights, Cloud App, BYOK",
+    description:
+      "DeepSeek's official chat is cloud-only with an account; 2025 regulator scrutiny on data handling. ShadowTalk: on-device offline, queue + sync, DeepSeek via BYOK.",
+    canonical: `${SITE_URL}/vs/deepseek`,
+  },
+  "vs-copilot": {
+    title: "ShadowTalk AI vs Microsoft Copilot — Cloud vs Offline Workspace",
+    description:
+      "Copilot needs a Microsoft account, a connection and Microsoft's servers. ShadowTalk answers on-device offline, queues + syncs, and spans 16+ providers — free.",
+    canonical: `${SITE_URL}/vs/copilot`,
+  },
+  "vs-duckduckgo-ai": {
+    title: "ShadowTalk AI vs DuckDuckGo AI — Anonymous Cloud vs On-Device",
+    description:
+      "duck.ai is anonymous and training-free but cloud-only with daily limits. ShadowTalk runs a model on your GPU with zero egress, queue + sync — also no account.",
+    canonical: `${SITE_URL}/vs/duckduckgo-ai`,
+  },
+  "vs-brave-leo": {
+    title: "ShadowTalk AI vs Brave Leo — Browser AI, Scored Honestly",
+    description:
+      "Leo is a Brave-only sidebar on cloud models, rate-limited free and paid beyond. ShadowTalk: any browser, on-device offline chat, queue + sync, BYOK — free.",
+    canonical: `${SITE_URL}/vs/brave-leo`,
   },
   about: {
     title: "About — The Story Behind ShadowTalk",

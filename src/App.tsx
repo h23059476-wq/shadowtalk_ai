@@ -186,6 +186,8 @@ const AnimatedRoutes = () => {
           <Route path="/mobile-offline-ai" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="mobile-offline-ai" /></PageTransition></Suspense>} />
           <Route path="/webgpu-ai-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="webgpu-ai-chat" /></PageTransition></Suspense>} />
           <Route path="/local-vs-cloud-ai" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="local-vs-cloud-ai" /></PageTransition></Suspense>} />
+          <Route path="/chatgpt-down" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="chatgpt-down" /></PageTransition></Suspense>} />
+          <Route path="/ai-chat-for-travel" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="ai-chat-for-travel" /></PageTransition></Suspense>} />
           {/* Guide fleet hub */}
           <Route path="/guides" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidesIndexPage /></PageTransition></Suspense>} />
           {/* Comparison engine — /compare hub + one head-to-head per intent cluster */}
@@ -200,6 +202,10 @@ const AnimatedRoutes = () => {
           <Route path="/vs/claude" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="claude" /></PageTransition></Suspense>} />
           <Route path="/vs/jan" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="jan" /></PageTransition></Suspense>} />
           <Route path="/vs/pocketpal" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="pocketpal" /></PageTransition></Suspense>} />
+          <Route path="/vs/deepseek" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="deepseek" /></PageTransition></Suspense>} />
+          <Route path="/vs/copilot" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="copilot" /></PageTransition></Suspense>} />
+          <Route path="/vs/duckduckgo-ai" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="duckduckgo-ai" /></PageTransition></Suspense>} />
+          <Route path="/vs/brave-leo" element={<Suspense fallback={<PageLoader />}><PageTransition><ComparePage cmp="brave-leo" /></PageTransition></Suspense>} />
           <Route path="/benchmarks" element={<Suspense fallback={<PageLoader />}><PageTransition><BenchmarksPage /></PageTransition></Suspense>} />
           <Route path="/case-studies" element={<Navigate to="/home" replace />} />
           <Route path="/gdpr" element={<PageTransition><GDPRPage /></PageTransition>} />

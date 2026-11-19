@@ -128,10 +128,11 @@ describe("seo growth: comparison engine", () => {
   const llms = read("public/llms.txt");
   const compareHrefs = ["/compare", ...COMPARE_SLUGS.map((s) => `/vs/${s}`)];
 
-  it("ships the ten head-to-heads plus hub, each wired to route + PAGE_SEO", () => {
+  it("ships the fourteen head-to-heads plus hub, each wired to route + PAGE_SEO", () => {
     expect(COMPARE_SLUGS).toEqual([
       "chatgpt", "gemini", "claude", "lm-studio", "proton-lumo",
       "web-llm-chat", "ollama", "jan", "perplexity", "pocketpal",
+      "deepseek", "copilot", "duckduckgo-ai", "brave-leo",
     ]);
     for (const href of compareHrefs) {
       expect(routes.includes(href), `route missing: ${href}`).toBe(true);
@@ -214,10 +215,12 @@ describe("seo growth: guide fleet + llms-full.txt (GEO)", () => {
     "/compare",
   ];
 
-  it("ships ten guides, each substantive and extractive", () => {
+  it("ships twelve guides, each substantive and extractive", () => {
     expect(guideSlugs.sort()).toEqual([
+      "ai-chat-for-travel",
       "ai-chat-without-account",
       "best-offline-ai-chat",
+      "chatgpt-down",
       "free-ai-chat",
       "local-vs-cloud-ai",
       "mobile-offline-ai",

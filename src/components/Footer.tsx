@@ -37,6 +37,8 @@ const Footer = () => {
         { name: "Offline AI on your phone", href: "/mobile-offline-ai" },
         { name: "WebGPU AI chat", href: "/webgpu-ai-chat" },
         { name: "Local vs cloud AI", href: "/local-vs-cloud-ai" },
+        { name: "AI chat for travel", href: "/ai-chat-for-travel" },
+        { name: "ChatGPT down playbook", href: "/chatgpt-down" },
       ],
     },
     {
@@ -53,6 +55,10 @@ const Footer = () => {
         { name: "vs Jan", href: "/vs/jan" },
         { name: "vs Perplexity", href: "/vs/perplexity" },
         { name: "vs PocketPal", href: "/vs/pocketpal" },
+        { name: "vs DeepSeek", href: "/vs/deepseek" },
+        { name: "vs Microsoft Copilot", href: "/vs/copilot" },
+        { name: "vs DuckDuckGo AI", href: "/vs/duckduckgo-ai" },
+        { name: "vs Brave Leo", href: "/vs/brave-leo" },
       ],
     },
     {
