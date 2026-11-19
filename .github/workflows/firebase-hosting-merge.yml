@@ -48,3 +48,16 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           channelId: live
           projectId: shadowtalk-ai-7a513
+      # ------------------------------------------------------------------
+      # IndexNow — instant indexing for Bing, Seznam, Yandex and Brave.
+      # Bing's index feeds ChatGPT Search and Copilot citations, so pinging
+      # it on every deploy gets new guides and head-to-heads into AI answer
+      # engines days before their organic crawl would.
+      #
+      # Non-fatal: a failed submission must never roll back a good deploy.
+      # The key is public by design (IndexNow ownership proof is a public
+      # key file at /d13c725ef8b8d4b4bc693b954d61c248.txt).
+      # ------------------------------------------------------------------
+      - name: Submit sitemap URLs to IndexNow
+        if: success()
+        run: node scripts/submit-indexnow.mjs || echo "::warning::IndexNow submission failed (non-fatal)"
