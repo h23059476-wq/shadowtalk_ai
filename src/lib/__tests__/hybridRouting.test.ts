@@ -70,6 +70,13 @@ vi.mock("@/lib/byok", () => ({
   streamByokChat: byokMock.streamByokChat,
 }));
 
+// The keyless dead-end now routes through the FreeAIRouter, whose on-device
+// fallback consults modelManager for cached weights. Pin it to "not ready"
+// so these tests never depend on real Cache API state in the test DOM.
+vi.mock("@/services/modelManager", () => ({
+  isInstantModelReady: vi.fn(async () => false),
+}));
+
 import {
   streamCloudChat,
   shouldEscalateToCloud,
@@ -302,20 +309,26 @@ describe("streamCloudChat — private-by-default routing", () => {
     expect(result.error).toContain("frontier model");
   });
 
-  it("falls through to the standard mode logic when the engine is not loaded", async () => {
+  it("falls through to the free-AI router when the engine is not loaded", async () => {
     setPreferLocal("uid-alice", true);
     engineMock.isLoaded.mockReturnValue(false);
     const result = await streamCloudChat([chat("Hello")]);
     expect(engineMock.generate).not.toHaveBeenCalled();
-    // No key + no cached mode → the standard BYOK guidance error.
-    expect(result.error).toContain("API key");
+    // No key + no cached mode + no vault → the zero-setup guidance result
+    // (the chat UI renders the recovery card for needsSetup).
+    expect(result.needsSetup).toBe(true);
+    expect(result.error).toContain("on-device");
   });
 
-  it("uses the standard mode logic when prefer-local is off", async () => {
+  it("serves keyless visitors from the loaded on-device engine when prefer-local is off", async () => {
     setPreferLocal("uid-alice", false);
     const result = await streamCloudChat([chat("Hello")]);
-    expect(engineMock.generate).not.toHaveBeenCalled();
-    expect(result.error).toContain("API key");
+    // The free-AI router's final route IS the on-device engine: a keyless
+    // visitor with the engine loaded still gets a private reply instead of
+    // the old "add your API key" dead end.
+    expect(engineMock.generate).toHaveBeenCalledTimes(1);
+    expect(result.source).toBe("local");
+    expect(result.content).toBe("local reply from the on-device model");
   });
 });
 

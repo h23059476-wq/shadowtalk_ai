@@ -11,6 +11,7 @@ type AIProvider = "turbo" | string;
 import { ChatHeader } from "@/components/chat/ChatHeader";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { AiAccessOnboarding } from "@/components/chat/AiAccessOnboarding";
+import { ZeroSetupCard } from "@/components/chat/ZeroSetupCard";
 import { PrivateAiBanner } from "@/components/chat/PrivateAiBanner";
 import { ModelManagerDrawer } from "@/components/ModelManagerDrawer";
 import { GUEST_LOCAL_UID } from "@/hooks/useLocalChatModels";
@@ -301,6 +302,8 @@ const ChatbotPage = () => {
   // Modals
   const [showImageGenerator, setShowImageGenerator] = useState(false);
   const [showByok, setShowByok] = useState(false);
+  /** Free-AI router exhausted all routes → show the ZeroSetupCard recovery UI. */
+  const [zeroSetupNeeded, setZeroSetupNeeded] = useState(false);
   // Opened from the chat header's model dropdown ("Manage downloaded models").
   const [showModelManager, setShowModelManager] = useState(false);
   const [showMusicGenerator, setShowMusicGenerator] = useState(false);
@@ -1767,7 +1770,7 @@ Structure and Content Guidelines:
         }
       }
 
-      const { content: streamedContent, error: cloudError, source: resultSource, modelUsed: resultModel, provider: resultProvider, citations: resultCitations, usage: resultUsage } = await streamCloudChat(cloudMessages, {
+      const { content: streamedContent, error: cloudError, source: resultSource, modelUsed: resultModel, provider: resultProvider, citations: resultCitations, usage: resultUsage, needsSetup: resultNeedsSetup } = await streamCloudChat(cloudMessages, {
         signal: controller.signal,
         temperature: 0.7,
         // Intelligent-workspace Batch 1: clamp the requested completion cap to
@@ -1788,6 +1791,11 @@ Structure and Content Guidelines:
       if (resultProvider) assistantProvider = resultProvider;
 
       if (cloudError && !streamedContent) {
+        // Free-AI router exhausted every route (no key, vault empty, on-device
+        // model absent): swap the bare error toast for the recovery card so
+        // the visitor is one tap from chatting (install on-device or paste a
+        // free key) instead of reading dead-end copy.
+        if (resultNeedsSetup) setZeroSetupNeeded(true);
         throw new Error(cloudError);
       }
       if (cloudError && streamedContent) {
@@ -3112,6 +3120,11 @@ Structure and Content Guidelines:
                       setTimeout(() => handleSendMessage(promptStr), 100);
                     }}
                   >
+                    <ZeroSetupCard
+                      visible={zeroSetupNeeded}
+                      onDismiss={() => setZeroSetupNeeded(false)}
+                      onReady={() => setZeroSetupNeeded(false)}
+                    />
                     <ChatInput {...chatInputProps} isEmptyState />
                   </ChatEmptyState>
                 </motion.div>
@@ -3183,6 +3196,12 @@ Structure and Content Guidelines:
                   onDismiss={() => setChatShareOffer(null)}
                 />
               )}
+
+              <ZeroSetupCard
+                visible={zeroSetupNeeded}
+                onDismiss={() => setZeroSetupNeeded(false)}
+                onReady={() => setZeroSetupNeeded(false)}
+              />
 
               <motion.div
                 initial={{ opacity: 0, y: 16 }}

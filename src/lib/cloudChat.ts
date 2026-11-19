@@ -54,7 +54,8 @@ export interface CloudChatResult {
   content: string;
   error?: string;
   /** Provider-reported source identifier (adapter-specific).
-   *  Batch 4 values: "byok" | "shared" | "local" | "omniroute". */
+   *  Batch 4 values: "byok" | "shared" | "local" | "omniroute";
+   *  Free-AI router adds "free" (device-local free-tier key vault). */
   source?: string;
   /** Model actually used (adapter-specific). */
   modelUsed?: string;
@@ -70,6 +71,10 @@ export interface CloudChatResult {
    *  provider reports it. Absent = caller falls back to documented
    *  char-based estimation (labeled as estimated in telemetry). */
   usage?: ProviderUsage;
+  /** Free-AI router: true when every route (BYOK, key vault, on-device)
+   *  was exhausted and the user must pick a setup path. The chat UI renders
+   *  the ZeroSetupCard for this marker instead of a bare error toast. */
+  needsSetup?: boolean;
 }
 
 export function isCloudChatConfigured(): boolean {
@@ -349,12 +354,19 @@ export async function streamCloudChat(
   if (accessMode === "byok") {
     const byok = getByokConfig();
     if (!byok?.apiKey) {
-      return { content: "", error: "No API key set. Add your OpenAI/Anthropic/Google/Groq/OpenRouter key in Settings → Personalization → BYOK to start chatting." };
+      // BYOK mode selected but no key saved (or the storage was cleared).
+      // Never dead-end: the free-AI router fails over through the device
+      // vault and the on-device model before asking for setup.
+      const { streamFreeChat } = await import("@/ai/FreeAIRouter");
+      return streamFreeChat(messages, opts);
     }
     return streamByokChat(byok, messages, opts);
   }
   if (accessMode !== "shared") {
-    return { content: "", error: "Add your API key in Settings → Personalization → BYOK to start chatting. ShadowTalk is BYOK-only." };
+    // Keyless visitor (guest, or signed-in without a saved key): zero-setup
+    // routing — vault keys → on-device model → actionable setup guidance.
+    const { streamFreeChat } = await import("@/ai/FreeAIRouter");
+    return streamFreeChat(messages, opts);
   }
   return streamBuiltInChat(messages, opts);
 }

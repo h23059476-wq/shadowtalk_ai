@@ -40,6 +40,7 @@ const openInBrowser = (url: string) => {
  *   "shared"    → "via ShadowTalk shared"         (the Firebase Function path)
  *   "local"     → "via Local (<model>)"           (on-device web-llm)
  *   "omniroute" → "via OmniRoute"
+ *   "free"      → "via <Provider> (free key)"     (Free-AI router vault key)
  *   anything else with modelUsed → "via <modelUsed>"
  */
 function formatSourceLabel(source: string, provider?: string, modelUsed?: string): string {
@@ -75,6 +76,22 @@ function formatSourceLabel(source: string, provider?: string, modelUsed?: string
       return modelUsed ? `On-device · private (${modelUsed})` : "On-device · private";
     case "omniroute":
       return "via OmniRoute";
+    case "free":
+      // Free-AI router: a device-local vault key (distinct from the
+      // signed-in account's BYOK key).
+      if (provider) {
+        const knownFree: Record<string, string> = {
+          openai: "OpenAI",
+          gemini: "Google Gemini",
+          groq: "Groq",
+          openrouter: "OpenRouter",
+          cerebras: "Cerebras",
+          mistral: "Mistral",
+        };
+        const label = knownFree[provider] || provider.charAt(0).toUpperCase() + provider.slice(1);
+        return `via ${label} (free key)`;
+      }
+      return "via free AI";
     default:
       return modelUsed ? `via ${modelUsed}` : "";
   }
