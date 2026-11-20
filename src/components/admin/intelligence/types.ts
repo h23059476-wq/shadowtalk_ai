@@ -13,6 +13,7 @@ export type DashboardView =
   | 'ai-intelligence'
   | 'cost-intelligence'
   | 'growth-intelligence'
+  | 'traffic-funnel'
   | 'performance'
   | 'privacy-security'
   | 'reports';

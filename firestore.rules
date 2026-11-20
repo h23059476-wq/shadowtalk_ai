@@ -213,13 +213,132 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
-    // analytics_daily: admin-only aggregate. The nested usage_analytics match
-    // that previously lived inside this block was a syntax artifact that created
-    // a phantom subcollection path (analytics_daily/{doc}/usage_analytics/{doc}) —
-    // removed in Batch 3. The canonical usage_analytics rule is below.
-    match /analytics_daily/{doc} {
-      allow read, write: if isAdmin();
+    // ------------------------------------------------------------------
+    // First-party analytics (Batch 4) — anonymous, zero-PII product data.
+    //
+    //   analytics_daily/{YYYY-MM-DD}        atomic counter increments
+    //   analytics_clients/{clientId}        anonymous profile + retention flags
+    //   analytics_client_days/{day}_{cid}   DAU heartbeat, one doc per active day
+    //
+    // Public access is WRITE-ONLY with strict shape validation; counters are
+    // MONOTONIC on update (a client can never decrease one — request.resource
+    // holds post-increment values, resource.data the pre-update snapshot).
+    // Reads and deletes stay admin-only. Spam is bounded by shape checks +
+    // value caps; App Check is the roadmap hardening (see feedback rule note).
+    // ------------------------------------------------------------------
+
+    function dailyKeysOnly(data) {
+      return data.keys().hasOnly(['visits', 'page_views', 'messages', 'sessions_new', 'sessions_returning', 'events', 'ctas', 'ide_runs', 'paths', 'referrers', 'campaigns']);
     }
+
+    function dailyScalarsPresent(data) {
+      return data.keys().hasAll(['visits', 'page_views', 'messages', 'sessions_new', 'sessions_returning', 'events', 'ctas', 'ide_runs']);
+    }
+
+    function isBoundedCounter(v, max) {
+      return v is number && v >= 0 && v <= max;
+    }
+
+    function dailyScalarsValid(data) {
+      return isBoundedCounter(data.visits, 100000) &&
+             isBoundedCounter(data.page_views, 100000) &&
+             isBoundedCounter(data.messages, 100000) &&
+             isBoundedCounter(data.sessions_new, 100000) &&
+             isBoundedCounter(data.sessions_returning, 100000) &&
+             isBoundedCounter(data.events, 1000000) &&
+             isBoundedCounter(data.ctas, 100000) &&
+             isBoundedCounter(data.ide_runs, 100000);
+    }
+
+    function dailyMapsValid(data) {
+      // Attribution maps are optional; bound the key count (rules cannot
+      // iterate map values, so depth policing is the writer's job).
+      return (!data.keys().hasAll(['paths']) || (data.paths is map && data.paths.keys().size() <= 300)) &&
+             (!data.keys().hasAll(['referrers']) || (data.referrers is map && data.referrers.keys().size() <= 300)) &&
+             (!data.keys().hasAll(['campaigns']) || (data.campaigns is map && data.campaigns.keys().size() <= 300));
+    }
+
+    function dailyMonotonic(data, before) {
+      return (!data.keys().hasAll(['visits']) || !before.keys().hasAll(['visits']) || data.visits >= before.visits) &&
+             (!data.keys().hasAll(['page_views']) || !before.keys().hasAll(['page_views']) || data.page_views >= before.page_views) &&
+             (!data.keys().hasAll(['messages']) || !before.keys().hasAll(['messages']) || data.messages >= before.messages) &&
+             (!data.keys().hasAll(['sessions_new']) || !before.keys().hasAll(['sessions_new']) || data.sessions_new >= before.sessions_new) &&
+             (!data.keys().hasAll(['sessions_returning']) || !before.keys().hasAll(['sessions_returning']) || data.sessions_returning >= before.sessions_returning) &&
+             (!data.keys().hasAll(['events']) || !before.keys().hasAll(['events']) || data.events >= before.events) &&
+             (!data.keys().hasAll(['ctas']) || !before.keys().hasAll(['ctas']) || data.ctas >= before.ctas) &&
+             (!data.keys().hasAll(['ide_runs']) || !before.keys().hasAll(['ide_runs']) || data.ide_runs >= before.ide_runs);
+    }
+
+    match /analytics_daily/{doc} {
+      allow create: if isAdmin() ||
+        (doc.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}') &&
+         dailyKeysOnly(request.resource.data) &&
+         dailyScalarsPresent(request.resource.data) &&
+         dailyScalarsValid(request.resource.data) &&
+         dailyMapsValid(request.resource.data));
+      allow update: if isAdmin() ||
+        (doc.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}') &&
+         dailyKeysOnly(request.resource.data) &&
+         dailyScalarsPresent(request.resource.data) &&
+         dailyScalarsValid(request.resource.data) &&
+         dailyMapsValid(request.resource.data) &&
+         dailyMonotonic(request.resource.data, resource.data));
+      allow read, delete: if isAdmin();
+    }
+
+    function isValidClientId(id) {
+      return id.size() >= 8 && id.size() <= 64 && id.matches('[0-9a-zA-Z-]+');
+    }
+
+    function clientKeysOnly(data) {
+      return data.keys().hasOnly(['client_id', 'first_seen', 'last_seen', 'first_path', 'first_referrer', 'utm_source', 'utm_medium', 'utm_campaign', 'returned_d1', 'returned_d7', 'returned_d30', 'first_message_at', 'message_count']);
+    }
+
+    function clientFieldsValid(data) {
+      return data.keys().hasAll(['client_id', 'first_seen', 'last_seen']) &&
+             data.client_id is string && data.client_id.size() <= 64 &&
+             data.first_seen is number && data.first_seen > 0 && data.first_seen <= 4102444800000 &&
+             data.last_seen is number && data.last_seen >= data.first_seen &&
+             (!data.keys().hasAll(['first_path']) || (data.first_path is string && data.first_path.size() <= 200)) &&
+             (!data.keys().hasAll(['first_referrer']) || (data.first_referrer is string && data.first_referrer.size() <= 120)) &&
+             (!data.keys().hasAll(['utm_source']) || (data.utm_source is string && data.utm_source.size() <= 120)) &&
+             (!data.keys().hasAll(['utm_medium']) || (data.utm_medium is string && data.utm_medium.size() <= 120)) &&
+             (!data.keys().hasAll(['utm_campaign']) || (data.utm_campaign is string && data.utm_campaign.size() <= 120)) &&
+             (!data.keys().hasAll(['returned_d1']) || data.returned_d1 is bool) &&
+             (!data.keys().hasAll(['returned_d7']) || data.returned_d7 is bool) &&
+             (!data.keys().hasAll(['returned_d30']) || data.returned_d30 is bool) &&
+             (!data.keys().hasAll(['first_message_at']) || (data.first_message_at is number && data.first_message_at > 0 && data.first_message_at <= 4102444800000)) &&
+             (!data.keys().hasAll(['message_count']) || isBoundedCounter(data.message_count, 1000000));
+    }
+
+    match /analytics_clients/{clientId} {
+      // first_message_at is set-once: once present it can never change, and
+      // message_count is monotonic — activation integrity against racing or
+      // malicious client writes.
+      function clientUpdateInvariants(data, before) {
+        return data.first_seen == before.first_seen &&
+               (!data.keys().hasAll(['first_message_at']) || !before.keys().hasAll(['first_message_at']) || data.first_message_at == before.first_message_at) &&
+               (!data.keys().hasAll(['message_count']) || !before.keys().hasAll(['message_count']) || data.message_count >= before.message_count);
+      }
+      allow create: if isAdmin() || (isValidClientId(clientId) && clientKeysOnly(request.resource.data) && clientFieldsValid(request.resource.data));
+      allow update: if isAdmin() || (isValidClientId(clientId) && clientKeysOnly(request.resource.data) && clientFieldsValid(request.resource.data) && clientUpdateInvariants(request.resource.data, resource.data));
+      allow read, delete: if isAdmin();
+    }
+
+    match /analytics_client_days/{docId} {
+      function isValidClientDayWrite() {
+        let data = request.resource.data;
+        return docId.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9a-zA-Z-]+') &&
+               data.keys().hasAll(['client_id', 'day', 'updated_at']) &&
+               data.keys().hasOnly(['client_id', 'day', 'updated_at']) &&
+               data.day == docId.split('_')[0] &&
+               data.client_id is string && data.client_id.size() <= 64 &&
+               data.updated_at is number && data.updated_at > 0 && data.updated_at <= 4102444800000;
+      }
+      allow create, update: if isAdmin() || isValidClientDayWrite();
+      allow read, delete: if isAdmin();
+    }
+
 
     // daily_usage: server-managed shared-AI rate limiter. Documents are
     // `${uid}_${YYYY-MM-DD}` written ONLY by the `chat` Cloud Function via the

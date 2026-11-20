@@ -1978,6 +1978,7 @@ Structure and Content Guidelines:
 
     try {
       const startTime = performance.now();
+      trackShadowTalkEvent("chat_message_sent", { mission_id: conversationId, user_id: user?.id, model: "turbo", tool_name: "core_chat" });
       trackShadowTalkEvent("mission_started", { mission_id: conversationId, user_id: user?.id, model: "turbo", tool_name: "core_chat" });
       await runChatCompletion(chatMessages, conversationId);
       const endTime = performance.now();
@@ -2723,6 +2724,7 @@ Structure and Content Guidelines:
 
     try {
       const startTime = performance.now();
+      trackShadowTalkEvent("chat_message_sent", { mission_id: conversationId, user_id: user?.id, model: "turbo", tool_name: "core_chat" });
       trackShadowTalkEvent("mission_started", { mission_id: conversationId, user_id: user?.id, model: "turbo", tool_name: "core_chat" });
       
       const assistantReply = await runChatCompletion(chatMessages, conversationId);

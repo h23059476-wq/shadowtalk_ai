@@ -13,6 +13,7 @@ import { GrowthIntelligenceView } from "@/components/admin/intelligence/views/Gr
 import { PerformanceView } from "@/components/admin/intelligence/views/PerformanceView";
 import { PrivacySecurityView } from "@/components/admin/intelligence/views/PrivacySecurityView";
 import { ReportsView } from "@/components/admin/intelligence/views/ReportsView";
+import { TrafficFunnelView } from "@/components/admin/intelligence/views/TrafficFunnelView";
 import { EventIngestionModal } from "@/components/admin/intelligence/modals/EventIngestionModal";
 import { Check } from "lucide-react";
 
@@ -45,6 +46,7 @@ export default function IntelligenceCenterPage() {
                 {activeView === "ai-intelligence" && <AiIntelligenceView data={dataset.aiIntelligence} isLoading={isRefreshing} />}
                 {activeView === "cost-intelligence" && <CostIntelligenceView data={dataset.costIntelligence} isLoading={isRefreshing} />}
                 {activeView === "growth-intelligence" && <GrowthIntelligenceView data={dataset.growthIntelligence} isLoading={isRefreshing} />}
+                {activeView === "traffic-funnel" && <TrafficFunnelView />}
                 {activeView === "performance" && <PerformanceView data={dataset.performance} isLoading={isRefreshing} />}
                 {activeView === "privacy-security" && <PrivacySecurityView data={dataset.privacySecurity} isLoading={isRefreshing} />}
                 {activeView === "reports" && <ReportsView data={dataset.reports} timeRange={timeRange} comparison={comparison} onExport={handleExport} onCreateReport={handleCreateReport} isLoading={isRefreshing} />}

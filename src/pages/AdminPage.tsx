@@ -9,17 +9,20 @@
  * Route: /admin
  */
 
-import { ComponentType } from "react";
+import { ComponentType, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/components/AuthProvider";
 import { useAdminCheck } from "@/hooks/useAdminCheck";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { localDayKey } from "@/lib/analytics/identity";
 import { motion } from "framer-motion";
 import {
   ShieldAlert,
   Users,
   CreditCard,
   MessageSquare,
-  DollarSign,
+  FileText,
   Megaphone,
   Rocket,
   MessageSquareHeart,
@@ -54,16 +57,43 @@ type AdminDashboardProps = {
 
 const AdminDashboardTyped = AdminDashboard as unknown as ComponentType<AdminDashboardProps>;
 
-// Live Firestore aggregates are not yet wired. Until they are, we display
-// honest placeholder values rather than fabricated metrics. The previous
-// implementation hardcoded "12,847 users / $48,210 MRR" — those numbers
-// were never real and have been removed.
-const STATS = [
-  { label: "Total Users", value: "—", icon: Users, accent: "text-indigo-400 bg-indigo-500/10" },
-  { label: "Active Subscriptions", value: "N/A", icon: CreditCard, accent: "text-emerald-400 bg-emerald-500/10" },
-  { label: "Daily Messages", value: "—", icon: MessageSquare, accent: "text-purple-400 bg-purple-500/10" },
-  { label: "Revenue (MRR)", value: "Free", icon: DollarSign, accent: "text-amber-400 bg-amber-500/10" },
-];
+// Live first-party analytics for TODAY, read straight from the aggregates
+// written by the client SDK (analytics_daily counter doc + client_day heartbeats).
+// Zero values are REAL zero values — no fabrication, ever.
+type TodayTraffic = { visits: number; dau: number; pageViews: number; messages: number };
+
+function useTodayTraffic(enabled: boolean): TodayTraffic | null {
+  const [stats, setStats] = useState<TodayTraffic | null>(null);
+  useEffect(() => {
+    if (!enabled) return undefined;
+    let cancelled = false;
+    void (async () => {
+      try {
+        const day = localDayKey();
+        const dailySnap = await getDoc(doc(db, "analytics_daily", day));
+        const daily = (dailySnap.exists() ? dailySnap.data() : null) as {
+          visits?: number;
+          page_views?: number;
+          messages?: number;
+        } | null;
+        const dauSnap = await getDocs(query(collection(db, "analytics_client_days"), where("day", "==", day)));
+        if (cancelled) return;
+        setStats({
+          visits: daily?.visits ?? 0,
+          dau: dauSnap.size,
+          pageViews: daily?.page_views ?? 0,
+          messages: daily?.messages ?? 0,
+        });
+      } catch {
+        if (!cancelled) setStats(null);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [enabled]);
+  return stats;
+}
 
 const QUICK_ACTIONS = [
   { label: "View Users", icon: Users, section: "users" },
@@ -104,6 +134,14 @@ export default function AdminPage() {
   const navigate = useNavigate();
   const accessGranted = Boolean(user && isAdmin);
   const accessLoading = authLoading || roleLoading;
+  const today = useTodayTraffic(accessGranted);
+
+  const todayStats = [
+    { label: "Visits Today", value: today ? today.visits.toLocaleString() : "—", icon: Users, accent: "text-indigo-400 bg-indigo-500/10" },
+    { label: "Anonymous Visitors Today", value: today ? today.dau.toLocaleString() : "—", icon: CreditCard, accent: "text-emerald-400 bg-emerald-500/10" },
+    { label: "Page Views Today", value: today ? today.pageViews.toLocaleString() : "—", icon: FileText, accent: "text-sky-400 bg-sky-500/10" },
+    { label: "Messages Today", value: today ? today.messages.toLocaleString() : "—", icon: MessageSquare, accent: "text-purple-400 bg-purple-500/10" },
+  ];
 
   const handleNavigate = (section: string) => {
     // In production this would route to the admin subpage (e.g. /admin/users).
@@ -142,9 +180,8 @@ export default function AdminPage() {
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Admin Dashboard</h1>
             <p className="text-sm text-muted-foreground mt-2 max-w-2xl">
-              Operational overview for the ShadowTalk AI team. Live Firestore aggregates
-              are not yet wired — all metrics below show zero or "—" until backend
-              wiring is added.
+              Operational overview for the ShadowTalk AI team. Traffic stats are live from the
+              first-party analytics pipeline (anonymous, zero-PII). Full funnel: /admin/intelligence → Traffic &amp; Funnel.
             </p>
           </motion.div>
 
@@ -154,9 +191,9 @@ export default function AdminPage() {
             <AccessDeniedFallback />
           ) : (
             <>
-              {/* Stats grid */}
+              {/* Stats grid — live first-party traffic (today) */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                {STATS.map((stat, i) => (
+                {todayStats.map((stat, i) => (
                   <motion.div
                     key={stat.label}
                     initial={{ opacity: 0, y: 10 }}

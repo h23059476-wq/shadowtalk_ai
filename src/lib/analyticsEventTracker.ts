@@ -1,10 +1,34 @@
-import { trackEvent, db } from "./firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+/**
+ * ShadowTalk Analytics — public tracking facade.
+ *
+ * `trackShadowTalkEvent(name, params)` stays the one API every feature calls.
+ * Internals (Batch 4) now run on the first-party offline-first pipeline in
+ * `src/lib/analytics/`:
+ *
+ *   - anonymous client id + 30-min sessions      (analytics/identity.ts)
+ *   - offline queue, batched Firestore writes    (analytics/ingest.ts)
+ *   - auto page views via <AnalyticsRouteTracker> (analytics/track.tsx)
+ *
+ * Events land in three Firestore targets atomically per flush:
+ *   analytics_events/{id}    raw event feed (admin real-time views)
+ *   analytics_daily/{day}    atomic counter increments (dashboards, cheap reads)
+ *   analytics_clients/{id}   anonymous profile: first touch, activation, D1/D7/D30
+ *
+ * Privacy: no PII, no IP, no user agent, no fingerprinting. The client id is
+ * a random UUID that the user can wipe via resetAnalyticsIdentity().
+ */
 
-// Generate a simple session ID that persists for this browser session
-const SESSION_ID = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 15);
+export {
+  track as trackEventEnriched,
+  initAnalytics,
+  AnalyticsRouteTracker,
+  type TrackParams,
+} from "./analytics/track";
+export { resetAnalyticsIdentity, getClientId } from "./analytics/identity";
 
-export type AnalyticsEventName = 
+import { track as pipelineTrack } from "./analytics/track";
+
+export type AnalyticsEventName =
   | "page_viewed"
   | "cta_clicked"
   | "session_started"
@@ -37,7 +61,7 @@ export interface AnalyticsEventParams {
   mission_id?: string;
   feature?: string;
   model?: string;
-  duration_ms?: number; 
+  duration_ms?: number;
   ttfv_ms?: number;
   success?: boolean;
   error_type?: string;
@@ -51,22 +75,20 @@ export interface AnalyticsEventParams {
   [key: string]: any;
 }
 
+// Simple per-load session marker kept for Firebase Analytics parity — the
+// first-party pipeline generates proper 30-minute sessions on its own.
+const SESSION_ID = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 15);
+
+/**
+ * Track one product event.
+ *
+ * The first-party pipeline is the system of record: the event is enriched
+ * (anonymous client id, 30-min session, day bucket, path), queued offline
+ * and flushed to Firestore in ONE batched write (analytics_events feed +
+ * analytics_daily counters + analytics_clients profile). Google Analytics
+ * mirrors the event client-side inside the pipeline when available.
+ */
 export const trackShadowTalkEvent = async (eventName: AnalyticsEventName, params?: Omit<AnalyticsEventParams, "session_id">) => {
   const fullParams = { ...params, session_id: SESSION_ID };
-  
-  // 1. Log to standard Firebase Analytics
-  trackEvent(eventName, fullParams);
-
-  // 2. Log to Firestore for the Admin Dashboard real-time funnel
-  try {
-    const eventsRef = collection(db, "analytics_events");
-    await addDoc(eventsRef, {
-      event_name: eventName,
-      ...fullParams,
-      timestamp: serverTimestamp(),
-    });
-  } catch (err) {
-    console.warn("Failed to log event to Firestore", err);
-  }
+  pipelineTrack(eventName, fullParams);
 };
-

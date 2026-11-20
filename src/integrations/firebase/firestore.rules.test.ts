@@ -441,4 +441,126 @@ rulesDescribe("Firestore auth and profile rules", () => {
     await assertSucceeds(getDoc(doc(aliceDb, "conversation_compactions/cmp-1")));
     await assertSucceeds(deleteDoc(doc(aliceDb, "conversation_compactions/cmp-1")));
   });
+
+  // ---------------------------------------------------------------
+  // Batch 4 — first-party analytics: analytics_daily, analytics_clients,
+  // analytics_client_days. Public write-only with strict shape validation,
+  // monotonic counters, admin-only reads.
+  // ---------------------------------------------------------------
+  const VALID_DAILY = {
+    visits: 1, page_views: 3, messages: 1, sessions_new: 1, sessions_returning: 0,
+    events: 5, ctas: 1, ide_runs: 0,
+    paths: { "/home": 3 }, referrers: { "news.ycombinator.com": 1 }, campaigns: {},
+  };
+
+  it("allows an anonymous client to create a well-formed analytics_daily counter doc", async () => {
+    const anonDb = testEnv.unauthenticatedContext().firestore();
+    await assertSucceeds(setDoc(doc(anonDb, "analytics_daily/2026-11-21"), VALID_DAILY));
+  });
+
+  it("denies malformed analytics_daily writes (bad id, missing scalars, extra keys, negatives)", async () => {
+    const anonDb = testEnv.unauthenticatedContext().firestore();
+    // doc id must be a date
+    await assertFails(setDoc(doc(anonDb, "analytics_daily/not-a-date"), VALID_DAILY));
+    // missing scalar counters (ide_runs omitted)
+    await assertFails(setDoc(doc(anonDb, "analytics_daily/2026-11-21"), {
+      visits: 1, page_views: 3, messages: 1, sessions_new: 1, sessions_returning: 0,
+      events: 5, ctas: 1,
+      paths: { "/home": 3 }, referrers: { "news.ycombinator.com": 1 }, campaigns: {},
+    }));
+    // extra key outside the whitelist
+    await assertFails(setDoc(doc(anonDb, "analytics_daily/2026-11-21"), { ...VALID_DAILY, hacked_field: true }));
+    // negative counter
+    await assertFails(setDoc(doc(anonDb, "analytics_daily/2026-11-21"), { ...VALID_DAILY, visits: -5 }));
+    // non-number counter
+    await assertFails(setDoc(doc(anonDb, "analytics_daily/2026-11-21"), { ...VALID_DAILY, visits: "many" }));
+  });
+
+  it("allows counter increments but denies decreasing a daily counter", async () => {
+    const anonDb = testEnv.unauthenticatedContext().firestore();
+    await assertSucceeds(setDoc(doc(anonDb, "analytics_daily/2026-11-21"), VALID_DAILY));
+    // Simulate the batched FieldValue.increment flush (post-write values).
+    await assertSucceeds(setDoc(doc(anonDb, "analytics_daily/2026-11-21"), { visits: 4, page_views: 7, events: 9 }, { merge: true }));
+    // Any attempt to roll a counter backwards is rejected.
+    await assertFails(setDoc(doc(anonDb, "analytics_daily/2026-11-21"), { visits: 2 }, { merge: true }));
+    await assertFails(updateDoc(doc(anonDb, "analytics_daily/2026-11-21"), { messages: 0 }));
+  });
+
+  it("keeps analytics_daily reads and deletes admin-only", async () => {
+    await testEnv.withSecurityRulesDisabled(async (context) => {
+      await setDoc(doc(context.firestore(), "analytics_daily/2026-11-21"), VALID_DAILY);
+      await setDoc(doc(context.firestore(), "user_roles/admin"), { role: "admin" });
+    });
+    const anonDb = testEnv.unauthenticatedContext().firestore();
+    const adminDb = testEnv.authenticatedContext("admin").firestore();
+    await assertFails(getDoc(doc(anonDb, "analytics_daily/2026-11-21")));
+    await assertSucceeds(getDoc(doc(adminDb, "analytics_daily/2026-11-21")));
+    await assertFails(deleteDoc(doc(anonDb, "analytics_daily/2026-11-21")));
+  });
+
+  const VALID_CLIENT = {
+    client_id: "0f8f2f10-5e11-4d0e-9f6c-1a2b3c4d5e6f",
+    first_seen: 1739999999000,
+    last_seen: 1739999999000,
+    first_path: "/home",
+    first_referrer: "news.ycombinator.com",
+    utm_source: "show_hn",
+  };
+
+  it("allows anonymous client profile upserts and pins first_message_at set-once", async () => {
+    const anonDb = testEnv.unauthenticatedContext().firestore();
+    await assertSucceeds(setDoc(doc(anonDb, "analytics_clients/0f8f2f10-5e11-4d0e-9f6c-1a2b3c4d5e6f"), VALID_CLIENT));
+    // Later activity updates last_seen / retention flags.
+    await assertSucceeds(setDoc(
+      doc(anonDb, "analytics_clients/0f8f2f10-5e11-4d0e-9f6c-1a2b3c4d5e6f"),
+      { last_seen: 1740008639000, returned_d1: true },
+      { merge: true },
+    ));
+    // First message lands and is then pinned forever.
+    await assertSucceeds(setDoc(
+      doc(anonDb, "analytics_clients/0f8f2f10-5e11-4d0e-9f6c-1a2b3c4d5e6f"),
+      { first_message_at: 1740000000000, message_count: 1 },
+      { merge: true },
+    ));
+    await assertFails(setDoc(
+      doc(anonDb, "analytics_clients/0f8f2f10-5e11-4d0e-9f6c-1a2b3c4d5e6f"),
+      { first_message_at: 1740099999000 },
+      { merge: true },
+    ));
+    // message_count can grow but never shrink.
+    await assertSucceeds(setDoc(
+      doc(anonDb, "analytics_clients/0f8f2f10-5e11-4d0e-9f6c-1a2b3c4d5e6f"),
+      { message_count: 3 },
+      { merge: true },
+    ));
+    await assertFails(setDoc(
+      doc(anonDb, "analytics_clients/0f8f2f10-5e11-4d0e-9f6c-1a2b3c4d5e6f"),
+      { message_count: 1 },
+      { merge: true },
+    ));
+    // Reads stay admin-only.
+    await assertFails(getDoc(doc(anonDb, "analytics_clients/0f8f2f10-5e11-4d0e-9f6c-1a2b3c4d5e6f")));
+  });
+
+  it("denies malformed analytics_clients writes", async () => {
+    const anonDb = testEnv.unauthenticatedContext().firestore();
+    await assertFails(setDoc(doc(anonDb, "analytics_clients/short"), VALID_CLIENT)); // id too short
+    await assertFails(setDoc(doc(anonDb, "analytics_clients/has space in id"), VALID_CLIENT));
+    await assertFails(setDoc(doc(anonDb, "analytics_clients/0f8f2f10-5e11-4d0e-9f6c-1a2b3c4d5e6f"), { ...VALID_CLIENT, hacked: 1 }));
+    await assertFails(setDoc(doc(anonDb, "analytics_clients/0f8f2f10-5e11-4d0e-9f6c-1a2b3c4d5e6f"), { ...VALID_CLIENT, last_seen: 1 })); // before first_seen
+    await assertFails(setDoc(doc(anonDb, "analytics_clients/0f8f2f10-5e11-4d0e-9f6c-1a2b3c4d5e6f"), { ...VALID_CLIENT, client_id: 123 }));
+  });
+
+  it("validates the analytics_client_days heartbeat and binds day to the doc id", async () => {
+    const anonDb = testEnv.unauthenticatedContext().firestore();
+    const cid = "0f8f2f105e114d0e9f6c1a2b3c4d5e6f";
+    await assertSucceeds(setDoc(doc(anonDb, `analytics_client_days/2026-11-21_${cid}`), {
+      client_id: cid, day: "2026-11-21", updated_at: 1739999999000,
+    }));
+    // day field must match the date encoded in the doc id.
+    await assertFails(setDoc(doc(anonDb, `analytics_client_days/2026-11-21_${cid}`), {
+      client_id: cid, day: "2020-01-01", updated_at: 1739999999000,
+    }));
+    await assertFails(getDoc(doc(anonDb, `analytics_client_days/2026-11-21_${cid}`)));
+  });
 });

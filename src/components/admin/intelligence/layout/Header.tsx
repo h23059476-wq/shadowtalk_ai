@@ -34,6 +34,7 @@ const VIEW_TITLES: Record<DashboardView, { title: string; category: string }> = 
   'ai-intelligence': { title: 'AI Intelligence', category: 'Model & Provider Telemetry' },
   'cost-intelligence': { title: 'Cost Intelligence', category: 'Financial Ledger & Estimation' },
   'growth-intelligence': { title: 'Growth Intelligence', category: 'Acquisition & Conversion' },
+  'traffic-funnel': { title: 'Traffic & Funnel', category: 'First-Party Acquisition & Retention' },
   'performance': { title: 'Performance', category: 'System Health & Latency' },
   'privacy-security': { title: 'Privacy & Security', category: 'Governance & Zero-PII Audit' },
   'reports': { title: 'Reports & Exports', category: 'Executive Intelligence' }

@@ -32,6 +32,7 @@ export function useAnalytics() {
         'ai-intelligence',
         'cost-intelligence',
         'growth-intelligence',
+        'traffic-funnel',
         'performance',
         'privacy-security',
         'reports'

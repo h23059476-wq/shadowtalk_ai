@@ -30,6 +30,8 @@ import { OAuthReturnHandler } from "@/components/OAuthReturnHandler";
 import { OAuthRedirectHandler } from "@/components/OAuthRedirectHandler";
 import EmailVerificationNotice from "@/components/auth/EmailVerificationNotice";
 import { useReferralCapture } from "@/hooks/useReferralTracking";
+import { AnalyticsRouteTracker } from "@/lib/analytics/track";
+import { CloudflareWebAnalyticsBeacon } from "@/components/CloudflareWebAnalyticsBeacon";
 
 export const CommandPaletteContext = createContext<{ open: () => void }>({ open: () => {} });
 // Critical path pages - loaded immediately
@@ -328,7 +330,9 @@ const App = () => {
               )}
               <Toaster />
               <Sonner />
+              <CloudflareWebAnalyticsBeacon />
                <BrowserRouter>
+                  <AnalyticsRouteTracker />
                   <MobileViewportFix />
                   <EmailVerificationNotice />
                   <NetworkTransitionOverlay />

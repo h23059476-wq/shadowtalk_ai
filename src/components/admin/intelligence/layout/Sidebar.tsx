@@ -15,7 +15,8 @@ import {
   ChevronRight,
   Database,
   Radio,
-  PlusCircle
+  PlusCircle,
+  Globe
 } from 'lucide-react';
 import { DashboardView } from '../types';
 
@@ -55,6 +56,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'ai-intelligence', label: 'AI Intelligence', icon: Cpu },
     { id: 'cost-intelligence', label: 'Cost Intelligence', icon: Coins, badge: 'Ledger', badgeColor: 'amber' },
     { id: 'growth-intelligence', label: 'Growth Intelligence', icon: TrendingUp },
+    { id: 'traffic-funnel', label: 'Traffic & Funnel', icon: Globe, badge: 'Live', badgeColor: 'emerald' },
     { id: 'performance', label: 'Performance', icon: Activity },
     { id: 'privacy-security', label: 'Privacy & Security', icon: ShieldCheck, badge: 'Zero-PII', badgeColor: 'emerald' },
     { id: 'reports', label: 'Reports', icon: FileSpreadsheet }
