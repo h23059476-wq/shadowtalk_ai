@@ -11,7 +11,6 @@ import { useStealthKillSwitch } from "@/hooks/useStealthKillSwitch";
 import { trackShadowTalkEvent } from "@/lib/analyticsEventTracker";
 import FreeTierLimitsStrip from "@/components/growth/FreeTierLimitsStrip";
 import ProofOverHypeBar from "@/components/growth/ProofOverHypeBar";
-import HeroProductVideo from "@/components/HeroProductVideo";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -103,12 +102,6 @@ const HeroSection = () => {
               No card · No email · Pick Claude, GPT-4o, Gemini, Llama — all on your own keys
             </p>
           </div>
-
-          {/* Above-the-fold brand film — 20s seamless loop, silent,
-              builds the brand: "Every model. One voice." across GPT-5.1,
-              Claude, Gemini and on-device Llama; the actual CTAs sit right
-              above it */}
-          <HeroProductVideo />
 
           {/* BYOK / WebGPU / RAG feature pills — explicit, scannable */}
           <div className="mb-6 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 px-2">
