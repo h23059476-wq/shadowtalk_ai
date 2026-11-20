@@ -13,6 +13,8 @@ import { motion } from 'framer-motion';
 import { LazyMarkdown } from './LazyMarkdown';
 import { CodeBlock } from './CodeBlock';
 import { ResearchDataCard } from './ResearchDataCard';
+import { SvgImageCard } from './SvgImageCard';
+import { isCodedSvgFence, validateSvg } from '@/lib/codedImages';
 import { VisualizationCard } from '@/components/visualization';
 import type { VisualizationSpec, VizSpecKind } from '@/lib/visualization/spec';
 import { useToast } from '@/hooks/use-toast';
@@ -318,6 +320,15 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
                     // JSON stays in message content and persistence.
                     if (!inline && match?.[1] === 'shadowdata') {
                       return <ResearchDataCard raw={codeString} />;
+                    }
+                    // Coded images — an SVG fence becomes a downloadable image
+                    // card (preview + PNG/JPG export, all client-side). Invalid
+                    // SVG (scripts, external refs) falls back to the code block.
+                    if (!inline && isCodedSvgFence(match?.[1], codeString)) {
+                      const parsed = validateSvg(codeString);
+                      if (parsed.ok) {
+                        return <SvgImageCard svg={parsed.svg} width={parsed.width} height={parsed.height} onOpenCanvas={onOpenCodeCanvas} />;
+                      }
                     }
                     if (!inline && match) {
                       return <CodeBlock code={codeString} language={match[1]} onOpenCanvas={onOpenCodeCanvas} onOpenIDE={onOpenIDE} onLaunchWebsite={onLaunchWebsite} />;

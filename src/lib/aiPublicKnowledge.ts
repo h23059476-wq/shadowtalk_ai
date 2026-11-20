@@ -80,6 +80,7 @@ export const SHADOWTALK_AI_KNOWLEDGE = {
     "ShadowTalk Live — real-time voice conversations",
     "Shadow Twin — a public shareable AI persona of you",
     "Code IDE and app builder",
+    "Coded images — the AI draws logos, icons, diagrams and illustrations as inline SVG in chat, previewed and downloadable as PNG/JPG (works offline, no image API key)",
     "End-to-end encrypted chat with passphrase unlock",
     "Stealth Vault — encrypted storage for sensitive work",
     "Marketplace of specialist AI agents",
