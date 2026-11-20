@@ -23,7 +23,6 @@ import {
   doc,
   writeBatch,
   increment as fbIncrement,
-  type FieldValue,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import {
@@ -231,21 +230,20 @@ export async function flushAnalyticsQueue(now: number = Date.now()): Promise<Flu
     // 2. Daily counters + attribution maps (atomic increments, merge-safe)
     for (const [day, agg] of Object.entries(byDay)) {
       const counters = agg.counters as unknown as Record<string, number>;
-      const increments: Record<string, FieldValue> = {};
+      const data: Record<string, unknown> = {};
       for (const [key, value] of Object.entries(counters)) {
-        increments[key] = fbIncrement(value);
+        data[key] = fbIncrement(value);
       }
-      const maps: Record<string, Record<string, FieldValue>> = { paths: {}, referrers: {}, campaigns: {} };
+      // Attribution maps are written as DOTTED fields ("paths./home") so each
+      // entry is its own atomic increment. setDoc({merge:true}) REPLACES whole
+      // nested maps, so writing a bare "paths" key (even empty) would WIPE
+      // entries queued by a concurrent flush — this dotted form never clobbers.
       for (const [mapName, entries] of Object.entries(agg.maps)) {
         for (const [key, value] of Object.entries(entries)) {
-          maps[mapName][key] = fbIncrement(value);
+          data[`${mapName}.${key}`] = fbIncrement(value);
         }
       }
-      batch.set(
-        doc(db, "analytics_daily", day),
-        { ...increments, paths: maps.paths, referrers: maps.referrers, campaigns: maps.campaigns },
-        { merge: true },
-      );
+      batch.set(doc(db, "analytics_daily", day), data, { merge: true });
     }
 
     // 3. Anonymous client profile (upsert; retention flags flip server-side too)
@@ -278,10 +276,11 @@ export async function flushAnalyticsQueue(now: number = Date.now()): Promise<Flu
 
     await batch.commit();
 
-    // Success: drop the flushed events. New events enqueued during the
-    // in-flight commit are preserved (writeQueue replaces, never truncates
-    // newer entries beyond the cap).
-    const remaining = readQueue().slice(events.length);
+    // Success: drop ONLY the flushed events. Events enqueued while the commit
+    // was in flight must survive (filter by id — a naive slice() would delete
+    // newer entries that were never written).
+    const flushedIds = new Set(events.map((e) => e.id));
+    const remaining = readQueue().filter((e) => !flushedIds.has(e.id));
     writeQueue(remaining);
     return { flushed: events.length, failed: false };
   } catch (err) {

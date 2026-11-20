@@ -29,7 +29,7 @@ import {
   SESSION_TIMEOUT_MS,
   type KVStore,
 } from "../identity";
-import { aggregateEvents, enqueueEvent, queueSize, clearQueue, __pathForTests, type QueuedEvent } from "../ingest";
+import { aggregateEvents, enqueueEvent, flushAnalyticsQueue, queueSize, clearQueue, __pathForTests, type QueuedEvent } from "../ingest";
 import {
   computeCohortRates,
   computeFunnel,
@@ -208,6 +208,43 @@ describe("ingest — aggregateEvents math", () => {
     expect(__pathForTests("client", "x", "CLIENT")).toBe("analytics_clients/CLIENT");
     expect(__pathForTests("clientDay", "2026-11-21", "abc")).toBe("analytics_client_days/2026-11-21_abc");
     expect(__pathForTests("event", "evt-1")).toBe("analytics_events/evt-1");
+  });
+});
+
+describe("ingest — flush race safety", () => {
+  it("keeps events enqueued DURING an in-flight commit (regression: slice() dropped them)", async () => {
+    // Rebuild the firestore mock with a controllable writeBatch for this test.
+    const { writeBatch } = await import("firebase/firestore");
+    const mocked = vi.mocked(writeBatch);
+    let releaseCommit: (() => void) | null = null;
+    const commitGate = new Promise<void>((resolve) => {
+      releaseCommit = resolve;
+    });
+    const batchObj = { set: vi.fn(), commit: vi.fn(() => commitGate) };
+    mocked.mockReturnValue(batchObj as never);
+
+    const mk = (id: string, name = "page_viewed"): QueuedEvent => ({
+      id,
+      name,
+      ts: NOW,
+      day: "2026-11-21",
+      session_id: "s-race",
+      path: "/home",
+    });
+
+    enqueueEvent(mk("evt-a"));
+    enqueueEvent(mk("evt-b"));
+
+    const flushing = flushAnalyticsQueue(NOW);
+    // Event lands while the commit is still in flight.
+    enqueueEvent(mk("evt-c"));
+    releaseCommit?.();
+    const result = await flushing;
+
+    expect(result.failed).toBe(false);
+    expect(result.flushed).toBe(2);
+    // evt-c survived — it was never part of the committed batch.
+    expect(queueSize()).toBe(1);
   });
 });
 
