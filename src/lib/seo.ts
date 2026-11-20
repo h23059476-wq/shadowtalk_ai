@@ -494,6 +494,31 @@ export function getSoftwareApplicationSchema() {
   };
 }
 
+/**
+ * schema.org VideoObject — the 30-second airplane-mode demo (channel
+ * trailer), self-hosted at /shadowtalk-trailer-30s.mp4 and mirrored on the
+ * ShadowTalk YouTube channel. Lets Google/Bing surface the demo as a video
+ * rich result for the home page.
+ */
+export function getVideoObjectSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "@id": `${SITE_URL}/#demo-video`,
+    name: "AI that works in airplane mode — ShadowTalk AI demo",
+    description:
+      "The internet dies. Your AI doesn't care. A 30-second demo of ShadowTalk AI: chatting with an on-device model in airplane mode, end-to-end encrypted history, and everything syncing across phone and desktop the moment the network returns.",
+    thumbnailUrl: [`${SITE_URL}/shadowtalk-trailer-poster.webp`],
+    uploadDate: "2026-11-20",
+    contentUrl: `${SITE_URL}/shadowtalk-trailer-30s.mp4`,
+    duration: "PT30S",
+    inLanguage: "en",
+    isFamilyFriendly: true,
+    publisher: { "@id": `${SITE_URL}/#organization` },
+    creator: { "@id": FOUNDER_CANONICAL["@id"] },
+  };
+}
+
 /** schema.org WebPage for a specific URL */
 export function getWebPageSchema(params: {
   title: string;

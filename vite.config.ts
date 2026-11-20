@@ -99,6 +99,11 @@ export default defineConfig(({ mode }) => {
           // src/services/modelManager.ts), so PWA install stays fast even
           // on slow networks.
           globPatterns: ['**/*.{js,mjs,css,html,ico,png,svg,json,wasm,woff,woff2,webmanifest,webp,webm,mp4}'],
+          // The 30s trailer (shadowtalk-trailer-30s.mp4) is marketing media
+          // streamed on demand from the home page trailer band — NOT app
+          // shell. Excluding it keeps PWA install weight flat; its tiny
+          // poster webp still precaches so the offline player shows artwork.
+          globIgnores: ['**/shadowtalk-trailer-30s.mp4'],
           maximumFileSizeToCacheInBytes: 10000000, // Increase limit for wasm/model artifacts
           runtimeCaching: [
             {

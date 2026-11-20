@@ -9,6 +9,7 @@ import {
   getFounderHomeStructuredData,
   getItemListSchema,
   getSoftwareApplicationSchema,
+  getVideoObjectSchema,
   getWebPageSchema,
   getWebSiteSchema,
 } from "@/lib/seo";
@@ -19,6 +20,7 @@ import { Button } from "@/components/ui/button";
 
 const WhatIsShadowTalk = lazy(() => import("@/components/landing/WhatIsShadowTalk"));
 const OfflineFirstBand = lazy(() => import("@/components/landing/OfflineFirstBand"));
+const TrailerVideoBand = lazy(() => import("@/components/landing/TrailerVideoBand"));
 const MarketGapBand = lazy(() => import("@/components/landing/MarketGapBand"));
 const FounderSpotlightSection = lazy(() => import("@/components/founder/FounderSpotlightSection"));
 const PricingSection = lazy(() => import("@/components/PricingSection"));
@@ -76,6 +78,7 @@ const Index = () => {
         description: meta.description,
       })),
     ),
+    getVideoObjectSchema(),
     ...getFounderHomeStructuredData(),
   ];
 
@@ -93,6 +96,12 @@ const Index = () => {
                 (not hub-tabbed), followed by the market-gap differentiators. */}
             <Suspense fallback={<div className="py-8" aria-hidden /> }>
               <OfflineFirstBand />
+            </Suspense>
+
+            {/* The 30-second airplane-mode demo — self-hosted trailer + YouTube
+                mirror, proving the claim above with moving pixels. */}
+            <Suspense fallback={<div className="py-8" aria-hidden /> }>
+              <TrailerVideoBand />
             </Suspense>
 
             {/* Why no one else can say the claim — the three-camp differentiators. */}

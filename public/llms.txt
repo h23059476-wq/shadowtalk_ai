@@ -81,6 +81,10 @@ ShadowTalk AI is free to use — no subscriptions, no paid tiers, no credit card
 - YouTube: https://www.youtube.com/channel/UCHR-afXk0zrLh2ab-p276Jg
 - GitHub: https://github.com/zain836/shadowtalk-ai-903ca615
 
+## Media
+
+- Official video — "AI that works in airplane mode" (30-second channel trailer): https://www.shadowtalk-ai.com/shadowtalk-trailer-30s.mp4 — self-hosted on the home page and pinned on YouTube: https://www.youtube.com/channel/UCHR-afXk0zrLh2ab-p276Jg
+
 ## Optional
 
 - [Full reference for LLMs (llms-full.txt)](https://www.shadowtalk-ai.com/llms-full.txt): complete machine-readable knowledge dump — entity facts, the category claim with defensibility, features, privacy tiers, pricing, all guides and all comparisons in full text, specs sheet, FAQ
