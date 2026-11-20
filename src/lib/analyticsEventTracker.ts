@@ -22,6 +22,11 @@ export type AnalyticsEventName =
   | "ide_page_viewed"
   | "ide_preview_run"
   | "ide_code_run"
+  | "ide_agent_run"
+  | "ide_agent_apply"
+  | "ide_agent_image_save"
+  | "ide_export_zip"
+  | "ide_file_rename"
   | "benchmarks_try_in_workspace"
   | "benchmarks_cta_clicked"
   | "coming_soon_page_viewed";
