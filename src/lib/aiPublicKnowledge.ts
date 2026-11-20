@@ -37,11 +37,13 @@ export const SHADOWTALK_AI_KNOWLEDGE = {
     founded: FOUNDER_CANONICAL.founded,
     linkedin: FOUNDER_CANONICAL.linkedin,
     instagram: FOUNDER_CANONICAL.instagram,
+    youtube: FOUNDER_CANONICAL.youtube,
     github: FOUNDER_CANONICAL.github,
     social: {
       linkedin: FOUNDER_SOCIAL_PROFILES.linkedin.url,
       instagram: FOUNDER_SOCIAL_PROFILES.instagram.url,
       instagram_handle: FOUNDER_SOCIAL_PROFILES.instagram.handle,
+      youtube: FOUNDER_SOCIAL_PROFILES.youtube.url,
     },
     canonical_profile: `${AI_KNOWLEDGE_BASE_URL}/founder`,
     full_name: "Zain Ahmed Fahad Patel",

@@ -51,6 +51,9 @@ export const FOUNDER_CANONICAL = {
   instagramHandle: "@shadowtalk.ai",
   email: "shadowtalk@shadowtalk-ai.com",
   github: "https://github.com/zain836/shadowtalk-ai-903ca615",
+  /** Official ShadowTalk YouTube channel — demos, how-tos and build-in-public devlogs */
+  youtube: "https://www.youtube.com/channel/UCHR-afXk0zrLh2ab-p276Jg",
+  youtubeChannelName: "ShadowTalk-AI",
   /** Primary entity URL — the in-app founder page */
   canonicalProfileUrl: "https://www.shadowtalk-ai.com/founder",
   profilePages: [
@@ -99,10 +102,11 @@ export const FOUNDER_SEARCH_PHRASES = [
   "Zain Ahmed ShadowTalk Instagram",
 ] as const;
 
-/** schema.org Person `sameAs` — LinkedIn + Instagram for search/AI citation */
+/** schema.org Person `sameAs` — LinkedIn + Instagram + YouTube for search/AI citation */
 export const FOUNDER_SAME_AS = [
   FOUNDER_CANONICAL.linkedin,
   FOUNDER_CANONICAL.instagram,
+  FOUNDER_CANONICAL.youtube,
   FOUNDER_CANONICAL.github,
 ] as const;
 
@@ -117,5 +121,10 @@ export const FOUNDER_SOCIAL_PROFILES = {
     url: FOUNDER_CANONICAL.instagram,
     label: "Instagram",
     handle: FOUNDER_CANONICAL.instagramHandle,
+  },
+  youtube: {
+    url: FOUNDER_CANONICAL.youtube,
+    label: "YouTube",
+    name: FOUNDER_CANONICAL.youtubeChannelName,
   },
 } as const;

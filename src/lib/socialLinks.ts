@@ -1,4 +1,4 @@
-import { Instagram, Linkedin, type LucideIcon } from "lucide-react";
+import { Instagram, Linkedin, Youtube, type LucideIcon } from "lucide-react";
 import { FOUNDER_CANONICAL, FOUNDER_SOCIAL_PROFILES } from "./founderIdentity";
 
 /** Founder social profiles — single source of truth for site-wide links */
@@ -13,6 +13,10 @@ export const FOUNDER_SOCIAL = {
     label: FOUNDER_SOCIAL_PROFILES.linkedin.label,
     name: FOUNDER_SOCIAL_PROFILES.linkedin.name,
   },
+  youtube: {
+    url: FOUNDER_SOCIAL_PROFILES.youtube.url,
+    label: FOUNDER_SOCIAL_PROFILES.youtube.label,
+  },
 } as const;
 
 export type SocialLinkItem = {
@@ -21,7 +25,7 @@ export type SocialLinkItem = {
   label: string;
 };
 
-/** Instagram + LinkedIn — founder profiles for footer, contact, about, SEO */
+/** Instagram + LinkedIn + YouTube — profiles for footer, contact, about, SEO */
 export const SOCIAL_LINKS: readonly SocialLinkItem[] = [
   {
     icon: Linkedin,
@@ -32,6 +36,11 @@ export const SOCIAL_LINKS: readonly SocialLinkItem[] = [
     icon: Instagram,
     href: FOUNDER_SOCIAL.instagram.url,
     label: FOUNDER_SOCIAL.instagram.label,
+  },
+  {
+    icon: Youtube,
+    href: FOUNDER_SOCIAL.youtube.url,
+    label: FOUNDER_SOCIAL.youtube.label,
   },
 ];
 
