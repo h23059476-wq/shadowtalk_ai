@@ -34,8 +34,9 @@ import {
   computeCohortRates,
   computeFunnel,
   dayKeyFromTs,
-  mergeMapTop,
+  mergeAttribTop,
   sumDailyDocs,
+  type AttribDocData,
   type ClientDocData,
   type DailyDocData,
 } from "@/components/admin/intelligence/trafficService";
@@ -249,7 +250,7 @@ describe("ingest — flush race safety", () => {
 });
 
 describe("trafficService — pure aggregation", () => {
-  const docFor = (day: string, visits: number, pageViews: number, messages: number, paths?: Record<string, number>): DailyDocData => ({
+  const docFor = (day: string, visits: number, pageViews: number, messages: number): DailyDocData => ({
     day,
     visits,
     page_views: pageViews,
@@ -259,7 +260,6 @@ describe("trafficService — pure aggregation", () => {
     events: visits + pageViews,
     ctas: 0,
     ide_runs: 0,
-    paths,
   });
 
   it("sumDailyDocs restricts to the range and builds an ordered trend", () => {
@@ -278,14 +278,19 @@ describe("trafficService — pure aggregation", () => {
     expect(trend.map((t) => t.day)).toEqual(["11-19", "11-20", "11-21"]);
   });
 
-  it("mergeMapTop merges attribution maps across days and ranks", () => {
-    const docs: DailyDocData[] = [
-      { ...docFor("2026-11-20", 1, 1, 1), paths: { "/home": 3, "/ide": 1 } },
-      { ...docFor("2026-11-21", 1, 1, 1), paths: { "/home": 2, "/pricing": 4 } },
+  it("mergeAttribTop merges flat attribution docs and ranks", () => {
+    const docs: AttribDocData[] = [
+      { day: "2026-11-20", type: "paths", key: "/home", count: 3 },
+      { day: "2026-11-20", type: "paths", key: "/ide", count: 1 },
+      { day: "2026-11-21", type: "paths", key: "/home", count: 2 },
+      { day: "2026-11-21", type: "paths", key: "/pricing", count: 4 },
+      { day: "2026-10-01", type: "paths", key: "/old", count: 100 },
     ];
-    const top = mergeMapTop(docs, "paths", 2);
+    const top = mergeAttribTop(docs, "2026-11-19", 2);
     expect(top[0]).toEqual({ label: "/home", count: 5 });
     expect(top[1]).toEqual({ label: "/pricing", count: 4 });
+    // out-of-range entry excluded
+    expect(top.find((t) => t.label === "/old")).toBeUndefined();
   });
 
   it("computeFunnel walks visit → first message → day-7 return", () => {

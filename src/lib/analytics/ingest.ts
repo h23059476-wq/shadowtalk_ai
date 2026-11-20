@@ -227,23 +227,31 @@ export async function flushAnalyticsQueue(now: number = Date.now()): Promise<Flu
       batch.set(doc(db, "analytics_events", ev.id), payload);
     }
 
-    // 2. Daily counters + attribution maps (atomic increments, merge-safe)
+    // 2. Daily counters — scalars only, atomic increments. Attribution maps
+    // live in the FLAT analytics_attrib collection (see below): Firestore
+    // rules cannot reliably validate nested FieldValue transforms inside
+    // maps (request.resource.data shows them as non-map values), so a nested
+    // "paths./home" increment was rejected as permission-denied in
+    // production. Flat docs = simple, testable rules + independent atomic
+    // increments that never clobber each other.
     for (const [day, agg] of Object.entries(byDay)) {
       const counters = agg.counters as unknown as Record<string, number>;
       const data: Record<string, unknown> = {};
       for (const [key, value] of Object.entries(counters)) {
         data[key] = fbIncrement(value);
       }
-      // Attribution maps are written as DOTTED fields ("paths./home") so each
-      // entry is its own atomic increment. setDoc({merge:true}) REPLACES whole
-      // nested maps, so writing a bare "paths" key (even empty) would WIPE
-      // entries queued by a concurrent flush — this dotted form never clobbers.
+      batch.set(doc(db, "analytics_daily", day), data, { merge: true });
+
+      // 2b. Attribution entries — one flat doc per (day, type, key).
       for (const [mapName, entries] of Object.entries(agg.maps)) {
         for (const [key, value] of Object.entries(entries)) {
-          data[`${mapName}.${key}`] = fbIncrement(value);
+          batch.set(
+            doc(db, "analytics_attrib", `${day}__${mapName}__${encodeURIComponent(key)}`),
+            { day, type: mapName, key, count: fbIncrement(value) },
+            { merge: true },
+          );
         }
       }
-      batch.set(doc(db, "analytics_daily", day), data, { merge: true });
     }
 
     // 3. Anonymous client profile (upsert; retention flags flip server-side too)

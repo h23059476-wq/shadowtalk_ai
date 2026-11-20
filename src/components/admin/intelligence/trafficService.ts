@@ -28,9 +28,14 @@ export interface DailyDocData {
   events: number;
   ctas: number;
   ide_runs: number;
-  paths?: Record<string, number>;
-  referrers?: Record<string, number>;
-  campaigns?: Record<string, number>;
+}
+
+/** One flat attribution counter: analytics_attrib/{day}__{type}__{key}. */
+export interface AttribDocData {
+  day: string;
+  type: "paths" | "referrers" | "campaigns";
+  key: string;
+  count: number;
 }
 
 export interface ClientDocData {
@@ -139,15 +144,19 @@ export function sumDailyDocs(
   return { totals, trend, daysObserved: inRange.length };
 }
 
-/** Merges one attribution map across days and returns the top N entries. */
-export function mergeMapTop(docs: DailyDocData[], mapKey: "paths" | "referrers" | "campaigns", n: number): Array<{ label: string; count: number }> {
+/**
+ * Merges flat attribution docs (analytics_attrib) into the top N entries.
+ * `cutoffDay` filters out entries older than the selected range.
+ */
+export function mergeAttribTop(
+  docs: AttribDocData[],
+  cutoffDay: string,
+  n: number,
+): Array<{ label: string; count: number }> {
   const merged = new Map<string, number>();
   for (const d of docs) {
-    const map = d[mapKey];
-    if (!map) continue;
-    for (const [key, count] of Object.entries(map)) {
-      merged.set(key, (merged.get(key) || 0) + (count || 0));
-    }
+    if (!d.day || d.day < cutoffDay) continue;
+    merged.set(d.key, (merged.get(d.key) || 0) + (d.count || 0));
   }
   return Array.from(merged.entries())
     .map(([label, count]) => ({ label, count }))
@@ -204,8 +213,9 @@ export function computeCohortRates(clients: ClientDocData[], now: number = Date.
 
 const MAX_DAILY_DOCS = 400;
 const MAX_CLIENT_DOCS = 2000;
+const MAX_ATTRIB_DOCS = 300;
 
-/** Latest-N guard shared by both readers. */
+/** Epoch cutoff for the client cohort query. */
 function cutoffTs(rangeDays: number, now: number): number {
   return now - rangeDays * DAY_MS;
 }
@@ -226,6 +236,15 @@ export async function fetchTrafficSnapshot(rangeDays: number, now: number = Date
   );
   const clients: ClientDocData[] = clientsSnap.docs.map((d) => d.data() as ClientDocData);
 
+  // Flat attribution: one query per type (single-field index, no composite
+  // needed); the day cutoff is applied client-side in mergeAttribTop.
+  const cutoffDay = dayKeyFromTs(now - (rangeDays - 1) * DAY_MS);
+  const fetchAttrib = async (type: "paths" | "referrers" | "campaigns"): Promise<AttribDocData[]> => {
+    const snap = await getDocs(query(collection(db, "analytics_attrib"), where("type", "==", type), fsLimit(MAX_ATTRIB_DOCS)));
+    return snap.docs.map((d) => d.data() as AttribDocData);
+  };
+  const [pathDocs, referrerDocs, campaignDocs] = await Promise.all([fetchAttrib("paths"), fetchAttrib("referrers"), fetchAttrib("campaigns")]);
+
   const { totals, trend, daysObserved } = sumDailyDocs(daily, rangeDays, now);
   const cohortClients = clients;
   const funnel = computeFunnel(cohortClients, now);
@@ -244,9 +263,9 @@ export async function fetchTrafficSnapshot(rangeDays: number, now: number = Date
       d1Cohort: funnel.d1Cohort,
     },
     cohortRates: rates,
-    topPages: mergeMapTop(daily, "paths", 8),
-    referrers: mergeMapTop(daily, "referrers", 8),
-    campaigns: mergeMapTop(daily, "campaigns", 8),
+    topPages: mergeAttribTop(pathDocs, cutoffDay, 8),
+    referrers: mergeAttribTop(referrerDocs, cutoffDay, 8),
+    campaigns: mergeAttribTop(campaignDocs, cutoffDay, 8),
     totalDaysObserved: daysObserved,
   };
 }

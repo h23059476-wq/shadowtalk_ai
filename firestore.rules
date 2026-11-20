@@ -216,9 +216,16 @@ service cloud.firestore {
     // ------------------------------------------------------------------
     // First-party analytics (Batch 4) — anonymous, zero-PII product data.
     //
-    //   analytics_daily/{YYYY-MM-DD}        atomic counter increments
+    //   analytics_daily/{YYYY-MM-DD}        atomic counter increments (scalars)
+    //   analytics_attrib/{day}__{type}__{k}  per-key attribution counters (flat)
     //   analytics_clients/{clientId}        anonymous profile + retention flags
     //   analytics_client_days/{day}_{cid}   DAU heartbeat, one doc per active day
+    //
+    // NOTE: attribution lives in a FLAT collection, not nested maps inside
+    // analytics_daily — the rules engine cannot validate nested
+    // FieldValue-in-map transforms (request.resource.data does not
+    // materialize them as maps), which denied every map increment in
+    // production. Flat docs keep the rules simple and testable.
     //
     // Public access is WRITE-ONLY with strict shape validation; counters are
     // MONOTONIC on update (a client can never decrease one — request.resource
@@ -228,7 +235,7 @@ service cloud.firestore {
     // ------------------------------------------------------------------
 
     function dailyKeysOnly(data) {
-      return data.keys().hasOnly(['visits', 'page_views', 'messages', 'sessions_new', 'sessions_returning', 'events', 'ctas', 'ide_runs', 'paths', 'referrers', 'campaigns']);
+      return data.keys().hasOnly(['visits', 'page_views', 'messages', 'sessions_new', 'sessions_returning', 'events', 'ctas', 'ide_runs']);
     }
 
     function dailyScalarsPresent(data) {
@@ -250,14 +257,6 @@ service cloud.firestore {
              isBoundedCounter(data.ide_runs, 100000);
     }
 
-    function dailyMapsValid(data) {
-      // Attribution maps are optional; bound the key count (rules cannot
-      // iterate map values, so depth policing is the writer's job).
-      return (!data.keys().hasAll(['paths']) || (data.paths is map && data.paths.keys().size() <= 300)) &&
-             (!data.keys().hasAll(['referrers']) || (data.referrers is map && data.referrers.keys().size() <= 300)) &&
-             (!data.keys().hasAll(['campaigns']) || (data.campaigns is map && data.campaigns.keys().size() <= 300));
-    }
-
     function dailyMonotonic(data, before) {
       return (!data.keys().hasAll(['visits']) || !before.keys().hasAll(['visits']) || data.visits >= before.visits) &&
              (!data.keys().hasAll(['page_views']) || !before.keys().hasAll(['page_views']) || data.page_views >= before.page_views) &&
@@ -274,15 +273,38 @@ service cloud.firestore {
         (doc.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}') &&
          dailyKeysOnly(request.resource.data) &&
          dailyScalarsPresent(request.resource.data) &&
-         dailyScalarsValid(request.resource.data) &&
-         dailyMapsValid(request.resource.data));
+         dailyScalarsValid(request.resource.data));
       allow update: if isAdmin() ||
         (doc.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}') &&
          dailyKeysOnly(request.resource.data) &&
          dailyScalarsPresent(request.resource.data) &&
          dailyScalarsValid(request.resource.data) &&
-         dailyMapsValid(request.resource.data) &&
          dailyMonotonic(request.resource.data, resource.data));
+      allow read, delete: if isAdmin();
+    }
+
+    // Flat attribution counters: one doc per (day, type, key). The doc id
+    // binds day + type so a client can never file an entry under another
+    // bucket; count is a bounded atomic increment (monotonic on update).
+    match /analytics_attrib/{docId} {
+      function isValidAttribWrite() {
+        let data = request.resource.data;
+        let parts = docId.split('__');
+        return docId.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}__(paths|referrers|campaigns)__..*') &&
+               data.keys().hasAll(['day', 'type', 'key', 'count']) &&
+               data.keys().hasOnly(['day', 'type', 'key', 'count']) &&
+               data.day == parts[0] &&
+               data.type == parts[1] &&
+               data.day is string && data.day.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}') &&
+               data.type is string && data.type in ['paths', 'referrers', 'campaigns'] &&
+               data.key is string && data.key.size() > 0 && data.key.size() <= 200 &&
+               isBoundedCounter(data.count, 1000000);
+      }
+      function attribCountMonotonic(data, before) {
+        return !before.keys().hasAll(['count']) || data.count >= before.count;
+      }
+      allow create: if isAdmin() || isValidAttribWrite();
+      allow update: if isAdmin() || (isValidAttribWrite() && attribCountMonotonic(request.resource.data, resource.data));
       allow read, delete: if isAdmin();
     }
 

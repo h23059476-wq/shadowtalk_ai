@@ -450,7 +450,6 @@ rulesDescribe("Firestore auth and profile rules", () => {
   const VALID_DAILY = {
     visits: 1, page_views: 3, messages: 1, sessions_new: 1, sessions_returning: 0,
     events: 5, ctas: 1, ide_runs: 0,
-    paths: { "/home": 3 }, referrers: { "news.ycombinator.com": 1 }, campaigns: {},
   };
 
   it("allows an anonymous client to create a well-formed analytics_daily counter doc", async () => {
@@ -466,7 +465,6 @@ rulesDescribe("Firestore auth and profile rules", () => {
     await assertFails(setDoc(doc(anonDb, "analytics_daily/2026-11-21"), {
       visits: 1, page_views: 3, messages: 1, sessions_new: 1, sessions_returning: 0,
       events: 5, ctas: 1,
-      paths: { "/home": 3 }, referrers: { "news.ycombinator.com": 1 }, campaigns: {},
     }));
     // extra key outside the whitelist
     await assertFails(setDoc(doc(anonDb, "analytics_daily/2026-11-21"), { ...VALID_DAILY, hacked_field: true }));
@@ -562,5 +560,38 @@ rulesDescribe("Firestore auth and profile rules", () => {
       client_id: cid, day: "2020-01-01", updated_at: 1739999999000,
     }));
     await assertFails(getDoc(doc(anonDb, `analytics_client_days/2026-11-21_${cid}`)));
+  });
+
+  // Flat attribution counters (Batch 4, revision 2): attribution lives in
+  // analytics_attrib instead of nested daily maps — the rules engine cannot
+  // validate nested FieldValue-in-map transforms, which denied every map
+  // increment in production.
+  it("allows well-formed analytics_attrib counters and binds id parts to fields", async () => {
+    const anonDb = testEnv.unauthenticatedContext().firestore();
+    await assertSucceeds(setDoc(doc(anonDb, "analytics_attrib/2026-11-21__paths__%2Fhome"), {
+      day: "2026-11-21", type: "paths", key: "/home", count: 1,
+    }));
+    // count can grow (atomic increments) ...
+    await assertSucceeds(setDoc(doc(anonDb, "analytics_attrib/2026-11-21__paths__%2Fhome"), {
+      day: "2026-11-21", type: "paths", key: "/home", count: 2,
+    }));
+    // ... but never shrink.
+    await assertFails(setDoc(doc(anonDb, "analytics_attrib/2026-11-21__paths__%2Fhome"), {
+      day: "2026-11-21", type: "paths", key: "/home", count: 1,
+    }));
+    // day in the id must match the day field ...
+    await assertFails(setDoc(doc(anonDb, "analytics_attrib/2026-11-21__paths__%2Fhome"), {
+      day: "2020-01-01", type: "paths", key: "/home", count: 1,
+    }));
+    // ... and the type must match too.
+    await assertFails(setDoc(doc(anonDb, "analytics_attrib/2026-11-21__referrers__direct"), {
+      day: "2026-11-21", type: "paths", key: "direct", count: 1,
+    }));
+    // unknown attribution type is rejected.
+    await assertFails(setDoc(doc(anonDb, "analytics_attrib/2026-11-21__hax__x"), {
+      day: "2026-11-21", type: "hax", key: "x", count: 1,
+    }));
+    // reads stay admin-only.
+    await assertFails(getDoc(doc(anonDb, "analytics_attrib/2026-11-21__paths__%2Fhome")));
   });
 });
