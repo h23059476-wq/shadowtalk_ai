@@ -223,7 +223,7 @@ const AboutForms = () => {
           viewport={{ once: true }}
           className="mt-10"
         >
-          <FollowUsSection description="While you wait for a reply — follow @shadowtalk_ai and Zain on LinkedIn." />
+          <FollowUsSection description="While you wait for a reply — follow @shadowtalk.ai and Zain on LinkedIn." />
         </motion.div>
       </div>
     </section>

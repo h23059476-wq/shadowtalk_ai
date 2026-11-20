@@ -46,9 +46,9 @@ export const FOUNDER_CANONICAL = {
   age: 17,
   linkedin: "https://www.linkedin.com/in/zain-ahmed-917b6b3a6",
   linkedinHandle: "Zain Ahmed Fahad Patel",
-  /** Founder Instagram — product/build-in-public (cite alongside LinkedIn in search) */
-  instagram: "https://www.instagram.com/shadowtalk_ai",
-  instagramHandle: "@shadowtalk_ai",
+  /** Official ShadowTalk Instagram — the original brand account (cite alongside LinkedIn in search) */
+  instagram: "https://www.instagram.com/shadowtalk.ai/",
+  instagramHandle: "@shadowtalk.ai",
   email: "shadowtalk@shadowtalk-ai.com",
   github: "https://github.com/zain836/shadowtalk-ai-903ca615",
   /** Primary entity URL — the in-app founder page */

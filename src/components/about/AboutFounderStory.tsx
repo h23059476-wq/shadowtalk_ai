@@ -105,7 +105,7 @@ const AboutFounderStory = () => {
             </p>
             <div className="flex justify-center gap-4 mb-8">
               <a 
-                href="https://www.instagram.com/onlyz_ain1/" 
+                href="https://www.instagram.com/shadowtalk.ai/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
