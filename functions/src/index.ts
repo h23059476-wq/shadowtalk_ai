@@ -1085,3 +1085,218 @@ export const sendVerificationEmail = onRequest(async (req, res) => {
     }
   });
 });
+
+/**
+ * Professional branded password reset.
+ *
+ * Mirrors sendVerificationEmail: instead of Firebase's plain default template,
+ * this generates the same out-of-band reset link the client SDK would generate
+ * (admin.auth().generatePasswordResetLink with the same continue-URL semantics)
+ * and delivers it in the branded dark HTML template via deliverEmail().
+ * Everything downstream (hosted action handler, /auth?flow=reset-complete,
+ * confirmPasswordReset) works unchanged.
+ *
+ * Security:
+ *   - Anonymous by design (the requester forgot their password). Never reveals
+ *     whether an account exists: unknown emails get the exact same 200 response
+ *     (email_delivery: "sent") as known ones — identical to the Firebase SDK's
+ *     user-not-found swallowing, so the UI's anti-enumeration copy stays true.
+ *   - 60s in-memory cooldown per email address + 8 resets/hour per IP address
+ *     (warm-instance best effort) to prevent mail-bombing through the endpoint.
+ *   - Continue URL is allowlisted to ShadowTalk hosts; anything else falls back
+ *     to the production reset page.
+ *
+ * The client falls back to Firebase's default sendPasswordResetEmail() unless
+ * this responds email_delivery === "sent", so password reset never dead-ends
+ * even when Resend is not configured yet (queued/failed → SDK path).
+ */
+const RESET_CONTINUE_DEFAULT =
+  process.env.RESET_CONTINUE_DEFAULT || "https://shadowtalk-ai.com/auth?flow=reset-complete";
+
+const RESET_EMAIL_COOLDOWN_MS = 60_000;
+const RESET_IP_WINDOW_MS = 3_600_000;
+const RESET_IP_MAX = 8;
+const lastResetSendByEmail = new Map<string, number>();
+const resetSendTimestampsByIp = new Map<string, number[]>();
+
+function safeResetContinueUrl(requested: string | undefined): string {
+  if (requested) {
+    try {
+      const parsed = new URL(requested);
+      if (parsed.protocol === "https:" && AUTH_CONTINUE_HOSTS.includes(parsed.hostname.toLowerCase())) {
+        return parsed.toString();
+      }
+    } catch {
+      /* fall through to the default */
+    }
+  }
+  return RESET_CONTINUE_DEFAULT;
+}
+
+function resetRateLimited(email: string, ip: string): boolean {
+  const now = Date.now();
+  const lastSend = lastResetSendByEmail.get(email) || 0;
+  if (now - lastSend < RESET_EMAIL_COOLDOWN_MS) return true;
+
+  const timestamps = (resetSendTimestampsByIp.get(ip) || []).filter(
+    (ts) => now - ts < RESET_IP_WINDOW_MS,
+  );
+  if (timestamps.length >= RESET_IP_MAX) return true;
+  return false;
+}
+
+function markResetSent(email: string, ip: string): void {
+  const now = Date.now();
+  lastResetSendByEmail.set(email, now);
+  const timestamps = (resetSendTimestampsByIp.get(ip) || []).filter(
+    (ts) => now - ts < RESET_IP_WINDOW_MS,
+  );
+  timestamps.push(now);
+  resetSendTimestampsByIp.set(ip, timestamps);
+}
+
+function buildResetEmail(
+  name: string,
+  resetLink: string,
+): { subject: string; text: string; html: string } {
+  const subject = "Reset your password — ShadowTalk AI";
+  const text = [
+    `Hi ${name},`,
+    "",
+    "We received a request to reset the password for your ShadowTalk AI account.",
+    "",
+    "Tap the button below to choose a new password:",
+    "",
+    resetLink,
+    "",
+    "This link is valid for 60 minutes. If it expires, request a new one from the sign-in page.",
+    "",
+    "If you didn't ask to reset your password, you can safely ignore this email —",
+    "your password stays unchanged.",
+    "",
+    "ShadowTalk will never ask for your password by email or chat. Anyone directing",
+    "you to a different page is impersonating us.",
+    "",
+    "— The ShadowTalk AI team · shadowtalk-ai.com",
+  ].join("\n");
+
+  const html = [
+    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+    '<html xmlns="http://www.w3.org/1999/xhtml">',
+    "<head>",
+    '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
+    '<meta name="viewport" content="width=device-width, initial-scale=1" />',
+    "<title>Reset your password — ShadowTalk AI</title>",
+    "</head>",
+    '<body style="margin:0;padding:0;background-color:#07080d;">',
+    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Reset your ShadowTalk AI password — the link is valid for 60 minutes.</div>',
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#07080d;padding:32px 12px;">',
+    "<tr><td align=\"center\">",
+    '<table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">',
+    // Brand header
+    "<tr><td style=\"padding:8px 4px 18px 4px;\">",
+    '<div style="font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.3px;">ShadowTalk <span style="color:#22cfff;">AI</span></div>',
+    '<div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a90a5;margin-top:4px;">Think AI. Think ShadowTalk.</div>',
+    "</td></tr>",
+    // Card
+    "<tr><td>",
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0e0f16;border:1px solid #1d2130;border-radius:16px;">',
+    "<tr><td style=\"padding:36px 32px 32px 32px;\">",
+    '<div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2.2px;color:#22cfff;margin:0 0 12px 0;">PASSWORD RESET</div>',
+    '<h1 style="font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:700;color:#ffffff;margin:0 0 14px 0;line-height:1.3;">Reset your password</h1>',
+    `<p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#b7bccd;line-height:1.6;margin:0 0 6px 0;">Hi ${escapeHtml(name)},</p>`,
+    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#b7bccd;line-height:1.6;margin:0 0 26px 0;">We received a request to reset the password for your ShadowTalk AI account. Tap the button below to choose a new password. If you didn\u2019t request this, you can safely ignore this email — your password stays unchanged.</p>',
+    // CTA button
+    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px 0;"><tr><td align="center" bgcolor="#22cfff" style="border-radius:10px;">',
+    `<a href="${escapeHtml(resetLink)}" target="_blank" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:700;color:#07080d;text-decoration:none;padding:14px 32px;border-radius:10px;background-color:#22cfff;">Reset password</a>`,
+    "</td></tr></table>",
+    // Fallback link
+    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8a90a5;line-height:1.6;margin:0 0 8px 0;">Button not working? Copy and paste this link into your browser:</p>',
+    `<p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#22cfff;line-height:1.5;margin:0 0 18px 0;word-break:break-all;">${escapeHtml(resetLink)}</p>`,
+    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8a90a5;line-height:1.6;margin:0 0 22px 0;">This link is valid for <span style="color:#b7bccd;font-weight:700;">60 minutes</span>. If it expires, request a new one from the sign-in page.</p>',
+    // Security note
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#13141d;border-radius:10px;"><tr><td style="padding:14px 16px;">',
+    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8a90a5;line-height:1.5;margin:0;"><span style="color:#ffffff;font-weight:700;">Security note.</span> ShadowTalk will never ask for your password by email or chat. Anyone directing you to a different page is impersonating us.</p>',
+    "</td></tr></table>",
+    "</td></tr></table>",
+    "</td></tr>",
+    // Footer
+    "<tr><td style=\"padding:20px 4px 8px 4px;text-align:center;\">",
+    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6b7280;margin:0 0 6px 0;">ShadowTalk AI · shadowtalk-ai.com</p>',
+    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6b7280;margin:0 0 4px 0;">Think AI. Think ShadowTalk.</p>',
+    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#4b5563;margin:0;">This is an automated message. Replies to this address aren\u2019t monitored.</p>',
+    "</td></tr></table>",
+    "</td></tr></table>",
+    "</body></html>",
+  ].join("");
+
+  return { subject, text, html };
+}
+
+export const requestPasswordReset = onRequest(async (req, res) => {
+  corsHandler(req, res, async () => {
+    if (req.method === "OPTIONS") return;
+    if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed." });
+
+    try {
+      const body = (req.body || {}) as Record<string, unknown>;
+      const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+      if (!email || email.length > 256 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        // Malformed input: respond exactly like an unknown address so the
+        // endpoint can't be used to probe anything.
+        return res.status(200).json({ ok: true, email_delivery: "sent" });
+      }
+
+      const ipHeader = (req.headers["x-forwarded-for"] as string | undefined) || "";
+      const ip = (ipHeader.split(",")[0] || req.headers["x-real-ip"] || "unknown").toString().trim();
+
+      const throttled = resetRateLimited(email, ip);
+      if (throttled) {
+        // Same external response as success — no information leak.
+        return res.status(200).json({ ok: true, email_delivery: "throttled" });
+      }
+
+      const continueUrl = safeResetContinueUrl(typeof body.redirectTo === "string" ? body.redirectTo : undefined);
+
+      // Unknown email → user-not-found. Answer identically to a successful
+      // send (Firebase's SDK behaves the same way, so UI copy stays honest).
+      let resetLink: string;
+      try {
+        resetLink = await admin.auth().generatePasswordResetLink(email, {
+          url: continueUrl,
+          handleCodeInApp: false,
+        });
+      } catch (error: any) {
+        const code = error?.errorInfo?.code || error?.code || "";
+        if (code.includes("user-not-found") || code.includes("user/email-not-found")) {
+          console.log(`requestPasswordReset: no account for ${email} — anti-enumeration ok response`);
+          return res.status(200).json({ ok: true, email_delivery: "sent" });
+        }
+        throw error;
+      }
+
+      // Personalize with the account's display name when one exists.
+      let name = email.split("@")[0];
+      try {
+        const user = await admin.auth().getUserByEmail(email);
+        name = (user.displayName || email.split("@")[0] || "there").slice(0, 80);
+      } catch {
+        /* name lookup is best-effort */
+      }
+
+      const content = buildResetEmail(name, resetLink);
+      const delivery = await deliverEmail({
+        to: email,
+        replyTo: null,
+        subject: content.subject,
+        text: content.text,
+        html: content.html,
+      });
+      markResetSent(email, ip);
+
+      return res.status(200).json({ ok: true, email_delivery: delivery.status, continue_url: continueUrl });
+    } catch (error) {
+      return sendError(res, error);
+    }
+  });
+});

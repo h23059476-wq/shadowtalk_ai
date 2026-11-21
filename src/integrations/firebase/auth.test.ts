@@ -7,9 +7,17 @@ const sdk = vi.hoisted(() => ({
   signInWithPopup: vi.fn(),
   signInWithRedirect: vi.fn(),
   getRedirectResult: vi.fn(),
+  /** Mutable so tests can point the adapter at a fake functions host. */
+  functionsBaseUrl: "" as string,
 }));
 
-vi.mock("./app", () => ({ fbAuth: () => sdk.auth }));
+vi.mock("./app", () => ({
+  fbAuth: () => sdk.auth,
+  // Getter so each use site re-reads the mutable test value.
+  get functionsBaseUrl() {
+    return sdk.functionsBaseUrl;
+  },
+}));
 vi.mock("firebase/auth", () => ({
   GoogleAuthProvider: class {
     setCustomParameters = vi.fn();
@@ -53,6 +61,8 @@ const mockFbUser = () => ({
 describe("Firebase auth adapter", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.unstubAllGlobals();
+    sdk.functionsBaseUrl = "";
     window.sessionStorage.clear();
     (onAuthStateChanged as unknown as Mock).mockImplementation(() => () => {});
   });
@@ -66,6 +76,52 @@ describe("Firebase auth adapter", () => {
       url: `${window.location.origin}/auth?flow=reset-complete`,
       handleCodeInApp: false,
     });
+  });
+
+  it("uses the branded reset email when the backend confirms delivery", async () => {
+    sdk.functionsBaseUrl = "https://us-central1-fake.cloudfunctions.net";
+    const fetchMock = vi.fn().mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ ok: true, email_delivery: "sent" }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    const result = await createAuthAdapter().resetPasswordForEmail("person@example.test", {
+      redirectTo: `${window.location.origin}/auth?flow=reset-complete`,
+    });
+    expect(result.error).toBeNull();
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://us-central1-fake.cloudfunctions.net/requestPasswordReset",
+      expect.objectContaining({ method: "POST" }),
+    );
+    const body = JSON.parse((fetchMock.mock.calls[0][1] as RequestInit).body as string);
+    expect(body.email).toBe("person@example.test");
+    expect(body.redirectTo).toBe(`${window.location.origin}/auth?flow=reset-complete`);
+    // The branded send replaces the Firebase default — never both.
+    expect(sdk.sendPasswordResetEmail).not.toHaveBeenCalled();
+  });
+
+  it("falls back to the default reset email when the backend cannot confirm delivery", async () => {
+    sdk.functionsBaseUrl = "https://us-central1-fake.cloudfunctions.net";
+    sdk.sendPasswordResetEmail.mockResolvedValueOnce({});
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ ok: true, email_delivery: "queued" }),
+      }),
+    );
+    const result = await createAuthAdapter().resetPasswordForEmail("person@example.test");
+    expect(result.error).toBeNull();
+    expect(sdk.sendPasswordResetEmail).toHaveBeenCalledTimes(1);
+  });
+
+  it("falls back to the default reset email when the backend is unreachable", async () => {
+    sdk.functionsBaseUrl = "https://us-central1-fake.cloudfunctions.net";
+    sdk.sendPasswordResetEmail.mockResolvedValueOnce({});
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValueOnce(new Error("network down")));
+    const result = await createAuthAdapter().resetPasswordForEmail("person@example.test");
+    expect(result.error).toBeNull();
+    expect(sdk.sendPasswordResetEmail).toHaveBeenCalledTimes(1);
   });
 
   it("does not return account-specific sign-in errors", async () => {

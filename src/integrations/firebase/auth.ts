@@ -75,7 +75,39 @@ async function sendBrandedVerificationEmail(user: FbUser, continueUrl: string): 
     });
     if (!res.ok) return false;
     const data: any = await res.json().catch(() => null);
-    return data?.ok === true && data?.email_delivery !== 'failed';
+    // Only "sent" means the branded email actually went out via Resend.
+    // "queued" (no RESEND_API_KEY, no Trigger Email extension) or "failed"
+    // would strand the user with no email — fall back to Firebase's default
+    // sendEmailVerification() so verification never dead-ends.
+    return data?.ok === true && data?.email_delivery === 'sent';
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Ask the backend for the branded password-reset email (professional template).
+ *
+ * Returns true ONLY when the backend confirmed actual delivery
+ * (email_delivery === "sent" via Resend). "queued"/"throttled"/"failed" and any
+ * network error fall back to Firebase's default sendPasswordResetEmail() so
+ * the user always receives an email. Anti-enumeration stays intact either way:
+ * the backend answers 200 for unknown addresses and the SDK swallows
+ * user-not-found, so the UI's neutral copy remains true on every path.
+ */
+async function requestBrandedResetEmail(email: string, continueUrl: string): Promise<boolean> {
+  if (!functionsBaseUrl) return false;
+  try {
+    const res = await fetch(`${functionsBaseUrl}/requestPasswordReset`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, redirectTo: continueUrl }),
+    });
+    if (!res.ok) return false;
+    const data: any = await res.json().catch(() => null);
+    return data?.ok === true && data?.email_delivery === 'sent';
   } catch {
     return false;
   }
@@ -361,9 +393,15 @@ export function createAuthAdapter() {
     },
 
     async resetPasswordForEmail(email: string, options?: { redirectTo?: string }) {
+      const continueUrl = safeAuthContinueUrl(options?.redirectTo, '/auth?flow=reset-complete');
       try {
+        // Branded delivery first (Resend); Firebase's default template is the
+        // guaranteed fallback whenever the backend can't confirm "sent".
+        if (continueUrl && (await requestBrandedResetEmail(email, continueUrl))) {
+          return { data: {}, error: null };
+        }
         await sendPasswordResetEmail(fbAuth(), email, {
-          url: safeAuthContinueUrl(options?.redirectTo, '/auth?flow=reset-complete'),
+          url: continueUrl ?? `${window.location.origin}/auth?flow=reset-complete`,
           handleCodeInApp: false,
         });
         return { data: {}, error: null };
