@@ -6,6 +6,10 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    env:
+      # Mapped at job level so steps can test its presence (`secrets` context is
+      # not allowed inside step-level `if:` expressions).
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -64,10 +68,9 @@ jobs:
       # the next merge to main.
       # ------------------------------------------------------------------
       - name: Deploy Cloud Functions
-        if: ${{ secrets.RESEND_API_KEY != '' }}
+        if: ${{ env.RESEND_API_KEY != '' }}
         continue-on-error: true
         env:
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
         run: |
           echo "RESEND_API_KEY=$RESEND_API_KEY" > functions/.env
