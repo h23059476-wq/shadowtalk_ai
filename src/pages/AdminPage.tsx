@@ -13,7 +13,7 @@ import { ComponentType, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/components/AuthProvider";
 import { useAdminCheck } from "@/hooks/useAdminCheck";
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getCountFromServer, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { localDayKey } from "@/lib/analytics/identity";
 import { motion } from "framer-motion";
@@ -95,6 +95,53 @@ function useTodayTraffic(enabled: boolean): TodayTraffic | null {
   return stats;
 }
 
+/**
+ * Real platform counts, read live via Firestore aggregate COUNT queries
+ * (server-computed, no document downloads). Requires the founder-email
+ * admin grant in firestore.rules — the same gate as the page itself.
+ * Counts are REAL: 0 means zero, never fabricated.
+ */
+type AdminCounts = {
+  totalUsers: number;
+  totalConversations: number;
+  totalMessages: number;
+  proSubscribers: number;
+  eliteSubscribers: number;
+};
+
+function useAdminCounts(enabled: boolean): AdminCounts | null {
+  const [counts, setCounts] = useState<AdminCounts | null>(null);
+  useEffect(() => {
+    if (!enabled) return undefined;
+    let cancelled = false;
+    void (async () => {
+      try {
+        const [users, convos, msgs, pro, elite] = await Promise.all([
+          getCountFromServer(collection(db, "profiles")),
+          getCountFromServer(collection(db, "conversations")),
+          getCountFromServer(collection(db, "messages")),
+          getCountFromServer(query(collection(db, "profiles"), where("plan", "==", "pro"))),
+          getCountFromServer(query(collection(db, "profiles"), where("plan", "==", "elite"))),
+        ]);
+        if (cancelled) return;
+        setCounts({
+          totalUsers: users.data().count,
+          totalConversations: convos.data().count,
+          totalMessages: msgs.data().count,
+          proSubscribers: pro.data().count,
+          eliteSubscribers: elite.data().count,
+        });
+      } catch {
+        if (!cancelled) setCounts(null);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [enabled]);
+  return counts;
+}
+
 const QUICK_ACTIONS = [
   { label: "View Users", icon: Users, section: "users" },
   { label: "Broadcast Message", icon: Megaphone, section: "broadcast" },
@@ -115,8 +162,9 @@ const AccessDeniedFallback = () => (
     </div>
     <h2 className="text-xl font-semibold">Admin access required</h2>
     <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-      You need a verified admin session to view the live dashboard. Sign in with an
-      admin-enabled account, or contact{" "}
+      This dashboard is restricted to the ShadowTalk founder account
+      (zain@shadowtalk-ai.com). Sign in with that email to view live data, or
+      contact{" "}
       <a href="mailto:shadowtalk@shadowtalk-ai.com" className="text-indigo-400 hover:underline">
         shadowtalk@shadowtalk-ai.com
       </a>{" "}
@@ -135,6 +183,7 @@ export default function AdminPage() {
   const accessGranted = Boolean(user && isAdmin);
   const accessLoading = authLoading || roleLoading;
   const today = useTodayTraffic(accessGranted);
+  const counts = useAdminCounts(accessGranted);
 
   const todayStats = [
     { label: "Visits Today", value: today ? today.visits.toLocaleString() : "—", icon: Users, accent: "text-indigo-400 bg-indigo-500/10" },
@@ -237,17 +286,20 @@ export default function AdminPage() {
                 <div className="ios-glass-card p-6 mb-8">
                   <AdminDashboardTyped
                     stats={{
-                      totalUsers: 0,
-                      totalConversations: 0,
-                      totalMessages: 0,
-                      activeSubscribers: 0,
-                      proSubscribers: 0,
-                      eliteSubscribers: 0,
+                      totalUsers: counts?.totalUsers ?? 0,
+                      totalConversations: counts?.totalConversations ?? 0,
+                      totalMessages: counts?.totalMessages ?? 0,
+                      activeSubscribers:
+                        (counts?.proSubscribers ?? 0) + (counts?.eliteSubscribers ?? 0),
+                      proSubscribers: counts?.proSubscribers ?? 0,
+                      eliteSubscribers: counts?.eliteSubscribers ?? 0,
+                      // No feedback collection exists yet — these stay a real
+                      // zero (the cards hide at 0) instead of fabricated data.
                       totalFeedback: 0,
                       pendingFeedback: 0,
                       pendingGrowthActions: 0,
                     }}
-                    loading={false}
+                    loading={!counts}
                     onNavigate={handleNavigate}
                   />
                 </div>

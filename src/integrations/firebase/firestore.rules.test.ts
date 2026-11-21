@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { assertFails, assertSucceeds, initializeTestEnvironment, type RulesTestEnvironment } from "@firebase/rules-unit-testing";
-import { collection, deleteDoc, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getCountFromServer, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
@@ -593,5 +593,63 @@ rulesDescribe("Firestore auth and profile rules", () => {
     }));
     // reads stay admin-only.
     await assertFails(getDoc(doc(anonDb, "analytics_attrib/2026-11-21__paths__%2Fhome")));
+  });
+
+  // ------------------------------------------------------------------
+  // Founder-email admin gate — the admin panel is restricted to the
+  // founder account email ONLY (zain@shadowtalk-ai.com). The email
+  // arrives inside the signed Firebase Auth ID token, so admin-grade
+  // reads work with NO user_roles document. Any other email — even a
+  // verified one — gets nothing.
+  // ------------------------------------------------------------------
+  const FOUNDER_EMAIL = "zain@shadowtalk-ai.com";
+
+  function founderDb() {
+    // authenticatedContext(uid, tokenOptions) — tokenOptions ARE the ID-token
+    // claims (email, email_verified, custom claims), NOT wrapped in a `token` key.
+    return testEnv
+      .authenticatedContext("zain-uid", { email: FOUNDER_EMAIL, email_verified: true })
+      .firestore();
+  }
+
+  it("grants the founder email admin-grade reads without any user_roles doc", async () => {
+    await testEnv.withSecurityRulesDisabled(async (context) => {
+      await setDoc(doc(context.firestore(), "profiles/someone"), { id: "someone", plan: "free" });
+      await setDoc(doc(context.firestore(), "conversations/c1"), { user_id: "someone", title: "t" });
+      await setDoc(doc(context.firestore(), "analytics_daily/2026-11-21"), { visits: 1, page_views: 1, messages: 0, sessions_new: 1, sessions_returning: 0, events: 1, ctas: 0, ide_runs: 0 });
+    });
+    const db = founderDb();
+    // Admin-grade single-doc read on profiles (other users' docs).
+    await assertSucceeds(getDoc(doc(db, "profiles/someone")));
+    // Admin-grade list on a user-data collection (catch-all admin branch).
+    await assertSucceeds(getDocs(collection(db, "conversations")));
+    // Aggregate COUNT over a user-data collection — powers the dashboard's
+    // real conversation/message counters.
+    await assertSucceeds(getCountFromServer(collection(db, "conversations")));
+    // Filtered aggregate (plan subscriber counts) — admin grant is
+    // resource-independent, so field-filtered aggregations pass.
+    await assertSucceeds(
+      getCountFromServer(query(collection(db, "profiles"), where("plan", "==", "pro"))),
+    );
+    // Founder-only analytics reads (Intelligence Center / Traffic & Funnel).
+    await assertSucceeds(getDoc(doc(db, "analytics_daily/2026-11-21")));
+  });
+
+  it("denies every other email the same admin-grade reads — email is not forgivable", async () => {
+    await testEnv.withSecurityRulesDisabled(async (context) => {
+      await setDoc(doc(context.firestore(), "profiles/someone"), { id: "someone", plan: "free" });
+    });
+    const lookalike = testEnv
+      .authenticatedContext("mallory", { email: "zain@shadowtalk-ai.com.evil.test", email_verified: true })
+      .firestore();
+    await assertFails(getDoc(doc(lookalike, "profiles/someone")));
+    await assertFails(getCountFromServer(collection(lookalike, "conversations")));
+    await assertFails(getDoc(doc(lookalike, "analytics_daily/2026-11-21")));
+    // A differently-cased but otherwise correct email still counts as the
+    // founder (emails are case-insensitive) — rules compare .lower().
+    const upper = testEnv
+      .authenticatedContext("zain-upper", { email: "ZAIN@shadowtalk-ai.com", email_verified: true })
+      .firestore();
+    await assertSucceeds(getDoc(doc(upper, "profiles/someone")));
   });
 });

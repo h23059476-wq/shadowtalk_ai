@@ -1,29 +1,15 @@
-import { useState, useEffect } from "react";
-import { backend } from "@/integrations/local/client";
 import { useAuth } from "@/components/AuthProvider";
 import { isFounderEmail } from "@/lib/resolveUserPlan";
 
+/**
+ * Founder gate — restricted to the founder account email ONLY
+ * (zain@shadowtalk-ai.com), checked against the signed-in user's email.
+ * Server-side Firestore rules (isFounder()) enforce the identical
+ * founder-email condition for privileged reads, so client and server
+ * agree on exactly one account.
+ */
 export const useFounderCheck = () => {
-  const { user, session } = useAuth();
-  const [isFounder, setIsFounder] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let active = true;
-    const check = async () => {
-      if (!user || !session) { setIsFounder(false); setLoading(false); return; }
-      if (isFounderEmail(user.email)) { setIsFounder(true); setLoading(false); return; }
-      setLoading(true);
-      try {
-        const { data, error } = await backend.from("user_roles").select("role").eq("user_id", user.id).eq("role", "founder").maybeSingle();
-        if (!active) return;
-        setIsFounder(!error && !!data);
-      } catch { if (active) setIsFounder(false); }
-      finally { if (active) setLoading(false); }
-    };
-    void check();
-    return () => { active = false; };
-  }, [user?.id, !!session]);
-
+  const { user, loading } = useAuth();
+  const isFounder = isFounderEmail(user?.email ?? null);
   return { isFounder, loading };
 };

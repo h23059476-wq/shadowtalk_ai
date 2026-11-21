@@ -17,17 +17,30 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    function isAdmin() {
+    // Admin panel access — restricted to the founder account email ONLY
+    // (zain@shadowtalk-ai.com). The email arrives inside the signed Firebase
+    // Auth ID token, so no Firestore lookup is needed and there is no role
+    // document to bootstrap. Direct claim access errors (deny) for accounts
+    // without an email claim (e.g. anonymous auth) — the safe direction.
+    function founderEmailAccess() {
       return signedIn()
+        && request.auth.token.get('email', '').lower() == 'zain@shadowtalk-ai.com';
+    }
+
+    function isAdmin() {
+      return founderEmailAccess()
+        || (signedIn()
         && exists(/databases/$(database)/documents/user_roles/$(request.auth.uid))
-        && get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role == 'admin';
+        && get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role == 'admin');
     }
 
     // Founder-only access: stricter than admin. Used for the Intelligence Center.
+    // Same founder-email fast path — the panel is email-gated, not role-gated.
     function isFounder() {
-      return signedIn()
+      return founderEmailAccess()
+        || (signedIn()
         && exists(/databases/$(database)/documents/user_roles/$(request.auth.uid))
-        && get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role == 'founder';
+        && get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role == 'founder');
     }
 
     // .get(key, default) avoids hard errors on docs that predate user_id.
