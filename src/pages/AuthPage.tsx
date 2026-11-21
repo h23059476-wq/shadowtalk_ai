@@ -496,7 +496,7 @@ const AuthPage = () => {
                     setResetSent(false);
                     setRateLimitMsg("");
                   }}
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-white transition-colors cursor-pointer mb-5"
+                  className="flex w-fit items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-white transition-colors cursor-pointer mb-5"
                 >
                   <ArrowLeft className="h-3.5 w-3.5" />
                   Back to sign in
@@ -504,7 +504,7 @@ const AuthPage = () => {
 
                 {resetSent ? (
                   <div className="text-center py-4">
-                    <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 mb-4">
+                    <div className="flex w-fit mx-auto items-center justify-center h-14 w-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 mb-4">
                       <MailCheck className="h-7 w-7 text-emerald-400" />
                     </div>
                     <h2 className="text-xl font-bold text-white tracking-tight">Check your inbox</h2>
@@ -526,7 +526,7 @@ const AuthPage = () => {
                   </div>
                 ) : (
                   <>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[11px] font-semibold mb-4">
+                    <div className="flex w-fit items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[11px] font-semibold mb-4">
                       <KeyRound className="h-3 w-3" />
                       <span>Account recovery</span>
                     </div>
