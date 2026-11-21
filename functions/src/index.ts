@@ -1,27 +1,17 @@
 import { onRequest } from "firebase-functions/v2/https";
-import { defineSecret } from "firebase-functions/params";
 import * as admin from "firebase-admin";
 const cors = require("cors");
 
 admin.initializeApp();
 
 const corsHandler = cors({ origin: true });
-// === OpenRouter key pool (Spark-safe) ===
-// PRIMARY key uses defineSecret (works on Spark + Blaze).
-// ADDITIONAL keys (_2 through _5) are read from process.env, so they work on
-// Spark (set via firebase functions:config or .env) without Secret Manager.
-// To add more keys on Spark:
-//   firebase functions:config:set openrouter.key2="sk-or-v1-..."
-//   firebase functions:config:set openrouter.key3="sk-or-v1-..."
-//   firebase deploy --only functions
-// On Blaze, you can also use Secret Manager:
-//   firebase functions:secrets:set OPENROUTER_API_KEY_2
-//   (then uncomment the defineSecret lines below)
-const openRouterApiKey = defineSecret("OPENROUTER_API_KEY");
-// const openRouterApiKey2 = defineSecret("OPENROUTER_API_KEY_2"); // Blaze only
-// const openRouterApiKey3 = defineSecret("OPENROUTER_API_KEY_3"); // Blaze only
-// const openRouterApiKey4 = defineSecret("OPENROUTER_API_KEY_4"); // Blaze only
-// const openRouterApiKey5 = defineSecret("OPENROUTER_API_KEY_5"); // Blaze only
+// === OpenRouter key pool (env-driven, Spark-safe) ===
+// Every key is a plain env var baked from functions/.env at deploy time — the
+// same mechanism as RESEND_API_KEY. No Secret Manager dependency, so CI
+// deploys run non-interactively, and missing keys simply leave the pool empty
+// (AI endpoints then answer 503 with a clear "not configured" message).
+//   OPENROUTER_API_KEY      — primary key
+//   OPENROUTER_API_KEY_2..5 — additional keys
 
 /**
  * In-memory key pool with round-robin rotation + per-key cooldown on 429.
@@ -29,12 +19,11 @@ const openRouterApiKey = defineSecret("OPENROUTER_API_KEY");
  * markCooldown() pulls it out of rotation for COOLDOWN_MS.
  */
 const KEY_COOLDOWN_MS = 60_000;
-const allSecrets = [openRouterApiKey]; // primary only — add _2-_5 here when on Blaze
 
 // NOTE: Remote Config was previously used as a key source, but Remote Config
 // is client-delivered configuration — any key placed there is recoverable by
-// app clients. Removed for security (audit finding ST-02). Use defineSecret()
-// (Secret Manager, requires Blaze) or process.env for additional keys.
+// app clients. Removed for security (audit finding ST-02). Keys live only in
+// functions/.env / CI secrets, never in client-readable config.
 
 class KeyPool {
   private keys: string[] = [];
@@ -43,19 +32,17 @@ class KeyPool {
 
   /**
    * Loads all available keys. Sources (in priority order):
-   *   1. defineSecret("OPENROUTER_API_KEY") — primary, works on Spark
-   *   2. process.env.OPENROUTER_API_KEY_2..5 — env vars (set via functions:config
-   *      or .env file, NOT Remote Config which is client-readable)
+   *   1. process.env.OPENROUTER_API_KEY — primary (from functions/.env)
+   *   2. process.env.OPENROUTER_API_KEY_2..5 — additional keys
    *
-   * To add more keys on Spark: create a .env file in functions/ with
+   * To add keys: put them in functions/.env (gitignored) and redeploy:
+   *   OPENROUTER_API_KEY=sk-or-v1-...
    *   OPENROUTER_API_KEY_2=sk-or-v1-...
-   *   OPENROUTER_API_KEY_3=sk-or-v1-...
-   * Then `firebase deploy --only functions`. The .env file must be gitignored.
    */
   async load(): Promise<string[]> {
-    const fromSecrets = allSecrets
-      .map((s) => s.value())
-      .filter((v): v is string => typeof v === "string" && v.length > 10);
+    const fromSecrets = [
+      process.env.OPENROUTER_API_KEY,
+    ].filter((v): v is string => typeof v === "string" && v.length > 10);
     const fromEnv = [
       process.env.OPENROUTER_API_KEY_2,
       process.env.OPENROUTER_API_KEY_3,
@@ -314,7 +301,7 @@ const FIRST_CHUNK_TIMEOUT_MS = 20_000;
 const HEARTBEAT_INTERVAL_MS = 5_000;
 const HEARTBEAT_IDLE_MS = 10_000;
 
-export const chat = onRequest({ secrets: allSecrets, timeoutSeconds: 300 }, (req, res) => {
+export const chat = onRequest({ timeoutSeconds: 300 }, (req, res) => {
   corsHandler(req, res, async () => {
     if (req.method === "OPTIONS") return;
     if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed." });
@@ -328,7 +315,7 @@ export const chat = onRequest({ secrets: allSecrets, timeoutSeconds: 300 }, (req
       const poolKeys = await keyPool.load();
       if (poolKeys.length === 0) {
         throw new AiRequestError(
-          "Shared AI is not configured. Set the OPENROUTER_API_KEY Firebase secret.",
+          "Shared AI is not configured. Set OPENROUTER_API_KEY in functions/.env.",
           503,
         );
       }
@@ -579,7 +566,7 @@ export const drive = onRequest((req, res) => {
   });
 });
 
-export const generateImage = onRequest({ secrets: allSecrets, timeoutSeconds: 120 }, (req, res) => {
+export const generateImage = onRequest({ timeoutSeconds: 120 }, (req, res) => {
   corsHandler(req, res, async () => {
     if (req.method === "OPTIONS") return;
     if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed." });
@@ -593,7 +580,7 @@ export const generateImage = onRequest({ secrets: allSecrets, timeoutSeconds: 12
       const poolKeys = await keyPool.load();
       if (poolKeys.length === 0) {
         throw new AiRequestError(
-          "Shared image generation is not configured. Set the OPENROUTER_API_KEY Firebase secret.",
+          "Shared image generation is not configured. Set OPENROUTER_API_KEY in functions/.env.",
           503,
         );
       }

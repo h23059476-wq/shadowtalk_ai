@@ -10,6 +10,9 @@ jobs:
       # Mapped at job level so steps can test its presence (`secrets` context is
       # not allowed inside step-level `if:` expressions).
       RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      # Optional: enables the server-side chat/image pool when present.
+      # Ignored when unset (AI endpoints answer 503 with a clear message).
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -74,6 +77,9 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
         run: |
           echo "RESEND_API_KEY=$RESEND_API_KEY" > functions/.env
+          if [ -n "$OPENROUTER_API_KEY" ]; then
+            echo "OPENROUTER_API_KEY=$OPENROUTER_API_KEY" >> functions/.env
+          fi
           npx --yes firebase-tools@14 deploy --only functions --project shadowtalk-ai-7a513 --force
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
