@@ -965,8 +965,79 @@ function safeAuthContinueUrl(requested: string | undefined): string {
   return AUTH_CONTINUE_DEFAULT;
 }
 
-function buildVerificationEmail(
+// === Shared "vault" shell for branded transactional emails ===
+// Same design system as the site: #05070C background, #0B101B card,
+// #1C2434 border, #1AC6FF accent, ST monogram. Table-based so it renders
+// correctly in Gmail / Outlook / Apple Mail.
+const EMAIL_FONT_STACK =
+  "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+
+function emailShell(opts: {
+  preheader: string;
+  eyebrow: string;
+  headline: string;
+  bodyRows: string[];
+  ctaLabel: string;
+  actionLink: string;
+  noteTitle: string;
+  noteBody: string;
+}): string {
+  const f = EMAIL_FONT_STACK;
+  const rows: string[] = [];
+  for (const r of opts.bodyRows) {
+    rows.push(
+      `<tr><td style="padding:0 0 14px;font-family:${f};font-size:15px;line-height:24px;color:#9aa5bd;">${r}</td></tr>`,
+    );
+  }
+  return [
+    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+    '<html xmlns="http://www.w3.org/1999/xhtml">',
+    "<head>",
+    '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
+    '<meta name="viewport" content="width=device-width, initial-scale=1" />',
+    "</head>",
+    '<body style="margin:0;padding:0;background:#05070c;">',
+    `<div style="display:none;max-height:0;overflow:hidden;opacity:0;">${opts.preheader}</div>`,
+    '<table role="presentation" width="100%" bgcolor="#05070c" cellpadding="0" cellspacing="0" border="0" style="background:#05070c;">',
+    '<tr><td align="center" style="padding:44px 16px;">',
+    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;">',
+    '<tr><td bgcolor="#0b101b" style="background:#0b101b;border:1px solid #1c2434;border-radius:16px;padding:44px 46px 42px;">',
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">',
+    // Brand row: ST monogram tile + wordmark
+    '<tr><td style="padding:0 0 26px 6px;">',
+    '<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>',
+    `<td width="40" height="40" align="center" valign="middle" bgcolor="#1ac6ff" style="width:40px;height:40px;background:#1ac6ff;border-radius:11px;font-family:${f};font-size:16px;font-weight:800;color:#05070c;letter-spacing:0.5px;">ST</td>`,
+    `<td style="padding-left:12px;font-family:${f};font-size:20px;font-weight:700;color:#f2f5fa;letter-spacing:-0.2px;">ShadowTalk</td>`,
+    "</tr></table>",
+    "</td></tr>",
+    // Eyebrow + headline
+    `<tr><td style="padding:6px 0 14px;font-family:${f};font-size:11px;font-weight:700;letter-spacing:2.2px;color:#1ac6ff;">${opts.eyebrow}</td></tr>`,
+    `<tr><td style="padding:0 0 18px;font-family:${f};font-size:26px;line-height:34px;font-weight:700;color:#f2f5fa;letter-spacing:-0.4px;">${opts.headline}</td></tr>`,
+    // Body copy
+    ...rows,
+    // CTA button
+    '<tr><td style="padding:10px 0 22px;">',
+    '<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>',
+    `<td bgcolor="#1ac6ff" style="background:#1ac6ff;border-radius:11px;border:1px solid #0e9fd1;"><a href="${opts.actionLink}" style="display:inline-block;padding:15px 38px;font-family:${f};font-size:15px;font-weight:700;color:#05070c;text-decoration:none;letter-spacing:0.2px;">${opts.ctaLabel}</a></td>`,
+    "</tr></table>",
+    "</td></tr>",
+    // Fallback link
+    `<tr><td style="padding:0 0 26px;font-family:${f};font-size:12px;line-height:19px;color:#6b768f;">Button not working? Copy and paste this link into your browser:<br><a href="${opts.actionLink}" style="color:#1ac6ff;text-decoration:none;word-break:break-all;">${opts.actionLink}</a></td></tr>`,
+    // Note box
+    `<tr><td bgcolor="#101725" style="background:#101725;border-radius:12px;padding:18px 20px;font-family:${f};font-size:13px;line-height:21px;color:#9aa5bd;"><span style="font-weight:700;color:#f2f5fa;">${opts.noteTitle}</span><br>${opts.noteBody}</td></tr>`,
+    "</table>",
+    "</td></tr>",
+    // Footer
+    `<tr><td align="center" style="padding:30px 16px 0;font-family:${f};font-size:12px;line-height:19px;color:#6b768f;">ShadowTalk AI &middot; <a href="https://shadowtalk-ai.com" style="color:#1ac6ff;text-decoration:none;">shadowtalk-ai.com</a><br>Think AI. Think ShadowTalk.<br><span style="font-size:11px;">This is an automated message. Replies to this address aren\u2019t monitored.</span></td></tr>`,
+    "</table>",
+    "</td></tr></table>",
+    "</body></html>",
+  ].join("");
+}
+
+export function buildVerificationEmail(
   name: string,
+  email: string,
   verificationLink: string,
 ): { subject: string; text: string; html: string } {
   const subject = "Verify your email address — ShadowTalk AI";
@@ -976,7 +1047,7 @@ function buildVerificationEmail(
     "Welcome to ShadowTalk AI — one workspace for agentic chat, voice, code",
     "and on-device models.",
     "",
-    "Confirm your email address to activate your account:",
+    `Confirm the email address ${email} to activate your account:`,
     "",
     verificationLink,
     "",
@@ -987,55 +1058,21 @@ function buildVerificationEmail(
     "",
     "— The ShadowTalk AI team · shadowtalk-ai.com",
   ].join("\n");
-
-  const html = [
-    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
-    '<html xmlns="http://www.w3.org/1999/xhtml">',
-    "<head>",
-    '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
-    '<meta name="viewport" content="width=device-width, initial-scale=1" />',
-    "<title>Verify your email — ShadowTalk AI</title>",
-    "</head>",
-    '<body style="margin:0;padding:0;background-color:#07080d;">',
-    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Confirm your email to activate your ShadowTalk AI account — the link is valid for 24 hours.</div>',
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#07080d;padding:32px 12px;">',
-    "<tr><td align=\"center\">",
-    '<table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">',
-    // Brand header
-    "<tr><td style=\"padding:8px 4px 18px 4px;\">",
-    '<div style="font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.3px;">ShadowTalk <span style="color:#22cfff;">AI</span></div>',
-    '<div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a90a5;margin-top:4px;">Think AI. Think ShadowTalk.</div>',
-    "</td></tr>",
-    // Card
-    "<tr><td>",
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0e0f16;border:1px solid #1d2130;border-radius:16px;">',
-    "<tr><td style=\"padding:36px 32px 32px 32px;\">",
-    '<h1 style="font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:700;color:#ffffff;margin:0 0 14px 0;line-height:1.3;">Confirm your email address</h1>',
-    `<p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#b7bccd;line-height:1.6;margin:0 0 6px 0;">Hi ${escapeHtml(name)},</p>`,
-    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#b7bccd;line-height:1.6;margin:0 0 26px 0;">Welcome to ShadowTalk AI — one workspace for agentic chat, voice, code and on-device models. Tap the button below to confirm this email address and activate your account.</p>',
-    // CTA button
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px 0;"><tr><td align="center" bgcolor="#22cfff" style="border-radius:10px;">',
-    `<a href="${escapeHtml(verificationLink)}" target="_blank" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:700;color:#07080d;text-decoration:none;padding:14px 32px;border-radius:10px;background-color:#22cfff;">Verify email address</a>`,
-    "</td></tr></table>",
-    // Fallback link
-    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8a90a5;line-height:1.6;margin:0 0 8px 0;">Or copy and paste this link into your browser:</p>',
-    `<p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#22cfff;line-height:1.5;margin:0 0 18px 0;word-break:break-all;">${escapeHtml(verificationLink)}</p>`,
-    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8a90a5;line-height:1.6;margin:0 0 22px 0;">This link is valid for <span style="color:#b7bccd;font-weight:700;">24 hours</span>. If it expires, sign in and request a new one.</p>',
-    // Security note
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#13141d;border-radius:10px;"><tr><td style="padding:14px 16px;">',
-    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8a90a5;line-height:1.5;margin:0;">Not you? If you didn\u2019t sign up for ShadowTalk AI, you can safely ignore this email — no account will be activated without confirmation.</p>',
-    "</td></tr></table>",
-    "</td></tr></table>",
-    "</td></tr>",
-    // Footer
-    "<tr><td style=\"padding:20px 4px 8px 4px;text-align:center;\">",
-    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6b7280;margin:0 0 6px 0;">ShadowTalk AI · shadowtalk-ai.com</p>',
-    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6b7280;margin:0;">Questions? <a href="mailto:zain@shadowtalk-ai.com" style="color:#22cfff;text-decoration:none;">zain@shadowtalk-ai.com</a></p>',
-    "</td></tr></table>",
-    "</td></tr></table>",
-    "</body></html>",
-  ].join("");
-
+  const html = emailShell({
+    preheader:
+      "Confirm your email to activate your ShadowTalk AI account — the link is valid for 24 hours.",
+    eyebrow: "VERIFY YOUR EMAIL",
+    headline: "Confirm your email",
+    bodyRows: [
+      `Welcome to ShadowTalk. Confirm this address to activate your account: <span style="color:#f2f5fa;font-weight:600;">${escapeHtml(email)}</span>.`,
+      "Verification protects your account and makes sure recovery emails reach you.",
+    ],
+    ctaLabel: "Verify email address",
+    actionLink: escapeHtml(verificationLink),
+    noteTitle: "Didn\u2019t sign up?",
+    noteBody:
+      "If you never created a ShadowTalk account, ignore this email and the address won\u2019t be verified.",
+  });
   return { subject, text, html };
 }
 
@@ -1069,7 +1106,7 @@ export const sendVerificationEmail = onRequest(async (req, res) => {
       });
 
       const displayName = (user.name || email.split("@")[0] || "there").slice(0, 80);
-      const content = buildVerificationEmail(displayName, link);
+      const content = buildVerificationEmail(displayName, email, link);
       const delivery = await deliverEmail({
         to: email,
         replyTo: null,
@@ -1155,17 +1192,18 @@ function markResetSent(email: string, ip: string): void {
   resetSendTimestampsByIp.set(ip, timestamps);
 }
 
-function buildResetEmail(
+export function buildResetEmail(
   name: string,
+  email: string,
   resetLink: string,
 ): { subject: string; text: string; html: string } {
   const subject = "Reset your password — ShadowTalk AI";
   const text = [
     `Hi ${name},`,
     "",
-    "We received a request to reset the password for your ShadowTalk AI account.",
+    `We received a request to reset the password for the ShadowTalk account ${email}.`,
     "",
-    "Tap the button below to choose a new password:",
+    "Use the button below to choose a new password:",
     "",
     resetLink,
     "",
@@ -1179,57 +1217,20 @@ function buildResetEmail(
     "",
     "— The ShadowTalk AI team · shadowtalk-ai.com",
   ].join("\n");
-
-  const html = [
-    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
-    '<html xmlns="http://www.w3.org/1999/xhtml">',
-    "<head>",
-    '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
-    '<meta name="viewport" content="width=device-width, initial-scale=1" />',
-    "<title>Reset your password — ShadowTalk AI</title>",
-    "</head>",
-    '<body style="margin:0;padding:0;background-color:#07080d;">',
-    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Reset your ShadowTalk AI password — the link is valid for 60 minutes.</div>',
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#07080d;padding:32px 12px;">',
-    "<tr><td align=\"center\">",
-    '<table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">',
-    // Brand header
-    "<tr><td style=\"padding:8px 4px 18px 4px;\">",
-    '<div style="font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.3px;">ShadowTalk <span style="color:#22cfff;">AI</span></div>',
-    '<div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a90a5;margin-top:4px;">Think AI. Think ShadowTalk.</div>',
-    "</td></tr>",
-    // Card
-    "<tr><td>",
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0e0f16;border:1px solid #1d2130;border-radius:16px;">',
-    "<tr><td style=\"padding:36px 32px 32px 32px;\">",
-    '<div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2.2px;color:#22cfff;margin:0 0 12px 0;">PASSWORD RESET</div>',
-    '<h1 style="font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:700;color:#ffffff;margin:0 0 14px 0;line-height:1.3;">Reset your password</h1>',
-    `<p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#b7bccd;line-height:1.6;margin:0 0 6px 0;">Hi ${escapeHtml(name)},</p>`,
-    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#b7bccd;line-height:1.6;margin:0 0 26px 0;">We received a request to reset the password for your ShadowTalk AI account. Tap the button below to choose a new password. If you didn\u2019t request this, you can safely ignore this email — your password stays unchanged.</p>',
-    // CTA button
-    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px 0;"><tr><td align="center" bgcolor="#22cfff" style="border-radius:10px;">',
-    `<a href="${escapeHtml(resetLink)}" target="_blank" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:700;color:#07080d;text-decoration:none;padding:14px 32px;border-radius:10px;background-color:#22cfff;">Reset password</a>`,
-    "</td></tr></table>",
-    // Fallback link
-    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8a90a5;line-height:1.6;margin:0 0 8px 0;">Button not working? Copy and paste this link into your browser:</p>',
-    `<p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#22cfff;line-height:1.5;margin:0 0 18px 0;word-break:break-all;">${escapeHtml(resetLink)}</p>`,
-    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8a90a5;line-height:1.6;margin:0 0 22px 0;">This link is valid for <span style="color:#b7bccd;font-weight:700;">60 minutes</span>. If it expires, request a new one from the sign-in page.</p>',
-    // Security note
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#13141d;border-radius:10px;"><tr><td style="padding:14px 16px;">',
-    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8a90a5;line-height:1.5;margin:0;"><span style="color:#ffffff;font-weight:700;">Security note.</span> ShadowTalk will never ask for your password by email or chat. Anyone directing you to a different page is impersonating us.</p>',
-    "</td></tr></table>",
-    "</td></tr></table>",
-    "</td></tr>",
-    // Footer
-    "<tr><td style=\"padding:20px 4px 8px 4px;text-align:center;\">",
-    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6b7280;margin:0 0 6px 0;">ShadowTalk AI · shadowtalk-ai.com</p>',
-    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#6b7280;margin:0 0 4px 0;">Think AI. Think ShadowTalk.</p>',
-    '<p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#4b5563;margin:0;">This is an automated message. Replies to this address aren\u2019t monitored.</p>',
-    "</td></tr></table>",
-    "</td></tr></table>",
-    "</body></html>",
-  ].join("");
-
+  const html = emailShell({
+    preheader: "Reset your ShadowTalk AI password — the link is valid for 60 minutes.",
+    eyebrow: "PASSWORD RESET",
+    headline: "Reset your password",
+    bodyRows: [
+      `We received a request to reset the password for the ShadowTalk account <span style="color:#f2f5fa;font-weight:600;">${escapeHtml(email)}</span>.`,
+      "Use the button below to choose a new password. If you didn\u2019t request this, you can safely ignore this email — your password stays unchanged.",
+    ],
+    ctaLabel: "Reset password",
+    actionLink: escapeHtml(resetLink),
+    noteTitle: "Security note",
+    noteBody:
+      "ShadowTalk will never ask for your password by email or chat. Anyone directing you to a different page is impersonating us.",
+  });
   return { subject, text, html };
 }
 
@@ -1284,7 +1285,7 @@ export const requestPasswordReset = onRequest(async (req, res) => {
         /* name lookup is best-effort */
       }
 
-      const content = buildResetEmail(name, resetLink);
+      const content = buildResetEmail(name, email, resetLink);
       const delivery = await deliverEmail({
         to: email,
         replyTo: null,
