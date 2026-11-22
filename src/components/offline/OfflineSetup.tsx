@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { localInferenceEngine } from '@/offline/LocalInferenceEngine';
 import { StorageManager } from '@/offline/StorageManager';
+import { markDeviceInstallConsent } from '@/offline/BackgroundInstall';
 import { LOCAL_MODEL_TIERS, STARTER_LOCAL_MODEL, pickLocalModelForDevice, type LocalModelDefinition } from '@/ai/ModelRegistry';
 import { Loader2, CheckCircle2, AlertCircle, Cpu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -58,6 +59,8 @@ export const OfflineSetup: React.FC<{ onComplete?: () => void }> = ({ onComplete
 
       await StorageManager.requestPersistentStorage();
 
+      // Explicit user intent (manual install) — latch device consent.
+      markDeviceInstallConsent();
       setStatus('downloading');
 
       const success = await localInferenceEngine.initialize((report) => {

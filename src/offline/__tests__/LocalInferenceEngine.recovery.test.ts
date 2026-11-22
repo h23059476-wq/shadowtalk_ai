@@ -44,8 +44,8 @@ vi.mock("@/ai/ModelRegistry", () => ({
     approxStorageRequirementMB: 800,
   },
   getLocalModelDefinition: (id: string) =>
-    id === "test-model-id"
-      ? { id: "test-model-id", displayName: "Test Model", approxStorageRequirementMB: 800 }
+    id === "test-model-id" || id === "test-model-b"
+      ? { id, displayName: "Test Model", approxStorageRequirementMB: 800 }
       : undefined,
   pickLocalModelForDevice: () => ({ id: "test-model-id", displayName: "Test Model", approxStorageRequirementMB: 800 }),
 }));
@@ -89,6 +89,32 @@ describe("LocalInferenceEngine recovery", () => {
     const ok = await localInferenceEngine.prewarm();
     expect(ok).toBe(true);
     expect(createEngineMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("NEVER adopts an in-flight init of a different model — waits for it, then loads the requested one", async () => {
+    // Regression: switchActiveModel("3B") while the bootstrap's 1B init is in
+    // flight used to adopt the 1B run and report "Model activated." while the
+    // wrong model loaded.
+    let releaseFirst!: () => void;
+    const firstGate = new Promise<void>((resolve) => { releaseFirst = resolve; });
+    createEngineMock.mockImplementationOnce(async () => {
+      await firstGate;
+      return healthyEngine("a");
+    });
+    createEngineMock.mockResolvedValueOnce(healthyEngine("b"));
+
+    const first = localInferenceEngine.initialize(undefined, "test-model-id");
+    const second = localInferenceEngine.initialize(undefined, "test-model-b");
+    releaseFirst(); // both calls are queued — the first init settles now
+    const results = await Promise.all([first, second]);
+
+    expect(results).toEqual([true, true]);
+    // Two separate engine builds — one per model, never a cross-model adoption
+    expect(createEngineMock).toHaveBeenCalledTimes(2);
+    expect(createEngineMock.mock.calls[0][1]).toBe("test-model-id");
+    expect(createEngineMock.mock.calls[1][1]).toBe("test-model-b");
+    expect(localInferenceEngine.getCurrentModelId()).toBe("test-model-b");
+    expect(localInferenceEngine.isLoaded()).toBe(true);
   });
 
   it("initialize fails fast (watchdog) when the worker never reports progress", async () => {

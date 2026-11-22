@@ -476,18 +476,6 @@ const ChatbotPage = () => {
     ]);
   }, [currentConversationId, user]);
 
-  useEffect(() => {
-    // Every visitor on the chat page kicks off the silent on-device model
-    // download. Cloud is used until the model is ready, then routing flips
-    // to local automatically (see tierAInstall → onLocalModelReady).
-
-  }, [user, isAnonymous]);
-
-  useEffect(() => {
-  }, [chatMode]);
-
-
-
 
   useEffect(() => {
     if (chatPrefsLoading || appliedChatDefaults.current) return;
@@ -1754,7 +1742,8 @@ Structure and Content Guidelines:
 
         if (isOffline) {
           throw new Error(
-            "You're offline and the local AI engine isn't loaded yet. Open Settings → Offline AI while connected to install it (one-time download).",
+            "You're offline and the on-device model isn't installed yet. Reconnect once to install it " +
+            "from the model manager (chat header → model switcher, one-time download) — after that, chat works fully offline.",
           );
         }
 
@@ -1765,7 +1754,7 @@ Structure and Content Guidelines:
           toast({
             title: "Local AI not loaded",
             description:
-              "Using the cloud provider for this message. Load the on-device engine in Settings → Offline AI to chat locally.",
+              "Using the cloud provider for this message. Open the model manager (chat header → model switcher) to load the on-device engine and chat locally.",
           });
         }
       }

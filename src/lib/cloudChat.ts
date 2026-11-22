@@ -317,6 +317,15 @@ export async function streamCloudChat(
       if (!shouldEscalateToCloud(messages, opts)) {
         return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
       }
+      // OFFLINE with the engine loaded: the cloud tier is unreachable, and a
+      // BYOK call would die in an opaque "Failed to fetch" even for tasks a
+      // context-fitted local run can serve (size-only overflows — a long
+      // history that merely exceeds the local window). Degrate to fitted
+      // local; hard frontier triggers (vision/web/structured) get the honest
+      // escalation error below — they genuinely cannot run on-device.
+      if (typeof navigator !== "undefined" && navigator.onLine === false && !hasFrontierTrigger(messages, opts)) {
+        return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
+      }
       // Escalation: try the user's key first.
       const accessMode = getCachedAiAccessMode();
       if (accessMode === "byok") {
@@ -336,16 +345,43 @@ export async function streamCloudChat(
     // (mount prewarm / background install): give it a bounded chance to
     // finish so ordinary chat stays on-device instead of bouncing to the
     // cloud tier while the engine compiles. The wait is watchdog-capped and
-    // skipped entirely for frontier tasks (cloud serves those better).
+    // skipped entirely for frontier tasks (cloud serves those better) — and
+    // skipped OFFLINE: a download can make no progress without a network,
+    // so waiting only delays the honest answer below.
     const engineState = localInferenceEngine.getState();
+    const offline = typeof navigator !== "undefined" && navigator.onLine === false;
     if (
       (engineState === "downloading" || engineState === "loading") &&
-      !shouldEscalateToCloud(messages, opts)
+      !shouldEscalateToCloud(messages, opts) &&
+      !offline
     ) {
       const warmed = await waitForLocalEngineReady(25_000, opts.signal).catch(() => false);
       if (warmed && localInferenceEngine.isLoaded()) {
         return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
       }
+    }
+    // OFFLINE with a cold engine: every path below ends in an opaque
+    // "Failed to fetch". If the weights are fully cached, a warm-up still
+    // works with no network (cache hits) — give it one bounded chance;
+    // otherwise return the honest offline guidance instead of a fetch error.
+    if (offline && !hasFrontierTrigger(messages, opts)) {
+      if (localInferenceEngine.getState() === "idle" || localInferenceEngine.getState() === "error") {
+        void localInferenceEngine.prewarm().catch(() => {});
+        const { hasModelInCache } = await import("@/services/modelManager");
+        if (await hasModelInCache(localInferenceEngine.getCurrentModelId()).catch(() => false)) {
+          const warmed = await waitForLocalEngineReady(30_000, opts.signal).catch(() => false);
+          if (warmed && localInferenceEngine.isLoaded()) {
+            return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
+          }
+        }
+      }
+      return {
+        content: "",
+        error:
+          "You're offline and the on-device model isn't loaded yet. Reconnect once to install it " +
+          "(chat header → model switcher → download) — after that, chat works fully offline.",
+        source: "local",
+      };
     }
     // Not provisioned → fall through to the standard mode logic.
   }

@@ -52,7 +52,10 @@ export const LocalModelStatus: React.FC = () => {
         <span>Storage:</span>
         <span className="text-foreground">~{displayedModel.approxStorageRequirementMB} MB</span>
         <span>Acceleration:</span>
-        <span className="text-foreground">{hasWebGPU ? 'WebGPU' : 'CPU'}</span>
+        {/* There is no CPU engine — without WebGPU the on-device tier cannot
+            run at all, and claiming "CPU" sent users hunting for a fallback
+            that does not exist. */}
+        <span className="text-foreground">{hasWebGPU ? 'WebGPU' : 'Not available'}</span>
         <span>Status:</span>
         <span className={`text-foreground ${isError ? 'text-red-500' : ''}`}>{STATE_LABEL[engineState]}</span>
       </div>

@@ -167,8 +167,10 @@ describe("ChatbotPage prefer-local integration (source contract)", () => {
     expect(src).toContain("preferLocalNoticeShownRef");
     expect(src).toMatch(/Local AI not loaded/);
     // Offline without the engine fails with actionable guidance instead of a
-    // generic network error.
-    expect(src).toMatch(/isn't loaded yet/);
+    // generic network error — pointing at surfaces guests can reach too (the
+    // model manager drawer), not the auth-gated Settings page.
+    expect(src).toMatch(/isn't installed yet/);
+    expect(src).toMatch(/model manager/);
   });
 
   it("keeps the Offline AI settings section reachable", async () => {

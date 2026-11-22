@@ -2,10 +2,12 @@
  * Background install for the on-device starter model.
  *
  * The download never blocks anything: on first sign-in the user is asked once
- * ("Install private AI in background? ~700MB for the Lite starter, ~300MB for
- * the Nano tier"), then keeps chatting via their BYOK key / escalation
+ * ("Install private AI in background? ~0.9–1.1GB for the Lite starter, ~0.6GB
+ * for the Nano tier"), then keeps chatting via their BYOK key / escalation
  * prompts while the shards stream down. WebLLM caches weights per-shard, so
- * an interrupted download resumes where it stopped.
+ * an interrupted download resumes where it stopped. Consent is recorded
+ * device-scoped (markDeviceInstallConsent) and gates the silent bootstrap —
+ * nothing multi-hundred-MB downloads without an explicit opt-in.
  *
  * When the model lands, chat silently flips to on-device (setPreferLocal) and
  * a `shadowtalk:local-model-ready` window event fires — ChatbotPage turns that
@@ -40,6 +42,34 @@ export type InstallDecision = "accepted" | "declined";
 
 const STATE_KEY = "shadowtalk.bginstall.state.v1";
 const DECISION_PREFIX = "shadowtalk.bginstall.decision.v1";
+// Device-scoped consent for the big background download. The one-time ask is
+// per-account (a banner per uid), but the shard cache is shared by every
+// account on this browser — and a GUEST never sees the banner at all.
+// Without a device-level flag the tiered bootstrap silently streamed ~1GB
+// onto first-time visitors' devices before they consented to anything.
+const DEVICE_CONSENT_KEY = "shadowtalk.bginstall.device-consent.v1";
+
+/** Whether ANY explicit install intent happened on this device (banner
+ *  accept, onboarding wizard, ZeroSetupCard install, model-manager
+ *  download). Gates the silent bootstrap — no consent, no multi-hundred-MB
+ *  background download. */
+export function hasDeviceInstallConsent(): boolean {
+  if (typeof localStorage === "undefined") return false;
+  try {
+    return localStorage.getItem(DEVICE_CONSENT_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+/** Record explicit install intent (device-scoped, idempotent). */
+export function markDeviceInstallConsent(): void {
+  try {
+    localStorage.setItem(DEVICE_CONSENT_KEY, "1");
+  } catch {
+    // private browsing — consent lives in memory only this session
+  }
+}
 
 const DEFAULT_SNAPSHOT: BackgroundInstallSnapshot = {
   phase: "not-started",
@@ -227,6 +257,7 @@ function writeDecision(uid: string, decision: InstallDecision): void {
 export function recordInstallDecision(uid: string, accepted: boolean): void {
   writeDecision(uid, accepted ? "accepted" : "declined");
   if (accepted) {
+    markDeviceInstallConsent();
     acceptedBy = uid;
     // A fresh accept overrides any earlier decline this session (Settings →
     // Offline AI path) and re-arms the auto-retry ladder.
@@ -252,6 +283,7 @@ export function recordInstallDecision(uid: string, accepted: boolean): void {
  */
 export function markInstalledViaWizard(uid: string, modelId?: string): void {
   writeDecision(uid, "accepted");
+  markDeviceInstallConsent();
   patchSnapshot({
     phase: "ready",
     progress: 1,
@@ -269,6 +301,10 @@ export function markInstalledViaWizard(uid: string, modelId?: string): void {
 export async function startBackgroundInstall(uid?: string): Promise<void> {
   if (typeof uid === "string" && uid) acceptedBy = uid;
   if (snapshot.phase === "ready" || starting || declineAbort) return;
+  // Any caller of this function is an explicit install intent (banner
+  // accept, wizard, ZeroSetupCard, resume) — latch device consent so the
+  // silent bootstrap may resume these shards after a reload.
+  markDeviceInstallConsent();
   clearRetryTimer();
   starting = true;
   try {
@@ -308,7 +344,7 @@ export async function startBackgroundInstall(uid?: string): Promise<void> {
     if (storage && storage.availableMB > 0 && storage.availableMB < floorMB * 0.9) {
       patchSnapshot({
         phase: "failed",
-        error: `Not enough browser storage free for the on-device model (~${Math.round(floorMB)}MB needed, ${Math.round(storage.availableMB)}MB free). Free up space and retry from Settings → Offline AI.`,
+        error: `Not enough browser storage free for the on-device model (~${Math.round(floorMB)}MB needed, ${Math.round(storage.availableMB)}MB free). Free up space and retry from the model manager (chat header → model switcher).`,
       });
       return;
     }
@@ -377,7 +413,7 @@ export async function startBackgroundInstall(uid?: string): Promise<void> {
       error:
         error instanceof Error
           ? `${error.message}${retrySuffix ?? ""}`
-          : `The background install failed. You can retry from Settings → Offline AI.${retrySuffix ?? ""}`,
+          : `The background install failed. You can retry from the model manager (chat header → model switcher).${retrySuffix ?? ""}`,
     });
     // preferLocal intentionally untouched — the user keeps chatting via cloud.
     return;
@@ -443,7 +479,7 @@ async function awaitEngineSettled(engine: {
       error:
         state === "error"
           ? `The on-device engine failed to finish installing.${retrySuffix ?? ""}`
-          : `The install was interrupted. Retry from Settings → Offline AI.${retrySuffix ?? ""}`,
+          : `The install was interrupted. Retry from the model manager (chat header → model switcher).${retrySuffix ?? ""}`,
     });
   }
 }

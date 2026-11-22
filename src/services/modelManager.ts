@@ -41,7 +41,8 @@ import {
   type LocalModelDefinition,
 } from "@/config/models";
 import { detectDeviceCapabilities, getDeviceMemoryGB, requestPersistentStorage, getStorageQuota } from "@/utils/deviceCapabilities";
-import { getInstallDecision } from "@/offline/BackgroundInstall";
+import { getInstallDecision, hasDeviceInstallConsent, markDeviceInstallConsent } from "@/offline/BackgroundInstall";
+import { buildMirrorAppConfig, isBuiltInMirroredModelId } from "@/offline/modelMirror";
 import type { CloudChatMessage, CloudChatOptions, CloudChatResult } from "@/lib/cloudChat";
 
 export type ModelManagerPhase =
@@ -127,11 +128,24 @@ export function subscribeModelManager(cb: (s: ModelManagerSnapshot) => void): ()
 
 /** What is already stored locally for a model (per-shard cache backend). */
 export async function hasModelInCache(modelId: string): Promise<boolean> {
+  // web-llm caches shards under the URLs of the appConfig used at install
+  // time. Models installed through the built-in mirror are keyed by the
+  // mirrored URLs — the default-config check misses them, so warm-up / the
+  // drawer offered a pointless re-download of an already-cached model.
   try {
-    return await webllmHasModelInCache(modelId);
+    if (await webllmHasModelInCache(modelId)) return true;
   } catch {
     return false;
   }
+  if (isBuiltInMirroredModelId(modelId)) {
+    try {
+      const mirrorConfig = buildMirrorAppConfig();
+      if (mirrorConfig && (await webllmHasModelInCache(modelId, mirrorConfig))) return true;
+    } catch {
+      /* fall through — treated as uncached */
+    }
+  }
+  return false;
 }
 
 /** Removes a cached model (unloading it first when it is the active one). */
@@ -141,12 +155,25 @@ export async function deleteCachedModel(modelId: string): Promise<void> {
     await localInferenceEngine.unload();
   }
   if (embedEngineModelId === modelId) await unloadEmbeddingEngine();
-  try {
-    await deleteModelAllInfoInCache(modelId);
-  } catch (error) {
-    console.warn(`[model-manager] could not delete cache for ${modelId}:`, error);
-    throw error;
+  // Delete under BOTH configs when the model may exist under mirrored URLs:
+  // "Clear" previously left ~600MB+ of orphaned mirror shards behind and the
+  // drawer kept offering a re-download. A delete against URLs that are not
+  // in the cache is a no-op (cache misses never throw), so trying both is
+  // always safe and always complete.
+  const configs: Array<Parameters<typeof deleteModelAllInfoInCache>[1]> = [undefined];
+  if (isBuiltInMirroredModelId(modelId)) configs.push(buildMirrorAppConfig() ?? undefined);
+  let lastError: unknown = null;
+  let deletedAny = false;
+  for (const cfg of configs) {
+    try {
+      await deleteModelAllInfoInCache(modelId, cfg);
+      deletedAny = true;
+    } catch (error) {
+      lastError = error;
+      console.warn(`[model-manager] could not delete cache for ${modelId}:`, error);
+    }
   }
+  if (!deletedAny && lastError) throw lastError;
 }
 
 // ── Embedding engine (second worker, lazy) ──────────────────────────────
@@ -286,6 +313,10 @@ export async function switchActiveModel(
     console.warn(`[model-manager] unknown model id: ${modelId}`);
     return false;
   }
+  // Both callers (model-manager drawer, chat-header model switcher) are
+  // explicit user installs — latch device consent so the bootstrap may
+  // pre-cache tiers and resume these shards later.
+  markDeviceInstallConsent();
   if (definition.modelKind === "embedding") {
     try {
       await ensureEmbeddingEngine(modelId, onProgress);
@@ -381,6 +412,17 @@ export async function bootstrapDefaultModels(
       return;
     }
     if (await uidDeclined(uid)) {
+      patch({ phase: "idle", progressText: "" });
+      return;
+    }
+    // Consent gate — nothing multi-hundred-MB downloads without an explicit
+    // opt-in. The one-time ask banner is signed-in-only, so before this gate
+    // a first-time GUEST (and even a signed-in user who had not answered the
+    // ask yet) silently downloaded the ~880MB starter + 64MB embeddings in
+    // the background. Every install surface (banner accept, onboarding
+    // wizard, ZeroSetupCard, model-manager download) latches the device
+    // consent flag; only after that does the bootstrap pre-cache tiers.
+    if (!hasDeviceInstallConsent()) {
       patch({ phase: "idle", progressText: "" });
       return;
     }

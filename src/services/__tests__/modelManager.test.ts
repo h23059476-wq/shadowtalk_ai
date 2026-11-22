@@ -12,6 +12,9 @@ vi.mock("@mlc-ai/web-llm", () => ({
   hasModelInCache: vi.fn(),
   deleteModelAllInfoInCache: vi.fn(),
   WebWorkerMLCEngine: class {},
+  // modelMirror clones the prebuilt config to build the mirror appConfig —
+  // an empty model_list keeps that path real without pulling the 2MB lib.
+  prebuiltAppConfig: { model_list: [] },
 }));
 
 vi.mock("@/utils/deviceCapabilities", () => ({
@@ -23,6 +26,8 @@ vi.mock("@/utils/deviceCapabilities", () => ({
 
 vi.mock("@/offline/BackgroundInstall", () => ({
   getInstallDecision: vi.fn(),
+  hasDeviceInstallConsent: vi.fn(),
+  markDeviceInstallConsent: vi.fn(),
   startBackgroundInstall: vi.fn().mockResolvedValue(undefined),
   getBackgroundInstallSnapshot: vi.fn(() => ({
     phase: "ready",
@@ -56,7 +61,7 @@ import {
   getStorageQuota,
   requestPersistentStorage,
 } from "@/utils/deviceCapabilities";
-import { getInstallDecision, startBackgroundInstall } from "@/offline/BackgroundInstall";
+import { getInstallDecision, hasDeviceInstallConsent, markDeviceInstallConsent, startBackgroundInstall } from "@/offline/BackgroundInstall";
 import { localInferenceEngine } from "@/offline/LocalInferenceEngine";
 import {
   bootstrapDefaultModels,
@@ -77,6 +82,8 @@ const cacheMock = vi.mocked(webllmHasModelInCache);
 const deleteCacheMock = vi.mocked(deleteModelAllInfoInCache);
 const createMock = vi.mocked(CreateWebWorkerMLCEngine);
 const decisionMock = vi.mocked(getInstallDecision);
+const consentMock = vi.mocked(hasDeviceInstallConsent);
+const markConsentMock = vi.mocked(markDeviceInstallConsent);
 const startInstallMock = vi.mocked(startBackgroundInstall);
 const engineMock = localInferenceEngine as unknown as {
   isLoaded: ReturnType<typeof vi.fn>;
@@ -132,6 +139,10 @@ beforeEach(() => {
   deleteCacheMock.mockResolvedValue(undefined);
   createMock.mockResolvedValue({ unload: vi.fn() } as never);
   decisionMock.mockReturnValue(null);
+  // Existing tests exercise the post-consent bootstrap; the consent-gate
+  // behavior gets its own explicit tests below.
+  consentMock.mockReturnValue(true);
+  markConsentMock.mockReturnValue(undefined);
   startInstallMock.mockResolvedValue(undefined);
   engineMock.isLoaded.mockReturnValue(false);
   engineMock.getCurrentModelId.mockReturnValue(CHAT_1B);
@@ -189,6 +200,23 @@ describe("bootstrapDefaultModels — ordering and outcomes", () => {
     expect(createMock).not.toHaveBeenCalled();
     expect(startInstallMock).not.toHaveBeenCalled();
     expect(getModelManagerSnapshot().phase).toBe("idle");
+  });
+
+  it("downloads nothing without device consent — silent idle, no error (guest consent gate)", async () => {
+    consentMock.mockReturnValue(false);
+    await bootstrapDefaultModels(undefined, "uid-1");
+    expect(createMock).not.toHaveBeenCalled();
+    expect(startInstallMock).not.toHaveBeenCalled();
+    const s = getModelManagerSnapshot();
+    expect(s.phase).toBe("idle");
+    expect(s.error).toBeNull();
+  });
+
+  it("latches device consent when a model is activated via switchActiveModel", async () => {
+    engineMock.isLoaded.mockReturnValue(false);
+    await switchActiveModel(CHAT_1B);
+    expect(markConsentMock).toHaveBeenCalled();
+    expect(engineMock.initialize).toHaveBeenCalledWith(undefined, CHAT_1B);
   });
 
   it("pauses offline instead of failing; resumes cleanly when back online", async () => {
@@ -262,7 +290,22 @@ describe("cache lifecycle", () => {
     engineMock.getCurrentModelId.mockReturnValue(CHAT_1B);
     await deleteCachedModel(CHAT_1B);
     expect(engineMock.unload).toHaveBeenCalledTimes(1);
-    expect(deleteCacheMock).toHaveBeenCalledWith(CHAT_1B);
+    expect(deleteCacheMock).toHaveBeenCalledWith(CHAT_1B, undefined);
+  });
+
+  it("deleteCachedModel also clears mirror-keyed cache for mirrored models (no orphaned shards)", async () => {
+    engineMock.isLoaded.mockReturnValue(false);
+    await deleteCachedModel(CHAT_05B); // built-in-mirrored 0.5B twin
+    expect(deleteCacheMock).toHaveBeenCalledTimes(2);
+    // second attempt runs under the mirror appConfig — without it, "Clear"
+    // left ~600MB+ of mirror shards orphaned in the Cache API
+    expect(deleteCacheMock.mock.calls[1][1]).toBeDefined();
+  });
+
+  it("deleteCachedModel uses only the default config for non-mirrored models", async () => {
+    engineMock.isLoaded.mockReturnValue(false);
+    await deleteCachedModel(CHAT_1B); // HF-only 1B starter
+    expect(deleteCacheMock).toHaveBeenCalledTimes(1);
   });
 
   it("deleteCachedModel throws when web-llm cannot delete (visible in UI)", async () => {

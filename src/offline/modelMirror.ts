@@ -85,6 +85,20 @@ export function isMirrorConfigured(): boolean {
   return template.length > 0 && template.includes("{slug}");
 }
 
+/**
+ * True when `modelId` is hosted on the BUILT-IN mirror (default template):
+ * its shards AND model_lib WASM are cached under the mirrored URLs, so cache
+ * checks and deletes must run against the mirror appConfig too — the default
+ * prebuiltAppConfig keys miss them entirely (orphaned ~600MB+ on "Clear").
+ */
+export function isBuiltInMirroredModelId(modelId: string): boolean {
+  return (
+    isMirrorConfigured() &&
+    mirrorUrlTemplate() === DEFAULT_MIRROR_TEMPLATE &&
+    DEFAULT_MIRRORED_MODEL_IDS.has(modelId)
+  );
+}
+
 let overrideTemplate: string | null = null;
 /** Test hook: override the template without re-importing the module. */
 export function __setMirrorTemplateForTests(template: string | null): void {

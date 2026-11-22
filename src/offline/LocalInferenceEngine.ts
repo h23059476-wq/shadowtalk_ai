@@ -68,6 +68,8 @@ export class LocalInferenceEngine {
 
   /** In-flight initialize() — concurrent callers adopt it instead of racing a second engine against the same GPU. */
   private initPromise: Promise<boolean> | null = null;
+  /** Model id requested by the in-flight initialize() (null = tier pick) — adoption never crosses models. */
+  private initModelId: string | null = null;
 
   /** Current engine state. */
   getState(): LocalEngineState {
@@ -171,12 +173,27 @@ export class LocalInferenceEngine {
       this.setState("ready");
       return true;
     }
-    // Dedupe concurrent starts (mount prewarm + background install + a
-    // message-triggered prewarm): adopt the in-flight run instead of
-    // spawning a second engine against the same GPU.
-    if (this.initPromise) return this.initPromise;
+    while (this.initPromise) {
+      // Dedupe concurrent starts (mount prewarm + background install + a
+      // message-triggered prewarm): adopt the in-flight run instead of
+      // spawning a second engine against the same GPU.
+      if (!modelId || modelId === this.initModelId) return this.initPromise;
+      // NEVER adopt across models: switchActiveModel("3B") while the
+      // bootstrap's 1B init is in flight would otherwise report "Model
+      // activated." while the wrong model loads. Let the in-flight run
+      // settle (watchdog-bounded, so this cannot hang), then take the slot.
+      try {
+        await this.initPromise;
+      } catch {
+        /* failed init — the slot clears in its finally */
+      }
+    }
     const promise = this.runInitialize(onProgress, modelId, engineConfig);
-    const wrapped = promise.finally(() => { this.initPromise = null; });
+    this.initModelId = modelId ?? null;
+    const wrapped = promise.finally(() => {
+      this.initPromise = null;
+      this.initModelId = null;
+    });
     this.initPromise = wrapped;
     return wrapped;
   }

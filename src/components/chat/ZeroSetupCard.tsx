@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { DeviceCapability } from "@/offline/DeviceCapability";
+import { markDeviceInstallConsent } from "@/offline/BackgroundInstall";
 import {
   FREE_AI_PRESETS,
   saveVaultKey,
@@ -83,6 +84,9 @@ export function ZeroSetupCard({ visible, onDismiss, onReady }: ZeroSetupCardProp
 
   const startLocalInstall = async () => {
     setMode("local");
+    // Explicit user intent (install button) — latch device consent so the
+    // background bootstrap may pre-cache tiers from now on.
+    markDeviceInstallConsent();
     setInstall({ active: true, progress: 0, text: "Preparing the on-device model…", error: null });
     try {
       const { localInferenceEngine } = await import("@/offline/LocalInferenceEngine");

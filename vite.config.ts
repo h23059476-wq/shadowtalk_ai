@@ -110,11 +110,16 @@ export default defineConfig(({ mode }) => {
               // Model infrastructure on raw.githubusercontent.com: the
               // built-in weights mirror (orphan `weights` branch) and the
               // web-llm model_lib WASMs (mlc-ai binary-mlc-llm-libs).
-              // Stale-while-revalidate keeps downloads working even when
-              // the network is flaky mid-session, and refreshes in the
+              // Stale-while-revalidate keeps small downloads working even
+              // when the network is flaky mid-session, and refreshes in the
               // background once a connection is back. Responses are
               // CORS-clean (ACAO: *), so nothing opaque enters the cache.
-              urlPattern: /^https:\/\/raw\.githubusercontent\.com\//,
+              // NOTE: `.bin` weight shards are EXCLUDED — web-llm already
+              // stores every shard in its own Cache API under "webllm/model",
+              // and double-caching them here burned ~2x storage (~1.2GB for
+              // the 0.5B twins) and accelerated eviction pressure on
+              // low-disk Android devices.
+              urlPattern: /^https:\/\/raw\.githubusercontent\.com\/(?!.*\.bin(?:\?|$)).*$/,
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheName: 'st-raw-github',
