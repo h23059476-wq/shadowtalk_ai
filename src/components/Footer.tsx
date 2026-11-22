@@ -176,6 +176,19 @@ const Footer = () => {
                     style={{ height: 44, width: "auto" }}
                   />
                 </a>
+                <a
+                  href="https://supalaun.ch/projects/shadowtalk-ai?utm_source=badge"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Featured on Supa Launch"
+                  className="inline-block opacity-90 hover:opacity-100 transition-opacity"
+                >
+                  <img
+                    src="https://supalaun.ch/supalaunch/images/badges/featured-on-dark.svg"
+                    alt="Featured on Supa Launch"
+                    style={{ height: 44, width: "auto" }}
+                  />
+                </a>
               </div>
             </div>
           </LandingAnimate>
