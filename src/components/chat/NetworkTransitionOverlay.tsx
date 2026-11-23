@@ -21,16 +21,29 @@ export const NetworkTransitionOverlay: React.FC = () => {
 
   useEffect(() => {
     let cancelled = false;
+    // Track the engine LIVE for the whole session: the overlay mounts once at
+    // app level, but the model often finishes installing mid-session (the
+    // background install takes minutes). A mount-time snapshot went stale and
+    // the offline banner then claimed "on-device AI unavailable" right after
+    // the install completed — subscribe instead of sampling.
+    let unsub: (() => void) | null = null;
     const checkLocalEngine = async () => {
       try {
         const { localInferenceEngine } = await import('@/offline/LocalInferenceEngine');
-        if (!cancelled) setLocalReady(localInferenceEngine.getState() === 'ready');
+        if (cancelled) return;
+        setLocalReady(localInferenceEngine.getState() === 'ready');
+        unsub = localInferenceEngine.subscribe((state) => {
+          if (!cancelled) setLocalReady(state === 'ready');
+        });
       } catch {
         if (!cancelled) setLocalReady(false);
       }
     };
     void checkLocalEngine();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+      unsub?.();
+    };
   }, []);
 
   const dismiss = useCallback(() => {
