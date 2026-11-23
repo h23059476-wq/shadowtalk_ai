@@ -265,6 +265,45 @@ describe("streamFreeChat", () => {
     expect(result.source).toBe("local");
   });
 
+  it("falls back to the CACHED on-device engine when OFFLINE (regression)", async () => {
+    // The old `navigator.onLine !== false` gate dead-ended every keyless
+    // offline visitor with setup guidance while the weights sat on disk —
+    // the exact scenario offline mode exists for. A warm-up needs no
+    // network (cache hits), so it must run offline too.
+    const prevNavigator = globalThis.navigator;
+    vi.stubGlobal("navigator", { userAgent: prevNavigator?.userAgent ?? "test-agent", onLine: false });
+    try {
+      saveVaultKey("groq", "gsk_offline_1");
+      // The cloud route fails the way it does offline — fast and opaque.
+      byokMock.streamByokChat.mockRejectedValue(new TypeError("Failed to fetch"));
+      modelManagerMock.isInstantModelReady.mockResolvedValue(true);
+      engineMock.initialize.mockResolvedValue(true);
+      const result = await streamFreeChat(chat("hi"));
+      expect(engineMock.initialize).toHaveBeenCalledTimes(1);
+      expect(engineMock.generate).toHaveBeenCalledTimes(1);
+      expect(result.content).toBe("on-device reply");
+      expect(result.source).toBe("local");
+      expect(result.needsSetup).toBeUndefined();
+    } finally {
+      vi.stubGlobal("navigator", prevNavigator);
+    }
+  });
+
+  it("still refuses to warm the engine OFFLINE when nothing is cached", async () => {
+    // Cache-gated, not network-gated — and with no cache there is nothing to
+    // warm: no cold download may ever start from inside a request.
+    const prevNavigator = globalThis.navigator;
+    vi.stubGlobal("navigator", { userAgent: prevNavigator?.userAgent ?? "test-agent", onLine: false });
+    try {
+      modelManagerMock.isInstantModelReady.mockResolvedValue(false);
+      const result = await streamFreeChat(chat("hi"));
+      expect(engineMock.initialize).not.toHaveBeenCalled();
+      expect(result.needsSetup).toBe(true);
+    } finally {
+      vi.stubGlobal("navigator", prevNavigator);
+    }
+  });
+
   it("never starts a cold model download from inside a request", async () => {
     modelManagerMock.isInstantModelReady.mockResolvedValue(false);
     const result = await streamFreeChat(chat("hi"));

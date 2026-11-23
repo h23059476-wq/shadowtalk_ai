@@ -1,8 +1,8 @@
-import { CreateWebWorkerMLCEngine, WebWorkerMLCEngine, type InitProgressCallback, type InitProgressReport, type MLCEngineConfig } from "@mlc-ai/web-llm";
+import { CreateWebWorkerMLCEngine, WebWorkerMLCEngine, deleteModelAllInfoInCache, hasModelInCache, type InitProgressCallback, type InitProgressReport, type MLCEngineConfig } from "@mlc-ai/web-llm";
 import { DEFAULT_LOCAL_MODEL, getLocalModelDefinition, pickLocalModelForDevice, type LocalModelDefinition } from "@/ai/ModelRegistry";
 import { CloudChatMessage, CloudChatOptions, CloudChatResult, LOCAL_OUTPUT_TOKEN_RESERVE } from "@/lib/cloudChat";
 import { DeviceCapability } from "@/offline/DeviceCapability";
-import { buildMirrorAppConfig, isMirrorEligibleError } from "@/offline/modelMirror";
+import { buildMirrorAppConfig, isBuiltInMirroredModelId, isMirrorEligibleError } from "@/offline/modelMirror";
 
 /**
  * Batch 4 — LocalInferenceEngine state machine.
@@ -49,6 +49,40 @@ const GENERATION_HARD_TIMEOUT_MS = 120_000;
 // caller can never wait more than ~3 minutes even in the worst cascade.
 const GENERATION_LADDER_DEADLINE_MS = 180_000;
 
+// ── One engine per device: Web Locks tab guard ────────────────────────────
+// Two tabs each spawning a WebGPU engine is the classic weak-GPU killer: 2×
+// device memory → device-lost on BOTH tabs → the whole offline story
+// collapses at once, usually mid-conversation. A device-scoped Web Lock
+// makes the second tab stand down cleanly (bounded, honest, cloud/honest
+// guidance) instead of corrupting the first tab's engine. Locks are
+// document-scoped and auto-release when the owning tab closes, so no
+// coordinator process is needed. Browsers without the API behave as before.
+const ENGINE_LOCK_NAME = "shadowtalk-local-engine.v1";
+// Escape hatch if the lock manager itself wedges — never let the guard
+// become the hang it exists to prevent.
+const ENGINE_LOCK_DECISION_TIMEOUT_MS = 2_000;
+
+interface LockManagerLike {
+  request?: (
+    name: string,
+    options: { ifAvailable?: boolean },
+    callback: (lock: unknown) => Promise<void> | void,
+  ) => Promise<void | null>;
+}
+
+// ── Corrupt-cache self-healing ───────────────────────────────────────────
+// A cache shard truncated by a browser crash (or an eviction bug) used to
+// brick private AI permanently: init throws a data-shaped error — never
+// network-shaped, so the mirror retry skipped it — and every later attempt
+// failed against the same poisoned bytes until the user manually cleared
+// the cache. When init fails with a data-shaped error and the model IS in
+// cache, wipe that model's cache entries (under both the default and the
+// mirror config) and give init one fresh chance. GPU-shaped errors (device
+// lost, out of memory, shader compile) must NOT trigger a wipe — re-
+// downloading 600MB cannot fix a driver.
+const DATA_CORRUPT_ERROR_RE =
+  /parse|syntax|unexpected token|unexpected end|json|utf-8|utf8|decode|corrupt|truncat|webassembly|wasm/i;
+
 export interface LocalEngineConfig {
   contextWindowSize?: number;
   /** Silence watchdog for initialize(): no progress for this long → fail (and retry via the mirror when eligible). */
@@ -70,6 +104,83 @@ export class LocalInferenceEngine {
   private initPromise: Promise<boolean> | null = null;
   /** Model id requested by the in-flight initialize() (null = tier pick) — adoption never crosses models. */
   private initModelId: string | null = null;
+  /** Release handle for the device engine lock (null = this document holds no lock). */
+  private engineLockRelease: (() => void) | null = null;
+
+  /**
+   * Try to take the device-wide engine lock without blocking. Returns true
+   * when this document may spawn the engine (lock taken, already held here,
+   * or the Web Locks API is unavailable); false when another tab owns the
+   * GPU — the caller must NOT spawn a second engine.
+   */
+  private async acquireEngineLock(): Promise<boolean> {
+    if (this.engineLockRelease) return true; // this document already holds it
+    const locks = (navigator as unknown as { locks?: LockManagerLike } | undefined)?.locks;
+    if (!locks?.request) return true; // API unavailable — legacy single-tab behavior
+    try {
+      const decision = new Promise<boolean>((resolve) => {
+        let holdResolve: (() => void) | null = null;
+        const hold = new Promise<void>((r) => { holdResolve = r; });
+        locks.request!(ENGINE_LOCK_NAME, { ifAvailable: true }, (lock: unknown) => {
+          if (!lock) {
+            resolve(false);
+            return;
+          }
+          this.engineLockRelease = () => {
+            this.engineLockRelease = null;
+            try { holdResolve?.(); } catch { /* already released */ }
+          };
+          resolve(true);
+          return hold; // keep holding until releaseEngineLock()
+        }).catch(() => {
+          // Lock API hiccup — degrade to legacy behavior, never block.
+          if (!this.engineLockRelease) resolve(true);
+        });
+      });
+      let decisionTimeout: ReturnType<typeof setTimeout> | null = null;
+      const verdict = await Promise.race([
+        decision,
+        new Promise<boolean>((r) => {
+          decisionTimeout = setTimeout(() => r(true), ENGINE_LOCK_DECISION_TIMEOUT_MS);
+        }),
+      ]);
+      if (decisionTimeout) clearTimeout(decisionTimeout);
+      return verdict;
+    } catch {
+      return true; // never fail the engine because of the lock
+    }
+  }
+
+  /** Release the device engine lock (no-op when not held). */
+  private releaseEngineLock(): void {
+    const release = this.engineLockRelease;
+    this.engineLockRelease = null;
+    try { release?.(); } catch { /* already released */ }
+  }
+
+  /** Whether the model sits in cache under the default or the mirror config. */
+  private async anyCacheForModel(modelId: string): Promise<boolean> {
+    try { if (await hasModelInCache(modelId)) return true; } catch { /* fall through */ }
+    if (isBuiltInMirroredModelId(modelId)) {
+      const cfg = buildMirrorAppConfig();
+      if (cfg) {
+        try { if (await hasModelInCache(modelId, cfg)) return true; } catch { /* fall through */ }
+      }
+    }
+    return false;
+  }
+
+  /** Best-effort wipe of a model's cache entries under every known config. */
+  private async wipeModelCache(modelId: string): Promise<void> {
+    const configs: Array<Parameters<typeof deleteModelAllInfoInCache>[1]> = [undefined];
+    if (isBuiltInMirroredModelId(modelId)) {
+      const cfg = buildMirrorAppConfig();
+      if (cfg) configs.push(cfg);
+    }
+    for (const cfg of configs) {
+      try { await deleteModelAllInfoInCache(modelId, cfg); } catch { /* best-effort */ }
+    }
+  }
 
   /** Current engine state. */
   getState(): LocalEngineState {
@@ -259,6 +370,14 @@ export class LocalInferenceEngine {
       onProgress?.(report);
     };
     try {
+      // One engine per device — a second tab must not fight this one for
+      // the GPU (weak devices lose BOTH engines to device-lost otherwise).
+      const lockTaken = await this.acquireEngineLock();
+      if (!lockTaken) {
+        console.info("[local-engine] the engine is already owned by another tab — standing down here");
+        this.setState("idle");
+        return false;
+      }
       this.engine = await this.createEngine(model, resolvedEngineConfig.contextWindowSize!, progressCb, false, resolvedEngineConfig.initIdleTimeoutMs);
       this.isReady = true;
       this.setState("ready");
@@ -267,6 +386,7 @@ export class LocalInferenceEngine {
       // Mirror retry: a Hugging Face CDN hiccup should never brick private AI.
       // One attempt against the self-hosted mirror (when configured) for
       // network-shaped failures; GPU/device errors are not worth a retry.
+      let lastError: unknown = error;
       if (isMirrorEligibleError(error) && buildMirrorAppConfig()) {
         console.info("[local-engine] primary download failed — retrying from the configured mirror");
         try {
@@ -276,9 +396,36 @@ export class LocalInferenceEngine {
           return true;
         } catch (mirrorError) {
           console.error("Mirror download also failed:", mirrorError);
+          lastError = mirrorError;
+        }
+      }
+      // Corrupt-cache self-healing: data-shaped failures against an existing
+      // cache get ONE wipe-and-retry (bounded — never a download loop).
+      const message =
+        lastError instanceof Error
+          ? lastError.message
+          : typeof lastError === "string"
+            ? lastError
+            : "";
+      if (
+        message &&
+        DATA_CORRUPT_ERROR_RE.test(message) &&
+        (await this.anyCacheForModel(model.id).catch(() => false))
+      ) {
+        console.warn(`[local-engine] init failed with a data-shaped error — clearing the possibly-corrupt cache for ${model.id} and retrying once`);
+        await this.wipeModelCache(model.id);
+        try {
+          this.engine = await this.createEngine(model, resolvedEngineConfig.contextWindowSize!, progressCb, false, resolvedEngineConfig.initIdleTimeoutMs);
+          this.isReady = true;
+          this.setState("ready");
+          return true;
+        } catch (recoveryError) {
+          console.error("Cache-cleared retry also failed:", recoveryError);
         }
       }
       console.error("Failed to initialize WebLLM engine:", error);
+      // The engine never came up — free the device slot for another tab.
+      this.releaseEngineLock();
       this.setState("error");
       return false;
     } finally {
@@ -553,6 +700,9 @@ export class LocalInferenceEngine {
       this.engine = null;
       this.isReady = false;
     }
+    // Free the device engine slot — another tab may now bring its own
+    // engine up without fighting a dead one for GPU memory.
+    this.releaseEngineLock();
     this.setState("idle");
   }
 }

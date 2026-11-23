@@ -204,14 +204,21 @@ export async function streamFreeChat(
         const local = await generateLocally(messages, opts);
         if (!local.error || local.content) return { ...local, source: "local" };
         firstError ??= local.error;
-      } else if (typeof navigator === "undefined" || navigator.onLine !== false) {
-        if (await canAutoStartLocalEngine()) {
-          const ok = await localInferenceEngine.initialize();
-          if (ok) {
-            const local = await generateLocally(messages, opts);
-            if (!local.error || local.content) return { ...local, source: "local" };
-            firstError ??= local.error;
-          }
+      } else if (await canAutoStartLocalEngine()) {
+        // Cache-gated, NOT network-gated: the only precondition for bringing
+        // the engine up is that the weights are already on disk — a warm-up
+        // is worker-spawn + shader compile + cache hits, none of which need a
+        // network. The old `navigator.onLine !== false` gate dead-ended every
+        // keyless OFFLINE visitor with "setup guidance" while a perfectly
+        // good private model sat in the cache (the exact scenario offline
+        // mode exists for). Online callers get the same behavior — the cache
+        // check inside canAutoStartLocalEngine() already prevents cold
+        // downloads from inside a request.
+        const ok = await localInferenceEngine.initialize();
+        if (ok) {
+          const local = await generateLocally(messages, opts);
+          if (!local.error || local.content) return { ...local, source: "local" };
+          firstError ??= local.error;
         }
       }
     } catch {

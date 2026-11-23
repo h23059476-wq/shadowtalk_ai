@@ -418,7 +418,7 @@ export async function startBackgroundInstall(uid?: string): Promise<void> {
       return;
     }
     throw initError ?? new Error(
-      "The on-device engine could not start (WebGPU unavailable, blocked, or the download failed).",
+      "The on-device engine could not start (WebGPU unavailable, blocked, already running in another tab, or the download failed).",
     );
   } catch (error) {
     starting = false;

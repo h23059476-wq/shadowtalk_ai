@@ -17,6 +17,8 @@ vi.mock("@mlc-ai/web-llm", () => {
       } } },
       unload: vi.fn(async () => {}),
     })),
+    hasModelInCache: vi.fn(async () => false),
+    deleteModelAllInfoInCache: vi.fn(async () => {}),
   };
 });
 
@@ -24,6 +26,7 @@ vi.mock("@mlc-ai/web-llm", () => {
 vi.mock("@/offline/modelMirror", () => ({
   buildMirrorAppConfig: vi.fn(() => null),
   isMirrorEligibleError: vi.fn(() => false),
+  isBuiltInMirroredModelId: vi.fn(() => false),
 }));
 
 // Stub the worker constructor.

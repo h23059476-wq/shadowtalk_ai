@@ -23,6 +23,8 @@ vi.mock("@mlc-ai/web-llm", () => {
       } } },
       unload: vi.fn(async () => {}),
     })),
+    hasModelInCache: vi.fn(async () => false),
+    deleteModelAllInfoInCache: vi.fn(async () => {}),
   };
 });
 
@@ -31,6 +33,7 @@ vi.mock("@mlc-ai/web-llm", () => {
 vi.mock("@/offline/modelMirror", () => ({
   buildMirrorAppConfig: vi.fn(() => null),
   isMirrorEligibleError: vi.fn(() => false),
+  isBuiltInMirroredModelId: vi.fn(() => false),
 }));
 
 // Stub the worker constructor.
@@ -51,9 +54,11 @@ vi.mock("@/ai/ModelRegistry", () => ({
 }));
 
 import { localInferenceEngine } from "@/offline/LocalInferenceEngine";
-import { CreateWebWorkerMLCEngine } from "@mlc-ai/web-llm";
+import { CreateWebWorkerMLCEngine, deleteModelAllInfoInCache, hasModelInCache } from "@mlc-ai/web-llm";
 
 const createEngineMock = vi.mocked(CreateWebWorkerMLCEngine);
+const cacheCheckMock = vi.mocked(hasModelInCache);
+const cacheDeleteMock = vi.mocked(deleteModelAllInfoInCache);
 
 function healthyEngine(reply: string, extra: Record<string, unknown> = {}) {
   return {
@@ -70,6 +75,10 @@ describe("LocalInferenceEngine recovery", () => {
   beforeEach(() => {
     createEngineMock.mockReset();
     createEngineMock.mockResolvedValue(healthyEngine("hi"));
+    cacheCheckMock.mockReset().mockResolvedValue(false);
+    cacheDeleteMock.mockReset().mockResolvedValue(undefined);
+    vi.unstubAllGlobals();
+    vi.stubGlobal("Worker", class { constructor() {} postMessage() {} terminate() {} });
     return localInferenceEngine.unload();
   });
   afterEach(() => localInferenceEngine.unload());
@@ -199,5 +208,116 @@ describe("LocalInferenceEngine recovery", () => {
     expect(result.content.length).toBeGreaterThan(0);
     expect(result.error).toContain("too long");
     expect(createEngineMock).toHaveBeenCalledTimes(1); // no ladder retry
+  }, 5_000);
+
+  // ── Corrupt-cache self-healing ─────────────────────────────────────────
+  it("wipes a corrupt cache and retries once when init fails with a data-shaped error", async () => {
+    // A browser crash truncated a cached shard: init throws a parse error —
+    // never network-shaped, so the mirror retry skips it — and without
+    // self-healing every later attempt failed against the same poisoned
+    // bytes until the user manually cleared the cache.
+    cacheCheckMock.mockResolvedValue(true);
+    createEngineMock
+      .mockRejectedValueOnce(new Error("Failed to parse model config: Unexpected token < in JSON"))
+      .mockResolvedValueOnce(healthyEngine("healed"));
+
+    const ok = await localInferenceEngine.initialize();
+    expect(ok).toBe(true);
+    expect(localInferenceEngine.getState()).toBe("ready");
+    expect(cacheDeleteMock).toHaveBeenCalledTimes(1);
+    expect(createEngineMock).toHaveBeenCalledTimes(2); // failed + post-wipe retry
+  }, 5_000);
+
+  it("does NOT wipe the cache on GPU-shaped errors (a re-download cannot fix a driver)", async () => {
+    cacheCheckMock.mockResolvedValue(true);
+    createEngineMock.mockRejectedValue(new Error("WebGPU device was lost during initialization"));
+
+    const ok = await localInferenceEngine.initialize();
+    expect(ok).toBe(false);
+    expect(cacheDeleteMock).not.toHaveBeenCalled();
+    expect(createEngineMock).toHaveBeenCalledTimes(1);
+    expect(localInferenceEngine.getState()).toBe("error");
+  }, 5_000);
+
+  it("skips the cache wipe when nothing is cached (no pointless re-download)", async () => {
+    cacheCheckMock.mockResolvedValue(false);
+    createEngineMock.mockRejectedValue(new Error("Unexpected end of data while decoding weights"));
+
+    const ok = await localInferenceEngine.initialize();
+    expect(ok).toBe(false);
+    expect(cacheDeleteMock).not.toHaveBeenCalled();
+    expect(createEngineMock).toHaveBeenCalledTimes(1);
+  }, 5_000);
+
+  // ── One engine per device: Web Locks tab guard ─────────────────────────
+  it("stands down when another tab holds the device engine lock", async () => {
+    // Tab B must not spawn a second engine against the same GPU — the
+    // classic weak-device failure where BOTH tabs die of device-lost.
+    let calls = 0;
+    vi.stubGlobal("navigator", {
+      userAgent: "test-agent",
+      locks: {
+        request: vi.fn((_name: string, _opts: unknown, cb: (lock: unknown) => unknown) => {
+          calls += 1;
+          cb(null); // lock held by another tab — not granted
+          return Promise.resolve(null);
+        }),
+      },
+    });
+    try {
+      const ok = await localInferenceEngine.initialize();
+      expect(ok).toBe(false);
+      expect(calls).toBe(1);
+      expect(createEngineMock).not.toHaveBeenCalled(); // no second GPU context
+      expect(localInferenceEngine.getState()).toBe("idle");
+    } finally {
+      vi.unstubAllGlobals();
+      vi.stubGlobal("Worker", class { constructor() {} postMessage() {} terminate() {} });
+    }
+  }, 5_000);
+
+  it("takes the device engine lock when free and releases it on unload", async () => {
+    let released = 0;
+    const holdPromise = new Promise<void>((r) => { /* resolved via the callback's hold */ });
+    vi.stubGlobal("navigator", {
+      userAgent: "test-agent",
+      locks: {
+        request: vi.fn((_name: string, _opts: unknown, cb: (lock: unknown) => unknown) => {
+          // Grant the lock; keep it held until the returned hold resolves.
+          const hold = cb({ name: "shadowtalk-local-engine.v1" }) as Promise<void>;
+          return (async () => {
+            await hold;
+            released += 1;
+          })();
+        }),
+      },
+    });
+    void holdPromise;
+    try {
+      const ok = await localInferenceEngine.initialize();
+      expect(ok).toBe(true);
+      expect(createEngineMock).toHaveBeenCalledTimes(1);
+      expect(released).toBe(0); // held while the engine is loaded
+      await localInferenceEngine.unload();
+      // The hold resolves asynchronously — give the lock manager mock a tick.
+      await new Promise((r) => setTimeout(r, 0));
+      expect(released).toBe(1); // freed for the next tab
+    } finally {
+      vi.unstubAllGlobals();
+      vi.stubGlobal("Worker", class { constructor() {} postMessage() {} terminate() {} });
+    }
+  }, 5_000);
+
+  it("degrades to legacy behavior when the Web Locks API is unavailable", async () => {
+    vi.stubGlobal("navigator", { userAgent: "test-agent" }); // no locks
+    try {
+      const ok = await localInferenceEngine.initialize();
+      expect(ok).toBe(true);
+      expect(createEngineMock).toHaveBeenCalledTimes(1);
+      expect(localInferenceEngine.getState()).toBe("ready");
+    } finally {
+      vi.unstubAllGlobals();
+      vi.stubGlobal("Worker", class { constructor() {} postMessage() {} terminate() {} });
+    }
   }, 5_000);
 });
