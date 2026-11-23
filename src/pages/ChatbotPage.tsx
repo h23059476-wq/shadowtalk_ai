@@ -2586,6 +2586,27 @@ Structure and Content Guidelines:
       if (!(err instanceof DOMException && err.name === "AbortError")) {
         const errMsg = formatChatFetchError(err);
         toast({ title: "Message failed", description: errMsg, variant: "destructive" });
+        // A toast vanishes in seconds — an OFFLINE user must see the failure
+        // in the thread itself (they are often not looking when it fires, and
+        // the guidance "reconnect once to install" is useless if it is gone
+        // when they look back). When the turn produced no assistant bubble
+        // (routing threw before the first delta), append a durable error
+        // bubble; when a partial bubble already exists, leave it alone.
+        setMessages((prev) => {
+          const last = prev[prev.length - 1];
+          if (last && last.type === "ai") {
+            if (last.content.trim().length === 0) {
+              return prev.map((m) => (m.id === last.id ? { ...m, content: `⚠️ ${errMsg}` } : m));
+            }
+            return prev;
+          }
+          return [...prev, {
+            id: (typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `ai-${Date.now()}`),
+            type: "ai" as const,
+            content: `⚠️ ${errMsg}`,
+            timestamp: new Date(),
+          }];
+        });
       }
     } finally {
       setIsLoading(false);
