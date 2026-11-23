@@ -600,10 +600,19 @@ export async function findCachedLocalModelId(): Promise<string | null> {
     (a, b) => a.approxStorageRequirementMB - b.approxStorageRequirementMB,
   );
   for (const tier of tiers) {
-    try {
-      if (await hasModelInCache(tier.id)) return tier.id;
-    } catch {
-      /* cache API unavailable — keep scanning */
+    // Both quantizations count: on adapters without shader-f16 the engine
+    // installs the q4f32 TWIN (fallbackModelId), so the primary id scans
+    // empty while a fully usable twin sits in cache. Prefer the primary
+    // when both are cached; the twin loads fine everywhere.
+    const ids = tier.fallbackModelId && tier.fallbackModelId !== tier.id
+      ? [tier.id, tier.fallbackModelId]
+      : [tier.id];
+    for (const id of ids) {
+      try {
+        if (await hasModelInCache(id)) return id;
+      } catch {
+        /* cache API unavailable — keep scanning */
+      }
     }
   }
   return null;
