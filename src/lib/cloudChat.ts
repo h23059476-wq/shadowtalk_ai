@@ -365,15 +365,18 @@ export async function streamCloudChat(
     // still works with no network (cache hits) — give it one bounded chance;
     // otherwise return the honest offline guidance instead of a fetch error.
     if (offline && !hasFrontierTrigger(messages, opts)) {
+      console.info(`[cloud-chat] offline cold-engine branch: state=${localInferenceEngine.getState()}`);
       if (localInferenceEngine.getState() === "idle" || localInferenceEngine.getState() === "error") {
         const { findCachedLocalModelId } = await import("@/services/modelManager");
         const cachedModelId = await findCachedLocalModelId().catch(() => null);
+        console.info(`[cloud-chat] offline warm-up: cachedModelId=${cachedModelId ?? "none"}`);
         if (cachedModelId) {
           // Load the model that is ACTUALLY on disk — the device-tier pick may
           // point at a different (uncached) tier and would report failure
           // while a usable cached model sits right there.
           void localInferenceEngine.initialize(undefined, cachedModelId).catch(() => {});
           const warmed = await waitForLocalEngineReady(30_000, opts.signal).catch(() => false);
+          console.info(`[cloud-chat] offline warm-up: warmed=${warmed} loaded=${localInferenceEngine.isLoaded()}`);
           if (warmed && localInferenceEngine.isLoaded()) {
             return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
           }
