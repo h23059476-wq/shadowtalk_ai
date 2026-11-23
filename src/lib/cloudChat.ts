@@ -9,7 +9,7 @@
 import { fbAuth, functionsBaseUrl } from "@/integrations/firebase/app";
 import { getByokConfig, streamByokChat } from "@/lib/byok";
 import { getCachedAiAccessMode, getPreferLocal } from "@/lib/aiAccessMode";
-import { isOffline } from "@/lib/offlineGuards";
+import { NetworkTimeoutError, isOffline, withNetworkTimeout } from "@/lib/offlineGuards";
 import type { Citation } from "@/lib/visualization/types";
 import { parseOpenAiUsageChunk, mergeUsage, type ProviderUsage } from "@/lib/tokenOptimizer/usage";
 
@@ -312,85 +312,141 @@ export async function streamCloudChat(
   // (~large); statically importing it here would bloat every chunk that
   // touches cloudChat.
   if (getPreferLocal()) {
-    const { localInferenceEngine, waitForLocalEngineReady } = await import("@/offline/LocalInferenceEngine");
-    if (localInferenceEngine.isLoaded()) {
-      if (!shouldEscalateToCloud(messages, opts)) {
-        return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
-      }
-      // OFFLINE with the engine loaded: the cloud tier is unreachable, and a
-      // BYOK call would die in an opaque "Failed to fetch" even for tasks a
-      // context-fitted local run can serve (size-only overflows — a long
-      // history that merely exceeds the local window). Degrate to fitted
-      // local; hard frontier triggers (vision/web/structured) get the honest
-      // escalation error below — they genuinely cannot run on-device.
-      if (typeof navigator !== "undefined" && navigator.onLine === false && !hasFrontierTrigger(messages, opts)) {
-        return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
-      }
-      // Escalation: try the user's key first.
-      const accessMode = getCachedAiAccessMode();
-      if (accessMode === "byok") {
-        const byok = getByokConfig();
-        if (byok?.apiKey) return streamByokChat(byok, messages, opts);
-      }
-      // No key. Hard frontier triggers (vision, web, structured output,
-      // explicit cloud model) genuinely cannot run on-device → the honest
-      // escalation prompt. Size-only overflow → degrade to a context-fitted
-      // on-device run instead of dead-ending the conversation.
-      if (!hasFrontierTrigger(messages, opts)) {
-        return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
-      }
-      return { content: "", error: ESCALATION_ERROR, source: "local" };
-    }
-    // Engine not loaded yet, but its initialization is already in flight
-    // (mount prewarm / background install): give it a bounded chance to
-    // finish so ordinary chat stays on-device instead of bouncing to the
-    // cloud tier while the engine compiles. The wait is watchdog-capped and
-    // skipped entirely for frontier tasks (cloud serves those better) — and
-    // skipped OFFLINE: a download can make no progress without a network,
-    // so waiting only delays the honest answer below.
-    const engineState = localInferenceEngine.getState();
-    const offline = typeof navigator !== "undefined" && navigator.onLine === false;
-    if (
-      (engineState === "downloading" || engineState === "loading") &&
-      !shouldEscalateToCloud(messages, opts) &&
-      !offline
-    ) {
-      const warmed = await waitForLocalEngineReady(25_000, opts.signal).catch(() => false);
-      if (warmed && localInferenceEngine.isLoaded()) {
-        return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
-      }
-    }
-    // OFFLINE with a cold engine: every path below ends in an opaque
-    // "Failed to fetch". If ANY tier's weights are fully cached, a warm-up
-    // still works with no network (cache hits) — give it one bounded chance;
-    // otherwise return the honest offline guidance instead of a fetch error.
-    if (offline && !hasFrontierTrigger(messages, opts)) {
-      console.info(`[cloud-chat] offline cold-engine branch: state=${localInferenceEngine.getState()}`);
-      if (localInferenceEngine.getState() === "idle" || localInferenceEngine.getState() === "error") {
-        const { findCachedLocalModelId } = await import("@/services/modelManager");
-        const cachedModelId = await findCachedLocalModelId().catch(() => null);
-        console.info(`[cloud-chat] offline warm-up: cachedModelId=${cachedModelId ?? "none"}`);
-        if (cachedModelId) {
-          // Load the model that is ACTUALLY on disk — the device-tier pick may
-          // point at a different (uncached) tier and would report failure
-          // while a usable cached model sits right there.
-          void localInferenceEngine.initialize(undefined, cachedModelId).catch(() => {});
-          const warmed = await waitForLocalEngineReady(30_000, opts.signal).catch(() => false);
-          console.info(`[cloud-chat] offline warm-up: warmed=${warmed} loaded=${localInferenceEngine.isLoaded()}`);
-          if (warmed && localInferenceEngine.isLoaded()) {
-            return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
+    // DEADLINE GUARD around the whole on-device routing decision. Every
+    // internal step is individually bounded EXCEPT web-llm's own cache layer
+    // (Cache.add() has no timeout and no abort — on a black-holed connection
+    // a single missing cache entry stalls the turn forever, observed live as
+    // an eternal "Thinking…" with zero console output). The wall-clock race
+    // turns ANY such hang into the honest offline guidance; legitimate work
+    // keeps running in the background (its result simply loses the race) and
+    // the engine still becomes ready for the NEXT message. The deadline
+    // exceeds the engine's own generation-ladder budget (180s) so a healthy
+    // slow device is never cut short.
+    const PREFER_LOCAL_DEADLINE_MS = 200_000;
+    const guidanceError = (
+      frontier: boolean,
+    ): CloudChatResult =>
+      frontier
+        ? { content: "", error: ESCALATION_ERROR, source: "local" }
+        : {
+            content: "",
+            error:
+              "You're offline and the on-device model isn't loaded yet. Reconnect once to install it " +
+              "(chat header → model switcher → download) — after that, chat works fully offline.",
+            source: "local",
+          };
+    try {
+      const raced = await withNetworkTimeout(
+        (async () => {
+          const { localInferenceEngine, waitForLocalEngineReady } = await import("@/offline/LocalInferenceEngine");
+          if (localInferenceEngine.isLoaded()) {
+            if (!shouldEscalateToCloud(messages, opts)) {
+              return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
+            }
+            // OFFLINE with the engine loaded: the cloud tier is unreachable, and a
+            // BYOK call would die in an opaque "Failed to fetch" even for tasks a
+            // context-fitted local run can serve (size-only overflows — a long
+            // history that merely exceeds the local window). Degrate to fitted
+            // local; hard frontier triggers (vision/web/structured) get the honest
+            // escalation error below — they genuinely cannot run on-device.
+            if (typeof navigator !== "undefined" && navigator.onLine === false && !hasFrontierTrigger(messages, opts)) {
+              return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
+            }
+            // Escalation: try the user's key first.
+            const accessMode = getCachedAiAccessMode();
+            if (accessMode === "byok") {
+              const byok = getByokConfig();
+              if (byok?.apiKey) return streamByokChat(byok, messages, opts);
+            }
+            // No key. Hard frontier triggers (vision, web, structured output,
+            // explicit cloud model) genuinely cannot run on-device → the honest
+            // escalation prompt. Size-only overflow → degrade to a context-fitted
+            // on-device run instead of dead-ending the conversation.
+            if (!hasFrontierTrigger(messages, opts)) {
+              return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
+            }
+            return { content: "", error: ESCALATION_ERROR, source: "local" };
           }
+          // Engine not loaded yet, but its initialization is already in flight
+          // (mount prewarm / background install): give it a bounded chance to
+          // finish so ordinary chat stays on-device instead of bouncing to the
+          // cloud tier while the engine compiles. The wait is watchdog-capped and
+          // skipped entirely for frontier tasks (cloud serves those better) — and
+          // skipped OFFLINE: a download can make no progress without a network,
+          // so waiting only delays the honest answer below.
+          const engineState = localInferenceEngine.getState();
+          const offline = typeof navigator !== "undefined" && navigator.onLine === false;
+          if (
+            (engineState === "downloading" || engineState === "loading") &&
+            !shouldEscalateToCloud(messages, opts) &&
+            !offline
+          ) {
+            const warmed = await waitForLocalEngineReady(25_000, opts.signal).catch(() => false);
+            if (warmed && localInferenceEngine.isLoaded()) {
+              return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
+            }
+          }
+          // OFFLINE with any engine state below "ready": every viable path
+          // runs on-device (the cloud tier is unreachable). ONE unified
+          // bounded warm-up: an in-flight cached warm-up (mount prewarm) needs
+          // no network and IS worth waiting for offline; a cold one starts
+          // here from whatever tier is actually cached. Size-only overflows
+          // degrade to a fitted local run; hard frontier tasks (vision / web /
+          // structured) genuinely cannot run on-device → the escalation error.
+          if (offline && !hasFrontierTrigger(messages, opts)) {
+            console.info(`[cloud-chat] offline cold-engine branch: state=${localInferenceEngine.getState()}`);
+            const { findCachedLocalModelId } = await import("@/services/modelManager");
+            const cachedModelId = await findCachedLocalModelId().catch(() => null);
+            console.info(`[cloud-chat] offline warm-up: cachedModelId=${cachedModelId ?? "none"}`);
+            if (cachedModelId) {
+              const stateNow = localInferenceEngine.getState();
+              if (stateNow === "idle" || stateNow === "error") {
+                // Load the model that is ACTUALLY on disk — the device-tier
+                // pick may point at a different (uncached) tier and would
+                // report failure while a usable cached model sits right there.
+                void localInferenceEngine.initialize(undefined, cachedModelId).catch(() => {});
+              }
+              // An in-flight initialize (mount prewarm / this warm-up) loads
+              // from cache hits offline — waiting for it is the whole point.
+              const warmed = await waitForLocalEngineReady(45_000, opts.signal).catch(() => false);
+              console.info(`[cloud-chat] offline warm-up: warmed=${warmed} loaded=${localInferenceEngine.isLoaded()}`);
+              if (warmed && localInferenceEngine.isLoaded()) {
+                return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
+              }
+            }
+            return guidanceError(false);
+          }
+          // Not provisioned → fall through to the standard mode logic. The
+          // sentinel tells the outer router to continue (it cannot "return"
+          // from inside this raced block).
+          throw new Error("__PREFER_LOCAL_FALLTHROUGH__");
+        })(),
+        PREFER_LOCAL_DEADLINE_MS,
+        "On-device routing",
+      ).catch((err) => {
+        if (err instanceof NetworkTimeoutError) {
+          console.warn("[cloud-chat] on-device routing hit the wall-clock deadline — landing the honest result");
+          return guidanceError(hasFrontierTrigger(messages, opts));
         }
+        throw err;
+      });
+      // The raced block cannot "fall through" by itself — the sentinel tells
+      // this outer function to continue into the standard mode logic below.
+      if ((raced as CloudChatResult).error !== "__PREFER_LOCAL_FALLTHROUGH__") {
+        return raced;
       }
-      return {
-        content: "",
-        error:
-          "You're offline and the on-device model isn't loaded yet. Reconnect once to install it " +
-          "(chat header → model switcher → download) — after that, chat works fully offline.",
-        source: "local",
-      };
+    } catch (err) {
+      // The raced block only surfaces non-deadline errors from the engine
+      // paths it owns; treat anything unexpected as the offline guidance so
+      // the turn NEVER dies inside on-device routing. The sentinel is a
+      // control-flow marker, not a user-facing error.
+      if ((err as Error)?.message === "__PREFER_LOCAL_FALLTHROUGH__") {
+        // fall through to the standard mode logic
+      } else {
+        console.warn("[cloud-chat] on-device routing threw — landing the honest result", err);
+        return guidanceError(hasFrontierTrigger(messages, opts));
+      }
     }
-    // Not provisioned → fall through to the standard mode logic.
   }
 
   const accessMode = getCachedAiAccessMode();
