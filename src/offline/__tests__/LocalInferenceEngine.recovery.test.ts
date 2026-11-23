@@ -16,7 +16,15 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 // Stub the web-llm worker factory so we don't load a real model.
 vi.mock("@mlc-ai/web-llm", () => {
   return {
-    prebuiltAppConfig: { model_list: [] },
+    prebuiltAppConfig: {
+      model_list: [
+        {
+          model_id: "test-model-id",
+          model: "https://cdn.test/test-model/resolve/main/",
+          model_lib: "https://cdn.test/libs/test.wasm",
+        },
+      ],
+    },
     CreateWebWorkerMLCEngine: vi.fn(async () => ({
       chat: { completions: { create: async function* () {
         yield { choices: [{ delta: { content: "hi" } }] };
@@ -315,6 +323,78 @@ describe("LocalInferenceEngine recovery", () => {
       expect(ok).toBe(true);
       expect(createEngineMock).toHaveBeenCalledTimes(1);
       expect(localInferenceEngine.getState()).toBe("ready");
+    } finally {
+      vi.unstubAllGlobals();
+      vi.stubGlobal("Worker", class { constructor() {} postMessage() {} terminate() {} });
+    }
+  }, 5_000);
+
+  // ── Cache-repair sweep (streamed-cache-write failure class) ───────────
+  it("repairs the cache itself when Cache.add dies with a network error but plain fetch works", async () => {
+    // Device-class failure: web-llm's streamed Cache.add/put errors on the
+    // big files while the same URL streams fine through plain fetch — those
+    // devices could NEVER install the model. The sweep fetches + buffers +
+    // puts each missing file itself, then init retries on cache hits.
+    const buckets = new Map<string, Map<string, Response>>();
+    vi.stubGlobal("caches", {
+      open: vi.fn(async (name: string) => {
+        if (!buckets.has(name)) buckets.set(name, new Map());
+        const bucket = buckets.get(name)!;
+        return {
+          match: async (req: Request | string) => {
+            const key = typeof req === "string" ? req : req.url;
+            return bucket.get(key) ? bucket.get(key)!.clone() : undefined;
+          },
+          put: vi.fn(async (req: Request | string, resp: Response) => {
+            const key = typeof req === "string" ? req : req.url;
+            bucket.set(key, resp);
+          }),
+        };
+      }),
+    });
+    const fetchedUrls: string[] = [];
+    vi.stubGlobal("fetch", vi.fn(async (input: Request | string) => {
+      const url = typeof input === "string" ? input : input.url;
+      fetchedUrls.push(url);
+      if (url.endsWith("tensor-cache.json")) {
+        return new Response(JSON.stringify({ records: [{ dataPath: "params_shard_0.bin" }] }), { status: 200 });
+      }
+      return new Response(new Uint8Array([1, 2, 3]), { status: 200 });
+    }) as unknown as typeof fetch);
+    try {
+      createEngineMock
+        .mockRejectedValueOnce(new Error("Failed to execute 'add' on 'Cache': Cache.add() encountered a network error"))
+        .mockResolvedValueOnce(healthyEngine("repaired"));
+
+      const ok = await localInferenceEngine.initialize();
+      expect(ok).toBe(true);
+      expect(localInferenceEngine.getState()).toBe("ready");
+      expect(createEngineMock).toHaveBeenCalledTimes(2); // failed + post-repair retry
+      // The static config files + the shard listed in tensor-cache.json were
+      // fetched and stored under the model's URL base.
+      const modelBucket = buckets.get("webllm/model")!;
+      expect(modelBucket.get("https://cdn.test/test-model/resolve/main/params_shard_0.bin")).toBeTruthy();
+      expect(modelBucket.get("https://cdn.test/test-model/resolve/main/tokenizer.json")).toBeTruthy();
+      expect(buckets.get("webllm/config")!.get("https://cdn.test/test-model/resolve/main/mlc-chat-config.json")).toBeTruthy();
+    } finally {
+      vi.unstubAllGlobals();
+      vi.stubGlobal("Worker", class { constructor() {} postMessage() {} terminate() {} });
+    }
+  }, 5_000);
+
+  it("surfaces the honest init error when the cache repair also cannot fetch (offline)", async () => {
+    vi.stubGlobal("caches", {
+      open: vi.fn(async () => ({
+        match: vi.fn(async () => undefined),
+        put: vi.fn(async () => {}),
+      })),
+    });
+    vi.stubGlobal("fetch", vi.fn(async () => { throw new TypeError("Failed to fetch"); }));
+    try {
+      createEngineMock.mockRejectedValue(new Error("Cache.add() encountered a network error"));
+      const ok = await localInferenceEngine.initialize();
+      expect(ok).toBe(false);
+      expect(localInferenceEngine.getState()).toBe("error");
     } finally {
       vi.unstubAllGlobals();
       vi.stubGlobal("Worker", class { constructor() {} postMessage() {} terminate() {} });

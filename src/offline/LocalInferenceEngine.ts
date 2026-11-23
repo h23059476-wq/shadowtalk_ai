@@ -1,4 +1,4 @@
-import { CreateWebWorkerMLCEngine, WebWorkerMLCEngine, deleteModelAllInfoInCache, hasModelInCache, type InitProgressCallback, type InitProgressReport, type MLCEngineConfig } from "@mlc-ai/web-llm";
+import { CreateWebWorkerMLCEngine, WebWorkerMLCEngine, deleteModelAllInfoInCache, hasModelInCache, prebuiltAppConfig, type InitProgressCallback, type InitProgressReport, type MLCEngineConfig } from "@mlc-ai/web-llm";
 import { DEFAULT_LOCAL_MODEL, getLocalModelDefinition, pickLocalModelForDevice, type LocalModelDefinition } from "@/ai/ModelRegistry";
 import { CloudChatMessage, CloudChatOptions, CloudChatResult, LOCAL_OUTPUT_TOKEN_RESERVE } from "@/lib/cloudChat";
 import { DeviceCapability } from "@/offline/DeviceCapability";
@@ -82,6 +82,29 @@ interface LockManagerLike {
 // downloading 600MB cannot fix a driver.
 const DATA_CORRUPT_ERROR_RE =
   /parse|syntax|unexpected token|unexpected end|json|utf-8|utf8|decode|corrupt|truncat|webassembly|wasm/i;
+
+// ── Cache-repair sweep (streamed-cache-write failure class) ─────────────
+// A whole class of devices cannot install the model at all: their Cache API
+// errors out with "Cache.add()/put() encountered a network error" on larger
+// files while the very same URL streams fine through plain fetch (seen on
+// certain Chromium storage backends, proxied/captive networks, and Android
+// WebView builds — web-llm always uses the streamed cache path, so for those
+// devices the install NEVER succeeds and offline mode never ships). The
+// repair sweep sidesteps it: fetch each missing model file with plain fetch
+// (the path that works), buffer it in memory, and store a Blob response —
+// then retry init, whose cache hits now skip the broken write path entirely.
+// Fully bounded: per-file best-effort (network down ⇒ sweep makes no progress
+// ⇒ the honest init error still surfaces) and a wall-clock deadline caps the
+// whole sweep so initialize() can never hang on a slow link.
+const CACHE_WRITE_NETWORK_ERROR_RE = /encountered a network error|cache\.(add|put)\(\)/i;
+const CACHE_REPAIR_DEADLINE_MS = 300_000;
+
+/** web-llm routes model files into three cache buckets by filename. */
+function webllmCacheNameFor(filename: string): string {
+  if (filename === "mlc-chat-config.json") return "webllm/config";
+  if (filename.endsWith(".wasm")) return "webllm/wasm";
+  return "webllm/model";
+}
 
 export interface LocalEngineConfig {
   contextWindowSize?: number;
@@ -180,6 +203,63 @@ export class LocalInferenceEngine {
     for (const cfg of configs) {
       try { await deleteModelAllInfoInCache(modelId, cfg); } catch { /* best-effort */ }
     }
+  }
+
+  /**
+   * Cache-repair sweep: pre-populate web-llm's caches for `modelId` under the
+   * URL base of the FAILED attempt (mirror URLs when the mirror run was the
+   * one that died, default CDN URLs otherwise). Plain fetch + buffered Blob
+   * put works on devices where the cache writer's own streamed fetch errors.
+   * Returns how many files were repaired (0 = nothing done — offline, cache
+   * API unavailable, or nothing fetched). Bounded by CACHE_REPAIR_DEADLINE_MS.
+   */
+  private async repairModelCache(modelId: string, useMirror: boolean): Promise<number> {
+    if (typeof caches === "undefined") return 0;
+    const record = (useMirror ? buildMirrorAppConfig() ?? prebuiltAppConfig : prebuiltAppConfig)
+      .model_list.find((r) => r.model_id === modelId);
+    if (!record) return 0;
+    const base = record.model;
+    const files = ["mlc-chat-config.json", "tokenizer.json", "tokenizer_config.json", "tensor-cache.json"];
+    try {
+      const tcCache = await caches.open("webllm/model");
+      const tcResp = (await tcCache.match(base + "tensor-cache.json")) ?? (await fetch(base + "tensor-cache.json"));
+      if (tcResp?.ok) {
+        const tc = await tcResp.json();
+        for (const rec of tc?.records ?? []) {
+          if (typeof rec?.dataPath === "string" && rec.dataPath) files.push(rec.dataPath);
+        }
+      }
+    } catch { /* repair the file list we know — init retry surfaces the rest */ }
+    // The model_lib WASM rides its own URL (third-party repo or our mirror) —
+    // repair it too when missing.
+    if (record.model_lib) files.push(record.model_lib);
+    const deadline = Date.now() + CACHE_REPAIR_DEADLINE_MS;
+    let repaired = 0;
+    for (const file of files) {
+      if (Date.now() >= deadline) break;
+      const url = file.endsWith(".wasm") ? (record.model_lib ?? "") : base + file;
+      if (!url) continue;
+      try {
+        const bucket = await caches.open(webllmCacheNameFor(file));
+        if (await bucket.match(url)) continue; // already present — skip
+        const resp = await fetch(url);
+        if (!resp.ok) continue;
+        const buf = await resp.arrayBuffer(); // buffered — avoids the streamed put path
+        await bucket.put(
+          new Request(url),
+          new Response(new Blob([buf]), {
+            status: 200,
+            statusText: "OK",
+            headers: { "content-type": resp.headers.get("content-type") ?? "application/octet-stream" },
+          }),
+        );
+        repaired += 1;
+      } catch {
+        // Network down or single file failed — keep going; the post-sweep
+        // init retry reports the honest error when the engine still can't load.
+      }
+    }
+    return repaired;
   }
 
   /** Current engine state. */
@@ -387,6 +467,7 @@ export class LocalInferenceEngine {
       // One attempt against the self-hosted mirror (when configured) for
       // network-shaped failures; GPU/device errors are not worth a retry.
       let lastError: unknown = error;
+      let lastUseMirror = false;
       if (isMirrorEligibleError(error) && buildMirrorAppConfig()) {
         console.info("[local-engine] primary download failed — retrying from the configured mirror");
         try {
@@ -397,16 +478,35 @@ export class LocalInferenceEngine {
         } catch (mirrorError) {
           console.error("Mirror download also failed:", mirrorError);
           lastError = mirrorError;
+          lastUseMirror = true;
         }
       }
-      // Corrupt-cache self-healing: data-shaped failures against an existing
-      // cache get ONE wipe-and-retry (bounded — never a download loop).
       const message =
         lastError instanceof Error
           ? lastError.message
           : typeof lastError === "string"
             ? lastError
             : "";
+      // Cache-repair sweep: devices whose Cache API errors on streamed large
+      // writes ("Cache.add() encountered a network error" while plain fetch
+      // streams the same URL fine) can never install through web-llm's own
+      // path — fetch + buffer + put the missing files ourselves, then retry.
+      if (message && CACHE_WRITE_NETWORK_ERROR_RE.test(message)) {
+        const repaired = await this.repairModelCache(model.id, lastUseMirror).catch(() => 0);
+        if (repaired > 0) {
+          console.info(`[local-engine] cache-repair sweep stored ${repaired} file(s) — retrying init`);
+          try {
+            this.engine = await this.createEngine(model, resolvedEngineConfig.contextWindowSize!, progressCb, lastUseMirror, resolvedEngineConfig.initIdleTimeoutMs);
+            this.isReady = true;
+            this.setState("ready");
+            return true;
+          } catch (repairRetryError) {
+            console.error("Post-repair init also failed:", repairRetryError);
+          }
+        }
+      }
+      // Corrupt-cache self-healing: data-shaped failures against an existing
+      // cache get ONE wipe-and-retry (bounded — never a download loop).
       if (
         message &&
         DATA_CORRUPT_ERROR_RE.test(message) &&
