@@ -79,23 +79,36 @@ export function PrivateAiBanner({ userId }: { userId: string }) {
   // Accepted → compact progress pill while the shards stream down.
   if (decision === "accepted") {
     if (snap.phase === "failed") {
+      // An armed auto-retry (15s/45s/120s ladder) is not a dead failure —
+      // show it as an in-progress state instead of a static error, and
+      // surface the REAL failure reason (tooltip) rather than hiding it.
+      const retrying = snap.retrying === true;
       return (
         <div
           className="fixed bottom-24 right-4 z-40 flex items-center gap-2 rounded-full border border-destructive/40 bg-card px-3 py-2 text-xs shadow-lg md:right-6"
           role="status"
         >
-          <AlertCircle className="h-3.5 w-3.5 shrink-0 text-destructive" />
-          <span className="max-w-[220px] truncate text-muted-foreground">
-            Private AI install failed
-          </span>
-          <Button
-            size="sm"
-            variant="outline"
-            className="h-6 rounded-full px-2 text-[11px]"
-            onClick={() => void startBackgroundInstall(userId)}
+          {retrying ? (
+            <Loader2 className="h-3.5 w-3.5 shrink-0 animate-spin text-amber-500" />
+          ) : (
+            <AlertCircle className="h-3.5 w-3.5 shrink-0 text-destructive" />
+          )}
+          <span
+            className="max-w-[220px] truncate text-muted-foreground"
+            title={snap.error ?? undefined}
           >
-            Retry
-          </Button>
+            {retrying ? "Private AI — retrying automatically…" : "Private AI install failed"}
+          </span>
+          {!retrying && (
+            <Button
+              size="sm"
+              variant="outline"
+              className="h-6 rounded-full px-2 text-[11px]"
+              onClick={() => void startBackgroundInstall(userId)}
+            >
+              Retry
+            </Button>
+          )}
           <button
             aria-label="Dismiss"
             className="text-muted-foreground hover:text-foreground"

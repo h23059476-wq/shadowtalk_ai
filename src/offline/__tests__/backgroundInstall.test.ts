@@ -71,6 +71,7 @@ import {
 import { STARTER_LOCAL_MODEL } from "@/ai/ModelRegistry";
 
 const DECISION_KEY = (uid: string) => `shadowtalk.bginstall.decision.v1.${uid}`;
+const STATE_KEY = "shadowtalk.bginstall.state.v1";
 
 describe("BackgroundInstall — one-time ask", () => {
   let readyEvents = 0;
@@ -211,5 +212,54 @@ describe("BackgroundInstall — one-time ask", () => {
     expect(getBackgroundInstallSnapshot().phase).toBe("ready");
     expect(getBackgroundInstallSnapshot().modelId).toBe("already-loaded");
     expect(readyEvents).toBe(0);
+  });
+
+  it("does not restore a persisted failure from a dead session (stale-failed reset)", async () => {
+    // A "failed" phase persisted by a previous session used to come back on
+    // every reload as an instant "Private AI install failed" pill — before
+    // anything had run in the new session, right next to the bootstrap's
+    // "Caching models…" chip. Failures are session-scoped; "downloading"
+    // stays a resume hint.
+    lsMock.setItem(
+      STATE_KEY,
+      JSON.stringify({ phase: "failed", progress: 0.4, progressText: "x", modelId: STARTER_LOCAL_MODEL.id, error: "boom" }),
+    );
+    vi.resetModules();
+    const fresh = await import("@/offline/BackgroundInstall");
+    expect(fresh.getBackgroundInstallSnapshot().phase).toBe("not-started");
+    expect(fresh.getBackgroundInstallSnapshot().retrying).toBe(false);
+
+    lsMock.setItem(
+      STATE_KEY,
+      JSON.stringify({ phase: "downloading", progress: 0.5, progressText: "", modelId: STARTER_LOCAL_MODEL.id, error: null }),
+    );
+    vi.resetModules();
+    const fresh2 = await import("@/offline/BackgroundInstall");
+    expect(fresh2.getBackgroundInstallSnapshot().phase).toBe("downloading");
+  });
+
+  it("an armed auto-retry surfaces as retrying=true and clears when the install runs again", async () => {
+    // The failing error must be network-shaped for the auto-retry ladder.
+    engineMock.initialize.mockImplementation(async () => {
+      engineMock.setState("error");
+      throw new Error("Failed to download shard 2 — network error");
+    });
+
+    recordInstallDecision("u-retryflag", true);
+    await vi.waitFor(() => {
+      const s = getBackgroundInstallSnapshot();
+      expect(s.phase).toBe("failed");
+      expect(s.retrying).toBe(true);
+    });
+    expect(getBackgroundInstallSnapshot().error).toContain("Retrying automatically in 15s");
+
+    // A manual retry (or the auto-retry firing) clears the flag.
+    engineMock.initialize.mockImplementation(async () => {
+      engineMock.setState("ready");
+      return true;
+    });
+    await startBackgroundInstall("u-retryflag");
+    expect(getBackgroundInstallSnapshot().phase).toBe("ready");
+    expect(getBackgroundInstallSnapshot().retrying).toBe(false);
   });
 });

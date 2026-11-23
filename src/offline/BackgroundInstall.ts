@@ -36,6 +36,9 @@ export interface BackgroundInstallSnapshot {
   progressText: string;
   modelId: string | null;
   error: string | null;
+  /** True while an automatic retry (15s/45s/120s ladder) is scheduled — the
+   *  UI must show "retrying automatically" instead of a dead failure. */
+  retrying: boolean;
 }
 
 export type InstallDecision = "accepted" | "declined";
@@ -77,6 +80,7 @@ const DEFAULT_SNAPSHOT: BackgroundInstallSnapshot = {
   progressText: "",
   modelId: null,
   error: null,
+  retrying: false,
 };
 
 let snapshot: BackgroundInstallSnapshot = loadSnapshot();
@@ -102,12 +106,14 @@ const listeners = new Set<(s: BackgroundInstallSnapshot) => void>();
 let declineAbort = false;
 let retryAttempt = 0;
 let retryTimer: ReturnType<typeof setTimeout> | null = null;
+let retrying = false;
 
 function clearRetryTimer(): void {
   if (retryTimer !== null) {
     clearTimeout(retryTimer);
     retryTimer = null;
   }
+  retrying = false;
 }
 
 function storageFloorMB(): number {
@@ -138,8 +144,14 @@ function scheduleRetryIfEligible(error: unknown): string | null {
   clearRetryTimer();
   retryTimer = setTimeout(() => {
     retryTimer = null;
+    retrying = false;
     void startBackgroundInstall();
   }, delay);
+  // Surfaced in the snapshot so the banner renders an honest
+  // "retrying automatically" state instead of a dead failure while the
+  // backoff counts down.
+  retrying = true;
+  patchSnapshot({ retrying: true });
   return ` Retrying automatically in ${Math.round(delay / 1000)}s…`;
 }
 
@@ -154,6 +166,8 @@ export function abortBackgroundInstall(): void {
   clearRetryTimer();
   if (snapshot.phase === "failed" || snapshot.phase === "downloading") {
     patchSnapshot({ phase: "not-started", progress: 0, progressText: "", error: null });
+  } else if (snapshot.retrying) {
+    patchSnapshot({ retrying: false });
   }
 }
 
@@ -175,18 +189,24 @@ function loadSnapshot(): BackgroundInstallSnapshot {
     const raw = localStorage.getItem(STATE_KEY);
     if (!raw) return { ...DEFAULT_SNAPSHOT };
     const parsed = JSON.parse(raw) as Partial<BackgroundInstallSnapshot>;
+    // A "downloading" marker from a dead session is a resume hint, not a
+    // live state — the actual engine starts idle on every page load. A
+    // persisted "failed" is the same kind of stale marker: restoring it made
+    // every reload open with "Private AI install failed" before anything had
+    // run this session (next to the bootstrap's "Caching models…" chip —
+    // two contradictory truths). Failures are session-scoped; the banner
+    // resume effect and the bootstrap re-run the install when appropriate.
     const phase: BackgroundInstallPhase =
-      parsed.phase === "downloading" || parsed.phase === "ready" || parsed.phase === "failed"
+      parsed.phase === "downloading" || parsed.phase === "ready"
         ? parsed.phase
         : "not-started";
-    // A "downloading" marker from a dead session is a resume hint, not a
-    // live state — the actual engine starts idle on every page load.
     return {
       phase,
       progress: typeof parsed.progress === "number" ? parsed.progress : 0,
       progressText: typeof parsed.progressText === "string" ? parsed.progressText : "",
       modelId: typeof parsed.modelId === "string" ? parsed.modelId : null,
       error: typeof parsed.error === "string" ? parsed.error : null,
+      retrying: false,
     };
   } catch {
     return { ...DEFAULT_SNAPSHOT };
@@ -355,6 +375,7 @@ export async function startBackgroundInstall(uid?: string): Promise<void> {
       progressText: "Downloading the model…",
       modelId: STARTER_LOCAL_MODEL.id,
       error: null,
+      retrying: false,
     });
 
     // Durable cache before the big download (best-effort).
@@ -495,4 +516,5 @@ function __resetInstallLatchesForTests(): void {
   declineAbort = false;
   retryAttempt = 0;
   clearRetryTimer();
+  retrying = false;
 }

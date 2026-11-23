@@ -166,6 +166,11 @@ export function ModelManagerDrawer({ open, onOpenChange }: ModelManagerDrawerPro
 
   const chipStatus = useMemo(() => {
     if (snap.phase === "unsupported") return null; // chip hidden without WebGPU
+    // A failed chat install must never be masked by a busy bootstrap: the
+    // failure pill (bottom-right) and a "Caching models…" chip (bottom-left)
+    // showing simultaneously read as two different truths. The failure wins
+    // until an auto-retry flips the install back to downloading.
+    if (bgSnap.phase === "failed") return { icon: "error" as const, label: "Model install failed" };
     if (chatDownloading || bootstrapBusy) {
       const pct = chatDownloading
         ? Math.round(bgSnap.progress * 100)
@@ -176,7 +181,7 @@ export function ModelManagerDrawer({ open, onOpenChange }: ModelManagerDrawerPro
     if (snap.phase === "failed") return { icon: "error" as const, label: "Model download failed" };
     if (engineState === "ready") return { icon: "ready" as const, label: "Private AI ready offline" };
     return { icon: "idle" as const, label: "AI models" };
-  }, [snap.phase, snap.progress, bootstrapBusy, chatDownloading, bgSnap.progress, engineState]);
+  }, [snap.phase, snap.progress, bootstrapBusy, chatDownloading, bgSnap.phase, bgSnap.progress, engineState]);
 
   const handleDownload = useCallback(
     async (id: string) => {

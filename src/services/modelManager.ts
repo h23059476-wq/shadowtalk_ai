@@ -178,6 +178,17 @@ export async function deleteCachedModel(modelId: string): Promise<void> {
 
 // ── Embedding engine (second worker, lazy) ──────────────────────────────
 
+// The bootstrap awaits the embedding engine BEFORE the chat step, so a
+// stalled embedding download previously hung the whole bootstrap in
+// "bootstrapping" forever — the model-manager chip spun "Caching models…"
+// indefinitely while the chat install's failure pill was already showing
+// (two contradictory truths on screen). Watchdog mirrors
+// LocalInferenceEngine.createEngine: no progress for 45s, or 150s total,
+// fails the step; bootstrapDefaultModels catches, records embeddingError,
+// and proceeds to the chat model.
+const EMBEDDING_INIT_IDLE_TIMEOUT_MS = 45_000;
+const EMBEDDING_INIT_HARD_TIMEOUT_MS = 150_000;
+
 async function ensureEmbeddingEngine(
   modelId?: string,
   onProgress?: (r: InitProgressReport) => void,
@@ -191,13 +202,46 @@ async function ensureEmbeddingEngine(
     const worker = new Worker(new URL("../workers/webllm.worker.ts", import.meta.url), {
       type: "module",
     });
+    let idleTimer: ReturnType<typeof setTimeout> | null = null;
+    let hardTimer: ReturnType<typeof setTimeout> | null = null;
+    let fail: ((reason: Error) => void) | null = null;
+    const stallPromise = new Promise<never>((_, reject) => {
+      fail = (reason) => {
+        // A terminated worker makes the in-flight create reject shortly after.
+        try {
+          worker.terminate();
+        } catch {
+          /* already dead */
+        }
+        reject(reason);
+      };
+    });
+    const armIdle = () => {
+      if (idleTimer) clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        fail?.(new Error(
+          `The embeddings model download stalled — no progress for ${Math.round(EMBEDDING_INIT_IDLE_TIMEOUT_MS / 1000)}s.`,
+        ));
+      }, EMBEDDING_INIT_IDLE_TIMEOUT_MS);
+    };
+    hardTimer = setTimeout(() => {
+      fail?.(new Error("The embeddings model setup took too long and was stopped."));
+    }, EMBEDDING_INIT_HARD_TIMEOUT_MS);
+    armIdle();
+    const createPromise = Create(worker, resolved, {
+      initProgressCallback: (report) => {
+        armIdle();
+        onProgress?.(report);
+      },
+      // No context_window_size override — embedding models ship their own
+      // (arctic: 512). No appConfig override — embeddings always load from
+      // the primary CDN (the self-hosted mirror only hosts chat twins).
+    });
+    // After a watchdog terminate the create promise may reject (dead worker)
+    // or pend forever — neither may surface as an unhandled rejection.
+    createPromise.catch(() => {});
     try {
-      const engine = await Create(worker, resolved, {
-        initProgressCallback: (report) => onProgress?.(report),
-        // No context_window_size override — embedding models ship their own
-        // (arctic: 512). No appConfig override — embeddings always load from
-        // the primary CDN (the self-hosted mirror only hosts chat twins).
-      });
+      const engine = (await Promise.race([createPromise, stallPromise])) as WebWorkerMLCEngine;
       embedEngine = engine;
       embedEngineModelId = resolved;
       return engine;
@@ -209,6 +253,8 @@ async function ensureEmbeddingEngine(
       }
       throw error;
     } finally {
+      if (idleTimer) clearTimeout(idleTimer);
+      if (hardTimer) clearTimeout(hardTimer);
       embedEngineCreating = null;
     }
   })();
