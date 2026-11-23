@@ -361,14 +361,18 @@ export async function streamCloudChat(
       }
     }
     // OFFLINE with a cold engine: every path below ends in an opaque
-    // "Failed to fetch". If the weights are fully cached, a warm-up still
-    // works with no network (cache hits) — give it one bounded chance;
+    // "Failed to fetch". If ANY tier's weights are fully cached, a warm-up
+    // still works with no network (cache hits) — give it one bounded chance;
     // otherwise return the honest offline guidance instead of a fetch error.
     if (offline && !hasFrontierTrigger(messages, opts)) {
       if (localInferenceEngine.getState() === "idle" || localInferenceEngine.getState() === "error") {
-        void localInferenceEngine.prewarm().catch(() => {});
-        const { hasModelInCache } = await import("@/services/modelManager");
-        if (await hasModelInCache(localInferenceEngine.getCurrentModelId()).catch(() => false)) {
+        const { findCachedLocalModelId } = await import("@/services/modelManager");
+        const cachedModelId = await findCachedLocalModelId().catch(() => null);
+        if (cachedModelId) {
+          // Load the model that is ACTUALLY on disk — the device-tier pick may
+          // point at a different (uncached) tier and would report failure
+          // while a usable cached model sits right there.
+          void localInferenceEngine.initialize(undefined, cachedModelId).catch(() => {});
           const warmed = await waitForLocalEngineReady(30_000, opts.signal).catch(() => false);
           if (warmed && localInferenceEngine.isLoaded()) {
             return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);

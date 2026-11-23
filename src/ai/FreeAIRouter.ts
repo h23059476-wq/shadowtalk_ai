@@ -116,17 +116,19 @@ function routeSource(kind: "byok" | "vault"): CloudChatResult["source"] {
 // ── On-device fallback helpers ────────────────────────────────────────────
 
 /**
- * True when the on-device model can be brought up WITHOUT a network
- * download (weights already cached by the background bootstrap). A cold
- * 880MB download must never start from inside a request — the ZeroSetupCard
- * asks for explicit consent.
+ * The cached on-device model that can be brought up WITHOUT a network
+ * download (any tier whose weights are fully cached — not just the device
+ * tier pick: a user who installed the Nano must not reload offline to
+ * "model install failed" while the Nano sits on disk). Null = nothing
+ * cached; a cold 880MB download must never start from inside a request —
+ * the ZeroSetupCard asks for explicit consent.
  */
-async function canAutoStartLocalEngine(): Promise<boolean> {
+async function findAutoStartCachedModel(): Promise<string | null> {
   try {
-    const { isInstantModelReady } = await import("@/services/modelManager");
-    return await isInstantModelReady();
+    const { findCachedLocalModelId } = await import("@/services/modelManager");
+    return await findCachedLocalModelId();
   } catch {
-    return false;
+    return null;
   }
 }
 
@@ -204,7 +206,7 @@ export async function streamFreeChat(
         const local = await generateLocally(messages, opts);
         if (!local.error || local.content) return { ...local, source: "local" };
         firstError ??= local.error;
-      } else if (await canAutoStartLocalEngine()) {
+      } else {
         // Cache-gated, NOT network-gated: the only precondition for bringing
         // the engine up is that the weights are already on disk — a warm-up
         // is worker-spawn + shader compile + cache hits, none of which need a
@@ -212,13 +214,16 @@ export async function streamFreeChat(
         // keyless OFFLINE visitor with "setup guidance" while a perfectly
         // good private model sat in the cache (the exact scenario offline
         // mode exists for). Online callers get the same behavior — the cache
-        // check inside canAutoStartLocalEngine() already prevents cold
+        // check inside findAutoStartCachedModel() already prevents cold
         // downloads from inside a request.
-        const ok = await localInferenceEngine.initialize();
-        if (ok) {
-          const local = await generateLocally(messages, opts);
-          if (!local.error || local.content) return { ...local, source: "local" };
-          firstError ??= local.error;
+        const cachedModelId = await findAutoStartCachedModel();
+        if (cachedModelId) {
+          const ok = await localInferenceEngine.initialize(undefined, cachedModelId);
+          if (ok) {
+            const local = await generateLocally(messages, opts);
+            if (!local.error || local.content) return { ...local, source: "local" };
+            firstError ??= local.error;
+          }
         }
       }
     } catch {

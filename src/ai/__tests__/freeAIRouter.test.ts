@@ -63,9 +63,11 @@ vi.mock("@/offline/LocalInferenceEngine", () => ({
 
 const modelManagerMock = vi.hoisted(() => ({
   isInstantModelReady: vi.fn(async () => false),
+  findCachedLocalModelId: vi.fn(async () => null as string | null),
 }));
 vi.mock("@/services/modelManager", () => ({
   isInstantModelReady: modelManagerMock.isInstantModelReady,
+  findCachedLocalModelId: modelManagerMock.findCachedLocalModelId,
 }));
 
 import { saveVaultKey, __resetKeyVaultForTests, orderedVaultEntries, type VaultEntry } from "@/lib/keyVault";
@@ -140,6 +142,7 @@ describe("streamFreeChat", () => {
     engineMock.initialize.mockClear();
     engineMock.generate.mockClear();
     modelManagerMock.isInstantModelReady.mockResolvedValue(false);
+    modelManagerMock.findCachedLocalModelId.mockResolvedValue(null);
   });
 
   it("returns the honest needsSetup result when no route exists", async () => {
@@ -259,9 +262,11 @@ describe("streamFreeChat", () => {
   });
 
   it("brings the engine up on demand when weights are already cached", async () => {
-    modelManagerMock.isInstantModelReady.mockResolvedValue(true);
+    modelManagerMock.findCachedLocalModelId.mockResolvedValue("Qwen2.5-0.5B-Instruct-q4f16_1-MLC");
     const result = await streamFreeChat(chat("hi"));
     expect(engineMock.initialize).toHaveBeenCalledTimes(1);
+    // The warm-up loads the model that is ACTUALLY cached, not the tier pick.
+    expect(engineMock.initialize).toHaveBeenCalledWith(undefined, "Qwen2.5-0.5B-Instruct-q4f16_1-MLC");
     expect(result.source).toBe("local");
   });
 
@@ -276,7 +281,7 @@ describe("streamFreeChat", () => {
       saveVaultKey("groq", "gsk_offline_1");
       // The cloud route fails the way it does offline — fast and opaque.
       byokMock.streamByokChat.mockRejectedValue(new TypeError("Failed to fetch"));
-      modelManagerMock.isInstantModelReady.mockResolvedValue(true);
+      modelManagerMock.findCachedLocalModelId.mockResolvedValue("Qwen2.5-0.5B-Instruct-q4f16_1-MLC");
       engineMock.initialize.mockResolvedValue(true);
       const result = await streamFreeChat(chat("hi"));
       expect(engineMock.initialize).toHaveBeenCalledTimes(1);
@@ -295,7 +300,7 @@ describe("streamFreeChat", () => {
     const prevNavigator = globalThis.navigator;
     vi.stubGlobal("navigator", { userAgent: prevNavigator?.userAgent ?? "test-agent", onLine: false });
     try {
-      modelManagerMock.isInstantModelReady.mockResolvedValue(false);
+      modelManagerMock.findCachedLocalModelId.mockResolvedValue(null);
       const result = await streamFreeChat(chat("hi"));
       expect(engineMock.initialize).not.toHaveBeenCalled();
       expect(result.needsSetup).toBe(true);
@@ -305,7 +310,7 @@ describe("streamFreeChat", () => {
   });
 
   it("never starts a cold model download from inside a request", async () => {
-    modelManagerMock.isInstantModelReady.mockResolvedValue(false);
+    modelManagerMock.findCachedLocalModelId.mockResolvedValue(null);
     const result = await streamFreeChat(chat("hi"));
     expect(engineMock.initialize).not.toHaveBeenCalled();
     expect(result.needsSetup).toBe(true);

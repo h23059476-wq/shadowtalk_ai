@@ -1,7 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import { localInferenceEngine } from '@/offline/LocalInferenceEngine';
 import { StorageManager } from '@/offline/StorageManager';
-import { markDeviceInstallConsent } from '@/offline/BackgroundInstall';
+import { markDeviceInstallConsent, markInstalledViaWizard } from '@/offline/BackgroundInstall';
+import { setPreferLocal } from '@/lib/aiAccessMode';
+import { fbAuth } from '@/integrations/firebase/app';
 import { LOCAL_MODEL_TIERS, STARTER_LOCAL_MODEL, pickLocalModelForDevice, type LocalModelDefinition } from '@/ai/ModelRegistry';
 import { Loader2, CheckCircle2, AlertCircle, Cpu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -70,6 +72,18 @@ export const OfflineSetup: React.FC<{ onComplete?: () => void }> = ({ onComplete
 
       if (success) {
         setStatus('ready');
+        // Route ordinary chat to the engine the user just installed — the
+        // settings wizard previously provisioned 0.9GB of weights but never
+        // flipped prefer-local (only the background banner did), so the
+        // engine sat idle in every conversation and offline chat bounced to
+        // the "not installed yet" guidance despite a fully loaded model.
+        const uid = fbAuth().currentUser?.uid;
+        if (uid) {
+          setPreferLocal(uid, true);
+          // Record the decision + ready snapshot so the banner never nags
+          // over an install this wizard just completed.
+          markInstalledViaWizard(uid, selectedModel.id);
+        }
         setTimeout(() => {
           onComplete?.();
         }, 1500);

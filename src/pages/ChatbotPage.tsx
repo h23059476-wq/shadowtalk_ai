@@ -16,7 +16,7 @@ import { PrivateAiBanner } from "@/components/chat/PrivateAiBanner";
 import { ModelManagerDrawer } from "@/components/ModelManagerDrawer";
 import { GUEST_LOCAL_UID } from "@/hooks/useLocalChatModels";
 import { LOCAL_MODEL_READY_EVENT } from "@/offline/BackgroundInstall";
-import { initModelManager, isInstantModelReady } from "@/services/modelManager";
+import { initModelManager } from "@/services/modelManager";
 const LiveVoiceMode = lazy(() => import("@/components/chat/LiveVoiceMode").then(m => ({ default: m.LiveVoiceMode })));
 const SettingsByokCard = lazy(() => import("@/components/settings/SettingsByokCard").then(m => ({ default: m.SettingsByokCard })));
 import { ChatToolbar } from "@/components/chat/ChatToolbar";
@@ -420,7 +420,9 @@ const ChatbotPage = () => {
   // engine on a fresh page load: the first prefer-local message of every
   // session silently bounced to cloud while the downloaded model sat idle.
   // Weights are already on disk by then, so warming costs seconds of
-  // worker-spawn + shader compile and needs no network.
+  // worker-spawn + shader compile and needs no network. The warm-up loads
+  // the tier that is ACTUALLY cached — the device-tier pick may point at a
+  // different (uncached) tier than the one the user installed.
   useEffect(() => {
     if (!getPreferLocal(user?.id ?? GUEST_LOCAL_UID)) return;
     let cancelled = false;
@@ -430,7 +432,9 @@ const ChatbotPage = () => {
         if (cancelled) return;
         const state = localInferenceEngine.getState();
         if (state === "idle" || state === "error") {
-          await localInferenceEngine.prewarm();
+          const { findCachedLocalModelId } = await import("@/services/modelManager");
+          const cachedModelId = await findCachedLocalModelId().catch(() => null);
+          await localInferenceEngine.initialize(undefined, cachedModelId ?? undefined);
         }
       } catch {
         // Engine module unavailable — the cloud path still serves this user.
@@ -1664,13 +1668,14 @@ Structure and Content Guidelines:
           engineState = localInferenceEngine.getState();
         }
         if (engineState === "idle" || engineState === "error") {
-          void localInferenceEngine.prewarm().catch(() => {});
+          const { findCachedLocalModelId } = await import("@/services/modelManager");
+          const cachedModelId = await findCachedLocalModelId().catch(() => null);
+          void localInferenceEngine.initialize(undefined, cachedModelId ?? undefined).catch(() => {});
           // Wait on REAL cache evidence only. The old `isOffline ||` forced a
           // 30s spin when offline with an empty cache — the engine can't
           // download weights it doesn't have, so the honest error below must
           // come immediately, not after a doomed wait.
-          const weightsCached = await isInstantModelReady().catch(() => false);
-          if (weightsCached) {
+          if (cachedModelId) {
             const warmed = await waitForLocalEngineReady(30_000, controller.signal);
             if (warmed) engineState = "ready";
           }

@@ -584,6 +584,31 @@ export async function isInstantModelReady(): Promise<boolean> {
   return hasModelInCache(localInferenceEngine.getCurrentModelId());
 }
 
+/**
+ * The id of any local chat model whose weights are FULLY cached (default or
+ * mirror URLs), smallest tier first — or null when nothing is cached.
+ *
+ * Warm-ups used to check only the device-tier pick: a user who installed the
+ * Nano tier (or whose tier pick drifted between loads) reloaded OFFLINE to
+ * "model install failed" while a perfectly usable cached model sat on disk.
+ * Every warm-up path goes through this discovery so the engine loads the
+ * model that actually exists on the device.
+ */
+export async function findCachedLocalModelId(): Promise<string | null> {
+  const { LOCAL_MODEL_TIERS } = await import("@/ai/ModelRegistry");
+  const tiers = [...LOCAL_MODEL_TIERS].sort(
+    (a, b) => a.approxStorageRequirementMB - b.approxStorageRequirementMB,
+  );
+  for (const tier of tiers) {
+    try {
+      if (await hasModelInCache(tier.id)) return tier.id;
+    } catch {
+      /* cache API unavailable — keep scanning */
+    }
+  }
+  return null;
+}
+
 // Test hooks
 export function __resetModelManagerForTests(): void {
   listeners.clear();
