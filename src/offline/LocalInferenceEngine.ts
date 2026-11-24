@@ -482,6 +482,19 @@ export class LocalInferenceEngine {
         this.setState("idle");
         return false;
       }
+      // OFFLINE with an incomplete cache: a download can make zero progress,
+      // and web-llm's internal fetch-retry loop keeps emitting progress
+      // reports while it churns, which starves the 45s idle watchdog — the
+      // init pends forever (seen live: the mirror retry sat through a whole
+      // 200s turn with no failure). Fail fast; routing lands its honest
+      // guidance immediately instead of waiting on a doomed download.
+      const offlineNow = typeof navigator !== "undefined" && navigator.onLine === false;
+      if (offlineNow && !(await this.anyCacheForModel(model.id).catch(() => false))) {
+        console.info(`[local-engine] offline and ${model.id} is not fully cached — skipping the doomed download`);
+        this.releaseEngineLock();
+        this.setState("error");
+        return false;
+      }
       this.engine = await this.createEngine(model, resolvedEngineConfig.contextWindowSize!, progressCb, false, resolvedEngineConfig.initIdleTimeoutMs);
       this.isReady = true;
       this.setState("ready");

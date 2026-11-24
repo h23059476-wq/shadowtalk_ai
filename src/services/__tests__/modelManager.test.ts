@@ -13,8 +13,29 @@ vi.mock("@mlc-ai/web-llm", () => ({
   deleteModelAllInfoInCache: vi.fn(),
   WebWorkerMLCEngine: class {},
   // modelMirror clones the prebuilt config to build the mirror appConfig —
-  // an empty model_list keeps that path real without pulling the 2MB lib.
-  prebuiltAppConfig: { model_list: [] },
+  // keep records for the two 0.5B twins so mirror-vs-default URL divergence
+  // is exercisable in the discovery tests below.
+  prebuiltAppConfig: {
+    model_list: [
+      { model_id: "Qwen2.5-0.5B-Instruct-q4f16_1-MLC", model: "https://huggingface.co/mlc-ai/Qwen2.5-0.5B-Instruct-q4f16_1-MLC" },
+      { model_id: "Qwen2.5-0.5B-Instruct-q4f32_1-MLC", model: "https://huggingface.co/mlc-ai/Qwen2.5-0.5B-Instruct-q4f32_1-MLC" },
+    ],
+  },
+}));
+
+vi.mock("@/offline/modelMirror", () => ({
+  // Mirror records for the two 0.5B twins — URL differs from the default,
+  // which is exactly the shape the mirror-key cache discovery must handle.
+  buildMirrorAppConfig: vi.fn(() => ({
+    model_list: [
+      { model_id: "Qwen2.5-0.5B-Instruct-q4f16_1-MLC", model: "https://raw.githubusercontent.com/o/r/weights/models/Qwen2.5-0.5B-Instruct-q4f16_1-MLC/resolve/main/" },
+      { model_id: "Qwen2.5-0.5B-Instruct-q4f32_1-MLC", model: "https://raw.githubusercontent.com/o/r/weights/models/Qwen2.5-0.5B-Instruct-q4f32_1-MLC/resolve/main/" },
+    ],
+  })),
+  isBuiltInMirroredModelId: vi.fn((id: string) => id.startsWith("Qwen2.5-0.5B")),
+  isMirrorConfigured: vi.fn(() => true),
+  isMirrorEligibleError: vi.fn(() => false),
+  __setMirrorTemplateForTests: vi.fn(),
 }));
 
 vi.mock("@/utils/deviceCapabilities", () => ({
@@ -66,6 +87,7 @@ import { localInferenceEngine } from "@/offline/LocalInferenceEngine";
 import {
   bootstrapDefaultModels,
   deleteCachedModel,
+  findCachedLocalModelId,
   generateChatCompletion,
   generateEmbeddings,
   getModelManagerSnapshot,
@@ -312,6 +334,33 @@ describe("cache lifecycle", () => {
     engineMock.isLoaded.mockReturnValue(false);
     deleteCacheMock.mockRejectedValueOnce(new Error("locked"));
     await expect(deleteCachedModel(CHAT_1B)).rejects.toThrow("locked");
+  });
+});
+
+describe("findCachedLocalModelId — mirror-key discovery", () => {
+  // The cache-repair sweep and a mirror-mode install store shards under the
+  // MIRROR URLs. web-llm's default-config hasModelInCache only sees Hugging
+  // Face keys — discovery reported "nothing cached" while 266MB of weights
+  // sat in webllm/model, and OFFLINE the engine tried to re-download forever.
+  it("finds the q4f32 twin cached under mirror keys (default scan misses)", async () => {
+    const TWIN = "Qwen2.5-0.5B-Instruct-q4f32_1-MLC";
+    cacheMock.mockImplementation(async (_id: string, cfg?: unknown) =>
+      // only the mirror-config scan hits, and only for the twin
+      cfg !== undefined && _id === TWIN,
+    );
+    await expect(findCachedLocalModelId()).resolves.toBe(TWIN);
+  });
+
+  it("prefers the primary id when the default-config scan hits", async () => {
+    cacheMock.mockImplementation(async (id: string, cfg?: unknown) =>
+      cfg === undefined && id === CHAT_05B,
+    );
+    await expect(findCachedLocalModelId()).resolves.toBe(CHAT_05B);
+  });
+
+  it("returns null when neither config has anything", async () => {
+    cacheMock.mockResolvedValue(false);
+    await expect(findCachedLocalModelId()).resolves.toBeNull();
   });
 });
 

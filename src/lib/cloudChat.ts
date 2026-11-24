@@ -339,6 +339,13 @@ export async function streamCloudChat(
       const raced = await withNetworkTimeout(
         (async () => {
           const { localInferenceEngine, waitForLocalEngineReady } = await import("@/offline/LocalInferenceEngine");
+          // One-line routing truth: state / escalation verdict / connectivity —
+          // the live drill's "pending 200s with zero output" demanded visibility.
+          console.info(
+            `[cloud-chat] prefer-local routing: state=${localInferenceEngine.getState()} ` +
+            `escalate=${shouldEscalateToCloud(messages, opts)} frontier=${hasFrontierTrigger(messages, opts)} ` +
+            `online=${typeof navigator !== "undefined" ? navigator.onLine : "?"} model=${opts?.model ?? "-"}`,
+          );
           if (localInferenceEngine.isLoaded()) {
             if (!shouldEscalateToCloud(messages, opts)) {
               return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);
@@ -381,6 +388,7 @@ export async function streamCloudChat(
             !shouldEscalateToCloud(messages, opts) &&
             !offline
           ) {
+            console.info("[cloud-chat] an init is in flight — bounded 25s wait for it");
             const warmed = await waitForLocalEngineReady(25_000, opts.signal).catch(() => false);
             if (warmed && localInferenceEngine.isLoaded()) {
               return localInferenceEngine.generate(fitMessagesToLocal(messages), opts);

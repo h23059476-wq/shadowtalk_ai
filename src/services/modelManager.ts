@@ -42,7 +42,8 @@ import {
 } from "@/config/models";
 import { detectDeviceCapabilities, getDeviceMemoryGB, requestPersistentStorage, getStorageQuota } from "@/utils/deviceCapabilities";
 import { getInstallDecision, hasDeviceInstallConsent, markDeviceInstallConsent } from "@/offline/BackgroundInstall";
-import { buildMirrorAppConfig, isBuiltInMirroredModelId } from "@/offline/modelMirror";
+import { buildMirrorAppConfig, isBuiltInMirroredModelId, isMirrorConfigured } from "@/offline/modelMirror";
+import { prebuiltAppConfig } from "@mlc-ai/web-llm";
 import type { CloudChatMessage, CloudChatOptions, CloudChatResult } from "@/lib/cloudChat";
 
 export type ModelManagerPhase =
@@ -612,6 +613,23 @@ export async function findCachedLocalModelId(): Promise<string | null> {
         if (await hasModelInCache(id)) return id;
       } catch {
         /* cache API unavailable — keep scanning */
+      }
+      // The cache-repair sweep and a successful mirror install store the
+      // shards under the MIRROR URLs (the failed attempt's base) — web-llm's
+      // default-config scan above only sees Hugging Face keys and reported
+      // "nothing cached" while 266MB of weights sat in webllm/model. Scan the
+      // mirror config for every record the mirror actually rewrites.
+      const mirrorCfg = isMirrorConfigured() ? buildMirrorAppConfig() : null;
+      if (mirrorCfg) {
+        const mirrored = mirrorCfg.model_list.find((r) => r.model_id === id);
+        const plain = prebuiltAppConfig.model_list.find((r) => r.model_id === id);
+        if (mirrored && plain && mirrored.model !== plain.model) {
+          try {
+            if (await hasModelInCache(id, mirrorCfg)) return id;
+          } catch {
+            /* fall through to the next id */
+          }
+        }
       }
     }
   }
