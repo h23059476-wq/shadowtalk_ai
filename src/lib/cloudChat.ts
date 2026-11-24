@@ -344,7 +344,8 @@ export async function streamCloudChat(
           console.info(
             `[cloud-chat] prefer-local routing: state=${localInferenceEngine.getState()} ` +
             `escalate=${shouldEscalateToCloud(messages, opts)} frontier=${hasFrontierTrigger(messages, opts)} ` +
-            `online=${typeof navigator !== "undefined" ? navigator.onLine : "?"} model=${opts?.model ?? "-"}`,
+            `online=${typeof navigator !== "undefined" ? navigator.onLine : "?"} model=${opts?.model ?? "-"} ` +
+            `chunk=${(performance.getEntriesByType("resource").find((r) => /LocalInferenceEngine-.*\.js/.test(r.name))?.name || "").split("/").pop()}`,
           );
           if (localInferenceEngine.isLoaded()) {
             if (!shouldEscalateToCloud(messages, opts)) {

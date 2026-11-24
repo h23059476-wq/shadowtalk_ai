@@ -618,6 +618,7 @@ export class LocalInferenceEngine {
     if (!this.engine || !this.isReady) {
       return { content: "", error: "Local engine not ready.", source: "local", modelUsed: this.currentModelId };
     }
+    console.info(`[local-engine] generate: start state=${this.state} model=${this.currentModelId}`);
 
     // Pile-on guard: a previous generate that is still wedged in
     // "generating" (hung worker, deadline-raced turn) would make every new
@@ -663,15 +664,19 @@ export class LocalInferenceEngine {
         ladderPromise,
         GENERATION_LADDER_DEADLINE_MS,
         "Local generation",
-      ).catch(() => ({
-        result: {
-          content: "",
-          error: "The on-device model did not finish in time — try again.",
-          source: "local",
-          modelUsed: this.currentModelId,
-        } as CloudChatResult,
-        retryable: false,
-      }));
+      ).catch(() => {
+        console.warn("[local-engine] generate: ladder overran its budget — landing the honest error");
+        return {
+          result: {
+            content: "",
+            error: "The on-device model did not finish in time — try again.",
+            source: "local",
+            modelUsed: this.currentModelId,
+          } as CloudChatResult,
+          retryable: false,
+        };
+      });
+      console.info(`[local-engine] generate: settled content=${(attempt.result.content || "").length}ch error=${attempt.result.error ? "yes" : "no"}`);
 
       const result = attempt.result;
       if (result.error && !result.content) {
@@ -748,6 +753,7 @@ export class LocalInferenceEngine {
         max_tokens: options?.maxTokens ?? LOCAL_OUTPUT_TOKEN_RESERVE,
         stream: true,
       });
+      console.info("[local-engine] stream created — reading chunks");
     } catch (error: any) {
       console.error("Local generation error:", error);
       return {
