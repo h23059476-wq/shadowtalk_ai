@@ -1,6 +1,7 @@
 import { CreateWebWorkerMLCEngine, WebWorkerMLCEngine, deleteModelAllInfoInCache, hasModelInCache, prebuiltAppConfig, type InitProgressCallback, type InitProgressReport, type MLCEngineConfig } from "@mlc-ai/web-llm";
 import { DEFAULT_LOCAL_MODEL, getLocalModelDefinition, pickLocalModelForDevice, type LocalModelDefinition } from "@/ai/ModelRegistry";
 import { CloudChatMessage, CloudChatOptions, CloudChatResult, LOCAL_OUTPUT_TOKEN_RESERVE } from "@/lib/cloudChat";
+import { withNetworkTimeout } from "@/lib/offlineGuards";
 import { DeviceCapability } from "@/offline/DeviceCapability";
 import { buildMirrorAppConfig, isBuiltInMirroredModelId, isMirrorEligibleError } from "@/offline/modelMirror";
 
@@ -618,28 +619,59 @@ export class LocalInferenceEngine {
       return { content: "", error: "Local engine not ready.", source: "local", modelUsed: this.currentModelId };
     }
 
+    // Pile-on guard: a previous generate that is still wedged in
+    // "generating" (hung worker, deadline-raced turn) would make every new
+    // message queue behind it or fail in parallel. Interrupt it and give it
+    // a bounded moment to unwind before this attempt starts.
+    if (this.state === "generating") {
+      console.info("[local-engine] a previous generation is still in flight — interrupting before the new attempt");
+      await this.safeInterrupt();
+      await new Promise((r) => setTimeout(r, 300));
+    }
+
     this.setState("generating");
     try {
-      let attempt = await this.attemptGenerate(messages, options);
-      const callerAborted = () => options?.signal?.aborted === true;
-      const ladderDeadline = Date.now() + GENERATION_LADDER_DEADLINE_MS;
+      // The ladder below is bounded in spirit (idle/hard caps per attempt)
+      // but a wedged re-init inside it can still overrun — the whole ladder
+      // races GENERATION_LADDER_DEADLINE_MS so generate() can NEVER pend
+      // past its own budget (the live drill watched it sit past the 200s
+      // routing deadline while the engine stayed wedged in "generating").
+      const ladderPromise = (async () => {
+        let attempt = await this.attemptGenerate(messages, options);
+        const callerAborted = () => options?.signal?.aborted === true;
+        const ladderDeadline = Date.now() + GENERATION_LADDER_DEADLINE_MS;
 
-      // Never-fail ladder. Caller aborts never retry.
-      //   1. Immediate retry after interruptGenerate — clears a wedged or
-      //      still-generating stream (the previous message's stop sometimes
-      //      leaves the worker busy; the retry then queues behind it).
-      //   2. Full engine re-init (WebGPU device lost mid-run) + one last
-      //      attempt — weights are cached, so this costs seconds.
-      if (attempt.result.error && attempt.retryable && !callerAborted() && Date.now() < ladderDeadline) {
-        await this.safeInterrupt();
-        attempt = await this.attemptGenerate(messages, options);
+        // Never-fail ladder. Caller aborts never retry.
+        //   1. Immediate retry after interruptGenerate — clears a wedged or
+        //      still-generating stream (the previous message's stop sometimes
+        //      leaves the worker busy; the retry then queues behind it).
+        //   2. Full engine re-init (WebGPU device lost mid-run) + one last
+        //      attempt — weights are cached, so this costs seconds.
         if (attempt.result.error && attempt.retryable && !callerAborted() && Date.now() < ladderDeadline) {
-          const reinitOk = await this.reinitialize();
-          if (reinitOk && this.isReady) {
-            attempt = await this.attemptGenerate(messages, options);
+          await this.safeInterrupt();
+          attempt = await this.attemptGenerate(messages, options);
+          if (attempt.result.error && attempt.retryable && !callerAborted() && Date.now() < ladderDeadline) {
+            const reinitOk = await this.reinitialize();
+            if (reinitOk && this.isReady) {
+              attempt = await this.attemptGenerate(messages, options);
+            }
           }
         }
-      }
+        return attempt;
+      })();
+      const attempt = await withNetworkTimeout(
+        ladderPromise,
+        GENERATION_LADDER_DEADLINE_MS,
+        "Local generation",
+      ).catch(() => ({
+        result: {
+          content: "",
+          error: "The on-device model did not finish in time — try again.",
+          source: "local",
+          modelUsed: this.currentModelId,
+        } as CloudChatResult,
+        retryable: false,
+      }));
 
       const result = attempt.result;
       if (result.error && !result.content) {
@@ -730,10 +762,18 @@ export class LocalInferenceEngine {
     let idleTimedOut = false;
     let hardTimedOut = false;
     let readError: unknown = null;
+    let sawFirstToken = false;
 
     // Silence watchdog: a tokenless gap means the worker hung (WebGPU device
     // lost mid-run) — racing every read against a timer turns that hang into
-    // a retryable failure instead of an eternal spinner.
+    // a retryable failure instead of an eternal spinner. The clock arms ONLY
+    // after the first token: prompt PREFILL on weak GPUs legitimately runs
+    // 30–90s with zero output (SwiftShader measured live), and the old
+    // arm-at-start killed every attempt before the model ever spoke — every
+    // offline reply died as "stopped responding" after a full ladder of
+    // doomed 30s attempts. Prefill is instead bounded by the HARD clock,
+    // which is raced below (the loop body can't check it while blocked in
+    // iterator.next()).
     let idleTimer: ReturnType<typeof setTimeout> | null = null;
     let settleIdle: (() => void) | null = null;
     const idlePromise = new Promise<void>((resolve) => { settleIdle = resolve; });
@@ -741,18 +781,19 @@ export class LocalInferenceEngine {
       if (idleTimer) clearTimeout(idleTimer);
       idleTimer = setTimeout(() => { idleTimedOut = true; settleIdle?.(); }, idleMs);
     };
+    const hardPromise = new Promise<void>((resolve) => setTimeout(resolve, hardMs));
 
     const startedAt = Date.now();
     const iterator = (chunks as AsyncIterable<any>)[Symbol.asyncIterator]();
     try {
-      armIdle();
       while (true) {
-        if (Date.now() - startedAt >= hardMs) { hardTimedOut = true; break; }
         const raced = await Promise.race([
           iterator.next(),
-          idlePromise.then(() => ({ stalled: true as const })),
+          hardPromise.then(() => ({ hard: true as const })),
+          ...(sawFirstToken ? [idlePromise.then(() => ({ stalled: true as const }))] : []),
         ]);
         if (idleTimer) clearTimeout(idleTimer);
+        if ("hard" in raced && raced.hard) { hardTimedOut = true; break; }
         if ("stalled" in raced && raced.stalled) break; // silence watchdog fired
         if (options?.signal?.aborted) { aborted = true; break; }
         const { done, value } = raced as { done: boolean; value?: any };
@@ -762,7 +803,11 @@ export class LocalInferenceEngine {
         content += delta;
         if (choice?.finish_reason) finishReason = choice.finish_reason;
         options?.onDelta?.(content);
-        armIdle();
+        if (!sawFirstToken && delta) {
+          sawFirstToken = true;
+          console.info(`[local-engine] first token after ${Date.now() - startedAt}ms (prefill done)`);
+        }
+        if (sawFirstToken) armIdle();
       }
     } catch (error) {
       readError = error;
