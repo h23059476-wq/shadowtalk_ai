@@ -20,7 +20,10 @@ vi.mock("@mlc-ai/web-llm", () => {
       model_list: [
         {
           model_id: "test-model-id",
-          model: "https://cdn.test/test-model/resolve/main/",
+          // web-llm 0.2.x stores the record RAW — no trailing slash, no
+          // /resolve/main/ (it normalizes internally via cleanModelUrl at
+          // fetch time). Keep the mock faithful so URL-key bugs surface here.
+          model: "https://cdn.test/test-model",
           model_lib: "https://cdn.test/libs/test.wasm",
         },
       ],
@@ -61,7 +64,7 @@ vi.mock("@/ai/ModelRegistry", () => ({
   pickLocalModelForDevice: () => ({ id: "test-model-id", displayName: "Test Model", approxStorageRequirementMB: 800 }),
 }));
 
-import { localInferenceEngine } from "@/offline/LocalInferenceEngine";
+import { localInferenceEngine, cleanModelBaseUrl } from "@/offline/LocalInferenceEngine";
 import { CreateWebWorkerMLCEngine, deleteModelAllInfoInCache, hasModelInCache } from "@mlc-ai/web-llm";
 
 const createEngineMock = vi.mocked(CreateWebWorkerMLCEngine);
@@ -330,6 +333,33 @@ describe("LocalInferenceEngine recovery", () => {
   }, 5_000);
 
   // ── Cache-repair sweep (streamed-cache-write failure class) ───────────
+  describe("cleanModelBaseUrl", () => {
+    // web-llm's cleanModelUrl semantics — the sweep and any cache-key
+    // building MUST produce the same keys the engine itself fetches.
+    it("appends /resolve/main/ to raw Hugging Face records (web-llm 0.2.x shape)", () => {
+      expect(cleanModelBaseUrl("https://huggingface.co/mlc-ai/Llama-3.2-1B-Instruct-q4f32_1-MLC")).toBe(
+        "https://huggingface.co/mlc-ai/Llama-3.2-1B-Instruct-q4f32_1-MLC/resolve/main/",
+      );
+      expect(cleanModelBaseUrl("https://huggingface.co/mlc-ai/Some-Model-q4f16_1-MLC/")).toBe(
+        "https://huggingface.co/mlc-ai/Some-Model-q4f16_1-MLC/resolve/main/",
+      );
+    });
+
+    it("leaves URLs that already carry a /resolve/<rev>/ infix untouched", () => {
+      expect(cleanModelBaseUrl("https://raw.githubusercontent.com/o/r/weights/models/x/resolve/main/")).toBe(
+        "https://raw.githubusercontent.com/o/r/weights/models/x/resolve/main/",
+      );
+      expect(cleanModelBaseUrl("https://cdn.example.com/models/resolve/v0.2/")).toBe(
+        "https://cdn.example.com/models/resolve/v0.2/",
+      );
+    });
+
+    it("never mutates a well-formed base into a double resolve", () => {
+      const out = cleanModelBaseUrl("https://huggingface.co/mlc-ai/M/resolve/main/");
+      expect(out.match(/resolve\/main\//g)).toHaveLength(1);
+    });
+  });
+
   it("repairs the cache itself when Cache.add dies with a network error but plain fetch works", async () => {
     // Device-class failure: web-llm's streamed Cache.add/put errors on the
     // big files while the same URL streams fine through plain fetch — those

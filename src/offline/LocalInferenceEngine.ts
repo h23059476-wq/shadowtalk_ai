@@ -106,6 +106,27 @@ function webllmCacheNameFor(filename: string): string {
   return "webllm/model";
 }
 
+/**
+ * Normalize a ModelRecord.model URL exactly the way web-llm does internally
+ * (its cleanModelUrl): guarantee a trailing slash and, for Hugging Face-style
+ * URLs, the "/resolve/<rev>/" infix. web-llm 0.2.x stores the record RAW
+ * ("https://huggingface.co/mlc-ai/<id>" — no /resolve/main/) and only
+ * normalizes at fetch time, so building cache keys or repair URLs from the
+ * raw record produced garbage ("...<id>tensor-cache.json" → 404 → CORS block
+ * → the sweep "repaired" nothing and every install died on both CDNs).
+ * Every external URL-building site MUST go through this helper so the keys
+ * match what web-llm itself fetches and caches.
+ */
+export function cleanModelBaseUrl(modelUrl: string): string {
+  let url = modelUrl + (modelUrl.endsWith("/") ? "" : "/");
+  if (!url.match(/.+\/resolve\/.+\//)) url += "resolve/main/";
+  try {
+    return new URL(url).href;
+  } catch {
+    return url; // relative/odd shapes — keep the string form
+  }
+}
+
 export interface LocalEngineConfig {
   contextWindowSize?: number;
   /** Silence watchdog for initialize(): no progress for this long → fail (and retry via the mirror when eligible). */
@@ -218,7 +239,10 @@ export class LocalInferenceEngine {
     const record = (useMirror ? buildMirrorAppConfig() ?? prebuiltAppConfig : prebuiltAppConfig)
       .model_list.find((r) => r.model_id === modelId);
     if (!record) return 0;
-    const base = record.model;
+    // web-llm fetches/caches everything under cleanModelUrl(record.model) —
+    // the raw record for the default HF CDN lacks the /resolve/main/ infix,
+    // and keys built from it never match what the engine reads back.
+    const base = cleanModelBaseUrl(record.model);
     const files = ["mlc-chat-config.json", "tokenizer.json", "tokenizer_config.json", "tensor-cache.json"];
     try {
       const tcCache = await caches.open("webllm/model");
