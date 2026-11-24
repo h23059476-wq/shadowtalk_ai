@@ -26,6 +26,7 @@ import {
   User,
   Settings,
   CreditCard,
+  KeyRound,
   LogIn,
   Palette,
   BookOpen,
@@ -278,6 +279,14 @@ export const pages: PageEntry[] = [
     desc: "The honest math — when $20/month earns it, and the free BYOK stack",
     group: "Guides",
     keywords: ["chatgpt plus", "worth it", "subscription", "pricing", "free", "alternative", "guide"],
+  },
+  {
+    name: "BYOK AI chat — use your own key",
+    href: "/byok-ai-chat",
+    icon: KeyRound,
+    desc: "Your API key, provider prices, no markup — plus the keyless offline model",
+    group: "Guides",
+    keywords: ["byok", "bring your own key", "api key", "openai", "anthropic", "openrouter", "no subscription", "guide"],
   },
   {
     name: "ChatGPT down? Outage playbook",

@@ -204,6 +204,12 @@ export const PAGE_SEO: Record<string, PageMeta> = {
       "When $20/month earns it — and the free stack that covers most of what it does: an on-device model with no limits, shared cloud chat, BYOK across 16+ providers at cost. Criteria, not an ad.",
     canonical: `${SITE_URL}/is-chatgpt-plus-worth-it`,
   },
+  "byok-ai-chat": {
+    title: "BYOK AI Chat — Use Your Own API Key (Free)",
+    description:
+      "Bring your own API key: 16+ providers at cost, no subscription, no markup, keys stay in your browser. Plus a free on-device model that works offline.",
+    canonical: `${SITE_URL}/byok-ai-chat`,
+  },
   "vs-chatgpt": {
     title: "ShadowTalk AI vs ChatGPT — Offline, Private, Free",
     description:

@@ -215,12 +215,13 @@ describe("seo growth: guide fleet + llms-full.txt (GEO)", () => {
     "/compare",
   ];
 
-  it("ships fifteen guides, each substantive and extractive", () => {
+  it("ships sixteen guides, each substantive and extractive", () => {
     expect(guideSlugs.sort()).toEqual([
       "ai-chat-for-students",
       "ai-chat-for-travel",
       "ai-chat-without-account",
       "best-offline-ai-chat",
+      "byok-ai-chat",
       "chatgpt-down",
       "free-ai-chat",
       "is-chatgpt-plus-worth-it",
@@ -256,7 +257,7 @@ describe("seo growth: guide fleet + llms-full.txt (GEO)", () => {
   it("both hubs list every fleet page and cross-link each other", () => {
     const guidesPage = read("src/pages/GuidesIndexPage.tsx");
     const comparePage = read("src/pages/CompareIndexPage.tsx");
-    // guides hub lists all fifteen guides via ItemList and links /compare
+    // guides hub lists all sixteen guides via ItemList and links /compare
     for (const slug of Object.keys(SEO_GUIDES)) {
       expect(guidesPage).toContain(`"${slug}"`);
     }
@@ -273,7 +274,7 @@ describe("seo growth: guide fleet + llms-full.txt (GEO)", () => {
     // entity facts
     expect(llmsFull).toContain("Zain Ahmed Fahad Patel");
     expect(llmsFull).toContain("https://www.shadowtalk-ai.com/founder");
-    expect(llmsFull).toContain("Last updated: 2026-11-19");
+    expect(llmsFull).toContain("Last updated: 2026-11-25");
     // privacy + honesty facts
     expect(llmsFull).toContain("AES-256-GCM");
     expect(llmsFull).toContain("stored server-side");

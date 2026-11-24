@@ -31,6 +31,7 @@ const GUIDE_ORDER = [
   "ai-chat-without-account",
   "free-ai-chat",
   "is-chatgpt-plus-worth-it",
+  "byok-ai-chat",
   "mobile-offline-ai",
   "webgpu-ai-chat",
   "local-vs-cloud-ai",

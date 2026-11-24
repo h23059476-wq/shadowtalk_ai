@@ -34,6 +34,7 @@ const Footer = () => {
         { name: "Best offline AI chat", href: "/best-offline-ai-chat" },
         { name: "AI chat without an account", href: "/ai-chat-without-account" },
         { name: "Free AI chat", href: "/free-ai-chat" },
+        { name: "BYOK AI chat — use your own key", href: "/byok-ai-chat" },
         { name: "Offline AI on your phone", href: "/mobile-offline-ai" },
         { name: "WebGPU AI chat", href: "/webgpu-ai-chat" },
         { name: "Local vs cloud AI", href: "/local-vs-cloud-ai" },

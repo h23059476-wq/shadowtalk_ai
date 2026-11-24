@@ -193,6 +193,7 @@ const AnimatedRoutes = () => {
           <Route path="/ai-chat-for-students" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="ai-chat-for-students" /></PageTransition></Suspense>} />
           <Route path="/who-can-read-your-ai-chats" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="who-can-read-your-ai-chats" /></PageTransition></Suspense>} />
           <Route path="/is-chatgpt-plus-worth-it" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="is-chatgpt-plus-worth-it" /></PageTransition></Suspense>} />
+          <Route path="/byok-ai-chat" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidePage guide="byok-ai-chat" /></PageTransition></Suspense>} />
           {/* Guide fleet hub */}
           <Route path="/guides" element={<Suspense fallback={<PageLoader />}><PageTransition><GuidesIndexPage /></PageTransition></Suspense>} />
           {/* Comparison engine — /compare hub + one head-to-head per intent cluster */}

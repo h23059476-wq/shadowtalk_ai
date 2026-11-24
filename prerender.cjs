@@ -54,6 +54,7 @@ const ROUTES_TO_PRERENDER = [
   '/ai-chat-for-students',
   '/who-can-read-your-ai-chats',
   '/is-chatgpt-plus-worth-it',
+  '/byok-ai-chat',
   '/guides',
   '/compare',
   '/vs/chatgpt',

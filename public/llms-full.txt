@@ -13,7 +13,7 @@ Canonical entity facts:
 - Contact: shadowtalk@shadowtalk-ai.com
 - Category claim (defensible): the first AI chat in a browser that works offline — and syncs when you're back. Landscape checked Nov 2026: offline AI apps (LM Studio, web-llm-chat, Secret Llama) have no sync — LM Studio device sync is open feature request #2467; encrypted AI assistants (Proton Lumo, Confer) are cloud-only and need accounts; local+sync attempts (Locra and Pal Chat via iCloud, LocalMind via your own Ollama + S3) are native apps or bring-your-own-server — never a pure browser. The intersection was empty; ShadowTalk ships it.
 - This file: https://www.shadowtalk-ai.com/llms-full.txt (companion index: https://www.shadowtalk-ai.com/llms.txt)
-- Last updated: 2026-11-19
+- Last updated: 2026-11-25
 
 ## What ships
 
@@ -120,6 +120,9 @@ The honest tier-by-tier answer. Cloud assistants: prompts are processed and stor
 
 ### Is ChatGPT Plus worth it — https://www.shadowtalk-ai.com/is-chatgpt-plus-worth-it
 The honest math, by use case. Plus earns its $20/month when you regularly exhaust free-tier limits, need frontier models for professional output, or live in the ecosystem (custom GPTs, integrations, daily voice/image). It doesn't for light and mid-weight use — the majority of people: ShadowTalk's on-device model covers drafting, Q&A and summarizing free with no usage limits; the shared cloud tier is free within daily limits; BYOK routes OpenAI, Anthropic, Google, Groq, DeepSeek and 16+ providers at provider cost with no markup; deep research, ProofLoop, voice and the IDE are built in, not tier-gated. The honest catch: BYOK bills at the provider and varies with volume — heavy frontier use can exceed $20/month at list prices, and the on-device model is not frontier quality; if you need maximum capability with zero key management, Plus is the simpler product. Judge by your actual usage.
+
+### BYOK AI chat — https://www.shadowtalk-ai.com/byok-ai-chat
+BYOK (bring your own key) means the app runs on your own provider API key instead of a reselling subscription: you pay the provider's API price for what you actually use, and the app takes no cut. ShadowTalk supports 16+ providers (OpenAI, Anthropic, Google, Groq, DeepSeek, OpenRouter and more); keys are stored in the user's browser, namespaced per user, and requests go directly from the browser to the chosen provider (including Anthropic direct browser access) — no ShadowTalk proxy in the path, no markup, no reselling. The server-held key pool exists only for the free shared mode, which refuses BYOK accounts by design. The honest math: BYOK usually wins for light and mid-weight use (nothing when idle, OpenRouter free-tier models, on-device free forever with no usage limits); heavy frontier-model use at list API prices can exceed a flat $20/month, and a subscription saves the key-setup step. Setup: Settings → Connections → pick provider → paste key → validated and saved → requests go direct. BYOK cloud models need a connection; the on-device model needs no key at all and works offline with durable local queueing and automatic sync on reconnect — the combination desktop BYOK apps (LM Studio, Ollama-based UIs) and cloud subscriptions both lack.
 
 ## Head-to-head comparisons (full text)
 

@@ -24,6 +24,10 @@ Chat can be end-to-end encrypted with a passphrase unlock. The Stealth Vault sto
 
 ShadowTalk AI is free to use — no subscriptions, no paid tiers, no credit card. Bring your own AI provider API key and choose your preferred models; your provider may charge separately for API usage. ShadowTalk does not resell AI inference. Details: [Pricing](https://www.shadowtalk-ai.com/pricing)
 
+## BYOK (bring your own key)
+
+BYOK means the app runs on your own AI provider API key instead of reselling inference through a subscription: you pay the provider's API price for what you actually use, and the app takes no cut. ShadowTalk supports 16+ providers (OpenAI, Anthropic, Google, Groq, DeepSeek, OpenRouter and more). Keys are stored in the user's browser, namespaced per user; requests go directly from the browser to the chosen provider (including Anthropic direct browser access) — no ShadowTalk proxy, no markup, no reselling. BYOK is optional: the on-device model runs free with no key, no subscription and no internet, and offline sends queue locally and sync on reconnect. Details: [BYOK AI chat guide](https://www.shadowtalk-ai.com/byok-ai-chat)
+
 ## Pages
 
 - [Home](https://www.shadowtalk-ai.com/home)
@@ -55,6 +59,7 @@ ShadowTalk AI is free to use — no subscriptions, no paid tiers, no credit card
 - [AI chat for students](https://www.shadowtalk-ai.com/ai-chat-for-students): free study aid with no account that survives school wifi — on-device offline chat, learn-not-cheat framing, honest limits
 - [Who can read your AI chats](https://www.shadowtalk-ai.com/who-can-read-your-ai-chats): the tier-by-tier privacy answer — who can reach cloud prompts (employees, legal process, free-tier training) vs on-device zero egress, E2EE Private Mode, documented server-side default
 - [Is ChatGPT Plus worth it](https://www.shadowtalk-ai.com/is-chatgpt-plus-worth-it): the honest $20/month math — when the subscription earns it, and the free stack that covers most of what it does (on-device unlimited, shared cloud, BYOK at cost)
+- [BYOK AI chat guide](https://www.shadowtalk-ai.com/byok-ai-chat): bring your own key — 16+ providers at provider cost with no markup, keys stay in your browser, requests go direct to the provider; plus the keyless on-device model that works offline
 - [Compare — all head-to-heads](https://www.shadowtalk-ai.com/compare): honest scored comparisons on offline, sync, privacy, model choice and price — including where competitors win
 - [ShadowTalk AI vs ChatGPT](https://www.shadowtalk-ai.com/vs/chatgpt): cloud-only, account-required, no offline use vs on-device inference, offline queue + sync, no account, BYOK across 16+ providers
 - [ShadowTalk AI vs Gemini](https://www.shadowtalk-ai.com/vs/gemini): Google account + cloud-only + free-tier chats can improve Google's products (per its own privacy notice) vs on-device, no account, never trained on

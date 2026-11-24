@@ -129,6 +129,7 @@ export const SEO_GUIDES: Record<string, SeoGuide> = {
       { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "Cloud-only vs offline-first, scored" },
       { label: "Private AI chat — encryption, no account, BYOK", href: "/private-ai-chat", note: "How the three privacy tiers work" },
       { label: "Run an LLM in your browser", href: "/run-llm-in-browser", note: "WebGPU models, sizes and speed" },
+      { label: "BYOK AI chat — bring your own key", href: "/byok-ai-chat", note: "Your key, provider prices, no markup" },
       { label: "Security & Trust", href: "/security", note: "Encryption, keys and data handling" },
     ],
     ctaLabel: "Start offline AI chat — free",
@@ -639,6 +640,7 @@ export const SEO_GUIDES: Record<string, SeoGuide> = {
       { label: "AI chat without an account", href: "/ai-chat-without-account", note: "Guest mode, zero sign-up" },
       { label: "Best offline AI chat — ranked", href: "/best-offline-ai-chat", note: "Free options compared on criteria" },
       { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "Free tiers, compared honestly" },
+      { label: "BYOK AI chat — bring your own key", href: "/byok-ai-chat", note: "Provider prices at cost, no subscription" },
       { label: "Offline AI chat guide", href: "/offline-ai-chat", note: "The free model that runs offline" },
     ],
     ctaLabel: "Chat free — no card",
@@ -1333,8 +1335,120 @@ export const SEO_GUIDES: Record<string, SeoGuide> = {
       { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "The structural comparison" },
       { label: "Local vs cloud AI", href: "/local-vs-cloud-ai", note: "The cost math, dimension by dimension" },
       { label: "ChatGPT down playbook", href: "/chatgpt-down", note: "The outage angle subscriptions can't fix" },
+      { label: "BYOK AI chat — bring your own key", href: "/byok-ai-chat", note: "The pay-per-use alternative, honestly mathed" },
     ],
     ctaLabel: "Run the free math yourself",
+  },
+  "byok-ai-chat": {
+    slug: "byok-ai-chat",
+    breadcrumb: "BYOK AI chat",
+    h1: "BYOK AI chat: bring your own key, pay the provider, skip the middleman",
+    definition:
+      "BYOK — bring your own key — means an AI app runs on your own provider API key instead of reselling you inference through a subscription: you pay the provider's API price for what you actually use, and the app takes no cut. ShadowTalk AI is a free, installable browser workspace with BYOK for 16+ providers (OpenAI, Anthropic, Google, Groq, DeepSeek, OpenRouter and more) — your key stays in your browser and requests go straight from your browser to the provider you chose, with no ShadowTalk proxy or markup in the path. Its on-device model needs no key, no subscription and no internet at all.",
+    intro:
+      "BYOK is how most of the AI power-user world already works — IDEs, terminal agents and a growing list of chat apps take your key instead of your $20 — yet most BYOK tools are desktop installs or single-tab web clients, and almost none of them can answer a question when the Wi-Fi dies. This page explains what BYOK actually is, when it's cheaper than a flat subscription (and when it isn't), how ShadowTalk handles your key, and what BYOK plus an offline on-device model buys you that neither a subscription nor a desktop BYOK app can.",
+    sections: [
+      {
+        heading: "What is BYOK in AI?",
+        paragraphs: [
+          "BYOK (bring your own key) flips the business model of an AI app: instead of charging you a monthly subscription for access to models the vendor resells, the app connects directly to your own API key from a provider like OpenAI, Anthropic, Google, Groq, DeepSeek or OpenRouter. The provider bills you at their published API price for exactly what you use; the app itself takes no cut of inference. It's the same model your IDE or terminal agent likely already uses — now applied to a full chat workspace.",
+          "The trade is straightforward: you get provider prices with no markup and free choice of models, in exchange for a one-time setup step (pasting a key) and the responsibility of your own provider bill.",
+        ],
+        bullets: [
+          "You pay the provider's API price for what you use — nothing when you don't",
+          "No middleman rate limits between you and the provider",
+          "Any provider's models in one workspace, switchable per task",
+          "OpenRouter exposes free-tier models, so you can try BYOK without paying anything",
+        ],
+      },
+      {
+        heading: "BYOK vs a flat subscription: the honest math",
+        paragraphs: [
+          "For light and mid-weight use — the majority of people by volume — BYOK usually wins: you pay for what you use and nothing when you don't, and everyday tasks can run on ShadowTalk's on-device model for free with no usage limits at all. The honest catch cuts the other way for heavy users: frontier models at list API prices can cost more than a flat $20/month if you generate enormous volume every day, and a subscription bundles zero-setup simplicity with no keys to manage. Judge by your actual usage, not by the marketing.",
+        ],
+        table: {
+          headers: ["Dimension", "BYOK (your key)", "Flat subscription"],
+          rows: [
+            ["Cost model", "Provider's API price for actual usage — nothing when idle", "Fixed monthly fee whether you use it or not"],
+            ["Model choice", "16+ providers in one workspace, switchable per task", "One vendor's models and rate limits"],
+            ["Markup", "None — the app takes no cut of inference", "You fund the reseller's margin"],
+            ["Offline", "On-device model works with no key and no internet", "None — cloud-only by design"],
+            ["Setup", "One paste in Settings → Connections", "None, but an account is required"],
+          ],
+        },
+      },
+      {
+        heading: "How ShadowTalk handles your key",
+        paragraphs: [
+          "BYOK keys in ShadowTalk live in your browser, namespaced per user — they are not sent to ShadowTalk's servers for BYOK accounts. Requests go directly from your browser to the provider you chose (including Anthropic's direct browser access), so there is no ShadowTalk proxy in the path and no place for a markup to hide. Keys are validated before first use, and you can set a different default model per provider.",
+          "The server-held key pool you may have read about exists only for the free shared cloud mode — and that mode refuses BYOK accounts by design, so the two paths never mix. ShadowTalk does not resell inference on any tier.",
+        ],
+      },
+      {
+        heading: "BYOK plus offline: the combination the rest of the market doesn't ship",
+        paragraphs: [
+          "Most BYOK apps are desktop installs (or web clients that still need the network for every token), and the local-AI apps that do work offline keep your chats trapped on one machine — LM Studio's device sync is still an open feature request (#2467, checked Nov 2026). ShadowTalk pairs BYOK cloud models with an on-device model that runs in your browser on WebGPU: no key, no account, no card, and no internet required after a one-time download (300MB–2.6GB depending on your device tier).",
+          "That pairing is the point: frontier quality when you're connected and willing to pay provider prices, capable draft-and-summarize work free and offline when you're not, and anything you send while offline queues up in durable local storage and syncs the moment you're back — end-to-end encrypted when Private Mode is on. Neither a subscription nor a desktop BYOK app can offer both halves.",
+        ],
+        bullets: [
+          "Cloud BYOK models: frontier quality, billed by your provider at cost",
+          "On-device models (Qwen 2.5, Llama 3.2, SmolLM2 tiers): free forever, no key, no rate limits",
+          "Offline sends queue locally and auto-sync on reconnect",
+          "One synced workspace across phone and desktop — the PWA installs in one tap, no app store",
+        ],
+      },
+    ],
+    howTo: {
+      name: "Set up BYOK in ShadowTalk",
+      steps: [
+        "Open shadowtalk-ai.com in Chrome or Edge (113+) — no account and no card required to start.",
+        "Get an API key from a provider: OpenAI, Anthropic, Google, Groq, DeepSeek or OpenRouter (OpenRouter offers free-tier models to start with).",
+        "In ShadowTalk, open Settings → Connections (\"API keys & integrations\").",
+        "Pick your provider, paste the key, and set the default model you want that provider to serve — the key is validated before it's saved.",
+        "Chat: requests go directly from your browser to the provider you chose, at provider cost, with no ShadowTalk markup.",
+        "Optional: install the on-device model from the offline settings — then everyday chat works free with no key and no internet, and cloud BYOK stays available when you're back online.",
+      ],
+    },
+    faqs: [
+      {
+        question: "What is BYOK in AI?",
+        answer:
+          "BYOK (bring your own key) means an AI app uses an API key from your own provider account — OpenAI, Anthropic, Google, Groq, DeepSeek, OpenRouter and more — instead of reselling inference through a subscription. You pay the provider directly for what you use and the app takes no cut. In ShadowTalk, keys stay in your browser and requests go straight from your browser to the provider you chose.",
+      },
+      {
+        question: "Is BYOK cheaper than a subscription like ChatGPT Plus?",
+        answer:
+          "For light and mid-weight use, usually yes — you pay only for what you use, OpenRouter offers free-tier models, and everyday tasks run free on ShadowTalk's on-device model with no usage limits. The honest catch: heavy frontier-model use at list API prices can cost more than a flat $20/month, and a subscription saves you the key setup. Judge by your actual volume.",
+      },
+      {
+        question: "Where does ShadowTalk store my API key?",
+        answer:
+          "In your browser, namespaced per user — BYOK keys are not sent to ShadowTalk's servers. Requests go directly from your browser to the provider you chose (including Anthropic's direct browser access), so there is no ShadowTalk proxy in the path. The server-held key pool exists only for the free shared mode, which refuses BYOK accounts by design.",
+      },
+      {
+        question: "Which providers can I bring a key from?",
+        answer:
+          "16+ providers, including OpenAI, Anthropic, Google, Groq, DeepSeek and OpenRouter. Keys are validated before first use and each provider can have its own default model, so you can route speed work to Groq, cheap reasoning to DeepSeek and frontier quality to OpenAI or Anthropic in one workspace.",
+      },
+      {
+        question: "Can I use ShadowTalk without an API key?",
+        answer:
+          "Yes. The on-device model runs in your browser on WebGPU (Chrome/Edge 113+) after a one-time download — free, no usage limits, no key, no card, and it keeps working offline. BYOK cloud models are optional, for when you need frontier quality.",
+      },
+      {
+        question: "Does BYOK work offline?",
+        answer:
+          "Cloud BYOK models need a connection — the key opens a door to a provider's servers, and nothing you paste changes that. The on-device model needs no key at all and works with zero internet: anything you send while offline queues in durable local storage and syncs when you're back.",
+      },
+    ],
+    related: [
+      { label: "Offline AI chat — works with no internet", href: "/offline-ai-chat", note: "The on-device model needs no key at all" },
+      { label: "Is ChatGPT Plus worth it", href: "/is-chatgpt-plus-worth-it", note: "The honest $20/month math vs the free stack" },
+      { label: "Free AI chat", href: "/free-ai-chat", note: "What 'free' actually means here" },
+      { label: "Who can read your AI chats", href: "/who-can-read-your-ai-chats", note: "Tier-by-tier server visibility" },
+      { label: "ShadowTalk vs ChatGPT", href: "/vs/chatgpt", note: "Cloud-only vs BYOK + on-device, scored" },
+    ],
+    ctaLabel: "Start BYOK chat — free, no card",
   },
 };
 
@@ -1355,4 +1469,5 @@ export const GUIDE_HUB_LINE: Record<string, string> = {
   "ai-chat-for-students": "Free study aid with no account that survives school wifi — learn with it, honestly",
   "who-can-read-your-ai-chats": "The tier-by-tier answer: who can reach your prompts — and what E2EE actually covers",
   "is-chatgpt-plus-worth-it": "The honest math: when $20/month earns it, and the free stack that covers most of what it does",
+  "byok-ai-chat": "BYOK explained: your key, your provider's prices, no markup — plus the keyless on-device model that works offline",
 };

@@ -60,6 +60,18 @@ const STATIC_FAQS: FAQItem[] = [
     answer: "Yes. ShadowTalk offers a generous free tier with daily message allocations, access to Groq Llama Turbo, tool triggers, and memory slots without requiring a credit card to get started.",
   },
   {
+    id: "faq-byok",
+    category: "pricing",
+    question: "What is BYOK? Do I need an API key?",
+    answer: "BYOK (bring your own key) means connecting your own provider API key — OpenAI, Anthropic, Google, Groq, DeepSeek, OpenRouter and more — so you pay the provider's API price directly, with no subscription and no markup. No, you don't need a key: the on-device model runs free in your browser with no usage limits and no internet.",
+  },
+  {
+    id: "faq-key-storage",
+    category: "security",
+    question: "Where are my BYOK API keys stored?",
+    answer: "In your browser, namespaced per user — BYOK keys are never sent to ShadowTalk's servers. Requests go directly from your browser to the provider you chose (including Anthropic's direct browser access), with no ShadowTalk proxy in the path. The server-held key pool exists only for the free shared mode, which refuses BYOK accounts by design.",
+  },
+  {
     id: "faq-models-supported",
     category: "product",
     question: "Which AI models can I use on ShadowTalk?",
