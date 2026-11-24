@@ -30,10 +30,24 @@ export const firebaseConfig = {
   measurementId: env.VITE_FIREBASE_MEASUREMENT_ID || 'G-LGJV8D66QM',
 };
 
-/** Base URL for Cloud Functions (used by `backend.functions.invoke`). */
+/**
+ * Base URL for the ShadowTalk edge backend, used by `backend.functions.invoke`
+ * and the branded auth-email calls in `auth.ts` (POST /requestPasswordReset,
+ * POST /sendVerificationEmail) and `cloudChat.ts` (POST /chat).
+ *
+ * Since 2026-11-24 this defaults to the Cloudflare Worker deployed by
+ * `scripts/deploy_cf_worker.py` (https://shadowtalk-email.z67061935.workers.dev).
+ * The previous default — the Firebase Cloud Functions URL — died in
+ * production (every cloudfunctions.net endpoint returned 404; the CI deploy
+ * step could no longer ship functions), so the worker took over the branded
+ * email endpoints and deliberately keeps the historic 404 contract on /chat
+ * so nothing silently changes shape.
+ *
+ * Override with VITE_FIREBASE_FUNCTIONS_URL (e.g. to move back to Firebase
+ * Cloud Functions or to a custom domain in front of the worker).
+ */
 export const functionsBaseUrl: string =
-  env.VITE_FIREBASE_FUNCTIONS_URL ||
-  `https://${env.VITE_FIREBASE_REGION || 'us-central1'}-${PROJECT_ID}.cloudfunctions.net`;
+  env.VITE_FIREBASE_FUNCTIONS_URL || 'https://shadowtalk-email.z67061935.workers.dev';
 
 let _app: FirebaseApp | null = null;
 let _auth: Auth | null = null;

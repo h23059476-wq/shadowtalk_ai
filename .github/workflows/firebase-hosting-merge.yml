@@ -6,22 +6,13 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-    env:
-      # Mapped at job level so steps can test its presence (`secrets` context is
-      # not allowed inside step-level `if:` expressions).
-      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-      # Optional: enables the server-side chat/image pool when present.
-      # Ignored when unset (AI endpoints answer 503 with a clear message).
-      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: |
-            package-lock.json
-            functions/package-lock.json
+          cache-dependency-path: package-lock.json
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
@@ -31,8 +22,6 @@ jobs:
           java-version: '17'
       - run: npx --yes firebase-tools@14 emulators:exec --project demo-shadowtalk-auth-rules --only firestore "npm test"
       - run: npm run build
-      - run: npm ci --prefix functions
-      - run: npm --prefix functions run build
       # ------------------------------------------------------------------
       # Firestore rules + indexes deploy on every main merge.
       #
@@ -58,29 +47,16 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
       # ------------------------------------------------------------------
-      # Cloud Functions deploy (chat proxy, contact intake, branded auth
-      # emails — sendVerificationEmail + requestPasswordReset via Resend).
-      #
-      # Guarded on the RESEND_API_KEY GitHub secret: when it exists, CI
-      # writes functions/.env (v2 functions load plain env vars from there at
-      # runtime) and deploys. When the secret is absent, the step skips and
-      # the previously deployed function code keeps running — the app's
-      # email paths fall back to Firebase's default sender, so nothing breaks.
-      # Set the secret (repo → Settings → Secrets → Actions → RESEND_API_KEY,
-      # value `re_...` from resend.com) and this activates automatically on
-      # the next merge to main.
+      # Cloud Functions deploy was removed on 2026-11-24: the functions
+      # pipeline had been shipping nothing (deploy step dead, every
+      # cloudfunctions.net endpoint 404 in production). The branded auth
+      # emails (sendVerificationEmail + requestPasswordReset via Resend) now
+      # come from the Cloudflare Worker deployed by scripts/deploy_cf_worker.py
+      # (https://shadowtalk-email.z67061935.workers.dev), which the app
+      # targets through `functionsBaseUrl` in src/integrations/firebase/app.ts.
+      # The functions/ source stays in the repo as reference; ci.yml still
+      # type-checks it.
       # ------------------------------------------------------------------
-      - name: Deploy Cloud Functions
-        if: ${{ env.RESEND_API_KEY != '' }}
-        continue-on-error: true
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
-        run: |
-          echo "RESEND_API_KEY=$RESEND_API_KEY" > functions/.env
-          if [ -n "$OPENROUTER_API_KEY" ]; then
-            echo "OPENROUTER_API_KEY=$OPENROUTER_API_KEY" >> functions/.env
-          fi
-          npx --yes firebase-tools@14 deploy --only functions --project shadowtalk-ai-7a513 --force
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
