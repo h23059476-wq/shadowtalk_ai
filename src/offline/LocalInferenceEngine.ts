@@ -858,7 +858,12 @@ export class LocalInferenceEngine {
       return {
         result: {
           content,
-          error: "The reply took too long on this device and was stopped. Ask to continue for the rest.",
+          // Distinguish "partial reply arrived, the rest was cut" from "the
+          // device never produced a single token" — the old message told a
+          // user with ZERO output to "ask to continue for the rest".
+          error: content
+            ? "The reply took too long on this device and was stopped. Ask to continue for the rest."
+            : "This device could not finish the on-device reply in time — it may be too slow for the model right now. Try again, or send a shorter message.",
           source: "local",
           modelUsed: this.currentModelId,
         },
