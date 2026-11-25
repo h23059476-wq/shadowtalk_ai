@@ -10,19 +10,22 @@ import {
 
 /**
  * FCM campaign opt-in — a quiet, dismissible banner next to the workspace
- * verification notice. Appears only when the user is signed in and browser
- * notification permission is still untouched ("default"); never nags users
- * who granted or denied permission, and never renders for guests.
+ * verification notice. Shows when the user is signed in and notifications
+ * aren't yet registered: untouched permission ("default") OR already-granted
+ * permission with no saved token (returning user, cleared storage). Never
+ * nags users who denied permission, and never renders for guests.
  */
 export default function PushOptInBanner() {
   const { user } = useAuth();
   const [permission, setPermission] = useState<NotificationPermission | "unsupported">("default");
+  const [registered, setRegistered] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
     setPermission(notificationPermission());
     try {
+      if (localStorage.getItem("shadowtalk.push-registered") === "1") setRegistered(true);
       if (localStorage.getItem("shadowtalk.push-optin-dismissed") === "1") setDismissed(true);
     } catch {
       /* storage unavailable — keep showing */
@@ -36,7 +39,7 @@ export default function PushOptInBanner() {
     });
   }, [user]);
 
-  if (!user || permission !== "default" || dismissed) return null;
+  if (!user || permission === "unsupported" || permission === "denied" || registered || dismissed) return null;
 
   const dismiss = () => {
     setDismissed(true);
@@ -52,7 +55,12 @@ export default function PushOptInBanner() {
     const result = await enablePushNotifications(user.id);
     setBusy(false);
     if (result.ok) {
-      setPermission("granted");
+      setRegistered(true);
+      try {
+        localStorage.setItem("shadowtalk.push-registered", "1");
+      } catch {
+        /* non-fatal */
+      }
       toast({
         title: "Notifications on",
         description: "You'll hear about major releases, model drops and downtime alerts here.",
