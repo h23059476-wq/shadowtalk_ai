@@ -53,3 +53,9 @@ self.addEventListener('notificationclick', (event) => {
     }),
   );
 });
+
+// Delivery diagnostics: confirms whether FCM pushes actually reach this
+// service worker (campaigns pipeline debugging aid — harmless in production).
+self.addEventListener('push', (event) => {
+  console.log('[ShadowTalk push SW] push event received, data bytes:', event.data ? event.data.text().length : 0);
+});
