@@ -452,6 +452,11 @@ service cloud.firestore {
         // ownership strength as messages: rows carry user_id == auth.uid;
         // summaries reference source messages but never replace them.
         'conversation_compactions',
+        // FCM push-campaign subscriptions: one row per browser token; the doc
+        // carries user_id == auth.uid (ownership enforced like other user data).
+        // The campaign sender reads/writes with server credentials, which
+        // bypass rules.
+        'fcm_tokens',
       ];
     }
 
