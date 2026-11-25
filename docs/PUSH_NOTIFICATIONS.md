@@ -22,10 +22,12 @@ ops machine (campaign sender)
        └─ FCM HTTP v1 messages:send (branded webpush payload + link)
 ```
 
-- **VAPID key pair**: standard web-push subscription; the public key is a
-  constant in `pushNotifications.ts`, the private half lives in the ops vault
-  (`~/.vapid-keys.json`, never committed). If the key pair is ever rotated,
-  browsers auto-rotate on the next opt-in (`deleteToken` + re-subscribe).
+- **VAPID key**: subscriptions bind to the **project-managed web push
+  certificate** (auto-provisioned by FCM; public key extracted from a real
+  no-vapid subscription and pinned as a constant in `pushNotifications.ts`).
+  FCM rejects registration with any other key pair (401 token-subscribe-failed),
+  so the app must never ship a foreign key. Browsers holding stale/foreign
+  subscriptions rotate transparently (`deleteToken` + unsubscribe + re-mint).
 - **Firestore rules**: `fcm_tokens` docs are user-owned (`user_id ==
   auth.uid`); the campaign sender reads/writes them with server credentials
   that bypass rules.
@@ -84,6 +86,6 @@ re-run the last campaign so fresh tokens join the topic.
   `show-error` / `init-error`. A missing `push-event` means delivery to the
   browser failed (stale token or dead push connection); a `show-error` means
   the SW saw the push but the OS rejected `showNotification`.
-- **Legacy tokens**: tokens minted before the VAPID switch keep working but
-  are weaker; the banner rotates them to VAPID subscriptions on the next
-  `Enable` tap.
+- **Legacy tokens**: tokens minted before the explicit-certificate switch keep
+  working but are weaker; the banner rotates them to certificate-bound
+  subscriptions on the next `Enable` tap.

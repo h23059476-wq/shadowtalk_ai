@@ -21,11 +21,16 @@ const SW_PATH = '/firebase-messaging-sw.js';
 
 /**
  * VAPID public key (applicationServerKey) for the standard web-push
- * subscription. Public by design — the private half lives in the ops vault
- * (.vapid-keys.json) and is only needed for direct RFC 8291 sends, never
- * inside the app.
+ * subscription — this is the project-managed web push certificate that FCM
+ * auto-provisioned (extracted from a real no-vapid subscription; FCM rejects
+ * registration attempts that use any OTHER key pair with a 401
+ * token-subscribe-failed). Passing it explicitly gives us the documented
+ * getToken path AND keeps FCM + console sends working. The corresponding
+ * private half is Google-held; direct RFC 8291 sends can use the ops vault
+ * key pair (~/.vapid-keys.json) against a custom-key subscription if ever
+ * needed.
  */
-const VAPID_PUBLIC_KEY = 'BEj5OZQYkx8RGPLd5B2n4c5ryf2fgwCLQ66BdLkXGlDh0PE9CVpdlyeYvkTckexlBNmn6fnFZgpjo3uY2ett-0Y';
+const VAPID_PUBLIC_KEY = 'BDOU99-h67HcA6JeFXHbSNMu7e2yNNu3RzoMj8TM4W88jITfq7ZmPvIM1Iv-4_l2LxQcYwhqby2xGpWwzjfAnG4';
 
 export interface PushRegistrationResult {
   ok: boolean;
@@ -103,9 +108,11 @@ export async function enablePushNotifications(userId: string): Promise<PushRegis
     token = await getToken(messaging, { serviceWorkerRegistration: registration, vapidKey: VAPID_PUBLIC_KEY });
   } catch (error: any) {
     const message = String(error?.message || error || '');
-    // A token/subscription minted with a different (or no) VAPID key is still
-    // registered in this browser — rotate it: drop the stale artifact, re-mint.
-    if (/applicationServerKey|subscription|vapid|mismatch|unsubscrib/i.test(message)) {
+    // A token/subscription minted with a different (or no longer accepted)
+    // key is still registered in this browser — rotate it: drop the stale
+    // artifact, re-mint. Covers applicationServerKey mismatches AND FCM 401s
+    // (token-subscribe-failed) against subscriptions bound to foreign keys.
+    if (/applicationServerKey|subscription|vapid|mismatch|unsubscrib|token-subscribe-failed|authentication credential/i.test(message)) {
       try { await deleteToken(messaging); } catch { /* already gone */ }
       try {
         const stale = await registration.pushManager.getSubscription();
