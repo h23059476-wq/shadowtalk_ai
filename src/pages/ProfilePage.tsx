@@ -419,9 +419,9 @@ const ProfilePage = () => {
                   animate="animate"
                   exit="exit"
                 >
-                  {currentTab === "profile" && (
+                  {currentTab === "profile" && user && (
                     <ProfileTab
-                      userId={user!.id}
+                      userId={user.id}
                       displayName={displayName}
                       setDisplayName={setDisplayName}
                       email={user?.email || ""}
