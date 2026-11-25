@@ -1,2 +1,4 @@
 output/
-assets/app_demo.mp4
+video/node_modules/
+video/.remotion/
+video/out/

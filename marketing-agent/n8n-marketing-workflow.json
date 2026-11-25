@@ -237,7 +237,7 @@
     },
     {
       "parameters": {
-        "command": "=python marketing-agent/generate_short.py --slug '{{ $json.slug.replaceAll(\"'\", `'\\\\''`) }}' --lines '{{ JSON.stringify($json.video_script_lines).replaceAll(\"'\", `'\\\\''`) }}'"
+        "command": "=node marketing-agent/video/render_short.mjs --slug '{{ $json.slug.replaceAll(\"'\", `'\\\\''`) }}' --lines '{{ JSON.stringify($json.video_script_lines).replaceAll(\"'\", `'\\\\''`) }}'"
       },
       "id": "8b397b2e-9f83-4fb0-bd19-691e14ce41df",
       "name": "Render Short Video",

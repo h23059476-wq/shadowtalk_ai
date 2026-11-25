@@ -1,6 +1,0 @@
-# ShadowTalk marketing agent — Python dependencies (zero-cost stack)
-# System requirement (not pip-installable): ffmpeg + ffprobe on PATH.
-#   Linux:   sudo apt install ffmpeg
-#   macOS:   brew install ffmpeg
-#   Windows: winget install Gyan.FFmpeg   (or download from ffmpeg.org)
-edge-tts>=6.1.0

@@ -1,0 +1,23 @@
+{
+  "name": "shadowtalk-marketing-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ShadowTalk marketing-agent video generator — the original Remotion brand engine (shadowtalk-remotion), vendored for the n8n pipeline. Renders the CampaignShort vertical composition.",
+  "scripts": {
+    "render": "remotion render CampaignShort out/test.mp4",
+    "still": "remotion still CampaignShort out/poster.png --frame=120"
+  },
+  "dependencies": {
+    "@fontsource/hanken-grotesk": "^5.2.5",
+    "@fontsource/jetbrains-mono": "^5.2.5",
+    "@fontsource/sora": "^5.2.5",
+    "@remotion/cli": "4.0.317",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "4.0.317"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "typescript": "^5.6.3"
+  }
+}

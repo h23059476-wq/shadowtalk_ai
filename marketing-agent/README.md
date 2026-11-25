@@ -1,13 +1,15 @@
 # ShadowTalk Autonomous Product Marketing Agent
 
 A self-hosted, $0–10/month content pipeline: one keyword in a Google Sheet →
-an SEO blog post committed to this repo (auto-deployed), a 25-second vertical
-short rendered with free TTS + ffmpeg, and social copy queued via webhook.
+an SEO blog post committed to this repo (auto-deployed), a 30-second vertical
+short rendered by the original Remotion brand engine (the same generator that
+made the channel trailer — typographic scenes, brand colors, synth music bed),
+and social copy queued via webhook.
 No SaaS subscriptions anywhere in the chain.
 
 ```
 Content_Queue (Sheets) ──▶ gemini-2.5-flash ──▶ ┬─ content/blog/<slug>.md  → GitHub → CI deploy → /blog
-                                                ├─ generate_short.py      → output/<slug>.mp4 (vertical short)
+                                                ├─ video/ (Remotion)      → output/<slug>.mp4 (vertical short)
                                                 └─ Postiz webhook         → LinkedIn + X posts
 ```
 
@@ -16,21 +18,20 @@ Content_Queue (Sheets) ──▶ gemini-2.5-flash ──▶ ┬─ content/blog/
 | File | What it does |
 |---|---|
 | `n8n-marketing-workflow.json` | Importable n8n workflow: daily 09:00 trigger → Google Sheets queue → Gemini (structured JSON output) → parse/validate → blog commit + video render + social distribution → mark row Published |
-| `generate_short.py` | Python: edge-tts voiceover → exact per-line timestamps → libass captions on dark box → ffmpeg loop/trim/scale of `assets/app_demo.mp4` → `output/<slug>.mp4` (1080×1920, H.264/AAC, faststart) |
-| `requirements.txt` | `edge-tts` (ffmpeg is a system package, see below) |
-| `assets/app_demo.mp4` | Your vertical screen recording. If missing, the script auto-generates a placeholder gradient so the pipeline never dead-ends — replace it with real footage for production |
+| `video/` | The original ShadowTalk Remotion project (vendored): `CampaignShort` composition — 1080×1920 @30fps, 30s — animated typographic scenes in site brand tokens, `public/music-bed.mp3` synth bed, `render_short.mjs` CLI. No Python, no ffmpeg, no TTS: the render is one Node command |
 | `output/` | Rendered shorts land here |
 | `.env.example` | The three secrets the pipeline needs |
 
 ## 1. One-time setup checklist
 
-- [ ] **ffmpeg** installed on the n8n host and on your PATH (`ffmpeg -version`):
-      Linux `sudo apt install ffmpeg` · macOS `brew install ffmpeg` · Windows `winget install Gyan.FFmpeg`
-- [ ] **Python 3.9+** on the n8n host, then `pip install -r marketing-agent/requirements.txt`
+- [ ] **Node.js 18+** on the n8n host, then once:
+      `cd marketing-agent/video && npm ci && npx remotion browser ensure`
+      (downloads the pinned headless Chromium into `node_modules/.remotion/` —
+      offline after that; re-run only after upgrading Remotion)
 - [ ] **Repo mounted where n8n runs it**: the Execute Command node runs from the
       n8n process working directory. Mount the repo at `/data/shadowtalk_ai`
       (docker-compose: `- ./:/data/shadowtalk_ai`) and either set n8n's working
-      dir there or adjust the `marketing-agent/generate_short.py` prefix in the
+      dir there or adjust the `marketing-agent/video/render_short.mjs` prefix in the
       "Render Short Video" node command.
 - [ ] **Gemini API key**: create at [aistudio.google.com](https://aistudio.google.com) → API key (free tier is enough for one article/day).
 - [ ] **GitHub token**: fine-grained PAT with **Contents: Read & Write** on
@@ -96,8 +97,9 @@ Copy the sheet ID from the URL (`docs.google.com/spreadsheets/d/<THIS_ID>/edit`)
    - **Render Short Video** produces `marketing-agent/output/<slug>.mp4`
      (1080×1920). Local test without n8n:
      ```bash
-     pip install -r marketing-agent/requirements.txt
-     python marketing-agent/generate_short.py \
+     cd marketing-agent/video && npm ci && npx remotion browser ensure
+     cd ../..
+     node marketing-agent/video/render_short.mjs \
        --slug test-short \
        --lines '["Your AI chats are not as private as you think.","Here is the fix in four steps.","Step one: skip the account.","Step two: bring your own API key.","ShadowTalk does all four — free."]'
      ```
@@ -134,8 +136,8 @@ So: the GitHub commit **is** the publish button. Deploy happens on merge to
 | n8n (self-hosted, Docker) | $0 |
 | Google Sheets | $0 (consumer account) |
 | Gemini 2.5 Flash | $0 free tier (≈1 article/day); ~$0.15–0.40/article if you exceed it |
-| edge-tts (Microsoft neural voices) | $0 |
-| ffmpeg | $0 |
+| Remotion render (self-hosted, Node) | $0 |
+| Music bed (committed synth asset) | $0 |
 | GitHub repo + Actions deploy | $0 (public repo / free minutes) |
 | Postiz (self-hosted) | $0 |
 | **Worst case** | **< $10/month** even with paid Gemini usage |
@@ -145,8 +147,8 @@ So: the GitHub commit **is** the publish button. Deploy happens on merge to
 | Symptom | Fix |
 |---|---|
 | `Gemini returned no text` | Check `GEMINI_API_KEY` is set in the n8n process env and the key has quota; check the node's `finishReason` detail |
-| Video node fails with `ffmpeg/ffprobe not found` | Install ffmpeg on the n8n host; on Docker also mount the repo path used by the command |
-| Video renders but no captions | Your ffmpeg build lacks libass — use the `ffmpeg` full build (Debian `ffmpeg`, Gyan Windows build) |
-| TTS error `edge-tts failed` | edge-tts needs one-time network access to `speech.platform.bing.com`; check firewall/egress |
+| Video node fails with `remotion render exited with code …` | Check Node 18+ on the host; run `npm ci` inside `marketing-agent/video/`; on Docker also mount the repo path used by the command |
+| `browser not found` / Chromium error | Run `npx remotion browser ensure` inside `marketing-agent/video/` once (needs one-time egress to download the pinned Chromium) |
+| Video has no sound | `video/public/music-bed.mp3` must exist — it is committed; restore it with `git checkout -- marketing-agent/video/public/music-bed.mp3` |
 | Post published but 404 on the blog link | CI deploy still running — check the Actions run; the Wait node can be raised from 6 to 10 minutes |
 | Google Sheets node can't find the tab | The first sheet must be named exactly `Content_Queue` (mode: By Name) |
