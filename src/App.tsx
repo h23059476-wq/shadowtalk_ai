@@ -63,6 +63,8 @@ const PublicProofCardPage = lazy(() => import("./pages/PublicProofCardPage"));
 // Production Company, Support & Legal Pages
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const GuidePage = lazy(() => import("./pages/GuidePage"));
+const BlogIndexPage = lazy(() => import("./pages/BlogIndexPage"));
+const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
 const CompareIndexPage = lazy(() => import("./pages/CompareIndexPage"));
 const GuidesIndexPage = lazy(() => import("./pages/GuidesIndexPage"));
@@ -173,6 +175,9 @@ const AnimatedRoutes = () => {
           <Route path="/workspace" element={<Navigate to="/chatbot" replace />} />
           <Route path="/marketplace" element={<Navigate to="/chatbot" replace />} />
           
+          {/* Autonomous marketing blog (content/blog/*.md, see marketing-agent/) */}
+          <Route path="/blog" element={<Suspense fallback={<PageLoader />}><PageTransition><BlogIndexPage /></PageTransition></Suspense>} />
+          <Route path="/blog/:slug" element={<Suspense fallback={<PageLoader />}><PageTransition><BlogPostPage /></PageTransition></Suspense>} />
           {/* Company, Support, Legal & Status Pages */}
           <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
           <Route path="/help" element={<Navigate to="/docs" replace />} />

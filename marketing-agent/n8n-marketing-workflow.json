@@ -1,0 +1,462 @@
+{
+  "name": "ShadowTalk Autonomous Marketing Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * *"
+            }
+          ]
+        }
+      },
+      "id": "f724ed01-71d0-479e-81bb-b4bf3fbffd71",
+      "name": "Daily 09:00 Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "PASTE_YOUR_GOOGLE_SHEET_ID_HERE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Content_Queue",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Pending"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "id": "586acfac-385b-4c8b-aa2b-35bef8d6e69b",
+      "name": "Get Next Keyword",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7fc89913-185b-4ec4-8b92-0684e0c2e717",
+              "leftValue": "={{ $json.Keyword }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "7f158b6b-64b7-4bf1-ad50-4bde394f419f",
+      "name": "Row Found?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "cc4b9c1b-d6ea-4c7d-a106-f38f524df878",
+      "name": "Queue Empty",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        660,
+        470
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build the full Gemini generateContent request body (JSON string) for the\n// HTTP node. Uses the structured-output schema so gemini-2.5-flash always\n// returns parseable JSON with every required field.\nconst row = $('Get Next Keyword').item.json;\nconst keyword = String(row.Keyword || '').trim();\nconst audience = String(row.Target_Audience || 'general').trim();\n\nconst prompt = `You are the senior SEO content strategist for ShadowTalk AI (https://www.shadowtalk-ai.com) — a free, privacy-first agentic AI workspace: encrypted multi-model chat with BYOK (bring your own key) across 16+ providers (OpenAI, Anthropic, Google, Groq, DeepSeek, OpenRouter and more), ProofLoop verifiable missions, deep research with cited sources, voice mode, an agentic IDE, and an optional on-device WebGPU model that runs offline in the browser. ShadowTalk never resells AI inference: BYOK requests go browser-to-provider, keys stay in the user's browser, and there is no subscription or credit card.\n\nWrite a marketing content package for this search query: \"${keyword}\"\nTarget audience: \"${audience}\"\n\nHard rules:\n- Facts only. Never invent statistics, quotes, dates, pricing or competitor claims. Any landscape statement must be framed as of 2026. The only ShadowTalk claims you may make are the product facts in this prompt.\n- The article must be 1,000+ words, structured with ## H2 and ### H3 headings, include at least one numbered step list, one \"How ShadowTalk fits\" subsection with ONE natural product mention (no hard sell), and a closing \"## FAQ\" section with at least four ### H3 questions and concise answers.\n- markdown_article starts with an ## H2 (the H1 title is rendered separately from seo_title). Do not repeat the title as an H1 inside the article.\n- seo_title: under 60 characters, front-load the keyword. meta_description: under 155 characters, ends with a call to discover more.\n- slug: lowercase, hyphenated, 3-6 words, URL-safe, ASCII only.\n- linkedin_post: 120-200 words — opening hook line, three short insight bullets (\"• \"), and a soft CTA pointing to https://www.shadowtalk-ai.com\n- x_thread_hook: exactly 3 tweets separated by blank lines. Tweet 1 = punchy hook (under 200 chars, no hashtag spam). Tweet 2 = the core insight. Tweet 3 = takeaway + link https://www.shadowtalk-ai.com\n- video_script_lines: exactly 5 strings, each 12 words maximum, spoken-word style for a 25-second vertical video, hook first, CTA last.\n\nReturn ONLY the JSON object matching the response schema — no markdown fences, no commentary.`;\n\nconst body = {\n  contents: [{ parts: [{ text: prompt }] }],\n  generationConfig: {\n    temperature: 0.8,\n    responseMimeType: 'application/json',\n    responseSchema: {\n      type: 'object',\n      properties: {\n        slug: { type: 'string' },\n        seo_title: { type: 'string' },\n        meta_description: { type: 'string' },\n        markdown_article: { type: 'string' },\n        linkedin_post: { type: 'string' },\n        x_thread_hook: { type: 'string' },\n        video_script_lines: { type: 'array', items: { type: 'string' } },\n      },\n      required: ['slug', 'seo_title', 'meta_description', 'markdown_article', 'linkedin_post', 'x_thread_hook', 'video_script_lines'],\n    },\n  },\n};\n\nreturn [{ json: { geminiRequestBody: JSON.stringify(body) } }];"
+      },
+      "id": "2cc3794a-c051-4154-8187-8d2ad02cff36",
+      "name": "Build Gemini Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        170
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "={{ $env.GEMINI_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.geminiRequestBody }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "982725ac-78a1-4aa3-a2fc-30e5b33635d9",
+      "name": "Gemini Content Engine",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        170
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Safely extract Gemini's JSON answer from candidates[0].content.parts[0].text\nconst item = $input.first();\nconst payload = item.json || {};\nconst candidates = Array.isArray(payload.candidates) ? payload.candidates : [];\nconst parts = (candidates[0] && candidates[0].content && candidates[0].content.parts) || [];\nconst raw = parts.map((p) => p.text || '').join('').trim();\n\nif (!raw) {\n  const reason = (candidates[0] && candidates[0].finishReason) || 'unknown';\n  const block = payload.promptFeedback && payload.promptFeedback.blockReason;\n  throw new Error(`Gemini returned no text (finishReason=${reason}${block ? ', blockReason=' + block : ''}). Check GEMINI_API_KEY quota and model availability.`);\n}\n\n// Strip optional ```json fences, then parse — with a brace-slice fallback.\nlet cleaned = raw.replace(/^```(?:json)?\\s*/i, '').replace(/```$/, '').trim();\nlet parsed;\ntry {\n  parsed = JSON.parse(cleaned);\n} catch (firstError) {\n  const start = cleaned.indexOf('{');\n  const end = cleaned.lastIndexOf('}');\n  if (start === -1 || end <= start) {\n    throw new Error('Gemini output is not valid JSON: ' + cleaned.slice(0, 200));\n  }\n  parsed = JSON.parse(cleaned.slice(start, end + 1));\n}\n\nconst REQUIRED = ['slug', 'seo_title', 'meta_description', 'markdown_article', 'linkedin_post', 'x_thread_hook', 'video_script_lines'];\nconst missing = REQUIRED.filter((k) => parsed[k] === undefined || parsed[k] === null || parsed[k] === '');\nif (missing.length) {\n  throw new Error('Gemini JSON missing required fields: ' + missing.join(', '));\n}\n\n// Normalise video_script_lines: accept an array or a newline-separated string.\nif (!Array.isArray(parsed.video_script_lines) || parsed.video_script_lines.length < 3) {\n  parsed.video_script_lines = String(parsed.video_script_lines || '')\n    .split('\\n')\n    .map((s) => s.replace(/^\\s*(?:\\d+[.)]|[-•*])\\s*/, '').trim())\n    .filter(Boolean)\n    .slice(0, 8);\n}\nif (!Array.isArray(parsed.video_script_lines) || parsed.video_script_lines.length < 3) {\n  throw new Error('video_script_lines has fewer than 3 usable lines — regenerate.');\n}\n\n// Carry the queue row metadata forward so downstream nodes never re-look it up.\nparsed.Keyword = $('Get Next Keyword').item.json.Keyword;\nparsed.Target_Audience = $('Get Next Keyword').item.json.Target_Audience || '';\n\nreturn [{ json: parsed }];"
+      },
+      "id": "4e870d95-1c52-467e-a761-412016c3ed8e",
+      "name": "Parse Gemini JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        170
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build the YAML-frontmatter Markdown file for content/blog/<slug>.md.\n// Keys mirror the blog reader contract in src/lib/blog.ts.\nconst item = $input.first().json;\nconst q = (v) => String(v ?? '').replace(/\"/g, '\\\\\"');\nconst blogMarkdown = [\n  '---',\n  `slug: \"${q(item.slug)}\"`,\n  `title: \"${q(item.seo_title)}\"`,\n  `description: \"${q(item.meta_description)}\"`,\n  `date: \"${$now.toFormat('yyyy-MM-dd')}\"`,\n  `keyword: \"${q(item.Keyword)}\"`,\n  `audience: \"${q(item.Target_Audience)}\"`,\n  '---',\n  '',\n  String(item.markdown_article || '').trim(),\n  '',\n].join('\\n');\n\nreturn [{ json: { slug: item.slug, blog_markdown: blogMarkdown } }];"
+      },
+      "id": "61fa1dd6-e5ef-4604-ad9c-30f26f7121b6",
+      "name": "Build Blog Markdown",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        30
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "createOrUpdate",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "h23059476-wq"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "shadowtalk_ai"
+        },
+        "filePath": "=content/blog/{{ $json.slug }}.md",
+        "branchName": "main",
+        "content": "={{ $json.blog_markdown }}",
+        "commitMessage": "=blog(marketing-agent): publish \"{{ $json.slug }}\""
+      },
+      "id": "c471b325-9d4a-4f98-8c53-630d26c0fbb7",
+      "name": "Commit Blog Post",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        30
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "PASTE_YOUR_GOOGLE_SHEET_ID_HERE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Content_Queue",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Keyword": "={{ $('Get Next Keyword').item.json.Keyword }}",
+            "Status": "Published",
+            "Blog_Slug": "={{ $('Parse Gemini JSON').item.json.slug }}",
+            "Published_Date": "={{ $now.toFormat('yyyy-MM-dd') }}"
+          },
+          "matchingColumns": [
+            "Keyword"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "ed9864c0-033e-400b-852d-c26786618503",
+      "name": "Mark Published",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        30
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=python marketing-agent/generate_short.py --slug '{{ $json.slug.replaceAll(\"'\", `'\\\\''`) }}' --lines '{{ JSON.stringify($json.video_script_lines).replaceAll(\"'\", `'\\\\''`) }}'"
+      },
+      "id": "8b397b2e-9f83-4fb0-bd19-691e14ce41df",
+      "name": "Render Short Video",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        210
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": 6,
+        "unit": "minutes"
+      },
+      "id": "76195b99-9665-46d9-b2f8-5193c2f9c8a3",
+      "name": "Wait for CI deploy",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1320,
+        390
+      ],
+      "webhookId": "a3e35222-d749-45ea-b4f0-4b3ed2acfc46"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.POSTIZ_WEBHOOK_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ content: $json.linkedin_post, link: 'https://www.shadowtalk-ai.com/blog/' + $json.slug, platforms: ['x', 'linkedin'], x_thread: $json.x_thread_hook, mediaUrl: ''}) }}",
+        "options": {}
+      },
+      "id": "e1cf2626-661e-4230-8743-3ae1b09ebea6",
+      "name": "Postiz Social Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1540,
+        390
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "tweet",
+        "operation": "create",
+        "text": "={{ $json.x_thread_hook }}"
+      },
+      "id": "3da2b81d-5b1a-4b15-a0be-95bb365cbeec",
+      "name": "X / Twitter API (placeholder)",
+      "type": "n8n-nodes-base.twitter",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        550
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "post",
+        "operation": "create",
+        "text": "={{ $json.linkedin_post }}"
+      },
+      "id": "65ea7b96-ee59-49fd-9cca-610fba3b0cbb",
+      "name": "LinkedIn API (placeholder)",
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        550
+      ],
+      "disabled": true
+    }
+  ],
+  "connections": {
+    "Daily 09:00 Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Next Keyword",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Next Keyword": {
+      "main": [
+        [
+          {
+            "node": "Row Found?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Row Found?": {
+      "main": [
+        [
+          {
+            "node": "Build Gemini Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Queue Empty",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Gemini Request": {
+      "main": [
+        [
+          {
+            "node": "Gemini Content Engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Content Engine": {
+      "main": [
+        [
+          {
+            "node": "Parse Gemini JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Gemini JSON": {
+      "main": [
+        [
+          {
+            "node": "Build Blog Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Render Short Video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait for CI deploy",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "X / Twitter API (placeholder)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "LinkedIn API (placeholder)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Blog Markdown": {
+      "main": [
+        [
+          {
+            "node": "Commit Blog Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Commit Blog Post": {
+      "main": [
+        [
+          {
+            "node": "Mark Published",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for CI deploy": {
+      "main": [
+        [
+          {
+            "node": "Postiz Social Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "active": false,
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

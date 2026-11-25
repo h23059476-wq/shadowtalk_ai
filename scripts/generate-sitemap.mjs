@@ -15,7 +15,7 @@
  * The `build` script runs it with --out dist between `vite build` and `prerender.cjs`,
  * so every deploy ships a sitemap with today's lastmod. seoGrowth.test.ts runs --check.
  */
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -64,11 +64,28 @@ const EXPLICIT_POLICY = {
 function policyFor(path) {
   if (EXPLICIT_POLICY[path]) return EXPLICIT_POLICY[path];
   if (path.startsWith("/vs/")) return { priority: "0.8", changefreq: "monthly" };
+  if (path.startsWith("/blog/")) return { priority: "0.7", changefreq: "monthly" };
   // guide fleet + hubs (/guides, /compare, /offline-ai-chat, ...): 0.8 weekly
   return { priority: "0.8", changefreq: "weekly" };
 }
 
-const urls = [...new Set(paths)].sort().map((path) => {
+/** Blog posts from content/blog/*.md — the marketing pipeline's output dir.
+ *  Same source the blog reader (src/lib/blog.ts) bundles at build time, so the
+ *  sitemap can never drift from what the app actually renders. */
+const BLOG_DIR = resolve(ROOT, "content", "blog");
+const blogPaths = existsSync(BLOG_DIR)
+  ? readdirSync(BLOG_DIR)
+      .filter((f) => f.endsWith(".md"))
+      .map((f) => {
+        const fm = readFileSync(resolve(BLOG_DIR, f), "utf-8").slice(0, 800);
+        const slug = fm.match(/^slug:\s*"?([^"\n]+)"?\s*$/m)?.[1]?.trim() || f.replace(/\.md$/, "");
+        return `/blog/${slug}`;
+      })
+      .filter((p) => p !== "/blog/")
+  : [];
+const allPaths = [...new Set([...paths, ...blogPaths])];
+
+const urls = allPaths.sort().map((path) => {
   const { priority, changefreq } = policyFor(path);
   return `  <url>
     <loc>${SITE_URL}${path === "/" ? "/" : path}</loc>
@@ -89,7 +106,7 @@ const args = process.argv.slice(2);
 if (args.includes("--check")) {
   const committed = readFileSync(resolve(ROOT, "public/sitemap.xml"), "utf-8");
   const committedLocs = new Set([...committed.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]));
-  const expected = new Set([...new Set(paths)].map((p) => `${SITE_URL}${p}`));
+  const expected = new Set(allPaths.map((p) => `${SITE_URL}${p}`));
   const missing = [...expected].filter((u) => !committedLocs.has(u));
   const orphan = [...committedLocs].filter((u) => !expected.has(u));
   if (missing.length || orphan.length) {

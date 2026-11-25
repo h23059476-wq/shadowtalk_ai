@@ -2,6 +2,22 @@ const fs = require('fs');
 const path = require('path');
 const http = require('http');
 
+/** Blog post routes from content/blog/*.md — same source the sitemap uses.
+ *  The marketing pipeline commits one file per post; each gets prerendered
+ *  so AI crawlers and social scrapers see full HTML without running JS. */
+function blogPostRoutes() {
+  const dir = path.resolve(__dirname, 'content', 'blog');
+  if (!fs.existsSync(dir)) return [];
+  return fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith('.md'))
+    .map((f) => {
+      const fm = fs.readFileSync(path.join(dir, f), 'utf-8').slice(0, 800);
+      const slug = (fm.match(/^slug:\s*"?([^"\n]+)"?\s*$/m) || [])[1];
+      return `/blog/${(slug || f.replace(/\.md$/, '')).trim()}`;
+    });
+}
+
 // Try to load puppeteer — if it's not available or can't launch,
 // the build continues without prerendering (non-fatal).
 let puppeteer;
@@ -55,6 +71,7 @@ const ROUTES_TO_PRERENDER = [
   '/who-can-read-your-ai-chats',
   '/is-chatgpt-plus-worth-it',
   '/byok-ai-chat',
+  '/blog',
   '/guides',
   '/compare',
   '/vs/chatgpt',
@@ -74,6 +91,12 @@ const ROUTES_TO_PRERENDER = [
   '/vs/grok',
   '/vs/poe',
 ];
+
+// Dynamic blog post routes (kept separate so the seoGrowth test can pin the
+// static hub list while posts flow in automatically from content/blog/).
+for (const route of blogPostRoutes()) {
+  if (!ROUTES_TO_PRERENDER.includes(route)) ROUTES_TO_PRERENDER.push(route);
+}
 
 // Simple static file server
 const server = http.createServer((req, res) => {

@@ -21,6 +21,7 @@ const Footer = () => {
         { name: "Chatbot", href: "/chatbot" },
         { name: "Changelog", href: "/changelog" },
         { name: "Download desktop", href: "/downloads" },
+        { name: "Blog", href: "/blog" },
       ],
     },
     {

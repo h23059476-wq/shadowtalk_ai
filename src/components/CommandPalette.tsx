@@ -30,6 +30,7 @@ import {
   LogIn,
   Palette,
   BookOpen,
+  Newspaper,
   Globe,
   History,
   ArrowRight,
@@ -160,6 +161,14 @@ export const pages: PageEntry[] = [
   },
 
   // === Guides (mirrors footer "Guides") ===
+  {
+    name: "Blog",
+    href: "/blog",
+    icon: Newspaper,
+    desc: "BYOK, offline AI & agentic workflows — new posts from the team",
+    group: "Guides",
+    keywords: ["blog", "articles", "posts", "news", "content"],
+  },
   {
     name: "All guides",
     href: "/guides",

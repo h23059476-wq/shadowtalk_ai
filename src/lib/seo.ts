@@ -108,6 +108,12 @@ export const PAGE_SEO: Record<string, PageMeta> = {
       "Fifteen honest guides: offline AI chat, private AI, WebGPU in the browser, free AI chat, students, ChatGPT Plus math, who reads your chats — quotable answers, dated fine print.",
     canonical: `${SITE_URL}/guides`,
   },
+  blog: {
+    title: "Blog — BYOK, Offline AI & Agentic Workflows",
+    description:
+      "Practical posts from the ShadowTalk team: BYOK setups, offline WebGPU models, encrypted chat and agentic workflows — one real question answered per post, no fluff.",
+    canonical: `${SITE_URL}/blog`,
+  },
   "offline-ai-chat": {
     title: "Offline AI Chat — Use AI Without Internet (Free)",
     description:

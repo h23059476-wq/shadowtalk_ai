@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { readFileSync, statSync, existsSync } from "fs";
+import { readFileSync, statSync, existsSync, readdirSync } from "fs";
 import { resolve } from "path";
 import { execSync } from "child_process";
 import { PAGE_SEO, SITE_URL } from "../seo";
@@ -22,6 +22,20 @@ const root = process.cwd(); // vitest runs from the repo root
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf-8");
 
 const CANONICAL_HOST = `${SITE_URL}`;
+
+/** Blog post slugs from content/blog/*.md — the marketing pipeline output.
+ *  Same source the sitemap generator scans, so test and generator cannot drift. */
+function blogPostPaths(): string[] {
+  const dir = resolve(root, "content", "blog");
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => {
+      const fm = readFileSync(resolve(dir, f), "utf-8").slice(0, 800);
+      const slug = fm.match(/^slug:\s*"?([^"\n]+)"?\s*$/m)?.[1]?.trim() || f.replace(/\.md$/, "");
+      return `/blog/${slug}`;
+    });
+}
 
 /** All indexable canonical paths from PAGE_SEO, e.g. ["/home", "/pricing", …] */
 const indexablePaths = Object.values(PAGE_SEO)
@@ -51,8 +65,12 @@ describe("seo growth: sitemap <-> PAGE_SEO sync", () => {
   it("sitemap.xml contains no orphan URLs outside PAGE_SEO", () => {
     const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
     expect(locs.length).toBeGreaterThan(0);
+    const blogSet = new Set(blogPostPaths());
     const orphans = locs.filter((loc) => {
       const path = loc.replace(CANONICAL_HOST, "") || "/";
+      // Blog posts are PAGE_SEO-dynamic: sourced from content/blog/*.md like
+      // the sitemap generator, verified in the "blog fleet" block above.
+      if (blogSet.has(path)) return false;
       return !indexablePaths.includes(path);
     });
     expect(orphans, `sitemap URLs with no PAGE_SEO entry: ${orphans.join(", ")}`).toEqual([]);
@@ -116,6 +134,40 @@ describe("seo growth: answer-engine crawler policy", () => {
     expect(robots).toContain("Sitemap: https://www.shadowtalk-ai.com/sitemap.xml");
     for (const p of indexablePaths) {
       expect(robots).not.toMatch(new RegExp(`Disallow:\\s*${p.replace(/\//g, "\\/")}\\s*$`, "m"));
+    }
+  });
+});
+
+describe("seo growth: blog fleet", () => {
+  const sitemap = read("public/sitemap.xml");
+  const appSource = read("src/App.tsx");
+  const routes = extractAppRoutePaths(appSource);
+  const prerendered = new Set(extractPrerenderRoutes());
+  const blogRoutes = blogPostPaths();
+
+  it("/blog is routable, in PAGE_SEO, sitemap, prerender and footer", () => {
+    expect(routes.includes("/blog"), "route missing: /blog").toBe(true);
+    expect(PAGE_SEO["blog"]).toBeDefined();
+    expect(sitemap).toContain(`<loc>${CANONICAL_HOST}/blog</loc>`);
+    expect(prerendered.has("/blog")).toBe(true);
+    expect(read("src/components/Footer.tsx")).toContain('href: "/blog"');
+  });
+
+  it("every committed post is routed, sitemapped and prerendered", () => {
+    const prerenderSource = read("prerender.cjs");
+    // Posts are appended to ROUTES_TO_PRERENDER at runtime by blogPostRoutes();
+    // the literal-array regex above only pins static routes, so verify the
+    // dynamic wiring exists and every post slug is derivable from content/.
+    expect(prerenderSource).toContain("blogPostRoutes()");
+    expect(prerenderSource).toContain("ROUTES_TO_PRERENDER.push(route)");
+    const dynamicPatterns = extractDynamicRoutePatterns(appSource);
+    for (const path of blogRoutes) {
+      const slug = path.replace("/blog/", "");
+      expect(dynamicPatterns.includes("/blog/:slug"), "dynamic route missing").toBe(true);
+      expect(sitemap).toContain(`<loc>${CANONICAL_HOST}${path}</loc>`);
+      const post = read(`content/blog/${slug}.md`);
+      expect(post).toContain("## ");
+      expect(post.length).toBeGreaterThan(2000);
     }
   });
 });

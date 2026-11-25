@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import animate from "tailwindcss-animate";
+import typography from "@tailwindcss/typography";
 import tailwindPalette from "tailwindcss/colors";
 import { hexToHsl, hslToTriplet } from "./src/lib/themes/contrast";
 
@@ -168,5 +169,5 @@ export default {
       },
     },
   },
-  plugins: [animate],
+  plugins: [animate, typography],
 } satisfies Config;
