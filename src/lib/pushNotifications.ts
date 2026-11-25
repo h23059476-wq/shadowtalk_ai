@@ -97,16 +97,20 @@ export async function enablePushNotifications(userId: string): Promise<PushRegis
     return { ok: false, error: 'Push token was empty — try again in a moment.' };
   }
 
+  // Doc ID = the FCM token itself (setDoc-merge fast path — NO pre-write
+  // query, which security rules would deny: a query on `token` can't prove
+  // ownership). create/update ownership is enforced by user_id == auth.uid.
   const { error } = await backend
     .from('fcm_tokens')
     .upsert({
+      id: token,
       token,
       user_id: userId,
       platform: 'web',
       user_agent: typeof navigator !== 'undefined' ? navigator.userAgent.slice(0, 300) : '',
       topic: 'campaigns',
       active: true,
-    }, { onConflict: 'token' });
+    }, { onConflict: 'id' });
   if (error) {
     console.warn('[push] token save failed:', error);
     return { ok: false, error: 'Could not save the notification subscription.' };
