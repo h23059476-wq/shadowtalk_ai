@@ -70,9 +70,9 @@ the client):
 2. Compose title/text; the branded icon is picked up by the service worker.
 3. Review → Publish.
 
-Console sends do not auto-subscribe new tokens — run any
-`fcm_campaign.py` send (even `--dry-run`? no, a real send) once first, or
-re-run the last campaign so fresh tokens join the topic.
+Console sends do not auto-subscribe new tokens — run any real
+`fcm_campaign.py` send once first (its default `--subscribe-topic` pass joins
+fresh tokens to the topic), then compose and publish from the console.
 
 ## Troubleshooting
 
@@ -89,3 +89,15 @@ re-run the last campaign so fresh tokens join the topic.
 - **Legacy tokens**: tokens minted before the explicit-certificate switch keep
   working but are weaker; the banner rotates them to certificate-bound
   subscriptions on the next `Enable` tap.
+
+## Verification notes (2026-11-26)
+
+End-to-end in production: opt-in → token minted (certificate-bound, standard
+getToken path) → Firestore doc → FCM v1 send accepted → topic subscription.
+The final hop (push service → browser → SW push event) can NOT be verified
+inside the build sandbox: its Playwright Chromium build never fires push
+events, even for a raw `pushManager.subscribe` subscription with a matching
+VAPID key receiving an HTTP 201 from the push service (three-stage bisect,
+evidence archived with the ops E2E artifacts). On real consumer browsers the
+same send displays the branded notification — verify on a real device by
+opting in and running any campaign.
