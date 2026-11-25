@@ -1,11 +1,14 @@
 /**
  * FCM push notifications — client registration + foreground handling.
  *
- * Zero-config token path: getToken() is called WITHOUT a vapidKey, which uses
- * FCM's project-managed web push certificate (no Firebase-console step). If a
- * certificate is ever created in Console → Project settings → Cloud Messaging,
- * pass its public key as getToken({ vapidKey }) for smoother re-subscribes;
- * tokens minted without one keep working.
+ * Standard web-push path: getToken() is called with our own VAPID public key
+ * (key pair generated server-side, private half never leaves the ops vault),
+ * so the underlying PushSubscription uses the RFC 8291 web-push protocol that
+ * every Chromium/Firefox/Safari push service accepts. Tokens minted earlier
+ * WITHOUT a vapidKey (FCM legacy certificate path) are transparently rotated:
+ * on an applicationServerKey mismatch we delete the stale token/subscription
+ * and re-mint. A no-vapidKey fallback keeps registration working even if the
+ * key pair is ever removed.
  *
  * Tokens are stored in Firestore `fcm_tokens` (rules: user-owned — the doc's
  * user_id must equal auth.uid). The campaign sender reads that collection with
@@ -15,6 +18,14 @@ import { isSupported, getMessaging, getToken, onMessage, deleteToken, type Messa
 import { backend } from '@/integrations/local/client';
 
 const SW_PATH = '/firebase-messaging-sw.js';
+
+/**
+ * VAPID public key (applicationServerKey) for the standard web-push
+ * subscription. Public by design — the private half lives in the ops vault
+ * (.vapid-keys.json) and is only needed for direct RFC 8291 sends, never
+ * inside the app.
+ */
+const VAPID_PUBLIC_KEY = 'BEj5OZQYkx8RGPLd5B2n4c5ryf2fgwCLQ66BdLkXGlDh0PE9CVpdlyeYvkTckexlBNmn6fnFZgpjo3uY2ett-0Y';
 
 export interface PushRegistrationResult {
   ok: boolean;
@@ -88,10 +99,31 @@ export async function enablePushNotifications(userId: string): Promise<PushRegis
 
   let token: string;
   try {
-    // No vapidKey → FCM project-managed certificate (no console setup needed).
-    token = await getToken(messaging, { serviceWorkerRegistration: registration });
+    // Standard path — subscribe the browser's PushSubscription to our VAPID key.
+    token = await getToken(messaging, { serviceWorkerRegistration: registration, vapidKey: VAPID_PUBLIC_KEY });
   } catch (error: any) {
-    return { ok: false, error: error?.message || 'Could not obtain a push token.' };
+    const message = String(error?.message || error || '');
+    // A token/subscription minted with a different (or no) VAPID key is still
+    // registered in this browser — rotate it: drop the stale artifact, re-mint.
+    if (/applicationServerKey|subscription|vapid|mismatch|unsubscrib/i.test(message)) {
+      try { await deleteToken(messaging); } catch { /* already gone */ }
+      try {
+        const stale = await registration.pushManager.getSubscription();
+        if (stale) await stale.unsubscribe();
+      } catch { /* nothing to drop */ }
+      try {
+        token = await getToken(messaging, { serviceWorkerRegistration: registration, vapidKey: VAPID_PUBLIC_KEY });
+      } catch (retryError: any) {
+        // Last resort: FCM's project-managed certificate (legacy, deprecated).
+        try {
+          token = await getToken(messaging, { serviceWorkerRegistration: registration });
+        } catch {
+          return { ok: false, error: retryError?.message || 'Could not obtain a push token.' };
+        }
+      }
+    } else {
+      return { ok: false, error: error?.message || 'Could not obtain a push token.' };
+    }
   }
   if (!token) {
     return { ok: false, error: 'Push token was empty — try again in a moment.' };
