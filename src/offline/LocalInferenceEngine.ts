@@ -40,6 +40,20 @@ export type LocalEngineState =
 // forever and every prefer-local message silently fell back to cloud.
 const INIT_IDLE_TIMEOUT_MS = 45_000;
 
+/**
+ * Actionable guidance appended to GPU-shaped init failures. The engine used
+ * to swallow the real reason (web-llm's "Unable to find a compatible GPU…")
+ * behind a generic "Failed to initialize local AI engine.", leaving users on
+ * GPU-less setups in a Try-Again loop that could never succeed.
+ */
+function friendlyInitError(raw: string): string {
+  const trimmed = (raw || "").trim();
+  if (/unable to find a compatible gpu|no webgpu|webgpu.*(not|un)support/i.test(trimmed)) {
+    return `${trimmed} — Local AI needs WebGPU: in Chrome/Edge enable Settings → System → "Use hardware acceleration when available", reload, and check chrome://gpu or https://webgpureport.org/ to confirm it is active.`;
+  }
+  return trimmed;
+}
+
 // Generation: on a 1B model tokens stream at 20-60/s, so a 30s tokenless gap
 // means the worker hung (WebGPU device lost mid-run) — not "thinking". The
 // hard cap bounds a pathologically slow device: past it the partial reply is
@@ -140,6 +154,8 @@ export class LocalInferenceEngine {
   private isReady = false;
   /** Model actually loaded into the engine (tier-picked or user-selected). */
   private currentModelId: string = DEFAULT_LOCAL_MODEL.id;
+  /** Why the last initialize() failed — surfaced by the UI instead of a generic message. */
+  private lastError: string | null = null;
 
   // Batch 4: state machine
   private state: LocalEngineState = "idle";
@@ -292,6 +308,11 @@ export class LocalInferenceEngine {
     return this.state;
   }
 
+  /** Why the last initialize() attempt failed (null while healthy/loaded). */
+  getLastError(): string | null {
+    return this.lastError;
+  }
+
   /** Subscribe to state changes. Returns an unsubscribe function. */
   subscribe(listener: (s: LocalEngineState) => void): () => void {
     this.listeners.add(listener);
@@ -437,6 +458,7 @@ export class LocalInferenceEngine {
   ): Promise<boolean> {
     this.isInitializing = true;
     this.setState("downloading");
+    this.lastError = null;
     let sawModelLoadStart = false;
     // Resolve the model: explicit id when valid, else the device-tier pick.
     const requested = modelId ? getLocalModelDefinition(modelId) : undefined;
@@ -475,11 +497,24 @@ export class LocalInferenceEngine {
       onProgress?.(report);
     };
     try {
+      // No WebGPU API at all — fail fast with the fix instead of spawning a
+      // worker doomed to throw. (The worker's adapter ladder can rescue
+      // software/low-power adapters; nothing can rescue a missing API.)
+      if (typeof navigator !== "undefined" && !("gpu" in navigator)) {
+        this.lastError =
+          "This browser does not expose WebGPU, which local AI requires. " +
+          "Use Chrome or Edge, keep Settings → System → “Use hardware acceleration when available” enabled, " +
+          "then reload and verify at chrome://gpu.";
+        console.warn("[local-engine] navigator.gpu is missing — failing fast with guidance");
+        this.setState("error");
+        return false;
+      }
       // One engine per device — a second tab must not fight this one for
       // the GPU (weak devices lose BOTH engines to device-lost otherwise).
       const lockTaken = await this.acquireEngineLock();
       if (!lockTaken) {
         console.info("[local-engine] the engine is already owned by another tab — standing down here");
+        this.lastError = "The local engine is already running in another tab — close it or use that tab.";
         this.setState("idle");
         return false;
       }
@@ -492,6 +527,7 @@ export class LocalInferenceEngine {
       const offlineNow = typeof navigator !== "undefined" && navigator.onLine === false;
       if (offlineNow && !(await this.anyCacheForModel(model.id).catch(() => false))) {
         console.info(`[local-engine] offline and ${model.id} is not fully cached — skipping the doomed download`);
+        this.lastError = "You are offline and this model is not fully downloaded yet — reconnect and let the install finish.";
         this.releaseEngineLock();
         this.setState("error");
         return false;
@@ -562,6 +598,13 @@ export class LocalInferenceEngine {
         }
       }
       console.error("Failed to initialize WebLLM engine:", error);
+      this.lastError = friendlyInitError(
+        lastError instanceof Error
+          ? lastError.message
+          : typeof lastError === "string"
+            ? lastError
+            : String(lastError || "Unknown init failure."),
+      );
       // The engine never came up — free the device slot for another tab.
       this.releaseEngineLock();
       this.setState("error");

@@ -60,9 +60,16 @@ describe("LocalInferenceEngine state machine", () => {
     createEngineMock.mockClear();
     mirrorConfigMock.mockReturnValue(null);
     eligibleMock.mockReturnValue(false);
+    // The engine's fail-fast WebGPU gate needs navigator.gpu present (happy-dom
+    // lacks it) — present-but-probeless mirrors a WebGPU-capable browser.
+    vi.stubGlobal("navigator", { gpu: {}, onLine: true, deviceMemory: undefined, userAgent: "vitest" });
+    vi.stubGlobal("Worker", class { constructor() {} postMessage() {} terminate() {} });
     return localInferenceEngine.unload();
   });
-  afterEach(() => localInferenceEngine.unload());
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    return localInferenceEngine.unload();
+  });
 
   it("starts in the idle state", () => {
     expect(localInferenceEngine.getState()).toBe("idle");
@@ -157,6 +164,8 @@ describe("LocalInferenceEngine.generate — bounded, interruptible streaming", (
     createEngineMock.mockReset();
     mirrorConfigMock.mockReturnValue(null);
     eligibleMock.mockReturnValue(false);
+    vi.stubGlobal("navigator", { gpu: {}, onLine: true, deviceMemory: undefined, userAgent: "vitest" });
+    vi.stubGlobal("Worker", class { constructor() {} postMessage() {} terminate() {} });
     createEngineMock.mockResolvedValue({
       chat: { completions: { create: async function* () {
         yield { choices: [{ delta: { content: "hi" } }] };
@@ -165,7 +174,10 @@ describe("LocalInferenceEngine.generate — bounded, interruptible streaming", (
     } as never);
     return localInferenceEngine.unload();
   });
-  afterEach(() => localInferenceEngine.unload());
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    return localInferenceEngine.unload();
+  });
 
   function engineWithStream(streamFactory: () => AsyncGenerator<any>, extra: Record<string, unknown> = {}) {
     const createSpy = vi.fn((_request: unknown) => streamFactory());

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { localInferenceEngine, type LocalEngineState } from '@/offline/LocalInferenceEngine';
 import { STARTER_LOCAL_MODEL, getLocalModelDefinition } from '@/ai/ModelRegistry';
 import { DeviceCapability } from '@/offline/DeviceCapability';
+import { detectDeviceCapabilities } from '@/utils/deviceCapabilities';
 
 /**
  * Batch 4 — replaced the 1s setInterval polling with a subscription to the
@@ -21,12 +22,24 @@ const STATE_LABEL: Record<LocalEngineState, string> = {
 export const LocalModelStatus: React.FC = () => {
   const [engineState, setEngineState] = useState<LocalEngineState>(localInferenceEngine.getState());
   const [hasWebGPU, setHasWebGPU] = useState<boolean | null>(null);
+  /** Only a software (SwiftShader) adapter — works, but say "slow" honestly. */
+  const [softwareAdapter, setSoftwareAdapter] = useState(false);
+  /** The engine's real failure reason, shown on the Error row. */
+  const [lastError, setLastError] = useState<string | null>(null);
 
   useEffect(() => {
     DeviceCapability.hasWebGPU().then(setHasWebGPU);
-    // Batch 4: subscribe to the engine state machine instead of polling.
-    const unsub = localInferenceEngine.subscribe(setEngineState);
+    detectDeviceCapabilities()
+      .then((caps) => setSoftwareAdapter(caps.adapter?.isFallbackAdapter === true))
+      .catch(() => {});
+    // Batch 4: subscribe to the engine state machine instead of polling, and
+    // keep the failure reason in sync so the Error row explains itself.
+    const unsub = localInferenceEngine.subscribe((state) => {
+      setEngineState(state);
+      setLastError(localInferenceEngine.getLastError());
+    });
     setEngineState(localInferenceEngine.getState());
+    setLastError(localInferenceEngine.getLastError());
     return unsub;
   }, []);
 
@@ -54,11 +67,23 @@ export const LocalModelStatus: React.FC = () => {
         <span>Acceleration:</span>
         {/* There is no CPU engine — without WebGPU the on-device tier cannot
             run at all, and claiming "CPU" sent users hunting for a fallback
-            that does not exist. */}
-        <span className="text-foreground">{hasWebGPU ? 'WebGPU' : 'Not available'}</span>
+            that does not exist. When only a software adapter exists, say so
+            honestly instead of implying hardware speed. */}
+        <span className="text-foreground">
+          {!hasWebGPU ? 'Not available' : softwareAdapter ? 'WebGPU (software — slow)' : 'WebGPU'}
+        </span>
         <span>Status:</span>
         <span className={`text-foreground ${isError ? 'text-red-500' : ''}`}>{STATE_LABEL[engineState]}</span>
       </div>
+      {!hasWebGPU && (
+        <p className="text-xs text-muted-foreground">
+          Local AI needs WebGPU. In Chrome/Edge enable Settings → System → "Use hardware acceleration when
+          available", reload, then verify at <span className="underline">chrome://gpu</span>.
+        </p>
+      )}
+      {isError && lastError && (
+        <p className="text-xs text-red-500/90 leading-relaxed">{lastError}</p>
+      )}
     </div>
   );
 };

@@ -79,29 +79,46 @@ interface GpuAdapterLike {
   isFallbackAdapter?: boolean;
 }
 interface GpuLike {
-  requestAdapter: (options?: { powerPreference?: string }) => Promise<GpuAdapterLike | null>;
+  requestAdapter: (options?: { powerPreference?: string; forceSoftware?: boolean }) => Promise<GpuAdapterLike | null>;
 }
+
+/**
+ * Adapter-request ladder, mirrored from the worker shim (webllm.worker.ts):
+ * a plain request can return null on machines that still have a usable
+ * low-power or software (SwiftShader) adapter — hardware acceleration
+ * disabled, VMs, iGPU-only laptops. Walking the ladder here keeps the
+ * settings card, the tier recommendation and the engine's shader-f16 decision
+ * in agreement with what the engine can actually obtain.
+ */
+const ADAPTER_LADDER: Array<{ powerPreference?: string; forceSoftware?: boolean }> = [
+  {},
+  { powerPreference: "low-power" },
+  { forceSoftware: true },
+];
 
 /** Reads `adapter.limits` + features defensively across browsers. */
 async function inspectAdapter(): Promise<AdapterInfo | null> {
   const gpu = (navigator as unknown as { gpu?: GpuLike }).gpu;
   if (!gpu) return null;
-  try {
-    const adapter = await gpu.requestAdapter();
-    if (!adapter) return null;
-    const limits = adapter.limits ?? {};
-    return {
-      maxBufferSize: typeof limits.maxBufferSize === "number" ? limits.maxBufferSize : null,
-      maxComputeWorkgroupStorageSize:
-        typeof limits.maxComputeWorkgroupStorageSize === "number"
-          ? limits.maxComputeWorkgroupStorageSize
-          : null,
-      isFallbackAdapter: adapter.isFallbackAdapter === true,
-      shaderF16: adapter.features?.has?.("shader-f16") === true,
-    };
-  } catch {
-    return null;
+  for (const options of ADAPTER_LADDER) {
+    try {
+      const adapter = await gpu.requestAdapter(options);
+      if (!adapter) continue;
+      const limits = adapter.limits ?? {};
+      return {
+        maxBufferSize: typeof limits.maxBufferSize === "number" ? limits.maxBufferSize : null,
+        maxComputeWorkgroupStorageSize:
+          typeof limits.maxComputeWorkgroupStorageSize === "number"
+            ? limits.maxComputeWorkgroupStorageSize
+            : null,
+        isFallbackAdapter: adapter.isFallbackAdapter === true,
+        shaderF16: adapter.features?.has?.("shader-f16") === true,
+      };
+    } catch {
+      /* try the next rung */
+    }
   }
+  return null;
 }
 
 /** Requests persistent storage so cached shards are never evicted under pressure. */

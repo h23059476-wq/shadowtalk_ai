@@ -1,14 +1,14 @@
 /**
  * FCM push notifications — client registration + foreground handling.
  *
- * Standard web-push path: getToken() is called with our own VAPID public key
- * (key pair generated server-side, private half never leaves the ops vault),
- * so the underlying PushSubscription uses the RFC 8291 web-push protocol that
- * every Chromium/Firefox/Safari push service accepts. Tokens minted earlier
- * WITHOUT a vapidKey (FCM legacy certificate path) are transparently rotated:
- * on an applicationServerKey mismatch we delete the stale token/subscription
+ * Standard web-push path: getToken() is called with the project-managed
+ * web push certificate public key (the FCM auto-provisioned certificate —
+ * FCM rejects any foreign key pair), so the underlying PushSubscription uses
+ * the RFC 8291 web-push protocol via the documented getToken API. Tokens
+ * minted earlier without an explicit key, or against foreign keys, rotate
+ * transparently: on a mismatch/401 we delete the stale token/subscription
  * and re-mint. A no-vapidKey fallback keeps registration working even if the
- * key pair is ever removed.
+ * key constant is ever removed.
  *
  * Tokens are stored in Firestore `fcm_tokens` (rules: user-owned — the doc's
  * user_id must equal auth.uid). The campaign sender reads that collection with

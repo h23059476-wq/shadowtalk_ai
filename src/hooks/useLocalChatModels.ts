@@ -102,13 +102,24 @@ export function useLocalChatModels(menuOpen: boolean, uid?: string) {
   const switchToLocalModel = useCallback(
     async (modelId: string): Promise<boolean> => {
       setSwitchingId(modelId);
+      // Remember the previous routing so a FAILED activation doesn't strand
+      // the user on the dead local path (the header label used to claim the
+      // local model was active while every message bounced off an errored
+      // engine).
+      const prevPreferred = getPreferLocal(routingUid);
       try {
         setPreferLocal(routingUid, true);
         setLocalPreferred(true);
         const ok = await switchActiveModel(modelId);
+        if (!ok) {
+          setPreferLocal(routingUid, prevPreferred);
+          setLocalPreferred(prevPreferred);
+        }
         await refresh();
         return ok;
       } catch (error) {
+        setPreferLocal(routingUid, prevPreferred);
+        setLocalPreferred(prevPreferred);
         console.warn("[useLocalChatModels] switch failed:", error);
         return false;
       } finally {

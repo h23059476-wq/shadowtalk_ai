@@ -90,6 +90,11 @@ describe("LocalInferenceEngine recovery", () => {
     cacheDeleteMock.mockReset().mockResolvedValue(undefined);
     vi.unstubAllGlobals();
     vi.stubGlobal("Worker", class { constructor() {} postMessage() {} terminate() {} });
+    // happy-dom's navigator has no `gpu` — the engine's fail-fast WebGPU gate
+    // (added with the lastError surfacing) would short-circuit every init
+    // before the mocked worker ever runs. Present-but-probeless is exactly
+    // what these tests want: the worker/adapter path decides the outcome.
+    vi.stubGlobal("navigator", { gpu: {}, onLine: true, deviceMemory: undefined, userAgent: "vitest" });
     return localInferenceEngine.unload();
   });
   afterEach(() => localInferenceEngine.unload());
@@ -267,6 +272,8 @@ describe("LocalInferenceEngine recovery", () => {
     let calls = 0;
     vi.stubGlobal("navigator", {
       userAgent: "test-agent",
+      gpu: {}, // engine fail-fast WebGPU gate requires the API to be present
+      onLine: true,
       locks: {
         request: vi.fn((_name: string, _opts: unknown, cb: (lock: unknown) => unknown) => {
           calls += 1;
@@ -292,6 +299,8 @@ describe("LocalInferenceEngine recovery", () => {
     const holdPromise = new Promise<void>((r) => { /* resolved via the callback's hold */ });
     vi.stubGlobal("navigator", {
       userAgent: "test-agent",
+      gpu: {},
+      onLine: true,
       locks: {
         request: vi.fn((_name: string, _opts: unknown, cb: (lock: unknown) => unknown) => {
           // Grant the lock; keep it held until the returned hold resolves.
@@ -320,7 +329,7 @@ describe("LocalInferenceEngine recovery", () => {
   }, 5_000);
 
   it("degrades to legacy behavior when the Web Locks API is unavailable", async () => {
-    vi.stubGlobal("navigator", { userAgent: "test-agent" }); // no locks
+    vi.stubGlobal("navigator", { userAgent: "test-agent", gpu: {}, onLine: true }); // no locks
     try {
       const ok = await localInferenceEngine.initialize();
       expect(ok).toBe(true);

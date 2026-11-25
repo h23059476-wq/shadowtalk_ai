@@ -88,7 +88,12 @@ export const OfflineSetup: React.FC<{ onComplete?: () => void }> = ({ onComplete
           onComplete?.();
         }, 1500);
       } else {
-        throw new Error("Failed to initialize local AI engine.");
+        // Surface the engine's REAL failure reason (missing WebGPU, GPU-less
+        // adapter, watchdog timeout, mirror/cache retries exhausted) instead
+        // of a generic dead-end that sent users into a futile Try-Again loop.
+        throw new Error(
+          localInferenceEngine.getLastError() || "Failed to initialize local AI engine.",
+        );
       }
 
     } catch (e: any) {

@@ -15,6 +15,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { useAIKeyContext } from "@/contexts/AIKeyContext";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalChatModels, type LocalChatModelOption } from "@/hooks/useLocalChatModels";
+import { localInferenceEngine } from "@/offline/LocalInferenceEngine";
 import { formatModelSize } from "@/lib/localModelCatalog";
 
 import {
@@ -124,18 +125,23 @@ const ChatHeaderInner = ({
 
   const handleSwitchToLocal = (model: LocalChatModelOption) => {
     void switchToLocalModel(model.id).then((ok) => {
-      toast(
-        ok
-          ? {
-              title: `${model.displayName} active`,
-              description: "Replies now run on-device — private, and they keep working offline.",
-            }
-          : {
-              title: "Could not switch model",
-              description: `“${model.displayName}” could not be activated. Try again from the model manager.`,
-              variant: "destructive",
-            },
-      );
+      if (ok) {
+        toast({
+          title: `${model.displayName} active`,
+          description: "Replies now run on-device — private, and they keep working offline.",
+        });
+        return;
+      }
+      // Surface the engine's real failure reason (missing WebGPU, GPU-less
+      // adapter, watchdog) instead of a dead-end "try the model manager".
+      const reason = localInferenceEngine.getLastError()?.trim();
+      toast({
+        title: "Could not switch model",
+        description: reason
+          ? `${reason.slice(0, 240)}${reason.length > 240 ? "…" : ""}`
+          : `“${model.displayName}” could not be activated. Try again from the model manager.`,
+        variant: "destructive",
+      });
     });
   };
 

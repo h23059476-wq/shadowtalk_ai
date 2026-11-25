@@ -190,7 +190,15 @@ export function ModelManagerDrawer({ open, onOpenChange }: ModelManagerDrawerPro
         const ok = await switchActiveModel(id, (report) => {
           setNotice(`${getLocalModelDefinition(id)?.displayName ?? id}: ${Math.round(report.progress * 100)}%`);
         });
-        flash(ok ? "Model activated." : "Download failed — check your connection and try again.");
+        if (ok) {
+          flash("Model activated.");
+        } else {
+          // The engine knows WHY (missing WebGPU, GPU-less adapter, watchdog,
+          // cache/mirror retries exhausted) — show that instead of a generic
+          // "download failed" that sends users in circles.
+          const { localInferenceEngine } = await import("@/offline/LocalInferenceEngine");
+          flash(localInferenceEngine.getLastError() || "Download failed — check your connection and try again.");
+        }
         refreshCached();
       } finally {
         setBusyId(null);

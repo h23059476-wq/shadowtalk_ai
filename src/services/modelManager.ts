@@ -311,7 +311,15 @@ export async function generateChatCompletion(
     }
     const ok = await localInferenceEngine.initialize(undefined, modelId);
     if (!ok || !localInferenceEngine.isLoaded()) {
-      return { content: "", error: "Could not activate the on-device model.", source: "local", modelUsed: modelId };
+      // Carry the engine's real failure reason (WebGPU missing, watchdog, …)
+      // into the honest-guidance path instead of a bare activation failure.
+      const reason = localInferenceEngine.getLastError();
+      return {
+        content: "",
+        error: `Could not activate the on-device model.${reason ? ` ${reason}` : ""}`,
+        source: "local",
+        modelUsed: modelId,
+      };
     }
   }
   return localInferenceEngine.generate(messages as CloudChatMessage[], {
