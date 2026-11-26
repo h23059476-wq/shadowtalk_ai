@@ -1,0 +1,10 @@
+# ShadowTalk ZeroGPU Space dependencies.
+# gradio + spaces come pre-installed on HF Spaces ZeroGPU hardware — pinning
+# them here keeps local `app.py` runs honest.
+gradio>=5.42,<6
+diffusers>=0.35.0
+transformers>=4.51.0
+accelerate>=1.6.0
+sentencepiece>=0.2.0
+protobuf>=4.25.0
+torch>=2.7.0

@@ -4,6 +4,7 @@
 // lives in sharedImage.ts + imageGen.ts (which compose this module).
 import { applyImageWatermark } from "@/lib/imageWatermark";
 import { getByokConfig, type ByokProvider } from "@/lib/byok";
+import type { ImageGenStatusUpdate } from "@/lib/imageGen";
 
 export interface GenerateImageOptions {
   model?: string;
@@ -11,6 +12,12 @@ export interface GenerateImageOptions {
   signal?: AbortSignal;
   watermark?: boolean;
   onFrame?: (dataUrl: string, isFinal: boolean) => void;
+  /**
+   * Live queue/progress updates from the active generation tier (currently
+   * the Tier 3 ZeroGPU Space path). Type lives in imageGen.ts to keep this
+   * module's contract single-sourced.
+   */
+  onStatus?: (update: ImageGenStatusUpdate) => void;
 }
 
 const OPENROUTER_IMAGE_MODEL = "google/gemini-2.5-flash-image";

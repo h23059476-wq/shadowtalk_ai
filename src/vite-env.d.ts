@@ -1,8 +1,10 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  
+
   readonly VITE_API_PROJECT_ID: string;
+  /** Optional override for the default ZeroGPU Space (Tier 3 image generation). */
+  readonly VITE_ZERO_GPU_SPACE_ID?: string;
 }
 
 interface ImportMeta {

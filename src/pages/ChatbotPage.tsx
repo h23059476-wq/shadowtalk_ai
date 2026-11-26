@@ -2122,9 +2122,10 @@ Structure and Content Guidelines:
           type: "ai" as const,
           timestamp: new Date(),
           content: [
-            "⚠️ **Image generation needs a quick setup.**",
+            "⚠️ **Image generation needs a connection or a quick setup.**",
             "",
-            "- **Use your own key (recommended):** add an **OpenAI, OpenRouter or Google Gemini** key in **Settings → Personalization → BYOK** — all three support images, and Gemini keys are free to create in Google AI Studio.",
+            "- **Free cloud (no key):** get back online — raster images then run on Hugging Face's free ZeroGPU pool. Connect your HF account in **Settings → Personalization → BYOK → Connect Hugging Face** for a personal daily quota and faster queue priority.",
+            "- **Use your own key (best quality):** add an **OpenAI, OpenRouter or Google Gemini** key in **Settings → Personalization → BYOK** — all three support images, and Gemini keys are free to create in Google AI Studio.",
             "- **Shared AI:** sign in and pick shared mode in AI setup — images then run through ShadowTalk's shared image service (100 requests/day, shared with chat).",
             "",
             "Note: charts and diagrams only need a regular chat key — any provider works for those.",
@@ -2155,17 +2156,27 @@ Structure and Content Guidelines:
         // message for provenance-aware visualization downstream.
         let toolCitations: Citation[] | undefined;
         // Image generation — the user's own key first (OpenAI, OpenRouter or
-        // Gemini, browser→provider). Signed-in shared-mode users without an
-        // image-capable key fall back to the platform-funded generateImage
-        // Function (100/day quota, enforced server-side). Errors surface so
-        // the user can fix their setup.
+        // Gemini, browser→provider), then the free ZeroGPU Space tier when
+        // online, then the platform-funded generateImage Function for
+        // signed-in shared-mode users (100/day quota, enforced server-side).
+        // ZeroGPU queue progress streams into the tool card live; the asset
+        // is persisted in the encrypted IndexedDB store (no temporary URLs).
         if (toolResult.tool === "image_generator") {
           const imgPrompt = toolResult.params?.prompt || strippedForTools;
-          const { imageUrl, source } = await generateImageWithFallback(imgPrompt, { watermark: true });
+          const { imageUrl, source } = await generateImageWithFallback(imgPrompt, {
+            watermark: true,
+            onStatus: (update) => {
+              setMessages((prev) => prev.map((m) => m.id === toolMessageId
+                ? { ...m, content: update.message }
+                : m));
+            },
+          });
           finalToolContent = `Generated image for: *${imgPrompt}*${
             source === "shared"
               ? "\n\n_Generated with ShadowTalk's shared AI — counts toward the 100 requests/day shared quota._"
-              : ""
+              : source === "zerogpu"
+                ? "\n\n_Generated on a free Hugging Face ZeroGPU Space — stored encrypted on this device._"
+                : ""
           }`;
           setMessages((prev) => prev.map((m) => m.id === toolMessageId ? {
             ...m,

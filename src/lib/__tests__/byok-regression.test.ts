@@ -43,6 +43,30 @@ vi.mock("@/integrations/firebase/app", () => ({
   functionsBaseUrl: "https://test.functions.example.com",
 }));
 
+// Tier 3 (ZeroGPU) sits between BYOK and the shared pool in the imageGen
+// chain. These regression tests own the BYOK↔shared contract, so the fake
+// tier defaults to ONLINE-but-failing (a space_unavailable run) — that keeps
+// every degradation to the shared pool on the same code path as production.
+// Its own behavior lives in src/lib/providers/__tests__/zeroGpuSpaceProvider.test.ts.
+const zerogpuState = vi.hoisted(() => ({
+  available: true,
+  impl: null as null | ((prompt: string, options?: unknown) => Promise<unknown>),
+}));
+
+vi.mock("@/lib/providers/zeroGpuSpaceProvider", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/providers/zeroGpuSpaceProvider")>();
+  return {
+    ...actual,
+    isZeroGpuSpaceAvailable: () => zerogpuState.available,
+    generateImageViaZeroGpu: (prompt: string, options?: unknown) =>
+      zerogpuState.impl
+        ? zerogpuState.impl(prompt, options)
+        : Promise.reject(
+            new actual.ZeroGpuError("space_unavailable", "ZeroGPU Space unavailable in this test profile"),
+          ),
+  };
+});
+
 describe("BYOK regression fixes (commit 9a3dba3)", () => {
   beforeEach(() => { localStorageMock.clear(); });
 
@@ -186,12 +210,24 @@ describe("BYOK regression fixes (commit 9a3dba3)", () => {
       fetchSpy.mockRestore();
     });
 
-    it("returns the actionable setup error when neither path is available", async () => {
+    it("returns an actionable notice when no path is available (Tier 3 run failed, nothing configured)", async () => {
       const fetchSpy = vi.spyOn(globalThis, "fetch");
       const { generateImageWithFallback } = await import("@/lib/imageGen");
-      await expect(generateImageWithFallback("a cat")).rejects.toThrow(/quick setup/);
+      // Online but the free Space run failed and no BYOK/shared path exists —
+      // the router explains every remaining option.
+      await expect(generateImageWithFallback("a cat", { watermark: false }))
+        .rejects.toThrow(/unavailable right now[\s\S]*add an OpenAI[\s\S]*offline chart\/diagram mode/);
       expect(fetchSpy).not.toHaveBeenCalled();
       fetchSpy.mockRestore();
+
+      // Fully offline — the notice points at the local chart/diagram renderer.
+      zerogpuState.available = false;
+      const online = Object.getOwnPropertyDescriptor(globalThis.navigator ?? {}, "onLine");
+      vi.stubGlobal("navigator", { onLine: false });
+      await expect(generateImageWithFallback("a cat")).rejects.toThrow(/internet connection[\s\S]*chart or diagram mode/);
+      vi.stubGlobal("navigator", { onLine: true });
+      void online;
+      zerogpuState.available = true;
     });
 
     it("surfaces BYOK provider rejections instead of masking them with the shared fallback", async () => {
