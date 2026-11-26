@@ -90,22 +90,62 @@ export default defineConfig(({ mode }) => {
           ]
         },
         workbox: {
-          // Pre-caches the app shell, the webllm.worker chunk, the
-          // vendor-ai (web-llm runtime) chunk, the SELF-HOSTED fonts
-          // (/fonts/*.woff2) and the pdf.js worker asset — hashed assets
-          // from dist only. NEVER raises above ~10MB per file and never
-          // hardcodes model weights: the multi-GB shards flow through
-          // web-llm's per-shard Cache API at runtime (see
-          // src/services/modelManager.ts), so PWA install stays fast even
-          // on slow networks.
+          // Pre-caches the app shell ONLY: hashed js/css/html, icons, and the
+          // two small latin text fonts (inter, jetbrains ~0.4MB combined).
+          // NEVER raises above ~10MB per file and never hardcodes model
+          // weights: the multi-GB shards flow through web-llm's per-shard
+          // Cache API at runtime (see src/services/modelManager.ts), so PWA
+          // install stays fast even on slow networks.
+          //
+          // 2026-11-26 quota incident: the previous glob precached EVERYTHING
+          // under dist — including the 3.9MB Material Symbols icon font, the
+          // 4MB of /docs PDFs and the 436KB og-image — pushing every
+          // first-time visit to ~10MB and exhausting the Spark plan's
+          // 360MB/day Hosting quota after ~35 visitors (HTTP 509
+          // 'Quota Exceeded'). Heavy assets are now runtime-cached instead:
+          // fetched once on demand, then offline-available from the SW cache
+          // plus the new 30-day immutable HTTP headers (firebase.json).
           globPatterns: ['**/*.{js,mjs,css,html,ico,png,svg,json,wasm,woff,woff2,webmanifest,webp,webm,mp4}'],
-          // The 30s trailer (shadowtalk-trailer-30s.mp4) is marketing media
-          // streamed on demand from the home page trailer band — NOT app
-          // shell. Excluding it keeps PWA install weight flat; its tiny
-          // poster webp still precaches so the offline player shows artwork.
-          globIgnores: ['**/shadowtalk-trailer-30s.mp4'],
+          // Marketing media and documents are NOT app shell:
+          // - shadowtalk-trailer-30s.mp4 (2.2MB) streams on demand on the
+          //   home page; its tiny poster webp still precaches so the offline
+          //   player shows artwork.
+          // - material-symbols-outlined (3.9MB) is only used by
+          //   LiveVoiceMode; runtime-cached on first voice-mode render.
+          // - /docs PDFs (4MB) are downloads, runtime-cached on demand.
+          // - og-image.png (436KB) is fetched by link unfurlers, never
+          //   needed offline.
+          globIgnores: [
+            '**/shadowtalk-trailer-30s.mp4',
+            '**/fonts/material-symbols-outlined-*.woff2',
+            '**/docs/**',
+            '**/og-image.png',
+          ],
           maximumFileSizeToCacheInBytes: 10000000, // Increase limit for wasm/model artifacts
           runtimeCaching: [
+            {
+              // Self-hosted heavy fonts (Material Symbols icon font, any
+              // future display faces): CacheFirst so voice mode renders
+              // offline after the first use without re-downloading 3.9MB.
+              urlPattern: /\/fonts\//,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'st-fonts',
+                expiration: { maxEntries: 16, maxAgeSeconds: 30 * 24 * 60 * 60 },
+                cacheableResponse: { statuses: [200] },
+              },
+            },
+            {
+              // Documentation PDFs: downloaded on demand, kept offline after
+              // first fetch (CacheFirst mirrors how users treat a download).
+              urlPattern: /\/docs\//,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'st-docs',
+                expiration: { maxEntries: 8, maxAgeSeconds: 30 * 24 * 60 * 60 },
+                cacheableResponse: { statuses: [200] },
+              },
+            },
             {
               // Model infrastructure on raw.githubusercontent.com: the
               // built-in weights mirror (orphan `weights` branch) and the
