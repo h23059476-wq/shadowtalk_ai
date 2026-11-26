@@ -120,6 +120,11 @@ export default defineConfig(({ mode }) => {
             '**/fonts/material-symbols-outlined-*.woff2',
             '**/docs/**',
             '**/og-image.png',
+            // Tier-1 local inference runtime (scripts/copy-ort-wasm.mjs →
+            // public/onnx/): ~24MB of onnxruntime WASM downloaded on demand
+            // with the first pipeline, runtime-cached — never precached, or
+            // every first visit would re-kill the Hosting bandwidth quota.
+            '**/onnx/**',
           ],
           maximumFileSizeToCacheInBytes: 10000000, // Increase limit for wasm/model artifacts
           runtimeCaching: [

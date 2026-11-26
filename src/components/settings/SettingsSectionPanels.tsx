@@ -29,6 +29,7 @@ import { AutoImproveInsights } from "@/components/autoImprove/AutoImproveInsight
 import { OfflineSetup } from "@/components/offline/OfflineSetup";
 import { LocalModelStatus } from "@/components/offline/LocalModelStatus";
 import { LocalToolsPanel } from "@/components/settings/LocalToolsPanel";
+import { OfflineModelManager } from "@/components/settings/OfflineModelManager";
 
 
 import { DesktopAppSettings } from "@/components/desktop/DesktopAppSettings";
@@ -219,6 +220,11 @@ export function SettingsSectionPanels({
           title="Local AI (Offline)"
           description="Provision and manage local models to run ShadowTalk fully offline."
         />
+        <SettingsStaggerItem>
+          <AnimatedCard>
+            <OfflineModelManager />
+          </AnimatedCard>
+        </SettingsStaggerItem>
         <SettingsStaggerItem>
           <AnimatedCard>
             <div className="space-y-6">

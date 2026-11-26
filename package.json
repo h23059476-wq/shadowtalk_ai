@@ -5,7 +5,9 @@
   "description": "Think AI. Think ShadowTalk. — Agentic AI workspace with encrypted chat, deep research, and multi-model intelligence.",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/copy-ort-wasm.mjs",
     "dev": "vite",
+    "prebuild": "node scripts/copy-ort-wasm.mjs",
     "build": "vite build && node scripts/generate-sitemap.mjs --out dist && node prerender.cjs",
     "build:dev": "vite build --mode development",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
@@ -15,6 +17,7 @@
   },
   "dependencies": {
     "@capacitor/core": "^8.5.0",
+    "@huggingface/transformers": "^3.8.1",
     "@mlc-ai/web-llm": "^0.2.84",
     "@monaco-editor/react": "^4.7.0",
     "@radix-ui/react-accordion": "^1.2.11",

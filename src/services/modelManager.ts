@@ -287,10 +287,62 @@ export interface ChatCompletionOptions {
 }
 
 /**
+ * Tier-1 fallback: run the request on the HF transformers worker (Qwen2.5
+ * 0.5B/1.5B q4) when the web-llm engine cannot serve it — WebGPU missing,
+ * model not cached, or activation failed. Only engages when an HF chat
+ * model is ALREADY cached (installs are explicit Offline Model Manager
+ * actions — no surprise multi-hundred-MB downloads mid-chat).
+ */
+async function tryHfChatFallback(
+  messages: ChatCompletionMessage[],
+  options: ChatCompletionOptions,
+): Promise<CloudChatResult | null> {
+  try {
+    const [{ getLocalInferenceClient, HF_CHAT_MODEL_SMALL, HF_CHAT_MODEL_MEDIUM }, { getHfCacheInventory }] =
+      await Promise.all([
+        import("@/lib/localInference/localEngineClient"),
+        import("@/lib/localInference/hfCacheManager"),
+      ]);
+    const inventory = await getHfCacheInventory();
+    const pick =
+      inventory.models.find((m) => m.repoId === HF_CHAT_MODEL_SMALL.repoId && m.hasWeights)
+        ? HF_CHAT_MODEL_SMALL
+        : inventory.models.find((m) => m.repoId === HF_CHAT_MODEL_MEDIUM.repoId && m.hasWeights)
+          ? HF_CHAT_MODEL_MEDIUM
+          : null;
+    if (!pick) return null;
+    const client = getLocalInferenceClient();
+    const result = await client.chat(
+      messages.map((m) => ({ role: m.role, content: m.content })),
+      {
+        model: pick,
+        temperature: options.temperature,
+        onDelta: (delta) => options.onDelta?.(delta),
+        signal: options.signal,
+      },
+    );
+    return { content: result.text, source: "local", modelUsed: result.model };
+  } catch (error) {
+    console.warn("[model-manager] Tier-1 HF chat fallback failed:", error);
+    return {
+      content: "",
+      error:
+        error instanceof Error
+          ? `The on-device fallback model could not run: ${error.message}`
+          : "The on-device fallback model could not run.",
+      source: "local",
+      modelUsed: "hf-fallback",
+    };
+  }
+}
+
+/**
  * OpenAI-compatible chat completion on the ACTIVE local model. Activates
  * the instant default first when nothing is loaded but cached (seconds —
  * no download), and fails with a clear message when the model is not
- * cached yet (the bootstrap/ask flow owns downloading).
+ * cached yet (the bootstrap/ask flow owns downloading). When the web-llm
+ * path cannot serve the request, the Tier-1 HF worker (WASM-capable) takes
+ * over — that is the only chat path on WebGPU-less devices.
  */
 export async function generateChatCompletion(
   messages: ChatCompletionMessage[],
@@ -301,6 +353,8 @@ export async function generateChatCompletion(
   if (!localInferenceEngine.isLoaded()) {
     const cached = await hasModelInCache(modelId);
     if (!cached) {
+      const fallback = await tryHfChatFallback(messages, options);
+      if (fallback) return fallback;
       return {
         content: "",
         error:
@@ -314,9 +368,13 @@ export async function generateChatCompletion(
       // Carry the engine's real failure reason (WebGPU missing, watchdog, …)
       // into the honest-guidance path instead of a bare activation failure.
       const reason = localInferenceEngine.getLastError();
+      const fallback = await tryHfChatFallback(messages, options);
+      if (fallback && !fallback.error) return fallback;
       return {
         content: "",
-        error: `Could not activate the on-device model.${reason ? ` ${reason}` : ""}`,
+        error: `Could not activate the on-device model.${reason ? ` ${reason}` : ""}${
+          !fallback ? " On WebGPU-less devices, install the WASM chat model from Settings → Offline AI → Offline Model Manager." : ""
+        }`,
         source: "local",
         modelUsed: modelId,
       };
@@ -457,7 +515,7 @@ export async function bootstrapDefaultModels(
       patch({
         phase: "unsupported",
         error:
-          "This browser has no WebGPU, so models cannot run on-device. Private chat still works via your cloud key.",
+          "This browser has no WebGPU, so the standard on-device models cannot run. Private chat still works via your cloud key — or install the small CPU (WASM) chat model from Settings → Offline AI → Offline Model Manager.",
       });
       return;
     }

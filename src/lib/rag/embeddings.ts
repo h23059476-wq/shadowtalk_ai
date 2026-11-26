@@ -235,6 +235,7 @@ const PREF_KEY_PREFIX = "shadowtalk.rag.embedding.v1.";
 
 export type EmbeddingPreference =
   | { kind: "local" }
+  | { kind: "local-hf"; consentedAt: string }
   | { kind: "remote"; provider: ByokProvider; model?: string; consentedAt: string };
 
 export function getEmbeddingPreference(userId: string): EmbeddingPreference {
@@ -251,6 +252,48 @@ export function getEmbeddingPreference(userId: string): EmbeddingPreference {
 
 export function setEmbeddingPreference(userId: string, preference: EmbeddingPreference): void {
   localStorage.setItem(`${PREF_KEY_PREFIX}${userId}`, JSON.stringify(preference));
+}
+
+/**
+ * Central provider resolution for the Tier-1 neural embedder slot.
+ *
+ * 'local-hf' resolves to the on-device neural embedder ONLY when its model
+ * is already cached (checked via the lightweight cache inventory) — an
+ * uncached preference degrades to the lexical embedder instead of silently
+ * paying a download inside an indexing job. The returned flag tells the UI
+ * whether the neural path is actually live.
+ */
+export async function resolveEmbedderForPreference(
+  preference: EmbeddingPreference,
+  options: { apiKey?: string; provider?: ByokProvider } = {},
+): Promise<{ embedder: EmbeddingProvider; neuralLive: boolean }> {
+  if (preference.kind === "local-hf") {
+    try {
+      const { getHfCacheInventory } = await import("@/lib/localInference/hfCacheManager");
+      const { HF_EMBED_MODEL } = await import("@/lib/localInference/hfModels");
+      const inventory = await getHfCacheInventory();
+      const cached = inventory.models.find(
+        (m) => m.repoId === HF_EMBED_MODEL.repoId && m.hasWeights,
+      );
+      if (cached) {
+        const { LocalHFEmbedder } = await import("@/lib/rag/hfEmbedder");
+        return { embedder: new LocalHFEmbedder(HF_EMBED_MODEL), neuralLive: true };
+      }
+    } catch {
+      /* fall through to the lexical embedder */
+    }
+    return { embedder: new LocalHashEmbedder(), neuralLive: false };
+  }
+  if (
+    preference.kind === "remote" &&
+    options.provider &&
+    options.apiKey &&
+    preference.provider === options.provider &&
+    EMBEDDING_CAPABLE_PROVIDERS.has(options.provider)
+  ) {
+    return { embedder: new RemoteEmbedder(options.provider, options.apiKey, preference.model), neuralLive: false };
+  }
+  return { embedder: new LocalHashEmbedder(), neuralLive: false };
 }
 
 export function currentUserId(): string | null {

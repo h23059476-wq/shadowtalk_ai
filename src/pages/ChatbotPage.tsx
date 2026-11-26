@@ -1163,15 +1163,13 @@ const ChatbotPage = () => {
       if (!user || files.length === 0) return;
       const rag = await import("@/lib/rag");
       const preference = rag.getEmbeddingPreference(user.id);
-      let embedder: import("@/lib/rag/embeddings").EmbeddingProvider = rag.createLocalEmbedder();
-      if (
-        preference.kind === "remote" &&
-        getByokConfig() &&
-        rag.EMBEDDING_CAPABLE_PROVIDERS.has(getByokConfig()!.provider) &&
-        preference.provider === getByokConfig()!.provider
-      ) {
-        embedder = new rag.RemoteEmbedder(preference.provider, getByokConfig()!.apiKey, preference.model);
-      }
+      // Tier-1: preference drives the embedder (lexical default, on-device
+      // neural when opted in + cached, BYOK remote when consented).
+      const byok = getByokConfig();
+      const { embedder } = await rag.resolveEmbedderForPreference(preference, {
+        apiKey: byok?.apiKey,
+        provider: byok?.provider,
+      });
       setRagIndexingCount(files.length);
       const results = await Promise.allSettled(
         files.map(async (file) => {
@@ -1369,17 +1367,10 @@ const ChatbotPage = () => {
         try {
           const rag = await import("@/lib/rag");
           const preference = rag.getEmbeddingPreference(user.id);
-          let embedder: import("@/lib/rag").EmbeddingProvider;
-          if (
-            preference.kind === "remote" &&
-            byokForBudget &&
-            rag.EMBEDDING_CAPABLE_PROVIDERS.has(byokForBudget.provider) &&
-            preference.provider === byokForBudget.provider
-          ) {
-            embedder = new rag.RemoteEmbedder(preference.provider, byokForBudget.apiKey, preference.model);
-          } else {
-            embedder = rag.createLocalEmbedder();
-          }
+          const { embedder } = await rag.resolveEmbedderForPreference(preference, {
+            apiKey: byokForBudget?.apiKey,
+            provider: byokForBudget?.provider,
+          });
           const result = await rag.retrieveContext(lastUser, {
             userId: user.id,
             projectId: null, // chat-level scope; project-scoped retrieval ships with the workspace wiring
