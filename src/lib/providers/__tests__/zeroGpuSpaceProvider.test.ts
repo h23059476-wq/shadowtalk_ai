@@ -34,6 +34,10 @@ interface FakeClientSpec {
   hangAfterEvents?: boolean;
   /** Extra delay inserted before each event after the first. */
   delayBetweenEventsMs?: number;
+  /** Thrown by the one-shot predict() recovery call (silent-end surfacing). */
+  predictError?: Error;
+  /** Returned by the one-shot predict() recovery call when it succeeds. */
+  predictData?: unknown[];
   namedEndpoints?: Record<
     string,
     {
@@ -50,7 +54,8 @@ interface FakeClientSpec {
 
 const gradioState = vi.hoisted(() => ({
   connectCalls: [] as Array<{ spaceId: string; options?: Record<string, unknown> }>,
-  submitCalls: [] as Array<{ endpoint: string | number; payload: Record<string, unknown> }>,
+  submitCalls: [] as Array<{ endpoint: string | number; payload: Record<string, unknown>; allEvents?: boolean }>,
+  predictCalls: [] as Array<{ endpoint: string | number; payload: Record<string, unknown> }>,
   cancelCalls: 0,
   connectImpl: null as null | ((spaceId: string, options?: Record<string, unknown>) => Promise<unknown>),
 }));
@@ -67,14 +72,22 @@ vi.mock("@gradio/client", () => ({
 function setFakeClient(spec: FakeClientSpec): void {
   gradioState.connectCalls = [];
   gradioState.submitCalls = [];
+  gradioState.predictCalls = [];
   gradioState.cancelCalls = 0;
   gradioState.connectImpl = async (spaceId: string, options?: Record<string, unknown>) => {
     gradioState.connectCalls.push({ spaceId, options });
     if (spec.connectError) throw spec.connectError;
     const client = {
       view_api: vi.fn(async () => ({ named_endpoints: spec.namedEndpoints ?? {} })),
-      submit: vi.fn((endpoint: string | number, payload: Record<string, unknown>) => {
-        gradioState.submitCalls.push({ endpoint, payload });
+      submit: vi.fn(
+        (
+          endpoint: string | number,
+          payload: Record<string, unknown>,
+          _eventData?: unknown,
+          _triggerId?: unknown,
+          allEvents?: boolean,
+        ) => {
+          gradioState.submitCalls.push({ endpoint, payload, allEvents });
         const events = spec.events ?? [];
         let index = 0;
         const next = async (): Promise<IteratorResult<FakeEvent>> => {
@@ -98,12 +111,21 @@ function setFakeClient(spec: FakeClientSpec): void {
           }),
         };
       }),
+      predict: vi.fn(async (endpoint: string | number, payload: Record<string, unknown>) => {
+        gradioState.predictCalls.push({ endpoint, payload });
+        if (spec.predictError) throw spec.predictError;
+        return { data: spec.predictData ?? [] };
+      }),
     };
     return client;
   };
 }
 
 const IMAGE_URL = "https://flux-space.hf.space/gradio_api/file=/tmp/gradio/abc/image.png";
+
+/** Verbatim anonymous-quota rejection captured LIVE from black-forest-labs/FLUX.1-schnell. */
+const REAL_ANON_QUOTA_MESSAGE =
+  "You have exceeded your ZeroGPU runs limit. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens";
 
 const FLUX_ENDPOINT_PARAMS = {
   "/infer": {
@@ -136,6 +158,7 @@ function successEvents(): FakeEvent[] {
 import {
   DEFAULT_ZERO_GPU_SPACE_ID,
   FLUX_DEFAULTS,
+  ZERO_GPU_QUOTA_HINT,
   ZeroGpuError,
   classifyZeroGpuError,
   generateImageViaZeroGpu,
@@ -222,6 +245,7 @@ describe("generateImageViaZeroGpu", () => {
     expect(gradioState.connectCalls[0].spaceId).toBe(DEFAULT_ZERO_GPU_SPACE_ID);
     expect(gradioState.connectCalls[0].options).toBeUndefined(); // anonymous
     expect(gradioState.submitCalls[0].endpoint).toBe("/infer");
+    expect(gradioState.submitCalls[0].allEvents).toBe(true); // error events must not be filtered
     expect(gradioState.submitCalls[0].payload).toMatchObject({
       prompt: "a photorealistic snowy owl",
       randomize_seed: true,
@@ -290,6 +314,56 @@ describe("generateImageViaZeroGpu", () => {
       },
     );
     expect(gradioState.cancelCalls).toBe(1); // the job was cancelled cleanly
+  });
+
+  it("classifies the REAL anonymous quota rejection streamed by the Space (captured live)", async () => {
+    // Live capture from black-forest-labs/FLUX.1-schnell: the join is
+    // rejected AFTER a queued status event, with this exact message shape.
+    setFakeClient({
+      namedEndpoints: FLUX_ENDPOINT_PARAMS,
+      events: [
+        { type: "status", stage: "pending", queue: true, position: 0, eta: 7.07 },
+        { type: "status", stage: "error", message: REAL_ANON_QUOTA_MESSAGE },
+      ],
+    });
+    await expect(generateImageViaZeroGpu("test")).rejects.toSatisfy((error: unknown) => {
+      expect(error).toBeInstanceOf(ZeroGpuError);
+      const zerr = error as ZeroGpuError;
+      expect(zerr.kind).toBe("quota");
+      expect(zerr.message).toContain("ZeroGPU runs limit");
+      expect(zerr.retryAfterSeconds).toBeUndefined(); // the anonymous message carries no countdown
+      return true;
+    });
+    expect(gradioState.cancelCalls).toBe(1);
+  });
+
+  it("surfaces the real quota error when the event stream ends silently (submit suppression)", async () => {
+    // Older/some @gradio/client builds filter join-time rejections out of the
+    // default event stream entirely — the iterator just ends. The provider
+    // must re-issue via predict() and surface the real error, not no_image.
+    setFakeClient({ namedEndpoints: FLUX_ENDPOINT_PARAMS, predictError: new Error(REAL_ANON_QUOTA_MESSAGE) });
+    await expect(generateImageViaZeroGpu("test")).rejects.toSatisfy((error: unknown) => {
+      expect(error).toBeInstanceOf(ZeroGpuError);
+      const zerr = error as ZeroGpuError;
+      expect(zerr.kind).toBe("quota");
+      expect(zerr.message).toContain(ZERO_GPU_QUOTA_HINT);
+      return true;
+    });
+    expect(gradioState.predictCalls).toHaveLength(1);
+    expect(gradioState.predictCalls[0].endpoint).toBe("/infer");
+  });
+
+  it("keeps no_image (no predict retry) when the stream ran but produced nothing usable", async () => {
+    setFakeClient({
+      namedEndpoints: FLUX_ENDPOINT_PARAMS,
+      events: [
+        { type: "status", stage: "generating" },
+        { type: "data", data: [{ some: "junk" }] },
+        { type: "status", stage: "complete", success: true },
+      ],
+    });
+    await expect(generateImageViaZeroGpu("test")).rejects.toMatchObject({ kind: "no_image" });
+    expect(gradioState.predictCalls).toHaveLength(0); // a real run happened — never double-bill quota
   });
 
   it("treats a sleeping/paused Space as space_unavailable", async () => {
@@ -378,7 +452,9 @@ describe("classifyZeroGpuError", () => {
   it("maps raw provider messages to typed kinds", () => {
     expect(classifyZeroGpuError(new Error("Failed to fetch")).kind).toBe("offline");
     expect(classifyZeroGpuError(new Error("ZeroGPU quota exceeded for today")).kind).toBe("quota");
+    expect(classifyZeroGpuError(new Error(REAL_ANON_QUOTA_MESSAGE)).kind).toBe("quota"); // live message shape
     expect(classifyZeroGpuError(new Error("Space is asleep")).kind).toBe("space_unavailable");
+    expect(classifyZeroGpuError(new Error("404: Not Found")).kind).toBe("space_unavailable"); // live 404 shape (cycling Space / gateway rejection)
     expect(classifyZeroGpuError(new Error("Connection timed out")).kind).toBe("timeout");
     expect(classifyZeroGpuError(new Error("mystery")).kind).toBe("unknown");
   });

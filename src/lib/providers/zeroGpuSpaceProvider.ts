@@ -138,10 +138,14 @@ export function isZeroGpuSpaceAvailable(): boolean {
 
 function mapZeroGpuFailure(message: string): ZeroGpuErrorKind {
   const text = message || "";
-  if (/exceeded your (gpu )?quota|gpu quota|quota exceeded|ZeroGPU quota/i.test(text)) return "quota";
+  // The real anonymous-quota message reads "You have exceeded your ZeroGPU
+  // runs limit. Authenticate with a Hugging Face token for more quota" —
+  // verified live against black-forest-labs/FLUX.1-schnell (see
+  // scripts/zerogpu_live_test.mjs), so match it explicitly.
+  if (/exceeded your (gpu )?quota|gpu quota|quota exceeded|zerogpu (quota|runs limit)|runs limit/i.test(text)) return "quota";
   if (/network|offline|failed to fetch|dns|err_name_not_resolved|internet connection/i.test(text)) return "offline";
   if (
-    /space is (asleep|paused|building|errored)|space_not_found|not_found|no_app_file|config_error|build_error|runtime_error|paused|sleeping|502|503|failed to (resolve|connect)|space (is )?unavailable/i.test(
+    /space is (asleep|paused|building|errored)|space_not_found|not_found|404|no_app_file|config_error|build_error|runtime_error|paused|sleeping|502|503|failed to (resolve|connect)|space (is )?unavailable/i.test(
       text,
     )
   ) {
@@ -216,7 +220,24 @@ interface GradioConnectOptions {
 interface GradioClientModule {
   Client: {
     connect(app_reference: string, options?: GradioConnectOptions): Promise<{
-      submit(endpoint: string | number, data: unknown[] | Record<string, unknown>): GradioJob;
+      /**
+       * `allEvents` MUST be true: without it @gradio/client filters event
+       * types down to an empty allow-list, so join-time rejections (quota,
+       * sleeping Space) arrive as a SILENT end-of-stream instead of a status
+       * error — verified physically against FLUX.1-schnell.
+       */
+      submit(
+        endpoint: string | number,
+        data: unknown[] | Record<string, unknown>,
+        eventData?: unknown,
+        triggerId?: unknown,
+        allEvents?: boolean,
+      ): GradioJob;
+      /** One-shot alternative that always surfaces the real error. */
+      predict?(
+        endpoint: string | number,
+        data: unknown[] | Record<string, unknown>,
+      ): Promise<{ data?: unknown[] } | undefined>;
       cancel?: () => Promise<void>;
       view_api: () => Promise<{
         named_endpoints?: Record<
@@ -437,8 +458,9 @@ export async function generateImageViaZeroGpu(
 
   const startedAt = Date.now();
   try {
-    const job = client.submit(endpoint, payload);
+    const job = client.submit(endpoint, payload, undefined, undefined, true);
     let image: { value: string; seed: number | null } | null = null;
+    let sawStreamEvent = false;
 
     for (;;) {
       throwIfAborted(options.signal);
@@ -464,12 +486,16 @@ export async function generateImageViaZeroGpu(
       const event = next.value;
 
       if (event.type === "status") {
+        sawStreamEvent = true;
         if (event.stage === "error") {
           await job.cancel?.().catch(() => undefined);
           const message = typeof event.message === "string" ? event.message : "The ZeroGPU run failed.";
+          const kind = mapZeroGpuFailure(message);
           throw new ZeroGpuError(
-            mapZeroGpuFailure(message),
-            `The ZeroGPU Space reported an error: ${message}`,
+            kind,
+            kind === "quota"
+              ? `The ZeroGPU Space reported an error: ${message} ${ZERO_GPU_QUOTA_HINT}`
+              : `The ZeroGPU Space reported an error: ${message}`,
             parseRetryAfterSeconds(message),
           );
         }
@@ -494,10 +520,35 @@ export async function generateImageViaZeroGpu(
           });
         }
       } else if (event.type === "data") {
+        sawStreamEvent = true;
         image = extractImageValue(event.data ?? []);
         if (image) emit({ phase: "fetching", message: "Fetching your image…", usingHfToken });
       } else if (event.type === "log") {
         // Log lines carry no actionable payload for this flow — ignore.
+      }
+    }
+
+    if (!image && !sawStreamEvent) {
+      // Silent end-of-stream: the submission was rejected before the queue
+      // stream opened (quota / sleeping Space) and this @gradio/client build
+      // suppressed the status event. predict() re-issues with all_events and
+      // throws the REAL error immediately — ZeroGPU checks quota before any
+      // GPU time is consumed, so this costs nothing and never double-bills.
+      const recovered = await withDeadline(
+        Promise.resolve(client.predict?.(endpoint, payload)),
+        Math.max(totalDeadline - Date.now(), 0),
+        () =>
+          new ZeroGpuError(
+            "timeout",
+            "The ZeroGPU Space took too long to answer (cold start + queue can exceed a minute during peak hours). Please retry — connecting your HF account also improves queue priority.",
+          ),
+        options.signal,
+        () => new ZeroGpuError("aborted", "Image generation was canceled."),
+      );
+      const recoveredImage = extractImageValue(recovered?.data ?? []);
+      if (recoveredImage) {
+        image = recoveredImage;
+        emit({ phase: "fetching", message: "Fetching your image…", usingHfToken });
       }
     }
 
