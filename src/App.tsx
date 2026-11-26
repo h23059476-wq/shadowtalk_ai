@@ -38,6 +38,8 @@ export const CommandPaletteContext = createContext<{ open: () => void }>({ open:
 // Critical path pages - loaded immediately
 const RootRoute = lazy(() => import("@/components/RootRoute"));
 const AuthPage = lazy(() => import("./pages/AuthPage"));
+// Tier 2 — OAuth redirect target for "Sign in with Hugging Face".
+const HfAuthCallbackPage = lazy(() => import("./pages/HfAuthCallbackPage"));
 const AuthActionPage = lazy(() => import("./pages/AuthActionPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -137,6 +139,8 @@ const AnimatedRoutes = () => {
           <Route path="/home" element={<Suspense fallback={<PageLoader />}><PageTransition><RootRoute /></PageTransition></Suspense>} />
           <Route path="/auth" element={<Suspense fallback={<PageLoader />}><PageTransition><AuthPage /></PageTransition></Suspense>} />
           <Route path="/auth/action" element={<Suspense fallback={<PageLoader />}><AuthActionPage /></Suspense>} />
+          {/* Tier 2 — HF OAuth callback: NOT wrapped in PageTransition/AnimatePresence (a redirect target must render immediately). */}
+          <Route path="/auth/hf/callback" element={<Suspense fallback={<PageLoader />}><HfAuthCallbackPage /></Suspense>} />
           
           {/* Core App Routes */}
           <Route path="/chatbot" element={<Suspense fallback={<PageLoader />}><ChatbotPage /></Suspense>} />

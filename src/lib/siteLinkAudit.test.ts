@@ -39,10 +39,12 @@ describe("site link audit", () => {
 
   /**
    * Routes rendered with real page components (not <Navigate> redirects, not
-   * the "*" catch-all, and not the /auth/action email-link transactional
-   * handler). Every one of these must be reachable from the CommandPalette.
+   * the "*" catch-all, not the /auth/action email-link transactional handler,
+   * and not the /auth/hf/callback OAuth redirect target — the browser only
+   * lands there by huggingface.co's redirect, never by palette navigation).
+   * Every one of these must be reachable from the CommandPalette.
    */
-  const PALETTE_ROUTE_EXCEPTIONS = new Set(["/auth/action"]);
+  const PALETTE_ROUTE_EXCEPTIONS = new Set(["/auth/action", "/auth/hf/callback"]);
   const renderedStaticRoutes = appSource
     .split("\n")
     .filter((line) => line.includes('path="') && line.includes("element="))

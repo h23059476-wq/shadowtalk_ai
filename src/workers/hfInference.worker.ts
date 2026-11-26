@@ -139,7 +139,15 @@ async function createPipeline(
   requestId: string,
 ): Promise<{ pipeline: unknown; device: "webgpu" | "wasm"; downgraded: boolean }> {
   const model = definitionFor(payload);
-  const forceWasm = !!payload.forceWasm || !("gpu" in navigator);
+  // A failed WebGPU pipeline attempt POISONS onnxruntime's backend registry
+  // for this worker process: after it, even device:"wasm" sessions die with
+  // the cached "[webgpu] Failed to get GPU adapter" error (physically
+  // reproduced in Chrome 158 — a fresh call with device:"wasm" succeeds
+  // before any webgpu attempt and fails after one). So the webgpu rungs may
+  // only run when a REAL adapter exists — `"gpu" in navigator` is not enough
+  // (headless Chrome and driverless Chrome both expose navigator.gpu with
+  // requestAdapter() → null).
+  const forceWasm = !!payload.forceWasm || !(await webgpuAdapterAvailable());
   const ladder = deviceDtypeLadder(model, forceWasm);
   const requestedDevice = forceWasm ? "wasm" : "webgpu";
   resetProgressTracking();
@@ -159,7 +167,14 @@ async function createPipeline(
       lastError = error;
       const kind = classifyHfError(error instanceof Error ? error.message : String(error));
       console.warn(`[hf.worker] init failed on ${rung.device} (${kind}) — trying next rung`, error);
-      if (kind === "download" || kind === "unsupported") throw error; // no point walking further
+      // ALWAYS walk to the next rung when one exists. The old early-throw
+      // ("download"/"unsupported") misclassified WebGPU backend-init failures
+      // whose message contains "fetch" (e.g. "no available backend found.
+      // ERR: [webgpu] TypeError: Failed to fetch dynamically imported module:
+      // ort-wasm-simd-threaded.jsep.mjs") as download errors — a fully
+      // downloaded model then dead-ended instead of falling back to WASM.
+      // Dtype also differs per rung, so a webgpu-rung file miss can still
+      // succeed on the WASM rung. Duplicate downloads are bounded and cached.
     }
   }
   throw lastError ?? new Error("Pipeline initialization failed on every device.");
@@ -167,6 +182,30 @@ async function createPipeline(
 
 function pipelineKey(task: string, model: string): string {
   return `${task}:${model}`;
+}
+
+/**
+ * Real WebGPU adapter probe, resolved once per worker. Catches the
+ * headless/driverless-Chrome case where `navigator.gpu` exists but
+ * `requestAdapter()` resolves null — attempting the webgpu rung there would
+ * poison the wasm fallback for this process (see createPipeline).
+ */
+let adapterProbePromise: Promise<boolean> | null = null;
+function webgpuAdapterAvailable(): Promise<boolean> {
+  adapterProbePromise ??= (async () => {
+    try {
+      const gpu = (navigator as Navigator & { gpu?: { requestAdapter(o?: unknown): Promise<unknown | null> } }).gpu;
+      if (!gpu) return false;
+      const adapter = await Promise.race([
+        gpu.requestAdapter(),
+        new Promise((resolve) => setTimeout(() => resolve(null), 3_000)),
+      ]);
+      return adapter != null;
+    } catch {
+      return false;
+    }
+  })();
+  return adapterProbePromise;
 }
 
 // ── Task runners (every result echoes the request id) ────────────────────

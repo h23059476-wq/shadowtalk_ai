@@ -43,7 +43,16 @@ import {
 import { detectDeviceCapabilities, getDeviceMemoryGB, requestPersistentStorage, getStorageQuota } from "@/utils/deviceCapabilities";
 import { getInstallDecision, hasDeviceInstallConsent, markDeviceInstallConsent } from "@/offline/BackgroundInstall";
 import { buildMirrorAppConfig, isBuiltInMirroredModelId } from "@/offline/modelMirror";
-import type { CloudChatMessage, CloudChatOptions, CloudChatResult } from "@/lib/cloudChat";
+import type { CloudChatContent, CloudChatMessage, CloudChatOptions, CloudChatResult } from "@/lib/cloudChat";
+
+/** The HF worker chat contract takes plain text — flatten multimodal parts. */
+function flattenCloudContent(content: CloudChatContent): string {
+  if (typeof content === "string") return content;
+  return content
+    .filter((p) => p.type === "text")
+    .map((p) => (p as { type: "text"; text: string }).text)
+    .join("\n");
+}
 
 export type ModelManagerPhase =
   | "idle"
@@ -294,7 +303,7 @@ export interface ChatCompletionOptions {
  * actions — no surprise multi-hundred-MB downloads mid-chat).
  */
 async function tryHfChatFallback(
-  messages: ChatCompletionMessage[],
+  messages: CloudChatMessage[],
   options: ChatCompletionOptions,
 ): Promise<CloudChatResult | null> {
   try {
@@ -313,7 +322,7 @@ async function tryHfChatFallback(
     if (!pick) return null;
     const client = getLocalInferenceClient();
     const result = await client.chat(
-      messages.map((m) => ({ role: m.role, content: m.content })),
+      messages.map((m) => ({ role: m.role, content: flattenCloudContent(m.content) })),
       {
         model: pick,
         temperature: options.temperature,
@@ -334,6 +343,20 @@ async function tryHfChatFallback(
       modelUsed: "hf-fallback",
     };
   }
+}
+
+/**
+ * Public Tier-1 fallback for the main chat page: run the request on the HF
+ * transformers worker (Qwen2.5 0.5B/1.5B q4, WASM-capable) when the web-llm
+ * engine cannot serve it. Only engages when an HF chat model is ALREADY
+ * cached — explicit installs only, never a surprise download. Returns null
+ * when no cached HF chat model exists (caller keeps its own fallback chain).
+ */
+export function generateHfChatFallback(
+  messages: CloudChatMessage[],
+  options: ChatCompletionOptions = {},
+): Promise<CloudChatResult | null> {
+  return tryHfChatFallback(messages, options);
 }
 
 /**

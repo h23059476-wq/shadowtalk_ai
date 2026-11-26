@@ -45,14 +45,47 @@ export function useChatSpeech() {
   const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
   const recognitionRef = useRef<any>(null);
   const localRecordingRef = useRef<LocalRecording | null>(null);
+  /** Transcript callback captured at dictation start, consumed on stop. */
+  const localTranscriptCbRef = useRef<((text: string) => void) | null>(null);
 
   const stopListening = useCallback(() => {
     recognitionRef.current?.stop();
     recognitionRef.current = null;
-    localRecordingRef.current?.cancel();
+    const recording = localRecordingRef.current;
+    const onTranscript = localTranscriptCbRef.current;
     localRecordingRef.current = null;
+    localTranscriptCbRef.current = null;
     setIsListening(false);
-  }, []);
+    if (!recording) return;
+    // Second click finalizes offline dictation: stop the capture, decode the
+    // PCM and transcribe on-device. (The old flow called recording.stop()
+    // immediately after start — the mic captured ~0ms and whisper could never
+    // receive a usable clip, so offline dictation could not actually work.)
+    void (async () => {
+      try {
+        const pcm = await recording.stop();
+        if (pcm.length < 1600) {
+          toast({ title: "Nothing audible", description: "The recording was too short — hold the conversation longer before stopping." });
+          return;
+        }
+        const client = getLocalInferenceClient();
+        const result = await client.transcribeAudio(pcm);
+        const text = result.text?.trim();
+        if (text && onTranscript) {
+          onTranscript(text);
+        } else {
+          toast({ title: "Nothing audible", description: "No speech was detected in the recording." });
+        }
+      } catch (error) {
+        toast({
+          title: "Offline transcription unavailable",
+          description:
+            error instanceof Error ? error.message : "The on-device speech model could not run.",
+          variant: "destructive",
+        });
+      }
+    })();
+  }, [toast]);
 
   /** Offline dictation path: record → decode 16 kHz mono → whisper via worker. */
   const startLocalDictation = useCallback(
@@ -60,25 +93,14 @@ export function useChatSpeech() {
       (async () => {
         try {
           const recording = await startLocalRecording();
+          localTranscriptCbRef.current = onTranscript;
           localRecordingRef.current = recording;
           setIsListening(true);
-          const pcm = await recording.stop();
-          localRecordingRef.current = null;
-          setIsListening(false);
-          if (pcm.length < 1600) {
-            // <0.1s of audio — nothing intelligible to transcribe.
-            return;
-          }
-          const client = getLocalInferenceClient();
-          const result = await client.transcribeAudio(pcm);
-          const text = result.text?.trim();
-          if (text) {
-            onTranscript(text);
-          } else {
-            toast({ title: "Nothing audible", description: "No speech was detected in the recording." });
-          }
+          // Recording keeps running until the user clicks the mic again —
+          // stopListening() finalizes the clip and runs whisper on-device.
         } catch (error) {
           localRecordingRef.current = null;
+          localTranscriptCbRef.current = null;
           setIsListening(false);
           toast({
             title: "Offline transcription unavailable",

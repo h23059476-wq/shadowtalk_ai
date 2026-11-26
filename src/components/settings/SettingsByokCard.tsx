@@ -43,6 +43,43 @@ export function SettingsByokCard() {
   const [saved, setSaved] = useState(Boolean(existing));
   const validation = useApiKeyValidation();
 
+  // Tier 2 — Hugging Face account connection (OAuth + PKCE). The stored token
+  // feeds BOTH the Inference Router (chat) and the free ZeroGPU image path.
+  const [hfState, setHfState] = useState<{ connected: boolean; username?: string; oauthConfigured: boolean }>({
+    connected: false,
+    oauthConfigured: false,
+  });
+  useEffect(() => {
+    void (async () => {
+      const [{ isHfAccountConnected, getHfCredentials }, { isHfOAuthConfigured }] = await Promise.all([
+        import("@/lib/auth/hfCredentials"),
+        import("@/lib/auth/hfOAuth"),
+      ]);
+      const creds = await getHfCredentials();
+      setHfState({ connected: await isHfAccountConnected(), username: creds?.username, oauthConfigured: isHfOAuthConfigured() });
+    })();
+  }, []);
+
+  const connectHf = async () => {
+    const { startHfSignIn, isHfOAuthConfigured } = await import("@/lib/auth/hfOAuth");
+    if (!isHfOAuthConfigured()) {
+      toast.error("This deployment has no Hugging Face OAuth client configured (missing VITE_HF_CLIENT_ID).");
+      return;
+    }
+    try {
+      window.location.href = await startHfSignIn();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not start the Hugging Face sign-in.");
+    }
+  };
+
+  const disconnectHf = async () => {
+    const { disconnectHfAccount } = await import("@/lib/auth/hfOAuth");
+    await disconnectHfAccount();
+    setHfState((s) => ({ ...s, connected: false, username: undefined }));
+    toast.success("Hugging Face account disconnected — the token was removed from this device.");
+  };
+
   // Re-check a saved key when the window opens so its model list loads again.
   useEffect(() => {
     if (existing?.apiKey) validation.validate(existing.provider, existing.apiKey);
@@ -218,6 +255,37 @@ export function SettingsByokCard() {
           <Button onClick={save}>Save</Button>
           <Button variant="outline" onClick={test} disabled={testing}>{testing ? "Testing..." : "Test key"}</Button>
           {saved && <Button variant="ghost" onClick={remove}>Remove</Button>}
+        </div>
+
+        {/* Tier 2 — Sign in with Hugging Face (OAuth + PKCE). Token stored in the
+            encrypted SecureStore; feeds the Inference Router + ZeroGPU image path. */}
+        <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-3 space-y-2">
+          <p className="text-sm font-medium flex items-center gap-2">
+            <ExternalLink className="h-3.5 w-3.5 text-amber-400" />
+            Hugging Face account
+            {hfState.connected && (
+              <span className="text-[10px] rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 px-2 py-0.5">
+                connected{hfState.username ? `: @${hfState.username}` : ""}
+              </span>
+            )}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            {hfState.connected
+              ? "Chat can run on the Hugging Face Inference Router (your account's free monthly inference credits), and free image generation rides your personal ZeroGPU quota with queue priority. The token stays in this device's encrypted store."
+              : "Sign in to run chat on Hugging Face's Inference Router with your account's free monthly inference credits, and give free image generation your personal ZeroGPU quota with queue priority. The token never touches localStorage."}
+          </p>
+          {hfState.connected ? (
+            <Button variant="outline" size="sm" onClick={disconnectHf}>Disconnect Hugging Face</Button>
+          ) : (
+            <Button size="sm" onClick={connectHf} disabled={!hfState.oauthConfigured}>
+              Connect Hugging Face
+            </Button>
+          )}
+          {!hfState.oauthConfigured && (
+            <p className="text-[10px] text-muted-foreground/70">
+              Deployment config: set VITE_HF_CLIENT_ID (OAuth client at huggingface.co/settings/connected-applications, redirect URI “{window.location.origin}/auth/hf/callback”).
+            </p>
+          )}
         </div>
       </CardContent>
     </Card>

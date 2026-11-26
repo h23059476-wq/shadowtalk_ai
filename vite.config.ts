@@ -1,8 +1,36 @@
 import { defineConfig } from 'vite';
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import fs from "node:fs";
 
 import { VitePWA } from 'vite-plugin-pwa';
+
+/**
+ * DEV ONLY — serve the pinned onnxruntime-web loader files raw.
+ *
+ * onnxruntime-web loads its WASM backend with a runtime `import(<url>)`. In
+ * vite dev the request arrives with the `?import` transform suffix, and vite
+ * REFUSES to serve /public files as modules ("should not be imported from
+ * source code" → HTTP 500), which made every Tier-1 pipeline init fail even
+ * though the loader file itself is perfectly servable raw. Production is
+ * unaffected (public/ is served as-is). The middleware intercepts /onnx/**
+ * before vite's transform and streams the file bytes directly.
+ */
+const rawOrtOnnxDevServer = {
+  name: "shadowtalk-raw-ort-onnx-dev",
+  configureServer(server: import("vite").ViteDevServer) {
+    server.middlewares.use((req, res, next) => {
+      const url = req.url || "";
+      if (!url.startsWith("/onnx/") || !url.includes("import")) return next();
+      const cleanUrl = url.split("?")[0];
+      const file = path.resolve(__dirname, "public", cleanUrl.replace(/^\//, ""));
+      if (!fs.existsSync(file)) return next();
+      res.setHeader("Content-Type", file.endsWith(".wasm") ? "application/wasm" : "text/javascript");
+      res.setHeader("Cache-Control", "no-cache");
+      fs.createReadStream(file).pipe(res);
+    });
+  },
+};
 
 // ShadowTalk AI — Vite build configuration.
 // (Historical note: this file was once part of a "ShadowScan MVP" experiment
@@ -13,6 +41,13 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: '/',
+    // Tier-1 inference loads @huggingface/transformers dynamically INSIDE a
+    // module worker — the dev dep-optimizer's scan never discovers that path,
+    // so a fresh cache (clean clone / wiped node_modules/.vite) 404s the dep
+    // chunk at runtime. Declaring it here makes the chunk always exist.
+    optimizeDeps: {
+      include: ["@huggingface/transformers"],
+    },
     server: {
       host: "::",
       port: 8080,
@@ -40,6 +75,7 @@ export default defineConfig(({ mode }) => {
       }
     },
     plugins: [
+      rawOrtOnnxDevServer,
       react(),
       VitePWA({
         registerType: 'autoUpdate',

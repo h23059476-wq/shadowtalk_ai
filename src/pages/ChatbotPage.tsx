@@ -1661,11 +1661,24 @@ Structure and Content Guidelines:
           // Context-fit before the engine: the full persona system prompt can
           // exceed the 2k-token local window even when the payload passed the
           // escalation check. Keeps identity/tone, newest turns verbatim.
-          const localResult = await localInferenceEngine.generate(fitMessagesToLocal(cloudMessages), {
+          let localResult = await localInferenceEngine.generate(fitMessagesToLocal(cloudMessages), {
             signal: controller.signal,
             temperature: 0.7,
             onDelta: (accumulated) => pushAssistant(accumulated),
           });
+
+          // The web-llm engine acknowledged ready but failed to serve the
+          // turn (GPU-lost, OOM, crashed mid-init). Before dead-ending, offer
+          // the Tier-1 HF worker (WASM) when its weights are already cached.
+          if (localResult.error && !localResult.content) {
+            const { generateHfChatFallback } = await import("@/services/modelManager");
+            const hfFallback = await generateHfChatFallback(fitMessagesToLocal(cloudMessages), {
+              signal: controller.signal,
+              temperature: 0.7,
+              onDelta: (accumulated) => pushAssistant(accumulated),
+            });
+            if (hfFallback && (hfFallback.content || hfFallback.error)) localResult = hfFallback;
+          }
 
           if (localResult.error && !localResult.content) {
             // Local generation failed — surface the error honestly.
@@ -1719,6 +1732,42 @@ Structure and Content Guidelines:
             { deviceRun: true, cloudUpload: false, model: localResult.modelUsed },
           ).catch(() => {});
           return localResult.content || undefined;
+        }
+
+        // WebGPU-less device (or web-llm engine never activated): the Tier-1
+        // HF transformers worker — Qwen2.5 q4 on WASM — is the ONLY on-device
+        // chat path here. Runs ONLINE and OFFLINE alike (cached weights need
+        // no network); only engages when its weights are ALREADY cached
+        // (explicit installs; never a surprise multi-hundred-MB download).
+        {
+          const { generateHfChatFallback } = await import("@/services/modelManager");
+          const hfFallback = await generateHfChatFallback(fitMessagesToLocal(cloudMessages), {
+            signal: controller.signal,
+            temperature: 0.7,
+            onDelta: (accumulated) => pushAssistant(accumulated),
+          });
+          if (hfFallback && !hfFallback.error && hfFallback.content) {
+            pushAssistant(hfFallback.content);
+            finalizeAssistant();
+            session.recordModelCall();
+            if (user) {
+              void saveMessage(hfFallback.content, "assistant", conversationId, buildMessageMetadata({
+                source: "local",
+              })).catch((e) => console.warn("[chat] saveMessage(assistant/local) failed", e));
+            }
+            if (hfFallback.content.trim().length > 0) {
+              recordSuccessfulChatSession();
+              recordFunnelEvent("first_reply");
+              markHasChatted();
+            }
+            void logMemoryEvent(
+              "chat",
+              "On-device inference completed",
+              `Reply generated locally by ${hfFallback.modelUsed || "the on-device fallback model"} — nothing left this browser.`,
+              { deviceRun: true, cloudUpload: false, model: hfFallback.modelUsed },
+            ).catch(() => {});
+            return hfFallback.content;
+          }
         }
 
         if (isOffline) {
