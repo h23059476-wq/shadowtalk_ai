@@ -132,20 +132,10 @@ import {
 import { reflectOnConversation, shouldReflect, type MemoryReflection } from "@/lib/memory/reflectionEngine";
 import { getActiveMemories, maybeReflectAndPersist } from "@/lib/memory/agentMemories";
 import { buildMemoryContext } from "@/lib/memory/promptInjector";
-// Batch R1 (Research-to-Visualization): structured research capture.
-import type { Citation, ResearchDataBlock } from "@/lib/visualization/types";
-import { extractResearchDataBlocks } from "@/lib/visualization/dataDoc";
-// Batch 2: visualization specs, planning and chat pipeline.
-import type { VizSpecKind, VisualizationSpec } from "@/lib/visualization/spec";
-import { transformKind } from "@/lib/visualization/planner";
-import { detectVisualizationIntent } from "@/lib/visualization/intentDetector";
-import {
-  handleVisualizationRequest,
-  lastVisualizationSpec,
-  type PipelineMessage,
-} from "@/lib/visualization/chatPipeline";
-// Batch 3: AI-assisted conceptual generation — model/research call contracts.
-import type { ConceptModelCall, ConceptResearchCall } from "@/lib/visualization/conceptual/modelBridge";
+// Research capture — structured research citations + ```shadowdata datasets.
+import type { Citation, ResearchDataBlock } from "@/lib/research/types";
+import { extractResearchDataBlocks } from "@/lib/research/dataDoc";
+// Studio visuals — the self-correcting message handler + JSON-to-engine contract.
 import { buildMessageMetadata, encodeMessageMetadata, decodeMessageMetadata, type ChatMessageMetadata, type TokenTelemetry } from "@/lib/chatMessageMetadata";
 // Intelligent Workspace Batch 1 — Dynamic Token Optimizer.
 import {
@@ -192,8 +182,6 @@ interface Message {
   tokenTelemetry?: TokenTelemetry;
   /** Batch R1 — structured research datasets captured from ```shadowdata blocks. */
   researchData?: ResearchDataBlock[];
-  /** Batch 2 — visualization artifact (validated spec) attached to this reply. */
-  visualization?: VisualizationSpec;
 }
 type Conversation = {
   id: string;
@@ -587,9 +575,6 @@ const ChatbotPage = () => {
             ...(meta?.source ? { source: meta.source } : {}),
             ...(meta?.modelUsed ? { modelUsed: meta.modelUsed } : {}),
             ...(meta?.provider ? { provider: meta.provider } : {}),
-            // Batch 2 — restored visualization artifacts survive reloads
-            // (decodeMessageMetadata re-validates the spec before restore).
-            ...(meta?.visualizations?.length ? { visualization: meta.visualizations[0] } : {}),
           };
         }),
       );
@@ -1993,162 +1978,67 @@ Structure and Content Guidelines:
     }
   };
 
-  // =================== Batch 2 — visualization pipeline ===================
-  // Handles /visualize + natural-language visualization intents. The pipeline
-  // (src/lib/visualization/chatPipeline.ts) is deterministic: it resolves the
-  // session's research context, plans/validates a spec, and returns honest
-  // text on any failure. This wrapper only wires React state + persistence.
+  // =================== Studio visuals — self-correction ===================
+  // The JSON-to-engine renderer (src/components/visual) validates every
+  // ```shadowvisual payload before rendering. When a payload still fails
+  // (bad JSON, broken mermaid), this silent 1-step retry asks the model to
+  // re-emit corrected JSON with the exact error message. The renderer calls
+  // this ONCE per payload, so there is no correction loop.
 
-  /** Firestore row ids for assistant messages (metadata updates on transforms). */
-  const vizRowIdsRef = useRef<Map<string, string>>(new Map());
-  const [vizTransformNotes, setVizTransformNotes] = useState<Record<string, string>>({});
-
-  const toPipelineMessages = (list: Message[]): PipelineMessage[] =>
-    list
-      .filter((m) => m.id !== "welcome")
-      .map((m) => ({
-        id: m.id,
-        type: m.type,
-        content: m.content,
-        ...(m.citations?.length ? { citations: m.citations } : {}),
-        ...(m.researchData?.length ? { researchData: m.researchData } : {}),
-        ...(m.toolExecution ? { toolExecution: { tool: m.toolExecution.tool, status: m.toolExecution.status } } : {}),
-        ...(m.visualization ? { visualization: m.visualization } : {}),
-      }));
-
-  /**
-   * Batch 3 — BYOK model completion for AI-assisted conceptual diagrams.
-   * Uses streamCloudChat, which respects the user's access mode and their
-   * OWN key (BYOK-only preserved; no shared keys, no provider switching).
-   * structuredOutput requests JSON from the provider when supported.
-   */
-  const vizModelCall: ConceptModelCall = useCallback(async ({ system, user, maxTokens, structuredOutput }) => {
-    const res = await streamCloudChat(
-      [
-        { role: "system", content: system },
-        { role: "user", content: user },
-      ],
-      {
-        ...(structuredOutput ? { structuredOutput: true } : {}),
-        maxTokens: maxTokens ?? 2000,
-      },
-    );
-    if (res.error) throw new Error(res.error);
-    return { content: res.content, ...(res.citations?.length ? { citations: res.citations } : {}) };
-  }, []);
-
-  /**
-   * Batch 3 — gap-driven research call. Uses the existing web_search tool
-   * (provider-backed, citation-preserving — Batch R1). Throws propagate;
-   * the pipeline converts them into honest limitation notes.
-   */
-  const vizResearchCall: ConceptResearchCall = useCallback(
-    async ({ query }) => {
-      const res = await executeShadowTool("web_search", { query }, query, {
-        personality,
-        mode: chatMode,
-      });
-      if (res.kind !== "inline") throw new Error("Research tool did not return text results.");
-      return { content: res.content, ...(res.citations?.length ? { citations: res.citations } : {}) };
-    },
-    [personality, chatMode],
-  );
-
-  const runVisualizationRequest = async (
-    intent: { kind: "create" | "refine" | "explain"; requestedType?: import("@/lib/visualization/types").VizTypeHint; timeRange?: string; compareTarget?: string; interactive?: boolean; confidence: number },
-    requestText: string,
-    sessionMessages: Message[],
-  ) => {
-    const vizMessageId = (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `viz-${Date.now()}`);
-    setIsLoading(true);
-    setMessages((prev) => [...prev, { id: vizMessageId, type: "ai", content: "", timestamp: new Date() }]);
-    try {
-      const outcome = await handleVisualizationRequest({
-        intent,
-        request: requestText,
-        messages: toPipelineMessages(sessionMessages),
-        // Batch 3 — AI-assisted conceptual generation + gap-driven research.
-        model: vizModelCall,
-        research: vizResearchCall,
-      });
-      setMessages((prev) =>
-        prev.map((m) =>
-          m.id === vizMessageId
-            ? {
-                ...m,
-                content: outcome.content,
-                ...(outcome.spec ? { visualization: outcome.spec } : {}),
-                ...(outcome.citations?.length ? { citations: outcome.citations } : {}),
-              }
-            : m,
-        ),
-      );
-      recordSuccessfulChatSession();
-      // Persist through the SAME encrypt-or-null metadata gate as chat
-      // content (approved D4 approach). Guest conversations skip storage.
-      const conversationId = await resolveConversationId();
-      if (user && conversationId && !isGuestConversationId(conversationId)) {
-        const row = await saveMessage(
-          outcome.content,
-          "assistant",
-          conversationId,
-          buildMessageMetadata({
-            citations: outcome.citations,
-            source: "shadowviz",
-            tool: "visualization",
-            visualizations: outcome.spec ? [outcome.spec] : undefined,
-          }),
-        ).catch((e) => {
-          console.warn("[viz] saveMessage(visualization) failed", e);
-          return null;
+  const handleVisualSelfCorrect = useCallback(
+    async (rawPayload: string, error: string) => {
+      try {
+        const res = await streamCloudChat(
+          [
+            {
+              role: "system",
+              content:
+                "You fix broken ShadowTalk visual payloads. Re-emit ONLY one fenced code block tagged shadowvisual containing pure corrected JSON (mode: chart | diagram | infographic). No prose, no markdown inside the fence.",
+            },
+            {
+              role: "user",
+              content: [
+                "Your previous visual payload failed to render with this exact error:",
+                error,
+                "",
+                "Failed payload:",
+                rawPayload.slice(0, 4000),
+                "",
+                "Re-emit the corrected shadowvisual block now. Keep every data value; fix only what the error describes.",
+              ].join("\n"),
+            },
+          ],
+          { maxTokens: 2000 },
+        );
+        if (res.error || !res.content) return;
+        const match = res.content.match(/```shadowvisual\s*\n([\s\S]*?)```/i);
+        const corrected = match ? match[1].trim() : null;
+        if (!corrected) return;
+        // Replace the failing fence in the most recent assistant message that
+        // carries this payload, so the corrected visual renders in place.
+        setMessages((prev) => {
+          for (let i = prev.length - 1; i >= 0; i--) {
+            const m = prev[i];
+            if (m.type !== "ai" || !m.content.includes(rawPayload.slice(0, 200))) continue;
+            const idx = m.content.indexOf(rawPayload.slice(0, 200));
+            const fenceStart = m.content.lastIndexOf("```shadowvisual", idx);
+            if (fenceStart === -1) continue;
+            const fenceEnd = m.content.indexOf("```", idx + rawPayload.slice(0, 200).length);
+            const nextContent =
+              fenceEnd === -1
+                ? m.content.slice(0, fenceStart) + "```shadowvisual\n" + corrected + "\n```"
+                : m.content.slice(0, fenceStart) + "```shadowvisual\n" + corrected + "\n```" + m.content.slice(fenceEnd + 3);
+            const updated = { ...m, content: nextContent };
+            return [...prev.slice(0, i), updated, ...prev.slice(i + 1)];
+          }
+          return prev;
         });
-        if (row?.id) vizRowIdsRef.current.set(vizMessageId, row.id);
+      } catch {
+        // Silent by design — the graceful error card remains visible.
       }
-    } catch (err) {
-      const errMsg = err instanceof Error ? err.message : "Visualization failed.";
-      setMessages((prev) => prev.map((m) => (m.id === vizMessageId ? { ...m, content: `⚠️ ${errMsg}` } : m)));
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  /** Type-switch handler wired into the visualization card toolbar. */
-  const handleVizTransform = async (messageId: string, spec: VisualizationSpec, targetKind: VizSpecKind) => {
-    const result = transformKind(spec, targetKind, new Date());
-    if (result.status === "unavailable") {
-      setVizTransformNotes((prev) => ({ ...prev, [messageId]: result.reason }));
-      return;
-    }
-    setVizTransformNotes((prev) => {
-      const next = { ...prev };
-      delete next[messageId];
-      return next;
-    });
-    setMessages((prev) => prev.map((m) => (m.id === messageId ? { ...m, visualization: result.spec } : m)));
-    // Persist the transform on the stored row so it survives reloads.
-    const rowId = vizRowIdsRef.current.get(messageId) ?? messageId;
-    const msg = messages.find((m) => m.id === messageId);
-    const conversationId = await resolveConversationId();
-    if (!user || !msg || !conversationId || isGuestConversationId(conversationId)) return;
-    try {
-      const metadata = buildMessageMetadata({
-        citations: msg.citations,
-        researchData: msg.researchData,
-        source: msg.source,
-        modelUsed: msg.modelUsed,
-        provider: msg.provider,
-        tool: "visualization",
-        visualizations: [result.spec],
-      });
-      const toSave = await encodeMessageMetadata(metadata, (plain) => chatPrivate.wrapForStorage(plain));
-      // Private-mode encryption failure → skip the update (never plaintext).
-      if (toSave) {
-        await backend.from("messages").update({ metadata: toSave }).eq("id", rowId);
-      }
-    } catch (e) {
-      console.warn("[viz] persist transform failed", e);
-    }
-  };
+    },
+    [],
+  );
 
   const handleSendMessage = async (overrideText?: string) => {
     const msgContent = (overrideText ?? message).trim();
@@ -2218,29 +2108,6 @@ Structure and Content Guidelines:
 
     // Yield briefly to allow the browser to paint the optimistic updates
     await new Promise(resolve => requestAnimationFrame(resolve));
-
-    // === Batch 2 — visualization intents (/visualize + natural language) ===
-    // Runs BEFORE tool interception so "/visualize …" is never hijacked by
-    // another tool, and so viz requests resolve the session's research
-    // context instead of starting unrelated research. Attachments take the
-    // normal chat path (visualizations analyze structured data, not files).
-    if (!selectedFile) {
-      const vizIntent = detectVisualizationIntent(msgContent);
-      const hasLiveSpec = lastVisualizationSpec(toPipelineMessages(messages)) !== null;
-      const bareCompareMatch = vizIntent
-        ? null
-        : msgContent.match(/\bcompare\s+[\w.-]+\s+(?:with|vs\.?|versus|against|and)\s+([\w .-]{2,40}?)(?=\s+(?:in|on|as|using|over|under|during|for|per|to)\b|[.?!]|$)/i);
-      const vizBareCompare = !vizIntent && hasLiveSpec && bareCompareMatch !== null;
-      if (vizIntent || vizBareCompare) {
-        const intent = vizIntent ?? {
-          kind: "refine" as const,
-          compareTarget: bareCompareMatch?.[1]?.trim(),
-          confidence: 0.7,
-        };
-        await runVisualizationRequest(intent, msgContent, [...messages, userMessage]);
-        return;
-      }
-    }
 
     // === Tool interception ===
     // Check if the message triggers a tool (image generation, web search, etc.)
@@ -3186,8 +3053,7 @@ Structure and Content Guidelines:
                     enterpriseShare={enterprise.isEnterpriseUser}
                     includeReferralInShare={enterprise.includeReferralInShare}
                     onConfirmTool={handleConfirmTool}
-                    onVizTransform={handleVizTransform}
-                    vizTransformNotes={vizTransformNotes}
+                    onVisualSelfCorrect={handleVisualSelfCorrect}
                     messagesEndRef={messagesEndRef}
                     layout="gemini"
                   />

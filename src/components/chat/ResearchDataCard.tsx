@@ -7,7 +7,7 @@
 
 import React from "react";
 import { Database, AlertTriangle } from "lucide-react";
-import { extractResearchDataBlocks } from "@/lib/visualization/dataDoc";
+import { extractResearchDataBlocks } from "@/lib/research/dataDoc";
 
 interface ResearchDataCardProps {
   /** Raw JSON body of the ```shadowdata fence. */

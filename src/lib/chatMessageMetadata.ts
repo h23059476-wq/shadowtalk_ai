@@ -18,9 +18,7 @@
  *    metadata feeds trusted renderers only as typed, sanitized fields.
  */
 
-import type { Citation, ResearchDataBlock } from "@/lib/visualization/types";
-import { parseVisualizationSpec } from "@/lib/visualization/spec";
-import type { VisualizationSpec } from "@/lib/visualization/spec";
+import type { Citation, ResearchDataBlock } from "@/lib/research/types";
 
 export interface ChatMessageMetadata {
   /** Provider-reported citations (web research). */
@@ -33,8 +31,6 @@ export interface ChatMessageMetadata {
   provider?: string;
   /** Tool that produced this message, when applicable. */
   tool?: string;
-  /** Batch 2 — validated visualization artifacts attached to this reply. */
-  visualizations?: VisualizationSpec[];
   /** Intelligent-workspace Batch 1 — honest per-turn token/cost accounting. */
   tokenTelemetry?: TokenTelemetry;
   /** Intelligent-workspace Batch 2 — retrieved document context for this reply. */
@@ -120,15 +116,6 @@ export function buildMessageMetadata(
   if (parts.modelUsed) cleaned.modelUsed = parts.modelUsed;
   if (parts.provider) cleaned.provider = parts.provider;
   if (parts.tool) cleaned.tool = parts.tool;
-  // Batch 2 — at most ONE visualization artifact per message; only specs
-  // that pass full validation are persisted.
-  if (parts.visualizations && parts.visualizations.length > 0) {
-    const valid = parts.visualizations
-      .slice(0, 1)
-      .map((v) => parseVisualizationSpec(v))
-      .filter((v): v is VisualizationSpec => v !== null);
-    if (valid.length > 0) cleaned.visualizations = valid;
-  }
   // Intelligent-workspace Batch 1 — telemetry passes through only when the
   // required numeric shape validates.
   if (parts.tokenTelemetry && isValidTokenTelemetry(parts.tokenTelemetry)) {
@@ -199,7 +186,6 @@ export async function decodeMessageMetadata(
     modelUsed: typeof meta.modelUsed === "string" ? meta.modelUsed : undefined,
     provider: typeof meta.provider === "string" ? meta.provider : undefined,
     tool: typeof meta.tool === "string" ? meta.tool : undefined,
-    visualizations: Array.isArray(meta.visualizations) ? meta.visualizations : undefined,
     tokenTelemetry: isValidTokenTelemetry(meta.tokenTelemetry) ? meta.tokenTelemetry : undefined,
     rag: isValidRagContext(meta.rag) ? meta.rag : undefined,
   });

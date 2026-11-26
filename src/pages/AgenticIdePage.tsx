@@ -16,7 +16,7 @@ import { IdeExplorer } from "@/components/ide/IdeExplorer";
 import { IdeTemplatePicker, IDE_TEMPLATES } from "@/components/ide/IdeTemplatePicker";
 import { SHADOWTALK_MONACO_THEME, defineShadowTalkTheme } from "@/lib/ide/monacoTheme";
 import { inferLanguageFromName } from "@/lib/ide/agentProtocol";
-import { validateSvg, svgToRasterBlob, downloadBlob, codedImageFileName } from "@/lib/codedImages";
+import { validateSvg, svgToRasterBlob, downloadBlob, codedImageFileName } from "@/lib/ide/svgPreview";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 const IdeAgentPanel = lazy(() => import("@/components/ide/IdeAgentPanel").then(m => ({ default: m.IdeAgentPanel })));
@@ -531,10 +531,6 @@ export default function AgenticIdePage() {
             files={julesFiles}
             activeFileName={activeFile || undefined}
             onApplyChanges={handleApplyChanges}
-            onCreateFile={(name, content) => {
-              addFile(name, content);
-              setPanel("editor");
-            }}
           />
         </Suspense>
       </div>
@@ -575,7 +571,7 @@ export default function AgenticIdePage() {
       <SEOHead
         meta={{
           title: "Agentic IDE — code, run and ship in the browser | ShadowTalk AI",
-          description: "A redesigned in-browser IDE with a ShadowTalk theme: Monaco editor, live multi-device preview, an AI agent that edits files and draws SVG images you can export as PNG/JPG, and a ZIP export. Keyless or BYOK AI — nothing to install.",
+          description: "A redesigned in-browser IDE with a ShadowTalk theme: Monaco editor, live multi-device preview, an AI agent that edits files and renders studio-grade charts, diagrams and infographics from JSON, and a ZIP export. Keyless or BYOK AI — nothing to install.",
           canonical: "https://www.shadowtalk-ai.com/ide",
         }}
       />
@@ -846,7 +842,7 @@ function EmptyWorkspace({ onStart }: { onStart: () => void }) {
           </h2>
           <p className="text-xs text-muted-foreground leading-relaxed">
             Write code with a full editor, hit Preview to run it instantly, and let the AI Agent
-            build features, fix bugs and even draw SVG images you can export as PNG or JPG.
+            build features, fix bugs and render studio-grade visuals you can export as PNG.
           </p>
         </div>
         <Button onClick={onStart} className="gap-2 bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90">

@@ -8,10 +8,13 @@ import {
 } from "../agentProtocol";
 
 describe("buildIdeAgentSystemPrompt", () => {
-  it("agent mode teaches the file-path fence contract and SVG rule", () => {
+  it("agent mode teaches the file-path fence contract and the shadowvisual JSON rule", () => {
     const prompt = buildIdeAgentSystemPrompt("agent");
     expect(prompt).toContain("path=app.js");
-    expect(prompt).toContain("```svg");
+    expect(prompt).toContain("shadowvisual");
+    expect(prompt).toContain("PURE JSON");
+    // Raw drawing instructions are gone — the model is forced to the JSON engines.
+    expect(prompt).not.toContain("```svg");
     expect(prompt).toContain("COMPLETE file content");
   });
 
@@ -105,18 +108,19 @@ describe("parseAgentResponse", () => {
     expect(normalizePath("")).toBe("");
   });
 
-  it("turns plain svg fences into image segments via validateSvg", () => {
-    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="60"><rect width="120" height="60" fill="#123"/></svg>';
-    const reply = `drawing:\n\`\`\`svg\n${svg}\n\`\`\``;
+  it("turns shadowvisual fences into visual segments", () => {
+    const payload = '{"mode":"chart","title":"T","chartType":"line","labels":["a"],"series":[{"name":"S","data":[1]}]}';
+    const reply = `visual:\n\`\`\`shadowvisual\n${payload}\n\`\`\``;
     const { segments, changes } = parseAgentResponse(reply, files);
-    expect(segments[1]).toMatchObject({ type: "image", width: 120, height: 60 });
+    expect(segments[1]).toMatchObject({ type: "visual", raw: payload });
     expect(changes).toHaveLength(0);
   });
 
-  it("keeps invalid svg as a code segment", () => {
+  it("keeps raw svg fences as plain code segments (no image path)", () => {
     const reply = '```svg\n<svg width="10"><script>alert(1)</script></svg>\n```';
     const { segments } = parseAgentResponse(reply, files);
     expect(segments[0]).toMatchObject({ type: "code", language: "svg" });
+    expect(JSON.stringify(segments)).not.toContain('"type":"image"');
   });
 
   it("streaming-safe: unterminated trailing fence becomes code", () => {

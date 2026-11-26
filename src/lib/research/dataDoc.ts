@@ -1,5 +1,5 @@
 /**
- * Research-to-Visualization — structured research-data capture (Batch 1).
+ * Research capture — structured research-data extraction (deterministic half).
  *
  * Research tools (`web_search`, `deep_research`) are instructed to end their
  * reply with a single fenced ```shadowdata block containing typed datasets,

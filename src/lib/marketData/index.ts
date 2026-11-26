@@ -604,7 +604,7 @@ export async function getMarketQuotes(symbols: string[]): Promise<QuoteBatchResu
  * Convert history into a typed research-shaped dataset the planner can
  * encode. Values are passed through verbatim; the unit is USD.
  */
-export function historyToShadowDataset(history: MarketHistory, title?: string): import("@/lib/visualization/types").ShadowDataset {
+export function historyToShadowDataset(history: MarketHistory, title?: string): import("@/lib/research/types").ShadowDataset {
   const hasOhlc = Boolean(history.hasOhlc && history.candles && history.candles.length > 0);
   return {
     title: title ?? `${history.symbol} daily prices (last ${history.points.length} days)`,

@@ -50,8 +50,8 @@ const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
 const SharedAnswerPage = lazy(() => import("./pages/SharedAnswerPage"));
 const DocsPage = lazy(() => import("./pages/DocsPage"));
-// Batch 2 — dev-only visualization demo (redirects to /chatbot in prod builds).
-const VizDemoPage = lazy(() => import("./pages/dev/VizDemoPage"));
+// Studio visuals — dev-only demo of the JSON-to-engine renderer (redirects to /chatbot in prod builds).
+const VisualDemoPage = lazy(() => import("./pages/dev/VisualDemoPage"));
 const AppearanceStudioPage = lazy(() => import("./pages/AppearanceStudioPage"));
 const ChangelogPage = lazy(() => import("./pages/ChangelogPage"));
 const FounderPage = lazy(() => import("./pages/FounderPage"));
@@ -150,7 +150,7 @@ const AnimatedRoutes = () => {
           <Route path="/auth/designs" element={<Navigate to="/auth" replace />} />
           <Route path="/auth/preview/:designId" element={<Navigate to="/auth" replace />} />
           <Route path="/docs" element={<PageTransition><DocsPage /></PageTransition>} />
-          <Route path="/dev/viz-demo" element={<Suspense fallback={<PageLoader />}><PageTransition><VizDemoPage /></PageTransition></Suspense>} />
+          <Route path="/dev/visual-demo" element={<Suspense fallback={<PageLoader />}><PageTransition><VisualDemoPage /></PageTransition></Suspense>} />
           <Route path="/s/:slug" element={<Suspense fallback={<PageLoader />}><SharedAnswerPage /></Suspense>} />
           <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
           <Route path="/pricing" element={<PageTransition><PricingPage /></PageTransition>} />

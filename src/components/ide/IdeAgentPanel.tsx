@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowUp, Bot, Check, CircleStop, Code2, Download, Eraser,
-  FilePlus2, Image as ImageIcon, Loader2, MessageCircleQuestion,
+  LayoutGrid, Loader2, MessageCircleQuestion,
   Sparkles, Wand2, Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,8 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
-import { SvgImageCard } from "@/components/chat/SvgImageCard";
 import { useIdeAgent } from "@/hooks/useIdeAgent";
+import ShadowVisualRenderer from "@/components/visual/ShadowVisualRenderer";
 import type { IdeAgentChange, IdeAgentMessage, IdeAgentMode } from "@/hooks/useIdeAgent";
 import type { AgentSegment } from "@/lib/ide/agentProtocol";
 import { getCachedAiAccessMode } from "@/lib/aiAccessMode";
@@ -24,7 +24,7 @@ const QUICK_TASKS: Array<{ label: string; icon: typeof Wand2; prompt: string; mo
   { label: "Refactor", icon: Wand2, prompt: "Refactor the active file for clarity and maintainability. Keep behavior identical." },
   { label: "Fix bugs", icon: Zap, prompt: "Find and fix bugs and edge cases in the workspace. Explain each fix in one line." },
   { label: "Add a feature", icon: Sparkles, prompt: "Add one small, useful feature to this project. Keep it self-contained." },
-  { label: "Draw an image", icon: ImageIcon, prompt: "Draw a clean, minimal SVG image for this project: a logo badge with a gradient and geometric shapes." },
+  { label: "Chart the data", icon: LayoutGrid, prompt: "Create a visual summary of this project: emit a shadowvisual block (mode chart, diagram or infographic) that presents the project's structure or key metrics as a studio visual." },
   { label: "Explain the code", icon: MessageCircleQuestion, prompt: "Explain how this project works, file by file. Keep it short.", mode: "ask" },
 ];
 
@@ -32,7 +32,6 @@ interface IdeAgentPanelProps {
   files: JulesWorkspaceFile[];
   activeFileName?: string;
   onApplyChanges: (changes: ParsedFileChange[]) => void;
-  onCreateFile: (name: string, content: string) => void;
 }
 
 function accessLabel(): { text: string; connected: boolean } {
@@ -43,8 +42,8 @@ function accessLabel(): { text: string; connected: boolean } {
     : { text: "Keyless cloud", connected: true };
 }
 
-/** The AI side of the IDE: a streaming agent that edits files and draws images. */
-export function IdeAgentPanel({ files, activeFileName, onApplyChanges, onCreateFile }: IdeAgentPanelProps) {
+/** The AI side of the IDE: a streaming agent that edits files and renders studio visuals. */
+export function IdeAgentPanel({ files, activeFileName, onApplyChanges }: IdeAgentPanelProps) {
   const { toast } = useToast();
   const agent = useIdeAgent(files, activeFileName);
   const [task, setTask] = useState("");
@@ -86,17 +85,6 @@ export function IdeAgentPanel({ files, activeFileName, onApplyChanges, onCreateF
     toast({ title: `${msg.changes.length} change${msg.changes.length === 1 ? "" : "s"} applied`, description: "Workspace updated." });
     trackShadowTalkEvent("ide_agent_apply", { count: msg.changes.length });
   }, [agent, onApplyChanges, toast]);
-
-  const saveImageToWorkspace = useCallback((svg: string) => {
-    const base = "agent-image";
-    let name = `${base}.svg`;
-    let n = 2;
-    const names = new Set(files.map((f) => f.name));
-    while (names.has(name)) name = `${base}-${n++}.svg`;
-    onCreateFile(name, svg);
-    toast({ title: `Saved ${name}`, description: "Open it in the editor, then preview or export PNG/JPG." });
-    trackShadowTalkEvent("ide_agent_image_save", { name });
-  }, [files, onCreateFile, toast]);
 
   return (
     <div className="h-full flex flex-col bg-background" data-testid="ide-agent-panel">
@@ -143,7 +131,6 @@ export function IdeAgentPanel({ files, activeFileName, onApplyChanges, onCreateF
                 msg={msg}
                 onApplyChange={applyChange}
                 onApplyAll={applyAll}
-                onSaveImage={saveImageToWorkspace}
               />
             ))}
           </div>
@@ -245,11 +232,10 @@ function EmptyAgentState({ onPick, filesCount, activeFileName }: {
 
 // ── Message rendering ──────────────────────────────────────────────────
 
-function AgentMessageView({ msg, onApplyChange, onApplyAll, onSaveImage }: {
+function AgentMessageView({ msg, onApplyChange, onApplyAll }: {
   msg: IdeAgentMessage;
   onApplyChange: (msgId: string, change: IdeAgentChange) => void;
   onApplyAll: (msg: IdeAgentMessage) => void;
-  onSaveImage: (svg: string) => void;
 }) {
   if (msg.role === "user") {
     return (
@@ -274,18 +260,11 @@ function AgentMessageView({ msg, onApplyChange, onApplyAll, onSaveImage }: {
             </p>
           );
         }
-        if (seg.type === "image") {
+        if (seg.type === "visual") {
+          // Studio visual — the JSON-to-engine renderer validates + styles it.
           return (
-            <div key={i} className="space-y-1">
-              <SvgImageCard svg={seg.svg} width={seg.width} height={seg.height} />
-              <button
-                type="button"
-                onClick={() => onSaveImage(seg.svg)}
-                className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-[11px] font-medium px-3 py-1 hover:bg-primary/20 transition-colors"
-              >
-                <FilePlus2 className="h-3 w-3" aria-hidden />
-                Add to workspace
-              </button>
+            <div key={i} className="my-1">
+              <ShadowVisualRenderer payload={seg.raw} />
             </div>
           );
         }

@@ -1,17 +1,18 @@
 /**
- * Coded images — the AI draws, the browser renders, nothing leaves the device.
+ * IDE SVG file preview — local helpers for rendering/exporting .svg FILES
+ * that already exist in the IDE workspace (e.g. via `path=poster.svg`).
  *
- * When a chat model outputs a fenced ```svg block, the message renderer swaps
- * the raw code for an image card (see SvgImageCard) that previews the drawing
- * and exports it as PNG/JPG through the native canvas APIs. No image model,
- * no network call — the same zero-egress guarantee as the rest of the
- * offline-first stack.
+ * This is a developer file-preview utility, NOT the AI visual generator:
+ * chat/agent visuals are rendered exclusively by the JSON-to-Engine
+ * pipeline in src/components/visual (ECharts / Mermaid / Bento). The
+ * validator/rasterizer below was moved here from the retired
+ * lib/codedImages chat generator so the IDE can still preview and export
+ * SVG files on-device, with the same offline-safety guarantees:
  *
- * Security model: SVGs render through `<img src=blob:…>`, where scripts never
- * execute. validateSvg() still rejects anything that could taint the canvas
- * or phone home when rasterized (scripts, event handlers, external
- * resources) so exports stay reliable and offline-safe: a canvas with any
- * cross-origin content throws a SecurityError on toBlob().
+ * Security model: SVGs render through <img src=data:…>, where scripts never
+ * execute. validateSvg() rejects anything that could taint the canvas or
+ * phone home when rasterized (scripts, event handlers, external resources),
+ * so canvas exports stay reliable and offline-safe.
  */
 
 /** Dimensions of a validated SVG drawing. */
@@ -31,16 +32,6 @@ const DEFAULT_DIMS: SvgDims = { width: 1024, height: 1024 };
 const MAX_RASTER_EDGE = 8192;
 export const DEFAULT_RASTER_SCALE = 2;
 
-/** Does this fenced code block qualify as a coded image? */
-export function isCodedSvgFence(language: string | undefined, code: string): boolean {
-  const lang = (language || "").trim().toLowerCase();
-  if (lang === "svg") return true;
-  // Models frequently tag SVG as ```xml — and occasionally leave it bare.
-  if (lang === "xml") return /^\s*<svg[\s>]/i.test(code);
-  if (lang === "") return /^\s*<svg[\s>]/i.test(code) && /<\/svg>/i.test(code);
-  return false;
-}
-
 /** Extract width/height/viewBox attributes from the `<svg …>` root tag. */
 function readRootAttrs(svg: string): string {
   const open = svg.match(/<svg\b[^>]*>/i);
@@ -55,7 +46,9 @@ function readNumericAttr(rootTag: string, attr: "width" | "height"): number | nu
 }
 
 function readViewBox(rootTag: string): SvgDims | null {
-  const m = rootTag.match(/\bviewBox\s*=\s*["']\s*([\d.eE+-]+)[\s,]+([\d.eE+-]+)[\s,]+([\d.eE+-]+)[\s,]+([\d.eE+-]+)\s*["']/i);
+  const m = rootTag.match(
+    /\bviewBox\s*=\s*["']\s*([\d.eE+-]+)[\s,]+([\d.eE+-]+)[\s,]+([\d.eE+-]+)[\s,]+([\d.eE+-]+)\s*["']/i,
+  );
   if (!m) return null;
   const w = Number.parseFloat(m[3]);
   const h = Number.parseFloat(m[4]);
@@ -73,12 +66,10 @@ function injectRootAttrs(svg: string, dims: SvgDims): string {
 }
 
 /**
- * Validate (and normalize) an AI-authored SVG.
- *
+ * Validate (and normalize) an SVG file for preview/rasterization.
  * Rejects scripts, event-handler attributes and any reference that would
- * fetch from the network — everything else (including data: URIs and
- * internal #fragment refs) is allowed. On success the svg string is trimmed
- * to the single root `<svg>…</svg>` element and guaranteed to carry explicit
+ * fetch from the network. On success the svg string is trimmed to the
+ * single root `<svg>…</svg>` element and guaranteed to carry explicit
  * width/height so rasterization and layout are deterministic.
  */
 export function validateSvg(code: string): SvgValidation {
@@ -92,7 +83,7 @@ export function validateSvg(code: string): SvgValidation {
   let svg = code.slice(start, close + "</svg>".length).trim();
 
   if (/<script[\s>]/i.test(svg)) {
-    return { ok: false, reason: "scripts are not allowed in coded images" };
+    return { ok: false, reason: "scripts are not allowed in SVG previews" };
   }
   if (/\son[a-z]+\s*=/i.test(svg)) {
     return { ok: false, reason: "event handler attributes are not allowed" };
@@ -225,11 +216,11 @@ export function downloadBlob(blob: Blob, filename: string): void {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-/** shadowtalk-coded-image-20261120-143205.png */
+/** shadowtalk-ide-svg-20261126-143205.png */
 export function codedImageFileName(ext: "png" | "jpg", now: Date = new Date()): string {
   const p = (n: number) => String(n).padStart(2, "0");
   const stamp =
     `${now.getFullYear()}${p(now.getMonth() + 1)}${p(now.getDate())}` +
     `-${p(now.getHours())}${p(now.getMinutes())}${p(now.getSeconds())}`;
-  return `shadowtalk-coded-image-${stamp}.${ext}`;
+  return `shadowtalk-ide-svg-${stamp}.${ext}`;
 }

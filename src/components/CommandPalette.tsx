@@ -578,13 +578,13 @@ export const pages: PageEntry[] = [
     keywords: ["intelligence", "command center", "analytics", "telemetry", "insights"],
   },
   {
-    name: "Visualization Demo",
-    href: "/dev/viz-demo",
+    name: "Visual Engine Demo",
+    href: "/dev/visual-demo",
     icon: LineChart,
-    desc: "Developer demo of chart & data-visualization components",
+    desc: "Developer demo of the JSON-to-engine visual renderer (ECharts, Mermaid, Bento)",
     group: "Admin & Developer",
     badge: "Dev",
-    keywords: ["viz", "charts", "demo", "developer", "visualization", "dev"],
+    keywords: ["viz", "charts", "demo", "developer", "visualization", "dev", "mermaid", "infographic", "echarts"],
   },
 
   // === Legal (mirrors footer "Legal") ===

@@ -11,6 +11,7 @@
  */
 import { FOUNDER_CANONICAL, FOUNDER_NOT_THE_SAME_AS } from "@/lib/founderIdentity";
 import { SHADOWTALK_AI_KNOWLEDGE } from "@/lib/aiPublicKnowledge";
+import { SHADOW_VISUAL_PROMPT } from "@/components/visual/visualSystemPrompt";
 
 /** Co-founder info (not in founderIdentity.ts — sourced from AboutPage). */
 export const COFOUNDER_INFO = {
@@ -64,7 +65,7 @@ ShadowTalk AI is an agentic AI workspace — not just a chatbot. It combines mul
 - 11 personalities: friendly, sarcastic, professional, creative, meticulous, curious, diplomatic, witty, pragmatic, inquisitive, spicy
 - File uploads: Upload images (vision analysis) and text/code files (content analyzed by AI)
 - Image generation: Use /image command or natural language ("generate an image of...") — works with the user's own OpenAI, OpenRouter or Google Gemini key; signed-in shared-mode users can use the built-in shared image service
-- Coded images: you can DRAW logos, icons, diagrams, charts, posters and flat illustrations as inline SVG — the chat renders them as an image card with one-click PNG/JPG download. Zero setup, zero network, no image API key needed
+- Studio visuals: you render charts, diagrams and infographics through the on-device ECharts / Mermaid / Bento engines from strict JSON (see the visual contract below) — publication-grade output with one-click PNG export, zero setup, zero network, no image API key needed
 - E2EE private chat: Toggle end-to-end encryption for sensitive conversations
 - Shadow Twin: Train a digital clone from your codebase + chat history — invoke with @name-shadow
 - Conversation persistence: Conversations saved with archive, search, and delete
@@ -76,7 +77,7 @@ ShadowTalk AI is an agentic AI workspace — not just a chatbot. It combines mul
 - Tool execution cards: 22 tool types with inline status tracking
 - Strategy Agent: 10-tab business intelligence suite with SWOT analysis, 12-month financial simulator, PDF report generator, competitor analysis, market research
 - Code Workspace: Monaco editor with live JS execution, HTML preview, Python syntax parsing
-- Canvas & Artifacts: Side-docked tabbed viewer for code, documents, tables, charts, HTML, SVG, mermaid
+- Canvas & Artifacts: Side-docked tabbed viewer for code, documents, tables, charts, HTML and mermaid
 - Document Artifact: Auto-detected document cards (email/article/report/proposal/resume) with PDF/Word/HTML/Markdown export
 
 ### Memory System
@@ -102,8 +103,8 @@ ShadowTalk AI is an agentic AI workspace — not just a chatbot. It combines mul
 - If asked "what are you?" / "what is ShadowTalk?": describe yourself as an agentic AI workspace, not just a chatbot. Mention multi-model chat, tools, agents, memory, image generation, code IDE, E2EE chat, and document generation.
 - If asked about pricing: ShadowTalk AI is free to use — no subscriptions, no paid tiers. Bring your own AI provider API key; your provider may charge separately for API usage.
 - If asked about features: list the relevant features from above (AI chat, tools, agents, memory, security, image generation, code IDE, document generation, voice mode, Shadow Twin, E2EE chat).
-- If asked about image generation: for photorealistic images use the /image command (needs an image-capable BYOK key — see above). For logos, icons, diagrams, charts, posters and flat illustrations, output a fenced code block tagged 'svg' (rules below) — it renders as a downloadable image with no key and no network.
-- If asked about image generation without a key, or while offline: explain coded images — you draw the image as SVG in chat and the user downloads it as PNG or JPG, entirely on-device.
+- If asked about image generation: for photorealistic images use the /image command (needs an image-capable BYOK key — see above). For charts, diagrams, infographics, comparisons, roadmaps and summary cards, emit the shadowvisual JSON block (contract below) — it renders as a studio-grade visual with PNG export, no key and no network.
+- If asked about image generation without a key, or while offline: explain the on-device visual engines — charts, diagrams and infographics render locally from your JSON with a 2x PNG export, entirely on-device.
 - If asked about memory: explain the 3-tier system (AI Memory, Business Memory, Shadow Memory).
 - If asked about security: explain client-side BYOK key storage, E2EE chat, Firebase Auth, and the /security trust center.
 - If asked how you differ from ChatGPT/Claude/Gemini: you offer multi-model routing, tools, agents, E2EE chat, image generation, code IDE, document generation, voice mode, Shadow Twin, and memory in one workspace — at lower paid tiers (starting at BYOK vs BYOK).
@@ -139,10 +140,7 @@ export function buildChatSystemPrompt(opts: {
     `- Use markdown formatting only for things that benefit from it: code blocks for code, bullet lists for lists, bold for emphasis. Do NOT structure every response with H1/H2 headers, tables, and stat blocks.`,
     `- Keep answers direct and natural. Match the user's tone — if they ask a quick question, give a quick answer.`,
     ``,
-    `## Coded images (SVG)`,
-    `- When the user asks to generate, create, draw, design or make an image, logo, icon, diagram, chart, poster or illustration: reply with ONE fenced code block tagged svg containing a single complete <svg> element. A short lead-in sentence is fine — the block itself is the image.`,
-    `- The <svg> root MUST declare width, height and viewBox. Keep the drawing self-contained: no <script>, no external URLs, no external images or web fonts — use inline shapes, paths, gradients and generic font-family stacks (sans-serif, serif, monospace) only. data: URIs are allowed. No animation — the card exports a static PNG/JPG.`,
-    `- SVG cannot do photorealistic scenes — for those, say so and offer the /image command with a BYOK key instead.`,
+    SHADOW_VISUAL_PROMPT,
   ];
 
   if (businessMemory) {

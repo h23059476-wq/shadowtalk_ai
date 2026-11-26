@@ -4,7 +4,7 @@
  * The original prompts are preserved verbatim (they define ShadowTalk's
  * research behavior); the `shadowdata` appendix teaches the model to end a
  * research reply with ONE machine-readable block so the deterministic
- * capture layer (src/lib/visualization/dataDoc.ts) can validate and store
+ * capture layer (src/lib/research/dataDoc.ts) can validate and store
  * typed datasets + sources + declared gaps on the message. That block is
  * what later lets "turn your previous research into a chart" work without
  * re-researching (PHASE1_AUDIT.md Part C).

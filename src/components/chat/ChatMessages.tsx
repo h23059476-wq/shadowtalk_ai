@@ -37,10 +37,8 @@ interface ChatMessagesProps {
   onConfirmTool?: (messageId: string) => void;
   onCancelTool?: (messageId: string) => void;
   onShareReply?: (content: string) => void;
-  /** Batch 2 — transform a visualization spec to a compatible kind. */
-  onVizTransform?: (messageId: string, spec: unknown, targetKind: string) => void;
-  /** Batch 2 — notes from infeasible transforms, keyed by message id. */
-  vizTransformNotes?: Record<string, string>;
+  /** Silent 1-step self-correction for a broken visual payload. */
+  onVisualSelfCorrect?: (rawPayload: string, error: string) => void;
   messagesEndRef: React.RefObject<HTMLDivElement>;
   thinkingStage?: 'understanding' | 'reasoning' | 'generating' | 'refining' | null;
   layout?: 'default' | 'gemini' | 'shadow-pulse';
@@ -65,8 +63,7 @@ export const ChatMessagesInner: React.FC<ChatMessagesProps> = ({
   onLaunchWebsite,
   onOpenInBrowser,
   onShareReply,
-  onVizTransform,
-  vizTransformNotes,
+  onVisualSelfCorrect,
   messagesEndRef,
   thinkingStage,
   layout = 'default',
@@ -159,8 +156,7 @@ export const ChatMessagesInner: React.FC<ChatMessagesProps> = ({
             enterpriseShare={enterpriseShare}
             includeReferralInShare={includeReferralInShare}
             layout={isGemini ? 'gemini' : 'default'}
-            onVizTransform={onVizTransform}
-            vizTransformNote={vizTransformNotes?.[msg.id]}
+            onVisualSelfCorrect={onVisualSelfCorrect}
           />
         ))}
 

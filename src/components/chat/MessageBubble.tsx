@@ -13,10 +13,8 @@ import { motion } from 'framer-motion';
 import { LazyMarkdown } from './LazyMarkdown';
 import { CodeBlock } from './CodeBlock';
 import { ResearchDataCard } from './ResearchDataCard';
-import { SvgImageCard } from './SvgImageCard';
-import { isCodedSvgFence, validateSvg } from '@/lib/codedImages';
-import { VisualizationCard } from '@/components/visualization';
-import type { VisualizationSpec, VizSpecKind } from '@/lib/visualization/spec';
+import ShadowVisualRenderer, { tryParseMermaidFence } from '@/components/visual/ShadowVisualRenderer';
+import { isShadowVisualFence, parseShadowVisual } from '@/components/visual/visualContract';
 import { useToast } from '@/hooks/use-toast';
 import { DocumentArtifact, detectDocumentArtifact } from './DocumentArtifact';
 import { ToolExecutionCard } from './ToolExecutionCard';
@@ -119,8 +117,6 @@ interface Message {
   citations?: Array<{ url: string; title?: string }>;
   /** Batch R1 — structured research datasets captured from ```shadowdata blocks. */
   researchData?: unknown[];
-  /** Batch 2 — visualization artifact (validated inside VisualizationCard). */
-  visualization?: unknown;
 }
 
 interface MessageBubbleProps {
@@ -143,10 +139,8 @@ interface MessageBubbleProps {
   onConfirmTool?: (messageId: string) => void;
   onCancelTool?: (messageId: string) => void;
   onShareReply?: (content: string) => void;
-  /** Batch 2 — transform the visualization to a compatible kind. */
-  onVizTransform?: (messageId: string, spec: unknown, targetKind: string) => void;
-  /** Batch 2 — note from an infeasible transform. */
-  vizTransformNote?: string;
+  /** Silent 1-step self-correction for a broken visual payload. */
+  onVisualSelfCorrect?: (rawPayload: string, error: string) => void;
   enterpriseShare?: boolean;
   includeReferralInShare?: boolean;
 }
@@ -170,8 +164,7 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
   onConfirmTool,
   onCancelTool,
   onShareReply,
-  onVizTransform,
-  vizTransformNote,
+  onVisualSelfCorrect,
   enterpriseShare = false,
   includeReferralInShare = true,
 }) => {
@@ -321,13 +314,32 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
                     if (!inline && match?.[1] === 'shadowdata') {
                       return <ResearchDataCard raw={codeString} />;
                     }
-                    // Coded images — an SVG fence becomes a downloadable image
-                    // card (preview + PNG/JPG export, all client-side). Invalid
-                    // SVG (scripts, external refs) falls back to the code block.
-                    if (!inline && isCodedSvgFence(match?.[1], codeString)) {
-                      const parsed = validateSvg(codeString);
-                      if (parsed.ok) {
-                        return <SvgImageCard svg={parsed.svg} width={parsed.width} height={parsed.height} onOpenCanvas={onOpenCodeCanvas} />;
+                    // Studio visuals — a shadowvisual JSON fence is rendered by
+                    // the bundled engines (ECharts / Mermaid / Bento). The
+                    // payload is validated first; malformed JSON falls through
+                    // to the code block so nothing is silently hidden.
+                    if (!inline && isShadowVisualFence(match?.[1])) {
+                      const parsedVisual = parseShadowVisual(codeString);
+                      if (parsedVisual.ok) {
+                        return (
+                          <div className="my-5 w-full">
+                            <ShadowVisualRenderer
+                              payload={parsedVisual.visual}
+                              onSelfCorrect={onVisualSelfCorrect}
+                            />
+                          </div>
+                        );
+                      }
+                    }
+                    // Bare mermaid fences render through the same diagram engine.
+                    if (!inline && match?.[1] === 'mermaid') {
+                      const mermaidVisual = tryParseMermaidFence(codeString);
+                      if (mermaidVisual) {
+                        return (
+                          <div className="my-5 w-full">
+                            <ShadowVisualRenderer payload={mermaidVisual} onSelfCorrect={onVisualSelfCorrect} />
+                          </div>
+                        );
                       }
                     }
                     if (!inline && match) {
@@ -481,17 +493,6 @@ const MessageBubbleInner: React.FC<MessageBubbleProps> = ({
             content={documentArtifact.documentContent}
             type={documentArtifact.type}
           />
-        )}
-
-        {/* Batch 2 — visualization artifact (lazy-loaded; validated spec only) */}
-        {!isUser && message.visualization && (
-          <div className="mt-2 w-full">
-            <VisualizationCard
-              spec={message.visualization}
-              transformNote={vizTransformNote}
-              onTransformKind={onVizTransform ? (spec, target) => onVizTransform(message.id, spec, target) : undefined}
-            />
-          </div>
         )}
 
         {/* Extracted URLs / provider citations */}
@@ -662,9 +663,6 @@ export const MessageBubble = React.memo(MessageBubbleInner, (prev, next) => {
     // so the comparator must react to them or the chips/card never render.
     prev.message.citations === next.message.citations &&
     prev.message.researchData === next.message.researchData &&
-    // Batch 2 — visualization artifact + transform note.
-    prev.message.visualization === next.message.visualization &&
-    prev.vizTransformNote === next.vizTransformNote &&
     prev.isLoading === next.isLoading &&
     prev.speakingMessageId === next.speakingMessageId &&
     prev.isSpeaking === next.isSpeaking

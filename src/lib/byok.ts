@@ -3,7 +3,7 @@
  * their device and used directly from the browser for the signed-in account.
  */
 import type { CloudChatMessage, CloudChatOptions, CloudChatResult } from "@/lib/cloudChat";
-import type { Citation } from "@/lib/visualization/types";
+import type { Citation } from "@/lib/research/types";
 import { fbAuth } from "@/integrations/firebase/app";
 import {
   parseAnthropicUsageEvent,

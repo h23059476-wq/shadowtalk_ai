@@ -8,7 +8,7 @@
  *  - USDT snapshot (CoinGecko keyless; Binance fallback)
  *  - USDC snapshot
  *  - USDT 30-day daily history (CoinGecko market_chart; Binance klines fallback)
- *  - comparison planning from the real quotes
+ *  - quote completeness (spec planning retired with the old viz system)
  * Asserts: real numbers present, provider attribution, timestamps, freshness.
  */
 
@@ -19,7 +19,6 @@ import {
   getMarketQuotes,
   historyToShadowDataset,
 } from "../index";
-import { planComparison } from "@/lib/visualization/planner";
 
 const LIVE = process.env.LIVE_MARKET_DATA === "1";
 
@@ -38,34 +37,10 @@ describe.skipIf(!LIVE)("live market-data providers", () => {
       console.log(`[live] ${q.symbol} $${q.priceUsd} asOf=${q.asOf} via ${q.provider.name} (${q.freshness})`);
     }
     if (quotes.length === 2) {
-      const result = planComparison(
-        quotes.map((q) => ({
-          symbol: q.symbol,
-          name: q.name,
-          metrics: {
-            price_usd: q.priceUsd,
-            change_24h_pct: q.change24hPct ?? null,
-            market_cap_usd: q.marketCapUsd ?? null,
-            volume_24h_usd: q.volume24hUsd ?? null,
-          },
-          asOf: q.asOf,
-        })),
-        {
-          provenance: "source-verified",
-          sources: quotes.map((q) => ({
-            url: q.provider.attributionUrl,
-            name: q.provider.attribution,
-            retrievedAt: q.retrievedAt,
-            dataTimestamp: q.asOf,
-          })),
-          gaps: failures.map((f) => `${f.symbol}: ${f.error.message}`),
-        },
-      );
-      expect(result.status).toBe("ok");
-      if (result.status === "ok") {
-        expect(result.spec.kind).toBe("comparison-matrix");
-        console.log(`[live] comparison spec: ${result.spec.title} — rows=${result.spec.datasets[0].rows.length}`);
-      }
+      // The old spec planner is retired — live quotes still must be complete
+      // and well-typed for the market-data research capture layer.
+      expect(quotes.every((q) => typeof q.priceUsd === "number" && Number.isFinite(q.priceUsd))).toBe(true);
+      console.log(`[live] quotes complete: ${quotes.map((q) => q.symbol).join(" + ")}`);
     }
   }, 120_000);
 

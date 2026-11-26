@@ -2,23 +2,27 @@
  * ShadowTalk IDE agent protocol.
  *
  * The IDE agent is a conversational model call with workspace context. Its
- * replies mix prose with two kinds of fenced blocks the IDE can act on:
+ * replies mix prose with three kinds of fenced blocks the IDE can act on:
  *
  *   1. Full-file rewrites — an info string that carries the file path:
  *        ```js path=app.js        (also accepted: file=app.js)
  *        …complete file content…
  *        ```
  *
- *   2. Coded images — a plain ```svg fence. These are validated with the
- *      same code path the chat uses (see lib/codedImages) so the IDE can
- *      preview them and export PNG/JPG without any image model.
+ *   2. Studio visuals — a ```shadowvisual JSON fence. The raw JSON is
+ *      forwarded to ShadowVisualRenderer (ECharts / Mermaid / Bento engines,
+ *      src/components/visual) which validates and renders it. Raw
+ *      <svg>/<canvas> drawing is NOT part of this protocol — the model is
+ *      forced through the JSON engines.
+ *
+ *   3. Plain code fences — rendered as code blocks.
  *
  * parseAgentResponse() splits a reply (streaming-safe: an unclosed trailing
  * fence is treated as code that is still being written) into renderable
  * segments and file changes the user can apply to the workspace.
  */
 
-import { isCodedSvgFence, validateSvg } from "@/lib/codedImages";
+import { isShadowVisualFence } from "@/components/visual/visualContract";
 import type { JulesWorkspaceFile } from "@/lib/jules/types";
 
 // ── Segments ───────────────────────────────────────────────────────────
@@ -26,7 +30,7 @@ import type { JulesWorkspaceFile } from "@/lib/jules/types";
 export type AgentSegment =
   | { type: "text"; text: string }
   | { type: "code"; language: string; content: string }
-  | { type: "image"; svg: string; width: number; height: number }
+  | { type: "visual"; raw: string }
   | { type: "file"; path: string; language: string; content: string; isNew: boolean };
 
 export interface ParsedAgentReply {
@@ -45,7 +49,7 @@ const AGENT_RULES = `Reply format:
    \`\`\`
    - Edit an existing file by using its exact name; create a file by using a new name (e.g. path=utils/helpers.js).
    - Keep HTML/CSS/JS runnable in the browser with no build step.
-3. If the user asks for an image, graphic, logo, poster, illustration or diagram, draw it as SVG in a plain \`\`\`svg fence instead of writing a file. Make it self-contained: no scripts, no external URLs or fonts, no animation, and always set width/height or viewBox.
+3. Charts, diagrams, flowcharts, mind maps, infographics, comparisons, roadmaps and summary cards are NOT drawn by hand: output ONE fenced code block tagged shadowvisual containing PURE JSON (mode: chart | diagram | infographic). Data only — no colors, no SVG, no canvas; the studio engines style everything. For an SVG/poster ART asset, write it as a file block instead (path=poster.svg).
 Be concise. Never restate whole files in prose.`;
 
 export function buildIdeAgentSystemPrompt(mode: "agent" | "ask" = "agent"): string {
@@ -167,13 +171,9 @@ export function parseAgentResponse(
         changeIndex.set(fencePath, changes.length);
         changes.push({ path: fencePath, content, language: seg.language, isNew: seg.isNew });
       }
-    } else if (isCodedSvgFence(language || undefined, content)) {
-      const validated = validateSvg(content);
-      if (validated.ok) {
-        segments.push({ type: "image", svg: validated.svg, width: validated.width, height: validated.height });
-      } else {
-        segments.push({ type: "code", language: language || "svg", content });
-      }
+    } else if (language && isShadowVisualFence(language)) {
+      // Studio visual — forwarded raw; ShadowVisualRenderer validates + renders.
+      segments.push({ type: "visual", raw: content });
     } else if (language && content.trim()) {
       segments.push({ type: "code", language, content });
     } else if (content.trim()) {

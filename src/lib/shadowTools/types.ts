@@ -1,5 +1,5 @@
 import type { ToolType } from "@/hooks/useToolOrchestrator";
-import type { Citation } from "@/lib/visualization/types";
+import type { Citation } from "@/lib/research/types";
 
 export type ShadowToolOutcomeKind = "inline" | "ui" | "chat_flags" | "none";
 

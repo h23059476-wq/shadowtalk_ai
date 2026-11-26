@@ -10,7 +10,7 @@ import { fbAuth, functionsBaseUrl } from "@/integrations/firebase/app";
 import { getByokConfig, streamByokChat } from "@/lib/byok";
 import { getCachedAiAccessMode, getPreferLocal } from "@/lib/aiAccessMode";
 import { NetworkTimeoutError, isOffline, withNetworkTimeout } from "@/lib/offlineGuards";
-import type { Citation } from "@/lib/visualization/types";
+import type { Citation } from "@/lib/research/types";
 import { parseOpenAiUsageChunk, mergeUsage, type ProviderUsage } from "@/lib/tokenOptimizer/usage";
 
 export type CloudChatContent =
