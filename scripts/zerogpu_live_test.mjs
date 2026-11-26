@@ -59,9 +59,9 @@ const payload = {};
 if (paramNames.includes("prompt")) payload.prompt = PROMPT;
 if (paramNames.includes("seed")) payload.seed = 0;
 if (paramNames.includes("randomize_seed")) payload.randomize_seed = true;
-if (paramNames.includes("width")) payload.width = 768;
-if (paramNames.includes("height")) payload.height = 768;
-if (paramNames.includes("num_inference_steps")) payload.num_inference_steps = 4;
+if (paramNames.includes("width")) payload.width = Number(process.env.ZEROGPU_W) || 768;
+if (paramNames.includes("height")) payload.height = Number(process.env.ZEROGPU_H) || 768;
+if (paramNames.includes("num_inference_steps")) payload.num_inference_steps = Number(process.env.ZEROGPU_STEPS) || 4;
 log("Submitting payload keys:", Object.keys(payload).join(", "));
 
 // all_events=true — see the header note. Without it, error events are filtered.
@@ -114,13 +114,15 @@ if (!res.ok) throw new Error(`Image download failed: HTTP ${res.status}`);
 const buf = Buffer.from(await res.arrayBuffer());
 log(`Downloaded ${buf.length} bytes, Content-Type=${res.headers.get("content-type")}`);
 
-// PNG signature check: 89 50 4E 47 0D 0A 1A 0A
+// Image magic check: Spaces return PNG, WebP or JPEG — verify whichever arrives.
 const isPng = buf.length > 8 && buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47;
-if (!isPng) throw new Error("Downloaded bytes are NOT a valid PNG (magic signature missing).");
-log("PNG magic signature verified: 89 50 4E 47 0D 0A 1A 0A");
+const isWebp = buf.length > 12 && buf.subarray(0, 4).toString("ascii") === "RIFF" && buf.subarray(8, 12).toString("ascii") === "WEBP";
+const isJpeg = buf.length > 3 && buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff;
+if (!isPng && !isWebp && !isJpeg) throw new Error("Downloaded bytes are not a valid image (no PNG/WebP/JPEG magic signature).");
+log(`Image magic verified: ${isPng ? "PNG" : isWebp ? "WebP" : "JPEG"}`);
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
-const outPath = path.join(OUT_DIR, "zerogpu-live-fox.png");
+const outPath = path.join(OUT_DIR, isWebp ? "zerogpu-live-fox.webp" : isJpeg ? "zerogpu-live-fox.jpg" : "zerogpu-live-fox.png");
 fs.writeFileSync(outPath, buf);
 log(`Saved evidence image to ${outPath}`);
 

@@ -441,6 +441,44 @@ describe("generateImageViaZeroGpu", () => {
     expect(result.endpoint).toBe("/generate");
     expect(gradioState.connectCalls[0].spaceId).toBe("shadowfan/my-private-flux");
   });
+
+  it("uses compact payload defaults for custom Spaces (free CPU hardware, physically measured)", async () => {
+    // Live finding: a free non-ZeroGPU Space (Collov-Labs/Monetico) needed 297s
+    // for 512²/4 — a 1024² render would blow the deadline. Custom Spaces must
+    // submit the compact 512² shape unless the caller overrides the dims.
+    setFakeClient({ events: successEvents() });
+    await generateImageViaZeroGpu("test", { spaceId: "shadowfan/cpu-space" });
+
+    expect(gradioState.submitCalls[0].payload).toMatchObject({
+      width: 512,
+      height: 512,
+      num_inference_steps: 4,
+    });
+  });
+
+  it("keeps FLUX 1024² defaults for the default ZeroGPU Space", async () => {
+    setFakeClient({ events: successEvents() });
+    await generateImageViaZeroGpu("test");
+    expect(gradioState.submitCalls[0].payload).toMatchObject({
+      width: FLUX_DEFAULTS.width,
+      height: FLUX_DEFAULTS.height,
+    });
+  });
+
+  it("honors explicit dimension overrides on a custom Space", async () => {
+    setFakeClient({ events: successEvents() });
+    await generateImageViaZeroGpu("test", {
+      spaceId: "shadowfan/cpu-space",
+      width: 768,
+      height: 768,
+      numInferenceSteps: 2,
+    });
+    expect(gradioState.submitCalls[0].payload).toMatchObject({
+      width: 768,
+      height: 768,
+      num_inference_steps: 2,
+    });
+  });
 });
 
 describe("classifyZeroGpuError", () => {

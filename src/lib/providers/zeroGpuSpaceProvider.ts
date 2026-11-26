@@ -36,7 +36,15 @@ export const FLUX_DEFAULTS = {
 
 const CONNECT_TIMEOUT_MS = 30_000; // Space handshake
 const DEFAULT_IDLE_TIMEOUT_MS = 90_000; // no event for 90s → treat as stalled (cold starts run 5–25s, generously above)
-const DEFAULT_TOTAL_TIMEOUT_MS = 4 * 60_000; // hard cap: cold start + queue + generation + download
+/** Hard cap for the default ZeroGPU Space: cold start + queue + generation + download. */
+const DEFAULT_FLUX_TOTAL_TIMEOUT_MS = 4 * 60_000;
+/**
+ * Hard cap for custom user-supplied Spaces — physically measured: a free
+ * non-ZeroGPU Space (Collov-Labs/Monetico, CPU hardware) needed 297s for a
+ * 512²/4-step run (queue ≈ 2.5 min + render ≈ 2 min). The 90s stall watchdog
+ * still aborts genuinely dead runs well before this.
+ */
+const DEFAULT_CUSTOM_SPACE_TOTAL_TIMEOUT_MS = 8 * 60_000;
 const MAX_PROMPT_LENGTH = 2_000; // FLUX.1-schnell prompt encoder comfort zone
 
 export const ZERO_GPU_QUOTA_HINT =
@@ -413,7 +421,18 @@ export async function generateImageViaZeroGpu(
   }
 
   const spaceId = (options.spaceId || ENV_SPACE_ID || DEFAULT_ZERO_GPU_SPACE_ID).trim();
-  const totalDeadline = Date.now() + (options.timeoutMs ?? DEFAULT_TOTAL_TIMEOUT_MS);
+  // The default FLUX.1-schnell Space renders on a ZeroGPU H200 — 1024² in ~2s.
+  // Custom user-supplied Spaces usually run on free CPU hardware, where a
+  // 1024²/4-step render can take 10+ minutes and blow the run deadline.
+  // Compact defaults keep a free custom-Space run fast enough to finish.
+  const isDefaultFluxSpace = spaceId === DEFAULT_ZERO_GPU_SPACE_ID;
+  const effectiveOptions: ZeroGpuSpaceOptions = {
+    ...options,
+    width: options.width ?? (isDefaultFluxSpace ? FLUX_DEFAULTS.width : 512),
+    height: options.height ?? (isDefaultFluxSpace ? FLUX_DEFAULTS.height : 512),
+    numInferenceSteps: options.numInferenceSteps ?? (isDefaultFluxSpace ? FLUX_DEFAULTS.numInferenceSteps : 4),
+  };
+  const totalDeadline = Date.now() + (options.timeoutMs ?? (isDefaultFluxSpace ? DEFAULT_FLUX_TOTAL_TIMEOUT_MS : DEFAULT_CUSTOM_SPACE_TOTAL_TIMEOUT_MS));
   const idleTimeoutMs = options.idleTimeoutMs ?? DEFAULT_IDLE_TIMEOUT_MS;
   const emit = (update: ZeroGpuStatusUpdate) => options.onStatus?.(update);
 
@@ -446,7 +465,7 @@ export async function generateImageViaZeroGpu(
   const { client, usingHfToken } = connected;
 
   const { endpoint, parameters } = await resolveTextToImageEndpoint(client, options.endpoint);
-  const payload = buildPredictPayload(trimmed, options, parameters);
+  const payload = buildPredictPayload(trimmed, effectiveOptions, parameters);
 
   emit({
     phase: "queued",
