@@ -103,7 +103,10 @@ describe("handleHfCallback", () => {
   it("surfaces HF's own error/description without any network call", async () => {
     const result = await handleHfCallback({ error: "access_denied", errorDescription: "user clicked cancel" });
     expect(result.ok).toBe(false);
-    if (!result.ok) expect(result.reason).toContain("user clicked cancel");
+    if (result.ok === false) {
+      // non-strict tsconfig: !result.ok does not narrow unions here
+      expect(result.reason).toContain("user clicked cancel");
+    }
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
@@ -117,7 +120,10 @@ describe("handleHfCallback", () => {
     seedPending("expected-state");
     const result = await handleHfCallback({ code: "abc", state: "forged-state" });
     expect(result.ok).toBe(false);
-    if (!result.ok) expect(result.reason).toMatch(/state mismatch/i);
+    if (result.ok === false) {
+      // non-strict tsconfig: !result.ok does not narrow unions here
+      expect(result.reason).toMatch(/state mismatch/i);
+    }
     expect(sessionStorage.getItem(PENDING_KEY)).toBeNull();
   });
 
@@ -125,7 +131,10 @@ describe("handleHfCallback", () => {
     seedPending("st-2", Date.now() - 11 * 60_000);
     const result = await handleHfCallback({ code: "abc", state: "st-2" });
     expect(result.ok).toBe(false);
-    if (!result.ok) expect(result.reason).toMatch(/expired/i);
+    if (result.ok === false) {
+      // non-strict tsconfig: !result.ok does not narrow unions here
+      expect(result.reason).toMatch(/expired/i);
+    }
   });
 
   it("exchanges the code, stores an hf_ token and reports the profile", async () => {
@@ -154,7 +163,10 @@ describe("handleHfCallback", () => {
     );
     const result = await handleHfCallback({ code: "bad-code", state: "st-4" });
     expect(result.ok).toBe(false);
-    if (!result.ok) expect(result.reason).toContain("bad verification code");
+    if (result.ok === false) {
+      // non-strict tsconfig: !result.ok does not narrow unions here
+      expect(result.reason).toContain("bad verification code");
+    }
     expect(await isHfAccountConnected()).toBe(false);
   });
 
@@ -163,7 +175,10 @@ describe("handleHfCallback", () => {
     fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({ access_token: "not-hf" }), { status: 200 }));
     const result = await handleHfCallback({ code: "c", state: "st-5" });
     expect(result.ok).toBe(false);
-    if (!result.ok) expect(result.reason).toMatch(/token shape/i);
+    if (result.ok === false) {
+      // non-strict tsconfig: !result.ok does not narrow unions here
+      expect(result.reason).toMatch(/token shape/i);
+    }
   });
 
   it("disconnect clears credentials and pending state", async () => {
