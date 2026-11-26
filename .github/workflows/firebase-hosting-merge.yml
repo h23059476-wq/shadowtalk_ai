@@ -21,7 +21,13 @@ jobs:
           distribution: temurin
           java-version: '17'
       - run: npx --yes firebase-tools@14 emulators:exec --project demo-shadowtalk-auth-rules --only firestore "npm test"
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
       - run: npm run build
+        # Same OOM guard as ci.yml: echarts + mermaid made the Vite graph
+        # exceed the default heap (exit 134 on c11dc8f4).
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
       # ------------------------------------------------------------------
       # Firestore rules + indexes deploy on every main merge.
       #
