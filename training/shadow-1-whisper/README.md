@@ -75,7 +75,7 @@ If you edit scenarios, the built-in validator re-checks every fenced payload and
 | **2 — Auth & load** | secure `getpass` token, loads `unsloth/Qwen3.5-0.8B` (`load_in_4bit=False` → ~3 GB VRAM), LoRA `r=16, lora_alpha=16` on **language layers only** (vision frozen) | ~2 min |
 | **3 — Train** | chat-template SFT, `max_length=2048` (trl 0.22.2 field name), **3 epochs @ lr 2e-4** | 25-40 min |
 | **4 — Push merged + GGUF** | merged 16-bit → `shadowtalkai/Shadow-1-Whisper-0.8B`; GGUF `q4_k_m` → `shadowtalkai/Shadow-1-Whisper-0.8B-GGUF` | 10-18 min |
-| **5 — ONNX transplant** | transplants fine-tuned language weights + tokenizer onto the reference WebGPU graph from `onnx-community/Qwen3.5-0.8B-ONNX`, verifies with onnxruntime, uploads → `shadowtalkai/Shadow-1-Whisper-0.8B-ONNX` | 8-15 min |
+| **5 — ONNX transplant** | transplants fine-tuned language weights + tokenizer onto the reference WebGPU graph from `onnx-community/Qwen3.5-0.8B-ONNX` (name map + transpose rules verified offline against the real graph: 320/320 initializers, 187 transposed, 18 squeezed), **regenerates `_q4`/`_q4f16` from the transplanted graphs** (the reference's quantized files carry base weights), verifies with onnxruntime, uploads → `shadowtalkai/Shadow-1-Whisper-0.8B-ONNX` | 8-15 min |
 
 **Checkpoint guidance:** train loss should settle below ~0.9 by epoch 2 and keep drifting down; the
 dataset is 45% strict-JSON, so schema-validity — not loss — is the real metric. Spot-check Cell 3's
@@ -91,9 +91,10 @@ printed sample to confirm the chat template rendered the `shadowvisual` fence co
 - *CUDA OOM in Cell 3* — drop `per_device_train_batch_size` to 1 (gradient_accumulation already
   compensates) or close the Colab "high-RAM" extras. The run is designed for the free T4's 15 GB.
 - *T4 rejects bf16* — the notebook auto-selects `fp16` on T4 (bf16 only on Ampere+/L4).
-- *Cell 5 coverage assert fires* — the ONNX graph naming drifted vs the reference; the printed
-  matched/unmatched report tells you exactly which initializer family to extend in `find_weight()`.
-  Shipping a half-transplanted model is never acceptable — the assert exists for that.
+- *Cell 5 coverage/shape asserts fire* — the ONNX graph naming drifted vs the reference; the printed
+  report tells you exactly which initializer family to extend in `graph_to_hf()`. Expected baseline on
+  the current reference graph: 320/320 matched, 187 transposed, 18 squeezed, 0 missing. Shipping a
+  half-transplanted model is never acceptable — the asserts exist for that.
 - *GGUF step slow* — `q4_k_m` quantization of 0.8B takes ~10 min; if it stalls >30 min, re-run the
   cell (unsloth caches the merged fp16 shard).
 
