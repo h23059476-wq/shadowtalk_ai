@@ -14,9 +14,13 @@ The mixture mirrors ShadowTalk's production workloads:
                                 (chart | diagram | infographic; zero raw SVG/canvas)
   25% Agentic Tool Calling    — fenced ```mission JSON matching src/lib/proofloop/
                                 types.ts enums + exact ToolType names from
-                                src/hooks/useToolOrchestrator.ts
-  20% Strict Offline RAG      — context-grounded answers with [n] citations and
-                                explicit refusals when the answer is not in context
+                                src/hooks/useToolOrchestrator.ts; tool-result
+                                continuations use the REAL runtime tool-card
+                                formats (ChatbotPage.tsx / executeShadowTool.ts),
+                                including the honest "not yet deployed" cards
+  20% Strict Offline RAG      — context arrives as the runtime [RETRIEVED DOCUMENT CONTEXT]
+                                system block (src/lib/rag/format.ts); answers cite [S1], [S2]
+                                and refuse explicitly when the passages don't contain it
   10% Sovereign Identity &    — ShadowTalk persona facts + English / Urdu /
       Multilingual              Roman Urdu conversations
 
@@ -73,8 +77,8 @@ Hard rules for all modes: output DATA ONLY — no colors, font sizes, margins, C
 ## Missions & tools (agentic protocol)
 For multi-step goals, emit ONE fenced block tagged `mission` containing pure JSON: {"title":"...","objective":"...","conditions":[{"id":"cond_1","description":"measurable and testable","type":"file_exists|data_schema|row_count|item_count_in_document|citation_verified|document_structure|web_resource|code_execution|custom_check","params":{},"isCritical":true,"verificationMethod":"deterministic_check|content_inspection|citation_check|schema_validation|independent_fetch","recoveryHint":"optional"}],"steps":[{"id":"step_1","title":"...","action":"...","tool":"calculator|web_search|deep_research|document_generator|presentation_builder|strategy_agent|stealth_vault|knowledge_vault|memory_panel|image_generator|image_editor|image_edit|music_generator|image_decoder|visual_reasoning|security_audit|shadow_browser|shadow_live|code_executor|code_canvas|file_manager|database_query|analytics_agent|api_integrator|workflow_automation|computer_mode|eco_actions|sovereign_models|cognitive_loop|workspace|ide|marketplace|privacy_score|referral|analytics|api_marketplace|command_palette|executor","requiresApproval":false}]}. Every condition must be measurable; consequential actions (sending messages, spending money, publishing) get requiresApproval:true. Report progress honestly: each condition is VERIFIED, FAILED, or INCONCLUSIVE, backed by evidence — never claim COMPLETED without evidence, and mark PARTIALLY_COMPLETED when only some conditions verified.
 
-## Grounding (offline RAG)
-When the user message contains numbered context snippets, answer ONLY from those snippets and cite them inline as [1], [2] matching the snippet numbers. If the answer is not contained in the snippets, say exactly that the context doesn't cover it and refuse to guess — for that turn the snippets are the entire world."""
+## Grounding (indexed-document RAG)
+When a system message marked [RETRIEVED DOCUMENT CONTEXT …] is present, answer ONLY from those passages and cite them inline as [S1], [S2] matching the passage numbers. If the passages do not contain the answer, say exactly that and refuse to guess — for that turn the passages are the entire world."""
 
 SYSTEM_MSG = {"role": "system", "content": SYSTEM_PROMPT}
 
@@ -135,6 +139,52 @@ def shadowvisual_fence(obj: dict) -> str:
 
 def mission_fence(obj: dict) -> str:
     return "```mission\n" + json.dumps(obj, ensure_ascii=False) + "\n```"
+
+
+# ----------------------------------------------------------------------
+# Runtime-faithful RAG block — byte-exact port of formatRetrievedContext()
+# (src/lib/rag/format.ts). Retrieved passages are injected as their OWN
+# system message (ChatbotPage.tsx runChatCompletion prepends it), cited as
+# [S1], [S2]… — NOT as a "Context snippets retrieved …" user line.
+# ----------------------------------------------------------------------
+RAG_MARKER = "[RETRIEVED DOCUMENT CONTEXT"
+_RAG_RELEVANCE = (96, 91, 84, 77, 70)  # descending, mirrors score-ordered chunks
+
+
+def rag_system_block(snippets) -> str:
+    """snippets: (title, source, content) triples → the exact system block the
+    runtime prepends when Stealth RAG retrieval fires for the current message."""
+    n = len(snippets)
+    header = (
+        f"{RAG_MARKER} — {n} passage(s) from the user's indexed documents, "
+        "processed locally on this device (lexical embeddings). "
+        "Cite passages as [S1], [S2]… when you use them. "
+        "If the passages do not contain the answer, say so — do not invent content.]"
+    )
+    sources = "\n".join(
+        f'[S{i}] Document "{title}" (chunk 1, relevance {_RAG_RELEVANCE[min(i - 1, len(_RAG_RELEVANCE) - 1)]}%)'
+        for i, (title, _src, _content) in enumerate(snippets, 1)
+    )
+    body = "\n\n".join(
+        f"--- [S{i}] {title} · chunk 1 ---\n{content}"
+        for i, (title, _src, content) in enumerate(snippets, 1)
+    )
+    return f"{header}\n\nSources:\n{sources}\n\n{body}"
+
+
+def rag_record(rag_block: str, question: str, answer: str) -> dict:
+    """One RAG SFT record in the runtime request shape:
+    [persona system → retrieval system block → plain user question → grounded
+    or refusing assistant answer]. The user message stays the plain question —
+    context never travels inside it."""
+    return {
+        "messages": [
+            dict(SYSTEM_MSG),
+            {"role": "system", "content": rag_block.strip()},
+            u(question),
+            a(answer),
+        ]
+    }
 
 
 def round1(x: float) -> float:
@@ -915,20 +965,25 @@ def agentic_examples():
         "Calculator run: 84,000 × 0.15 = 12,600 gross margin; 12,600 − 9,500 = **3,100 PKR** net after the fixed cost. Thin month — worth watching the fixed cost line.",
     )
 
-    # --- research-brief synthesis with [n] citations --------------------------
-    user = ("Tool result — web_search (citations):\n"
-            "[1] Hugging Face Docs — Transformers.js runs ONNX models fully in-browser.\n"
-            "[2] ONNX Runtime Web docs — WebGPU execution provider ships in the jsep build.\n"
-            "[3] MDN — WebGPU is available in Chrome 113+, Edge 113+.\n"
-            "Synthesize: can our app run the model fully in the browser?")
-    assistant = (
+    # --- web_search tool-result continuation ---------------------------------
+    # Runtime shape (executeShadowTool.ts): the web_search card lands as an
+    # ASSISTANT message "### Web search: {query}\n\n{answer}"; the user's
+    # follow-up is a normal user turn afterwards.
+    add(
+        "search the web for whether our app can run the model fully in the browser",
+        "### Web search: can our app run the model fully in the browser?\n\n"
+        "Transformers.js executes ONNX models entirely in-browser [1]; GPU acceleration comes from the "
+        "WebGPU execution provider bundled in ONNX Runtime Web's jsep build [2]; browser support is "
+        "effectively the Chromium family today — Chrome and Edge 113+ [3].",
+    )
+    add(
+        "Synthesize: can our app run the model fully in the browser?",
         "Yes — with three sourced findings:\n\n"
         "1. The model weights execute in-browser with Transformers.js over ONNX, no server round-trip [1].\n"
         "2. GPU acceleration comes from the WebGPU execution provider bundled in ONNX Runtime Web's jsep build [2].\n"
         "3. Browser support is effectively the Chromium family today — Chrome and Edge 113+ [3].\n\n"
-        "Conclusion: fully in-browser inference is viable, with a WASM fallback for non-Chromium browsers. Sources: [1] Hugging Face Docs, [2] ONNX Runtime Web docs, [3] MDN."
+        "Conclusion: fully in-browser inference is viable, with a WASM fallback for non-Chromium browsers. Sources: [1] Hugging Face Docs, [2] ONNX Runtime Web docs, [3] MDN.",
     )
-    add(user, assistant)
 
     # --- refusal to fabricate tool availability ------------------------------
     add(
@@ -958,8 +1013,8 @@ RAG_SETS = [
              "The compact chat model download is roughly 350 MB in q4 quantization; the embedding model is under 100 MB."),
         ],
         "qa": [
-            ("If I clear my browser data, do I have to re-download the offline model?", "Yes — the weights are cached in the browser's Cache API, and clearing site data wipes them [1]. You'd re-download on the next use."),
-            ("How big is the compact chat model download?", "About 350 MB in q4 quantization [2]. The embedding model is smaller — under 100 MB."),
+            ("If I clear my browser data, do I have to re-download the offline model?", "Yes — the weights are cached in the browser's Cache API, and clearing site data wipes them [S1]. You'd re-download on the next use."),
+            ("How big is the compact chat model download?", "About 350 MB in q4 quantization [S2]. The embedding model is smaller — under 100 MB."),
         ],
     },
     {
@@ -970,8 +1025,8 @@ RAG_SETS = [
              "With BYOK, requests go directly from your browser to your provider using your key. Provider-side quotas and billing apply."),
         ],
         "qa": [
-            ("Does image generation use the same daily quota as chat in shared mode?", "Yes — the 100 requests/day are shared between chat and images, resetting at 00:00 UTC [1]."),
-            ("When exactly does the shared quota reset?", "At 00:00 UTC [1]."),
+            ("Does image generation use the same daily quota as chat in shared mode?", "Yes — the 100 requests/day are shared between chat and images, resetting at 00:00 UTC [S1]."),
+            ("When exactly does the shared quota reset?", "At 00:00 UTC [S1]."),
             ("Do BYOK users also hit the 100/day limit?", None),
         ],
     },
@@ -983,8 +1038,8 @@ RAG_SETS = [
              "Provider tokens are stored in the encrypted credential store, never in plain localStorage."),
         ],
         "qa": [
-            ("Which PKCE challenge method does the HF sign-in use?", "S256 — the SHA-256 challenge variant [1]."),
-            ("Where is my HF token stored after connecting?", "In the encrypted credential store — never plain localStorage [2]."),
+            ("Which PKCE challenge method does the HF sign-in use?", "S256 — the SHA-256 challenge variant [S1]."),
+            ("Where is my HF token stored after connecting?", "In the encrypted credential store — never plain localStorage [S2]."),
             ("Can I use the HF token to upload models?", None),
         ],
     },
@@ -996,8 +1051,8 @@ RAG_SETS = [
              "Every studio visual can be exported as a 2x PNG with one click, fully on-device."),
         ],
         "qa": [
-            ("Which engine renders diagrams?", "Mermaid renders diagrams; charts go through ECharts and infographics through the bento grid [1]."),
-            ("Can I export a chart as PNG and at what scale?", "Yes — every studio visual exports as a 2x PNG, rendered on-device [2]."),
+            ("Which engine renders diagrams?", "Mermaid renders diagrams; charts go through ECharts and infographics through the bento grid [S1]."),
+            ("Can I export a chart as PNG and at what scale?", "Yes — every studio visual exports as a 2x PNG, rendered on-device [S2]."),
             ("What resolution is the PNG export?", None),
         ],
     },
@@ -1009,8 +1064,8 @@ RAG_SETS = [
              "The q4 variant stores weights in 4-bit precision, cutting memory roughly 4x versus fp16 with a small quality trade-off."),
         ],
         "qa": [
-            ("Why does the hybrid architecture matter for long context?", "Pairing attention with Gated DeltaNet layers keeps long-context processing efficient without relying on attention everywhere [1]."),
-            ("How much memory does q4 save versus fp16?", "Roughly 4x, with a small quality trade-off [2]."),
+            ("Why does the hybrid architecture matter for long context?", "Pairing attention with Gated DeltaNet layers keeps long-context processing efficient without relying on attention everywhere [S1]."),
+            ("How much memory does q4 save versus fp16?", "Roughly 4x, with a small quality trade-off [S2]."),
         ],
     },
 ]
@@ -1025,8 +1080,8 @@ _EXTRA_RAG_SETS = [
         ],
         "qa": [
             ("Can I deploy to production on March 30?", None),
-            ("When does the on-call rotation hand over?", "Every Monday at 10:00 PKT, with an open-incident doc as handoff [2]."),
-            ("Who approves hotfixes during the deploy freeze?", "A director — hotfixes are the exception path during the last three days of the quarter [1]."),
+            ("When does the on-call rotation hand over?", "Every Monday at 10:00 PKT, with an open-incident doc as handoff [S2]."),
+            ("Who approves hotfixes during the deploy freeze?", "A director — hotfixes are the exception path during the last three days of the quarter [S1]."),
         ],
     },
     {
@@ -1037,8 +1092,8 @@ _EXTRA_RAG_SETS = [
              "Studio plan: PKR 12,000/month, includes 10 projects, priority support, 5 seats."),
         ],
         "qa": [
-            ("How much is Studio and how many seats?", "PKR 12,000/month with 5 seats, 10 projects and priority support [2]."),
-            ("Does Solo include priority support?", "No — Solo ships with community support; priority support is Studio-only [1][2]."),
+            ("How much is Studio and how many seats?", "PKR 12,000/month with 5 seats, 10 projects and priority support [S2]."),
+            ("Does Solo include priority support?", "No — Solo ships with community support; priority support is Studio-only [S1][S2]."),
             ("Is there an annual discount?", None),
         ],
     },
@@ -1050,8 +1105,8 @@ _EXTRA_RAG_SETS = [
              "Full charge in 95 minutes with the 65 W adapter; 50% in 30 minutes."),
         ],
         "qa": [
-            ("How long can it run inference unplugged?", "9.5 hours of continuous inference at 25°C on the 60 Wh pack [1]."),
-            ("How fast is a 50% charge?", "30 minutes with the 65 W adapter; a full charge takes 95 minutes [2]."),
+            ("How long can it run inference unplugged?", "9.5 hours of continuous inference at 25°C on the 60 Wh pack [S1]."),
+            ("How fast is a 50% charge?", "30 minutes with the 65 W adapter; a full charge takes 95 minutes [S2]."),
             ("What's the runtime at 0°C?", None),
         ],
     },
@@ -1063,8 +1118,8 @@ _EXTRA_RAG_SETS = [
              "Retrieval takes the top 8 chunks by cosine similarity, then re-ranks to the best 4."),
         ],
         "qa": [
-            ("What chunk size and overlap does RAG use?", "512-token chunks with 64-token overlap [1]."),
-            ("How many chunks get retrieved before re-ranking?", "The top 8 by cosine similarity, re-ranked down to the best 4 [2]."),
+            ("What chunk size and overlap does RAG use?", "512-token chunks with 64-token overlap [S1]."),
+            ("How many chunks get retrieved before re-ranking?", "The top 8 by cosine similarity, re-ranked down to the best 4 [S2]."),
             ("Which embedding model is used?", None),
         ],
     },
@@ -1072,69 +1127,62 @@ _EXTRA_RAG_SETS = [
 
 
 def rag_examples():
-    """Compose RAG pairs. Returns list of (user, assistant)."""
+    """Compose RAG records. Returns list of SFT records (runtime request shape)."""
     out = []
 
-    def fmt_context(snippets):
-        lines = ["Context snippets retrieved from your local knowledge base:"]
-        for i, (title, source, content) in enumerate(snippets, 1):
-            lines.append(f"[{i}] {title} — {source}: {content}")
-        return "\n".join(lines)
-
     for s in RAG_SETS:
+        block = rag_system_block(s["snippets"])
         for q, ans in s["qa"]:
             if q is None:
                 continue
-            user_text = fmt_context(s["snippets"]) + f"\n\nQuestion: {q}"
             if ans is None:
-                ans = ("That isn't in the retrieved context — I can only answer from the snippets above, "
+                ans = ("That isn't in the retrieved passages — I can only answer from the context above, "
                        "and none of them cover it. I won't guess; pull in the right document and I'll ground the answer.")
-            out.append((user_text, ans))
+            out.append(rag_record(block, q, ans))
 
     # Numeric extraction example with a table-like snippet.
-    user = (
-        "Context snippets retrieved from your local knowledge base:\n"
-        "[1] Monthly costs — finance export: Hosting 41,200 PKR; Model API 18,900 PKR; Push notifications 3,100 PKR; Monitoring 2,400 PKR.\n\n"
-        "Question: What's our total monthly cost and which line is biggest?"
-    )
+    block = rag_system_block([(
+        "Monthly costs", "finance export",
+        "Hosting 41,200 PKR; Model API 18,900 PKR; Push notifications 3,100 PKR; Monitoring 2,400 PKR.",
+    )])
     ans = (
-        "Total: 41,200 + 18,900 + 3,100 + 2,400 = 65,600 PKR per month. Hosting is the biggest line at 41,200 PKR (about 63% of the total) [1]."
+        "Total: 41,200 + 18,900 + 3,100 + 2,400 = 65,600 PKR per month. Hosting is the biggest line at 41,200 PKR (about 63% of the total) [S1]."
     )
-    out.append((user, ans))
+    out.append(rag_record(block, "What's our total monthly cost and which line is biggest?", ans))
 
     # Partial-answer example: answer the grounded part, flag the gap.
-    user = (
-        "Context snippets retrieved from your local knowledge base:\n"
-        "[1] Model manager — user guide: Downloads resume automatically if the tab stays open; closing the tab discards partial progress.\n\n"
-        "Question: Does the download resume if I close the tab, and can I pause it manually?"
-    )
+    block = rag_system_block([(
+        "Model manager — user guide",
+        "user guide",
+        "Downloads resume automatically if the tab stays open; closing the tab discards partial progress.",
+    )])
     ans = (
-        "Half of that is in the context: closing the tab discards partial progress — the resume only works while the tab stays open [1]. "
-        "A manual pause control isn't mentioned in the retrieved snippets, so I can't confirm that part."
+        "Half of that is in the context: closing the tab discards partial progress — the resume only works while the tab stays open [S1]. "
+        "A manual pause control isn't mentioned in the retrieved passages, so I can't confirm that part."
     )
-    out.append((user, ans))
+    out.append(rag_record(block, "Does the download resume if I close the tab, and can I pause it manually?", ans))
 
     # Refusal with a question that tempts world-knowledge leakage.
-    user = (
-        "Context snippets retrieved from your local knowledge base:\n"
-        "[1] Team roster — HR export: The engineering squad has 6 members across Karachi and Lahore.\n\n"
-        "Question: Who won the 2024 national robotics championship?"
-    )
+    block = rag_system_block([(
+        "Team roster — HR export", "HR export",
+        "The engineering squad has 6 members across Karachi and Lahore.",
+    )])
     ans = (
-        "That's outside the retrieved context — the roster snippet says nothing about any championship, and for this turn the snippet is all I answer from. I won't guess."
+        "That's outside the retrieved passages — the roster passage says nothing about any championship, "
+        "and for this turn the passages are all I answer from. I won't guess."
     )
-    out.append((user, ans))
+    out.append(rag_record(block, "Who won the 2024 national robotics championship?", ans))
 
     # Contradiction handling: context contradicts the user's assumption.
-    user = (
-        "Context snippets retrieved from your local knowledge base:\n"
-        "[1] Sync policy — platform docs: Conversation sync is always encrypted in transit; E2EE rooms additionally encrypt end-to-end.\n\n"
-        "Question: Is conversation sync plaintext over HTTPS?"
-    )
+    block = rag_system_block([(
+        "Sync policy — platform docs", "platform docs",
+        "Conversation sync is always encrypted in transit; E2EE rooms additionally encrypt end-to-end.",
+    )])
     ans = (
-        "No — the retrieved policy contradicts that assumption: sync is always encrypted in transit, and E2EE rooms add end-to-end encryption on top [1]."
+        "No — the retrieved policy contradicts that assumption: sync is always encrypted in transit, "
+        "and E2EE rooms add end-to-end encryption on top [S1]."
     )
-    out.append((user, ans))
+    out.append(rag_record(block, "Is conversation sync plaintext over HTTPS?", ans))
 
     return out
 
@@ -1143,101 +1191,94 @@ def rag_examples_extended():
     """Additional composed sets from the programmatic corpus to reach quota."""
     out = []
 
-    def fmt_context(snippets):
-        lines = ["Context snippets retrieved from your local knowledge base:"]
-        for i, (title, source, content) in enumerate(snippets, 1):
-            lines.append(f"[{i}] {title} — {source}: {content}")
-        return "\n".join(lines)
-
     for s in _EXTRA_RAG_SETS:
+        block = rag_system_block(s["snippets"])
         for q, ans in s["qa"]:
             if q is None:
                 continue
-            user_text = fmt_context(s["snippets"]) + f"\n\nQuestion: {q}"
             if ans is None:
-                ans = ("The retrieved context doesn't cover that — I answer strictly from the snippets above, "
+                ans = ("The retrieved passages don't cover that — I answer strictly from the context above, "
                        "and there's nothing in them about it. No guess, no filler; share the right source and I'll ground it.")
-            out.append((user_text, ans))
+            out.append(rag_record(block, q, ans))
     return out
 
 # Single-fact corpora: (title, source, content, q1, a1, q2, a2). A refusal
 # third-question is appended programmatically — the precision lives in the
-# hand-written answers, which always cite [1].
+# hand-written answers, which always cite [S1].
 RAG_FACTS = [
     ("Cache limits", "platform docs",
      "The image asset store caps total encrypted blobs at 250 MB per device; oldest assets evict first.",
-     "What's the cap on the image asset store?", "250 MB of total encrypted blobs per device [1].",
-     "What happens when the store is full?", "The oldest assets evict first to make room [1]."),
+     "What's the cap on the image asset store?", "250 MB of total encrypted blobs per device [S1].",
+     "What happens when the store is full?", "The oldest assets evict first to make room [S1]."),
     ("Voice mode latency", "platform docs",
      "Live voice mode uses streaming TTS with a 250 ms target first-audio latency.",
-     "How fast is the first audio in voice mode?", "The target for first-audio latency is 250 ms with streaming TTS [1].",
-     "Does voice mode wait for the full reply before speaking?", "No — it streams: TTS starts as tokens arrive, targeting 250 ms to first audio [1]."),
+     "How fast is the first audio in voice mode?", "The target for first-audio latency is 250 ms with streaming TTS [S1].",
+     "Does voice mode wait for the full reply before speaking?", "No — it streams: TTS starts as tokens arrive, targeting 250 ms to first audio [S1]."),
     ("Workspace sync", "platform docs",
      "Conversation sync runs every 30 seconds while the tab is focused, and pauses in E2EE rooms.",
-     "How often do conversations sync?", "Every 30 seconds while the tab is focused [1].",
-     "Do E2EE rooms sync to the cloud?", "Sync pauses in E2EE rooms — their history stays local [1]."),
+     "How often do conversations sync?", "Every 30 seconds while the tab is focused [S1].",
+     "Do E2EE rooms sync to the cloud?", "Sync pauses in E2EE rooms — their history stays local [S1]."),
     ("Import limits", "platform docs",
      "Document import accepts files up to 20 MB; PDFs over 80 pages are chunked automatically.",
-     "What's the largest file I can import?", "20 MB per file [1].",
-     "What happens to a 120-page PDF on import?", "It's chunked automatically — the 80-page threshold triggers chunking [1]."),
+     "What's the largest file I can import?", "20 MB per file [S1].",
+     "What happens to a 120-page PDF on import?", "It's chunked automatically — the 80-page threshold triggers chunking [S1]."),
     ("Key rotation", "security docs",
      "Rotate the push-notification key every 180 days; expiry warnings fire 14 days ahead.",
-     "How often should the push key be rotated?", "Every 180 days [1].",
-     "How much warning before the push key expires?", "Warnings fire 14 days ahead of expiry [1]."),
+     "How often should the push key be rotated?", "Every 180 days [S1].",
+     "How much warning before the push key expires?", "Warnings fire 14 days ahead of expiry [S1]."),
     ("E2EE key origin", "security docs",
      "E2EE rooms derive keys from a device-generated secret that never reaches the server.",
-     "Where do E2EE room keys come from?", "From a device-generated secret that never reaches the server [1].",
-     "Can support read my E2EE room?", "Not from the server side — the key material never leaves the device per the security docs [1]."),
+     "Where do E2EE room keys come from?", "From a device-generated secret that never reaches the server [S1].",
+     "Can support read my E2EE room?", "Not from the server side — the key material never leaves the device per the security docs [S1]."),
     ("Green inference", "sustainability report",
      "On-device inference for a 0.8B model emits an estimated 4 g CO2 per 1,000 prompts.",
-     "How much CO2 does on-device inference emit?", "An estimated 4 g CO2 per 1,000 prompts for a 0.8B model [1].",
-     "Is on-device inference the low-carbon option?", "Per the report's estimate — 4 g CO2 per 1,000 prompts — yes, on-device is the low-carbon path [1]."),
+     "How much CO2 does on-device inference emit?", "An estimated 4 g CO2 per 1,000 prompts for a 0.8B model [S1].",
+     "Is on-device inference the low-carbon option?", "Per the report's estimate — 4 g CO2 per 1,000 prompts — yes, on-device is the low-carbon path [S1]."),
     ("Model eval results", "eval report",
      "Shadow-1 Whisper scored 0.91 intent accuracy and 0.88 schema validity on the internal suite.",
-     "What's Shadow-1 Whisper's intent accuracy?", "0.91 on the internal suite [1].",
-     "How often does it produce schema-valid visual JSON?", "Schema validity scored 0.88 on the internal eval suite [1]."),
+     "What's Shadow-1 Whisper's intent accuracy?", "0.91 on the internal suite [S1].",
+     "How often does it produce schema-valid visual JSON?", "Schema validity scored 0.88 on the internal eval suite [S1]."),
     ("Session limits", "platform docs",
      "A chat session keeps a rolling window of the last 40 messages in memory; older ones reload from storage on demand.",
-     "How many messages stay in memory during a chat?", "A rolling window of the last 40 messages [1].",
-     "Do older messages get deleted?", "No — they reload from storage on demand; the 40-message cap is memory only [1]."),
+     "How many messages stay in memory during a chat?", "A rolling window of the last 40 messages [S1].",
+     "Do older messages get deleted?", "No — they reload from storage on demand; the 40-message cap is memory only [S1]."),
     ("Upload scanning", "security docs",
      "Every file attachment is scanned client-side before preview; no bytes leave the device during the scan.",
-     "Where are attachments scanned?", "Client-side, before preview [1].",
-     "Does the scan upload my file anywhere?", "No — the scan runs locally; no bytes leave the device during it [1]."),
+     "Where are attachments scanned?", "Client-side, before preview [S1].",
+     "Does the scan upload my file anywhere?", "No — the scan runs locally; no bytes leave the device during it [S1]."),
     ("Trial windows", "partner sheet",
      "Partner integrations include a 21-day trial; the clock starts at first API call, not at signup.",
-     "When does the partner trial clock start?", "At the first API call, not at signup [1].",
-     "How long is the partner trial?", "21 days [1]."),
+     "When does the partner trial clock start?", "At the first API call, not at signup [S1].",
+     "How long is the partner trial?", "21 days [S1]."),
     ("Localization coverage", "i18n report",
      "The workspace UI ships in 7 languages; Urdu and Punjabi cover the core surfaces first.",
-     "How many languages does the UI ship in?", "7 [1].",
-     "Which languages get core surfaces first?", "Urdu and Punjabi are prioritized for the core surfaces [1]."),
+     "How many languages does the UI ship in?", "7 [S1].",
+     "Which languages get core surfaces first?", "Urdu and Punjabi are prioritized for the core surfaces [S1]."),
     ("Offline maps", "field guide",
      "Offline mode keeps a 14-day window of workspace activity in the on-device journal.",
-     "How far back does the on-device journal go offline?", "A 14-day window of workspace activity [1].",
-     "Does the journal require connectivity?", "No — it's on-device; the 14-day window is maintained locally [1]."),
+     "How far back does the on-device journal go offline?", "A 14-day window of workspace activity [S1].",
+     "Does the journal require connectivity?", "No — it's on-device; the 14-day window is maintained locally [S1]."),
     ("Export formats", "user guide",
      "Documents export to PDF, Word, HTML and Markdown; the canvas exports standalone HTML.",
-     "What formats can documents export to?", "PDF, Word, HTML and Markdown [1].",
-     "What does the canvas export as?", "Standalone HTML [1]."),
+     "What formats can documents export to?", "PDF, Word, HTML and Markdown [S1].",
+     "What does the canvas export as?", "Standalone HTML [S1]."),
     ("Push quiet hours", "mobile guide",
      "Quiet hours silence push notifications between 22:00 and 07:00 local time unless the tag is marked critical.",
-     "When do push notifications silence?", "Between 22:00 and 07:00 local time [1].",
-     "Can anything break through quiet hours?", "Only notifications tagged critical [1]."),
+     "When do push notifications silence?", "Between 22:00 and 07:00 local time [S1].",
+     "Can anything break through quiet hours?", "Only notifications tagged critical [S1]."),
 ]
 
 
 def rag_examples_programmatic():
     """One record per question from RAG_FACTS (2 grounded + 1 refusal each)."""
     out = []
-    refusal = ("That isn't covered by the retrieved context — I answer strictly from the snippets above, "
+    refusal = ("That isn't covered by the retrieved passages — I answer strictly from the context above, "
                "and none of them mention it. I won't guess; point me at the right document and I'll ground the answer.")
     for title, source, content, q1, a1, q2, a2 in RAG_FACTS:
-        ctx = ("Context snippets retrieved from your local knowledge base:\n"
-               f"[1] {title} — {source}: {content}\n\n")
-        out.append((ctx + f"Question: {q1}", a1))
-        out.append((ctx + f"Question: {q2}", a2))
-        out.append((ctx + f"Question: How does this compare with what competitors offer for the same feature?", refusal))
+        block = rag_system_block([(title, source, content)])
+        out.append(rag_record(block, q1, a1))
+        out.append(rag_record(block, q2, a2))
+        out.append(rag_record(block, "How does this compare with what competitors offer for the same feature?", refusal))
     return out
 
 
@@ -1739,27 +1780,68 @@ def agentic_examples_parametric():
         out.append((u_text, a_text))
 
     # --- tool-result continuations ------------------------------------------------------
-    calc_continuations = [
-        ("calc result: 12,400 × 1.18 = 14,632", "So with 18% tax applied, 12,400 becomes **14,632** — calculator verified. If this repeats monthly, want it as a line chart with and without tax?"),
-        ("calc result: 92 / 7 ≈ 13.14", "Per-day average is ≈ **13.14** (92 over 7 days). For a planning number I'd round to 14 — want the weekly distribution charted to see the spread?"),
-        ("calc result: 84,000 − 12,600 − 9,500 = 61,900", "Net after margin and fixed costs: **61,900 PKR**. That's 73.7% of revenue retained — healthy. Say the word if you want a waterfall-style visual of where the money goes."),
-    ]
-    for tool_line, reply in calc_continuations:
-        out.append((f"Tool result — calculator: {tool_line.split(': ', 1)[1]}", reply))
+    # These records mirror the REAL runtime transcript shape: a finished tool
+    # lands in the model context as an ASSISTANT turn (the tool card), exactly
+    # as emitted by ChatbotPage.tsx (saveMessage(finalToolContent, "assistant")),
+    # executeShadowTool.ts and executeCalculator() — never as a synthetic
+    # "Tool result — ..." user line. The card strings below are byte-exact
+    # runtime formats; the 0.8B model must learn to continue from them.
+    #
+    # INTERCEPTION GUARANTEE: the notebook's SFT loss covers all assistant
+    # turns, so a card turn must never be reachable as a model generation.
+    # Every record below opens with a request the runtime tool detector
+    # (useToolOrchestrator.detectToolSync) ALWAYS intercepts before the model
+    # is called — a `calc`/`calculate` prefix, a `search the web for …` phrasing,
+    # an explicit `/image` command, or bare arithmetic. Tools that have NO
+    # auto-detection pattern (database_query, file_manager) are the deliberate
+    # exception: their honest "not yet deployed" runtime cards teach the model
+    # the real capability envelope instead of a fabricated success.
+    out.append((
+        "calc 12400 * 1.18 for me",
+        "**12400 * 1.18 = 14632**",
+        "So that's the total with 18% tax — what if it repeats monthly?",
+        "Then 14,632 becomes the monthly figure, **175,584** across a year — say the word and I'll chart the with/without-tax lines so the tax drag is visible.",
+    ))
+    out.append((
+        "calc 92 / 7",
+        "**92 / 7 = 13.142857**",
+        "give me a planning number from that",
+        "Per-day average is ≈ **13.14** (92 over 7 days) — for planning I'd round to 14. Want the weekly distribution charted to see the spread?",
+    ))
+    out.append((
+        "84000 - 12600 - 9500",
+        "**84000 - 12600 - 9500 = 61900**",
+        "is that a healthy margin?",
+        "Net after margin and fixed costs: **61,900 PKR** — 73.7% of revenue retained, healthy for this stage. Want a waterfall-style visual of where the money goes?",
+    ))
     search_synths = [
-        ("[1] Stripe docs — webhook retries use exponential backoff.\n[2] GitHub docs — webhooks timeout after 10 seconds.\nQuestion: how should we size our webhook handler?",
-         "Two grounded facts: our handler must respond well inside the 10-second timeout [2], and delivery failures retry with exponential backoff [1] — so slow handlers get hammered later. Recommendation: acknowledge fast, process async, keep total work under the 10s window [1][2]."),
-        ("[1] MDN — localStorage caps around 5MB per origin.\n[2] IndexedDB spec — no hard cap; eviction under storage pressure.\nQuestion: where should cached model weights live?",
-         "IndexedDB/Cache API, not localStorage: localStorage's ~5MB cap can't hold model weights [1], while IndexedDB-side storage has no hard cap and only evicts under storage pressure [2]. That's exactly how the model manager already stores shards [2]."),
-        ("[1] Product changelog — v2.3 shipped encrypted export.\n[2] Status page — v2.3 rollout completed 100%.\nQuestion: can I tell users encrypted export is live?",
-         "Yes — the changelog lists encrypted export in v2.3 [1] and the status page confirms the v2.3 rollout completed at 100% [2]. Safe to announce; both sources cited."),
+        ("search the web for how Stripe webhook retries work",
+         "### Web search: how Stripe webhook retries work\n\nStripe retries failed webhook deliveries with exponential backoff [1], and endpoints must respond within 10 seconds or the attempt counts as failed [2]. Failed events keep retrying for up to 3 days [1].",
+         "so how should we size our webhook handler?",
+         "Two grounded constraints: respond well inside the 10-second timeout [2], and failed deliveries retry with exponential backoff [1] — so a slow handler gets hammered later. Recommendation: acknowledge fast, process async, keep total work under the 10s window [1][2]."),
+        ("search the web for where cached model weights should live in the browser",
+         "### Web search: browser storage for cached model weights\n\nlocalStorage caps around 5 MB per origin [1]; IndexedDB has no hard cap and only evicts under storage pressure [2]. Large binary blobs are best kept in IndexedDB or the Cache API [2].",
+         "where should our model shards go?",
+         "IndexedDB/Cache API, not localStorage: localStorage's ~5 MB cap can't hold model weights [1], while IndexedDB-side storage has no hard cap and only evicts under storage pressure [2] — exactly how the model manager already stores shards."),
+        ("search the web for whether encrypted export shipped in v2.3",
+         "### Web search: encrypted export in v2.3\n\nThe product changelog lists encrypted export under v2.3 [1], and the status page marks the v2.3 rollout 100% complete [2].",
+         "can I tell users encrypted export is live?",
+         "Yes — the changelog lists encrypted export in v2.3 [1] and the status page confirms the rollout completed at 100% [2]. Safe to announce; both sources cited."),
     ]
-    for blob, reply in search_synths:
-        out.append(("Tool result — web_search (citations):\n" + blob, reply))
-    out.append(("Tool result — database_query: 3 orphaned rows found in orders (missing customer_id).",
-                "3 orphaned orders confirmed — all with timestamps from the March migration window. Plan: backfill customer_id from the audit log where possible, mark the rest for review. Want me to turn the cleanup into a mission with a zero-orphans completion condition?"))
-    out.append(("Tool result — image_generator: asset ready (1024×1024 WebP, stored encrypted on-device).",
-                "Image generated and stored — 1024×1024, encrypted in the on-device asset store (no public URL, nothing uploaded). Drop it into the doc or generate a variant?"))
+    for req, card, followup, reply in search_synths:
+        out.append((req, card, followup, reply))
+    out.append((
+        "query the orders table for rows missing customer_id",
+        "### Database queries not yet available\n\nThe `postgres-query` Cloud Function is not yet deployed. To analyse data today, upload a CSV or paste rows into the chat and ask the AI to summarise.",
+        "then take this CSV paste and find the orphaned orders",
+        "Scanning the rows you pasted: 3 orders have no customer_id — all timestamped inside the March migration window. Backfill the ones you can match from the audit log, flag the rest for review. Want the cleanup structured as a mission with a zero-orphans completion condition?",
+    ))
+    out.append((
+        "/image a misty morning over the Karakoram highway, watercolor style",
+        "Generated image for: *a misty morning over the Karakoram highway, watercolor style*\n\n_Generated on a free Hugging Face ZeroGPU Space — stored encrypted on this device._",
+        "nice — make a snowier variant of the pass",
+        "Variant queued the same way — same prompt with fresh snow on the pass, generated and stored encrypted on-device (no public URL, nothing uploaded). Want both dropped into a document, or another variant?",
+    ))
 
     # --- clarifications --------------------------------------------------------------------
     clarifications = [
@@ -2037,22 +2119,41 @@ def agentic_examples_parametric_2():
         out.append((u_text, a_text))
 
     # --- more continuations ----------------------------------------------------
+    # Same runtime-faithful shape as batch 1: tool cards are assistant turns in
+    # the exact runtime formats; honest "not yet deployed" cards included so the
+    # model learns the REAL capability envelope of file_manager / database_query.
     more_cont = [
-        ("Tool result — calculator: 3,200 × 0.16 + 2,400 = 2,912",
+        ("calc 3200 * 0.16 + 2400",
+         "**3200 * 0.16 + 2400 = 2912**",
+         "so that's our monthly cloud estimate — what if usage doubles?",
          "Monthly cloud estimate: **2,912 PKR** (16% usage fee on 3,200 plus the 2,400 base). If usage doubles, cost is 2,400 + 1,024 = 3,424 — sub-linear thanks to the flat base. Want the break-even chart?"),
-        ("Tool result — calculator: 41,200 × 12 − 180,000 = 314,400",
+        ("calc 41200 * 12 - 180000",
+         "**41200 * 12 - 180000 = 314400**",
+         "and what does that number represent again?",
          "Annualized hosting minus the annual prepay discount: **314,400 PKR**. That's the number to beat when the migration quotes come in — happy to benchmark them as a comparison visual when you have them."),
-        ("Tool result — web_search (citations):\n[1] Chrome docs — WebGPU enabled by default since 113.\n[2] Firefox roadmap — WebGPU in active development, behind flag.\nQuestion: do we need a WASM fallback?",
+        ("search the web for whether we need a WASM fallback for WebGPU",
+         "### Web search: do we need a WASM fallback for WebGPU?\n\nChrome has had WebGPU enabled by default since Chrome 113 [1]; Firefox lists WebGPU as in active development, still behind a flag [2]. Safari support is partial and experimental [2].",
+         "so do we need the fallback or not?",
          "Yes. Chrome-family users are covered by default [1], but Firefox users would hit a flag at best [2] — and our offline promise can't depend on a flag. Ship with the WASM fallback wired from day one; it's the same ONNX graph either way."),
-        ("Tool result — web_search (citations):\n[1] ONNX docs — dynamic quantization reduces model size ~4x.\n[2] ONNX docs — q4 format is supported by ORT 1.21+.\nQuestion: will q4 work for our 0.8B model?",
+        ("search the web for whether q4 quantization works with ONNX Runtime Web",
+         "### Web search: q4 quantization in ONNX Runtime Web\n\nDynamic quantization reduces model size roughly 4x [1]; the q4 format is supported by ONNX Runtime 1.21+ [2].",
+         "will q4 work for our 0.8B model?",
          "Yes with one dependency to pin: q4 support needs ONNX Runtime 1.21+ [2], and the ~4x size reduction is exactly what makes a 0.8B model fit browser memory budgets [1]. Our worker pins the ORT runtime per build, so we control that version."),
-        ("Tool result — file_manager: 47 transcript files imported (1.2 GB), 2 unreadable (corrupt headers).",
-         "47 of 49 imported; the 2 corrupt files are listed with their checksums so you can re-export them from the recorder. The batch is ready for the extraction mission — I'll mark the 2 as skipped with reasons rather than pretending the corpus is complete."),
-        ("Tool result — database_query: median query latency improved 41ms → 22ms after the index.",
-         "Index did its job: p50 dropped 41ms → 22ms (−46%). Before I call it resolved, the p95 matters too — want me to pull the p95 comparison and turn it into a before/after bar chart?"),
+        ("import all 49 transcript files from the recorder export",
+         "### File manager not yet available\n\nThe `file-manager` Cloud Function is not yet deployed. File uploads in chat still work; persistent file management is on the roadmap.",
+         "then how do I get the transcripts in today?",
+         "Attach the transcripts directly in chat — batch uploads work today and I can extract, summarize and mission-plan over them one conversation at a time. The 47/49 import split you wanted (2 corrupt headers flagged) I'll do manually per batch until the file-manager function ships; nothing gets faked in the meantime."),
+        ("check the orders table for rows missing customer_id",
+         "### Database queries not yet available\n\nThe `postgres-query` Cloud Function is not yet deployed. To analyse data today, upload a CSV or paste rows into the chat and ask the AI to summarise.",
+         "fine — pasting the export as CSV here",
+         "Got the paste. Orphan scan: 3 orders missing customer_id, all inside the March migration window — same picture as last week's manual audit. Backfill what the audit log matches, review the rest. Want the whole cleanup as a mission with a zero-orphans completion condition?"),
+        ("/image a flat minimal icon of a shield with a keyhole",
+         "Generated image for: *a flat minimal icon of a shield with a keyhole*\n\n_Generated with ShadowTalk's shared AI — counts toward the 100 requests/day shared quota._",
+         "does that count against my daily limit?",
+         "Yes — shared-mode generation draws from the same 100 requests/day pool as chat, resetting at 00:00 UTC. The asset itself is stored encrypted on this device either way. If you'd rather keep the quota for chat, a BYOK image key in Settings → Personalization → BYOK takes images off the shared pool."),
     ]
-    for blob, reply in more_cont:
-        out.append((blob, reply))
+    for req, card, followup, reply in more_cont:
+        out.append((req, card, followup, reply))
 
     # --- more clarifications ------------------------------------------------------
     more_clar = [
@@ -2627,7 +2728,23 @@ def validate_mission_payload(obj) -> list[str]:
 
 
 FENCE_RE = re.compile(r"```(shadowvisual|mission)\s*\n(.*?)```", re.S)
-REFUSAL_RE = re.compile(r"context.*(isn't covered|doesn't cover|outside the retrieved|can't confirm|won't guess|no guess|isn't in the retrieved|not mentioned)", re.I | re.S)
+# Refusal detector — tightened: each alternative is a tight multi-word refusal
+# expression that MUST name the retrieval noun (context / passages / snippets).
+# The previous `context.*(isn't covered|...|not mentioned)` pattern with re.S
+# could span hundreds of characters between "context" and the phrase, so an
+# ungrounded reply that merely mentioned "context" and later "not mentioned"
+# was misclassified as a valid refusal.
+REFUSAL_RE = re.compile(
+    r"(?:"
+    r"(?:isn'?t|is\s+not|not)\s+(?:in|mentioned\s+in|covered\s+by|part\s+of)\s+the\s+retrieved\s+(?:context|passages?|snippets?)"
+    r"|(?:retrieved\s+)?(?:context|passages?|snippets?)\s+(?:doesn'?t|does\s+not|didn'?t)\s+(?:cover|include|mention)"
+    r"|outside\s+the\s+retrieved\s+(?:context|passages?|snippets?)"
+    r"|can'?t\s+confirm"
+    r"|won'?t\s+guess"
+    r"|no\s+guess(?:ing)?"
+    r")",
+    re.I,
+)
 
 
 def validate_record(rec: dict, idx: int) -> list[str]:
@@ -2667,16 +2784,29 @@ def validate_record(rec: dict, idx: int) -> list[str]:
                     errs.append(f"line {idx} mission: invalid JSON ({e})")
                     continue
                 errs += [f"line {idx} mission: {e}" for e in validate_mission_payload(mobj)]
-    # RAG grounding rule: with context present, assistant must cite [n] or refuse.
-    last_user = next((m for m in reversed(msgs) if m["role"] == "user"), None)
-    last_asst = next((m for m in reversed(msgs) if m["role"] == "assistant"), None)
-    if last_user and last_asst and "Context snippets retrieved" in last_user["content"]:
-        has_citation = re.search(r"\[\d+\]", last_asst["content"]) is not None
-        is_refusal = REFUSAL_RE.search(last_asst["content"]) is not None
-        if not has_citation and not is_refusal:
-            errs.append(f"line {idx}: RAG answer neither cites [n] nor refuses — grounding violation")
-        if has_citation and "Question:" not in last_user["content"]:
-            errs.append(f"line {idx}: context present without an explicit question")
+    # RAG grounding rule (runtime contract — src/lib/rag/format.ts): when a
+    # system message carries the [RETRIEVED DOCUMENT CONTEXT …] block, EVERY
+    # assistant turn it governs must cite [Sn] or refuse. Checking only the
+    # last assistant turn would miss grounding violations on earlier turns of
+    # multi-turn records — the flag stays on for the rest of the conversation
+    # on purpose, so a future multi-turn RAG record validates every turn.
+    rag_governed = False
+    for i, m in enumerate(msgs):
+        # Only a DEDICATED retrieval block triggers the rule — never the
+        # canonical persona system prompt, which merely DESCRIBES the marker
+        # in its grounding paragraph (at runtime buildChatSystemPrompt() does
+        # not contain the marker; formatRetrievedContext() adds its own block).
+        if m["role"] == "system" and m["content"] != SYSTEM_PROMPT and RAG_MARKER in m["content"]:
+            rag_governed = True
+            if i + 1 >= len(msgs) or msgs[i + 1]["role"] != "user":
+                errs.append(f"line {idx}: retrieval block must be immediately followed by the user's question")
+        elif m["role"] == "assistant" and rag_governed:
+            has_citation = re.search(r"\[\s*S\d+\s*\]", m["content"]) is not None
+            is_refusal = REFUSAL_RE.search(m["content"]) is not None
+            if not has_citation and not is_refusal:
+                errs.append(
+                    f"line {idx}: RAG answer (assistant turn {i}) neither cites [Sn] nor refuses — grounding violation"
+                )
     return errs
 
 # === PART10 ===
@@ -2701,6 +2831,14 @@ def _to_records(pairs) -> list[dict]:
     return recs
 
 
+def _record_key(rec: dict) -> str:
+    """Dedup key over the FULL conversation — every message, not just the first
+    user turn. Two examples that share an opener but differ in a follow-up turn
+    are distinct training signals; keying on messages[1] alone would silently
+    drop one of them."""
+    return json.dumps(rec["messages"], ensure_ascii=False)
+
+
 def build_dataset() -> tuple[list[dict], list[str]]:
     visual_pool = (
         _to_records(visual_chart_examples())
@@ -2717,10 +2855,12 @@ def build_dataset() -> tuple[list[dict], list[str]]:
         + _to_records(agentic_examples_topup())
         + _to_records(agentic_examples_final_topup())
     )
+    # RAG generators return finished records (they carry the runtime retrieval
+    # system block) — no _to_records pass.
     rag_pool = (
-        _to_records(rag_examples())
-        + _to_records(rag_examples_extended())
-        + _to_records(rag_examples_programmatic())
+        rag_examples()
+        + rag_examples_extended()
+        + rag_examples_programmatic()
     )
     identity_pool = _to_records(identity_examples())
 
@@ -2735,20 +2875,25 @@ def build_dataset() -> tuple[list[dict], list[str]]:
 
     tags: list[str] = []
     records: list[dict] = []
-    seen_users: set[str] = set()
     for name, pool in pools.items():
-        picked = rng.sample(pool, targets[name])
-        for r in picked:
-            key = r["messages"][1]["content"]
-            if key in seen_users:
-                # swap in an unused record from the same pool
-                leftovers = [c for c in pool if c["messages"][1]["content"] not in seen_users]
-                if not leftovers:
-                    raise SystemExit(f"pool '{name}' has no unused left-over to replace a duplicate — add more scenarios")
-                r = rng.choice(leftovers)
-            seen_users.add(key)
-            records.append(r)
-            tags.append(name)
+        # Dedupe on the full conversation BEFORE sampling. The previous
+        # approach deduped on messages[1] (first user turn) only and swapped
+        # collisions via rng.choice(leftovers) — which silently dropped one of
+        # two legitimately different examples sharing an opener, and it added
+        # the duplicate's key instead of the replacement's, so a replacement
+        # could itself be picked again for the next collision.
+        unique: dict[str, dict] = {}
+        for r in pool:
+            unique.setdefault(_record_key(r), r)
+        deduped = list(unique.values())
+        if len(deduped) < targets[name]:
+            raise SystemExit(
+                f"pool '{name}' has {len(deduped)} unique conversations < {targets[name]} — "
+                f"add scenarios in {name}_examples*() before regenerating."
+            )
+        picked = rng.sample(deduped, targets[name])
+        records.extend(picked)
+        tags.extend([name] * targets[name])
 
     assert len(records) == TOTAL, f"assembled {len(records)} != {TOTAL}"
     order = list(range(len(records)))
@@ -2798,7 +2943,9 @@ def main() -> int:
                 continue
             msgs = rec["messages"]
             max_record_chars = max(max_record_chars, sum(len(m["content"]) for m in msgs))
-            if len(msgs) > 3:
+            # multi-turn = more than one USER turn (RAG records carry a second
+            # system message, which must not inflate this stat)
+            if sum(1 for m in msgs if m["role"] == "user") > 1:
                 multiturn += 1
             assistant = msgs[-1]["content"]
             assistant_chars.append(len(assistant))
@@ -2826,9 +2973,8 @@ def main() -> int:
                             tool_usage[s.get("tool", "?")] += 1
                     except json.JSONDecodeError:
                         pass
-            last_user = next((m for m in reversed(msgs) if m["role"] == "user"), None)
-            if last_user and "Context snippets retrieved" in last_user["content"]:
-                if re.search(r"\[\d+\]", assistant):
+            if any(m["role"] == "system" and m["content"] != SYSTEM_PROMPT and RAG_MARKER in m["content"] for m in msgs):
+                if re.search(r"\[\s*S\d+\s*\]", assistant):
                     grounded_count += 1
                 elif REFUSAL_RE.search(assistant):
                     refusal_count += 1
@@ -2855,7 +3001,7 @@ def main() -> int:
     print("  top tools: " + ", ".join(f"{k}={v}" for k, v in tool_usage.most_common(10)))
 
     print("\n--- RAG ---")
-    print(f"  grounded (cited [n]): {grounded_count}   strict refusals: {refusal_count}")
+    print(f"  grounded (cited [Sn]): {grounded_count}   strict refusals: {refusal_count}")
 
     print("\n--- language & shape ---")
     print(f"  records containing Urdu script: {urdu_count}")
@@ -2875,7 +3021,7 @@ def main() -> int:
     print("  every line parsed as JSON: OK")
     print("  every shadowvisual payload passes the visualContract validators: OK")
     print("  every mission payload passes the ProofLoop enum validators: OK")
-    print("  RAG grounding rule (cite [n] or refuse): OK")
+    print("  RAG grounding rule (cite [Sn] or refuse): OK")
     print("  no raw <svg>/<canvas>, no placeholder markers: OK")
     print(f"\nPASS — {OUT_PATH} is ready for training ({TOTAL} examples)")
     return 0
@@ -3304,72 +3450,72 @@ def agentic_examples_final_topup():
 RAG_FACTS.extend([
     ("Rate limits", "api docs",
      "The chat endpoint allows 20 requests per minute per session; bursts above 25 are shed with a 429.",
-     "What's the chat endpoint's rate limit?", "20 requests per minute per session [1].",
-     "What happens if I exceed it?", "Bursts above 25 get shed with a 429 response [1]."),
+     "What's the chat endpoint's rate limit?", "20 requests per minute per session [S1].",
+     "What happens if I exceed it?", "Bursts above 25 get shed with a 429 response [S1]."),
     ("Backup schedule", "ops runbook",
      "Firestore backups run nightly at 02:00 UTC with a 35-day retention window.",
-     "When do database backups run?", "Nightly at 02:00 UTC [1].",
-     "How long are backups kept?", "35 days [1]."),
+     "When do database backups run?", "Nightly at 02:00 UTC [S1].",
+     "How long are backups kept?", "35 days [S1]."),
     ("Font licensing", "design system doc",
      "The display font is licensed for app use only; embedding it in marketing images requires the extended license.",
-     "Can I use the display font in marketing images?", "Not under the current license — marketing embedding needs the extended license [1].",
-     "Where is the display font allowed?", "App use only, per the design system doc [1]."),
+     "Can I use the display font in marketing images?", "Not under the current license — marketing embedding needs the extended license [S1].",
+     "Where is the display font allowed?", "App use only, per the design system doc [S1]."),
     ("Session timeout", "security config",
      "Web sessions expire after 14 days of inactivity; E2EE rooms re-prompt after 24 hours.",
-     "How long do web sessions last?", "14 days of inactivity [1].",
-     "Do E2EE rooms have a stricter timeout?", "Yes — they re-prompt for the secret after 24 hours [1]."),
+     "How long do web sessions last?", "14 days of inactivity [S1].",
+     "Do E2EE rooms have a stricter timeout?", "Yes — they re-prompt for the secret after 24 hours [S1]."),
     ("Export metadata", "user guide",
      "Document exports embed title, author handle and export date in the file metadata.",
-     "What metadata goes into exported documents?", "Title, author handle and export date [1].",
-     "Can I strip export metadata?", "That isn't in the retrieved context — the snippet lists what metadata is embedded but says nothing about stripping it. I won't guess."),  # last answer is a soft refusal
+     "What metadata goes into exported documents?", "Title, author handle and export date [S1].",
+     "Can I strip export metadata?", "That isn't in the retrieved passages — the passage lists what metadata is embedded but says nothing about stripping it. I won't guess."),  # last answer is a soft refusal
     ("Model memory budget", "model card",
      "The q4 chat model needs roughly 700 MB of free memory; on 2 GB devices close other tabs first.",
-     "How much memory does the q4 model need?", "About 700 MB of free memory [1].",
-     "Any advice for 2 GB devices?", "Close other tabs first to free the budget [1]."),
+     "How much memory does the q4 model need?", "About 700 MB of free memory [S1].",
+     "Any advice for 2 GB devices?", "Close other tabs first to free the budget [S1]."),
     ("Two-factor recovery", "security FAQ",
      "Losing your 2FA device requires the recovery codes generated at signup; support cannot bypass it.",
-     "I lost my 2FA device — what now?", "Use the recovery codes generated at signup [1].",
-     "Can support reset 2FA for me?", "No — support cannot bypass 2FA per the FAQ [1]."),
+     "I lost my 2FA device — what now?", "Use the recovery codes generated at signup [S1].",
+     "Can support reset 2FA for me?", "No — support cannot bypass 2FA per the FAQ [S1]."),
     ("Locale fallback", "i18n guide",
      "Missing translations fall back to English silently; the UI marks untranslated strings with a dotted underline in dev mode.",
-     "What happens when a translation is missing?", "It falls back to English silently [1].",
-     "How do I spot untranslated strings?", "In dev mode they get a dotted underline [1]."),
+     "What happens when a translation is missing?", "It falls back to English silently [S1].",
+     "How do I spot untranslated strings?", "In dev mode they get a dotted underline [S1]."),
     ("Search indexing delay", "platform docs",
      "New knowledge-base articles become searchable within 5 minutes of import.",
-     "How soon can I search an imported article?", "Within about 5 minutes of import [1].",
-     "Does indexing block the import?", "That isn't in the retrieved context — the snippet covers only the 5-minute indexing delay, not whether indexing blocks imports. I won't guess."),
+     "How soon can I search an imported article?", "Within about 5 minutes of import [S1].",
+     "Does indexing block the import?", "That isn't in the retrieved passages — the passage covers only the 5-minute indexing delay, not whether indexing blocks imports. I won't guess."),
     ("Referral rewards", "growth docs",
      "Referrals grant both users 50 extra shared requests; the bonus never expires.",
-     "What do referral rewards grant?", "50 extra shared requests for both users [1].",
-     "Do referral bonuses expire?", "No — the bonus never expires [1]."),
+     "What do referral rewards grant?", "50 extra shared requests for both users [S1].",
+     "Do referral bonuses expire?", "No — the bonus never expires [S1]."),
     ("Desktop updates", "desktop guide",
      "The desktop app checks for updates every 6 hours and installs them on the next launch.",
-     "How often does the desktop app check for updates?", "Every 6 hours [1].",
-     "When do updates install?", "On the next launch after a check [1]."),
+     "How often does the desktop app check for updates?", "Every 6 hours [S1].",
+     "When do updates install?", "On the next launch after a check [S1]."),
     ("Voice privacy", "security docs",
      "Voice mode audio is processed on-device for dictation; live conversation mode uses the provider you selected.",
-     "Where is dictation audio processed?", "On-device [1].",
-     "What about live conversation mode?", "It uses the provider you selected — that's in the security docs [1]."),
+     "Where is dictation audio processed?", "On-device [S1].",
+     "What about live conversation mode?", "It uses the provider you selected — that's in the security docs [S1]."),
     ("Storage quota warnings", "mobile guide",
      "Users get a storage warning at 80% of the model cache budget and an eviction notice at 95%.",
-     "When do I get a storage warning?", "At 80% of the model cache budget [1].",
-     "What happens at 95%?", "An eviction notice fires at that threshold [1]."),
+     "When do I get a storage warning?", "At 80% of the model cache budget [S1].",
+     "What happens at 95%?", "An eviction notice fires at that threshold [S1]."),
     ("Team seats", "workspace admin guide",
      "Workspaces support up to 8 seats; every seat gets its own encrypted memory namespace.",
-     "How many seats can a workspace have?", "Up to 8 [1].",
-     "Do seats share memory?", "No — each seat gets its own encrypted memory namespace [1]."),
+     "How many seats can a workspace have?", "Up to 8 [S1].",
+     "Do seats share memory?", "No — each seat gets its own encrypted memory namespace [S1]."),
     ("Prompt template limits", "power user guide",
      "Custom templates cap at 4,000 characters and 10 variables; variables use the {{name}} syntax.",
-     "What's the template size limit?", "4,000 characters [1].",
-     "How do variables work in templates?", "Use {{name}} syntax, up to 10 variables [1]."),
+     "What's the template size limit?", "4,000 characters [S1].",
+     "How do variables work in templates?", "Use {{name}} syntax, up to 10 variables [S1]."),
     ("Image retention", "image docs",
      "Generated images stay in the encrypted asset store for 90 days unless pinned.",
-     "How long do generated images stay?", "90 days in the encrypted asset store unless pinned [1].",
-     "How do I keep an image forever?", "Pin it — unpinned assets age out at 90 days [1]."),
+     "How long do generated images stay?", "90 days in the encrypted asset store unless pinned [S1].",
+     "How do I keep an image forever?", "Pin it — unpinned assets age out at 90 days [S1]."),
     ("Offline missions", "missions FAQ",
      "Missions can draft and plan offline; verification steps that need external sources queue until you're online.",
-     "Can missions run fully offline?", "Drafting and planning yes; verification steps needing external sources queue until online [1].",
-     "What happens to queued verification offline?", "It waits in the queue and runs when connectivity returns [1]."),
+     "Can missions run fully offline?", "Drafting and planning yes; verification steps needing external sources queue until online [S1].",
+     "What happens to queued verification offline?", "It waits in the queue and runs when connectivity returns [S1]."),
 ])
 
 

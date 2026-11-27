@@ -19,8 +19,23 @@ training/shadow-1-whisper/
 
 The dataset mixture mirrors ShadowTalk's production workloads: **45%** `shadowvisual` engine JSON
 (chart / diagram / infographic, validated against the real `visualContract.ts` rules), **25%** agentic
-`mission` blocks + tool calling (ProofLoop enums, exact `ToolType` names), **20%** strict offline RAG
-(cite `[n]` or refuse), **10%** sovereign identity + English/Urdu/Roman Urdu.
+`mission` blocks + tool calling (ProofLoop enums, exact `ToolType` names, and tool-result continuations
+in the REAL runtime tool-card formats — assistant-turn cards from `ChatbotPage.tsx` /
+`executeShadowTool.ts` / `executeCalculator()`, including the honest "not yet deployed" cards for
+`database_query` / `file_manager`), **20%** strict offline RAG (context arrives as the runtime
+`[RETRIEVED DOCUMENT CONTEXT …]` system block from `src/lib/rag/format.ts`; answers cite `[S1]`, `[S2]`
+or refuse), **10%** sovereign identity + English/Urdu/Roman Urdu.
+
+Two invariants to keep in mind when editing scenarios:
+
+- **Interception guarantee** — every tool-card turn is a *context* turn, not a generation target. The
+  notebook's SFT loss covers all assistant turns, so each card-bearing record opens with a request the
+  runtime tool detector intercepts before the model is called (`calc`/bare arithmetic, `search the web
+  for …`, `/image …`). Only `database_query` / `file_manager` cards are deliberately reachable — their
+  honest "not yet deployed" text is what the runtime actually says.
+- **Dedup is full-conversation** — records are deduplicated on every message, not the first user turn,
+  and pools are deduped *before* sampling: two examples that share an opener but differ in a follow-up
+  are both kept.
 
 ---
 
@@ -156,9 +171,10 @@ Also required by the worker (already in place, listed so the wiring is complete)
 
 ## 7. Versioning discipline
 
-- Re-run `generate_dataset.py` after touching **any** prompt/schema file it mirrors
+- Re-run `generate_dataset.py` after touching **any** prompt/schema/format file it mirrors
   (`visualContract.ts`, `visualSystemPrompt.ts`, `shadowTalkPersona.ts`, `useToolOrchestrator.ts`,
-  `proofloop/types.ts`) — the enums and limits are copied, and drift between kit and app is a
-  silent-quality killer.
+  `proofloop/types.ts`, `rag/format.ts`, `executeShadowTool.ts`, and the tool-card emission sites in
+  `ChatbotPage.tsx`) — the enums, limits and runtime string formats are copied, and drift between kit
+  and app is a silent-quality killer.
 - Ship ONNX versions as `v<N>` tags on the ONNX repo and pin the worker's `MODEL_ID` revision via
   `?revision=v<N>` during canary releases before widening to `main`.
