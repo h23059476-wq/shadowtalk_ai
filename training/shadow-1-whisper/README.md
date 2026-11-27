@@ -71,10 +71,10 @@ If you edit scenarios, the built-in validator re-checks every fenced payload and
 
 | Cell | What it does | Typical time |
 |---|---|---|
-| **1 — Setup** | fails fast on CPU runtimes, then installs the **official unsloth Qwen3.5 Vision Colab combo** — pinned `torch 2.8.0`, `transformers==5.2.0`, `trl==0.22.2`, `tokenizers≤0.23.0`, xformers, `unsloth install-kernels` — plus onnx/onnxruntime for the export cells | 3-5 min |
-| **2 — Auth & load** | secure `getpass` token, loads `unsloth/Qwen3.5-0.8B` (`load_in_4bit=False` → ~3 GB VRAM), LoRA `r=16, lora_alpha=16` on **language layers only** (vision frozen) | ~2 min |
+| **1 — Setup** | fails fast on CPU runtimes, verifies the compiled torchvision ops load (**subprocess nms probe**), then installs the **official unsloth Qwen3.5 Vision Colab combo** as ONE ABI-matched set — pinned `torch 2.8.0`, `transformers==5.2.0`, `trl==0.22.2`, `tokenizers≤0.23.0`, xformers, `unsloth install-kernels` — plus onnx/onnxruntime for the export cells. Re-runs after a restart take ~20 s when the pinned pair is already on disk | 3-6 min (first run) / ~20 s (re-run) |
+| **2 — Auth & load** | token from the `HF_TOKEN` env var (headless/CLI runs), a secure `getpass` prompt (interactive), or **tokenless mode** (`HF_TOKEN=skip` / Enter at the prompt); loads `unsloth/Qwen3.5-0.8B` (`load_in_4bit=False` → ~3 GB VRAM), LoRA `r=16, lora_alpha=16` on **language layers only** (vision frozen) | ~2 min |
 | **3 — Train** | chat-template SFT, `max_length=2048` (trl 0.22.2 field name), **3 epochs @ lr 2e-4** | 25-40 min |
-| **4 — Push merged + GGUF** | merged 16-bit → `shadowtalkai/Shadow-1-Whisper-0.8B`; GGUF `q4_k_m` → `shadowtalkai/Shadow-1-Whisper-0.8B-GGUF` | 10-18 min |
+| **4 — Push merged + GGUF** | merged 16-bit → `shadowtalkai/Shadow-1-Whisper-0.8B`; GGUF `q4_k_m` → `shadowtalkai/Shadow-1-Whisper-0.8B-GGUF`. Any push failure — or a tokenless run — **saves locally** under `/content/` instead (retrieve with `colab download`) | 10-18 min |
 | **5 — ONNX transplant** | transplants fine-tuned language weights + tokenizer onto the reference WebGPU graph from `onnx-community/Qwen3.5-0.8B-ONNX` (name map + transpose rules verified offline against the real graph: 320/320 initializers, 187 transposed, 18 squeezed), **regenerates `_q4`/`_q4f16` from the transplanted graphs** (the reference's quantized files carry base weights), verifies with onnxruntime, uploads → `shadowtalkai/Shadow-1-Whisper-0.8B-ONNX` | 8-15 min |
 
 **Checkpoint guidance:** train loss should settle below ~0.9 by epoch 2 and keep drifting down; the
@@ -88,16 +88,24 @@ printed sample to confirm the chat template rendered the `shadowvisual` fence co
   Never "fix" this by loosening the pin — unsloth's Qwen3.5 kernels are built against that
   exact combo (PyPI's latest transformers is 5.24.x and is NOT tested with them).
 
-- *Cell 2 `ImportError: … torchvision==0.23.0 claims to match torch==2.8.0, but its compiled
-  operators do not load (operator torchvision::nms does not exist)`* — the session's in-memory
-  torch is a DIFFERENT build than the on-disk one. Triggered by importing `torch` before the
-  installer (older Cell 1 copies did this for the GPU check: Colab preinstalls torch 2.10 while
-  the pinned install downgrades the stack to 2.8.0/0.23.0 — later imports load the stale 2.10
-  and torchvision's compiled ops fail to load). Fixed: Cell 1 now checks the GPU via
-  `nvidia-smi` and never imports torch before installing. On an older notebook copy: run Cell 1,
-  then **Runtime → Restart session**, then run Cell 2 directly (installs persist on the VM; the
-  restart clears the stale in-memory torch). Never re-run Cell 1 after torch/unsloth were
-  imported — it refuses with a restart notice.
+- *`operator torchvision::nms does not exist` (anywhere)* — torch and torchvision are
+  **ABI-paired compiled libraries**: the torchvision `_C.so` only loads when its build
+  matches the installed torch build exactly, and torch's extension loader swallows the
+  dlopen failure — the first visible symptom is this error, usually inside unsloth's
+  import in Cell 2. It means the environment ended up with a **mixed pair** (e.g. PyPI
+  torchvision over Colab's own torch build, or a one-sided downgrade). Cell 1 now
+  installs torch/torchvision/torchaudio/xformers as **one matched set** in a single joint
+  uv resolution and **verifies the compiled ops load in a fresh subprocess before
+  proceeding** — so this state is caught at setup time with a clear message, not half an
+  hour later. Recovery if you ever see it: **Runtime → Restart session**, re-run Cell 1
+  (its restart guard refuses to reinstall into a session that already imported the stack —
+  in-place repair is impossible once binaries are loaded).
+
+- *Cell 1 stops with `setup step failed (exit N): …`* — that IS the useful behavior: every
+  install command is checked, so the cell dies at the step that actually failed (visible
+  right above the message) instead of cascading into a misleading assert minutes later.
+  Fix the cause shown (usually a transient network error — re-run the cell) — re-runs skip
+  everything already installed.
 
 - *CUDA OOM in Cell 3* — drop `per_device_train_batch_size` to 1 (gradient_accumulation already
   compensates) or close the Colab "high-RAM" extras. The run is designed for the free T4's 15 GB.
@@ -108,6 +116,36 @@ printed sample to confirm the chat template rendered the `shadowvisual` fence co
   half-transplanted model is never acceptable — the asserts exist for that.
 - *GGUF step slow* — `q4_k_m` quantization of 0.8B takes ~10 min; if it stalls >30 min, re-run the
   cell (unsloth caches the merged fp16 shard).
+
+## 3b. Headless run with the Google Colab CLI (optional)
+
+The notebook is also drivable from a terminal via Google's official
+[Colab CLI](https://github.com/googlecolab/google-colab-cli) — useful for agents and CI. The notebook
+is CLI-aware: `HF_TOKEN=skip` runs it tokenless (Cells 4/5 save exports locally instead of pushing).
+
+```bash
+pip install google-colab-cli
+
+# one-time OAuth: the CLI prints a URL; approve it in any browser and paste the code back
+# (ADC via `gcloud auth application-default login` with the colaboratory scope also works)
+colab --auth=oauth2 sessions
+
+colab new -s shadow1 --gpu T4
+colab upload -s shadow1 training/shadow-1-whisper/shadowtalk_sft.jsonl /content/shadowtalk_sft.jsonl
+
+# run the whole notebook on the T4; writes train_and_export_colab_output.ipynb locally
+colab exec -s shadow1 -f training/shadow-1-whisper/train_and_export_colab.ipynb
+
+# tokenless artifact retrieval after a local-save run
+colab download -s shadow1 /content/Shadow-1-Whisper-0.8B-merged ./export-merged
+colab log -s shadow1 -o run_log.md
+colab stop -s shadow1
+```
+
+Notes: `colab exec` streams each cell live; the kernel keeps state across invocations (imports and
+variables persist, like one Colab session). `HF_TOKEN=<real token> colab exec …` gives a fully
+unattended end-to-end run. Interactive getpass prompts only fire when no `HF_TOKEN` env var is set —
+piping stdin to `colab exec` answers them with EOF, which the notebook treats as "tokenless".
 
 ## 4. Flip the repos Public
 
