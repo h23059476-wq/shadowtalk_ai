@@ -71,9 +71,9 @@ If you edit scenarios, the built-in validator re-checks every fenced payload and
 
 | Cell | What it does | Typical time |
 |---|---|---|
-| **1 — Setup** | installs unsloth/trl/peft/transformers≥5.2.0/onnx/onnxruntime stack | 3-5 min |
+| **1 — Setup** | fails fast on CPU runtimes, then installs the **official unsloth Qwen3.5 Vision Colab combo** — pinned `torch 2.8.0`, `transformers==5.2.0`, `trl==0.22.2`, `tokenizers≤0.23.0`, xformers, `unsloth install-kernels` — plus onnx/onnxruntime for the export cells | 3-5 min |
 | **2 — Auth & load** | secure `getpass` token, loads `unsloth/Qwen3.5-0.8B` (`load_in_4bit=False` → ~3 GB VRAM), LoRA `r=16, lora_alpha=16` on **language layers only** (vision frozen) | ~2 min |
-| **3 — Train** | chat-template SFT, `max_seq_length=2048`, **3 epochs @ lr 2e-4** | 25-40 min |
+| **3 — Train** | chat-template SFT, `max_length=2048` (trl 0.22.2 field name), **3 epochs @ lr 2e-4** | 25-40 min |
 | **4 — Push merged + GGUF** | merged 16-bit → `shadowtalkai/Shadow-1-Whisper-0.8B`; GGUF `q4_k_m` → `shadowtalkai/Shadow-1-Whisper-0.8B-GGUF` | 10-18 min |
 | **5 — ONNX transplant** | transplants fine-tuned language weights + tokenizer onto the reference WebGPU graph from `onnx-community/Qwen3.5-0.8B-ONNX`, verifies with onnxruntime, uploads → `shadowtalkai/Shadow-1-Whisper-0.8B-ONNX` | 8-15 min |
 
@@ -82,6 +82,11 @@ dataset is 45% strict-JSON, so schema-validity — not loss — is the real metr
 printed sample to confirm the chat template rendered the `shadowvisual` fence correctly.
 
 **Troubleshooting**
+
+- *Cell 1 version asserts fire* — the environment drifted off the official Qwen3.5 Vision
+  pin (`transformers==5.2.0` / `trl==0.22.2`): Runtime → Restart session, re-run Cell 1.
+  Never "fix" this by loosening the pin — unsloth's Qwen3.5 kernels are built against that
+  exact combo (PyPI's latest transformers is 5.24.x and is NOT tested with them).
 
 - *CUDA OOM in Cell 3* — drop `per_device_train_batch_size` to 1 (gradient_accumulation already
   compensates) or close the Colab "high-RAM" extras. The run is designed for the free T4's 15 GB.

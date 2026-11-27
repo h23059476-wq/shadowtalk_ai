@@ -3008,7 +3008,7 @@ def main() -> int:
     print(f"  multi-turn records: {multiturn}")
     print(f"  assistant reply chars: avg {sum(assistant_chars) // max(1, len(assistant_chars))}, max {max(assistant_chars)}")
     est_tokens = max_record_chars / 4
-    print(f"  longest record ≈ {max_record_chars} chars ≈ {est_tokens:.0f} tokens (max_seq_length=2048 {'OK' if est_tokens < 1950 else 'TOO LONG — trim'})")
+    print(f"  longest record ≈ {max_record_chars} chars ≈ {est_tokens:.0f} tokens (max_length=2048 {'OK' if est_tokens < 1950 else 'TOO LONG — trim'})")
 
     print("\n--- validation ---")
     if all_errors:
