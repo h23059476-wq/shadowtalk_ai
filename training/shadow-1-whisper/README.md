@@ -88,6 +88,14 @@ printed sample to confirm the chat template rendered the `shadowvisual` fence co
   Never "fix" this by loosening the pin — unsloth's Qwen3.5 kernels are built against that
   exact combo (PyPI's latest transformers is 5.24.x and is NOT tested with them).
 
+- *Cell 2 `ImportError: … torchvision==0.23.0 claims to match torch==2.8.0, but its compiled
+  operators do not load (operator torchvision::nms does not exist)`* — the runtime's torchvision
+  was replaced while already imported (Cell 1 re-run mid-session, or a failed earlier import).
+  Fix: run `!pip install --force-reinstall --no-deps --no-cache-dir "torchvision==0.23.0"` in a
+  fresh cell, then **Runtime → Restart session**, re-run Cell 1 and continue. Cell 1 now guards
+  against re-running after an import and re-unpacks torchvision cleanly, so fresh runs never
+  reach this state.
+
 - *CUDA OOM in Cell 3* — drop `per_device_train_batch_size` to 1 (gradient_accumulation already
   compensates) or close the Colab "high-RAM" extras. The run is designed for the free T4's 15 GB.
 - *T4 rejects bf16* — the notebook auto-selects `fp16` on T4 (bf16 only on Ampere+/L4).
