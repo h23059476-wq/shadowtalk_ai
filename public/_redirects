@@ -1,0 +1,5 @@
+# Cloudflare Pages — SPA deep-link fallback.
+# Static files (including the prerendered /blog/<slug>/index.html routes) are
+# always served first; this rewrite only fires when no asset matches, exactly
+# mirroring firebase.json's "rewrites: ** -> /index.html".
+/*    /index.html    200

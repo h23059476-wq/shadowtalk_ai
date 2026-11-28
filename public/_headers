@@ -11,11 +11,24 @@
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Embedder-Policy: credentialless
   Cross-Origin-Resource-Policy: same-origin
+  Cache-Control: no-cache
 
 /workbox-*.js
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Embedder-Policy: credentialless
+  Cache-Control: no-cache
+
+/manifest.webmanifest
+  Cache-Control: no-cache
 
 /assets/*
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Embedder-Policy: credentialless
+  Cross-Origin-Resource-Policy: same-origin
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=2592000, immutable
+
+/docs/*
+  Cache-Control: public, max-age=604800
