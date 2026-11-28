@@ -75,7 +75,7 @@ If you edit scenarios, the built-in validator re-checks every fenced payload and
 | **2 — Auth & load** | token from the `HF_TOKEN` env var (headless/CLI runs), a secure `getpass` prompt (interactive), or **tokenless mode** (`HF_TOKEN=skip` / Enter at the prompt); loads `unsloth/Qwen3.5-0.8B` (`load_in_4bit=False` → ~3 GB VRAM), LoRA `r=16, lora_alpha=16` on **language layers only** (vision frozen) | ~2 min |
 | **3 — Train** | chat-template SFT, `max_length=2048` (trl 0.22.2 field name), **3 epochs @ lr 2e-4** | 25-40 min |
 | **4 — Push merged + GGUF** | merged 16-bit → `shadowtalkai/Shadow-1-Whisper-0.8B`; GGUF `q4_k_m` → `shadowtalkai/Shadow-1-Whisper-0.8B-GGUF`. Any push failure — or a tokenless run — **saves locally** under `/content/` instead (retrieve with `colab download`) | 10-18 min |
-| **5 — ONNX transplant** | transplants fine-tuned language weights + tokenizer onto the reference WebGPU graph from `onnx-community/Qwen3.5-0.8B-ONNX` (name map + transpose rules verified offline against the real graph: 320/320 initializers, 187 transposed, 18 squeezed), **regenerates `_q4`/`_q4f16` from the transplanted graphs** (the reference's quantized files carry base weights), verifies with onnxruntime, uploads → `shadowtalkai/Shadow-1-Whisper-0.8B-ONNX` | 8-15 min |
+| **5 — ONNX transplant** | transplants fine-tuned language weights + tokenizer onto the **pinned** reference WebGPU graph `onnx-community/Qwen3.5-0.8B-ONNX@8fe9dbe3` (name map + orientation rules verified offline: 320/320 initializers, 187 transposed, 18 squeezed; hard gates on missing/non-finite/size-ambiguous initializers), **regenerates `_q4`/`_q4f16` from the transplanted graphs** (the reference's quantized files carry base weights) with a q4-size regression check, runs a **one-token CPU smoke test** per shipped decoder (finite logits required + transplanted-vs-base cosine gate that catches a silent weight scramble), writes a sha256 `manifest.json`, verifies with onnxruntime, uploads → `shadowtalkai/Shadow-1-Whisper-0.8B-ONNX` + auto-creates the next `v<N>` tag | 10-20 min |
 
 **Checkpoint guidance:** train loss should settle below ~0.9 by epoch 2 and keep drifting down; the
 dataset is 45% strict-JSON, so schema-validity — not loss — is the real metric. Spot-check Cell 3's
@@ -112,8 +112,14 @@ printed sample to confirm the chat template rendered the `shadowvisual` fence co
 - *T4 rejects bf16* — the notebook auto-selects `fp16` on T4 (bf16 only on Ampere+/L4).
 - *Cell 5 coverage/shape asserts fire* — the ONNX graph naming drifted vs the reference; the printed
   report tells you exactly which initializer family to extend in `graph_to_hf()`. Expected baseline on
-  the current reference graph: 320/320 matched, 187 transposed, 18 squeezed, 0 missing. Shipping a
-  half-transplanted model is never acceptable — the asserts exist for that.
+  the pinned reference graph (`@8fe9dbe3`): 320/320 matched, 187 transposed, 18 squeezed, 0 missing.
+  Shipping a half-transplanted model is never acceptable — the asserts exist for that.
+- *Cell 5 smoke gate fires (cosine vs base < 0.5, or non-finite logits)* — the transplant scrambled
+  weights; do not ship. Re-check the printed `transposed/squeezed` numbers against the 187/18 baseline
+  and confirm the reference revision still matches `REF_REVISION` before re-running.
+- *Cell 5 smoke prints `ok_no_delta`* — transplanted logits are (nearly) identical to base, so the
+  fine-tune barely moved the weights: verify Cell 4 actually merged the LoRA adapters
+  (`save_method="merged_16bit"`) before shipping.
 - *GGUF step slow* — `q4_k_m` quantization of 0.8B takes ~10 min; if it stalls >30 min, re-run the
   cell (unsloth caches the merged fp16 shard).
 
@@ -219,7 +225,9 @@ Also required by the worker (already in place, listed so the wiring is complete)
 - [ ] Cell 2 prints trainable-parameter summary (LoRA language layers only)
 - [ ] Cell 3 completes 3 epochs; loss < ~0.9
 - [ ] All three repos pushed and flipped public
-- [ ] ONNX package loads in ORT with the documented input/output shapes (Cell 5 step 5.4)
+- [ ] ONNX package loads in ORT with the documented input/output shapes (Cell 5 steps 5.6-5.7) and
+      `manifest.json` shows every decoder `runtime_smoke` status `ok` with a sane `cosine_vs_base`
+- [ ] Worker pins the published ONNX revision (`?revision=v<N>` tag printed by Cell 5) — not floating `main`
 - [ ] Browser smoke test: download via Offline Model Manager → on-device chat reply renders with the
       "On-device · private" provenance label → `/visual` prompt produces a valid `shadowvisual` block
 - [ ] Desktop smoke test: GGUF loads, same sampling contract, chat works offline
